@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cloudcontrol/CloudControlApi_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cloudcontrol/CloudControlApiEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudControlApi
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudControlApi {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudControlApiClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudControlApiEndpointProviderBase =
     EndpointProviderBase<CloudControlApiClientConfiguration, CloudControlApiBuiltInParameters, CloudControlApiClientContextParameters>;
 
 using CloudControlApiDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudControlApiClientConfiguration, CloudControlApiBuiltInParameters, CloudControlApiClientContextParameters>;
+    BDDEndpointProvider<CloudControlApiClientConfiguration, CloudControlApiBuiltInParameters, CloudControlApiClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDCONTROLAPI_API CloudControlApiEndpointProvider : public CloudControlApiDefaultEpProviderBase
-{
-public:
-    using CloudControlApiResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDCONTROLAPI_API CloudControlApiEndpointProvider : public CloudControlApiDefaultEpProviderBase {
+ public:
+  using CloudControlApiResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudControlApiEndpointProvider()
-      : CloudControlApiDefaultEpProviderBase(Aws::CloudControlApi::CloudControlApiEndpointRules::GetRulesBlob(), Aws::CloudControlApi::CloudControlApiEndpointRules::RulesBlobSize)
-    {}
+  CloudControlApiEndpointProvider();
 
-    ~CloudControlApiEndpointProvider()
-    {
-    }
+  ~CloudControlApiEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudControlApi
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudControlApi
+}  // namespace Aws

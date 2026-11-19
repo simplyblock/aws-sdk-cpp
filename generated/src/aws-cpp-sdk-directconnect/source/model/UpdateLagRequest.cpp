@@ -3,63 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/UpdateLagRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateLagRequest::UpdateLagRequest() : 
-    m_lagIdHasBeenSet(false),
-    m_lagNameHasBeenSet(false),
-    m_minimumLinks(0),
-    m_minimumLinksHasBeenSet(false),
-    m_encryptionModeHasBeenSet(false)
-{
+Aws::String UpdateLagRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_lagIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lagNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_minimumLinksHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionModeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_lagIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("lagId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_lagId.c_str()));
+  }
+
+  if (m_lagNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("lagName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_lagName.c_str()));
+  }
+
+  if (m_minimumLinksHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("minimumLinks"));
+    (m_minimumLinks >= 0) ? encoder.WriteUInt(m_minimumLinks) : encoder.WriteNegInt(m_minimumLinks);
+  }
+
+  if (m_encryptionModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("encryptionMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_encryptionMode.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateLagRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_lagIdHasBeenSet)
-  {
-   payload.WithString("lagId", m_lagId);
-
-  }
-
-  if(m_lagNameHasBeenSet)
-  {
-   payload.WithString("lagName", m_lagName);
-
-  }
-
-  if(m_minimumLinksHasBeenSet)
-  {
-   payload.WithInteger("minimumLinks", m_minimumLinks);
-
-  }
-
-  if(m_encryptionModeHasBeenSet)
-  {
-   payload.WithString("encryptionMode", m_encryptionMode);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateLagRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateLagRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.UpdateLag"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

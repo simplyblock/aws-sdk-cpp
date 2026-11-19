@@ -4,165 +4,212 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/ChannelPlacementGroupState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
+/**
+ * Placeholder documentation for UpdateChannelPlacementGroupResponse<p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelPlacementGroupResponse">AWS
+ * API Reference</a></p>
+ */
+class UpdateChannelPlacementGroupResult {
+ public:
+  AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult() = default;
+  AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * Placeholder documentation for UpdateChannelPlacementGroupResponse<p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelPlacementGroupResponse">AWS
-   * API Reference</a></p>
+   * The ARN of this ChannelPlacementGroup. It is automatically assigned when the
+   * ChannelPlacementGroup is created.
    */
-  class UpdateChannelPlacementGroupResult
-  {
-  public:
-    AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult();
-    AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIALIVE_API UpdateChannelPlacementGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateChannelPlacementGroupResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * Used in ListChannelPlacementGroupsResult
+   */
+  inline const Aws::Vector<Aws::String>& GetChannels() const { return m_channels; }
+  template <typename ChannelsT = Aws::Vector<Aws::String>>
+  void SetChannels(ChannelsT&& value) {
+    m_channelsHasBeenSet = true;
+    m_channels = std::forward<ChannelsT>(value);
+  }
+  template <typename ChannelsT = Aws::Vector<Aws::String>>
+  UpdateChannelPlacementGroupResult& WithChannels(ChannelsT&& value) {
+    SetChannels(std::forward<ChannelsT>(value));
+    return *this;
+  }
+  template <typename ChannelsT = Aws::String>
+  UpdateChannelPlacementGroupResult& AddChannels(ChannelsT&& value) {
+    m_channelsHasBeenSet = true;
+    m_channels.emplace_back(std::forward<ChannelsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ARN of this ChannelPlacementGroup. It is automatically assigned when the
-     * ChannelPlacementGroup is created.
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UpdateChannelPlacementGroupResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The ID of the Cluster that the Node belongs to.
+   */
+  inline const Aws::String& GetClusterId() const { return m_clusterId; }
+  template <typename ClusterIdT = Aws::String>
+  void SetClusterId(ClusterIdT&& value) {
+    m_clusterIdHasBeenSet = true;
+    m_clusterId = std::forward<ClusterIdT>(value);
+  }
+  template <typename ClusterIdT = Aws::String>
+  UpdateChannelPlacementGroupResult& WithClusterId(ClusterIdT&& value) {
+    SetClusterId(std::forward<ClusterIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Used in ListChannelPlacementGroupsResult
-     */
-    inline const Aws::Vector<Aws::String>& GetChannels() const{ return m_channels; }
-    inline void SetChannels(const Aws::Vector<Aws::String>& value) { m_channels = value; }
-    inline void SetChannels(Aws::Vector<Aws::String>&& value) { m_channels = std::move(value); }
-    inline UpdateChannelPlacementGroupResult& WithChannels(const Aws::Vector<Aws::String>& value) { SetChannels(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithChannels(Aws::Vector<Aws::String>&& value) { SetChannels(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& AddChannels(const Aws::String& value) { m_channels.push_back(value); return *this; }
-    inline UpdateChannelPlacementGroupResult& AddChannels(Aws::String&& value) { m_channels.push_back(std::move(value)); return *this; }
-    inline UpdateChannelPlacementGroupResult& AddChannels(const char* value) { m_channels.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * The ID of the ChannelPlacementGroup. Unique in the AWS account. The ID is the
+   * resource-id portion of the ARN.
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateChannelPlacementGroupResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ID of the Cluster that the Node belongs to.
-     */
-    inline const Aws::String& GetClusterId() const{ return m_clusterId; }
-    inline void SetClusterId(const Aws::String& value) { m_clusterId = value; }
-    inline void SetClusterId(Aws::String&& value) { m_clusterId = std::move(value); }
-    inline void SetClusterId(const char* value) { m_clusterId.assign(value); }
-    inline UpdateChannelPlacementGroupResult& WithClusterId(const Aws::String& value) { SetClusterId(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithClusterId(Aws::String&& value) { SetClusterId(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithClusterId(const char* value) { SetClusterId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The name that you specified for the ChannelPlacementGroup.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateChannelPlacementGroupResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ID of the ChannelPlacementGroup. Unique in the AWS account. The ID is the
-     * resource-id portion of the ARN.
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline UpdateChannelPlacementGroupResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * An array with one item, which is the single Node that is associated with the
+   * ChannelPlacementGroup.
+   */
+  inline const Aws::Vector<Aws::String>& GetNodes() const { return m_nodes; }
+  template <typename NodesT = Aws::Vector<Aws::String>>
+  void SetNodes(NodesT&& value) {
+    m_nodesHasBeenSet = true;
+    m_nodes = std::forward<NodesT>(value);
+  }
+  template <typename NodesT = Aws::Vector<Aws::String>>
+  UpdateChannelPlacementGroupResult& WithNodes(NodesT&& value) {
+    SetNodes(std::forward<NodesT>(value));
+    return *this;
+  }
+  template <typename NodesT = Aws::String>
+  UpdateChannelPlacementGroupResult& AddNodes(NodesT&& value) {
+    m_nodesHasBeenSet = true;
+    m_nodes.emplace_back(std::forward<NodesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name that you specified for the ChannelPlacementGroup.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline UpdateChannelPlacementGroupResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The current state of the ChannelPlacementGroup.
+   */
+  inline ChannelPlacementGroupState GetState() const { return m_state; }
+  inline void SetState(ChannelPlacementGroupState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline UpdateChannelPlacementGroupResult& WithState(ChannelPlacementGroupState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * An array with one item, which is the signle Node that is associated with the
-     * ChannelPlacementGroup.
-     */
-    inline const Aws::Vector<Aws::String>& GetNodes() const{ return m_nodes; }
-    inline void SetNodes(const Aws::Vector<Aws::String>& value) { m_nodes = value; }
-    inline void SetNodes(Aws::Vector<Aws::String>&& value) { m_nodes = std::move(value); }
-    inline UpdateChannelPlacementGroupResult& WithNodes(const Aws::Vector<Aws::String>& value) { SetNodes(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithNodes(Aws::Vector<Aws::String>&& value) { SetNodes(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& AddNodes(const Aws::String& value) { m_nodes.push_back(value); return *this; }
-    inline UpdateChannelPlacementGroupResult& AddNodes(Aws::String&& value) { m_nodes.push_back(std::move(value)); return *this; }
-    inline UpdateChannelPlacementGroupResult& AddNodes(const char* value) { m_nodes.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * The current state of the ChannelPlacementGroup.
-     */
-    inline const ChannelPlacementGroupState& GetState() const{ return m_state; }
-    inline void SetState(const ChannelPlacementGroupState& value) { m_state = value; }
-    inline void SetState(ChannelPlacementGroupState&& value) { m_state = std::move(value); }
-    inline UpdateChannelPlacementGroupResult& WithState(const ChannelPlacementGroupState& value) { SetState(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithState(ChannelPlacementGroupState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateChannelPlacementGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateChannelPlacementGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateChannelPlacementGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_arn;
 
-    Aws::String m_arn;
+  Aws::Vector<Aws::String> m_channels;
 
-    Aws::Vector<Aws::String> m_channels;
+  Aws::String m_clusterId;
 
-    Aws::String m_clusterId;
+  Aws::String m_id;
 
-    Aws::String m_id;
+  Aws::String m_name;
 
-    Aws::String m_name;
+  Aws::Vector<Aws::String> m_nodes;
 
-    Aws::Vector<Aws::String> m_nodes;
+  ChannelPlacementGroupState m_state{ChannelPlacementGroupState::NOT_SET};
 
-    ChannelPlacementGroupState m_state;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_channelsHasBeenSet = false;
+  bool m_clusterIdHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_nodesHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/support/Support_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/support/Support_EXPORTS.h>
 
-#include <aws/support/SupportEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Support
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Support {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SupportClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SupportEndpointProviderBase =
     EndpointProviderBase<SupportClientConfiguration, SupportBuiltInParameters, SupportClientContextParameters>;
 
 using SupportDefaultEpProviderBase =
-    DefaultEndpointProvider<SupportClientConfiguration, SupportBuiltInParameters, SupportClientContextParameters>;
+    BDDEndpointProvider<SupportClientConfiguration, SupportBuiltInParameters, SupportClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SUPPORT_API SupportEndpointProvider : public SupportDefaultEpProviderBase
-{
-public:
-    using SupportResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SUPPORT_API SupportEndpointProvider : public SupportDefaultEpProviderBase {
+ public:
+  using SupportResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SupportEndpointProvider()
-      : SupportDefaultEpProviderBase(Aws::Support::SupportEndpointRules::GetRulesBlob(), Aws::Support::SupportEndpointRules::RulesBlobSize)
-    {}
+  SupportEndpointProvider();
 
-    ~SupportEndpointProvider()
-    {
-    }
+  ~SupportEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Support
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Support
+}  // namespace Aws

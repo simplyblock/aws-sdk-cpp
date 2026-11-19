@@ -4,80 +4,80 @@
  */
 
 #include <aws/appstream/model/CreateThemeForStackRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateThemeForStackRequest::CreateThemeForStackRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_footerLinksHasBeenSet(false),
-    m_titleTextHasBeenSet(false),
-    m_themeStyling(ThemeStyling::NOT_SET),
-    m_themeStylingHasBeenSet(false),
-    m_organizationLogoS3LocationHasBeenSet(false),
-    m_faviconS3LocationHasBeenSet(false)
-{
+Aws::String CreateThemeForStackRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_stackNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_footerLinksHasBeenSet) {
+    mapSize++;
+  }
+  if (m_titleTextHasBeenSet) {
+    mapSize++;
+  }
+  if (m_themeStylingHasBeenSet) {
+    mapSize++;
+  }
+  if (m_organizationLogoS3LocationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_faviconS3LocationHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_stackNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("StackName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_stackName.c_str()));
+  }
+
+  if (m_footerLinksHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FooterLinks"));
+    encoder.WriteArrayStart(m_footerLinks.size());
+    for (const auto& item_0 : m_footerLinks) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_titleTextHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TitleText"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_titleText.c_str()));
+  }
+
+  if (m_themeStylingHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ThemeStyling"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ThemeStylingMapper::GetNameForThemeStyling(m_themeStyling).c_str()));
+  }
+
+  if (m_organizationLogoS3LocationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OrganizationLogoS3Location"));
+    m_organizationLogoS3Location.CborEncode(encoder);
+  }
+
+  if (m_faviconS3LocationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FaviconS3Location"));
+    m_faviconS3Location.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateThemeForStackRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_stackNameHasBeenSet)
-  {
-   payload.WithString("StackName", m_stackName);
-
-  }
-
-  if(m_footerLinksHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> footerLinksJsonList(m_footerLinks.size());
-   for(unsigned footerLinksIndex = 0; footerLinksIndex < footerLinksJsonList.GetLength(); ++footerLinksIndex)
-   {
-     footerLinksJsonList[footerLinksIndex].AsObject(m_footerLinks[footerLinksIndex].Jsonize());
-   }
-   payload.WithArray("FooterLinks", std::move(footerLinksJsonList));
-
-  }
-
-  if(m_titleTextHasBeenSet)
-  {
-   payload.WithString("TitleText", m_titleText);
-
-  }
-
-  if(m_themeStylingHasBeenSet)
-  {
-   payload.WithString("ThemeStyling", ThemeStylingMapper::GetNameForThemeStyling(m_themeStyling));
-  }
-
-  if(m_organizationLogoS3LocationHasBeenSet)
-  {
-   payload.WithObject("OrganizationLogoS3Location", m_organizationLogoS3Location.Jsonize());
-
-  }
-
-  if(m_faviconS3LocationHasBeenSet)
-  {
-   payload.WithObject("FaviconS3Location", m_faviconS3Location.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateThemeForStackRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateThemeForStackRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.CreateThemeForStack"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,71 +3,212 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/memorydb/model/ParameterNameValue.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MemoryDB
-{
-namespace Model
-{
+namespace Aws {
+namespace MemoryDB {
+namespace Model {
 
-ParameterNameValue::ParameterNameValue() : 
-    m_parameterNameHasBeenSet(false),
-    m_parameterValueHasBeenSet(false)
-{
-}
+ParameterNameValue::ParameterNameValue(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-ParameterNameValue::ParameterNameValue(JsonView jsonValue)
-  : ParameterNameValue()
-{
-  *this = jsonValue;
-}
+ParameterNameValue& ParameterNameValue::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ParameterNameValue& ParameterNameValue::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ParameterName"))
-  {
-    m_parameterName = jsonValue.GetString("ParameterName");
+              if (initialKeyStr == "ParameterName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_parameterName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_parameterName = ss.str();
+                  }
+                }
+                m_parameterNameHasBeenSet = true;
+              }
 
-    m_parameterNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ParameterValue") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_parameterValue = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_parameterValue = ss.str();
+                  }
+                }
+                m_parameterValueHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ParameterNameValue", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("ParameterValue"))
-  {
-    m_parameterValue = jsonValue.GetString("ParameterValue");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_parameterValueHasBeenSet = true;
+            if (initialKeyStr == "ParameterName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_parameterName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_parameterName = ss.str();
+                }
+              }
+              m_parameterNameHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ParameterValue") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_parameterValue = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_parameterValue = ss.str();
+                }
+              }
+              m_parameterValueHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue ParameterNameValue::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_parameterNameHasBeenSet)
-  {
-   payload.WithString("ParameterName", m_parameterName);
-
+void ParameterNameValue::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_parameterNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_parameterValueHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_parameterValueHasBeenSet)
-  {
-   payload.WithString("ParameterValue", m_parameterValue);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_parameterNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ParameterName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_parameterName.c_str()));
   }
 
-  return payload;
+  if (m_parameterValueHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ParameterValue"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_parameterValue.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

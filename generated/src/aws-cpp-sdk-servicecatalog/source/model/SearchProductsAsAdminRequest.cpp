@@ -3,101 +3,101 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/SearchProductsAsAdminRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-SearchProductsAsAdminRequest::SearchProductsAsAdminRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_portfolioIdHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_sortBy(ProductViewSortBy::NOT_SET),
-    m_sortByHasBeenSet(false),
-    m_sortOrder(SortOrder::NOT_SET),
-    m_sortOrderHasBeenSet(false),
-    m_pageTokenHasBeenSet(false),
-    m_pageSize(0),
-    m_pageSizeHasBeenSet(false),
-    m_productSource(ProductSource::NOT_SET),
-    m_productSourceHasBeenSet(false)
-{
+Aws::String SearchProductsAsAdminRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_filtersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sortByHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sortOrderHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pageTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pageSizeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_productSourceHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_portfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_portfolioId.c_str()));
+  }
+
+  if (m_filtersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Filters"));
+    encoder.WriteMapStart(m_filters.size());
+    for (const auto& item_0 : m_filters) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(ProductViewFilterByMapper::GetNameForProductViewFilterBy(item_0.first).c_str()));
+      encoder.WriteArrayStart(item_0.second.size());
+      for (const auto& item_1 : item_0.second) {
+        encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_1.c_str()));
+      }
+    }
+  }
+
+  if (m_sortByHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SortBy"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ProductViewSortByMapper::GetNameForProductViewSortBy(m_sortBy).c_str()));
+  }
+
+  if (m_sortOrderHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SortOrder"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(SortOrderMapper::GetNameForSortOrder(m_sortOrder).c_str()));
+  }
+
+  if (m_pageTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PageToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pageToken.c_str()));
+  }
+
+  if (m_pageSizeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PageSize"));
+    (m_pageSize >= 0) ? encoder.WriteUInt(m_pageSize) : encoder.WriteNegInt(m_pageSize);
+  }
+
+  if (m_productSourceHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProductSource"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ProductSourceMapper::GetNameForProductSource(m_productSource).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String SearchProductsAsAdminRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_portfolioIdHasBeenSet)
-  {
-   payload.WithString("PortfolioId", m_portfolioId);
-
-  }
-
-  if(m_filtersHasBeenSet)
-  {
-   JsonValue filtersJsonMap;
-   for(auto& filtersItem : m_filters)
-   {
-     Aws::Utils::Array<JsonValue> productViewFilterValuesJsonList(filtersItem.second.size());
-     for(unsigned productViewFilterValuesIndex = 0; productViewFilterValuesIndex < productViewFilterValuesJsonList.GetLength(); ++productViewFilterValuesIndex)
-     {
-       productViewFilterValuesJsonList[productViewFilterValuesIndex].AsString(filtersItem.second[productViewFilterValuesIndex]);
-     }
-     filtersJsonMap.WithArray(ProductViewFilterByMapper::GetNameForProductViewFilterBy(filtersItem.first), std::move(productViewFilterValuesJsonList));
-   }
-   payload.WithObject("Filters", std::move(filtersJsonMap));
-
-  }
-
-  if(m_sortByHasBeenSet)
-  {
-   payload.WithString("SortBy", ProductViewSortByMapper::GetNameForProductViewSortBy(m_sortBy));
-  }
-
-  if(m_sortOrderHasBeenSet)
-  {
-   payload.WithString("SortOrder", SortOrderMapper::GetNameForSortOrder(m_sortOrder));
-  }
-
-  if(m_pageTokenHasBeenSet)
-  {
-   payload.WithString("PageToken", m_pageToken);
-
-  }
-
-  if(m_pageSizeHasBeenSet)
-  {
-   payload.WithInteger("PageSize", m_pageSize);
-
-  }
-
-  if(m_productSourceHasBeenSet)
-  {
-   payload.WithString("ProductSource", ProductSourceMapper::GetNameForProductSource(m_productSource));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection SearchProductsAsAdminRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection SearchProductsAsAdminRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.SearchProductsAsAdmin"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

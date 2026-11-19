@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/RevokeIpRulesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RevokeIpRulesRequest::RevokeIpRulesRequest() : 
-    m_groupIdHasBeenSet(false),
-    m_userRulesHasBeenSet(false)
-{
-}
+Aws::String RevokeIpRulesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String RevokeIpRulesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_groupIdHasBeenSet)
-  {
-   payload.WithString("GroupId", m_groupId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_groupIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_userRulesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_userRulesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> userRulesJsonList(m_userRules.size());
-   for(unsigned userRulesIndex = 0; userRulesIndex < userRulesJsonList.GetLength(); ++userRulesIndex)
-   {
-     userRulesJsonList[userRulesIndex].AsString(m_userRules[userRulesIndex]);
-   }
-   payload.WithArray("UserRules", std::move(userRulesJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_groupIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GroupId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_groupId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_userRulesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserRules"));
+    encoder.WriteArrayStart(m_userRules.size());
+    for (const auto& item_0 : m_userRules) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection RevokeIpRulesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RevokeIpRulesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.RevokeIpRules"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

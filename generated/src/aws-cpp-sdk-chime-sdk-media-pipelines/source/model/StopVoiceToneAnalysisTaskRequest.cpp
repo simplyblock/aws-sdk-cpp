@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopVoiceToneAnalysisTaskRequest::StopVoiceToneAnalysisTaskRequest() : 
-    m_identifierHasBeenSet(false),
-    m_voiceToneAnalysisTaskIdHasBeenSet(false)
-{
-}
-
-Aws::String StopVoiceToneAnalysisTaskRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StopVoiceToneAnalysisTaskRequest::SerializePayload() const { return {}; }

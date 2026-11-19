@@ -4,99 +4,121 @@
  */
 
 #pragma once
-#include <aws/lakeformation/LakeFormation_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lakeformation/LakeFormation_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LakeFormation
-{
-namespace Model
-{
-  class GetLFTagResult
-  {
-  public:
-    AWS_LAKEFORMATION_API GetLFTagResult();
-    AWS_LAKEFORMATION_API GetLFTagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAKEFORMATION_API GetLFTagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LakeFormation {
+namespace Model {
+class GetLFTagResult {
+ public:
+  AWS_LAKEFORMATION_API GetLFTagResult() = default;
+  AWS_LAKEFORMATION_API GetLFTagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAKEFORMATION_API GetLFTagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier for the Data Catalog. By default, the account ID. The Data
+   * Catalog is the persistent metadata store. It contains database definitions,
+   * table definitions, and other control information to manage your Lake Formation
+   * environment. </p>
+   */
+  inline const Aws::String& GetCatalogId() const { return m_catalogId; }
+  template <typename CatalogIdT = Aws::String>
+  void SetCatalogId(CatalogIdT&& value) {
+    m_catalogIdHasBeenSet = true;
+    m_catalogId = std::forward<CatalogIdT>(value);
+  }
+  template <typename CatalogIdT = Aws::String>
+  GetLFTagResult& WithCatalogId(CatalogIdT&& value) {
+    SetCatalogId(std::forward<CatalogIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier for the Data Catalog. By default, the account ID. The Data
-     * Catalog is the persistent metadata store. It contains database definitions,
-     * table definitions, and other control information to manage your Lake Formation
-     * environment. </p>
-     */
-    inline const Aws::String& GetCatalogId() const{ return m_catalogId; }
-    inline void SetCatalogId(const Aws::String& value) { m_catalogId = value; }
-    inline void SetCatalogId(Aws::String&& value) { m_catalogId = std::move(value); }
-    inline void SetCatalogId(const char* value) { m_catalogId.assign(value); }
-    inline GetLFTagResult& WithCatalogId(const Aws::String& value) { SetCatalogId(value); return *this;}
-    inline GetLFTagResult& WithCatalogId(Aws::String&& value) { SetCatalogId(std::move(value)); return *this;}
-    inline GetLFTagResult& WithCatalogId(const char* value) { SetCatalogId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The key-name for the LF-tag.</p>
+   */
+  inline const Aws::String& GetTagKey() const { return m_tagKey; }
+  template <typename TagKeyT = Aws::String>
+  void SetTagKey(TagKeyT&& value) {
+    m_tagKeyHasBeenSet = true;
+    m_tagKey = std::forward<TagKeyT>(value);
+  }
+  template <typename TagKeyT = Aws::String>
+  GetLFTagResult& WithTagKey(TagKeyT&& value) {
+    SetTagKey(std::forward<TagKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The key-name for the LF-tag.</p>
-     */
-    inline const Aws::String& GetTagKey() const{ return m_tagKey; }
-    inline void SetTagKey(const Aws::String& value) { m_tagKey = value; }
-    inline void SetTagKey(Aws::String&& value) { m_tagKey = std::move(value); }
-    inline void SetTagKey(const char* value) { m_tagKey.assign(value); }
-    inline GetLFTagResult& WithTagKey(const Aws::String& value) { SetTagKey(value); return *this;}
-    inline GetLFTagResult& WithTagKey(Aws::String&& value) { SetTagKey(std::move(value)); return *this;}
-    inline GetLFTagResult& WithTagKey(const char* value) { SetTagKey(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of possible values an attribute can take.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTagValues() const { return m_tagValues; }
+  template <typename TagValuesT = Aws::Vector<Aws::String>>
+  void SetTagValues(TagValuesT&& value) {
+    m_tagValuesHasBeenSet = true;
+    m_tagValues = std::forward<TagValuesT>(value);
+  }
+  template <typename TagValuesT = Aws::Vector<Aws::String>>
+  GetLFTagResult& WithTagValues(TagValuesT&& value) {
+    SetTagValues(std::forward<TagValuesT>(value));
+    return *this;
+  }
+  template <typename TagValuesT = Aws::String>
+  GetLFTagResult& AddTagValues(TagValuesT&& value) {
+    m_tagValuesHasBeenSet = true;
+    m_tagValues.emplace_back(std::forward<TagValuesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of possible values an attribute can take.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTagValues() const{ return m_tagValues; }
-    inline void SetTagValues(const Aws::Vector<Aws::String>& value) { m_tagValues = value; }
-    inline void SetTagValues(Aws::Vector<Aws::String>&& value) { m_tagValues = std::move(value); }
-    inline GetLFTagResult& WithTagValues(const Aws::Vector<Aws::String>& value) { SetTagValues(value); return *this;}
-    inline GetLFTagResult& WithTagValues(Aws::Vector<Aws::String>&& value) { SetTagValues(std::move(value)); return *this;}
-    inline GetLFTagResult& AddTagValues(const Aws::String& value) { m_tagValues.push_back(value); return *this; }
-    inline GetLFTagResult& AddTagValues(Aws::String&& value) { m_tagValues.push_back(std::move(value)); return *this; }
-    inline GetLFTagResult& AddTagValues(const char* value) { m_tagValues.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLFTagResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLFTagResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLFTagResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLFTagResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_catalogId;
+ private:
+  Aws::String m_catalogId;
 
-    Aws::String m_tagKey;
+  Aws::String m_tagKey;
 
-    Aws::Vector<Aws::String> m_tagValues;
+  Aws::Vector<Aws::String> m_tagValues;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_catalogIdHasBeenSet = false;
+  bool m_tagKeyHasBeenSet = false;
+  bool m_tagValuesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LakeFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace LakeFormation
+}  // namespace Aws

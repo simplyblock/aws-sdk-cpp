@@ -5,16 +5,16 @@
 #pragma once
 
 #include <smithy/identity/resolver/AwsCredentialIdentityResolver.h>
-
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <smithy/identity/auth/AuthSchemeResolverBase.h>
 
 namespace smithy
 {
     class SimpleAwsCredentialIdentityResolver : public AwsCredentialIdentityResolver
     {
     public:
-        using SigV4AuthSchemeParameters = DefaultAuthSchemeResolverParameters;
+        using SigV4AuthSchemeParameters = smithy::DefaultAuthSchemeResolverParameters;
 
         explicit SimpleAwsCredentialIdentityResolver(const Aws::Auth::AWSCredentials& credentials)
             : m_credentials(credentials)
@@ -33,9 +33,12 @@ namespace smithy
             AWS_UNREFERENCED_PARAM(identityProperties);
             AWS_UNREFERENCED_PARAM(additionalParameters);
 
-            auto smithyCreds = Aws::MakeUnique<AwsCredentialIdentity>("DefaultAwsCredentialIdentityResolver",
-                                                                     m_credentials.GetAWSAccessKeyId(), m_credentials.GetAWSSecretKey(),
-                                                                     m_credentials.GetSessionToken(), m_credentials.GetExpiration());
+            auto smithyCreds = Aws::MakeUnique<AwsCredentialIdentity>("SimpleAwsCredentialIdentityResolver",
+                                                                     m_credentials.GetAWSAccessKeyId(),
+                                                                     m_credentials.GetAWSSecretKey(),
+                                                                     m_credentials.GetSessionToken().empty()? Aws::Crt::Optional<Aws::String>() : m_credentials.GetSessionToken(),
+                                                                     m_credentials.GetExpiration(),
+                                                                     m_credentials.GetAccountId().empty()? Aws::Crt::Optional<Aws::String>() : m_credentials.GetAccountId());
 
             return {std::move(smithyCreds)};
         }

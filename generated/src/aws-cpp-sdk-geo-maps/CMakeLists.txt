@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-geo-maps "C++ SDK for the AWS geo-maps service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-geo-maps "C++ SDK for Amazon Location Service Maps V2" aws-cpp-sdk-core)
 
 file(GLOB AWS_GEO-MAPS_HEADERS
     "include/aws/geo-maps/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_GEO-MAPS_HEADERS
 
 file(GLOB AWS_GEO-MAPS_MODEL_HEADERS
     "include/aws/geo-maps/model/*.h"
+)
+
+file(GLOB AWS_GEO-MAPS_INTERNAL_HEADERS
+    "include/aws/geo-maps/internal/*.h"
 )
 
 file(GLOB AWS_GEO-MAPS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_GEO-MAPS_MODEL_SOURCE
 
 file(GLOB GEO-MAPS_UNIFIED_HEADERS
     ${AWS_GEO-MAPS_HEADERS}
+    ${AWS_GEO-MAPS_INTERNAL_HEADERS}
     ${AWS_GEO-MAPS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\geo-maps" FILES ${AWS_GEO-MAPS_HEADERS})
+        source_group("Header Files\\aws\\geo-maps\\internal" FILES ${AWS_GEO-MAPS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\geo-maps\\model" FILES ${AWS_GEO-MAPS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_GEO-MAPS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_GEO-MAPS_MODEL_SOURCE})

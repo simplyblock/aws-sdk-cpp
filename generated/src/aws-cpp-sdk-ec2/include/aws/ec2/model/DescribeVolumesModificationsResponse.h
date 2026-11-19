@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/VolumeModification.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeVolumesModificationsResponse
-  {
-  public:
-    AWS_EC2_API DescribeVolumesModificationsResponse();
-    AWS_EC2_API DescribeVolumesModificationsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeVolumesModificationsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeVolumesModificationsResponse {
+ public:
+  AWS_EC2_API DescribeVolumesModificationsResponse() = default;
+  AWS_EC2_API DescribeVolumesModificationsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeVolumesModificationsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The token to include in another request to get the next page of items. This
+   * value is <code>null</code> when there are no more items to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeVolumesModificationsResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to include in another request to get the next page of items. This
-     * value is <code>null</code> when there are no more items to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeVolumesModificationsResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeVolumesModificationsResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeVolumesModificationsResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the volume modifications.</p>
+   */
+  inline const Aws::Vector<VolumeModification>& GetVolumesModifications() const { return m_volumesModifications; }
+  template <typename VolumesModificationsT = Aws::Vector<VolumeModification>>
+  void SetVolumesModifications(VolumesModificationsT&& value) {
+    m_volumesModificationsHasBeenSet = true;
+    m_volumesModifications = std::forward<VolumesModificationsT>(value);
+  }
+  template <typename VolumesModificationsT = Aws::Vector<VolumeModification>>
+  DescribeVolumesModificationsResponse& WithVolumesModifications(VolumesModificationsT&& value) {
+    SetVolumesModifications(std::forward<VolumesModificationsT>(value));
+    return *this;
+  }
+  template <typename VolumesModificationsT = VolumeModification>
+  DescribeVolumesModificationsResponse& AddVolumesModifications(VolumesModificationsT&& value) {
+    m_volumesModificationsHasBeenSet = true;
+    m_volumesModifications.emplace_back(std::forward<VolumesModificationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the volume modifications.</p>
-     */
-    inline const Aws::Vector<VolumeModification>& GetVolumesModifications() const{ return m_volumesModifications; }
-    inline void SetVolumesModifications(const Aws::Vector<VolumeModification>& value) { m_volumesModifications = value; }
-    inline void SetVolumesModifications(Aws::Vector<VolumeModification>&& value) { m_volumesModifications = std::move(value); }
-    inline DescribeVolumesModificationsResponse& WithVolumesModifications(const Aws::Vector<VolumeModification>& value) { SetVolumesModifications(value); return *this;}
-    inline DescribeVolumesModificationsResponse& WithVolumesModifications(Aws::Vector<VolumeModification>&& value) { SetVolumesModifications(std::move(value)); return *this;}
-    inline DescribeVolumesModificationsResponse& AddVolumesModifications(const VolumeModification& value) { m_volumesModifications.push_back(value); return *this; }
-    inline DescribeVolumesModificationsResponse& AddVolumesModifications(VolumeModification&& value) { m_volumesModifications.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeVolumesModificationsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeVolumesModificationsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeVolumesModificationsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<VolumeModification> m_volumesModifications;
+  Aws::Vector<VolumeModification> m_volumesModifications;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_volumesModificationsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -7,6 +7,7 @@
 #include <aws/testing/AwsTestHelpers.h>
 #include <aws/core/platform/Environment.h>
 #include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/HashingUtils.h>
 #include <aws/s3-crt/S3CrtClient.h>
 #include <aws/s3-crt/model/DeleteBucketRequest.h>
 #include <aws/s3-crt/model/CreateBucketRequest.h>
@@ -19,7 +20,6 @@
 #include <aws/s3-crt/model/CreateMultipartUploadRequest.h>
 #include <aws/s3-crt/model/UploadPartRequest.h>
 #include <aws/s3-crt/model/CompleteMultipartUploadRequest.h>
-#include <aws/s3-crt/model/SelectObjectContentRequest.h>
 #include <aws/s3-crt/model/ListDirectoryBucketsRequest.h>
 #include <aws/s3-crt/model/CreateSessionRequest.h>
 #include <aws/s3-crt/model/PutBucketPolicyRequest.h>
@@ -199,10 +199,11 @@ namespace {
         .WithChecksumCRC32(uploadPart.GetResult().GetChecksumCRC32()));
 
       return client->CompleteMultipartUpload(CompleteMultipartUploadRequest()
-        .WithBucket(bucketName)
-        .WithKey(keyName)
-        .WithUploadId(createOutcome.GetResult().GetUploadId())
-        .WithMultipartUpload(completedUpload));
+                                                 .WithBucket(bucketName)
+                                                 .WithKey(keyName)
+                                                 .WithUploadId(createOutcome.GetResult().GetUploadId())
+                                                 .WithMultipartUpload(completedUpload)
+                                                 .WithChecksumType(ChecksumType::COMPOSITE));
     }
 
     UploadPartCopyOutcome UploadPartCopy(const Aws::String &bucketName, const Aws::String &keyName) {
@@ -294,6 +295,30 @@ namespace {
           std::cout << "Failed to delete bucket: " << outcome.GetError().GetMessage() << "\n";
         }
       }
+    }
+
+    static std::shared_ptr<Aws::StringStream> Create5MbStreamForUploadPart(const char *partTag) {
+      uint32_t fiveMbSize = 5 * 1024 * 1024;
+
+      Aws::StringStream patternStream;
+      patternStream << "Multi-Part upload Test Part " << partTag << ":" << std::endl;
+      Aws::String pattern = patternStream.str();
+
+      Aws::String scratchString;
+      scratchString.reserve(fiveMbSize);
+
+      // 5MB is a hard minimum for multi part uploads; make sure the final string is at least that long
+      uint32_t patternCopyCount = static_cast<uint32_t>(fiveMbSize / pattern.size() + 1);
+      for (uint32_t i = 0; i < patternCopyCount; ++i) {
+        scratchString.append(pattern);
+      }
+
+      std::shared_ptr<Aws::StringStream> streamPtr = Aws::MakeShared<Aws::StringStream>(ALLOCATION_TAG, scratchString);
+
+      streamPtr->seekg(0);
+      streamPtr->seekp(0, std::ios_base::end);
+
+      return streamPtr;
     }
 
   protected:
@@ -457,7 +482,7 @@ namespace {
         },
         HttpResponseCode::OK,
         "Then all at once he was standing there"
-      }
+      },
     };
 
     for (const auto&testCase: testCases) {
@@ -516,4 +541,65 @@ namespace {
     const auto response = client->PutObject(request);
     AWS_EXPECT_SUCCESS(response);
   }
+
+  TEST_F(S3ExpressTest, ShouldSkipResponseValidationOnCompositeChecksums) {
+    const auto bucketName = Testing::GetAwsResourcePrefix() + randomString() + S3_EXPRESS_SUFFIX;
+    const auto createOutcome = CreateBucket(bucketName);
+    AWS_EXPECT_SUCCESS(createOutcome);
+
+      const Aws::String objectKey{"test-composite-checksum"};
+
+      const auto createMPUResponse = client->CreateMultipartUpload(CreateMultipartUploadRequest{}
+        .WithBucket(bucketName)
+        .WithKey(objectKey)
+        .WithChecksumType(ChecksumType::COMPOSITE)
+        .WithChecksumAlgorithm(ChecksumAlgorithm::CRC32));
+      AWS_EXPECT_SUCCESS(createMPUResponse);
+
+      auto uploadPartOneRequest = UploadPartRequest{}
+        .WithBucket(bucketName)
+        .WithKey(objectKey)
+        .WithChecksumAlgorithm(ChecksumAlgorithm::CRC32)
+        .WithUploadId(createMPUResponse.GetResult().GetUploadId())
+        .WithPartNumber(1);
+
+      uploadPartOneRequest.SetBody(Create5MbStreamForUploadPart("Hello from part 1"));
+
+      const auto partOneUploadResponse = client->UploadPart(uploadPartOneRequest);
+      AWS_EXPECT_SUCCESS(partOneUploadResponse);
+
+      auto uploadPartTwoRequest = UploadPartRequest{}
+        .WithBucket(bucketName)
+        .WithKey(objectKey)
+        .WithChecksumAlgorithm(ChecksumAlgorithm::CRC32)
+        .WithUploadId(createMPUResponse.GetResult().GetUploadId())
+        .WithPartNumber(2);
+
+      uploadPartTwoRequest.SetBody(Create5MbStreamForUploadPart("Hello from part 2"));
+
+      const auto partTwoUploadResponse = client->UploadPart(uploadPartTwoRequest);
+      AWS_EXPECT_SUCCESS(partTwoUploadResponse);
+
+
+      const auto completeMpuRequest = client->CompleteMultipartUpload(CompleteMultipartUploadRequest{}
+        .WithBucket(bucketName)
+        .WithKey(objectKey)
+        .WithUploadId(createMPUResponse.GetResult().GetUploadId())
+        .WithChecksumType(ChecksumType::COMPOSITE)
+        .WithMultipartUpload(CompletedMultipartUpload{}.WithParts({
+          CompletedPart{}.WithPartNumber(1)
+            .WithETag(partOneUploadResponse.GetResult().GetETag())
+            .WithChecksumCRC32(partOneUploadResponse.GetResult().GetChecksumCRC32()),
+          CompletedPart{}
+            .WithPartNumber(2)
+            .WithETag(partTwoUploadResponse.GetResult().GetETag())
+            .WithChecksumCRC32(partTwoUploadResponse.GetResult().GetChecksumCRC32())
+        })));
+      AWS_EXPECT_SUCCESS(completeMpuRequest);
+
+      const auto getObjectResponse = client->GetObject(GetObjectRequest{}
+        .WithBucket(bucketName)
+        .WithKey(objectKey));
+      AWS_EXPECT_SUCCESS(getObjectResponse);
+    }
 }

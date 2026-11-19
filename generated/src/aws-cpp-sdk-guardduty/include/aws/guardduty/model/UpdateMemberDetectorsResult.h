@@ -4,67 +4,80 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/guardduty/model/UnprocessedAccount.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
-  class UpdateMemberDetectorsResult
-  {
-  public:
-    AWS_GUARDDUTY_API UpdateMemberDetectorsResult();
-    AWS_GUARDDUTY_API UpdateMemberDetectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GUARDDUTY_API UpdateMemberDetectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
+class UpdateMemberDetectorsResult {
+ public:
+  AWS_GUARDDUTY_API UpdateMemberDetectorsResult() = default;
+  AWS_GUARDDUTY_API UpdateMemberDetectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GUARDDUTY_API UpdateMemberDetectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of member account IDs that were unable to be processed along with an
+   * explanation for why they were not processed.</p>
+   */
+  inline const Aws::Vector<UnprocessedAccount>& GetUnprocessedAccounts() const { return m_unprocessedAccounts; }
+  template <typename UnprocessedAccountsT = Aws::Vector<UnprocessedAccount>>
+  void SetUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    m_unprocessedAccountsHasBeenSet = true;
+    m_unprocessedAccounts = std::forward<UnprocessedAccountsT>(value);
+  }
+  template <typename UnprocessedAccountsT = Aws::Vector<UnprocessedAccount>>
+  UpdateMemberDetectorsResult& WithUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    SetUnprocessedAccounts(std::forward<UnprocessedAccountsT>(value));
+    return *this;
+  }
+  template <typename UnprocessedAccountsT = UnprocessedAccount>
+  UpdateMemberDetectorsResult& AddUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    m_unprocessedAccountsHasBeenSet = true;
+    m_unprocessedAccounts.emplace_back(std::forward<UnprocessedAccountsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of member account IDs that were unable to be processed along with an
-     * explanation for why they were not processed.</p>
-     */
-    inline const Aws::Vector<UnprocessedAccount>& GetUnprocessedAccounts() const{ return m_unprocessedAccounts; }
-    inline void SetUnprocessedAccounts(const Aws::Vector<UnprocessedAccount>& value) { m_unprocessedAccounts = value; }
-    inline void SetUnprocessedAccounts(Aws::Vector<UnprocessedAccount>&& value) { m_unprocessedAccounts = std::move(value); }
-    inline UpdateMemberDetectorsResult& WithUnprocessedAccounts(const Aws::Vector<UnprocessedAccount>& value) { SetUnprocessedAccounts(value); return *this;}
-    inline UpdateMemberDetectorsResult& WithUnprocessedAccounts(Aws::Vector<UnprocessedAccount>&& value) { SetUnprocessedAccounts(std::move(value)); return *this;}
-    inline UpdateMemberDetectorsResult& AddUnprocessedAccounts(const UnprocessedAccount& value) { m_unprocessedAccounts.push_back(value); return *this; }
-    inline UpdateMemberDetectorsResult& AddUnprocessedAccounts(UnprocessedAccount&& value) { m_unprocessedAccounts.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateMemberDetectorsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateMemberDetectorsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateMemberDetectorsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateMemberDetectorsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UnprocessedAccount> m_unprocessedAccounts;
+ private:
+  Aws::Vector<UnprocessedAccount> m_unprocessedAccounts;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_unprocessedAccountsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

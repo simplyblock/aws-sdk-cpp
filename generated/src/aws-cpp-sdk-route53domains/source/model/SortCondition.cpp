@@ -3,71 +3,128 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/model/SortCondition.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Route53Domains
-{
-namespace Model
-{
+namespace Aws {
+namespace Route53Domains {
+namespace Model {
 
-SortCondition::SortCondition() : 
-    m_name(ListDomainsAttributeName::NOT_SET),
-    m_nameHasBeenSet(false),
-    m_sortOrder(SortOrder::NOT_SET),
-    m_sortOrderHasBeenSet(false)
-{
-}
+SortCondition::SortCondition(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-SortCondition::SortCondition(JsonView jsonValue)
-  : SortCondition()
-{
-  *this = jsonValue;
-}
+SortCondition& SortCondition::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-SortCondition& SortCondition::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Name"))
-  {
-    m_name = ListDomainsAttributeNameMapper::GetListDomainsAttributeNameForName(jsonValue.GetString("Name"));
+              if (initialKeyStr == "Name") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_name = ListDomainsAttributeNameMapper::GetListDomainsAttributeNameForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_nameHasBeenSet = true;
+              }
 
-    m_nameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SortOrder") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_sortOrder =
+                      SortOrderMapper::GetSortOrderForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_sortOrderHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("SortCondition", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("SortOrder"))
-  {
-    m_sortOrder = SortOrderMapper::GetSortOrderForName(jsonValue.GetString("SortOrder"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_sortOrderHasBeenSet = true;
+            if (initialKeyStr == "Name") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_name = ListDomainsAttributeNameMapper::GetListDomainsAttributeNameForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_nameHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SortOrder") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_sortOrder =
+                    SortOrderMapper::GetSortOrderForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_sortOrderHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue SortCondition::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", ListDomainsAttributeNameMapper::GetNameForListDomainsAttributeName(m_name));
+void SortCondition::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sortOrderHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_sortOrderHasBeenSet)
-  {
-   payload.WithString("SortOrder", SortOrderMapper::GetNameForSortOrder(m_sortOrder));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ListDomainsAttributeNameMapper::GetNameForListDomainsAttributeName(m_name).c_str()));
   }
 
-  return payload;
+  if (m_sortOrderHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SortOrder"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(SortOrderMapper::GetNameForSortOrder(m_sortOrder).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace Route53Domains
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53Domains
+}  // namespace Aws

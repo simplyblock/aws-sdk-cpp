@@ -6,61 +6,71 @@
 #pragma once
 #include <aws/ce/CostExplorer_EXPORTS.h>
 #include <aws/ce/model/CostAllocationTagBackfillRequest.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CostExplorer
-{
-namespace Model
-{
-  class StartCostAllocationTagBackfillResult
-  {
-  public:
-    AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult();
-    AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CostExplorer {
+namespace Model {
+class StartCostAllocationTagBackfillResult {
+ public:
+  AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult() = default;
+  AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COSTEXPLORER_API StartCostAllocationTagBackfillResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> An object containing detailed metadata of your new backfill request. </p>
+   */
+  inline const CostAllocationTagBackfillRequest& GetBackfillRequest() const { return m_backfillRequest; }
+  template <typename BackfillRequestT = CostAllocationTagBackfillRequest>
+  void SetBackfillRequest(BackfillRequestT&& value) {
+    m_backfillRequestHasBeenSet = true;
+    m_backfillRequest = std::forward<BackfillRequestT>(value);
+  }
+  template <typename BackfillRequestT = CostAllocationTagBackfillRequest>
+  StartCostAllocationTagBackfillResult& WithBackfillRequest(BackfillRequestT&& value) {
+    SetBackfillRequest(std::forward<BackfillRequestT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An object containing detailed metadata of your new backfill request. </p>
-     */
-    inline const CostAllocationTagBackfillRequest& GetBackfillRequest() const{ return m_backfillRequest; }
-    inline void SetBackfillRequest(const CostAllocationTagBackfillRequest& value) { m_backfillRequest = value; }
-    inline void SetBackfillRequest(CostAllocationTagBackfillRequest&& value) { m_backfillRequest = std::move(value); }
-    inline StartCostAllocationTagBackfillResult& WithBackfillRequest(const CostAllocationTagBackfillRequest& value) { SetBackfillRequest(value); return *this;}
-    inline StartCostAllocationTagBackfillResult& WithBackfillRequest(CostAllocationTagBackfillRequest&& value) { SetBackfillRequest(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartCostAllocationTagBackfillResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartCostAllocationTagBackfillResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartCostAllocationTagBackfillResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartCostAllocationTagBackfillResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CostAllocationTagBackfillRequest m_backfillRequest;
+ private:
+  CostAllocationTagBackfillRequest m_backfillRequest;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_backfillRequestHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CostExplorer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostExplorer
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lightsail "C++ SDK for the AWS lightsail service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lightsail "C++ SDK for Amazon Lightsail" aws-cpp-sdk-core)
 
 file(GLOB AWS_LIGHTSAIL_HEADERS
     "include/aws/lightsail/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LIGHTSAIL_HEADERS
 
 file(GLOB AWS_LIGHTSAIL_MODEL_HEADERS
     "include/aws/lightsail/model/*.h"
+)
+
+file(GLOB AWS_LIGHTSAIL_INTERNAL_HEADERS
+    "include/aws/lightsail/internal/*.h"
 )
 
 file(GLOB AWS_LIGHTSAIL_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LIGHTSAIL_MODEL_SOURCE
 
 file(GLOB LIGHTSAIL_UNIFIED_HEADERS
     ${AWS_LIGHTSAIL_HEADERS}
+    ${AWS_LIGHTSAIL_INTERNAL_HEADERS}
     ${AWS_LIGHTSAIL_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lightsail" FILES ${AWS_LIGHTSAIL_HEADERS})
+        source_group("Header Files\\aws\\lightsail\\internal" FILES ${AWS_LIGHTSAIL_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lightsail\\model" FILES ${AWS_LIGHTSAIL_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LIGHTSAIL_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LIGHTSAIL_MODEL_SOURCE})

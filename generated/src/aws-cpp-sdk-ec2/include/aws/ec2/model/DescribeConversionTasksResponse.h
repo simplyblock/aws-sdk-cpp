@@ -4,64 +4,79 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ConversionTask.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeConversionTasksResponse
-  {
-  public:
-    AWS_EC2_API DescribeConversionTasksResponse();
-    AWS_EC2_API DescribeConversionTasksResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeConversionTasksResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeConversionTasksResponse {
+ public:
+  AWS_EC2_API DescribeConversionTasksResponse() = default;
+  AWS_EC2_API DescribeConversionTasksResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeConversionTasksResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the conversion tasks.</p>
+   */
+  inline const Aws::Vector<ConversionTask>& GetConversionTasks() const { return m_conversionTasks; }
+  template <typename ConversionTasksT = Aws::Vector<ConversionTask>>
+  void SetConversionTasks(ConversionTasksT&& value) {
+    m_conversionTasksHasBeenSet = true;
+    m_conversionTasks = std::forward<ConversionTasksT>(value);
+  }
+  template <typename ConversionTasksT = Aws::Vector<ConversionTask>>
+  DescribeConversionTasksResponse& WithConversionTasks(ConversionTasksT&& value) {
+    SetConversionTasks(std::forward<ConversionTasksT>(value));
+    return *this;
+  }
+  template <typename ConversionTasksT = ConversionTask>
+  DescribeConversionTasksResponse& AddConversionTasks(ConversionTasksT&& value) {
+    m_conversionTasksHasBeenSet = true;
+    m_conversionTasks.emplace_back(std::forward<ConversionTasksT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the conversion tasks.</p>
-     */
-    inline const Aws::Vector<ConversionTask>& GetConversionTasks() const{ return m_conversionTasks; }
-    inline void SetConversionTasks(const Aws::Vector<ConversionTask>& value) { m_conversionTasks = value; }
-    inline void SetConversionTasks(Aws::Vector<ConversionTask>&& value) { m_conversionTasks = std::move(value); }
-    inline DescribeConversionTasksResponse& WithConversionTasks(const Aws::Vector<ConversionTask>& value) { SetConversionTasks(value); return *this;}
-    inline DescribeConversionTasksResponse& WithConversionTasks(Aws::Vector<ConversionTask>&& value) { SetConversionTasks(std::move(value)); return *this;}
-    inline DescribeConversionTasksResponse& AddConversionTasks(const ConversionTask& value) { m_conversionTasks.push_back(value); return *this; }
-    inline DescribeConversionTasksResponse& AddConversionTasks(ConversionTask&& value) { m_conversionTasks.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeConversionTasksResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeConversionTasksResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeConversionTasksResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ConversionTask> m_conversionTasks;
+ private:
+  Aws::Vector<ConversionTask> m_conversionTasks;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_conversionTasksHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

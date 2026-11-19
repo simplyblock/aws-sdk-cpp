@@ -10,23 +10,14 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-ListChangeSetsRequest::ListChangeSetsRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListChangeSetsRequest::SerializePayload() const
-{
+Aws::String ListChangeSetsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ListChangeSets&";
-  if(m_stackNameHasBeenSet)
-  {
+  if (m_stackNameHasBeenSet) {
     ss << "StackName=" << StringUtils::URLEncode(m_stackName.c_str()) << "&";
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String ListChangeSetsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ListChangeSetsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ListChangeSetsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

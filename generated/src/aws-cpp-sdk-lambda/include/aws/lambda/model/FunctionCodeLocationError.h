@@ -1,0 +1,82 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+
+#include <utility>
+
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+
+/**
+ * <p>Contains details about an error that occurred when Lambda attempted to
+ * retrieve a function's deployment package.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/FunctionCodeLocationError">AWS
+ * API Reference</a></p>
+ */
+class FunctionCodeLocationError {
+ public:
+  AWS_LAMBDA_API FunctionCodeLocationError() = default;
+  AWS_LAMBDA_API FunctionCodeLocationError(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API FunctionCodeLocationError& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+  /**
+   * <p>The error code that identifies why Lambda failed to retrieve the deployment
+   * package.</p>
+   */
+  inline const Aws::String& GetErrorCode() const { return m_errorCode; }
+  inline bool ErrorCodeHasBeenSet() const { return m_errorCodeHasBeenSet; }
+  template <typename ErrorCodeT = Aws::String>
+  void SetErrorCode(ErrorCodeT&& value) {
+    m_errorCodeHasBeenSet = true;
+    m_errorCode = std::forward<ErrorCodeT>(value);
+  }
+  template <typename ErrorCodeT = Aws::String>
+  FunctionCodeLocationError& WithErrorCode(ErrorCodeT&& value) {
+    SetErrorCode(std::forward<ErrorCodeT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The human-readable message that describes why Lambda failed to retrieve the
+   * deployment package.</p>
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  FunctionCodeLocationError& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_errorCode;
+
+  Aws::String m_message;
+  bool m_errorCodeHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

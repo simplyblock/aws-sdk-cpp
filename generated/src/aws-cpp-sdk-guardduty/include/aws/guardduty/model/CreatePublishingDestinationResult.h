@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
-  class CreatePublishingDestinationResult
-  {
-  public:
-    AWS_GUARDDUTY_API CreatePublishingDestinationResult();
-    AWS_GUARDDUTY_API CreatePublishingDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GUARDDUTY_API CreatePublishingDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
+class CreatePublishingDestinationResult {
+ public:
+  AWS_GUARDDUTY_API CreatePublishingDestinationResult() = default;
+  AWS_GUARDDUTY_API CreatePublishingDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GUARDDUTY_API CreatePublishingDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the publishing destination that is created.</p>
+   */
+  inline const Aws::String& GetDestinationId() const { return m_destinationId; }
+  template <typename DestinationIdT = Aws::String>
+  void SetDestinationId(DestinationIdT&& value) {
+    m_destinationIdHasBeenSet = true;
+    m_destinationId = std::forward<DestinationIdT>(value);
+  }
+  template <typename DestinationIdT = Aws::String>
+  CreatePublishingDestinationResult& WithDestinationId(DestinationIdT&& value) {
+    SetDestinationId(std::forward<DestinationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the publishing destination that is created.</p>
-     */
-    inline const Aws::String& GetDestinationId() const{ return m_destinationId; }
-    inline void SetDestinationId(const Aws::String& value) { m_destinationId = value; }
-    inline void SetDestinationId(Aws::String&& value) { m_destinationId = std::move(value); }
-    inline void SetDestinationId(const char* value) { m_destinationId.assign(value); }
-    inline CreatePublishingDestinationResult& WithDestinationId(const Aws::String& value) { SetDestinationId(value); return *this;}
-    inline CreatePublishingDestinationResult& WithDestinationId(Aws::String&& value) { SetDestinationId(std::move(value)); return *this;}
-    inline CreatePublishingDestinationResult& WithDestinationId(const char* value) { SetDestinationId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreatePublishingDestinationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreatePublishingDestinationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreatePublishingDestinationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreatePublishingDestinationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_destinationId;
+ private:
+  Aws::String m_destinationId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_destinationIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

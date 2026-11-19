@@ -4,90 +4,109 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
 #include <aws/es/model/AuthorizedPrincipal.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p>Container for response parameters to the
+ * <code><a>ListVpcEndpointAccess</a></code> operation. Returns a list of accounts
+ * id and account type authorized to manage VPC endpoints.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListVpcEndpointAccessResponse">AWS
+ * API Reference</a></p>
+ */
+class ListVpcEndpointAccessResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Container for response parameters to the
-   * <code><a>ListVpcEndpointAccess</a></code> operation. Returns a list of accounts
-   * id and account type authorized to manage VPC endpoints.</p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListVpcEndpointAccessResponse">AWS
-   * API Reference</a></p>
+   * <p>List of <code>AuthorizedPrincipal</code> describing the details of the
+   * permissions to manage VPC endpoints against the specified domain.</p>
    */
-  class ListVpcEndpointAccessResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult();
-    AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API ListVpcEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<AuthorizedPrincipal>& GetAuthorizedPrincipalList() const { return m_authorizedPrincipalList; }
+  template <typename AuthorizedPrincipalListT = Aws::Vector<AuthorizedPrincipal>>
+  void SetAuthorizedPrincipalList(AuthorizedPrincipalListT&& value) {
+    m_authorizedPrincipalListHasBeenSet = true;
+    m_authorizedPrincipalList = std::forward<AuthorizedPrincipalListT>(value);
+  }
+  template <typename AuthorizedPrincipalListT = Aws::Vector<AuthorizedPrincipal>>
+  ListVpcEndpointAccessResult& WithAuthorizedPrincipalList(AuthorizedPrincipalListT&& value) {
+    SetAuthorizedPrincipalList(std::forward<AuthorizedPrincipalListT>(value));
+    return *this;
+  }
+  template <typename AuthorizedPrincipalListT = AuthorizedPrincipal>
+  ListVpcEndpointAccessResult& AddAuthorizedPrincipalList(AuthorizedPrincipalListT&& value) {
+    m_authorizedPrincipalListHasBeenSet = true;
+    m_authorizedPrincipalList.emplace_back(std::forward<AuthorizedPrincipalListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Provides an identifier to allow retrieval of paginated results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListVpcEndpointAccessResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>List of <code>AuthorizedPrincipal</code> describing the details of the
-     * permissions to manage VPC endpoints against the specified domain.</p>
-     */
-    inline const Aws::Vector<AuthorizedPrincipal>& GetAuthorizedPrincipalList() const{ return m_authorizedPrincipalList; }
-    inline void SetAuthorizedPrincipalList(const Aws::Vector<AuthorizedPrincipal>& value) { m_authorizedPrincipalList = value; }
-    inline void SetAuthorizedPrincipalList(Aws::Vector<AuthorizedPrincipal>&& value) { m_authorizedPrincipalList = std::move(value); }
-    inline ListVpcEndpointAccessResult& WithAuthorizedPrincipalList(const Aws::Vector<AuthorizedPrincipal>& value) { SetAuthorizedPrincipalList(value); return *this;}
-    inline ListVpcEndpointAccessResult& WithAuthorizedPrincipalList(Aws::Vector<AuthorizedPrincipal>&& value) { SetAuthorizedPrincipalList(std::move(value)); return *this;}
-    inline ListVpcEndpointAccessResult& AddAuthorizedPrincipalList(const AuthorizedPrincipal& value) { m_authorizedPrincipalList.push_back(value); return *this; }
-    inline ListVpcEndpointAccessResult& AddAuthorizedPrincipalList(AuthorizedPrincipal&& value) { m_authorizedPrincipalList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Provides an identifier to allow retrieval of paginated results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListVpcEndpointAccessResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListVpcEndpointAccessResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListVpcEndpointAccessResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListVpcEndpointAccessResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListVpcEndpointAccessResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListVpcEndpointAccessResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListVpcEndpointAccessResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<AuthorizedPrincipal> m_authorizedPrincipalList;
 
-    Aws::Vector<AuthorizedPrincipal> m_authorizedPrincipalList;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_authorizedPrincipalListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

@@ -4,107 +4,177 @@
  */
 
 #pragma once
-#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
-#include <aws/devicefarm/DeviceFarmRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/devicefarm/DeviceFarmRequest.h>
+#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
+#include <aws/devicefarm/model/EnvironmentVariable.h>
 #include <aws/devicefarm/model/VpcConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DeviceFarm
-{
-namespace Model
-{
+namespace Aws {
+namespace DeviceFarm {
+namespace Model {
 
+/**
+ * <p>Represents a request to the update project operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/UpdateProjectRequest">AWS
+ * API Reference</a></p>
+ */
+class UpdateProjectRequest : public DeviceFarmRequest {
+ public:
+  AWS_DEVICEFARM_API UpdateProjectRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateProject"; }
+
+  AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
+
+  AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>Represents a request to the update project operation.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/UpdateProjectRequest">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of the project whose name to update.</p>
    */
-  class UpdateProjectRequest : public DeviceFarmRequest
-  {
-  public:
-    AWS_DEVICEFARM_API UpdateProjectRequest();
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateProjectRequest& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateProject"; }
+  ///@{
+  /**
+   * <p>A string that represents the new name of the project that you are
+   * updating.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateProjectRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The number of minutes a test run in the project executes before it times
+   * out.</p>
+   */
+  inline int GetDefaultJobTimeoutMinutes() const { return m_defaultJobTimeoutMinutes; }
+  inline bool DefaultJobTimeoutMinutesHasBeenSet() const { return m_defaultJobTimeoutMinutesHasBeenSet; }
+  inline void SetDefaultJobTimeoutMinutes(int value) {
+    m_defaultJobTimeoutMinutesHasBeenSet = true;
+    m_defaultJobTimeoutMinutes = value;
+  }
+  inline UpdateProjectRequest& WithDefaultJobTimeoutMinutes(int value) {
+    SetDefaultJobTimeoutMinutes(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The VPC security groups and subnets that are attached to a project.</p>
+   */
+  inline const VpcConfig& GetVpcConfig() const { return m_vpcConfig; }
+  inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
+  template <typename VpcConfigT = VpcConfig>
+  void SetVpcConfig(VpcConfigT&& value) {
+    m_vpcConfigHasBeenSet = true;
+    m_vpcConfig = std::forward<VpcConfigT>(value);
+  }
+  template <typename VpcConfigT = VpcConfig>
+  UpdateProjectRequest& WithVpcConfig(VpcConfigT&& value) {
+    SetVpcConfig(std::forward<VpcConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> A set of environment variables which are used by default for all runs in the
+   * project. These environment variables are applied to the test run during the
+   * execution of a test spec file. </p> <p> For more information about using test
+   * spec files, please see <a
+   * href="https://docs.aws.amazon.com/devicefarm/latest/developerguide/custom-test-environments.html">Custom
+   * test environments </a> in <i>AWS Device Farm.</i> </p>
+   */
+  inline const Aws::Vector<EnvironmentVariable>& GetEnvironmentVariables() const { return m_environmentVariables; }
+  inline bool EnvironmentVariablesHasBeenSet() const { return m_environmentVariablesHasBeenSet; }
+  template <typename EnvironmentVariablesT = Aws::Vector<EnvironmentVariable>>
+  void SetEnvironmentVariables(EnvironmentVariablesT&& value) {
+    m_environmentVariablesHasBeenSet = true;
+    m_environmentVariables = std::forward<EnvironmentVariablesT>(value);
+  }
+  template <typename EnvironmentVariablesT = Aws::Vector<EnvironmentVariable>>
+  UpdateProjectRequest& WithEnvironmentVariables(EnvironmentVariablesT&& value) {
+    SetEnvironmentVariables(std::forward<EnvironmentVariablesT>(value));
+    return *this;
+  }
+  template <typename EnvironmentVariablesT = EnvironmentVariable>
+  UpdateProjectRequest& AddEnvironmentVariables(EnvironmentVariablesT&& value) {
+    m_environmentVariablesHasBeenSet = true;
+    m_environmentVariables.emplace_back(std::forward<EnvironmentVariablesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the project whose name to update.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline UpdateProjectRequest& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateProjectRequest& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateProjectRequest& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An IAM role to be assumed by the test host for all runs in the project.</p>
+   */
+  inline const Aws::String& GetExecutionRoleArn() const { return m_executionRoleArn; }
+  inline bool ExecutionRoleArnHasBeenSet() const { return m_executionRoleArnHasBeenSet; }
+  template <typename ExecutionRoleArnT = Aws::String>
+  void SetExecutionRoleArn(ExecutionRoleArnT&& value) {
+    m_executionRoleArnHasBeenSet = true;
+    m_executionRoleArn = std::forward<ExecutionRoleArnT>(value);
+  }
+  template <typename ExecutionRoleArnT = Aws::String>
+  UpdateProjectRequest& WithExecutionRoleArn(ExecutionRoleArnT&& value) {
+    SetExecutionRoleArn(std::forward<ExecutionRoleArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
-    ///@{
-    /**
-     * <p>A string that represents the new name of the project that you are
-     * updating.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateProjectRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateProjectRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateProjectRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The number of minutes a test run in the project executes before it times
-     * out.</p>
-     */
-    inline int GetDefaultJobTimeoutMinutes() const{ return m_defaultJobTimeoutMinutes; }
-    inline bool DefaultJobTimeoutMinutesHasBeenSet() const { return m_defaultJobTimeoutMinutesHasBeenSet; }
-    inline void SetDefaultJobTimeoutMinutes(int value) { m_defaultJobTimeoutMinutesHasBeenSet = true; m_defaultJobTimeoutMinutes = value; }
-    inline UpdateProjectRequest& WithDefaultJobTimeoutMinutes(int value) { SetDefaultJobTimeoutMinutes(value); return *this;}
-    ///@}
+  int m_defaultJobTimeoutMinutes{0};
 
-    ///@{
-    /**
-     * <p>The VPC security groups and subnets that are attached to a project.</p>
-     */
-    inline const VpcConfig& GetVpcConfig() const{ return m_vpcConfig; }
-    inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
-    inline void SetVpcConfig(const VpcConfig& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = value; }
-    inline void SetVpcConfig(VpcConfig&& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = std::move(value); }
-    inline UpdateProjectRequest& WithVpcConfig(const VpcConfig& value) { SetVpcConfig(value); return *this;}
-    inline UpdateProjectRequest& WithVpcConfig(VpcConfig&& value) { SetVpcConfig(std::move(value)); return *this;}
-    ///@}
-  private:
+  VpcConfig m_vpcConfig;
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::Vector<EnvironmentVariable> m_environmentVariables;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_executionRoleArn;
+  bool m_arnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_defaultJobTimeoutMinutesHasBeenSet = false;
+  bool m_vpcConfigHasBeenSet = false;
+  bool m_environmentVariablesHasBeenSet = false;
+  bool m_executionRoleArnHasBeenSet = false;
+};
 
-    int m_defaultJobTimeoutMinutes;
-    bool m_defaultJobTimeoutMinutesHasBeenSet = false;
-
-    VpcConfig m_vpcConfig;
-    bool m_vpcConfigHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

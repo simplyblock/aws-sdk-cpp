@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/Listener.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class ListListenersResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API ListListenersResult();
-    AWS_GLOBALACCELERATOR_API ListListenersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API ListListenersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class ListListenersResult {
+ public:
+  AWS_GLOBALACCELERATOR_API ListListenersResult() = default;
+  AWS_GLOBALACCELERATOR_API ListListenersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API ListListenersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of listeners for an accelerator.</p>
+   */
+  inline const Aws::Vector<Listener>& GetListeners() const { return m_listeners; }
+  template <typename ListenersT = Aws::Vector<Listener>>
+  void SetListeners(ListenersT&& value) {
+    m_listenersHasBeenSet = true;
+    m_listeners = std::forward<ListenersT>(value);
+  }
+  template <typename ListenersT = Aws::Vector<Listener>>
+  ListListenersResult& WithListeners(ListenersT&& value) {
+    SetListeners(std::forward<ListenersT>(value));
+    return *this;
+  }
+  template <typename ListenersT = Listener>
+  ListListenersResult& AddListeners(ListenersT&& value) {
+    m_listenersHasBeenSet = true;
+    m_listeners.emplace_back(std::forward<ListenersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of listeners for an accelerator.</p>
-     */
-    inline const Aws::Vector<Listener>& GetListeners() const{ return m_listeners; }
-    inline void SetListeners(const Aws::Vector<Listener>& value) { m_listeners = value; }
-    inline void SetListeners(Aws::Vector<Listener>&& value) { m_listeners = std::move(value); }
-    inline ListListenersResult& WithListeners(const Aws::Vector<Listener>& value) { SetListeners(value); return *this;}
-    inline ListListenersResult& WithListeners(Aws::Vector<Listener>&& value) { SetListeners(std::move(value)); return *this;}
-    inline ListListenersResult& AddListeners(const Listener& value) { m_listeners.push_back(value); return *this; }
-    inline ListListenersResult& AddListeners(Listener&& value) { m_listeners.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token for the next set of results. You receive this token from a previous
+   * call.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListListenersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of results. You receive this token from a previous
-     * call.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListListenersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListListenersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListListenersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListListenersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListListenersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListListenersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListListenersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Listener> m_listeners;
+ private:
+  Aws::Vector<Listener> m_listeners;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_listenersHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

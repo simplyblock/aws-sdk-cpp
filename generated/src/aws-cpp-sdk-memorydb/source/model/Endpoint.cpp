@@ -3,72 +3,188 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/memorydb/model/Endpoint.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MemoryDB
-{
-namespace Model
-{
+namespace Aws {
+namespace MemoryDB {
+namespace Model {
 
-Endpoint::Endpoint() : 
-    m_addressHasBeenSet(false),
-    m_port(0),
-    m_portHasBeenSet(false)
-{
-}
+Endpoint::Endpoint(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-Endpoint::Endpoint(JsonView jsonValue)
-  : Endpoint()
-{
-  *this = jsonValue;
-}
+Endpoint& Endpoint::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-Endpoint& Endpoint::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Address"))
-  {
-    m_address = jsonValue.GetString("Address");
+              if (initialKeyStr == "Address") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_address = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_address = ss.str();
+                  }
+                }
+                m_addressHasBeenSet = true;
+              }
 
-    m_addressHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Port") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_port = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_port = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_portHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("Endpoint", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Port"))
-  {
-    m_port = jsonValue.GetInteger("Port");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_portHasBeenSet = true;
+            if (initialKeyStr == "Address") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_address = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_address = ss.str();
+                }
+              }
+              m_addressHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Port") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_port = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_port = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_portHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue Endpoint::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_addressHasBeenSet)
-  {
-   payload.WithString("Address", m_address);
-
+void Endpoint::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_addressHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_portHasBeenSet)
-  {
-   payload.WithInteger("Port", m_port);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_addressHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Address"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_address.c_str()));
   }
 
-  return payload;
+  if (m_portHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Port"));
+    (m_port >= 0) ? encoder.WriteUInt(m_port) : encoder.WriteNegInt(m_port);
+  }
 }
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

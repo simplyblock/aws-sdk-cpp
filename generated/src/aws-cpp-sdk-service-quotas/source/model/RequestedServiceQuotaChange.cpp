@@ -3,267 +3,166 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/service-quotas/model/RequestedServiceQuotaChange.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/service-quotas/model/RequestedServiceQuotaChange.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ServiceQuotas
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceQuotas {
+namespace Model {
 
-RequestedServiceQuotaChange::RequestedServiceQuotaChange() : 
-    m_idHasBeenSet(false),
-    m_caseIdHasBeenSet(false),
-    m_serviceCodeHasBeenSet(false),
-    m_serviceNameHasBeenSet(false),
-    m_quotaCodeHasBeenSet(false),
-    m_quotaNameHasBeenSet(false),
-    m_desiredValue(0.0),
-    m_desiredValueHasBeenSet(false),
-    m_status(RequestStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_createdHasBeenSet(false),
-    m_lastUpdatedHasBeenSet(false),
-    m_requesterHasBeenSet(false),
-    m_quotaArnHasBeenSet(false),
-    m_globalQuota(false),
-    m_globalQuotaHasBeenSet(false),
-    m_unitHasBeenSet(false),
-    m_quotaRequestedAtLevel(AppliedLevelEnum::NOT_SET),
-    m_quotaRequestedAtLevelHasBeenSet(false),
-    m_quotaContextHasBeenSet(false)
-{
-}
+RequestedServiceQuotaChange::RequestedServiceQuotaChange(JsonView jsonValue) { *this = jsonValue; }
 
-RequestedServiceQuotaChange::RequestedServiceQuotaChange(JsonView jsonValue)
-  : RequestedServiceQuotaChange()
-{
-  *this = jsonValue;
-}
-
-RequestedServiceQuotaChange& RequestedServiceQuotaChange::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Id"))
-  {
+RequestedServiceQuotaChange& RequestedServiceQuotaChange::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Id")) {
     m_id = jsonValue.GetString("Id");
-
     m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CaseId"))
-  {
+  if (jsonValue.ValueExists("RequestType")) {
+    m_requestType = RequestTypeMapper::GetRequestTypeForName(jsonValue.GetString("RequestType"));
+    m_requestTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("CaseId")) {
     m_caseId = jsonValue.GetString("CaseId");
-
     m_caseIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ServiceCode"))
-  {
+  if (jsonValue.ValueExists("ServiceCode")) {
     m_serviceCode = jsonValue.GetString("ServiceCode");
-
     m_serviceCodeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ServiceName"))
-  {
+  if (jsonValue.ValueExists("ServiceName")) {
     m_serviceName = jsonValue.GetString("ServiceName");
-
     m_serviceNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QuotaCode"))
-  {
+  if (jsonValue.ValueExists("QuotaCode")) {
     m_quotaCode = jsonValue.GetString("QuotaCode");
-
     m_quotaCodeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QuotaName"))
-  {
+  if (jsonValue.ValueExists("QuotaName")) {
     m_quotaName = jsonValue.GetString("QuotaName");
-
     m_quotaNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("DesiredValue"))
-  {
+  if (jsonValue.ValueExists("DesiredValue")) {
     m_desiredValue = jsonValue.GetDouble("DesiredValue");
-
     m_desiredValueHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Status"))
-  {
+  if (jsonValue.ValueExists("Status")) {
     m_status = RequestStatusMapper::GetRequestStatusForName(jsonValue.GetString("Status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Created"))
-  {
+  if (jsonValue.ValueExists("Created")) {
     m_created = jsonValue.GetDouble("Created");
-
     m_createdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("LastUpdated"))
-  {
+  if (jsonValue.ValueExists("LastUpdated")) {
     m_lastUpdated = jsonValue.GetDouble("LastUpdated");
-
     m_lastUpdatedHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Requester"))
-  {
+  if (jsonValue.ValueExists("Requester")) {
     m_requester = jsonValue.GetString("Requester");
-
     m_requesterHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QuotaArn"))
-  {
+  if (jsonValue.ValueExists("QuotaArn")) {
     m_quotaArn = jsonValue.GetString("QuotaArn");
-
     m_quotaArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("GlobalQuota"))
-  {
+  if (jsonValue.ValueExists("GlobalQuota")) {
     m_globalQuota = jsonValue.GetBool("GlobalQuota");
-
     m_globalQuotaHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Unit"))
-  {
+  if (jsonValue.ValueExists("Unit")) {
     m_unit = jsonValue.GetString("Unit");
-
     m_unitHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QuotaRequestedAtLevel"))
-  {
+  if (jsonValue.ValueExists("QuotaRequestedAtLevel")) {
     m_quotaRequestedAtLevel = AppliedLevelEnumMapper::GetAppliedLevelEnumForName(jsonValue.GetString("QuotaRequestedAtLevel"));
-
     m_quotaRequestedAtLevelHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QuotaContext"))
-  {
+  if (jsonValue.ValueExists("QuotaContext")) {
     m_quotaContext = jsonValue.GetObject("QuotaContext");
-
     m_quotaContextHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue RequestedServiceQuotaChange::Jsonize() const
-{
+JsonValue RequestedServiceQuotaChange::Jsonize() const {
   JsonValue payload;
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("Id", m_id);
-
+  if (m_idHasBeenSet) {
+    payload.WithString("Id", m_id);
   }
 
-  if(m_caseIdHasBeenSet)
-  {
-   payload.WithString("CaseId", m_caseId);
-
+  if (m_requestTypeHasBeenSet) {
+    payload.WithString("RequestType", RequestTypeMapper::GetNameForRequestType(m_requestType));
   }
 
-  if(m_serviceCodeHasBeenSet)
-  {
-   payload.WithString("ServiceCode", m_serviceCode);
-
+  if (m_caseIdHasBeenSet) {
+    payload.WithString("CaseId", m_caseId);
   }
 
-  if(m_serviceNameHasBeenSet)
-  {
-   payload.WithString("ServiceName", m_serviceName);
-
+  if (m_serviceCodeHasBeenSet) {
+    payload.WithString("ServiceCode", m_serviceCode);
   }
 
-  if(m_quotaCodeHasBeenSet)
-  {
-   payload.WithString("QuotaCode", m_quotaCode);
-
+  if (m_serviceNameHasBeenSet) {
+    payload.WithString("ServiceName", m_serviceName);
   }
 
-  if(m_quotaNameHasBeenSet)
-  {
-   payload.WithString("QuotaName", m_quotaName);
-
+  if (m_quotaCodeHasBeenSet) {
+    payload.WithString("QuotaCode", m_quotaCode);
   }
 
-  if(m_desiredValueHasBeenSet)
-  {
-   payload.WithDouble("DesiredValue", m_desiredValue);
-
+  if (m_quotaNameHasBeenSet) {
+    payload.WithString("QuotaName", m_quotaName);
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", RequestStatusMapper::GetNameForRequestStatus(m_status));
+  if (m_desiredValueHasBeenSet) {
+    payload.WithDouble("DesiredValue", m_desiredValue);
   }
 
-  if(m_createdHasBeenSet)
-  {
-   payload.WithDouble("Created", m_created.SecondsWithMSPrecision());
+  if (m_statusHasBeenSet) {
+    payload.WithString("Status", RequestStatusMapper::GetNameForRequestStatus(m_status));
   }
 
-  if(m_lastUpdatedHasBeenSet)
-  {
-   payload.WithDouble("LastUpdated", m_lastUpdated.SecondsWithMSPrecision());
+  if (m_createdHasBeenSet) {
+    payload.WithDouble("Created", m_created.SecondsWithMSPrecision());
   }
 
-  if(m_requesterHasBeenSet)
-  {
-   payload.WithString("Requester", m_requester);
-
+  if (m_lastUpdatedHasBeenSet) {
+    payload.WithDouble("LastUpdated", m_lastUpdated.SecondsWithMSPrecision());
   }
 
-  if(m_quotaArnHasBeenSet)
-  {
-   payload.WithString("QuotaArn", m_quotaArn);
-
+  if (m_requesterHasBeenSet) {
+    payload.WithString("Requester", m_requester);
   }
 
-  if(m_globalQuotaHasBeenSet)
-  {
-   payload.WithBool("GlobalQuota", m_globalQuota);
-
+  if (m_quotaArnHasBeenSet) {
+    payload.WithString("QuotaArn", m_quotaArn);
   }
 
-  if(m_unitHasBeenSet)
-  {
-   payload.WithString("Unit", m_unit);
-
+  if (m_globalQuotaHasBeenSet) {
+    payload.WithBool("GlobalQuota", m_globalQuota);
   }
 
-  if(m_quotaRequestedAtLevelHasBeenSet)
-  {
-   payload.WithString("QuotaRequestedAtLevel", AppliedLevelEnumMapper::GetNameForAppliedLevelEnum(m_quotaRequestedAtLevel));
+  if (m_unitHasBeenSet) {
+    payload.WithString("Unit", m_unit);
   }
 
-  if(m_quotaContextHasBeenSet)
-  {
-   payload.WithObject("QuotaContext", m_quotaContext.Jsonize());
+  if (m_quotaRequestedAtLevelHasBeenSet) {
+    payload.WithString("QuotaRequestedAtLevel", AppliedLevelEnumMapper::GetNameForAppliedLevelEnum(m_quotaRequestedAtLevel));
+  }
 
+  if (m_quotaContextHasBeenSet) {
+    payload.WithObject("QuotaContext", m_quotaContext.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ServiceQuotas
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceQuotas
+}  // namespace Aws

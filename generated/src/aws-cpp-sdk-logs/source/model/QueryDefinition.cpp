@@ -3,122 +3,100 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/logs/model/QueryDefinition.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/logs/model/QueryDefinition.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CloudWatchLogs
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudWatchLogs {
+namespace Model {
 
-QueryDefinition::QueryDefinition() : 
-    m_queryDefinitionIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_queryStringHasBeenSet(false),
-    m_lastModified(0),
-    m_lastModifiedHasBeenSet(false),
-    m_logGroupNamesHasBeenSet(false)
-{
-}
+QueryDefinition::QueryDefinition(JsonView jsonValue) { *this = jsonValue; }
 
-QueryDefinition::QueryDefinition(JsonView jsonValue)
-  : QueryDefinition()
-{
-  *this = jsonValue;
-}
-
-QueryDefinition& QueryDefinition::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("queryDefinitionId"))
-  {
+QueryDefinition& QueryDefinition::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("queryLanguage")) {
+    m_queryLanguage = QueryLanguageMapper::GetQueryLanguageForName(jsonValue.GetString("queryLanguage"));
+    m_queryLanguageHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("queryDefinitionId")) {
     m_queryDefinitionId = jsonValue.GetString("queryDefinitionId");
-
     m_queryDefinitionIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("queryString"))
-  {
+  if (jsonValue.ValueExists("queryString")) {
     m_queryString = jsonValue.GetString("queryString");
-
     m_queryStringHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("lastModified"))
-  {
+  if (jsonValue.ValueExists("lastModified")) {
     m_lastModified = jsonValue.GetInt64("lastModified");
-
     m_lastModifiedHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("logGroupNames"))
-  {
+  if (jsonValue.ValueExists("logGroupNames")) {
     Aws::Utils::Array<JsonView> logGroupNamesJsonList = jsonValue.GetArray("logGroupNames");
-    for(unsigned logGroupNamesIndex = 0; logGroupNamesIndex < logGroupNamesJsonList.GetLength(); ++logGroupNamesIndex)
-    {
+    for (unsigned logGroupNamesIndex = 0; logGroupNamesIndex < logGroupNamesJsonList.GetLength(); ++logGroupNamesIndex) {
       m_logGroupNames.push_back(logGroupNamesJsonList[logGroupNamesIndex].AsString());
     }
     m_logGroupNamesHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("parameters")) {
+    Aws::Utils::Array<JsonView> parametersJsonList = jsonValue.GetArray("parameters");
+    for (unsigned parametersIndex = 0; parametersIndex < parametersJsonList.GetLength(); ++parametersIndex) {
+      m_parameters.push_back(parametersJsonList[parametersIndex].AsObject());
+    }
+    m_parametersHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue QueryDefinition::Jsonize() const
-{
+JsonValue QueryDefinition::Jsonize() const {
   JsonValue payload;
 
-  if(m_queryDefinitionIdHasBeenSet)
-  {
-   payload.WithString("queryDefinitionId", m_queryDefinitionId);
-
+  if (m_queryLanguageHasBeenSet) {
+    payload.WithString("queryLanguage", QueryLanguageMapper::GetNameForQueryLanguage(m_queryLanguage));
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_queryDefinitionIdHasBeenSet) {
+    payload.WithString("queryDefinitionId", m_queryDefinitionId);
   }
 
-  if(m_queryStringHasBeenSet)
-  {
-   payload.WithString("queryString", m_queryString);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_lastModifiedHasBeenSet)
-  {
-   payload.WithInt64("lastModified", m_lastModified);
-
+  if (m_queryStringHasBeenSet) {
+    payload.WithString("queryString", m_queryString);
   }
 
-  if(m_logGroupNamesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> logGroupNamesJsonList(m_logGroupNames.size());
-   for(unsigned logGroupNamesIndex = 0; logGroupNamesIndex < logGroupNamesJsonList.GetLength(); ++logGroupNamesIndex)
-   {
-     logGroupNamesJsonList[logGroupNamesIndex].AsString(m_logGroupNames[logGroupNamesIndex]);
-   }
-   payload.WithArray("logGroupNames", std::move(logGroupNamesJsonList));
+  if (m_lastModifiedHasBeenSet) {
+    payload.WithInt64("lastModified", m_lastModified);
+  }
 
+  if (m_logGroupNamesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> logGroupNamesJsonList(m_logGroupNames.size());
+    for (unsigned logGroupNamesIndex = 0; logGroupNamesIndex < logGroupNamesJsonList.GetLength(); ++logGroupNamesIndex) {
+      logGroupNamesJsonList[logGroupNamesIndex].AsString(m_logGroupNames[logGroupNamesIndex]);
+    }
+    payload.WithArray("logGroupNames", std::move(logGroupNamesJsonList));
+  }
+
+  if (m_parametersHasBeenSet) {
+    Aws::Utils::Array<JsonValue> parametersJsonList(m_parameters.size());
+    for (unsigned parametersIndex = 0; parametersIndex < parametersJsonList.GetLength(); ++parametersIndex) {
+      parametersJsonList[parametersIndex].AsObject(m_parameters[parametersIndex].Jsonize());
+    }
+    payload.WithArray("parameters", std::move(parametersJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

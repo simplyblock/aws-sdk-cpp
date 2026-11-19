@@ -4,54 +4,54 @@
  */
 
 #include <aws/acm-pca/model/UpdateCertificateAuthorityRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ACMPCA::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateCertificateAuthorityRequest::UpdateCertificateAuthorityRequest() : 
-    m_certificateAuthorityArnHasBeenSet(false),
-    m_revocationConfigurationHasBeenSet(false),
-    m_status(CertificateAuthorityStatus::NOT_SET),
-    m_statusHasBeenSet(false)
-{
+Aws::String UpdateCertificateAuthorityRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_certificateAuthorityArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_revocationConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_certificateAuthorityArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CertificateAuthorityArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_certificateAuthorityArn.c_str()));
+  }
+
+  if (m_revocationConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RevocationConfiguration"));
+    m_revocationConfiguration.CborEncode(encoder);
+  }
+
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(CertificateAuthorityStatusMapper::GetNameForCertificateAuthorityStatus(m_status).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateCertificateAuthorityRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_certificateAuthorityArnHasBeenSet)
-  {
-   payload.WithString("CertificateAuthorityArn", m_certificateAuthorityArn);
-
-  }
-
-  if(m_revocationConfigurationHasBeenSet)
-  {
-   payload.WithObject("RevocationConfiguration", m_revocationConfiguration.Jsonize());
-
-  }
-
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", CertificateAuthorityStatusMapper::GetNameForCertificateAuthorityStatus(m_status));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateCertificateAuthorityRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateCertificateAuthorityRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ACMPrivateCA.UpdateCertificateAuthority"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

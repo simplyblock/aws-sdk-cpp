@@ -6,74 +6,75 @@
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
 
+/**
+ * <p>Contains details about the routing configuration of the alias.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AgentAliasRoutingConfigurationListItem">AWS
+ * API Reference</a></p>
+ */
+class AgentAliasRoutingConfigurationListItem {
+ public:
+  AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem() = default;
+  AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains details about the routing configuration of the alias.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AgentAliasRoutingConfigurationListItem">AWS
-   * API Reference</a></p>
+   * <p>The version of the agent with which the alias is associated.</p>
    */
-  class AgentAliasRoutingConfigurationListItem
-  {
-  public:
-    AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem();
-    AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API AgentAliasRoutingConfigurationListItem& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAgentVersion() const { return m_agentVersion; }
+  inline bool AgentVersionHasBeenSet() const { return m_agentVersionHasBeenSet; }
+  template <typename AgentVersionT = Aws::String>
+  void SetAgentVersion(AgentVersionT&& value) {
+    m_agentVersionHasBeenSet = true;
+    m_agentVersion = std::forward<AgentVersionT>(value);
+  }
+  template <typename AgentVersionT = Aws::String>
+  AgentAliasRoutingConfigurationListItem& WithAgentVersion(AgentVersionT&& value) {
+    SetAgentVersion(std::forward<AgentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Information on the Provisioned Throughput assigned to an agent alias.</p>
+   */
+  inline const Aws::String& GetProvisionedThroughput() const { return m_provisionedThroughput; }
+  inline bool ProvisionedThroughputHasBeenSet() const { return m_provisionedThroughputHasBeenSet; }
+  template <typename ProvisionedThroughputT = Aws::String>
+  void SetProvisionedThroughput(ProvisionedThroughputT&& value) {
+    m_provisionedThroughputHasBeenSet = true;
+    m_provisionedThroughput = std::forward<ProvisionedThroughputT>(value);
+  }
+  template <typename ProvisionedThroughputT = Aws::String>
+  AgentAliasRoutingConfigurationListItem& WithProvisionedThroughput(ProvisionedThroughputT&& value) {
+    SetProvisionedThroughput(std::forward<ProvisionedThroughputT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_agentVersion;
 
-    ///@{
-    /**
-     * <p>The version of the agent with which the alias is associated.</p>
-     */
-    inline const Aws::String& GetAgentVersion() const{ return m_agentVersion; }
-    inline bool AgentVersionHasBeenSet() const { return m_agentVersionHasBeenSet; }
-    inline void SetAgentVersion(const Aws::String& value) { m_agentVersionHasBeenSet = true; m_agentVersion = value; }
-    inline void SetAgentVersion(Aws::String&& value) { m_agentVersionHasBeenSet = true; m_agentVersion = std::move(value); }
-    inline void SetAgentVersion(const char* value) { m_agentVersionHasBeenSet = true; m_agentVersion.assign(value); }
-    inline AgentAliasRoutingConfigurationListItem& WithAgentVersion(const Aws::String& value) { SetAgentVersion(value); return *this;}
-    inline AgentAliasRoutingConfigurationListItem& WithAgentVersion(Aws::String&& value) { SetAgentVersion(std::move(value)); return *this;}
-    inline AgentAliasRoutingConfigurationListItem& WithAgentVersion(const char* value) { SetAgentVersion(value); return *this;}
-    ///@}
+  Aws::String m_provisionedThroughput;
+  bool m_agentVersionHasBeenSet = false;
+  bool m_provisionedThroughputHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Information on the Provisioned Throughput assigned to an agent alias.</p>
-     */
-    inline const Aws::String& GetProvisionedThroughput() const{ return m_provisionedThroughput; }
-    inline bool ProvisionedThroughputHasBeenSet() const { return m_provisionedThroughputHasBeenSet; }
-    inline void SetProvisionedThroughput(const Aws::String& value) { m_provisionedThroughputHasBeenSet = true; m_provisionedThroughput = value; }
-    inline void SetProvisionedThroughput(Aws::String&& value) { m_provisionedThroughputHasBeenSet = true; m_provisionedThroughput = std::move(value); }
-    inline void SetProvisionedThroughput(const char* value) { m_provisionedThroughputHasBeenSet = true; m_provisionedThroughput.assign(value); }
-    inline AgentAliasRoutingConfigurationListItem& WithProvisionedThroughput(const Aws::String& value) { SetProvisionedThroughput(value); return *this;}
-    inline AgentAliasRoutingConfigurationListItem& WithProvisionedThroughput(Aws::String&& value) { SetProvisionedThroughput(std::move(value)); return *this;}
-    inline AgentAliasRoutingConfigurationListItem& WithProvisionedThroughput(const char* value) { SetProvisionedThroughput(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_agentVersion;
-    bool m_agentVersionHasBeenSet = false;
-
-    Aws::String m_provisionedThroughput;
-    bool m_provisionedThroughputHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

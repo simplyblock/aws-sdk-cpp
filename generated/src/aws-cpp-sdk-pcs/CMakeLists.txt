@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-pcs "C++ SDK for the AWS pcs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-pcs "C++ SDK for AWS Parallel Computing Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_PCS_HEADERS
     "include/aws/pcs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PCS_HEADERS
 
 file(GLOB AWS_PCS_MODEL_HEADERS
     "include/aws/pcs/model/*.h"
+)
+
+file(GLOB AWS_PCS_INTERNAL_HEADERS
+    "include/aws/pcs/internal/*.h"
 )
 
 file(GLOB AWS_PCS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PCS_MODEL_SOURCE
 
 file(GLOB PCS_UNIFIED_HEADERS
     ${AWS_PCS_HEADERS}
+    ${AWS_PCS_INTERNAL_HEADERS}
     ${AWS_PCS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\pcs" FILES ${AWS_PCS_HEADERS})
+        source_group("Header Files\\aws\\pcs\\internal" FILES ${AWS_PCS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\pcs\\model" FILES ${AWS_PCS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PCS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PCS_MODEL_SOURCE})

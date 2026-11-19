@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/ssm-quicksetup/SSMQuickSetup_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm-quicksetup/SSMQuickSetup_EXPORTS.h>
 
-#include <aws/ssm-quicksetup/SSMQuickSetupEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SSMQuickSetup
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SSMQuickSetup {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SSMQuickSetupClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SSMQuickSetupEndpointProviderBase =
     EndpointProviderBase<SSMQuickSetupClientConfiguration, SSMQuickSetupBuiltInParameters, SSMQuickSetupClientContextParameters>;
 
 using SSMQuickSetupDefaultEpProviderBase =
-    DefaultEndpointProvider<SSMQuickSetupClientConfiguration, SSMQuickSetupBuiltInParameters, SSMQuickSetupClientContextParameters>;
+    BDDEndpointProvider<SSMQuickSetupClientConfiguration, SSMQuickSetupBuiltInParameters, SSMQuickSetupClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SSMQUICKSETUP_API SSMQuickSetupEndpointProvider : public SSMQuickSetupDefaultEpProviderBase
-{
-public:
-    using SSMQuickSetupResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SSMQUICKSETUP_API SSMQuickSetupEndpointProvider : public SSMQuickSetupDefaultEpProviderBase {
+ public:
+  using SSMQuickSetupResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SSMQuickSetupEndpointProvider()
-      : SSMQuickSetupDefaultEpProviderBase(Aws::SSMQuickSetup::SSMQuickSetupEndpointRules::GetRulesBlob(), Aws::SSMQuickSetup::SSMQuickSetupEndpointRules::RulesBlobSize)
-    {}
+  SSMQuickSetupEndpointProvider();
 
-    ~SSMQuickSetupEndpointProvider()
-    {
-    }
+  ~SSMQuickSetupEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SSMQuickSetup
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SSMQuickSetup
+}  // namespace Aws

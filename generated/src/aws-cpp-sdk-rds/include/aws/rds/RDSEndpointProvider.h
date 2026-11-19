@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/rds/RDS_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rds/RDS_EXPORTS.h>
 
-#include <aws/rds/RDSEndpointRules.h>
-
-
-namespace Aws
-{
-namespace RDS
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace RDS {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using RDSClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -34,28 +28,21 @@ using RDSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * Inherit from this Base class / "Interface" should you want to provide a custom endpoint provider.
  * The SDK must use service-specific type for each service per specification.
  */
-using RDSEndpointProviderBase =
-    EndpointProviderBase<RDSClientConfiguration, RDSBuiltInParameters, RDSClientContextParameters>;
+using RDSEndpointProviderBase = EndpointProviderBase<RDSClientConfiguration, RDSBuiltInParameters, RDSClientContextParameters>;
 
-using RDSDefaultEpProviderBase =
-    DefaultEndpointProvider<RDSClientConfiguration, RDSBuiltInParameters, RDSClientContextParameters>;
+using RDSDefaultEpProviderBase = BDDEndpointProvider<RDSClientConfiguration, RDSBuiltInParameters, RDSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_RDS_API RDSEndpointProvider : public RDSDefaultEpProviderBase
-{
-public:
-    using RDSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_RDS_API RDSEndpointProvider : public RDSDefaultEpProviderBase {
+ public:
+  using RDSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    RDSEndpointProvider()
-      : RDSDefaultEpProviderBase(Aws::RDS::RDSEndpointRules::GetRulesBlob(), Aws::RDS::RDSEndpointRules::RulesBlobSize)
-    {}
+  RDSEndpointProvider();
 
-    ~RDSEndpointProvider()
-    {
-    }
+  ~RDSEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace RDS
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace RDS
+}  // namespace Aws

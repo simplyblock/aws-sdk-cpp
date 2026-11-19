@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeCopyJobRequest::DescribeCopyJobRequest() : 
-    m_copyJobIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeCopyJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeCopyJobRequest::SerializePayload() const { return {}; }

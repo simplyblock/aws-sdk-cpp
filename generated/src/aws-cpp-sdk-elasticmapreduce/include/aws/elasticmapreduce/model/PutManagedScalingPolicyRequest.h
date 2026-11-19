@@ -4,72 +4,77 @@
  */
 
 #pragma once
-#include <aws/elasticmapreduce/EMR_EXPORTS.h>
-#include <aws/elasticmapreduce/EMRRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticmapreduce/EMRRequest.h>
+#include <aws/elasticmapreduce/EMR_EXPORTS.h>
 #include <aws/elasticmapreduce/model/ManagedScalingPolicy.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EMR
-{
-namespace Model
-{
+namespace Aws {
+namespace EMR {
+namespace Model {
 
+/**
+ */
+class PutManagedScalingPolicyRequest : public EMRRequest {
+ public:
+  AWS_EMR_API PutManagedScalingPolicyRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutManagedScalingPolicy"; }
+
+  AWS_EMR_API Aws::String SerializePayload() const override;
+
+  AWS_EMR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Specifies the ID of an Amazon EMR cluster where the managed scaling policy is
+   * attached. </p>
    */
-  class PutManagedScalingPolicyRequest : public EMRRequest
-  {
-  public:
-    AWS_EMR_API PutManagedScalingPolicyRequest();
+  inline const Aws::String& GetClusterId() const { return m_clusterId; }
+  inline bool ClusterIdHasBeenSet() const { return m_clusterIdHasBeenSet; }
+  template <typename ClusterIdT = Aws::String>
+  void SetClusterId(ClusterIdT&& value) {
+    m_clusterIdHasBeenSet = true;
+    m_clusterId = std::forward<ClusterIdT>(value);
+  }
+  template <typename ClusterIdT = Aws::String>
+  PutManagedScalingPolicyRequest& WithClusterId(ClusterIdT&& value) {
+    SetClusterId(std::forward<ClusterIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutManagedScalingPolicy"; }
+  ///@{
+  /**
+   * <p>Specifies the constraints for the managed scaling policy. </p>
+   */
+  inline const ManagedScalingPolicy& GetManagedScalingPolicy() const { return m_managedScalingPolicy; }
+  inline bool ManagedScalingPolicyHasBeenSet() const { return m_managedScalingPolicyHasBeenSet; }
+  template <typename ManagedScalingPolicyT = ManagedScalingPolicy>
+  void SetManagedScalingPolicy(ManagedScalingPolicyT&& value) {
+    m_managedScalingPolicyHasBeenSet = true;
+    m_managedScalingPolicy = std::forward<ManagedScalingPolicyT>(value);
+  }
+  template <typename ManagedScalingPolicyT = ManagedScalingPolicy>
+  PutManagedScalingPolicyRequest& WithManagedScalingPolicy(ManagedScalingPolicyT&& value) {
+    SetManagedScalingPolicy(std::forward<ManagedScalingPolicyT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterId;
 
-    AWS_EMR_API Aws::String SerializePayload() const override;
+  ManagedScalingPolicy m_managedScalingPolicy;
+  bool m_clusterIdHasBeenSet = false;
+  bool m_managedScalingPolicyHasBeenSet = false;
+};
 
-    AWS_EMR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>Specifies the ID of an Amazon EMR cluster where the managed scaling policy is
-     * attached. </p>
-     */
-    inline const Aws::String& GetClusterId() const{ return m_clusterId; }
-    inline bool ClusterIdHasBeenSet() const { return m_clusterIdHasBeenSet; }
-    inline void SetClusterId(const Aws::String& value) { m_clusterIdHasBeenSet = true; m_clusterId = value; }
-    inline void SetClusterId(Aws::String&& value) { m_clusterIdHasBeenSet = true; m_clusterId = std::move(value); }
-    inline void SetClusterId(const char* value) { m_clusterIdHasBeenSet = true; m_clusterId.assign(value); }
-    inline PutManagedScalingPolicyRequest& WithClusterId(const Aws::String& value) { SetClusterId(value); return *this;}
-    inline PutManagedScalingPolicyRequest& WithClusterId(Aws::String&& value) { SetClusterId(std::move(value)); return *this;}
-    inline PutManagedScalingPolicyRequest& WithClusterId(const char* value) { SetClusterId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Specifies the constraints for the managed scaling policy. </p>
-     */
-    inline const ManagedScalingPolicy& GetManagedScalingPolicy() const{ return m_managedScalingPolicy; }
-    inline bool ManagedScalingPolicyHasBeenSet() const { return m_managedScalingPolicyHasBeenSet; }
-    inline void SetManagedScalingPolicy(const ManagedScalingPolicy& value) { m_managedScalingPolicyHasBeenSet = true; m_managedScalingPolicy = value; }
-    inline void SetManagedScalingPolicy(ManagedScalingPolicy&& value) { m_managedScalingPolicyHasBeenSet = true; m_managedScalingPolicy = std::move(value); }
-    inline PutManagedScalingPolicyRequest& WithManagedScalingPolicy(const ManagedScalingPolicy& value) { SetManagedScalingPolicy(value); return *this;}
-    inline PutManagedScalingPolicyRequest& WithManagedScalingPolicy(ManagedScalingPolicy&& value) { SetManagedScalingPolicy(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_clusterId;
-    bool m_clusterIdHasBeenSet = false;
-
-    ManagedScalingPolicy m_managedScalingPolicy;
-    bool m_managedScalingPolicyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

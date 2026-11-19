@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class CreateModelCardExportJobResult
-  {
-  public:
-    AWS_SAGEMAKER_API CreateModelCardExportJobResult();
-    AWS_SAGEMAKER_API CreateModelCardExportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API CreateModelCardExportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class CreateModelCardExportJobResult {
+ public:
+  AWS_SAGEMAKER_API CreateModelCardExportJobResult() = default;
+  AWS_SAGEMAKER_API CreateModelCardExportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API CreateModelCardExportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the model card export job.</p>
+   */
+  inline const Aws::String& GetModelCardExportJobArn() const { return m_modelCardExportJobArn; }
+  template <typename ModelCardExportJobArnT = Aws::String>
+  void SetModelCardExportJobArn(ModelCardExportJobArnT&& value) {
+    m_modelCardExportJobArnHasBeenSet = true;
+    m_modelCardExportJobArn = std::forward<ModelCardExportJobArnT>(value);
+  }
+  template <typename ModelCardExportJobArnT = Aws::String>
+  CreateModelCardExportJobResult& WithModelCardExportJobArn(ModelCardExportJobArnT&& value) {
+    SetModelCardExportJobArn(std::forward<ModelCardExportJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the model card export job.</p>
-     */
-    inline const Aws::String& GetModelCardExportJobArn() const{ return m_modelCardExportJobArn; }
-    inline void SetModelCardExportJobArn(const Aws::String& value) { m_modelCardExportJobArn = value; }
-    inline void SetModelCardExportJobArn(Aws::String&& value) { m_modelCardExportJobArn = std::move(value); }
-    inline void SetModelCardExportJobArn(const char* value) { m_modelCardExportJobArn.assign(value); }
-    inline CreateModelCardExportJobResult& WithModelCardExportJobArn(const Aws::String& value) { SetModelCardExportJobArn(value); return *this;}
-    inline CreateModelCardExportJobResult& WithModelCardExportJobArn(Aws::String&& value) { SetModelCardExportJobArn(std::move(value)); return *this;}
-    inline CreateModelCardExportJobResult& WithModelCardExportJobArn(const char* value) { SetModelCardExportJobArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateModelCardExportJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateModelCardExportJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateModelCardExportJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateModelCardExportJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_modelCardExportJobArn;
+ private:
+  Aws::String m_modelCardExportJobArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_modelCardExportJobArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

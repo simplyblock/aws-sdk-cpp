@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
 
+/**
+ * Details about the state of a replicator<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/ReplicationStateInfo">AWS
+ * API Reference</a></p>
+ */
+class ReplicationStateInfo {
+ public:
+  AWS_KAFKA_API ReplicationStateInfo() = default;
+  AWS_KAFKA_API ReplicationStateInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API ReplicationStateInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * Details about the state of a replicator<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/ReplicationStateInfo">AWS
-   * API Reference</a></p>
+   * Code that describes the current state of the replicator.
    */
-  class ReplicationStateInfo
-  {
-  public:
-    AWS_KAFKA_API ReplicationStateInfo();
-    AWS_KAFKA_API ReplicationStateInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API ReplicationStateInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCode() const { return m_code; }
+  inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
+  template <typename CodeT = Aws::String>
+  void SetCode(CodeT&& value) {
+    m_codeHasBeenSet = true;
+    m_code = std::forward<CodeT>(value);
+  }
+  template <typename CodeT = Aws::String>
+  ReplicationStateInfo& WithCode(CodeT&& value) {
+    SetCode(std::forward<CodeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * Message that describes the state of the replicator.
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ReplicationStateInfo& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_code;
 
-    ///@{
-    /**
-     * Code that describes the current state of the replicator.
-     */
-    inline const Aws::String& GetCode() const{ return m_code; }
-    inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
-    inline void SetCode(const Aws::String& value) { m_codeHasBeenSet = true; m_code = value; }
-    inline void SetCode(Aws::String&& value) { m_codeHasBeenSet = true; m_code = std::move(value); }
-    inline void SetCode(const char* value) { m_codeHasBeenSet = true; m_code.assign(value); }
-    inline ReplicationStateInfo& WithCode(const Aws::String& value) { SetCode(value); return *this;}
-    inline ReplicationStateInfo& WithCode(Aws::String&& value) { SetCode(std::move(value)); return *this;}
-    inline ReplicationStateInfo& WithCode(const char* value) { SetCode(value); return *this;}
-    ///@}
+  Aws::String m_message;
+  bool m_codeHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * Message that describes the state of the replicator.
-     */
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ReplicationStateInfo& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ReplicationStateInfo& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ReplicationStateInfo& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_code;
-    bool m_codeHasBeenSet = false;
-
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

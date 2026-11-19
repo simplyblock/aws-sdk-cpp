@@ -4,30 +4,30 @@
  */
 
 #pragma once
-#include <aws/inspector2/Inspector2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/inspector2/Inspector2_EXPORTS.h>
 
-namespace Aws
-{
-namespace Inspector2
-{
-namespace Model
-{
-  enum class FreeTrialType
-  {
-    NOT_SET,
-    EC2,
-    ECR,
-    LAMBDA,
-    LAMBDA_CODE
-  };
+namespace Aws {
+namespace Inspector2 {
+namespace Model {
+enum class FreeTrialType {
+  NOT_SET,
+  EC2,
+  ECR,
+  LAMBDA,
+  LAMBDA_CODE,
+  CODE_REPOSITORY,
+  VM,
+  CONTAINER_IMAGE,
+  SERVERLESS_FUNCTION,
+  MACHINE_IMAGE
+};
 
-namespace FreeTrialTypeMapper
-{
+namespace FreeTrialTypeMapper {
 AWS_INSPECTOR2_API FreeTrialType GetFreeTrialTypeForName(const Aws::String& name);
 
 AWS_INSPECTOR2_API Aws::String GetNameForFreeTrialType(FreeTrialType value);
-} // namespace FreeTrialTypeMapper
-} // namespace Model
-} // namespace Inspector2
-} // namespace Aws
+}  // namespace FreeTrialTypeMapper
+}  // namespace Model
+}  // namespace Inspector2
+}  // namespace Aws

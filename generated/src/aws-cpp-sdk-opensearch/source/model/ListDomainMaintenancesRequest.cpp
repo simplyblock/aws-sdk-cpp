@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/opensearch/model/ListDomainMaintenancesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/http/URI.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/opensearch/model/ListDomainMaintenancesRequest.h>
 
 #include <utility>
 
@@ -15,55 +15,31 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
 
-ListDomainMaintenancesRequest::ListDomainMaintenancesRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_action(MaintenanceType::NOT_SET),
-    m_actionHasBeenSet(false),
-    m_status(MaintenanceStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
+Aws::String ListDomainMaintenancesRequest::SerializePayload() const { return {}; }
+
+void ListDomainMaintenancesRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_actionHasBeenSet) {
+    ss << MaintenanceTypeMapper::GetNameForMaintenanceType(m_action);
+    uri.AddQueryStringParameter("action", ss.str());
+    ss.str("");
+  }
+
+  if (m_statusHasBeenSet) {
+    ss << MaintenanceStatusMapper::GetNameForMaintenanceStatus(m_status);
+    uri.AddQueryStringParameter("status", ss.str());
+    ss.str("");
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    ss << m_maxResults;
+    uri.AddQueryStringParameter("maxResults", ss.str());
+    ss.str("");
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    ss << m_nextToken;
+    uri.AddQueryStringParameter("nextToken", ss.str());
+    ss.str("");
+  }
 }
-
-Aws::String ListDomainMaintenancesRequest::SerializePayload() const
-{
-  return {};
-}
-
-void ListDomainMaintenancesRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_actionHasBeenSet)
-    {
-      ss << MaintenanceTypeMapper::GetNameForMaintenanceType(m_action);
-      uri.AddQueryStringParameter("action", ss.str());
-      ss.str("");
-    }
-
-    if(m_statusHasBeenSet)
-    {
-      ss << MaintenanceStatusMapper::GetNameForMaintenanceStatus(m_status);
-      uri.AddQueryStringParameter("status", ss.str());
-      ss.str("");
-    }
-
-    if(m_maxResultsHasBeenSet)
-    {
-      ss << m_maxResults;
-      uri.AddQueryStringParameter("maxResults", ss.str());
-      ss.str("");
-    }
-
-    if(m_nextTokenHasBeenSet)
-    {
-      ss << m_nextToken;
-      uri.AddQueryStringParameter("nextToken", ss.str());
-      ss.str("");
-    }
-
-}
-
-
-

@@ -5,231 +5,335 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/connect/model/RuleTriggerEventSource.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/connect/model/PreEvaluationFilters.h>
+#include <aws/connect/model/RuleAction.h>
+#include <aws/connect/model/RuleCapabilityTier.h>
 #include <aws/connect/model/RulePublishStatus.h>
+#include <aws/connect/model/RuleTriggerEventSource.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/connect/model/RuleAction.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>Information about a rule.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Rule">AWS API
+ * Reference</a></p>
+ */
+class Rule {
+ public:
+  AWS_CONNECT_API Rule() = default;
+  AWS_CONNECT_API Rule(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Rule& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about a rule.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Rule">AWS API
-   * Reference</a></p>
+   * <p>The name of the rule.</p>
    */
-  class Rule
-  {
-  public:
-    AWS_CONNECT_API Rule();
-    AWS_CONNECT_API Rule(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Rule& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Rule& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A unique identifier for the rule.</p>
+   */
+  inline const Aws::String& GetRuleId() const { return m_ruleId; }
+  inline bool RuleIdHasBeenSet() const { return m_ruleIdHasBeenSet; }
+  template <typename RuleIdT = Aws::String>
+  void SetRuleId(RuleIdT&& value) {
+    m_ruleIdHasBeenSet = true;
+    m_ruleId = std::forward<RuleIdT>(value);
+  }
+  template <typename RuleIdT = Aws::String>
+  Rule& WithRuleId(RuleIdT&& value) {
+    SetRuleId(std::forward<RuleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the rule.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Rule& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Rule& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Rule& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the rule.</p>
+   */
+  inline const Aws::String& GetRuleArn() const { return m_ruleArn; }
+  inline bool RuleArnHasBeenSet() const { return m_ruleArnHasBeenSet; }
+  template <typename RuleArnT = Aws::String>
+  void SetRuleArn(RuleArnT&& value) {
+    m_ruleArnHasBeenSet = true;
+    m_ruleArn = std::forward<RuleArnT>(value);
+  }
+  template <typename RuleArnT = Aws::String>
+  Rule& WithRuleArn(RuleArnT&& value) {
+    SetRuleArn(std::forward<RuleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the rule.</p>
-     */
-    inline const Aws::String& GetRuleId() const{ return m_ruleId; }
-    inline bool RuleIdHasBeenSet() const { return m_ruleIdHasBeenSet; }
-    inline void SetRuleId(const Aws::String& value) { m_ruleIdHasBeenSet = true; m_ruleId = value; }
-    inline void SetRuleId(Aws::String&& value) { m_ruleIdHasBeenSet = true; m_ruleId = std::move(value); }
-    inline void SetRuleId(const char* value) { m_ruleIdHasBeenSet = true; m_ruleId.assign(value); }
-    inline Rule& WithRuleId(const Aws::String& value) { SetRuleId(value); return *this;}
-    inline Rule& WithRuleId(Aws::String&& value) { SetRuleId(std::move(value)); return *this;}
-    inline Rule& WithRuleId(const char* value) { SetRuleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The event source to trigger the rule.</p>
+   */
+  inline const RuleTriggerEventSource& GetTriggerEventSource() const { return m_triggerEventSource; }
+  inline bool TriggerEventSourceHasBeenSet() const { return m_triggerEventSourceHasBeenSet; }
+  template <typename TriggerEventSourceT = RuleTriggerEventSource>
+  void SetTriggerEventSource(TriggerEventSourceT&& value) {
+    m_triggerEventSourceHasBeenSet = true;
+    m_triggerEventSource = std::forward<TriggerEventSourceT>(value);
+  }
+  template <typename TriggerEventSourceT = RuleTriggerEventSource>
+  Rule& WithTriggerEventSource(TriggerEventSourceT&& value) {
+    SetTriggerEventSource(std::forward<TriggerEventSourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the rule.</p>
-     */
-    inline const Aws::String& GetRuleArn() const{ return m_ruleArn; }
-    inline bool RuleArnHasBeenSet() const { return m_ruleArnHasBeenSet; }
-    inline void SetRuleArn(const Aws::String& value) { m_ruleArnHasBeenSet = true; m_ruleArn = value; }
-    inline void SetRuleArn(Aws::String&& value) { m_ruleArnHasBeenSet = true; m_ruleArn = std::move(value); }
-    inline void SetRuleArn(const char* value) { m_ruleArnHasBeenSet = true; m_ruleArn.assign(value); }
-    inline Rule& WithRuleArn(const Aws::String& value) { SetRuleArn(value); return *this;}
-    inline Rule& WithRuleArn(Aws::String&& value) { SetRuleArn(std::move(value)); return *this;}
-    inline Rule& WithRuleArn(const char* value) { SetRuleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of capability tiers associated with the rule. Used for categorizing
+   * rules by capability (for example, <code>GenerativeAI</code>).</p>
+   */
+  inline const Aws::Vector<RuleCapabilityTier>& GetRuleCapabilityTiers() const { return m_ruleCapabilityTiers; }
+  inline bool RuleCapabilityTiersHasBeenSet() const { return m_ruleCapabilityTiersHasBeenSet; }
+  template <typename RuleCapabilityTiersT = Aws::Vector<RuleCapabilityTier>>
+  void SetRuleCapabilityTiers(RuleCapabilityTiersT&& value) {
+    m_ruleCapabilityTiersHasBeenSet = true;
+    m_ruleCapabilityTiers = std::forward<RuleCapabilityTiersT>(value);
+  }
+  template <typename RuleCapabilityTiersT = Aws::Vector<RuleCapabilityTier>>
+  Rule& WithRuleCapabilityTiers(RuleCapabilityTiersT&& value) {
+    SetRuleCapabilityTiers(std::forward<RuleCapabilityTiersT>(value));
+    return *this;
+  }
+  inline Rule& AddRuleCapabilityTiers(RuleCapabilityTier value) {
+    m_ruleCapabilityTiersHasBeenSet = true;
+    m_ruleCapabilityTiers.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The event source to trigger the rule.</p>
-     */
-    inline const RuleTriggerEventSource& GetTriggerEventSource() const{ return m_triggerEventSource; }
-    inline bool TriggerEventSourceHasBeenSet() const { return m_triggerEventSourceHasBeenSet; }
-    inline void SetTriggerEventSource(const RuleTriggerEventSource& value) { m_triggerEventSourceHasBeenSet = true; m_triggerEventSource = value; }
-    inline void SetTriggerEventSource(RuleTriggerEventSource&& value) { m_triggerEventSourceHasBeenSet = true; m_triggerEventSource = std::move(value); }
-    inline Rule& WithTriggerEventSource(const RuleTriggerEventSource& value) { SetTriggerEventSource(value); return *this;}
-    inline Rule& WithTriggerEventSource(RuleTriggerEventSource&& value) { SetTriggerEventSource(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The conditions of the rule.</p>
+   */
+  inline const Aws::String& GetFunction() const { return m_function; }
+  inline bool FunctionHasBeenSet() const { return m_functionHasBeenSet; }
+  template <typename FunctionT = Aws::String>
+  void SetFunction(FunctionT&& value) {
+    m_functionHasBeenSet = true;
+    m_function = std::forward<FunctionT>(value);
+  }
+  template <typename FunctionT = Aws::String>
+  Rule& WithFunction(FunctionT&& value) {
+    SetFunction(std::forward<FunctionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The conditions of the rule.</p>
-     */
-    inline const Aws::String& GetFunction() const{ return m_function; }
-    inline bool FunctionHasBeenSet() const { return m_functionHasBeenSet; }
-    inline void SetFunction(const Aws::String& value) { m_functionHasBeenSet = true; m_function = value; }
-    inline void SetFunction(Aws::String&& value) { m_functionHasBeenSet = true; m_function = std::move(value); }
-    inline void SetFunction(const char* value) { m_functionHasBeenSet = true; m_function.assign(value); }
-    inline Rule& WithFunction(const Aws::String& value) { SetFunction(value); return *this;}
-    inline Rule& WithFunction(Aws::String&& value) { SetFunction(std::move(value)); return *this;}
-    inline Rule& WithFunction(const char* value) { SetFunction(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of actions to be run when the rule is triggered.</p>
+   */
+  inline const Aws::Vector<RuleAction>& GetActions() const { return m_actions; }
+  inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
+  template <typename ActionsT = Aws::Vector<RuleAction>>
+  void SetActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions = std::forward<ActionsT>(value);
+  }
+  template <typename ActionsT = Aws::Vector<RuleAction>>
+  Rule& WithActions(ActionsT&& value) {
+    SetActions(std::forward<ActionsT>(value));
+    return *this;
+  }
+  template <typename ActionsT = RuleAction>
+  Rule& AddActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions.emplace_back(std::forward<ActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of actions to be run when the rule is triggered.</p>
-     */
-    inline const Aws::Vector<RuleAction>& GetActions() const{ return m_actions; }
-    inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
-    inline void SetActions(const Aws::Vector<RuleAction>& value) { m_actionsHasBeenSet = true; m_actions = value; }
-    inline void SetActions(Aws::Vector<RuleAction>&& value) { m_actionsHasBeenSet = true; m_actions = std::move(value); }
-    inline Rule& WithActions(const Aws::Vector<RuleAction>& value) { SetActions(value); return *this;}
-    inline Rule& WithActions(Aws::Vector<RuleAction>&& value) { SetActions(std::move(value)); return *this;}
-    inline Rule& AddActions(const RuleAction& value) { m_actionsHasBeenSet = true; m_actions.push_back(value); return *this; }
-    inline Rule& AddActions(RuleAction&& value) { m_actionsHasBeenSet = true; m_actions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The publish status of the rule.</p>
+   */
+  inline RulePublishStatus GetPublishStatus() const { return m_publishStatus; }
+  inline bool PublishStatusHasBeenSet() const { return m_publishStatusHasBeenSet; }
+  inline void SetPublishStatus(RulePublishStatus value) {
+    m_publishStatusHasBeenSet = true;
+    m_publishStatus = value;
+  }
+  inline Rule& WithPublishStatus(RulePublishStatus value) {
+    SetPublishStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The publish status of the rule.</p>
-     */
-    inline const RulePublishStatus& GetPublishStatus() const{ return m_publishStatus; }
-    inline bool PublishStatusHasBeenSet() const { return m_publishStatusHasBeenSet; }
-    inline void SetPublishStatus(const RulePublishStatus& value) { m_publishStatusHasBeenSet = true; m_publishStatus = value; }
-    inline void SetPublishStatus(RulePublishStatus&& value) { m_publishStatusHasBeenSet = true; m_publishStatus = std::move(value); }
-    inline Rule& WithPublishStatus(const RulePublishStatus& value) { SetPublishStatus(value); return *this;}
-    inline Rule& WithPublishStatus(RulePublishStatus&& value) { SetPublishStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The pre-evaluation filters for the rule, that restrict the rule to be applied
+   * to only certain resources based on the resource's attributes, such as tags
+   * assigned to a contact. The pre-evaluation filters are applied even before rule
+   * conditions are evaluated and are used to enforce tag-based-access-control while
+   * applying rules.</p>
+   */
+  inline const PreEvaluationFilters& GetPreEvaluationFilters() const { return m_preEvaluationFilters; }
+  inline bool PreEvaluationFiltersHasBeenSet() const { return m_preEvaluationFiltersHasBeenSet; }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  void SetPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    m_preEvaluationFiltersHasBeenSet = true;
+    m_preEvaluationFilters = std::forward<PreEvaluationFiltersT>(value);
+  }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  Rule& WithPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    SetPreEvaluationFilters(std::forward<PreEvaluationFiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the rule was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTime() const{ return m_createdTime; }
-    inline bool CreatedTimeHasBeenSet() const { return m_createdTimeHasBeenSet; }
-    inline void SetCreatedTime(const Aws::Utils::DateTime& value) { m_createdTimeHasBeenSet = true; m_createdTime = value; }
-    inline void SetCreatedTime(Aws::Utils::DateTime&& value) { m_createdTimeHasBeenSet = true; m_createdTime = std::move(value); }
-    inline Rule& WithCreatedTime(const Aws::Utils::DateTime& value) { SetCreatedTime(value); return *this;}
-    inline Rule& WithCreatedTime(Aws::Utils::DateTime&& value) { SetCreatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the rule was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTime() const { return m_createdTime; }
+  inline bool CreatedTimeHasBeenSet() const { return m_createdTimeHasBeenSet; }
+  template <typename CreatedTimeT = Aws::Utils::DateTime>
+  void SetCreatedTime(CreatedTimeT&& value) {
+    m_createdTimeHasBeenSet = true;
+    m_createdTime = std::forward<CreatedTimeT>(value);
+  }
+  template <typename CreatedTimeT = Aws::Utils::DateTime>
+  Rule& WithCreatedTime(CreatedTimeT&& value) {
+    SetCreatedTime(std::forward<CreatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for the when the rule was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTime() const{ return m_lastUpdatedTime; }
-    inline bool LastUpdatedTimeHasBeenSet() const { return m_lastUpdatedTimeHasBeenSet; }
-    inline void SetLastUpdatedTime(const Aws::Utils::DateTime& value) { m_lastUpdatedTimeHasBeenSet = true; m_lastUpdatedTime = value; }
-    inline void SetLastUpdatedTime(Aws::Utils::DateTime&& value) { m_lastUpdatedTimeHasBeenSet = true; m_lastUpdatedTime = std::move(value); }
-    inline Rule& WithLastUpdatedTime(const Aws::Utils::DateTime& value) { SetLastUpdatedTime(value); return *this;}
-    inline Rule& WithLastUpdatedTime(Aws::Utils::DateTime&& value) { SetLastUpdatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for the when the rule was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTime() const { return m_lastUpdatedTime; }
+  inline bool LastUpdatedTimeHasBeenSet() const { return m_lastUpdatedTimeHasBeenSet; }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  void SetLastUpdatedTime(LastUpdatedTimeT&& value) {
+    m_lastUpdatedTimeHasBeenSet = true;
+    m_lastUpdatedTime = std::forward<LastUpdatedTimeT>(value);
+  }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  Rule& WithLastUpdatedTime(LastUpdatedTimeT&& value) {
+    SetLastUpdatedTime(std::forward<LastUpdatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the user who last updated the rule.</p>
-     */
-    inline const Aws::String& GetLastUpdatedBy() const{ return m_lastUpdatedBy; }
-    inline bool LastUpdatedByHasBeenSet() const { return m_lastUpdatedByHasBeenSet; }
-    inline void SetLastUpdatedBy(const Aws::String& value) { m_lastUpdatedByHasBeenSet = true; m_lastUpdatedBy = value; }
-    inline void SetLastUpdatedBy(Aws::String&& value) { m_lastUpdatedByHasBeenSet = true; m_lastUpdatedBy = std::move(value); }
-    inline void SetLastUpdatedBy(const char* value) { m_lastUpdatedByHasBeenSet = true; m_lastUpdatedBy.assign(value); }
-    inline Rule& WithLastUpdatedBy(const Aws::String& value) { SetLastUpdatedBy(value); return *this;}
-    inline Rule& WithLastUpdatedBy(Aws::String&& value) { SetLastUpdatedBy(std::move(value)); return *this;}
-    inline Rule& WithLastUpdatedBy(const char* value) { SetLastUpdatedBy(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the user who last updated the rule.</p>
+   */
+  inline const Aws::String& GetLastUpdatedBy() const { return m_lastUpdatedBy; }
+  inline bool LastUpdatedByHasBeenSet() const { return m_lastUpdatedByHasBeenSet; }
+  template <typename LastUpdatedByT = Aws::String>
+  void SetLastUpdatedBy(LastUpdatedByT&& value) {
+    m_lastUpdatedByHasBeenSet = true;
+    m_lastUpdatedBy = std::forward<LastUpdatedByT>(value);
+  }
+  template <typename LastUpdatedByT = Aws::String>
+  Rule& WithLastUpdatedBy(LastUpdatedByT&& value) {
+    SetLastUpdatedBy(std::forward<LastUpdatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource. For
-     * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline Rule& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline Rule& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline Rule& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline Rule& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline Rule& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline Rule& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline Rule& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline Rule& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline Rule& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource. For
+   * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  Rule& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  Rule& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_ruleId;
 
-    Aws::String m_ruleId;
-    bool m_ruleIdHasBeenSet = false;
+  Aws::String m_ruleArn;
 
-    Aws::String m_ruleArn;
-    bool m_ruleArnHasBeenSet = false;
+  RuleTriggerEventSource m_triggerEventSource;
 
-    RuleTriggerEventSource m_triggerEventSource;
-    bool m_triggerEventSourceHasBeenSet = false;
+  Aws::Vector<RuleCapabilityTier> m_ruleCapabilityTiers;
 
-    Aws::String m_function;
-    bool m_functionHasBeenSet = false;
+  Aws::String m_function;
 
-    Aws::Vector<RuleAction> m_actions;
-    bool m_actionsHasBeenSet = false;
+  Aws::Vector<RuleAction> m_actions;
 
-    RulePublishStatus m_publishStatus;
-    bool m_publishStatusHasBeenSet = false;
+  RulePublishStatus m_publishStatus{RulePublishStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_createdTime;
-    bool m_createdTimeHasBeenSet = false;
+  PreEvaluationFilters m_preEvaluationFilters;
 
-    Aws::Utils::DateTime m_lastUpdatedTime;
-    bool m_lastUpdatedTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_createdTime{};
 
-    Aws::String m_lastUpdatedBy;
-    bool m_lastUpdatedByHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdatedTime{};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
+  Aws::String m_lastUpdatedBy;
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_nameHasBeenSet = false;
+  bool m_ruleIdHasBeenSet = false;
+  bool m_ruleArnHasBeenSet = false;
+  bool m_triggerEventSourceHasBeenSet = false;
+  bool m_ruleCapabilityTiersHasBeenSet = false;
+  bool m_functionHasBeenSet = false;
+  bool m_actionsHasBeenSet = false;
+  bool m_publishStatusHasBeenSet = false;
+  bool m_preEvaluationFiltersHasBeenSet = false;
+  bool m_createdTimeHasBeenSet = false;
+  bool m_lastUpdatedTimeHasBeenSet = false;
+  bool m_lastUpdatedByHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

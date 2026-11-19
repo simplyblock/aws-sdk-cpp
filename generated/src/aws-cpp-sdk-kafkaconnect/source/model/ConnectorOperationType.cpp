@@ -1,0 +1,83 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/core/Globals.h>
+#include <aws/core/utils/EnumParseOverflowContainer.h>
+#include <aws/core/utils/HashingUtils.h>
+#include <aws/kafkaconnect/model/ConnectorOperationType.h>
+
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace KafkaConnect {
+namespace Model {
+namespace ConnectorOperationTypeMapper {
+
+static const int UPDATE_WORKER_SETTING_HASH = HashingUtils::HashString("UPDATE_WORKER_SETTING");
+static const int UPDATE_CONNECTOR_CONFIGURATION_HASH = HashingUtils::HashString("UPDATE_CONNECTOR_CONFIGURATION");
+static const int ISOLATE_CONNECTOR_HASH = HashingUtils::HashString("ISOLATE_CONNECTOR");
+static const int RESTORE_CONNECTOR_HASH = HashingUtils::HashString("RESTORE_CONNECTOR");
+static const int RESTART_CONNECTOR_HASH = HashingUtils::HashString("RESTART_CONNECTOR");
+static const int PAUSE_CONNECTOR_HASH = HashingUtils::HashString("PAUSE_CONNECTOR");
+static const int RESUME_CONNECTOR_HASH = HashingUtils::HashString("RESUME_CONNECTOR");
+
+ConnectorOperationType GetConnectorOperationTypeForName(const Aws::String& name) {
+  int hashCode = HashingUtils::HashString(name.c_str());
+  if (hashCode == UPDATE_WORKER_SETTING_HASH) {
+    return ConnectorOperationType::UPDATE_WORKER_SETTING;
+  } else if (hashCode == UPDATE_CONNECTOR_CONFIGURATION_HASH) {
+    return ConnectorOperationType::UPDATE_CONNECTOR_CONFIGURATION;
+  } else if (hashCode == ISOLATE_CONNECTOR_HASH) {
+    return ConnectorOperationType::ISOLATE_CONNECTOR;
+  } else if (hashCode == RESTORE_CONNECTOR_HASH) {
+    return ConnectorOperationType::RESTORE_CONNECTOR;
+  } else if (hashCode == RESTART_CONNECTOR_HASH) {
+    return ConnectorOperationType::RESTART_CONNECTOR;
+  } else if (hashCode == PAUSE_CONNECTOR_HASH) {
+    return ConnectorOperationType::PAUSE_CONNECTOR;
+  } else if (hashCode == RESUME_CONNECTOR_HASH) {
+    return ConnectorOperationType::RESUME_CONNECTOR;
+  }
+  EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+  if (overflowContainer) {
+    overflowContainer->StoreOverflow(hashCode, name);
+    return static_cast<ConnectorOperationType>(hashCode);
+  }
+
+  return ConnectorOperationType::NOT_SET;
+}
+
+Aws::String GetNameForConnectorOperationType(ConnectorOperationType enumValue) {
+  switch (enumValue) {
+    case ConnectorOperationType::NOT_SET:
+      return {};
+    case ConnectorOperationType::UPDATE_WORKER_SETTING:
+      return "UPDATE_WORKER_SETTING";
+    case ConnectorOperationType::UPDATE_CONNECTOR_CONFIGURATION:
+      return "UPDATE_CONNECTOR_CONFIGURATION";
+    case ConnectorOperationType::ISOLATE_CONNECTOR:
+      return "ISOLATE_CONNECTOR";
+    case ConnectorOperationType::RESTORE_CONNECTOR:
+      return "RESTORE_CONNECTOR";
+    case ConnectorOperationType::RESTART_CONNECTOR:
+      return "RESTART_CONNECTOR";
+    case ConnectorOperationType::PAUSE_CONNECTOR:
+      return "PAUSE_CONNECTOR";
+    case ConnectorOperationType::RESUME_CONNECTOR:
+      return "RESUME_CONNECTOR";
+    default:
+      EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+      if (overflowContainer) {
+        return overflowContainer->RetrieveOverflow(static_cast<int>(enumValue));
+      }
+
+      return {};
+  }
+}
+
+}  // namespace ConnectorOperationTypeMapper
+}  // namespace Model
+}  // namespace KafkaConnect
+}  // namespace Aws

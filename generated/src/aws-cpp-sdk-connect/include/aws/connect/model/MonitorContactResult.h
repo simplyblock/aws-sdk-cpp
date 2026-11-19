@@ -5,78 +5,90 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class MonitorContactResult
-  {
-  public:
-    AWS_CONNECT_API MonitorContactResult();
-    AWS_CONNECT_API MonitorContactResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API MonitorContactResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class MonitorContactResult {
+ public:
+  AWS_CONNECT_API MonitorContactResult() = default;
+  AWS_CONNECT_API MonitorContactResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API MonitorContactResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the contact.</p>
+   */
+  inline const Aws::String& GetContactId() const { return m_contactId; }
+  template <typename ContactIdT = Aws::String>
+  void SetContactId(ContactIdT&& value) {
+    m_contactIdHasBeenSet = true;
+    m_contactId = std::forward<ContactIdT>(value);
+  }
+  template <typename ContactIdT = Aws::String>
+  MonitorContactResult& WithContactId(ContactIdT&& value) {
+    SetContactId(std::forward<ContactIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the contact.</p>
-     */
-    inline const Aws::String& GetContactId() const{ return m_contactId; }
-    inline void SetContactId(const Aws::String& value) { m_contactId = value; }
-    inline void SetContactId(Aws::String&& value) { m_contactId = std::move(value); }
-    inline void SetContactId(const char* value) { m_contactId.assign(value); }
-    inline MonitorContactResult& WithContactId(const Aws::String& value) { SetContactId(value); return *this;}
-    inline MonitorContactResult& WithContactId(Aws::String&& value) { SetContactId(std::move(value)); return *this;}
-    inline MonitorContactResult& WithContactId(const char* value) { SetContactId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the contact.</p>
+   */
+  inline const Aws::String& GetContactArn() const { return m_contactArn; }
+  template <typename ContactArnT = Aws::String>
+  void SetContactArn(ContactArnT&& value) {
+    m_contactArnHasBeenSet = true;
+    m_contactArn = std::forward<ContactArnT>(value);
+  }
+  template <typename ContactArnT = Aws::String>
+  MonitorContactResult& WithContactArn(ContactArnT&& value) {
+    SetContactArn(std::forward<ContactArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the contact.</p>
-     */
-    inline const Aws::String& GetContactArn() const{ return m_contactArn; }
-    inline void SetContactArn(const Aws::String& value) { m_contactArn = value; }
-    inline void SetContactArn(Aws::String&& value) { m_contactArn = std::move(value); }
-    inline void SetContactArn(const char* value) { m_contactArn.assign(value); }
-    inline MonitorContactResult& WithContactArn(const Aws::String& value) { SetContactArn(value); return *this;}
-    inline MonitorContactResult& WithContactArn(Aws::String&& value) { SetContactArn(std::move(value)); return *this;}
-    inline MonitorContactResult& WithContactArn(const char* value) { SetContactArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline MonitorContactResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline MonitorContactResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline MonitorContactResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  MonitorContactResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_contactId;
+ private:
+  Aws::String m_contactId;
 
-    Aws::String m_contactArn;
+  Aws::String m_contactArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contactIdHasBeenSet = false;
+  bool m_contactArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

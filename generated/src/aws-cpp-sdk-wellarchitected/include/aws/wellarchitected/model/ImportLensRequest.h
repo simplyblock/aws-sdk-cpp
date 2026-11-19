@@ -4,107 +4,119 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
-#include <aws/wellarchitected/WellArchitectedRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wellarchitected/WellArchitectedRequest.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 
-namespace Aws
-{
-namespace WellArchitected
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace WellArchitected {
+namespace Model {
+
+/**
+ */
+class ImportLensRequest : public WellArchitectedRequest {
+ public:
+  AWS_WELLARCHITECTED_API ImportLensRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ImportLens"; }
+
+  AWS_WELLARCHITECTED_API Aws::String SerializePayload() const override;
+
+  ///@{
+
+  inline const Aws::String& GetLensAlias() const { return m_lensAlias; }
+  inline bool LensAliasHasBeenSet() const { return m_lensAliasHasBeenSet; }
+  template <typename LensAliasT = Aws::String>
+  void SetLensAlias(LensAliasT&& value) {
+    m_lensAliasHasBeenSet = true;
+    m_lensAlias = std::forward<LensAliasT>(value);
+  }
+  template <typename LensAliasT = Aws::String>
+  ImportLensRequest& WithLensAlias(LensAliasT&& value) {
+    SetLensAlias(std::forward<LensAliasT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
+   * <p>The JSON representation of a lens.</p>
    */
-  class ImportLensRequest : public WellArchitectedRequest
-  {
-  public:
-    AWS_WELLARCHITECTED_API ImportLensRequest();
+  inline const Aws::String& GetJSONString() const { return m_jSONString; }
+  inline bool JSONStringHasBeenSet() const { return m_jSONStringHasBeenSet; }
+  template <typename JSONStringT = Aws::String>
+  void SetJSONString(JSONStringT&& value) {
+    m_jSONStringHasBeenSet = true;
+    m_jSONString = std::forward<JSONStringT>(value);
+  }
+  template <typename JSONStringT = Aws::String>
+  ImportLensRequest& WithJSONString(JSONStringT&& value) {
+    SetJSONString(std::forward<JSONStringT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ImportLens"; }
+  ///@{
 
-    AWS_WELLARCHITECTED_API Aws::String SerializePayload() const override;
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  ImportLensRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Tags to associate to a lens.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  ImportLensRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  ImportLensRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_lensAlias;
 
-    ///@{
-    
-    inline const Aws::String& GetLensAlias() const{ return m_lensAlias; }
-    inline bool LensAliasHasBeenSet() const { return m_lensAliasHasBeenSet; }
-    inline void SetLensAlias(const Aws::String& value) { m_lensAliasHasBeenSet = true; m_lensAlias = value; }
-    inline void SetLensAlias(Aws::String&& value) { m_lensAliasHasBeenSet = true; m_lensAlias = std::move(value); }
-    inline void SetLensAlias(const char* value) { m_lensAliasHasBeenSet = true; m_lensAlias.assign(value); }
-    inline ImportLensRequest& WithLensAlias(const Aws::String& value) { SetLensAlias(value); return *this;}
-    inline ImportLensRequest& WithLensAlias(Aws::String&& value) { SetLensAlias(std::move(value)); return *this;}
-    inline ImportLensRequest& WithLensAlias(const char* value) { SetLensAlias(value); return *this;}
-    ///@}
+  Aws::String m_jSONString;
 
-    ///@{
-    /**
-     * <p>The JSON representation of a lens.</p>
-     */
-    inline const Aws::String& GetJSONString() const{ return m_jSONString; }
-    inline bool JSONStringHasBeenSet() const { return m_jSONStringHasBeenSet; }
-    inline void SetJSONString(const Aws::String& value) { m_jSONStringHasBeenSet = true; m_jSONString = value; }
-    inline void SetJSONString(Aws::String&& value) { m_jSONStringHasBeenSet = true; m_jSONString = std::move(value); }
-    inline void SetJSONString(const char* value) { m_jSONStringHasBeenSet = true; m_jSONString.assign(value); }
-    inline ImportLensRequest& WithJSONString(const Aws::String& value) { SetJSONString(value); return *this;}
-    inline ImportLensRequest& WithJSONString(Aws::String&& value) { SetJSONString(std::move(value)); return *this;}
-    inline ImportLensRequest& WithJSONString(const char* value) { SetJSONString(value); return *this;}
-    ///@}
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline ImportLensRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline ImportLensRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline ImportLensRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_lensAliasHasBeenSet = false;
+  bool m_jSONStringHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Tags to associate to a lens.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ImportLensRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline ImportLensRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline ImportLensRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline ImportLensRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ImportLensRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ImportLensRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline ImportLensRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ImportLensRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ImportLensRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_lensAlias;
-    bool m_lensAliasHasBeenSet = false;
-
-    Aws::String m_jSONString;
-    bool m_jSONStringHasBeenSet = false;
-
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

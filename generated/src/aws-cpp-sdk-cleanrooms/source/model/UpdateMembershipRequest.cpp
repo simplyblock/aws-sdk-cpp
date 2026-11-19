@@ -12,32 +12,28 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateMembershipRequest::UpdateMembershipRequest() : 
-    m_membershipIdentifierHasBeenSet(false),
-    m_queryLogStatus(MembershipQueryLogStatus::NOT_SET),
-    m_queryLogStatusHasBeenSet(false),
-    m_defaultResultConfigurationHasBeenSet(false)
-{
-}
-
-Aws::String UpdateMembershipRequest::SerializePayload() const
-{
+Aws::String UpdateMembershipRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_queryLogStatusHasBeenSet)
-  {
-   payload.WithString("queryLogStatus", MembershipQueryLogStatusMapper::GetNameForMembershipQueryLogStatus(m_queryLogStatus));
+  if (m_queryLogStatusHasBeenSet) {
+    payload.WithString("queryLogStatus", MembershipQueryLogStatusMapper::GetNameForMembershipQueryLogStatus(m_queryLogStatus));
   }
 
-  if(m_defaultResultConfigurationHasBeenSet)
-  {
-   payload.WithObject("defaultResultConfiguration", m_defaultResultConfiguration.Jsonize());
+  if (m_jobLogStatusHasBeenSet) {
+    payload.WithString("jobLogStatus", MembershipJobLogStatusMapper::GetNameForMembershipJobLogStatus(m_jobLogStatus));
+  }
 
+  if (m_defaultResultConfigurationHasBeenSet) {
+    payload.WithObject("defaultResultConfiguration", m_defaultResultConfiguration.Jsonize());
+  }
+
+  if (m_defaultJobResultConfigurationHasBeenSet) {
+    payload.WithObject("defaultJobResultConfiguration", m_defaultJobResultConfiguration.Jsonize());
+  }
+
+  if (m_membershipPaymentConfigurationHasBeenSet) {
+    payload.WithObject("membershipPaymentConfiguration", m_membershipPaymentConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

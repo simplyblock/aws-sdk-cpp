@@ -13,32 +13,15 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteConfigurationProfileRequest::DeleteConfigurationProfileRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_configurationProfileIdHasBeenSet(false),
-    m_deletionProtectionCheck(DeletionProtectionCheck::NOT_SET),
-    m_deletionProtectionCheckHasBeenSet(false)
-{
-}
+Aws::String DeleteConfigurationProfileRequest::SerializePayload() const { return {}; }
 
-Aws::String DeleteConfigurationProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-Aws::Http::HeaderValueCollection DeleteConfigurationProfileRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteConfigurationProfileRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   Aws::StringStream ss;
-  if(m_deletionProtectionCheckHasBeenSet && m_deletionProtectionCheck != DeletionProtectionCheck::NOT_SET)
-  {
-    headers.emplace("x-amzn-deletion-protection-check", DeletionProtectionCheckMapper::GetNameForDeletionProtectionCheck(m_deletionProtectionCheck));
+  if (m_deletionProtectionCheckHasBeenSet && m_deletionProtectionCheck != DeletionProtectionCheck::NOT_SET) {
+    headers.emplace("x-amzn-deletion-protection-check",
+                    DeletionProtectionCheckMapper::GetNameForDeletionProtectionCheck(m_deletionProtectionCheck));
   }
 
   return headers;
-
 }
-
-
-
-

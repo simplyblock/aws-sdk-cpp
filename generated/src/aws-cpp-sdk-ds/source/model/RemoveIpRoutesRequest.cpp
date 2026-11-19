@@ -3,53 +3,60 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/RemoveIpRoutesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectoryService::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RemoveIpRoutesRequest::RemoveIpRoutesRequest() : 
-    m_directoryIdHasBeenSet(false),
-    m_cidrIpsHasBeenSet(false)
-{
-}
+Aws::String RemoveIpRoutesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String RemoveIpRoutesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cidrIpsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cidrIpv6sHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_cidrIpsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> cidrIpsJsonList(m_cidrIps.size());
-   for(unsigned cidrIpsIndex = 0; cidrIpsIndex < cidrIpsJsonList.GetLength(); ++cidrIpsIndex)
-   {
-     cidrIpsJsonList[cidrIpsIndex].AsString(m_cidrIps[cidrIpsIndex]);
-   }
-   payload.WithArray("CidrIps", std::move(cidrIpsJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_cidrIpsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CidrIps"));
+    encoder.WriteArrayStart(m_cidrIps.size());
+    for (const auto& item_0 : m_cidrIps) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_cidrIpv6sHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CidrIpv6s"));
+    encoder.WriteArrayStart(m_cidrIpv6s.size());
+    for (const auto& item_0 : m_cidrIpv6s) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection RemoveIpRoutesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RemoveIpRoutesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DirectoryService_20150416.RemoveIpRoutes"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

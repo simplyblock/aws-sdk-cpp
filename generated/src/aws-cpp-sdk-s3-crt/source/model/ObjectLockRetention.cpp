@@ -3,76 +3,77 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/s3-crt/model/ObjectLockRetention.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/s3-crt/model/ObjectLockRetention.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace S3Crt
-{
-namespace Model
-{
+namespace Aws {
+namespace S3Crt {
+namespace Model {
 
-ObjectLockRetention::ObjectLockRetention() : 
-    m_mode(ObjectLockRetentionMode::NOT_SET),
-    m_modeHasBeenSet(false),
-    m_retainUntilDateHasBeenSet(false)
-{
-}
+ObjectLockRetention::ObjectLockRetention(const XmlNode& xmlNode) { *this = xmlNode; }
 
-ObjectLockRetention::ObjectLockRetention(const XmlNode& xmlNode)
-  : ObjectLockRetention()
-{
-  *this = xmlNode;
-}
-
-ObjectLockRetention& ObjectLockRetention::operator =(const XmlNode& xmlNode)
-{
+ObjectLockRetention& ObjectLockRetention::operator=(const XmlNode& xmlNode) {
   XmlNode resultNode = xmlNode;
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode modeNode = resultNode.FirstChild("Mode");
-    if(!modeNode.IsNull())
-    {
-      m_mode = ObjectLockRetentionModeMapper::GetObjectLockRetentionModeForName(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(modeNode.GetText()).c_str()).c_str());
+    if (!modeNode.IsNull()) {
+      m_mode = ObjectLockRetentionModeMapper::GetObjectLockRetentionModeForName(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(modeNode.GetText()).c_str()));
       m_modeHasBeenSet = true;
     }
     XmlNode retainUntilDateNode = resultNode.FirstChild("RetainUntilDate");
-    if(!retainUntilDateNode.IsNull())
-    {
-      m_retainUntilDate = DateTime(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(retainUntilDateNode.GetText()).c_str()).c_str(), Aws::Utils::DateFormat::ISO_8601);
+    if (!retainUntilDateNode.IsNull()) {
+      m_retainUntilDate = DateTime(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(retainUntilDateNode.GetText()).c_str()).c_str(),
+                                   Aws::Utils::DateFormat::ISO_8601);
       m_retainUntilDateHasBeenSet = true;
+    }
+    XmlNode eventHoldNode = resultNode.FirstChild("EventHold");
+    if (!eventHoldNode.IsNull()) {
+      m_eventHold = ObjectLockEventHoldMapper::GetObjectLockEventHoldForName(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(eventHoldNode.GetText()).c_str()));
+      m_eventHoldHasBeenSet = true;
+    }
+    XmlNode eventHoldDurationNode = resultNode.FirstChild("EventHoldDuration");
+    if (!eventHoldDurationNode.IsNull()) {
+      m_eventHoldDuration = eventHoldDurationNode;
+      m_eventHoldDurationHasBeenSet = true;
     }
   }
 
   return *this;
 }
 
-void ObjectLockRetention::AddToNode(XmlNode& parentNode) const
-{
+void ObjectLockRetention::AddToNode(XmlNode& parentNode) const {
   Aws::StringStream ss;
-  if(m_modeHasBeenSet)
-  {
-   XmlNode modeNode = parentNode.CreateChildElement("Mode");
-   modeNode.SetText(ObjectLockRetentionModeMapper::GetNameForObjectLockRetentionMode(m_mode));
+  if (m_modeHasBeenSet) {
+    XmlNode modeNode = parentNode.CreateChildElement("Mode");
+    modeNode.SetText(ObjectLockRetentionModeMapper::GetNameForObjectLockRetentionMode(m_mode));
   }
 
-  if(m_retainUntilDateHasBeenSet)
-  {
-   XmlNode retainUntilDateNode = parentNode.CreateChildElement("RetainUntilDate");
-   retainUntilDateNode.SetText(m_retainUntilDate.ToGmtString(Aws::Utils::DateFormat::ISO_8601));
+  if (m_retainUntilDateHasBeenSet) {
+    XmlNode retainUntilDateNode = parentNode.CreateChildElement("RetainUntilDate");
+    retainUntilDateNode.SetText(m_retainUntilDate.ToGmtString(Aws::Utils::DateFormat::ISO_8601));
   }
 
+  if (m_eventHoldHasBeenSet) {
+    XmlNode eventHoldNode = parentNode.CreateChildElement("EventHold");
+    eventHoldNode.SetText(ObjectLockEventHoldMapper::GetNameForObjectLockEventHold(m_eventHold));
+  }
+
+  if (m_eventHoldDurationHasBeenSet) {
+    XmlNode eventHoldDurationNode = parentNode.CreateChildElement("EventHoldDuration");
+    m_eventHoldDuration.AddToNode(eventHoldDurationNode);
+  }
 }
 
-} // namespace Model
-} // namespace S3Crt
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3Crt
+}  // namespace Aws

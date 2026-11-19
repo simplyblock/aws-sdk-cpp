@@ -7,100 +7,110 @@
 #include <aws/billingconductor/BillingConductor_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BillingConductor {
+namespace Model {
 
+/**
+ * <p>The filter on the account ID of the linked account, or any of the
+ * following:</p> <p> <code>MONITORED</code>: linked accounts that are associated
+ * to billing groups.</p> <p> <code>UNMONITORED</code>: linked accounts that are
+ * not associated to billing groups.</p> <p> <code>Billing Group Arn</code>: linked
+ * accounts that are associated to the provided Billing Group Arn.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/ListAccountAssociationsFilter">AWS
+ * API Reference</a></p>
+ */
+class ListAccountAssociationsFilter {
+ public:
+  AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter() = default;
+  AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The filter on the account ID of the linked account, or any of the
-   * following:</p> <p> <code>MONITORED</code>: linked accounts that are associated
-   * to billing groups.</p> <p> <code>UNMONITORED</code>: linked accounts that are
-   * not associated to billing groups.</p> <p> <code>Billing Group Arn</code>: linked
-   * accounts that are associated to the provided Billing Group Arn.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/ListAccountAssociationsFilter">AWS
-   * API Reference</a></p>
+   * <p> <code>MONITORED</code>: linked accounts that are associated to billing
+   * groups.</p> <p> <code>UNMONITORED</code>: linked accounts that are not
+   * associated to billing groups.</p> <p> <code>Billing Group Arn</code>: linked
+   * accounts that are associated to the provided Billing Group Arn.</p>
    */
-  class ListAccountAssociationsFilter
-  {
-  public:
-    AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter();
-    AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API ListAccountAssociationsFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAssociation() const { return m_association; }
+  inline bool AssociationHasBeenSet() const { return m_associationHasBeenSet; }
+  template <typename AssociationT = Aws::String>
+  void SetAssociation(AssociationT&& value) {
+    m_associationHasBeenSet = true;
+    m_association = std::forward<AssociationT>(value);
+  }
+  template <typename AssociationT = Aws::String>
+  ListAccountAssociationsFilter& WithAssociation(AssociationT&& value) {
+    SetAssociation(std::forward<AssociationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID to filter on.</p>
+   */
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  ListAccountAssociationsFilter& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> <code>MONITORED</code>: linked accounts that are associated to billing
-     * groups.</p> <p> <code>UNMONITORED</code>: linked accounts that are not
-     * associated to billing groups.</p> <p> <code>Billing Group Arn</code>: linked
-     * accounts that are associated to the provided Billing Group Arn.</p>
-     */
-    inline const Aws::String& GetAssociation() const{ return m_association; }
-    inline bool AssociationHasBeenSet() const { return m_associationHasBeenSet; }
-    inline void SetAssociation(const Aws::String& value) { m_associationHasBeenSet = true; m_association = value; }
-    inline void SetAssociation(Aws::String&& value) { m_associationHasBeenSet = true; m_association = std::move(value); }
-    inline void SetAssociation(const char* value) { m_associationHasBeenSet = true; m_association.assign(value); }
-    inline ListAccountAssociationsFilter& WithAssociation(const Aws::String& value) { SetAssociation(value); return *this;}
-    inline ListAccountAssociationsFilter& WithAssociation(Aws::String&& value) { SetAssociation(std::move(value)); return *this;}
-    inline ListAccountAssociationsFilter& WithAssociation(const char* value) { SetAssociation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The list of Amazon Web Services IDs to retrieve their associated billing
+   * group for a given time range. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAccountIds() const { return m_accountIds; }
+  inline bool AccountIdsHasBeenSet() const { return m_accountIdsHasBeenSet; }
+  template <typename AccountIdsT = Aws::Vector<Aws::String>>
+  void SetAccountIds(AccountIdsT&& value) {
+    m_accountIdsHasBeenSet = true;
+    m_accountIds = std::forward<AccountIdsT>(value);
+  }
+  template <typename AccountIdsT = Aws::Vector<Aws::String>>
+  ListAccountAssociationsFilter& WithAccountIds(AccountIdsT&& value) {
+    SetAccountIds(std::forward<AccountIdsT>(value));
+    return *this;
+  }
+  template <typename AccountIdsT = Aws::String>
+  ListAccountAssociationsFilter& AddAccountIds(AccountIdsT&& value) {
+    m_accountIdsHasBeenSet = true;
+    m_accountIds.emplace_back(std::forward<AccountIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_association;
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID to filter on.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline ListAccountAssociationsFilter& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline ListAccountAssociationsFilter& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline ListAccountAssociationsFilter& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  Aws::String m_accountId;
 
-    ///@{
-    /**
-     * <p> The list of Amazon Web Services IDs to retrieve their associated billing
-     * group for a given time range. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetAccountIds() const{ return m_accountIds; }
-    inline bool AccountIdsHasBeenSet() const { return m_accountIdsHasBeenSet; }
-    inline void SetAccountIds(const Aws::Vector<Aws::String>& value) { m_accountIdsHasBeenSet = true; m_accountIds = value; }
-    inline void SetAccountIds(Aws::Vector<Aws::String>&& value) { m_accountIdsHasBeenSet = true; m_accountIds = std::move(value); }
-    inline ListAccountAssociationsFilter& WithAccountIds(const Aws::Vector<Aws::String>& value) { SetAccountIds(value); return *this;}
-    inline ListAccountAssociationsFilter& WithAccountIds(Aws::Vector<Aws::String>&& value) { SetAccountIds(std::move(value)); return *this;}
-    inline ListAccountAssociationsFilter& AddAccountIds(const Aws::String& value) { m_accountIdsHasBeenSet = true; m_accountIds.push_back(value); return *this; }
-    inline ListAccountAssociationsFilter& AddAccountIds(Aws::String&& value) { m_accountIdsHasBeenSet = true; m_accountIds.push_back(std::move(value)); return *this; }
-    inline ListAccountAssociationsFilter& AddAccountIds(const char* value) { m_accountIdsHasBeenSet = true; m_accountIds.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_accountIds;
+  bool m_associationHasBeenSet = false;
+  bool m_accountIdHasBeenSet = false;
+  bool m_accountIdsHasBeenSet = false;
+};
 
-    Aws::String m_association;
-    bool m_associationHasBeenSet = false;
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_accountIds;
-    bool m_accountIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

@@ -4,114 +4,129 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
 
+/**
+ * <p>Describes a parameter group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterGroup">AWS
+ * API Reference</a></p>
+ */
+class ClusterParameterGroup {
+ public:
+  AWS_REDSHIFT_API ClusterParameterGroup() = default;
+  AWS_REDSHIFT_API ClusterParameterGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_REDSHIFT_API ClusterParameterGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a parameter group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterGroup">AWS
-   * API Reference</a></p>
+   * <p>The name of the cluster parameter group.</p>
    */
-  class ClusterParameterGroup
-  {
-  public:
-    AWS_REDSHIFT_API ClusterParameterGroup();
-    AWS_REDSHIFT_API ClusterParameterGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_REDSHIFT_API ClusterParameterGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetParameterGroupName() const { return m_parameterGroupName; }
+  inline bool ParameterGroupNameHasBeenSet() const { return m_parameterGroupNameHasBeenSet; }
+  template <typename ParameterGroupNameT = Aws::String>
+  void SetParameterGroupName(ParameterGroupNameT&& value) {
+    m_parameterGroupNameHasBeenSet = true;
+    m_parameterGroupName = std::forward<ParameterGroupNameT>(value);
+  }
+  template <typename ParameterGroupNameT = Aws::String>
+  ClusterParameterGroup& WithParameterGroupName(ParameterGroupNameT&& value) {
+    SetParameterGroupName(std::forward<ParameterGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The name of the cluster parameter group family that this cluster parameter
+   * group is compatible with.</p>
+   */
+  inline const Aws::String& GetParameterGroupFamily() const { return m_parameterGroupFamily; }
+  inline bool ParameterGroupFamilyHasBeenSet() const { return m_parameterGroupFamilyHasBeenSet; }
+  template <typename ParameterGroupFamilyT = Aws::String>
+  void SetParameterGroupFamily(ParameterGroupFamilyT&& value) {
+    m_parameterGroupFamilyHasBeenSet = true;
+    m_parameterGroupFamily = std::forward<ParameterGroupFamilyT>(value);
+  }
+  template <typename ParameterGroupFamilyT = Aws::String>
+  ClusterParameterGroup& WithParameterGroupFamily(ParameterGroupFamilyT&& value) {
+    SetParameterGroupFamily(std::forward<ParameterGroupFamilyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The description of the parameter group.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  ClusterParameterGroup& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the cluster parameter group.</p>
-     */
-    inline const Aws::String& GetParameterGroupName() const{ return m_parameterGroupName; }
-    inline bool ParameterGroupNameHasBeenSet() const { return m_parameterGroupNameHasBeenSet; }
-    inline void SetParameterGroupName(const Aws::String& value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName = value; }
-    inline void SetParameterGroupName(Aws::String&& value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName = std::move(value); }
-    inline void SetParameterGroupName(const char* value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName.assign(value); }
-    inline ClusterParameterGroup& WithParameterGroupName(const Aws::String& value) { SetParameterGroupName(value); return *this;}
-    inline ClusterParameterGroup& WithParameterGroupName(Aws::String&& value) { SetParameterGroupName(std::move(value)); return *this;}
-    inline ClusterParameterGroup& WithParameterGroupName(const char* value) { SetParameterGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of tags for the cluster parameter group.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  ClusterParameterGroup& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  ClusterParameterGroup& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_parameterGroupName;
 
-    ///@{
-    /**
-     * <p>The name of the cluster parameter group family that this cluster parameter
-     * group is compatible with.</p>
-     */
-    inline const Aws::String& GetParameterGroupFamily() const{ return m_parameterGroupFamily; }
-    inline bool ParameterGroupFamilyHasBeenSet() const { return m_parameterGroupFamilyHasBeenSet; }
-    inline void SetParameterGroupFamily(const Aws::String& value) { m_parameterGroupFamilyHasBeenSet = true; m_parameterGroupFamily = value; }
-    inline void SetParameterGroupFamily(Aws::String&& value) { m_parameterGroupFamilyHasBeenSet = true; m_parameterGroupFamily = std::move(value); }
-    inline void SetParameterGroupFamily(const char* value) { m_parameterGroupFamilyHasBeenSet = true; m_parameterGroupFamily.assign(value); }
-    inline ClusterParameterGroup& WithParameterGroupFamily(const Aws::String& value) { SetParameterGroupFamily(value); return *this;}
-    inline ClusterParameterGroup& WithParameterGroupFamily(Aws::String&& value) { SetParameterGroupFamily(std::move(value)); return *this;}
-    inline ClusterParameterGroup& WithParameterGroupFamily(const char* value) { SetParameterGroupFamily(value); return *this;}
-    ///@}
+  Aws::String m_parameterGroupFamily;
 
-    ///@{
-    /**
-     * <p>The description of the parameter group.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline ClusterParameterGroup& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline ClusterParameterGroup& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline ClusterParameterGroup& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The list of tags for the cluster parameter group.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ClusterParameterGroup& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline ClusterParameterGroup& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ClusterParameterGroup& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline ClusterParameterGroup& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Tag> m_tags;
+  bool m_parameterGroupNameHasBeenSet = false;
+  bool m_parameterGroupFamilyHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_parameterGroupName;
-    bool m_parameterGroupNameHasBeenSet = false;
-
-    Aws::String m_parameterGroupFamily;
-    bool m_parameterGroupFamilyHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

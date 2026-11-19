@@ -4,246 +4,272 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/securityhub/model/AwsIamPolicyVersion.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>Represents an IAM permissions policy.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsIamPolicyDetails">AWS
+ * API Reference</a></p>
+ */
+class AwsIamPolicyDetails {
+ public:
+  AWS_SECURITYHUB_API AwsIamPolicyDetails() = default;
+  AWS_SECURITYHUB_API AwsIamPolicyDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API AwsIamPolicyDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Represents an IAM permissions policy.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsIamPolicyDetails">AWS
-   * API Reference</a></p>
+   * <p>The number of users, groups, and roles that the policy is attached to.</p>
    */
-  class AwsIamPolicyDetails
-  {
-  public:
-    AWS_SECURITYHUB_API AwsIamPolicyDetails();
-    AWS_SECURITYHUB_API AwsIamPolicyDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API AwsIamPolicyDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline int GetAttachmentCount() const { return m_attachmentCount; }
+  inline bool AttachmentCountHasBeenSet() const { return m_attachmentCountHasBeenSet; }
+  inline void SetAttachmentCount(int value) {
+    m_attachmentCountHasBeenSet = true;
+    m_attachmentCount = value;
+  }
+  inline AwsIamPolicyDetails& WithAttachmentCount(int value) {
+    SetAttachmentCount(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>When the policy was created.</p> <p>For more information about the validation
+   * and formatting of timestamp fields in Security Hub CSPM, see <a
+   * href="https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps">Timestamps</a>.</p>
+   */
+  inline const Aws::String& GetCreateDate() const { return m_createDate; }
+  inline bool CreateDateHasBeenSet() const { return m_createDateHasBeenSet; }
+  template <typename CreateDateT = Aws::String>
+  void SetCreateDate(CreateDateT&& value) {
+    m_createDateHasBeenSet = true;
+    m_createDate = std::forward<CreateDateT>(value);
+  }
+  template <typename CreateDateT = Aws::String>
+  AwsIamPolicyDetails& WithCreateDate(CreateDateT&& value) {
+    SetCreateDate(std::forward<CreateDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of users, groups, and roles that the policy is attached to.</p>
-     */
-    inline int GetAttachmentCount() const{ return m_attachmentCount; }
-    inline bool AttachmentCountHasBeenSet() const { return m_attachmentCountHasBeenSet; }
-    inline void SetAttachmentCount(int value) { m_attachmentCountHasBeenSet = true; m_attachmentCount = value; }
-    inline AwsIamPolicyDetails& WithAttachmentCount(int value) { SetAttachmentCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the default version of the policy.</p>
+   */
+  inline const Aws::String& GetDefaultVersionId() const { return m_defaultVersionId; }
+  inline bool DefaultVersionIdHasBeenSet() const { return m_defaultVersionIdHasBeenSet; }
+  template <typename DefaultVersionIdT = Aws::String>
+  void SetDefaultVersionId(DefaultVersionIdT&& value) {
+    m_defaultVersionIdHasBeenSet = true;
+    m_defaultVersionId = std::forward<DefaultVersionIdT>(value);
+  }
+  template <typename DefaultVersionIdT = Aws::String>
+  AwsIamPolicyDetails& WithDefaultVersionId(DefaultVersionIdT&& value) {
+    SetDefaultVersionId(std::forward<DefaultVersionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When the policy was created.</p> <p>This field accepts only the specified
-     * formats. Timestamps can end with <code>Z</code> or <code>("+" / "-") time-hour
-     * [":" time-minute]</code>. The time-secfrac after seconds is limited to a maximum
-     * of 9 digits. The offset is bounded by +/-18:00. Here are valid timestamp formats
-     * with examples:</p> <ul> <li> <p> <code>YYYY-MM-DDTHH:MM:SSZ</code> (for example,
-     * <code>2019-01-31T23:00:00Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ</code> (for example,
-     * <code>2019-01-31T23:00:00.123456789Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10+17:59</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS-HHMM</code> (for example,
-     * <code>2024-01-04T15:25:10-1759</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10.123456789+17:59</code>)</p> </li> </ul>
-     */
-    inline const Aws::String& GetCreateDate() const{ return m_createDate; }
-    inline bool CreateDateHasBeenSet() const { return m_createDateHasBeenSet; }
-    inline void SetCreateDate(const Aws::String& value) { m_createDateHasBeenSet = true; m_createDate = value; }
-    inline void SetCreateDate(Aws::String&& value) { m_createDateHasBeenSet = true; m_createDate = std::move(value); }
-    inline void SetCreateDate(const char* value) { m_createDateHasBeenSet = true; m_createDate.assign(value); }
-    inline AwsIamPolicyDetails& WithCreateDate(const Aws::String& value) { SetCreateDate(value); return *this;}
-    inline AwsIamPolicyDetails& WithCreateDate(Aws::String&& value) { SetCreateDate(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithCreateDate(const char* value) { SetCreateDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A description of the policy.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  AwsIamPolicyDetails& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the default version of the policy.</p>
-     */
-    inline const Aws::String& GetDefaultVersionId() const{ return m_defaultVersionId; }
-    inline bool DefaultVersionIdHasBeenSet() const { return m_defaultVersionIdHasBeenSet; }
-    inline void SetDefaultVersionId(const Aws::String& value) { m_defaultVersionIdHasBeenSet = true; m_defaultVersionId = value; }
-    inline void SetDefaultVersionId(Aws::String&& value) { m_defaultVersionIdHasBeenSet = true; m_defaultVersionId = std::move(value); }
-    inline void SetDefaultVersionId(const char* value) { m_defaultVersionIdHasBeenSet = true; m_defaultVersionId.assign(value); }
-    inline AwsIamPolicyDetails& WithDefaultVersionId(const Aws::String& value) { SetDefaultVersionId(value); return *this;}
-    inline AwsIamPolicyDetails& WithDefaultVersionId(Aws::String&& value) { SetDefaultVersionId(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithDefaultVersionId(const char* value) { SetDefaultVersionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether the policy can be attached to a user, group, or role.</p>
+   */
+  inline bool GetIsAttachable() const { return m_isAttachable; }
+  inline bool IsAttachableHasBeenSet() const { return m_isAttachableHasBeenSet; }
+  inline void SetIsAttachable(bool value) {
+    m_isAttachableHasBeenSet = true;
+    m_isAttachable = value;
+  }
+  inline AwsIamPolicyDetails& WithIsAttachable(bool value) {
+    SetIsAttachable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description of the policy.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline AwsIamPolicyDetails& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline AwsIamPolicyDetails& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The path to the policy.</p>
+   */
+  inline const Aws::String& GetPath() const { return m_path; }
+  inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
+  template <typename PathT = Aws::String>
+  void SetPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path = std::forward<PathT>(value);
+  }
+  template <typename PathT = Aws::String>
+  AwsIamPolicyDetails& WithPath(PathT&& value) {
+    SetPath(std::forward<PathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether the policy can be attached to a user, group, or role.</p>
-     */
-    inline bool GetIsAttachable() const{ return m_isAttachable; }
-    inline bool IsAttachableHasBeenSet() const { return m_isAttachableHasBeenSet; }
-    inline void SetIsAttachable(bool value) { m_isAttachableHasBeenSet = true; m_isAttachable = value; }
-    inline AwsIamPolicyDetails& WithIsAttachable(bool value) { SetIsAttachable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of users and roles that use the policy to set the permissions
+   * boundary.</p>
+   */
+  inline int GetPermissionsBoundaryUsageCount() const { return m_permissionsBoundaryUsageCount; }
+  inline bool PermissionsBoundaryUsageCountHasBeenSet() const { return m_permissionsBoundaryUsageCountHasBeenSet; }
+  inline void SetPermissionsBoundaryUsageCount(int value) {
+    m_permissionsBoundaryUsageCountHasBeenSet = true;
+    m_permissionsBoundaryUsageCount = value;
+  }
+  inline AwsIamPolicyDetails& WithPermissionsBoundaryUsageCount(int value) {
+    SetPermissionsBoundaryUsageCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The path to the policy.</p>
-     */
-    inline const Aws::String& GetPath() const{ return m_path; }
-    inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
-    inline void SetPath(const Aws::String& value) { m_pathHasBeenSet = true; m_path = value; }
-    inline void SetPath(Aws::String&& value) { m_pathHasBeenSet = true; m_path = std::move(value); }
-    inline void SetPath(const char* value) { m_pathHasBeenSet = true; m_path.assign(value); }
-    inline AwsIamPolicyDetails& WithPath(const Aws::String& value) { SetPath(value); return *this;}
-    inline AwsIamPolicyDetails& WithPath(Aws::String&& value) { SetPath(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithPath(const char* value) { SetPath(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier of the policy.</p>
+   */
+  inline const Aws::String& GetPolicyId() const { return m_policyId; }
+  inline bool PolicyIdHasBeenSet() const { return m_policyIdHasBeenSet; }
+  template <typename PolicyIdT = Aws::String>
+  void SetPolicyId(PolicyIdT&& value) {
+    m_policyIdHasBeenSet = true;
+    m_policyId = std::forward<PolicyIdT>(value);
+  }
+  template <typename PolicyIdT = Aws::String>
+  AwsIamPolicyDetails& WithPolicyId(PolicyIdT&& value) {
+    SetPolicyId(std::forward<PolicyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of users and roles that use the policy to set the permissions
-     * boundary.</p>
-     */
-    inline int GetPermissionsBoundaryUsageCount() const{ return m_permissionsBoundaryUsageCount; }
-    inline bool PermissionsBoundaryUsageCountHasBeenSet() const { return m_permissionsBoundaryUsageCountHasBeenSet; }
-    inline void SetPermissionsBoundaryUsageCount(int value) { m_permissionsBoundaryUsageCountHasBeenSet = true; m_permissionsBoundaryUsageCount = value; }
-    inline AwsIamPolicyDetails& WithPermissionsBoundaryUsageCount(int value) { SetPermissionsBoundaryUsageCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the policy.</p>
+   */
+  inline const Aws::String& GetPolicyName() const { return m_policyName; }
+  inline bool PolicyNameHasBeenSet() const { return m_policyNameHasBeenSet; }
+  template <typename PolicyNameT = Aws::String>
+  void SetPolicyName(PolicyNameT&& value) {
+    m_policyNameHasBeenSet = true;
+    m_policyName = std::forward<PolicyNameT>(value);
+  }
+  template <typename PolicyNameT = Aws::String>
+  AwsIamPolicyDetails& WithPolicyName(PolicyNameT&& value) {
+    SetPolicyName(std::forward<PolicyNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the policy.</p>
-     */
-    inline const Aws::String& GetPolicyId() const{ return m_policyId; }
-    inline bool PolicyIdHasBeenSet() const { return m_policyIdHasBeenSet; }
-    inline void SetPolicyId(const Aws::String& value) { m_policyIdHasBeenSet = true; m_policyId = value; }
-    inline void SetPolicyId(Aws::String&& value) { m_policyIdHasBeenSet = true; m_policyId = std::move(value); }
-    inline void SetPolicyId(const char* value) { m_policyIdHasBeenSet = true; m_policyId.assign(value); }
-    inline AwsIamPolicyDetails& WithPolicyId(const Aws::String& value) { SetPolicyId(value); return *this;}
-    inline AwsIamPolicyDetails& WithPolicyId(Aws::String&& value) { SetPolicyId(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithPolicyId(const char* value) { SetPolicyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>List of versions of the policy.</p>
+   */
+  inline const Aws::Vector<AwsIamPolicyVersion>& GetPolicyVersionList() const { return m_policyVersionList; }
+  inline bool PolicyVersionListHasBeenSet() const { return m_policyVersionListHasBeenSet; }
+  template <typename PolicyVersionListT = Aws::Vector<AwsIamPolicyVersion>>
+  void SetPolicyVersionList(PolicyVersionListT&& value) {
+    m_policyVersionListHasBeenSet = true;
+    m_policyVersionList = std::forward<PolicyVersionListT>(value);
+  }
+  template <typename PolicyVersionListT = Aws::Vector<AwsIamPolicyVersion>>
+  AwsIamPolicyDetails& WithPolicyVersionList(PolicyVersionListT&& value) {
+    SetPolicyVersionList(std::forward<PolicyVersionListT>(value));
+    return *this;
+  }
+  template <typename PolicyVersionListT = AwsIamPolicyVersion>
+  AwsIamPolicyDetails& AddPolicyVersionList(PolicyVersionListT&& value) {
+    m_policyVersionListHasBeenSet = true;
+    m_policyVersionList.emplace_back(std::forward<PolicyVersionListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the policy.</p>
-     */
-    inline const Aws::String& GetPolicyName() const{ return m_policyName; }
-    inline bool PolicyNameHasBeenSet() const { return m_policyNameHasBeenSet; }
-    inline void SetPolicyName(const Aws::String& value) { m_policyNameHasBeenSet = true; m_policyName = value; }
-    inline void SetPolicyName(Aws::String&& value) { m_policyNameHasBeenSet = true; m_policyName = std::move(value); }
-    inline void SetPolicyName(const char* value) { m_policyNameHasBeenSet = true; m_policyName.assign(value); }
-    inline AwsIamPolicyDetails& WithPolicyName(const Aws::String& value) { SetPolicyName(value); return *this;}
-    inline AwsIamPolicyDetails& WithPolicyName(Aws::String&& value) { SetPolicyName(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithPolicyName(const char* value) { SetPolicyName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When the policy was most recently updated.</p> <p>For more information about
+   * the validation and formatting of timestamp fields in Security Hub CSPM, see <a
+   * href="https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps">Timestamps</a>.</p>
+   */
+  inline const Aws::String& GetUpdateDate() const { return m_updateDate; }
+  inline bool UpdateDateHasBeenSet() const { return m_updateDateHasBeenSet; }
+  template <typename UpdateDateT = Aws::String>
+  void SetUpdateDate(UpdateDateT&& value) {
+    m_updateDateHasBeenSet = true;
+    m_updateDate = std::forward<UpdateDateT>(value);
+  }
+  template <typename UpdateDateT = Aws::String>
+  AwsIamPolicyDetails& WithUpdateDate(UpdateDateT&& value) {
+    SetUpdateDate(std::forward<UpdateDateT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  int m_attachmentCount{0};
 
-    ///@{
-    /**
-     * <p>List of versions of the policy.</p>
-     */
-    inline const Aws::Vector<AwsIamPolicyVersion>& GetPolicyVersionList() const{ return m_policyVersionList; }
-    inline bool PolicyVersionListHasBeenSet() const { return m_policyVersionListHasBeenSet; }
-    inline void SetPolicyVersionList(const Aws::Vector<AwsIamPolicyVersion>& value) { m_policyVersionListHasBeenSet = true; m_policyVersionList = value; }
-    inline void SetPolicyVersionList(Aws::Vector<AwsIamPolicyVersion>&& value) { m_policyVersionListHasBeenSet = true; m_policyVersionList = std::move(value); }
-    inline AwsIamPolicyDetails& WithPolicyVersionList(const Aws::Vector<AwsIamPolicyVersion>& value) { SetPolicyVersionList(value); return *this;}
-    inline AwsIamPolicyDetails& WithPolicyVersionList(Aws::Vector<AwsIamPolicyVersion>&& value) { SetPolicyVersionList(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& AddPolicyVersionList(const AwsIamPolicyVersion& value) { m_policyVersionListHasBeenSet = true; m_policyVersionList.push_back(value); return *this; }
-    inline AwsIamPolicyDetails& AddPolicyVersionList(AwsIamPolicyVersion&& value) { m_policyVersionListHasBeenSet = true; m_policyVersionList.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_createDate;
 
-    ///@{
-    /**
-     * <p>When the policy was most recently updated.</p> <p>This field accepts only the
-     * specified formats. Timestamps can end with <code>Z</code> or <code>("+" / "-")
-     * time-hour [":" time-minute]</code>. The time-secfrac after seconds is limited to
-     * a maximum of 9 digits. The offset is bounded by +/-18:00. Here are valid
-     * timestamp formats with examples:</p> <ul> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SSZ</code> (for example,
-     * <code>2019-01-31T23:00:00Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ</code> (for example,
-     * <code>2019-01-31T23:00:00.123456789Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10+17:59</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS-HHMM</code> (for example,
-     * <code>2024-01-04T15:25:10-1759</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10.123456789+17:59</code>)</p> </li> </ul>
-     */
-    inline const Aws::String& GetUpdateDate() const{ return m_updateDate; }
-    inline bool UpdateDateHasBeenSet() const { return m_updateDateHasBeenSet; }
-    inline void SetUpdateDate(const Aws::String& value) { m_updateDateHasBeenSet = true; m_updateDate = value; }
-    inline void SetUpdateDate(Aws::String&& value) { m_updateDateHasBeenSet = true; m_updateDate = std::move(value); }
-    inline void SetUpdateDate(const char* value) { m_updateDateHasBeenSet = true; m_updateDate.assign(value); }
-    inline AwsIamPolicyDetails& WithUpdateDate(const Aws::String& value) { SetUpdateDate(value); return *this;}
-    inline AwsIamPolicyDetails& WithUpdateDate(Aws::String&& value) { SetUpdateDate(std::move(value)); return *this;}
-    inline AwsIamPolicyDetails& WithUpdateDate(const char* value) { SetUpdateDate(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_defaultVersionId;
 
-    int m_attachmentCount;
-    bool m_attachmentCountHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_createDate;
-    bool m_createDateHasBeenSet = false;
+  bool m_isAttachable{false};
 
-    Aws::String m_defaultVersionId;
-    bool m_defaultVersionIdHasBeenSet = false;
+  Aws::String m_path;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  int m_permissionsBoundaryUsageCount{0};
 
-    bool m_isAttachable;
-    bool m_isAttachableHasBeenSet = false;
+  Aws::String m_policyId;
 
-    Aws::String m_path;
-    bool m_pathHasBeenSet = false;
+  Aws::String m_policyName;
 
-    int m_permissionsBoundaryUsageCount;
-    bool m_permissionsBoundaryUsageCountHasBeenSet = false;
+  Aws::Vector<AwsIamPolicyVersion> m_policyVersionList;
 
-    Aws::String m_policyId;
-    bool m_policyIdHasBeenSet = false;
+  Aws::String m_updateDate;
+  bool m_attachmentCountHasBeenSet = false;
+  bool m_createDateHasBeenSet = false;
+  bool m_defaultVersionIdHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_isAttachableHasBeenSet = false;
+  bool m_pathHasBeenSet = false;
+  bool m_permissionsBoundaryUsageCountHasBeenSet = false;
+  bool m_policyIdHasBeenSet = false;
+  bool m_policyNameHasBeenSet = false;
+  bool m_policyVersionListHasBeenSet = false;
+  bool m_updateDateHasBeenSet = false;
+};
 
-    Aws::String m_policyName;
-    bool m_policyNameHasBeenSet = false;
-
-    Aws::Vector<AwsIamPolicyVersion> m_policyVersionList;
-    bool m_policyVersionListHasBeenSet = false;
-
-    Aws::String m_updateDate;
-    bool m_updateDateHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

@@ -4,10 +4,10 @@
  */
 
 #include <aws/codecommit/model/DeleteApprovalRuleTemplateResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
@@ -17,32 +17,22 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteApprovalRuleTemplateResult::DeleteApprovalRuleTemplateResult()
-{
-}
+DeleteApprovalRuleTemplateResult::DeleteApprovalRuleTemplateResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-DeleteApprovalRuleTemplateResult::DeleteApprovalRuleTemplateResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-DeleteApprovalRuleTemplateResult& DeleteApprovalRuleTemplateResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+DeleteApprovalRuleTemplateResult& DeleteApprovalRuleTemplateResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("approvalRuleTemplateId"))
-  {
+  if (jsonValue.ValueExists("approvalRuleTemplateId")) {
     m_approvalRuleTemplateId = jsonValue.GetString("approvalRuleTemplateId");
-
+    m_approvalRuleTemplateIdHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

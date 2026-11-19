@@ -12,16 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetFederationTokenRequest::GetFederationTokenRequest() : 
-    m_instanceIdHasBeenSet(false)
-{
-}
-
-Aws::String GetFederationTokenRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetFederationTokenRequest::SerializePayload() const { return {}; }

@@ -4,89 +4,113 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/ReplicationTaskIndividualAssessment.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeReplicationTaskIndividualAssessmentsResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeReplicationTaskIndividualAssessmentsResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeReplicationTaskIndividualAssessmentsResponse">AWS
-   * API Reference</a></p>
+   * <p>A pagination token returned for you to pass to a subsequent request. If you
+   * pass this token as the <code>Marker</code> value in a subsequent request, the
+   * response includes only records beyond the marker, up to the value specified in
+   * the request by <code>MaxRecords</code>.</p>
    */
-  class DescribeReplicationTaskIndividualAssessmentsResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult();
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationTaskIndividualAssessmentsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeReplicationTaskIndividualAssessmentsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>One or more individual assessments as specified by <code>Filters</code>.</p>
+   */
+  inline const Aws::Vector<ReplicationTaskIndividualAssessment>& GetReplicationTaskIndividualAssessments() const {
+    return m_replicationTaskIndividualAssessments;
+  }
+  template <typename ReplicationTaskIndividualAssessmentsT = Aws::Vector<ReplicationTaskIndividualAssessment>>
+  void SetReplicationTaskIndividualAssessments(ReplicationTaskIndividualAssessmentsT&& value) {
+    m_replicationTaskIndividualAssessmentsHasBeenSet = true;
+    m_replicationTaskIndividualAssessments = std::forward<ReplicationTaskIndividualAssessmentsT>(value);
+  }
+  template <typename ReplicationTaskIndividualAssessmentsT = Aws::Vector<ReplicationTaskIndividualAssessment>>
+  DescribeReplicationTaskIndividualAssessmentsResult& WithReplicationTaskIndividualAssessments(
+      ReplicationTaskIndividualAssessmentsT&& value) {
+    SetReplicationTaskIndividualAssessments(std::forward<ReplicationTaskIndividualAssessmentsT>(value));
+    return *this;
+  }
+  template <typename ReplicationTaskIndividualAssessmentsT = ReplicationTaskIndividualAssessment>
+  DescribeReplicationTaskIndividualAssessmentsResult& AddReplicationTaskIndividualAssessments(
+      ReplicationTaskIndividualAssessmentsT&& value) {
+    m_replicationTaskIndividualAssessmentsHasBeenSet = true;
+    m_replicationTaskIndividualAssessments.emplace_back(std::forward<ReplicationTaskIndividualAssessmentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A pagination token returned for you to pass to a subsequent request. If you
-     * pass this token as the <code>Marker</code> value in a subsequent request, the
-     * response includes only records beyond the marker, up to the value specified in
-     * the request by <code>MaxRecords</code>.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>One or more individual assessments as specified by <code>Filters</code>.</p>
-     */
-    inline const Aws::Vector<ReplicationTaskIndividualAssessment>& GetReplicationTaskIndividualAssessments() const{ return m_replicationTaskIndividualAssessments; }
-    inline void SetReplicationTaskIndividualAssessments(const Aws::Vector<ReplicationTaskIndividualAssessment>& value) { m_replicationTaskIndividualAssessments = value; }
-    inline void SetReplicationTaskIndividualAssessments(Aws::Vector<ReplicationTaskIndividualAssessment>&& value) { m_replicationTaskIndividualAssessments = std::move(value); }
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithReplicationTaskIndividualAssessments(const Aws::Vector<ReplicationTaskIndividualAssessment>& value) { SetReplicationTaskIndividualAssessments(value); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithReplicationTaskIndividualAssessments(Aws::Vector<ReplicationTaskIndividualAssessment>&& value) { SetReplicationTaskIndividualAssessments(std::move(value)); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& AddReplicationTaskIndividualAssessments(const ReplicationTaskIndividualAssessment& value) { m_replicationTaskIndividualAssessments.push_back(value); return *this; }
-    inline DescribeReplicationTaskIndividualAssessmentsResult& AddReplicationTaskIndividualAssessments(ReplicationTaskIndividualAssessment&& value) { m_replicationTaskIndividualAssessments.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReplicationTaskIndividualAssessmentsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReplicationTaskIndividualAssessmentsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::Vector<ReplicationTaskIndividualAssessment> m_replicationTaskIndividualAssessments;
 
-    Aws::Vector<ReplicationTaskIndividualAssessment> m_replicationTaskIndividualAssessments;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_replicationTaskIndividualAssessmentsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

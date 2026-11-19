@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/inspector-scan/Inspectorscan_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/inspector-scan/Inspectorscan_EXPORTS.h>
 
-#include <aws/inspector-scan/InspectorscanEndpointRules.h>
-
-
-namespace Aws
-{
-namespace inspectorscan
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace inspectorscan {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using InspectorscanClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using InspectorscanEndpointProviderBase =
     EndpointProviderBase<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
 
 using InspectorscanDefaultEpProviderBase =
-    DefaultEndpointProvider<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
+    BDDEndpointProvider<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_INSPECTORSCAN_API InspectorscanEndpointProvider : public InspectorscanDefaultEpProviderBase
-{
-public:
-    using InspectorscanResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_INSPECTORSCAN_API InspectorscanEndpointProvider : public InspectorscanDefaultEpProviderBase {
+ public:
+  using InspectorscanResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    InspectorscanEndpointProvider()
-      : InspectorscanDefaultEpProviderBase(Aws::inspectorscan::InspectorscanEndpointRules::GetRulesBlob(), Aws::inspectorscan::InspectorscanEndpointRules::RulesBlobSize)
-    {}
+  InspectorscanEndpointProvider();
 
-    ~InspectorscanEndpointProvider()
-    {
-    }
+  ~InspectorscanEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace inspectorscan
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace inspectorscan
+}  // namespace Aws

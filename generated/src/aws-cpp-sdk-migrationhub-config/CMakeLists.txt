@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-migrationhub-config "C++ SDK for the AWS migrationhub-config service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-migrationhub-config "C++ SDK for AWS Migration Hub Config" aws-cpp-sdk-core)
 
 file(GLOB AWS_MIGRATIONHUB-CONFIG_HEADERS
     "include/aws/migrationhub-config/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MIGRATIONHUB-CONFIG_HEADERS
 
 file(GLOB AWS_MIGRATIONHUB-CONFIG_MODEL_HEADERS
     "include/aws/migrationhub-config/model/*.h"
+)
+
+file(GLOB AWS_MIGRATIONHUB-CONFIG_INTERNAL_HEADERS
+    "include/aws/migrationhub-config/internal/*.h"
 )
 
 file(GLOB AWS_MIGRATIONHUB-CONFIG_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MIGRATIONHUB-CONFIG_MODEL_SOURCE
 
 file(GLOB MIGRATIONHUB-CONFIG_UNIFIED_HEADERS
     ${AWS_MIGRATIONHUB-CONFIG_HEADERS}
+    ${AWS_MIGRATIONHUB-CONFIG_INTERNAL_HEADERS}
     ${AWS_MIGRATIONHUB-CONFIG_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\migrationhub-config" FILES ${AWS_MIGRATIONHUB-CONFIG_HEADERS})
+        source_group("Header Files\\aws\\migrationhub-config\\internal" FILES ${AWS_MIGRATIONHUB-CONFIG_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\migrationhub-config\\model" FILES ${AWS_MIGRATIONHUB-CONFIG_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MIGRATIONHUB-CONFIG_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MIGRATIONHUB-CONFIG_MODEL_SOURCE})

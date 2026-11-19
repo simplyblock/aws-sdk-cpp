@@ -3,85 +3,282 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/textract/model/HumanLoopQuotaExceededException.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Textract
-{
-namespace Model
-{
+namespace Aws {
+namespace Textract {
+namespace Model {
 
-HumanLoopQuotaExceededException::HumanLoopQuotaExceededException() : 
-    m_resourceTypeHasBeenSet(false),
-    m_quotaCodeHasBeenSet(false),
-    m_serviceCodeHasBeenSet(false)
-{
+HumanLoopQuotaExceededException::HumanLoopQuotaExceededException(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-HumanLoopQuotaExceededException::HumanLoopQuotaExceededException(JsonView jsonValue)
-  : HumanLoopQuotaExceededException()
-{
-  *this = jsonValue;
-}
+HumanLoopQuotaExceededException& HumanLoopQuotaExceededException::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-HumanLoopQuotaExceededException& HumanLoopQuotaExceededException::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ResourceType"))
-  {
-    m_resourceType = jsonValue.GetString("ResourceType");
+              if (initialKeyStr == "ResourceType") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_resourceType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_resourceType = ss.str();
+                  }
+                }
+                m_resourceTypeHasBeenSet = true;
+              }
 
-    m_resourceTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "QuotaCode") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_quotaCode = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_quotaCode = ss.str();
+                  }
+                }
+                m_quotaCodeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("QuotaCode"))
-  {
-    m_quotaCode = jsonValue.GetString("QuotaCode");
+              else if (initialKeyStr == "ServiceCode") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_serviceCode = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_serviceCode = ss.str();
+                  }
+                }
+                m_serviceCodeHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("HumanLoopQuotaExceededException", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_quotaCodeHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("ServiceCode"))
-  {
-    m_serviceCode = jsonValue.GetString("ServiceCode");
+            if (initialKeyStr == "ResourceType") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_resourceType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_resourceType = ss.str();
+                }
+              }
+              m_resourceTypeHasBeenSet = true;
+            }
 
-    m_serviceCodeHasBeenSet = true;
+            else if (initialKeyStr == "QuotaCode") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_quotaCode = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_quotaCode = ss.str();
+                }
+              }
+              m_quotaCodeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ServiceCode") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_serviceCode = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_serviceCode = ss.str();
+                }
+              }
+              m_serviceCodeHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue HumanLoopQuotaExceededException::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_resourceTypeHasBeenSet)
-  {
-   payload.WithString("ResourceType", m_resourceType);
-
+void HumanLoopQuotaExceededException::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_quotaCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_serviceCodeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_quotaCodeHasBeenSet)
-  {
-   payload.WithString("QuotaCode", m_quotaCode);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_resourceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceType.c_str()));
   }
 
-  if(m_serviceCodeHasBeenSet)
-  {
-   payload.WithString("ServiceCode", m_serviceCode);
-
+  if (m_quotaCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("QuotaCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_quotaCode.c_str()));
   }
 
-  return payload;
+  if (m_serviceCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServiceCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_serviceCode.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace Textract
-} // namespace Aws
+}  // namespace Model
+}  // namespace Textract
+}  // namespace Aws

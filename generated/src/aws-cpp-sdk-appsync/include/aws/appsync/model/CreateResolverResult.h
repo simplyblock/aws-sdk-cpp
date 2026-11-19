@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/appsync/AppSync_EXPORTS.h>
 #include <aws/appsync/model/Resolver.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppSync
-{
-namespace Model
-{
-  class CreateResolverResult
-  {
-  public:
-    AWS_APPSYNC_API CreateResolverResult();
-    AWS_APPSYNC_API CreateResolverResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSYNC_API CreateResolverResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppSync {
+namespace Model {
+class CreateResolverResult {
+ public:
+  AWS_APPSYNC_API CreateResolverResult() = default;
+  AWS_APPSYNC_API CreateResolverResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSYNC_API CreateResolverResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <code>Resolver</code> object.</p>
+   */
+  inline const Resolver& GetResolver() const { return m_resolver; }
+  template <typename ResolverT = Resolver>
+  void SetResolver(ResolverT&& value) {
+    m_resolverHasBeenSet = true;
+    m_resolver = std::forward<ResolverT>(value);
+  }
+  template <typename ResolverT = Resolver>
+  CreateResolverResult& WithResolver(ResolverT&& value) {
+    SetResolver(std::forward<ResolverT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>Resolver</code> object.</p>
-     */
-    inline const Resolver& GetResolver() const{ return m_resolver; }
-    inline void SetResolver(const Resolver& value) { m_resolver = value; }
-    inline void SetResolver(Resolver&& value) { m_resolver = std::move(value); }
-    inline CreateResolverResult& WithResolver(const Resolver& value) { SetResolver(value); return *this;}
-    inline CreateResolverResult& WithResolver(Resolver&& value) { SetResolver(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateResolverResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateResolverResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateResolverResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateResolverResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Resolver m_resolver;
+ private:
+  Resolver m_resolver;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resolverHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

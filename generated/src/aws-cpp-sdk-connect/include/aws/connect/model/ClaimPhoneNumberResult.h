@@ -5,78 +5,90 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class ClaimPhoneNumberResult
-  {
-  public:
-    AWS_CONNECT_API ClaimPhoneNumberResult();
-    AWS_CONNECT_API ClaimPhoneNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API ClaimPhoneNumberResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class ClaimPhoneNumberResult {
+ public:
+  AWS_CONNECT_API ClaimPhoneNumberResult() = default;
+  AWS_CONNECT_API ClaimPhoneNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API ClaimPhoneNumberResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A unique identifier for the phone number.</p>
+   */
+  inline const Aws::String& GetPhoneNumberId() const { return m_phoneNumberId; }
+  template <typename PhoneNumberIdT = Aws::String>
+  void SetPhoneNumberId(PhoneNumberIdT&& value) {
+    m_phoneNumberIdHasBeenSet = true;
+    m_phoneNumberId = std::forward<PhoneNumberIdT>(value);
+  }
+  template <typename PhoneNumberIdT = Aws::String>
+  ClaimPhoneNumberResult& WithPhoneNumberId(PhoneNumberIdT&& value) {
+    SetPhoneNumberId(std::forward<PhoneNumberIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the phone number.</p>
-     */
-    inline const Aws::String& GetPhoneNumberId() const{ return m_phoneNumberId; }
-    inline void SetPhoneNumberId(const Aws::String& value) { m_phoneNumberId = value; }
-    inline void SetPhoneNumberId(Aws::String&& value) { m_phoneNumberId = std::move(value); }
-    inline void SetPhoneNumberId(const char* value) { m_phoneNumberId.assign(value); }
-    inline ClaimPhoneNumberResult& WithPhoneNumberId(const Aws::String& value) { SetPhoneNumberId(value); return *this;}
-    inline ClaimPhoneNumberResult& WithPhoneNumberId(Aws::String&& value) { SetPhoneNumberId(std::move(value)); return *this;}
-    inline ClaimPhoneNumberResult& WithPhoneNumberId(const char* value) { SetPhoneNumberId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the phone number.</p>
+   */
+  inline const Aws::String& GetPhoneNumberArn() const { return m_phoneNumberArn; }
+  template <typename PhoneNumberArnT = Aws::String>
+  void SetPhoneNumberArn(PhoneNumberArnT&& value) {
+    m_phoneNumberArnHasBeenSet = true;
+    m_phoneNumberArn = std::forward<PhoneNumberArnT>(value);
+  }
+  template <typename PhoneNumberArnT = Aws::String>
+  ClaimPhoneNumberResult& WithPhoneNumberArn(PhoneNumberArnT&& value) {
+    SetPhoneNumberArn(std::forward<PhoneNumberArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the phone number.</p>
-     */
-    inline const Aws::String& GetPhoneNumberArn() const{ return m_phoneNumberArn; }
-    inline void SetPhoneNumberArn(const Aws::String& value) { m_phoneNumberArn = value; }
-    inline void SetPhoneNumberArn(Aws::String&& value) { m_phoneNumberArn = std::move(value); }
-    inline void SetPhoneNumberArn(const char* value) { m_phoneNumberArn.assign(value); }
-    inline ClaimPhoneNumberResult& WithPhoneNumberArn(const Aws::String& value) { SetPhoneNumberArn(value); return *this;}
-    inline ClaimPhoneNumberResult& WithPhoneNumberArn(Aws::String&& value) { SetPhoneNumberArn(std::move(value)); return *this;}
-    inline ClaimPhoneNumberResult& WithPhoneNumberArn(const char* value) { SetPhoneNumberArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ClaimPhoneNumberResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ClaimPhoneNumberResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ClaimPhoneNumberResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ClaimPhoneNumberResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_phoneNumberId;
+ private:
+  Aws::String m_phoneNumberId;
 
-    Aws::String m_phoneNumberArn;
+  Aws::String m_phoneNumberArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_phoneNumberIdHasBeenSet = false;
+  bool m_phoneNumberArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

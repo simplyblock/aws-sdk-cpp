@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticfilesystem/model/DescribeLifecycleConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/elasticfilesystem/model/DescribeLifecycleConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::EFS::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeLifecycleConfigurationRequest::DescribeLifecycleConfigurationRequest() : 
-    m_fileSystemIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeLifecycleConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeLifecycleConfigurationRequest::SerializePayload() const { return {}; }

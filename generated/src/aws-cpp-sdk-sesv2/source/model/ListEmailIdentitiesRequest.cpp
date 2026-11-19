@@ -3,48 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sesv2/model/ListEmailIdentitiesRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
-#include <aws/core/http/URI.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/sesv2/model/ListEmailIdentitiesRequest.h>
 
 #include <utility>
 
 using namespace Aws::SESV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
-using namespace Aws::Http;
 
-ListEmailIdentitiesRequest::ListEmailIdentitiesRequest() : 
-    m_nextTokenHasBeenSet(false),
-    m_pageSize(0),
-    m_pageSizeHasBeenSet(false)
-{
-}
+Aws::String ListEmailIdentitiesRequest::SerializePayload() const {
+  JsonValue payload;
 
-Aws::String ListEmailIdentitiesRequest::SerializePayload() const
-{
-  return {};
-}
-
-void ListEmailIdentitiesRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_nextTokenHasBeenSet)
-    {
-      ss << m_nextToken;
-      uri.AddQueryStringParameter("NextToken", ss.str());
-      ss.str("");
+  if (m_filterHasBeenSet) {
+    JsonValue filterJsonMap;
+    for (auto& filterItem : m_filter) {
+      filterJsonMap.WithString(IdentityFilterKeyMapper::GetNameForIdentityFilterKey(filterItem.first), filterItem.second);
     }
+    payload.WithObject("Filter", std::move(filterJsonMap));
+  }
 
-    if(m_pageSizeHasBeenSet)
-    {
-      ss << m_pageSize;
-      uri.AddQueryStringParameter("PageSize", ss.str());
-      ss.str("");
-    }
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("NextToken", m_nextToken);
+  }
 
+  if (m_pageSizeHasBeenSet) {
+    payload.WithInteger("PageSize", m_pageSize);
+  }
+
+  return payload.View().WriteReadable();
 }
-
-
-

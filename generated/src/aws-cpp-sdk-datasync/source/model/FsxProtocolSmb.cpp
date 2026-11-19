@@ -3,99 +3,352 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/FsxProtocolSmb.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DataSync
-{
-namespace Model
-{
+namespace Aws {
+namespace DataSync {
+namespace Model {
 
-FsxProtocolSmb::FsxProtocolSmb() : 
-    m_domainHasBeenSet(false),
-    m_mountOptionsHasBeenSet(false),
-    m_passwordHasBeenSet(false),
-    m_userHasBeenSet(false)
-{
-}
+FsxProtocolSmb::FsxProtocolSmb(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-FsxProtocolSmb::FsxProtocolSmb(JsonView jsonValue)
-  : FsxProtocolSmb()
-{
-  *this = jsonValue;
-}
+FsxProtocolSmb& FsxProtocolSmb::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-FsxProtocolSmb& FsxProtocolSmb::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Domain"))
-  {
-    m_domain = jsonValue.GetString("Domain");
+              if (initialKeyStr == "Domain") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_domain = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_domain = ss.str();
+                  }
+                }
+                m_domainHasBeenSet = true;
+              }
 
-    m_domainHasBeenSet = true;
-  }
+              else if (initialKeyStr == "MountOptions") {
+                m_mountOptions = SmbMountOptions(decoder);
+                m_mountOptionsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("MountOptions"))
-  {
-    m_mountOptions = jsonValue.GetObject("MountOptions");
+              else if (initialKeyStr == "Password") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_password = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_password = ss.str();
+                  }
+                }
+                m_passwordHasBeenSet = true;
+              }
 
-    m_mountOptionsHasBeenSet = true;
-  }
+              else if (initialKeyStr == "User") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_user = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_user = ss.str();
+                  }
+                }
+                m_userHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Password"))
-  {
-    m_password = jsonValue.GetString("Password");
+              else if (initialKeyStr == "ManagedSecretConfig") {
+                m_managedSecretConfig = ManagedSecretConfig(decoder);
+                m_managedSecretConfigHasBeenSet = true;
+              }
 
-    m_passwordHasBeenSet = true;
-  }
+              else if (initialKeyStr == "CmkSecretConfig") {
+                m_cmkSecretConfig = CmkSecretConfig(decoder);
+                m_cmkSecretConfigHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("User"))
-  {
-    m_user = jsonValue.GetString("User");
+              else if (initialKeyStr == "CustomSecretConfig") {
+                m_customSecretConfig = CustomSecretConfig(decoder);
+                m_customSecretConfigHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("FsxProtocolSmb", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_userHasBeenSet = true;
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "Domain") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_domain = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_domain = ss.str();
+                }
+              }
+              m_domainHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "MountOptions") {
+              m_mountOptions = SmbMountOptions(decoder);
+              m_mountOptionsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Password") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_password = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_password = ss.str();
+                }
+              }
+              m_passwordHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "User") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_user = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_user = ss.str();
+                }
+              }
+              m_userHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ManagedSecretConfig") {
+              m_managedSecretConfig = ManagedSecretConfig(decoder);
+              m_managedSecretConfigHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "CmkSecretConfig") {
+              m_cmkSecretConfig = CmkSecretConfig(decoder);
+              m_cmkSecretConfigHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "CustomSecretConfig") {
+              m_customSecretConfig = CustomSecretConfig(decoder);
+              m_customSecretConfigHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue FsxProtocolSmb::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_domainHasBeenSet)
-  {
-   payload.WithString("Domain", m_domain);
-
+void FsxProtocolSmb::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_domainHasBeenSet) {
+    mapSize++;
+  }
+  if (m_mountOptionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_passwordHasBeenSet) {
+    mapSize++;
+  }
+  if (m_userHasBeenSet) {
+    mapSize++;
+  }
+  if (m_managedSecretConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cmkSecretConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_customSecretConfigHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_mountOptionsHasBeenSet)
-  {
-   payload.WithObject("MountOptions", m_mountOptions.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_domainHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Domain"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_domain.c_str()));
   }
 
-  if(m_passwordHasBeenSet)
-  {
-   payload.WithString("Password", m_password);
-
+  if (m_mountOptionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MountOptions"));
+    m_mountOptions.CborEncode(encoder);
   }
 
-  if(m_userHasBeenSet)
-  {
-   payload.WithString("User", m_user);
-
+  if (m_passwordHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Password"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_password.c_str()));
   }
 
-  return payload;
+  if (m_userHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("User"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_user.c_str()));
+  }
+
+  if (m_managedSecretConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ManagedSecretConfig"));
+    m_managedSecretConfig.CborEncode(encoder);
+  }
+
+  if (m_cmkSecretConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CmkSecretConfig"));
+    m_cmkSecretConfig.CborEncode(encoder);
+  }
+
+  if (m_customSecretConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CustomSecretConfig"));
+    m_customSecretConfig.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

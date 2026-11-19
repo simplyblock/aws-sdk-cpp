@@ -4,40 +4,37 @@
  */
 
 #include <aws/codedeploy/model/DeleteGitHubAccountTokenRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteGitHubAccountTokenRequest::DeleteGitHubAccountTokenRequest() : 
-    m_tokenNameHasBeenSet(false)
-{
-}
+Aws::String DeleteGitHubAccountTokenRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteGitHubAccountTokenRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_tokenNameHasBeenSet)
-  {
-   payload.WithString("tokenName", m_tokenName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_tokenNameHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_tokenNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("tokenName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_tokenName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteGitHubAccountTokenRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteGitHubAccountTokenRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.DeleteGitHubAccountToken"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

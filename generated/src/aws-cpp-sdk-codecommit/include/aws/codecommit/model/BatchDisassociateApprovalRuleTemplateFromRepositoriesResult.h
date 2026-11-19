@@ -5,83 +5,108 @@
 
 #pragma once
 #include <aws/codecommit/CodeCommit_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/codecommit/model/BatchDisassociateApprovalRuleTemplateFromRepositoriesError.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeCommit
-{
-namespace Model
-{
-  class BatchDisassociateApprovalRuleTemplateFromRepositoriesResult
-  {
-  public:
-    AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult();
-    AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeCommit {
+namespace Model {
+class BatchDisassociateApprovalRuleTemplateFromRepositoriesResult {
+ public:
+  AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult() = default;
+  AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECOMMIT_API BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of repository names that have had their association with the template
+   * removed.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDisassociatedRepositoryNames() const { return m_disassociatedRepositoryNames; }
+  template <typename DisassociatedRepositoryNamesT = Aws::Vector<Aws::String>>
+  void SetDisassociatedRepositoryNames(DisassociatedRepositoryNamesT&& value) {
+    m_disassociatedRepositoryNamesHasBeenSet = true;
+    m_disassociatedRepositoryNames = std::forward<DisassociatedRepositoryNamesT>(value);
+  }
+  template <typename DisassociatedRepositoryNamesT = Aws::Vector<Aws::String>>
+  BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithDisassociatedRepositoryNames(DisassociatedRepositoryNamesT&& value) {
+    SetDisassociatedRepositoryNames(std::forward<DisassociatedRepositoryNamesT>(value));
+    return *this;
+  }
+  template <typename DisassociatedRepositoryNamesT = Aws::String>
+  BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddDisassociatedRepositoryNames(DisassociatedRepositoryNamesT&& value) {
+    m_disassociatedRepositoryNamesHasBeenSet = true;
+    m_disassociatedRepositoryNames.emplace_back(std::forward<DisassociatedRepositoryNamesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of repository names that have had their association with the template
-     * removed.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDisassociatedRepositoryNames() const{ return m_disassociatedRepositoryNames; }
-    inline void SetDisassociatedRepositoryNames(const Aws::Vector<Aws::String>& value) { m_disassociatedRepositoryNames = value; }
-    inline void SetDisassociatedRepositoryNames(Aws::Vector<Aws::String>&& value) { m_disassociatedRepositoryNames = std::move(value); }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithDisassociatedRepositoryNames(const Aws::Vector<Aws::String>& value) { SetDisassociatedRepositoryNames(value); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithDisassociatedRepositoryNames(Aws::Vector<Aws::String>&& value) { SetDisassociatedRepositoryNames(std::move(value)); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddDisassociatedRepositoryNames(const Aws::String& value) { m_disassociatedRepositoryNames.push_back(value); return *this; }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddDisassociatedRepositoryNames(Aws::String&& value) { m_disassociatedRepositoryNames.push_back(std::move(value)); return *this; }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddDisassociatedRepositoryNames(const char* value) { m_disassociatedRepositoryNames.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of any errors that might have occurred while attempting to remove the
+   * association between the template and the repositories.</p>
+   */
+  inline const Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>& GetErrors() const { return m_errors; }
+  template <typename ErrorsT = Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>>
+  BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = BatchDisassociateApprovalRuleTemplateFromRepositoriesError>
+  BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of any errors that might have occurred while attempting to remove the
-     * association between the template and the repositories.</p>
-     */
-    inline const Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>& GetErrors() const{ return m_errors; }
-    inline void SetErrors(const Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>& value) { m_errors = value; }
-    inline void SetErrors(Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>&& value) { m_errors = std::move(value); }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithErrors(const Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>& value) { SetErrors(value); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithErrors(Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError>&& value) { SetErrors(std::move(value)); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddErrors(const BatchDisassociateApprovalRuleTemplateFromRepositoriesError& value) { m_errors.push_back(value); return *this; }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& AddErrors(BatchDisassociateApprovalRuleTemplateFromRepositoriesError&& value) { m_errors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchDisassociateApprovalRuleTemplateFromRepositoriesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_disassociatedRepositoryNames;
+ private:
+  Aws::Vector<Aws::String> m_disassociatedRepositoryNames;
 
-    Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError> m_errors;
+  Aws::Vector<BatchDisassociateApprovalRuleTemplateFromRepositoriesError> m_errors;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_disassociatedRepositoryNamesHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

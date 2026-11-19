@@ -4,83 +4,118 @@
  */
 
 #pragma once
-#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
-#include <aws/iotsitewise/IoTSiteWiseRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotsitewise/IoTSiteWiseRequest.h>
+#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IoTSiteWise
-{
-namespace Model
-{
+namespace Aws {
+namespace IoTSiteWise {
+namespace Model {
 
+/**
+ */
+class ExecuteQueryRequest : public IoTSiteWiseRequest {
+ public:
+  AWS_IOTSITEWISE_API ExecuteQueryRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ExecuteQuery"; }
+
+  AWS_IOTSITEWISE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The IoT SiteWise query statement.</p>
    */
-  class ExecuteQueryRequest : public IoTSiteWiseRequest
-  {
-  public:
-    AWS_IOTSITEWISE_API ExecuteQueryRequest();
+  inline const Aws::String& GetQueryStatement() const { return m_queryStatement; }
+  inline bool QueryStatementHasBeenSet() const { return m_queryStatementHasBeenSet; }
+  template <typename QueryStatementT = Aws::String>
+  void SetQueryStatement(QueryStatementT&& value) {
+    m_queryStatementHasBeenSet = true;
+    m_queryStatement = std::forward<QueryStatementT>(value);
+  }
+  template <typename QueryStatementT = Aws::String>
+  ExecuteQueryRequest& WithQueryStatement(QueryStatementT&& value) {
+    SetQueryStatement(std::forward<QueryStatementT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ExecuteQuery"; }
+  ///@{
+  /**
+   * <p>The string that specifies the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ExecuteQueryRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IOTSITEWISE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of results to return at one time.</p> <ul> <li> <p>Minimum
+   * is 1</p> </li> <li> <p>Maximum is 20000</p> </li> <li> <p>Default is 20000</p>
+   * </li> </ul>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ExecuteQueryRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A unique case-sensitive identifier that you can provide to ensure the
+   * idempotency of the request. Don't reuse this client token if a new idempotent
+   * request is required.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  ExecuteQueryRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_queryStatement;
 
-    ///@{
-    /**
-     * <p>The IoT SiteWise query statement.</p>
-     */
-    inline const Aws::String& GetQueryStatement() const{ return m_queryStatement; }
-    inline bool QueryStatementHasBeenSet() const { return m_queryStatementHasBeenSet; }
-    inline void SetQueryStatement(const Aws::String& value) { m_queryStatementHasBeenSet = true; m_queryStatement = value; }
-    inline void SetQueryStatement(Aws::String&& value) { m_queryStatementHasBeenSet = true; m_queryStatement = std::move(value); }
-    inline void SetQueryStatement(const char* value) { m_queryStatementHasBeenSet = true; m_queryStatement.assign(value); }
-    inline ExecuteQueryRequest& WithQueryStatement(const Aws::String& value) { SetQueryStatement(value); return *this;}
-    inline ExecuteQueryRequest& WithQueryStatement(Aws::String&& value) { SetQueryStatement(std::move(value)); return *this;}
-    inline ExecuteQueryRequest& WithQueryStatement(const char* value) { SetQueryStatement(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The string that specifies the next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ExecuteQueryRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ExecuteQueryRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ExecuteQueryRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>The maximum number of results to return at one time. The default is 25.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ExecuteQueryRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_queryStatementHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_queryStatement;
-    bool m_queryStatementHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

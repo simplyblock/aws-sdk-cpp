@@ -4,86 +4,118 @@
  */
 
 #pragma once
-#include <aws/opensearch/OpenSearchService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/opensearch/OpenSearchService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
 
+/**
+ * <p>Options to specify the subnets and security groups for an Amazon OpenSearch
+ * Service VPC endpoint. For more information, see <a
+ * href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html">Launching
+ * your Amazon OpenSearch Service domains using a VPC</a>.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/VPCOptions">AWS
+ * API Reference</a></p>
+ */
+class VPCOptions {
+ public:
+  AWS_OPENSEARCHSERVICE_API VPCOptions() = default;
+  AWS_OPENSEARCHSERVICE_API VPCOptions(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API VPCOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Options to specify the subnets and security groups for an Amazon OpenSearch
-   * Service VPC endpoint. For more information, see <a
-   * href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html">Launching
-   * your Amazon OpenSearch Service domains using a VPC</a>.</p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/VPCOptions">AWS
-   * API Reference</a></p>
+   * <p>A list of subnet IDs associated with the VPC endpoints for the domain. If
+   * your domain uses multiple Availability Zones, you need to provide two subnet
+   * IDs, one per zone. Otherwise, provide only one.</p>
    */
-  class VPCOptions
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API VPCOptions();
-    AWS_OPENSEARCHSERVICE_API VPCOptions(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API VPCOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetSubnetIds() const { return m_subnetIds; }
+  inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  void SetSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds = std::forward<SubnetIdsT>(value);
+  }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  VPCOptions& WithSubnetIds(SubnetIdsT&& value) {
+    SetSubnetIds(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  template <typename SubnetIdsT = Aws::String>
+  VPCOptions& AddSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds.emplace_back(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of security group IDs associated with the VPC endpoints for the
+   * domain. If you do not provide a security group ID, OpenSearch Service uses the
+   * default security group for the VPC.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const { return m_securityGroupIds; }
+  inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds = std::forward<SecurityGroupIdsT>(value);
+  }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  VPCOptions& WithSecurityGroupIds(SecurityGroupIdsT&& value) {
+    SetSecurityGroupIds(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupIdsT = Aws::String>
+  VPCOptions& AddSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds.emplace_back(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of subnet IDs associated with the VPC endpoints for the domain. If
-     * your domain uses multiple Availability Zones, you need to provide two subnet
-     * IDs, one per zone. Otherwise, provide only one.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnetIds() const{ return m_subnetIds; }
-    inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
-    inline void SetSubnetIds(const Aws::Vector<Aws::String>& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = value; }
-    inline void SetSubnetIds(Aws::Vector<Aws::String>&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = std::move(value); }
-    inline VPCOptions& WithSubnetIds(const Aws::Vector<Aws::String>& value) { SetSubnetIds(value); return *this;}
-    inline VPCOptions& WithSubnetIds(Aws::Vector<Aws::String>&& value) { SetSubnetIds(std::move(value)); return *this;}
-    inline VPCOptions& AddSubnetIds(const Aws::String& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    inline VPCOptions& AddSubnetIds(Aws::String&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(std::move(value)); return *this; }
-    inline VPCOptions& AddSubnetIds(const char* value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Controls whether egress traffic from the domain is routed through the
+   * customer VPC. When <code>true</code>, outbound traffic flows through the VPC.
+   * When <code>false</code>, outbound traffic goes through the public internet.</p>
+   */
+  inline bool GetEgressEnabled() const { return m_egressEnabled; }
+  inline bool EgressEnabledHasBeenSet() const { return m_egressEnabledHasBeenSet; }
+  inline void SetEgressEnabled(bool value) {
+    m_egressEnabledHasBeenSet = true;
+    m_egressEnabled = value;
+  }
+  inline VPCOptions& WithEgressEnabled(bool value) {
+    SetEgressEnabled(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_subnetIds;
 
-    ///@{
-    /**
-     * <p>The list of security group IDs associated with the VPC endpoints for the
-     * domain. If you do not provide a security group ID, OpenSearch Service uses the
-     * default security group for the VPC.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const{ return m_securityGroupIds; }
-    inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
-    inline void SetSecurityGroupIds(const Aws::Vector<Aws::String>& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = value; }
-    inline void SetSecurityGroupIds(Aws::Vector<Aws::String>&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = std::move(value); }
-    inline VPCOptions& WithSecurityGroupIds(const Aws::Vector<Aws::String>& value) { SetSecurityGroupIds(value); return *this;}
-    inline VPCOptions& WithSecurityGroupIds(Aws::Vector<Aws::String>&& value) { SetSecurityGroupIds(std::move(value)); return *this;}
-    inline VPCOptions& AddSecurityGroupIds(const Aws::String& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    inline VPCOptions& AddSecurityGroupIds(Aws::String&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(std::move(value)); return *this; }
-    inline VPCOptions& AddSecurityGroupIds(const char* value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_securityGroupIds;
 
-    Aws::Vector<Aws::String> m_subnetIds;
-    bool m_subnetIdsHasBeenSet = false;
+  bool m_egressEnabled{false};
+  bool m_subnetIdsHasBeenSet = false;
+  bool m_securityGroupIdsHasBeenSet = false;
+  bool m_egressEnabledHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_securityGroupIds;
-    bool m_securityGroupIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

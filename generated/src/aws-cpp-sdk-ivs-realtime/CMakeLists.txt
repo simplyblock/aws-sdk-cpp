@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ivs-realtime "C++ SDK for the AWS ivs-realtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ivs-realtime "C++ SDK for Amazon Interactive Video Service RealTime" aws-cpp-sdk-core)
 
 file(GLOB AWS_IVS-REALTIME_HEADERS
     "include/aws/ivs-realtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IVS-REALTIME_HEADERS
 
 file(GLOB AWS_IVS-REALTIME_MODEL_HEADERS
     "include/aws/ivs-realtime/model/*.h"
+)
+
+file(GLOB AWS_IVS-REALTIME_INTERNAL_HEADERS
+    "include/aws/ivs-realtime/internal/*.h"
 )
 
 file(GLOB AWS_IVS-REALTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IVS-REALTIME_MODEL_SOURCE
 
 file(GLOB IVS-REALTIME_UNIFIED_HEADERS
     ${AWS_IVS-REALTIME_HEADERS}
+    ${AWS_IVS-REALTIME_INTERNAL_HEADERS}
     ${AWS_IVS-REALTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ivs-realtime" FILES ${AWS_IVS-REALTIME_HEADERS})
+        source_group("Header Files\\aws\\ivs-realtime\\internal" FILES ${AWS_IVS-REALTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ivs-realtime\\model" FILES ${AWS_IVS-REALTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IVS-REALTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IVS-REALTIME_MODEL_SOURCE})

@@ -4,13 +4,15 @@
  */
 
 #include <aws/monitoring/CloudWatchEndpointProvider.h>
+#include <aws/monitoring/internal/CloudWatchEndpointRules.h>
 
-namespace Aws
-{
-namespace CloudWatch
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CloudWatch
-} // namespace Aws
+namespace Aws {
+namespace CloudWatch {
+namespace Endpoint {
+CloudWatchEndpointProvider::CloudWatchEndpointProvider()
+    : CloudWatchDefaultEpProviderBase(Aws::CloudWatch::CloudWatchEndpointRules::GetRulesBlob(),
+                                      Aws::CloudWatch::CloudWatchEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CloudWatch
+}  // namespace Aws

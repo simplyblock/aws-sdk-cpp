@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetImportedModelRequest::GetImportedModelRequest() : 
-    m_modelIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetImportedModelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetImportedModelRequest::SerializePayload() const { return {}; }

@@ -4,64 +4,73 @@
  */
 
 #pragma once
-#include <aws/email/SES_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/email/SES_EXPORTS.h>
 #include <aws/email/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SES
-{
-namespace Model
-{
-  class SendTemplatedEmailResult
-  {
-  public:
-    AWS_SES_API SendTemplatedEmailResult();
-    AWS_SES_API SendTemplatedEmailResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SES_API SendTemplatedEmailResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SES {
+namespace Model {
+class SendTemplatedEmailResult {
+ public:
+  AWS_SES_API SendTemplatedEmailResult() = default;
+  AWS_SES_API SendTemplatedEmailResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SES_API SendTemplatedEmailResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The unique message identifier returned from the
+   * <code>SendTemplatedEmail</code> action. </p>
+   */
+  inline const Aws::String& GetMessageId() const { return m_messageId; }
+  template <typename MessageIdT = Aws::String>
+  void SetMessageId(MessageIdT&& value) {
+    m_messageIdHasBeenSet = true;
+    m_messageId = std::forward<MessageIdT>(value);
+  }
+  template <typename MessageIdT = Aws::String>
+  SendTemplatedEmailResult& WithMessageId(MessageIdT&& value) {
+    SetMessageId(std::forward<MessageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique message identifier returned from the
-     * <code>SendTemplatedEmail</code> action. </p>
-     */
-    inline const Aws::String& GetMessageId() const{ return m_messageId; }
-    inline void SetMessageId(const Aws::String& value) { m_messageId = value; }
-    inline void SetMessageId(Aws::String&& value) { m_messageId = std::move(value); }
-    inline void SetMessageId(const char* value) { m_messageId.assign(value); }
-    inline SendTemplatedEmailResult& WithMessageId(const Aws::String& value) { SetMessageId(value); return *this;}
-    inline SendTemplatedEmailResult& WithMessageId(Aws::String&& value) { SetMessageId(std::move(value)); return *this;}
-    inline SendTemplatedEmailResult& WithMessageId(const char* value) { SetMessageId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline SendTemplatedEmailResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline SendTemplatedEmailResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  SendTemplatedEmailResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_messageId;
+ private:
+  Aws::String m_messageId;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_messageIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SES
-} // namespace Aws
+}  // namespace Model
+}  // namespace SES
+}  // namespace Aws

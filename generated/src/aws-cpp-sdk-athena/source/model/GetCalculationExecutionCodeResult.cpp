@@ -4,10 +4,10 @@
  */
 
 #include <aws/athena/model/GetCalculationExecutionCodeResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
@@ -17,32 +17,24 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetCalculationExecutionCodeResult::GetCalculationExecutionCodeResult()
-{
-}
-
-GetCalculationExecutionCodeResult::GetCalculationExecutionCodeResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetCalculationExecutionCodeResult::GetCalculationExecutionCodeResult(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   *this = result;
 }
 
-GetCalculationExecutionCodeResult& GetCalculationExecutionCodeResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetCalculationExecutionCodeResult& GetCalculationExecutionCodeResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("CodeBlock"))
-  {
+  if (jsonValue.ValueExists("CodeBlock")) {
     m_codeBlock = jsonValue.GetString("CodeBlock");
-
+    m_codeBlockHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

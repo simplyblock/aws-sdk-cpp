@@ -5,81 +5,99 @@
 
 #pragma once
 #include <aws/appsync/AppSync_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appsync/model/FunctionConfiguration.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppSync
-{
-namespace Model
-{
-  class ListFunctionsResult
-  {
-  public:
-    AWS_APPSYNC_API ListFunctionsResult();
-    AWS_APPSYNC_API ListFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSYNC_API ListFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppSync {
+namespace Model {
+class ListFunctionsResult {
+ public:
+  AWS_APPSYNC_API ListFunctionsResult() = default;
+  AWS_APPSYNC_API ListFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSYNC_API ListFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of <code>Function</code> objects.</p>
+   */
+  inline const Aws::Vector<FunctionConfiguration>& GetFunctions() const { return m_functions; }
+  template <typename FunctionsT = Aws::Vector<FunctionConfiguration>>
+  void SetFunctions(FunctionsT&& value) {
+    m_functionsHasBeenSet = true;
+    m_functions = std::forward<FunctionsT>(value);
+  }
+  template <typename FunctionsT = Aws::Vector<FunctionConfiguration>>
+  ListFunctionsResult& WithFunctions(FunctionsT&& value) {
+    SetFunctions(std::forward<FunctionsT>(value));
+    return *this;
+  }
+  template <typename FunctionsT = FunctionConfiguration>
+  ListFunctionsResult& AddFunctions(FunctionsT&& value) {
+    m_functionsHasBeenSet = true;
+    m_functions.emplace_back(std::forward<FunctionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>Function</code> objects.</p>
-     */
-    inline const Aws::Vector<FunctionConfiguration>& GetFunctions() const{ return m_functions; }
-    inline void SetFunctions(const Aws::Vector<FunctionConfiguration>& value) { m_functions = value; }
-    inline void SetFunctions(Aws::Vector<FunctionConfiguration>&& value) { m_functions = std::move(value); }
-    inline ListFunctionsResult& WithFunctions(const Aws::Vector<FunctionConfiguration>& value) { SetFunctions(value); return *this;}
-    inline ListFunctionsResult& WithFunctions(Aws::Vector<FunctionConfiguration>&& value) { SetFunctions(std::move(value)); return *this;}
-    inline ListFunctionsResult& AddFunctions(const FunctionConfiguration& value) { m_functions.push_back(value); return *this; }
-    inline ListFunctionsResult& AddFunctions(FunctionConfiguration&& value) { m_functions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An identifier that was returned from the previous call to this operation,
+   * which you can use to return the next set of items in the list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFunctionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An identifier that was returned from the previous call to this operation,
-     * which you can use to return the next set of items in the list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFunctionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFunctionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFunctionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFunctionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFunctionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFunctionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFunctionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FunctionConfiguration> m_functions;
+ private:
+  Aws::Vector<FunctionConfiguration> m_functions;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_functionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

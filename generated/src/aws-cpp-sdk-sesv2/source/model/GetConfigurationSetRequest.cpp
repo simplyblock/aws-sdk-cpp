@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sesv2/model/GetConfigurationSetRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/sesv2/model/GetConfigurationSetRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::SESV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConfigurationSetRequest::GetConfigurationSetRequest() : 
-    m_configurationSetNameHasBeenSet(false)
-{
-}
-
-Aws::String GetConfigurationSetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConfigurationSetRequest::SerializePayload() const { return {}; }

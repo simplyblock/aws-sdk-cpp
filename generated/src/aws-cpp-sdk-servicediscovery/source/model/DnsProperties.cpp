@@ -3,71 +3,162 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicediscovery/model/DnsProperties.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ServiceDiscovery
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceDiscovery {
+namespace Model {
 
-DnsProperties::DnsProperties() : 
-    m_hostedZoneIdHasBeenSet(false),
-    m_sOAHasBeenSet(false)
-{
-}
+DnsProperties::DnsProperties(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-DnsProperties::DnsProperties(JsonView jsonValue)
-  : DnsProperties()
-{
-  *this = jsonValue;
-}
+DnsProperties& DnsProperties::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-DnsProperties& DnsProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("HostedZoneId"))
-  {
-    m_hostedZoneId = jsonValue.GetString("HostedZoneId");
+              if (initialKeyStr == "HostedZoneId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_hostedZoneId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_hostedZoneId = ss.str();
+                  }
+                }
+                m_hostedZoneIdHasBeenSet = true;
+              }
 
-    m_hostedZoneIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SOA") {
+                m_sOA = SOA(decoder);
+                m_sOAHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("DnsProperties", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("SOA"))
-  {
-    m_sOA = jsonValue.GetObject("SOA");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_sOAHasBeenSet = true;
+            if (initialKeyStr == "HostedZoneId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_hostedZoneId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_hostedZoneId = ss.str();
+                }
+              }
+              m_hostedZoneIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SOA") {
+              m_sOA = SOA(decoder);
+              m_sOAHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue DnsProperties::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_hostedZoneIdHasBeenSet)
-  {
-   payload.WithString("HostedZoneId", m_hostedZoneId);
-
+void DnsProperties::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_hostedZoneIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sOAHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_sOAHasBeenSet)
-  {
-   payload.WithObject("SOA", m_sOA.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_hostedZoneIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HostedZoneId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hostedZoneId.c_str()));
   }
 
-  return payload;
+  if (m_sOAHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SOA"));
+    m_sOA.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace ServiceDiscovery
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceDiscovery
+}  // namespace Aws

@@ -5,84 +5,104 @@
 
 #pragma once
 #include <aws/cloudformation/CloudFormation_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/cloudformation/model/ResponseMetadata.h>
 #include <aws/cloudformation/model/TypeVersionSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFormation
-{
-namespace Model
-{
-  class ListTypeVersionsResult
-  {
-  public:
-    AWS_CLOUDFORMATION_API ListTypeVersionsResult();
-    AWS_CLOUDFORMATION_API ListTypeVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFORMATION_API ListTypeVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFormation {
+namespace Model {
+class ListTypeVersionsResult {
+ public:
+  AWS_CLOUDFORMATION_API ListTypeVersionsResult() = default;
+  AWS_CLOUDFORMATION_API ListTypeVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFORMATION_API ListTypeVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A list of <code>TypeVersionSummary</code> structures that contain information
+   * about the specified extension's versions.</p>
+   */
+  inline const Aws::Vector<TypeVersionSummary>& GetTypeVersionSummaries() const { return m_typeVersionSummaries; }
+  template <typename TypeVersionSummariesT = Aws::Vector<TypeVersionSummary>>
+  void SetTypeVersionSummaries(TypeVersionSummariesT&& value) {
+    m_typeVersionSummariesHasBeenSet = true;
+    m_typeVersionSummaries = std::forward<TypeVersionSummariesT>(value);
+  }
+  template <typename TypeVersionSummariesT = Aws::Vector<TypeVersionSummary>>
+  ListTypeVersionsResult& WithTypeVersionSummaries(TypeVersionSummariesT&& value) {
+    SetTypeVersionSummaries(std::forward<TypeVersionSummariesT>(value));
+    return *this;
+  }
+  template <typename TypeVersionSummariesT = TypeVersionSummary>
+  ListTypeVersionsResult& AddTypeVersionSummaries(TypeVersionSummariesT&& value) {
+    m_typeVersionSummariesHasBeenSet = true;
+    m_typeVersionSummaries.emplace_back(std::forward<TypeVersionSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>TypeVersionSummary</code> structures that contain information
-     * about the specified extension's versions.</p>
-     */
-    inline const Aws::Vector<TypeVersionSummary>& GetTypeVersionSummaries() const{ return m_typeVersionSummaries; }
-    inline void SetTypeVersionSummaries(const Aws::Vector<TypeVersionSummary>& value) { m_typeVersionSummaries = value; }
-    inline void SetTypeVersionSummaries(Aws::Vector<TypeVersionSummary>&& value) { m_typeVersionSummaries = std::move(value); }
-    inline ListTypeVersionsResult& WithTypeVersionSummaries(const Aws::Vector<TypeVersionSummary>& value) { SetTypeVersionSummaries(value); return *this;}
-    inline ListTypeVersionsResult& WithTypeVersionSummaries(Aws::Vector<TypeVersionSummary>&& value) { SetTypeVersionSummaries(std::move(value)); return *this;}
-    inline ListTypeVersionsResult& AddTypeVersionSummaries(const TypeVersionSummary& value) { m_typeVersionSummaries.push_back(value); return *this; }
-    inline ListTypeVersionsResult& AddTypeVersionSummaries(TypeVersionSummary&& value) { m_typeVersionSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If the request doesn't return all of the remaining results,
+   * <code>NextToken</code> is set to a token. To retrieve the next set of results,
+   * call this action again and assign that token to the request object's
+   * <code>NextToken</code> parameter. If the request returns all results,
+   * <code>NextToken</code> is set to <code>null</code>.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTypeVersionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the request doesn't return all of the remaining results,
-     * <code>NextToken</code> is set to a token. To retrieve the next set of results,
-     * call this action again and assign that token to the request object's
-     * <code>NextToken</code> parameter. If the request returns all results,
-     * <code>NextToken</code> is set to <code>null</code>.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListTypeVersionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTypeVersionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTypeVersionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListTypeVersionsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListTypeVersionsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListTypeVersionsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<TypeVersionSummary> m_typeVersionSummaries;
+ private:
+  Aws::Vector<TypeVersionSummary> m_typeVersionSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_typeVersionSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFormation
+}  // namespace Aws

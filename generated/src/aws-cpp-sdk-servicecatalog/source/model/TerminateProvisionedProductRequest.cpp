@@ -3,79 +3,78 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/TerminateProvisionedProductRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-TerminateProvisionedProductRequest::TerminateProvisionedProductRequest() : 
-    m_provisionedProductNameHasBeenSet(false),
-    m_provisionedProductIdHasBeenSet(false),
-    m_terminateToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_terminateTokenHasBeenSet(true),
-    m_ignoreErrors(false),
-    m_ignoreErrorsHasBeenSet(false),
-    m_acceptLanguageHasBeenSet(false),
-    m_retainPhysicalResources(false),
-    m_retainPhysicalResourcesHasBeenSet(false)
-{
+Aws::String TerminateProvisionedProductRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_provisionedProductNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_provisionedProductIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_terminateTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ignoreErrorsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_retainPhysicalResourcesHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_provisionedProductNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisionedProductName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_provisionedProductName.c_str()));
+  }
+
+  if (m_provisionedProductIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisionedProductId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_provisionedProductId.c_str()));
+  }
+
+  if (m_terminateTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TerminateToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_terminateToken.c_str()));
+  }
+
+  if (m_ignoreErrorsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IgnoreErrors"));
+    encoder.WriteBool(m_ignoreErrors);
+  }
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_retainPhysicalResourcesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RetainPhysicalResources"));
+    encoder.WriteBool(m_retainPhysicalResources);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String TerminateProvisionedProductRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_provisionedProductNameHasBeenSet)
-  {
-   payload.WithString("ProvisionedProductName", m_provisionedProductName);
-
-  }
-
-  if(m_provisionedProductIdHasBeenSet)
-  {
-   payload.WithString("ProvisionedProductId", m_provisionedProductId);
-
-  }
-
-  if(m_terminateTokenHasBeenSet)
-  {
-   payload.WithString("TerminateToken", m_terminateToken);
-
-  }
-
-  if(m_ignoreErrorsHasBeenSet)
-  {
-   payload.WithBool("IgnoreErrors", m_ignoreErrors);
-
-  }
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_retainPhysicalResourcesHasBeenSet)
-  {
-   payload.WithBool("RetainPhysicalResources", m_retainPhysicalResources);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection TerminateProvisionedProductRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TerminateProvisionedProductRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.TerminateProvisionedProduct"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

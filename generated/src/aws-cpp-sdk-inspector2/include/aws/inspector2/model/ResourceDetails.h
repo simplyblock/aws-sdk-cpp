@@ -8,88 +8,211 @@
 #include <aws/inspector2/model/AwsEc2InstanceDetails.h>
 #include <aws/inspector2/model/AwsEcrContainerImageDetails.h>
 #include <aws/inspector2/model/AwsLambdaFunctionDetails.h>
+#include <aws/inspector2/model/CodeRepositoryDetails.h>
+#include <aws/inspector2/model/Image.h>
+#include <aws/inspector2/model/MachineImageDetails.h>
+#include <aws/inspector2/model/ServerlessFunction.h>
+#include <aws/inspector2/model/Vm.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Inspector2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Inspector2 {
+namespace Model {
 
+/**
+ * <p>Contains details about the resource involved in the finding.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ResourceDetails">AWS
+ * API Reference</a></p>
+ */
+class ResourceDetails {
+ public:
+  AWS_INSPECTOR2_API ResourceDetails() = default;
+  AWS_INSPECTOR2_API ResourceDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_INSPECTOR2_API ResourceDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_INSPECTOR2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains details about the resource involved in the finding.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ResourceDetails">AWS
-   * API Reference</a></p>
+   * <p>An object that contains details about the Amazon EC2 instance involved in the
+   * finding.</p>
    */
-  class ResourceDetails
-  {
-  public:
-    AWS_INSPECTOR2_API ResourceDetails();
-    AWS_INSPECTOR2_API ResourceDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_INSPECTOR2_API ResourceDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_INSPECTOR2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const AwsEc2InstanceDetails& GetAwsEc2Instance() const { return m_awsEc2Instance; }
+  inline bool AwsEc2InstanceHasBeenSet() const { return m_awsEc2InstanceHasBeenSet; }
+  template <typename AwsEc2InstanceT = AwsEc2InstanceDetails>
+  void SetAwsEc2Instance(AwsEc2InstanceT&& value) {
+    m_awsEc2InstanceHasBeenSet = true;
+    m_awsEc2Instance = std::forward<AwsEc2InstanceT>(value);
+  }
+  template <typename AwsEc2InstanceT = AwsEc2InstanceDetails>
+  ResourceDetails& WithAwsEc2Instance(AwsEc2InstanceT&& value) {
+    SetAwsEc2Instance(std::forward<AwsEc2InstanceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An object that contains details about the Amazon ECR container image involved
+   * in the finding.</p>
+   */
+  inline const AwsEcrContainerImageDetails& GetAwsEcrContainerImage() const { return m_awsEcrContainerImage; }
+  inline bool AwsEcrContainerImageHasBeenSet() const { return m_awsEcrContainerImageHasBeenSet; }
+  template <typename AwsEcrContainerImageT = AwsEcrContainerImageDetails>
+  void SetAwsEcrContainerImage(AwsEcrContainerImageT&& value) {
+    m_awsEcrContainerImageHasBeenSet = true;
+    m_awsEcrContainerImage = std::forward<AwsEcrContainerImageT>(value);
+  }
+  template <typename AwsEcrContainerImageT = AwsEcrContainerImageDetails>
+  ResourceDetails& WithAwsEcrContainerImage(AwsEcrContainerImageT&& value) {
+    SetAwsEcrContainerImage(std::forward<AwsEcrContainerImageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that contains details about the Amazon EC2 instance involved in the
-     * finding.</p>
-     */
-    inline const AwsEc2InstanceDetails& GetAwsEc2Instance() const{ return m_awsEc2Instance; }
-    inline bool AwsEc2InstanceHasBeenSet() const { return m_awsEc2InstanceHasBeenSet; }
-    inline void SetAwsEc2Instance(const AwsEc2InstanceDetails& value) { m_awsEc2InstanceHasBeenSet = true; m_awsEc2Instance = value; }
-    inline void SetAwsEc2Instance(AwsEc2InstanceDetails&& value) { m_awsEc2InstanceHasBeenSet = true; m_awsEc2Instance = std::move(value); }
-    inline ResourceDetails& WithAwsEc2Instance(const AwsEc2InstanceDetails& value) { SetAwsEc2Instance(value); return *this;}
-    inline ResourceDetails& WithAwsEc2Instance(AwsEc2InstanceDetails&& value) { SetAwsEc2Instance(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A summary of the information about an Amazon Web Services Lambda function
+   * affected by a finding.</p>
+   */
+  inline const AwsLambdaFunctionDetails& GetAwsLambdaFunction() const { return m_awsLambdaFunction; }
+  inline bool AwsLambdaFunctionHasBeenSet() const { return m_awsLambdaFunctionHasBeenSet; }
+  template <typename AwsLambdaFunctionT = AwsLambdaFunctionDetails>
+  void SetAwsLambdaFunction(AwsLambdaFunctionT&& value) {
+    m_awsLambdaFunctionHasBeenSet = true;
+    m_awsLambdaFunction = std::forward<AwsLambdaFunctionT>(value);
+  }
+  template <typename AwsLambdaFunctionT = AwsLambdaFunctionDetails>
+  ResourceDetails& WithAwsLambdaFunction(AwsLambdaFunctionT&& value) {
+    SetAwsLambdaFunction(std::forward<AwsLambdaFunctionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that contains details about the Amazon ECR container image involved
-     * in the finding.</p>
-     */
-    inline const AwsEcrContainerImageDetails& GetAwsEcrContainerImage() const{ return m_awsEcrContainerImage; }
-    inline bool AwsEcrContainerImageHasBeenSet() const { return m_awsEcrContainerImageHasBeenSet; }
-    inline void SetAwsEcrContainerImage(const AwsEcrContainerImageDetails& value) { m_awsEcrContainerImageHasBeenSet = true; m_awsEcrContainerImage = value; }
-    inline void SetAwsEcrContainerImage(AwsEcrContainerImageDetails&& value) { m_awsEcrContainerImageHasBeenSet = true; m_awsEcrContainerImage = std::move(value); }
-    inline ResourceDetails& WithAwsEcrContainerImage(const AwsEcrContainerImageDetails& value) { SetAwsEcrContainerImage(value); return *this;}
-    inline ResourceDetails& WithAwsEcrContainerImage(AwsEcrContainerImageDetails&& value) { SetAwsEcrContainerImage(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains details about a code repository resource associated with a
+   * finding.</p>
+   */
+  inline const CodeRepositoryDetails& GetCodeRepository() const { return m_codeRepository; }
+  inline bool CodeRepositoryHasBeenSet() const { return m_codeRepositoryHasBeenSet; }
+  template <typename CodeRepositoryT = CodeRepositoryDetails>
+  void SetCodeRepository(CodeRepositoryT&& value) {
+    m_codeRepositoryHasBeenSet = true;
+    m_codeRepository = std::forward<CodeRepositoryT>(value);
+  }
+  template <typename CodeRepositoryT = CodeRepositoryDetails>
+  ResourceDetails& WithCodeRepository(CodeRepositoryT&& value) {
+    SetCodeRepository(std::forward<CodeRepositoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A summary of the information about an Amazon Web Services Lambda function
-     * affected by a finding.</p>
-     */
-    inline const AwsLambdaFunctionDetails& GetAwsLambdaFunction() const{ return m_awsLambdaFunction; }
-    inline bool AwsLambdaFunctionHasBeenSet() const { return m_awsLambdaFunctionHasBeenSet; }
-    inline void SetAwsLambdaFunction(const AwsLambdaFunctionDetails& value) { m_awsLambdaFunctionHasBeenSet = true; m_awsLambdaFunction = value; }
-    inline void SetAwsLambdaFunction(AwsLambdaFunctionDetails&& value) { m_awsLambdaFunctionHasBeenSet = true; m_awsLambdaFunction = std::move(value); }
-    inline ResourceDetails& WithAwsLambdaFunction(const AwsLambdaFunctionDetails& value) { SetAwsLambdaFunction(value); return *this;}
-    inline ResourceDetails& WithAwsLambdaFunction(AwsLambdaFunctionDetails&& value) { SetAwsLambdaFunction(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    AwsEc2InstanceDetails m_awsEc2Instance;
-    bool m_awsEc2InstanceHasBeenSet = false;
+  inline const MachineImageDetails& GetMachineImage() const { return m_machineImage; }
+  inline bool MachineImageHasBeenSet() const { return m_machineImageHasBeenSet; }
+  template <typename MachineImageT = MachineImageDetails>
+  void SetMachineImage(MachineImageT&& value) {
+    m_machineImageHasBeenSet = true;
+    m_machineImage = std::forward<MachineImageT>(value);
+  }
+  template <typename MachineImageT = MachineImageDetails>
+  ResourceDetails& WithMachineImage(MachineImageT&& value) {
+    SetMachineImage(std::forward<MachineImageT>(value));
+    return *this;
+  }
+  ///@}
 
-    AwsEcrContainerImageDetails m_awsEcrContainerImage;
-    bool m_awsEcrContainerImageHasBeenSet = false;
+  ///@{
+  /**
+   * <p>An object that contains details about a VM instance involved in the
+   * finding.</p>
+   */
+  inline const Vm& GetVm() const { return m_vm; }
+  inline bool VmHasBeenSet() const { return m_vmHasBeenSet; }
+  template <typename VmT = Vm>
+  void SetVm(VmT&& value) {
+    m_vmHasBeenSet = true;
+    m_vm = std::forward<VmT>(value);
+  }
+  template <typename VmT = Vm>
+  ResourceDetails& WithVm(VmT&& value) {
+    SetVm(std::forward<VmT>(value));
+    return *this;
+  }
+  ///@}
 
-    AwsLambdaFunctionDetails m_awsLambdaFunction;
-    bool m_awsLambdaFunctionHasBeenSet = false;
-  };
+  ///@{
+  /**
+   * <p>An object that contains details about a container image involved in the
+   * finding.</p>
+   */
+  inline const Image& GetImage() const { return m_image; }
+  inline bool ImageHasBeenSet() const { return m_imageHasBeenSet; }
+  template <typename ImageT = Image>
+  void SetImage(ImageT&& value) {
+    m_imageHasBeenSet = true;
+    m_image = std::forward<ImageT>(value);
+  }
+  template <typename ImageT = Image>
+  ResourceDetails& WithImage(ImageT&& value) {
+    SetImage(std::forward<ImageT>(value));
+    return *this;
+  }
+  ///@}
 
-} // namespace Model
-} // namespace Inspector2
-} // namespace Aws
+  ///@{
+  /**
+   * <p>An object that contains details about a serverless function involved in the
+   * finding.</p>
+   */
+  inline const ServerlessFunction& GetServerlessFunction() const { return m_serverlessFunction; }
+  inline bool ServerlessFunctionHasBeenSet() const { return m_serverlessFunctionHasBeenSet; }
+  template <typename ServerlessFunctionT = ServerlessFunction>
+  void SetServerlessFunction(ServerlessFunctionT&& value) {
+    m_serverlessFunctionHasBeenSet = true;
+    m_serverlessFunction = std::forward<ServerlessFunctionT>(value);
+  }
+  template <typename ServerlessFunctionT = ServerlessFunction>
+  ResourceDetails& WithServerlessFunction(ServerlessFunctionT&& value) {
+    SetServerlessFunction(std::forward<ServerlessFunctionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  AwsEc2InstanceDetails m_awsEc2Instance;
+
+  AwsEcrContainerImageDetails m_awsEcrContainerImage;
+
+  AwsLambdaFunctionDetails m_awsLambdaFunction;
+
+  CodeRepositoryDetails m_codeRepository;
+
+  MachineImageDetails m_machineImage;
+
+  Vm m_vm;
+
+  Image m_image;
+
+  ServerlessFunction m_serverlessFunction;
+  bool m_awsEc2InstanceHasBeenSet = false;
+  bool m_awsEcrContainerImageHasBeenSet = false;
+  bool m_awsLambdaFunctionHasBeenSet = false;
+  bool m_codeRepositoryHasBeenSet = false;
+  bool m_machineImageHasBeenSet = false;
+  bool m_vmHasBeenSet = false;
+  bool m_imageHasBeenSet = false;
+  bool m_serverlessFunctionHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Inspector2
+}  // namespace Aws

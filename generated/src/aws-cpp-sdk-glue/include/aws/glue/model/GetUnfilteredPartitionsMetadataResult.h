@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/UnfilteredPartition.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class GetUnfilteredPartitionsMetadataResult
-  {
-  public:
-    AWS_GLUE_API GetUnfilteredPartitionsMetadataResult();
-    AWS_GLUE_API GetUnfilteredPartitionsMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API GetUnfilteredPartitionsMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class GetUnfilteredPartitionsMetadataResult {
+ public:
+  AWS_GLUE_API GetUnfilteredPartitionsMetadataResult() = default;
+  AWS_GLUE_API GetUnfilteredPartitionsMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API GetUnfilteredPartitionsMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of requested partitions.</p>
+   */
+  inline const Aws::Vector<UnfilteredPartition>& GetUnfilteredPartitions() const { return m_unfilteredPartitions; }
+  template <typename UnfilteredPartitionsT = Aws::Vector<UnfilteredPartition>>
+  void SetUnfilteredPartitions(UnfilteredPartitionsT&& value) {
+    m_unfilteredPartitionsHasBeenSet = true;
+    m_unfilteredPartitions = std::forward<UnfilteredPartitionsT>(value);
+  }
+  template <typename UnfilteredPartitionsT = Aws::Vector<UnfilteredPartition>>
+  GetUnfilteredPartitionsMetadataResult& WithUnfilteredPartitions(UnfilteredPartitionsT&& value) {
+    SetUnfilteredPartitions(std::forward<UnfilteredPartitionsT>(value));
+    return *this;
+  }
+  template <typename UnfilteredPartitionsT = UnfilteredPartition>
+  GetUnfilteredPartitionsMetadataResult& AddUnfilteredPartitions(UnfilteredPartitionsT&& value) {
+    m_unfilteredPartitionsHasBeenSet = true;
+    m_unfilteredPartitions.emplace_back(std::forward<UnfilteredPartitionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of requested partitions.</p>
-     */
-    inline const Aws::Vector<UnfilteredPartition>& GetUnfilteredPartitions() const{ return m_unfilteredPartitions; }
-    inline void SetUnfilteredPartitions(const Aws::Vector<UnfilteredPartition>& value) { m_unfilteredPartitions = value; }
-    inline void SetUnfilteredPartitions(Aws::Vector<UnfilteredPartition>&& value) { m_unfilteredPartitions = std::move(value); }
-    inline GetUnfilteredPartitionsMetadataResult& WithUnfilteredPartitions(const Aws::Vector<UnfilteredPartition>& value) { SetUnfilteredPartitions(value); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& WithUnfilteredPartitions(Aws::Vector<UnfilteredPartition>&& value) { SetUnfilteredPartitions(std::move(value)); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& AddUnfilteredPartitions(const UnfilteredPartition& value) { m_unfilteredPartitions.push_back(value); return *this; }
-    inline GetUnfilteredPartitionsMetadataResult& AddUnfilteredPartitions(UnfilteredPartition&& value) { m_unfilteredPartitions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A continuation token, if the returned list of partitions does not include the
+   * last one.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetUnfilteredPartitionsMetadataResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A continuation token, if the returned list of partitions does not include the
-     * last one.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetUnfilteredPartitionsMetadataResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetUnfilteredPartitionsMetadataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetUnfilteredPartitionsMetadataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetUnfilteredPartitionsMetadataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UnfilteredPartition> m_unfilteredPartitions;
+ private:
+  Aws::Vector<UnfilteredPartition> m_unfilteredPartitions;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_unfilteredPartitionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

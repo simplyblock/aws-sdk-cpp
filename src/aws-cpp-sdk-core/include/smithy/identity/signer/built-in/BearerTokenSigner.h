@@ -21,7 +21,6 @@ class BearerTokenSigner : public AwsSignerBase<AwsBearerTokenIdentityBase>
 {
 
   public:
-    static const char LOGGING_TAG[];
 
     using BearerTokenAuthSchemeParameters =
         smithy::DefaultAuthSchemeResolverParameters;
@@ -44,7 +43,7 @@ class BearerTokenSigner : public AwsSignerBase<AwsBearerTokenIdentityBase>
             // security when making requests with bearer tokens.
             // https://datatracker.ietf.org/doc/html/rfc6750
             AWS_LOGSTREAM_ERROR(
-                LOGGING_TAG,
+                "BearerTokenSigner",
                 "HTTPS scheme must be used with a bearer token authorization");
             return SigningError(
                 Aws::Client::CoreErrors::INVALID_PARAMETER_VALUE, "",
@@ -57,6 +56,13 @@ class BearerTokenSigner : public AwsSignerBase<AwsBearerTokenIdentityBase>
         return SigningFutureOutcome(std::move(httpRequest));
     }
 
+    SigningFutureOutcome presign(std::shared_ptr<HttpRequest> , const IdentityT& , SigningProperties , const Aws::String& , const Aws::String& , long long ) override
+    {
+        return  SigningError(Aws::Client::CoreErrors::CLIENT_SIGNING_FAILURE, "", "presign not supported",
+                                          false /*retryable*/);
+    }
+
+
     virtual ~BearerTokenSigner(){};
 
   protected:
@@ -64,5 +70,4 @@ class BearerTokenSigner : public AwsSignerBase<AwsBearerTokenIdentityBase>
     Aws::String m_region;
 };
 
-const char BearerTokenSigner::LOGGING_TAG[] = "BearerTokenSigner";
 } // namespace smithy

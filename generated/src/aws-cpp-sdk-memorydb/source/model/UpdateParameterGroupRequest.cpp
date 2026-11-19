@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/memorydb/model/UpdateParameterGroupRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MemoryDB::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateParameterGroupRequest::UpdateParameterGroupRequest() : 
-    m_parameterGroupNameHasBeenSet(false),
-    m_parameterNameValuesHasBeenSet(false)
-{
-}
+Aws::String UpdateParameterGroupRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String UpdateParameterGroupRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_parameterGroupNameHasBeenSet)
-  {
-   payload.WithString("ParameterGroupName", m_parameterGroupName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_parameterGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_parameterNameValuesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_parameterNameValuesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> parameterNameValuesJsonList(m_parameterNameValues.size());
-   for(unsigned parameterNameValuesIndex = 0; parameterNameValuesIndex < parameterNameValuesJsonList.GetLength(); ++parameterNameValuesIndex)
-   {
-     parameterNameValuesJsonList[parameterNameValuesIndex].AsObject(m_parameterNameValues[parameterNameValuesIndex].Jsonize());
-   }
-   payload.WithArray("ParameterNameValues", std::move(parameterNameValuesJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_parameterGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ParameterGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_parameterGroupName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_parameterNameValuesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ParameterNameValues"));
+    encoder.WriteArrayStart(m_parameterNameValues.size());
+    for (const auto& item_0 : m_parameterNameValues) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection UpdateParameterGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateParameterGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonMemoryDB.UpdateParameterGroup"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

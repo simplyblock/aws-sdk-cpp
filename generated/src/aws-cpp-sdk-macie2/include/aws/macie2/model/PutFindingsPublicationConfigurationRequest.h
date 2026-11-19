@@ -4,72 +4,77 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/macie2/Macie2Request.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/macie2/model/SecurityHubConfiguration.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/macie2/Macie2Request.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
+#include <aws/macie2/model/SecurityHubConfiguration.h>
 
-namespace Aws
-{
-namespace Macie2
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Macie2 {
+namespace Model {
+
+/**
+ */
+class PutFindingsPublicationConfigurationRequest : public Macie2Request {
+ public:
+  AWS_MACIE2_API PutFindingsPublicationConfigurationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutFindingsPublicationConfiguration"; }
+
+  AWS_MACIE2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique, case-sensitive token that you provide to ensure the idempotency of
+   * the request.</p>
    */
-  class PutFindingsPublicationConfigurationRequest : public Macie2Request
-  {
-  public:
-    AWS_MACIE2_API PutFindingsPublicationConfigurationRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  PutFindingsPublicationConfigurationRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutFindingsPublicationConfiguration"; }
+  ///@{
+  /**
+   * <p>The configuration settings that determine which findings to publish to
+   * Security Hub.</p>
+   */
+  inline const SecurityHubConfiguration& GetSecurityHubConfiguration() const { return m_securityHubConfiguration; }
+  inline bool SecurityHubConfigurationHasBeenSet() const { return m_securityHubConfigurationHasBeenSet; }
+  template <typename SecurityHubConfigurationT = SecurityHubConfiguration>
+  void SetSecurityHubConfiguration(SecurityHubConfigurationT&& value) {
+    m_securityHubConfigurationHasBeenSet = true;
+    m_securityHubConfiguration = std::forward<SecurityHubConfigurationT>(value);
+  }
+  template <typename SecurityHubConfigurationT = SecurityHubConfiguration>
+  PutFindingsPublicationConfigurationRequest& WithSecurityHubConfiguration(SecurityHubConfigurationT&& value) {
+    SetSecurityHubConfiguration(std::forward<SecurityHubConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    AWS_MACIE2_API Aws::String SerializePayload() const override;
+  SecurityHubConfiguration m_securityHubConfiguration;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_securityHubConfigurationHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>A unique, case-sensitive token that you provide to ensure the idempotency of
-     * the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline PutFindingsPublicationConfigurationRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline PutFindingsPublicationConfigurationRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline PutFindingsPublicationConfigurationRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The configuration settings that determine which findings to publish to
-     * Security Hub.</p>
-     */
-    inline const SecurityHubConfiguration& GetSecurityHubConfiguration() const{ return m_securityHubConfiguration; }
-    inline bool SecurityHubConfigurationHasBeenSet() const { return m_securityHubConfigurationHasBeenSet; }
-    inline void SetSecurityHubConfiguration(const SecurityHubConfiguration& value) { m_securityHubConfigurationHasBeenSet = true; m_securityHubConfiguration = value; }
-    inline void SetSecurityHubConfiguration(SecurityHubConfiguration&& value) { m_securityHubConfigurationHasBeenSet = true; m_securityHubConfiguration = std::move(value); }
-    inline PutFindingsPublicationConfigurationRequest& WithSecurityHubConfiguration(const SecurityHubConfiguration& value) { SetSecurityHubConfiguration(value); return *this;}
-    inline PutFindingsPublicationConfigurationRequest& WithSecurityHubConfiguration(SecurityHubConfiguration&& value) { SetSecurityHubConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    SecurityHubConfiguration m_securityHubConfiguration;
-    bool m_securityHubConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

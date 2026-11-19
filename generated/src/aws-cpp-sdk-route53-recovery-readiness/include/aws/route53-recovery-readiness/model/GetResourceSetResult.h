@@ -4,139 +4,173 @@
  */
 
 #pragma once
-#include <aws/route53-recovery-readiness/Route53RecoveryReadiness_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/route53-recovery-readiness/Route53RecoveryReadiness_EXPORTS.h>
 #include <aws/route53-recovery-readiness/model/Resource.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Route53RecoveryReadiness
-{
-namespace Model
-{
-  class GetResourceSetResult
-  {
-  public:
-    AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult();
-    AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53RecoveryReadiness {
+namespace Model {
+class GetResourceSetResult {
+ public:
+  AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult() = default;
+  AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53RECOVERYREADINESS_API GetResourceSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the resource set.</p>
+   */
+  inline const Aws::String& GetResourceSetArn() const { return m_resourceSetArn; }
+  template <typename ResourceSetArnT = Aws::String>
+  void SetResourceSetArn(ResourceSetArnT&& value) {
+    m_resourceSetArnHasBeenSet = true;
+    m_resourceSetArn = std::forward<ResourceSetArnT>(value);
+  }
+  template <typename ResourceSetArnT = Aws::String>
+  GetResourceSetResult& WithResourceSetArn(ResourceSetArnT&& value) {
+    SetResourceSetArn(std::forward<ResourceSetArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the resource set.</p>
-     */
-    inline const Aws::String& GetResourceSetArn() const{ return m_resourceSetArn; }
-    inline void SetResourceSetArn(const Aws::String& value) { m_resourceSetArn = value; }
-    inline void SetResourceSetArn(Aws::String&& value) { m_resourceSetArn = std::move(value); }
-    inline void SetResourceSetArn(const char* value) { m_resourceSetArn.assign(value); }
-    inline GetResourceSetResult& WithResourceSetArn(const Aws::String& value) { SetResourceSetArn(value); return *this;}
-    inline GetResourceSetResult& WithResourceSetArn(Aws::String&& value) { SetResourceSetArn(std::move(value)); return *this;}
-    inline GetResourceSetResult& WithResourceSetArn(const char* value) { SetResourceSetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the resource set.</p>
+   */
+  inline const Aws::String& GetResourceSetName() const { return m_resourceSetName; }
+  template <typename ResourceSetNameT = Aws::String>
+  void SetResourceSetName(ResourceSetNameT&& value) {
+    m_resourceSetNameHasBeenSet = true;
+    m_resourceSetName = std::forward<ResourceSetNameT>(value);
+  }
+  template <typename ResourceSetNameT = Aws::String>
+  GetResourceSetResult& WithResourceSetName(ResourceSetNameT&& value) {
+    SetResourceSetName(std::forward<ResourceSetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the resource set.</p>
-     */
-    inline const Aws::String& GetResourceSetName() const{ return m_resourceSetName; }
-    inline void SetResourceSetName(const Aws::String& value) { m_resourceSetName = value; }
-    inline void SetResourceSetName(Aws::String&& value) { m_resourceSetName = std::move(value); }
-    inline void SetResourceSetName(const char* value) { m_resourceSetName.assign(value); }
-    inline GetResourceSetResult& WithResourceSetName(const Aws::String& value) { SetResourceSetName(value); return *this;}
-    inline GetResourceSetResult& WithResourceSetName(Aws::String&& value) { SetResourceSetName(std::move(value)); return *this;}
-    inline GetResourceSetResult& WithResourceSetName(const char* value) { SetResourceSetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The resource type of the resources in the resource set. Enter one of the
+   * following values for resource type:</p> <p>AWS::ApiGateway::Stage,
+   * AWS::ApiGatewayV2::Stage, AWS::AutoScaling::AutoScalingGroup,
+   * AWS::CloudWatch::Alarm, AWS::EC2::CustomerGateway, AWS::DynamoDB::Table,
+   * AWS::EC2::Volume, AWS::ElasticLoadBalancing::LoadBalancer,
+   * AWS::ElasticLoadBalancingV2::LoadBalancer, AWS::Lambda::Function,
+   * AWS::MSK::Cluster, AWS::RDS::DBCluster, AWS::Route53::HealthCheck,
+   * AWS::SQS::Queue, AWS::SNS::Topic, AWS::SNS::Subscription, AWS::EC2::VPC,
+   * AWS::EC2::VPNConnection, AWS::EC2::VPNGateway,
+   * AWS::Route53RecoveryReadiness::DNSTargetResource</p>
+   */
+  inline const Aws::String& GetResourceSetType() const { return m_resourceSetType; }
+  template <typename ResourceSetTypeT = Aws::String>
+  void SetResourceSetType(ResourceSetTypeT&& value) {
+    m_resourceSetTypeHasBeenSet = true;
+    m_resourceSetType = std::forward<ResourceSetTypeT>(value);
+  }
+  template <typename ResourceSetTypeT = Aws::String>
+  GetResourceSetResult& WithResourceSetType(ResourceSetTypeT&& value) {
+    SetResourceSetType(std::forward<ResourceSetTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource type of the resources in the resource set. Enter one of the
-     * following values for resource type:</p> <p>AWS::ApiGateway::Stage,
-     * AWS::ApiGatewayV2::Stage, AWS::AutoScaling::AutoScalingGroup,
-     * AWS::CloudWatch::Alarm, AWS::EC2::CustomerGateway, AWS::DynamoDB::Table,
-     * AWS::EC2::Volume, AWS::ElasticLoadBalancing::LoadBalancer,
-     * AWS::ElasticLoadBalancingV2::LoadBalancer, AWS::Lambda::Function,
-     * AWS::MSK::Cluster, AWS::RDS::DBCluster, AWS::Route53::HealthCheck,
-     * AWS::SQS::Queue, AWS::SNS::Topic, AWS::SNS::Subscription, AWS::EC2::VPC,
-     * AWS::EC2::VPNConnection, AWS::EC2::VPNGateway,
-     * AWS::Route53RecoveryReadiness::DNSTargetResource</p>
-     */
-    inline const Aws::String& GetResourceSetType() const{ return m_resourceSetType; }
-    inline void SetResourceSetType(const Aws::String& value) { m_resourceSetType = value; }
-    inline void SetResourceSetType(Aws::String&& value) { m_resourceSetType = std::move(value); }
-    inline void SetResourceSetType(const char* value) { m_resourceSetType.assign(value); }
-    inline GetResourceSetResult& WithResourceSetType(const Aws::String& value) { SetResourceSetType(value); return *this;}
-    inline GetResourceSetResult& WithResourceSetType(Aws::String&& value) { SetResourceSetType(std::move(value)); return *this;}
-    inline GetResourceSetResult& WithResourceSetType(const char* value) { SetResourceSetType(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of resource objects.</p>
+   */
+  inline const Aws::Vector<Resource>& GetResources() const { return m_resources; }
+  template <typename ResourcesT = Aws::Vector<Resource>>
+  void SetResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources = std::forward<ResourcesT>(value);
+  }
+  template <typename ResourcesT = Aws::Vector<Resource>>
+  GetResourceSetResult& WithResources(ResourcesT&& value) {
+    SetResources(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  template <typename ResourcesT = Resource>
+  GetResourceSetResult& AddResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources.emplace_back(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of resource objects.</p>
-     */
-    inline const Aws::Vector<Resource>& GetResources() const{ return m_resources; }
-    inline void SetResources(const Aws::Vector<Resource>& value) { m_resources = value; }
-    inline void SetResources(Aws::Vector<Resource>&& value) { m_resources = std::move(value); }
-    inline GetResourceSetResult& WithResources(const Aws::Vector<Resource>& value) { SetResources(value); return *this;}
-    inline GetResourceSetResult& WithResources(Aws::Vector<Resource>&& value) { SetResources(std::move(value)); return *this;}
-    inline GetResourceSetResult& AddResources(const Resource& value) { m_resources.push_back(value); return *this; }
-    inline GetResourceSetResult& AddResources(Resource&& value) { m_resources.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline GetResourceSetResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline GetResourceSetResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline GetResourceSetResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline GetResourceSetResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetResourceSetResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetResourceSetResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetResourceSetResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetResourceSetResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetResourceSetResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  GetResourceSetResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  GetResourceSetResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetResourceSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetResourceSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetResourceSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_resourceSetArn;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetResourceSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_resourceSetName;
+ private:
+  Aws::String m_resourceSetArn;
 
-    Aws::String m_resourceSetType;
+  Aws::String m_resourceSetName;
 
-    Aws::Vector<Resource> m_resources;
+  Aws::String m_resourceSetType;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::Vector<Resource> m_resources;
 
-    Aws::String m_requestId;
-  };
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-} // namespace Model
-} // namespace Route53RecoveryReadiness
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceSetArnHasBeenSet = false;
+  bool m_resourceSetNameHasBeenSet = false;
+  bool m_resourceSetTypeHasBeenSet = false;
+  bool m_resourcesHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Route53RecoveryReadiness
+}  // namespace Aws

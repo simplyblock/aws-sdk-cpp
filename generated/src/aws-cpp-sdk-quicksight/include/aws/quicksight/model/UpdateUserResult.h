@@ -4,74 +4,90 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/User.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class UpdateUserResult
-  {
-  public:
-    AWS_QUICKSIGHT_API UpdateUserResult();
-    AWS_QUICKSIGHT_API UpdateUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API UpdateUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class UpdateUserResult {
+ public:
+  AWS_QUICKSIGHT_API UpdateUserResult() = default;
+  AWS_QUICKSIGHT_API UpdateUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API UpdateUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Quick Sight user.</p>
+   */
+  inline const User& GetUser() const { return m_user; }
+  template <typename UserT = User>
+  void SetUser(UserT&& value) {
+    m_userHasBeenSet = true;
+    m_user = std::forward<UserT>(value);
+  }
+  template <typename UserT = User>
+  UpdateUserResult& WithUser(UserT&& value) {
+    SetUser(std::forward<UserT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon QuickSight user.</p>
-     */
-    inline const User& GetUser() const{ return m_user; }
-    inline void SetUser(const User& value) { m_user = value; }
-    inline void SetUser(User&& value) { m_user = std::move(value); }
-    inline UpdateUserResult& WithUser(const User& value) { SetUser(value); return *this;}
-    inline UpdateUserResult& WithUser(User&& value) { SetUser(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateUserResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateUserResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateUserResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateUserResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline UpdateUserResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateUserResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    User m_user;
+ private:
+  User m_user;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_userHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

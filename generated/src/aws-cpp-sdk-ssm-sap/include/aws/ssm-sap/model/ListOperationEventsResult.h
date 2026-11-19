@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/ssm-sap/SsmSap_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm-sap/SsmSap_EXPORTS.h>
 #include <aws/ssm-sap/model/OperationEvent.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SsmSap
-{
-namespace Model
-{
-  class ListOperationEventsResult
-  {
-  public:
-    AWS_SSMSAP_API ListOperationEventsResult();
-    AWS_SSMSAP_API ListOperationEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMSAP_API ListOperationEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SsmSap {
+namespace Model {
+class ListOperationEventsResult {
+ public:
+  AWS_SSMSAP_API ListOperationEventsResult() = default;
+  AWS_SSMSAP_API ListOperationEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMSAP_API ListOperationEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A returned list of operation events that meet the filter criteria.</p>
+   */
+  inline const Aws::Vector<OperationEvent>& GetOperationEvents() const { return m_operationEvents; }
+  template <typename OperationEventsT = Aws::Vector<OperationEvent>>
+  void SetOperationEvents(OperationEventsT&& value) {
+    m_operationEventsHasBeenSet = true;
+    m_operationEvents = std::forward<OperationEventsT>(value);
+  }
+  template <typename OperationEventsT = Aws::Vector<OperationEvent>>
+  ListOperationEventsResult& WithOperationEvents(OperationEventsT&& value) {
+    SetOperationEvents(std::forward<OperationEventsT>(value));
+    return *this;
+  }
+  template <typename OperationEventsT = OperationEvent>
+  ListOperationEventsResult& AddOperationEvents(OperationEventsT&& value) {
+    m_operationEventsHasBeenSet = true;
+    m_operationEvents.emplace_back(std::forward<OperationEventsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A returned list of operation events that meet the filter criteria.</p>
-     */
-    inline const Aws::Vector<OperationEvent>& GetOperationEvents() const{ return m_operationEvents; }
-    inline void SetOperationEvents(const Aws::Vector<OperationEvent>& value) { m_operationEvents = value; }
-    inline void SetOperationEvents(Aws::Vector<OperationEvent>&& value) { m_operationEvents = std::move(value); }
-    inline ListOperationEventsResult& WithOperationEvents(const Aws::Vector<OperationEvent>& value) { SetOperationEvents(value); return *this;}
-    inline ListOperationEventsResult& WithOperationEvents(Aws::Vector<OperationEvent>&& value) { SetOperationEvents(std::move(value)); return *this;}
-    inline ListOperationEventsResult& AddOperationEvents(const OperationEvent& value) { m_operationEvents.push_back(value); return *this; }
-    inline ListOperationEventsResult& AddOperationEvents(OperationEvent&& value) { m_operationEvents.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is null
+   * when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListOperationEventsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is null
-     * when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListOperationEventsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListOperationEventsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListOperationEventsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListOperationEventsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListOperationEventsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListOperationEventsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListOperationEventsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<OperationEvent> m_operationEvents;
+ private:
+  Aws::Vector<OperationEvent> m_operationEvents;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_operationEventsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SsmSap
-} // namespace Aws
+}  // namespace Model
+}  // namespace SsmSap
+}  // namespace Aws

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/organizations/Organizations_EXPORTS.h>
 #include <aws/organizations/model/ResourcePolicy.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Organizations
-{
-namespace Model
-{
-  class DescribeResourcePolicyResult
-  {
-  public:
-    AWS_ORGANIZATIONS_API DescribeResourcePolicyResult();
-    AWS_ORGANIZATIONS_API DescribeResourcePolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ORGANIZATIONS_API DescribeResourcePolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Organizations {
+namespace Model {
+class DescribeResourcePolicyResult {
+ public:
+  AWS_ORGANIZATIONS_API DescribeResourcePolicyResult() = default;
+  AWS_ORGANIZATIONS_API DescribeResourcePolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ORGANIZATIONS_API DescribeResourcePolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure that contains details about the resource policy.</p>
+   */
+  inline const ResourcePolicy& GetResourcePolicy() const { return m_resourcePolicy; }
+  template <typename ResourcePolicyT = ResourcePolicy>
+  void SetResourcePolicy(ResourcePolicyT&& value) {
+    m_resourcePolicyHasBeenSet = true;
+    m_resourcePolicy = std::forward<ResourcePolicyT>(value);
+  }
+  template <typename ResourcePolicyT = ResourcePolicy>
+  DescribeResourcePolicyResult& WithResourcePolicy(ResourcePolicyT&& value) {
+    SetResourcePolicy(std::forward<ResourcePolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains details about the resource policy.</p>
-     */
-    inline const ResourcePolicy& GetResourcePolicy() const{ return m_resourcePolicy; }
-    inline void SetResourcePolicy(const ResourcePolicy& value) { m_resourcePolicy = value; }
-    inline void SetResourcePolicy(ResourcePolicy&& value) { m_resourcePolicy = std::move(value); }
-    inline DescribeResourcePolicyResult& WithResourcePolicy(const ResourcePolicy& value) { SetResourcePolicy(value); return *this;}
-    inline DescribeResourcePolicyResult& WithResourcePolicy(ResourcePolicy&& value) { SetResourcePolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeResourcePolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeResourcePolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeResourcePolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeResourcePolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResourcePolicy m_resourcePolicy;
+ private:
+  ResourcePolicy m_resourcePolicy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourcePolicyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Organizations
-} // namespace Aws
+}  // namespace Model
+}  // namespace Organizations
+}  // namespace Aws

@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/fsx/model/Backup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FSx
-{
-namespace Model
-{
-  class CopyBackupResult
-  {
-  public:
-    AWS_FSX_API CopyBackupResult();
-    AWS_FSX_API CopyBackupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FSX_API CopyBackupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FSx {
+namespace Model {
+class CopyBackupResult {
+ public:
+  AWS_FSX_API CopyBackupResult() = default;
+  AWS_FSX_API CopyBackupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FSX_API CopyBackupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Backup& GetBackup() const{ return m_backup; }
-    inline void SetBackup(const Backup& value) { m_backup = value; }
-    inline void SetBackup(Backup&& value) { m_backup = std::move(value); }
-    inline CopyBackupResult& WithBackup(const Backup& value) { SetBackup(value); return *this;}
-    inline CopyBackupResult& WithBackup(Backup&& value) { SetBackup(std::move(value)); return *this;}
-    ///@}
+  inline const Backup& GetBackup() const { return m_backup; }
+  template <typename BackupT = Backup>
+  void SetBackup(BackupT&& value) {
+    m_backupHasBeenSet = true;
+    m_backup = std::forward<BackupT>(value);
+  }
+  template <typename BackupT = Backup>
+  CopyBackupResult& WithBackup(BackupT&& value) {
+    SetBackup(std::forward<BackupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CopyBackupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CopyBackupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CopyBackupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Backup m_backup;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CopyBackupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Backup m_backup;
 
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_backupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

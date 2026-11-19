@@ -5,103 +5,144 @@
 
 #pragma once
 #include <aws/emr-containers/EMRContainers_EXPORTS.h>
-#include <aws/emr-containers/model/PersistentAppUI.h>
 #include <aws/emr-containers/model/CloudWatchMonitoringConfiguration.h>
-#include <aws/emr-containers/model/S3MonitoringConfiguration.h>
 #include <aws/emr-containers/model/ContainerLogRotationConfiguration.h>
+#include <aws/emr-containers/model/ManagedLogs.h>
+#include <aws/emr-containers/model/PersistentAppUI.h>
+#include <aws/emr-containers/model/S3MonitoringConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EMRContainers
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EMRContainers {
+namespace Model {
 
+/**
+ * <p>Configuration setting for monitoring.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/MonitoringConfiguration">AWS
+ * API Reference</a></p>
+ */
+class MonitoringConfiguration {
+ public:
+  AWS_EMRCONTAINERS_API MonitoringConfiguration() = default;
+  AWS_EMRCONTAINERS_API MonitoringConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMRCONTAINERS_API MonitoringConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMRCONTAINERS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Configuration setting for monitoring.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/MonitoringConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The entity that controls configuration for managed logs.</p>
    */
-  class MonitoringConfiguration
-  {
-  public:
-    AWS_EMRCONTAINERS_API MonitoringConfiguration();
-    AWS_EMRCONTAINERS_API MonitoringConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMRCONTAINERS_API MonitoringConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMRCONTAINERS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const ManagedLogs& GetManagedLogs() const { return m_managedLogs; }
+  inline bool ManagedLogsHasBeenSet() const { return m_managedLogsHasBeenSet; }
+  template <typename ManagedLogsT = ManagedLogs>
+  void SetManagedLogs(ManagedLogsT&& value) {
+    m_managedLogsHasBeenSet = true;
+    m_managedLogs = std::forward<ManagedLogsT>(value);
+  }
+  template <typename ManagedLogsT = ManagedLogs>
+  MonitoringConfiguration& WithManagedLogs(ManagedLogsT&& value) {
+    SetManagedLogs(std::forward<ManagedLogsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Monitoring configurations for the persistent application UI. </p>
+   */
+  inline PersistentAppUI GetPersistentAppUI() const { return m_persistentAppUI; }
+  inline bool PersistentAppUIHasBeenSet() const { return m_persistentAppUIHasBeenSet; }
+  inline void SetPersistentAppUI(PersistentAppUI value) {
+    m_persistentAppUIHasBeenSet = true;
+    m_persistentAppUI = value;
+  }
+  inline MonitoringConfiguration& WithPersistentAppUI(PersistentAppUI value) {
+    SetPersistentAppUI(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Monitoring configurations for the persistent application UI. </p>
-     */
-    inline const PersistentAppUI& GetPersistentAppUI() const{ return m_persistentAppUI; }
-    inline bool PersistentAppUIHasBeenSet() const { return m_persistentAppUIHasBeenSet; }
-    inline void SetPersistentAppUI(const PersistentAppUI& value) { m_persistentAppUIHasBeenSet = true; m_persistentAppUI = value; }
-    inline void SetPersistentAppUI(PersistentAppUI&& value) { m_persistentAppUIHasBeenSet = true; m_persistentAppUI = std::move(value); }
-    inline MonitoringConfiguration& WithPersistentAppUI(const PersistentAppUI& value) { SetPersistentAppUI(value); return *this;}
-    inline MonitoringConfiguration& WithPersistentAppUI(PersistentAppUI&& value) { SetPersistentAppUI(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Monitoring configurations for CloudWatch.</p>
+   */
+  inline const CloudWatchMonitoringConfiguration& GetCloudWatchMonitoringConfiguration() const {
+    return m_cloudWatchMonitoringConfiguration;
+  }
+  inline bool CloudWatchMonitoringConfigurationHasBeenSet() const { return m_cloudWatchMonitoringConfigurationHasBeenSet; }
+  template <typename CloudWatchMonitoringConfigurationT = CloudWatchMonitoringConfiguration>
+  void SetCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfigurationT&& value) {
+    m_cloudWatchMonitoringConfigurationHasBeenSet = true;
+    m_cloudWatchMonitoringConfiguration = std::forward<CloudWatchMonitoringConfigurationT>(value);
+  }
+  template <typename CloudWatchMonitoringConfigurationT = CloudWatchMonitoringConfiguration>
+  MonitoringConfiguration& WithCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfigurationT&& value) {
+    SetCloudWatchMonitoringConfiguration(std::forward<CloudWatchMonitoringConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Monitoring configurations for CloudWatch.</p>
-     */
-    inline const CloudWatchMonitoringConfiguration& GetCloudWatchMonitoringConfiguration() const{ return m_cloudWatchMonitoringConfiguration; }
-    inline bool CloudWatchMonitoringConfigurationHasBeenSet() const { return m_cloudWatchMonitoringConfigurationHasBeenSet; }
-    inline void SetCloudWatchMonitoringConfiguration(const CloudWatchMonitoringConfiguration& value) { m_cloudWatchMonitoringConfigurationHasBeenSet = true; m_cloudWatchMonitoringConfiguration = value; }
-    inline void SetCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfiguration&& value) { m_cloudWatchMonitoringConfigurationHasBeenSet = true; m_cloudWatchMonitoringConfiguration = std::move(value); }
-    inline MonitoringConfiguration& WithCloudWatchMonitoringConfiguration(const CloudWatchMonitoringConfiguration& value) { SetCloudWatchMonitoringConfiguration(value); return *this;}
-    inline MonitoringConfiguration& WithCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfiguration&& value) { SetCloudWatchMonitoringConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Amazon S3 configuration for monitoring log publishing.</p>
+   */
+  inline const S3MonitoringConfiguration& GetS3MonitoringConfiguration() const { return m_s3MonitoringConfiguration; }
+  inline bool S3MonitoringConfigurationHasBeenSet() const { return m_s3MonitoringConfigurationHasBeenSet; }
+  template <typename S3MonitoringConfigurationT = S3MonitoringConfiguration>
+  void SetS3MonitoringConfiguration(S3MonitoringConfigurationT&& value) {
+    m_s3MonitoringConfigurationHasBeenSet = true;
+    m_s3MonitoringConfiguration = std::forward<S3MonitoringConfigurationT>(value);
+  }
+  template <typename S3MonitoringConfigurationT = S3MonitoringConfiguration>
+  MonitoringConfiguration& WithS3MonitoringConfiguration(S3MonitoringConfigurationT&& value) {
+    SetS3MonitoringConfiguration(std::forward<S3MonitoringConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon S3 configuration for monitoring log publishing.</p>
-     */
-    inline const S3MonitoringConfiguration& GetS3MonitoringConfiguration() const{ return m_s3MonitoringConfiguration; }
-    inline bool S3MonitoringConfigurationHasBeenSet() const { return m_s3MonitoringConfigurationHasBeenSet; }
-    inline void SetS3MonitoringConfiguration(const S3MonitoringConfiguration& value) { m_s3MonitoringConfigurationHasBeenSet = true; m_s3MonitoringConfiguration = value; }
-    inline void SetS3MonitoringConfiguration(S3MonitoringConfiguration&& value) { m_s3MonitoringConfigurationHasBeenSet = true; m_s3MonitoringConfiguration = std::move(value); }
-    inline MonitoringConfiguration& WithS3MonitoringConfiguration(const S3MonitoringConfiguration& value) { SetS3MonitoringConfiguration(value); return *this;}
-    inline MonitoringConfiguration& WithS3MonitoringConfiguration(S3MonitoringConfiguration&& value) { SetS3MonitoringConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Enable or disable container log rotation.</p>
+   */
+  inline const ContainerLogRotationConfiguration& GetContainerLogRotationConfiguration() const {
+    return m_containerLogRotationConfiguration;
+  }
+  inline bool ContainerLogRotationConfigurationHasBeenSet() const { return m_containerLogRotationConfigurationHasBeenSet; }
+  template <typename ContainerLogRotationConfigurationT = ContainerLogRotationConfiguration>
+  void SetContainerLogRotationConfiguration(ContainerLogRotationConfigurationT&& value) {
+    m_containerLogRotationConfigurationHasBeenSet = true;
+    m_containerLogRotationConfiguration = std::forward<ContainerLogRotationConfigurationT>(value);
+  }
+  template <typename ContainerLogRotationConfigurationT = ContainerLogRotationConfiguration>
+  MonitoringConfiguration& WithContainerLogRotationConfiguration(ContainerLogRotationConfigurationT&& value) {
+    SetContainerLogRotationConfiguration(std::forward<ContainerLogRotationConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ManagedLogs m_managedLogs;
 
-    ///@{
-    /**
-     * <p>Enable or disable container log rotation.</p>
-     */
-    inline const ContainerLogRotationConfiguration& GetContainerLogRotationConfiguration() const{ return m_containerLogRotationConfiguration; }
-    inline bool ContainerLogRotationConfigurationHasBeenSet() const { return m_containerLogRotationConfigurationHasBeenSet; }
-    inline void SetContainerLogRotationConfiguration(const ContainerLogRotationConfiguration& value) { m_containerLogRotationConfigurationHasBeenSet = true; m_containerLogRotationConfiguration = value; }
-    inline void SetContainerLogRotationConfiguration(ContainerLogRotationConfiguration&& value) { m_containerLogRotationConfigurationHasBeenSet = true; m_containerLogRotationConfiguration = std::move(value); }
-    inline MonitoringConfiguration& WithContainerLogRotationConfiguration(const ContainerLogRotationConfiguration& value) { SetContainerLogRotationConfiguration(value); return *this;}
-    inline MonitoringConfiguration& WithContainerLogRotationConfiguration(ContainerLogRotationConfiguration&& value) { SetContainerLogRotationConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  PersistentAppUI m_persistentAppUI{PersistentAppUI::NOT_SET};
 
-    PersistentAppUI m_persistentAppUI;
-    bool m_persistentAppUIHasBeenSet = false;
+  CloudWatchMonitoringConfiguration m_cloudWatchMonitoringConfiguration;
 
-    CloudWatchMonitoringConfiguration m_cloudWatchMonitoringConfiguration;
-    bool m_cloudWatchMonitoringConfigurationHasBeenSet = false;
+  S3MonitoringConfiguration m_s3MonitoringConfiguration;
 
-    S3MonitoringConfiguration m_s3MonitoringConfiguration;
-    bool m_s3MonitoringConfigurationHasBeenSet = false;
+  ContainerLogRotationConfiguration m_containerLogRotationConfiguration;
+  bool m_managedLogsHasBeenSet = false;
+  bool m_persistentAppUIHasBeenSet = false;
+  bool m_cloudWatchMonitoringConfigurationHasBeenSet = false;
+  bool m_s3MonitoringConfigurationHasBeenSet = false;
+  bool m_containerLogRotationConfigurationHasBeenSet = false;
+};
 
-    ContainerLogRotationConfiguration m_containerLogRotationConfiguration;
-    bool m_containerLogRotationConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EMRContainers
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMRContainers
+}  // namespace Aws

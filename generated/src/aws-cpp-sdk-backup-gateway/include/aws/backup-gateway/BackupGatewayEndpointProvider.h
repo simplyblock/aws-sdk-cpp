@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/backup-gateway/BackupGateway_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/backup-gateway/BackupGatewayEndpointRules.h>
-
-
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace BackupGateway {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using BackupGatewayClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using BackupGatewayEndpointProviderBase =
     EndpointProviderBase<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
 
 using BackupGatewayDefaultEpProviderBase =
-    DefaultEndpointProvider<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
+    BDDEndpointProvider<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_BACKUPGATEWAY_API BackupGatewayEndpointProvider : public BackupGatewayDefaultEpProviderBase
-{
-public:
-    using BackupGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_BACKUPGATEWAY_API BackupGatewayEndpointProvider : public BackupGatewayDefaultEpProviderBase {
+ public:
+  using BackupGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    BackupGatewayEndpointProvider()
-      : BackupGatewayDefaultEpProviderBase(Aws::BackupGateway::BackupGatewayEndpointRules::GetRulesBlob(), Aws::BackupGateway::BackupGatewayEndpointRules::RulesBlobSize)
-    {}
+  BackupGatewayEndpointProvider();
 
-    ~BackupGatewayEndpointProvider()
-    {
-    }
+  ~BackupGatewayEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace BackupGateway
+}  // namespace Aws

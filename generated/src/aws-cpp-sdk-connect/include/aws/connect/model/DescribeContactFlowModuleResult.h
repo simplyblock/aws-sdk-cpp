@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/ContactFlowModule.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class DescribeContactFlowModuleResult
-  {
-  public:
-    AWS_CONNECT_API DescribeContactFlowModuleResult();
-    AWS_CONNECT_API DescribeContactFlowModuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API DescribeContactFlowModuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class DescribeContactFlowModuleResult {
+ public:
+  AWS_CONNECT_API DescribeContactFlowModuleResult() = default;
+  AWS_CONNECT_API DescribeContactFlowModuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API DescribeContactFlowModuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the flow module.</p>
+   */
+  inline const ContactFlowModule& GetContactFlowModule() const { return m_contactFlowModule; }
+  template <typename ContactFlowModuleT = ContactFlowModule>
+  void SetContactFlowModule(ContactFlowModuleT&& value) {
+    m_contactFlowModuleHasBeenSet = true;
+    m_contactFlowModule = std::forward<ContactFlowModuleT>(value);
+  }
+  template <typename ContactFlowModuleT = ContactFlowModule>
+  DescribeContactFlowModuleResult& WithContactFlowModule(ContactFlowModuleT&& value) {
+    SetContactFlowModule(std::forward<ContactFlowModuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the flow module.</p>
-     */
-    inline const ContactFlowModule& GetContactFlowModule() const{ return m_contactFlowModule; }
-    inline void SetContactFlowModule(const ContactFlowModule& value) { m_contactFlowModule = value; }
-    inline void SetContactFlowModule(ContactFlowModule&& value) { m_contactFlowModule = std::move(value); }
-    inline DescribeContactFlowModuleResult& WithContactFlowModule(const ContactFlowModule& value) { SetContactFlowModule(value); return *this;}
-    inline DescribeContactFlowModuleResult& WithContactFlowModule(ContactFlowModule&& value) { SetContactFlowModule(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeContactFlowModuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeContactFlowModuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeContactFlowModuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeContactFlowModuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContactFlowModule m_contactFlowModule;
+ private:
+  ContactFlowModule m_contactFlowModule;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contactFlowModuleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -4,205 +4,272 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/datazone/model/SubscriptionStatus.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/SubscribedListing.h>
 #include <aws/datazone/model/SubscribedPrincipal.h>
+#include <aws/datazone/model/SubscriptionStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataZone
-{
-namespace Model
-{
-  class GetSubscriptionResult
-  {
-  public:
-    AWS_DATAZONE_API GetSubscriptionResult();
-    AWS_DATAZONE_API GetSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATAZONE_API GetSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataZone {
+namespace Model {
+class GetSubscriptionResult {
+ public:
+  AWS_DATAZONE_API GetSubscriptionResult() = default;
+  AWS_DATAZONE_API GetSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATAZONE_API GetSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the subscription.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetSubscriptionResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the subscription was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetSubscriptionResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetSubscriptionResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon DataZone user who created the subscription.</p>
+   */
+  inline const Aws::String& GetCreatedBy() const { return m_createdBy; }
+  template <typename CreatedByT = Aws::String>
+  void SetCreatedBy(CreatedByT&& value) {
+    m_createdByHasBeenSet = true;
+    m_createdBy = std::forward<CreatedByT>(value);
+  }
+  template <typename CreatedByT = Aws::String>
+  GetSubscriptionResult& WithCreatedBy(CreatedByT&& value) {
+    SetCreatedBy(std::forward<CreatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon DataZone user who created the subscription.</p>
-     */
-    inline const Aws::String& GetCreatedBy() const{ return m_createdBy; }
-    inline void SetCreatedBy(const Aws::String& value) { m_createdBy = value; }
-    inline void SetCreatedBy(Aws::String&& value) { m_createdBy = std::move(value); }
-    inline void SetCreatedBy(const char* value) { m_createdBy.assign(value); }
-    inline GetSubscriptionResult& WithCreatedBy(const Aws::String& value) { SetCreatedBy(value); return *this;}
-    inline GetSubscriptionResult& WithCreatedBy(Aws::String&& value) { SetCreatedBy(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithCreatedBy(const char* value) { SetCreatedBy(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon DataZone user who updated the subscription.</p>
+   */
+  inline const Aws::String& GetUpdatedBy() const { return m_updatedBy; }
+  template <typename UpdatedByT = Aws::String>
+  void SetUpdatedBy(UpdatedByT&& value) {
+    m_updatedByHasBeenSet = true;
+    m_updatedBy = std::forward<UpdatedByT>(value);
+  }
+  template <typename UpdatedByT = Aws::String>
+  GetSubscriptionResult& WithUpdatedBy(UpdatedByT&& value) {
+    SetUpdatedBy(std::forward<UpdatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon DataZone domain in which the subscription exists.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline void SetDomainId(const Aws::String& value) { m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainId.assign(value); }
-    inline GetSubscriptionResult& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline GetSubscriptionResult& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the Amazon DataZone domain in which the subscription exists.</p>
+   */
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  GetSubscriptionResult& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the subscription.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline GetSubscriptionResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetSubscriptionResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the subscription.</p>
+   */
+  inline SubscriptionStatus GetStatus() const { return m_status; }
+  inline void SetStatus(SubscriptionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetSubscriptionResult& WithStatus(SubscriptionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The retain permissions of the subscription.</p>
-     */
-    inline bool GetRetainPermissions() const{ return m_retainPermissions; }
-    inline void SetRetainPermissions(bool value) { m_retainPermissions = value; }
-    inline GetSubscriptionResult& WithRetainPermissions(bool value) { SetRetainPermissions(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the subscription was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetSubscriptionResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the subscription.</p>
-     */
-    inline const SubscriptionStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const SubscriptionStatus& value) { m_status = value; }
-    inline void SetStatus(SubscriptionStatus&& value) { m_status = std::move(value); }
-    inline GetSubscriptionResult& WithStatus(const SubscriptionStatus& value) { SetStatus(value); return *this;}
-    inline GetSubscriptionResult& WithStatus(SubscriptionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the subscription was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetSubscriptionResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the published asset for which the subscription grant is
-     * created.</p>
-     */
-    inline const SubscribedListing& GetSubscribedListing() const{ return m_subscribedListing; }
-    inline void SetSubscribedListing(const SubscribedListing& value) { m_subscribedListing = value; }
-    inline void SetSubscribedListing(SubscribedListing&& value) { m_subscribedListing = std::move(value); }
-    inline GetSubscriptionResult& WithSubscribedListing(const SubscribedListing& value) { SetSubscribedListing(value); return *this;}
-    inline GetSubscriptionResult& WithSubscribedListing(SubscribedListing&& value) { SetSubscribedListing(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The principal that owns the subscription.</p>
+   */
+  inline const SubscribedPrincipal& GetSubscribedPrincipal() const { return m_subscribedPrincipal; }
+  template <typename SubscribedPrincipalT = SubscribedPrincipal>
+  void SetSubscribedPrincipal(SubscribedPrincipalT&& value) {
+    m_subscribedPrincipalHasBeenSet = true;
+    m_subscribedPrincipal = std::forward<SubscribedPrincipalT>(value);
+  }
+  template <typename SubscribedPrincipalT = SubscribedPrincipal>
+  GetSubscriptionResult& WithSubscribedPrincipal(SubscribedPrincipalT&& value) {
+    SetSubscribedPrincipal(std::forward<SubscribedPrincipalT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The principal that owns the subscription.</p>
-     */
-    inline const SubscribedPrincipal& GetSubscribedPrincipal() const{ return m_subscribedPrincipal; }
-    inline void SetSubscribedPrincipal(const SubscribedPrincipal& value) { m_subscribedPrincipal = value; }
-    inline void SetSubscribedPrincipal(SubscribedPrincipal&& value) { m_subscribedPrincipal = std::move(value); }
-    inline GetSubscriptionResult& WithSubscribedPrincipal(const SubscribedPrincipal& value) { SetSubscribedPrincipal(value); return *this;}
-    inline GetSubscriptionResult& WithSubscribedPrincipal(SubscribedPrincipal&& value) { SetSubscribedPrincipal(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The details of the published asset for which the subscription grant is
+   * created.</p>
+   */
+  inline const SubscribedListing& GetSubscribedListing() const { return m_subscribedListing; }
+  template <typename SubscribedListingT = SubscribedListing>
+  void SetSubscribedListing(SubscribedListingT&& value) {
+    m_subscribedListingHasBeenSet = true;
+    m_subscribedListing = std::forward<SubscribedListingT>(value);
+  }
+  template <typename SubscribedListingT = SubscribedListing>
+  GetSubscriptionResult& WithSubscribedListing(SubscribedListingT&& value) {
+    SetSubscribedListing(std::forward<SubscribedListingT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the subscription request.</p>
-     */
-    inline const Aws::String& GetSubscriptionRequestId() const{ return m_subscriptionRequestId; }
-    inline void SetSubscriptionRequestId(const Aws::String& value) { m_subscriptionRequestId = value; }
-    inline void SetSubscriptionRequestId(Aws::String&& value) { m_subscriptionRequestId = std::move(value); }
-    inline void SetSubscriptionRequestId(const char* value) { m_subscriptionRequestId.assign(value); }
-    inline GetSubscriptionResult& WithSubscriptionRequestId(const Aws::String& value) { SetSubscriptionRequestId(value); return *this;}
-    inline GetSubscriptionResult& WithSubscriptionRequestId(Aws::String&& value) { SetSubscriptionRequestId(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithSubscriptionRequestId(const char* value) { SetSubscriptionRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the subscription request.</p>
+   */
+  inline const Aws::String& GetSubscriptionRequestId() const { return m_subscriptionRequestId; }
+  template <typename SubscriptionRequestIdT = Aws::String>
+  void SetSubscriptionRequestId(SubscriptionRequestIdT&& value) {
+    m_subscriptionRequestIdHasBeenSet = true;
+    m_subscriptionRequestId = std::forward<SubscriptionRequestIdT>(value);
+  }
+  template <typename SubscriptionRequestIdT = Aws::String>
+  GetSubscriptionResult& WithSubscriptionRequestId(SubscriptionRequestIdT&& value) {
+    SetSubscriptionRequestId(std::forward<SubscriptionRequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the subscription was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAt = std::move(value); }
-    inline GetSubscriptionResult& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline GetSubscriptionResult& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The retain permissions of the subscription.</p>
+   */
+  inline bool GetRetainPermissions() const { return m_retainPermissions; }
+  inline void SetRetainPermissions(bool value) {
+    m_retainPermissionsHasBeenSet = true;
+    m_retainPermissions = value;
+  }
+  inline GetSubscriptionResult& WithRetainPermissions(bool value) {
+    SetRetainPermissions(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon DataZone user who updated the subscription.</p>
-     */
-    inline const Aws::String& GetUpdatedBy() const{ return m_updatedBy; }
-    inline void SetUpdatedBy(const Aws::String& value) { m_updatedBy = value; }
-    inline void SetUpdatedBy(Aws::String&& value) { m_updatedBy = std::move(value); }
-    inline void SetUpdatedBy(const char* value) { m_updatedBy.assign(value); }
-    inline GetSubscriptionResult& WithUpdatedBy(const Aws::String& value) { SetUpdatedBy(value); return *this;}
-    inline GetSubscriptionResult& WithUpdatedBy(Aws::String&& value) { SetUpdatedBy(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithUpdatedBy(const char* value) { SetUpdatedBy(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSubscriptionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSubscriptionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSubscriptionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSubscriptionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Utils::DateTime m_createdAt;
+ private:
+  Aws::String m_id;
 
-    Aws::String m_createdBy;
+  Aws::String m_createdBy;
 
-    Aws::String m_domainId;
+  Aws::String m_updatedBy;
 
-    Aws::String m_id;
+  Aws::String m_domainId;
 
-    bool m_retainPermissions;
+  SubscriptionStatus m_status{SubscriptionStatus::NOT_SET};
 
-    SubscriptionStatus m_status;
+  Aws::Utils::DateTime m_createdAt{};
 
-    SubscribedListing m_subscribedListing;
+  Aws::Utils::DateTime m_updatedAt{};
 
-    SubscribedPrincipal m_subscribedPrincipal;
+  SubscribedPrincipal m_subscribedPrincipal;
 
-    Aws::String m_subscriptionRequestId;
+  SubscribedListing m_subscribedListing;
 
-    Aws::Utils::DateTime m_updatedAt;
+  Aws::String m_subscriptionRequestId;
 
-    Aws::String m_updatedBy;
+  bool m_retainPermissions{false};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_idHasBeenSet = false;
+  bool m_createdByHasBeenSet = false;
+  bool m_updatedByHasBeenSet = false;
+  bool m_domainIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_subscribedPrincipalHasBeenSet = false;
+  bool m_subscribedListingHasBeenSet = false;
+  bool m_subscriptionRequestIdHasBeenSet = false;
+  bool m_retainPermissionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

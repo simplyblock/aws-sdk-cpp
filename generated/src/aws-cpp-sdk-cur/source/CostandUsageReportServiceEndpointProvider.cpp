@@ -4,13 +4,16 @@
  */
 
 #include <aws/cur/CostandUsageReportServiceEndpointProvider.h>
+#include <aws/cur/internal/CostandUsageReportServiceEndpointRules.h>
 
-namespace Aws
-{
-namespace CostandUsageReportService
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CostandUsageReportService
-} // namespace Aws
+namespace Aws {
+namespace CostandUsageReportService {
+namespace Endpoint {
+CostandUsageReportServiceEndpointProvider::CostandUsageReportServiceEndpointProvider()
+    : CostandUsageReportServiceDefaultEpProviderBase(
+          Aws::CostandUsageReportService::CostandUsageReportServiceEndpointRules::GetRulesBlob(),
+          Aws::CostandUsageReportService::CostandUsageReportServiceEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CostandUsageReportService
+}  // namespace Aws

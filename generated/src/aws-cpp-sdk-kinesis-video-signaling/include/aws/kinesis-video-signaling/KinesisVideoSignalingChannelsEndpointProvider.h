@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/kinesis-video-signaling/KinesisVideoSignalingChannels_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kinesis-video-signaling/KinesisVideoSignalingChannels_EXPORTS.h>
 
-#include <aws/kinesis-video-signaling/KinesisVideoSignalingChannelsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace KinesisVideoSignalingChannels
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace KinesisVideoSignalingChannels {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using KinesisVideoSignalingChannelsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,25 @@ using KinesisVideoSignalingChannelsBuiltInParameters = Aws::Endpoint::BuiltInPar
  * The SDK must use service-specific type for each service per specification.
  */
 using KinesisVideoSignalingChannelsEndpointProviderBase =
-    EndpointProviderBase<KinesisVideoSignalingChannelsClientConfiguration, KinesisVideoSignalingChannelsBuiltInParameters, KinesisVideoSignalingChannelsClientContextParameters>;
+    EndpointProviderBase<KinesisVideoSignalingChannelsClientConfiguration, KinesisVideoSignalingChannelsBuiltInParameters,
+                         KinesisVideoSignalingChannelsClientContextParameters>;
 
 using KinesisVideoSignalingChannelsDefaultEpProviderBase =
-    DefaultEndpointProvider<KinesisVideoSignalingChannelsClientConfiguration, KinesisVideoSignalingChannelsBuiltInParameters, KinesisVideoSignalingChannelsClientContextParameters>;
+    BDDEndpointProvider<KinesisVideoSignalingChannelsClientConfiguration, KinesisVideoSignalingChannelsBuiltInParameters,
+                        KinesisVideoSignalingChannelsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_KINESISVIDEOSIGNALINGCHANNELS_API KinesisVideoSignalingChannelsEndpointProvider : public KinesisVideoSignalingChannelsDefaultEpProviderBase
-{
-public:
-    using KinesisVideoSignalingChannelsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_KINESISVIDEOSIGNALINGCHANNELS_API KinesisVideoSignalingChannelsEndpointProvider
+    : public KinesisVideoSignalingChannelsDefaultEpProviderBase {
+ public:
+  using KinesisVideoSignalingChannelsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    KinesisVideoSignalingChannelsEndpointProvider()
-      : KinesisVideoSignalingChannelsDefaultEpProviderBase(Aws::KinesisVideoSignalingChannels::KinesisVideoSignalingChannelsEndpointRules::GetRulesBlob(), Aws::KinesisVideoSignalingChannels::KinesisVideoSignalingChannelsEndpointRules::RulesBlobSize)
-    {}
+  KinesisVideoSignalingChannelsEndpointProvider();
 
-    ~KinesisVideoSignalingChannelsEndpointProvider()
-    {
-    }
+  ~KinesisVideoSignalingChannelsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace KinesisVideoSignalingChannels
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace KinesisVideoSignalingChannels
+}  // namespace Aws

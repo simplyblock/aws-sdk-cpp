@@ -4,129 +4,170 @@
  */
 
 #pragma once
-#include <aws/migrationhubstrategy/MigrationHubStrategyRecommendations_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/migrationhubstrategy/model/RemoteSourceCodeAnalysisServerInfo.h>
+#include <aws/migrationhubstrategy/MigrationHubStrategyRecommendations_EXPORTS.h>
 #include <aws/migrationhubstrategy/model/IPAddressBasedRemoteInfo.h>
 #include <aws/migrationhubstrategy/model/PipelineInfo.h>
+#include <aws/migrationhubstrategy/model/RemoteSourceCodeAnalysisServerInfo.h>
 #include <aws/migrationhubstrategy/model/VcenterBasedRemoteInfo.h>
 #include <aws/migrationhubstrategy/model/VersionControlInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MigrationHubStrategyRecommendations
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MigrationHubStrategyRecommendations {
+namespace Model {
 
+/**
+ * <p>Summary of the collector configuration.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/migrationhubstrategy-2020-02-19/ConfigurationSummary">AWS
+ * API Reference</a></p>
+ */
+class ConfigurationSummary {
+ public:
+  AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary() = default;
+  AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Summary of the collector configuration.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/migrationhubstrategy-2020-02-19/ConfigurationSummary">AWS
-   * API Reference</a></p>
+   * <p>IP address based configurations.</p>
    */
-  class ConfigurationSummary
-  {
-  public:
-    AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary();
-    AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API ConfigurationSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MIGRATIONHUBSTRATEGYRECOMMENDATIONS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<IPAddressBasedRemoteInfo>& GetIpAddressBasedRemoteInfoList() const { return m_ipAddressBasedRemoteInfoList; }
+  inline bool IpAddressBasedRemoteInfoListHasBeenSet() const { return m_ipAddressBasedRemoteInfoListHasBeenSet; }
+  template <typename IpAddressBasedRemoteInfoListT = Aws::Vector<IPAddressBasedRemoteInfo>>
+  void SetIpAddressBasedRemoteInfoList(IpAddressBasedRemoteInfoListT&& value) {
+    m_ipAddressBasedRemoteInfoListHasBeenSet = true;
+    m_ipAddressBasedRemoteInfoList = std::forward<IpAddressBasedRemoteInfoListT>(value);
+  }
+  template <typename IpAddressBasedRemoteInfoListT = Aws::Vector<IPAddressBasedRemoteInfo>>
+  ConfigurationSummary& WithIpAddressBasedRemoteInfoList(IpAddressBasedRemoteInfoListT&& value) {
+    SetIpAddressBasedRemoteInfoList(std::forward<IpAddressBasedRemoteInfoListT>(value));
+    return *this;
+  }
+  template <typename IpAddressBasedRemoteInfoListT = IPAddressBasedRemoteInfo>
+  ConfigurationSummary& AddIpAddressBasedRemoteInfoList(IpAddressBasedRemoteInfoListT&& value) {
+    m_ipAddressBasedRemoteInfoListHasBeenSet = true;
+    m_ipAddressBasedRemoteInfoList.emplace_back(std::forward<IpAddressBasedRemoteInfoListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of pipeline info configurations.</p>
+   */
+  inline const Aws::Vector<PipelineInfo>& GetPipelineInfoList() const { return m_pipelineInfoList; }
+  inline bool PipelineInfoListHasBeenSet() const { return m_pipelineInfoListHasBeenSet; }
+  template <typename PipelineInfoListT = Aws::Vector<PipelineInfo>>
+  void SetPipelineInfoList(PipelineInfoListT&& value) {
+    m_pipelineInfoListHasBeenSet = true;
+    m_pipelineInfoList = std::forward<PipelineInfoListT>(value);
+  }
+  template <typename PipelineInfoListT = Aws::Vector<PipelineInfo>>
+  ConfigurationSummary& WithPipelineInfoList(PipelineInfoListT&& value) {
+    SetPipelineInfoList(std::forward<PipelineInfoListT>(value));
+    return *this;
+  }
+  template <typename PipelineInfoListT = PipelineInfo>
+  ConfigurationSummary& AddPipelineInfoList(PipelineInfoListT&& value) {
+    m_pipelineInfoListHasBeenSet = true;
+    m_pipelineInfoList.emplace_back(std::forward<PipelineInfoListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>IP address based configurations.</p>
-     */
-    inline const Aws::Vector<IPAddressBasedRemoteInfo>& GetIpAddressBasedRemoteInfoList() const{ return m_ipAddressBasedRemoteInfoList; }
-    inline bool IpAddressBasedRemoteInfoListHasBeenSet() const { return m_ipAddressBasedRemoteInfoListHasBeenSet; }
-    inline void SetIpAddressBasedRemoteInfoList(const Aws::Vector<IPAddressBasedRemoteInfo>& value) { m_ipAddressBasedRemoteInfoListHasBeenSet = true; m_ipAddressBasedRemoteInfoList = value; }
-    inline void SetIpAddressBasedRemoteInfoList(Aws::Vector<IPAddressBasedRemoteInfo>&& value) { m_ipAddressBasedRemoteInfoListHasBeenSet = true; m_ipAddressBasedRemoteInfoList = std::move(value); }
-    inline ConfigurationSummary& WithIpAddressBasedRemoteInfoList(const Aws::Vector<IPAddressBasedRemoteInfo>& value) { SetIpAddressBasedRemoteInfoList(value); return *this;}
-    inline ConfigurationSummary& WithIpAddressBasedRemoteInfoList(Aws::Vector<IPAddressBasedRemoteInfo>&& value) { SetIpAddressBasedRemoteInfoList(std::move(value)); return *this;}
-    inline ConfigurationSummary& AddIpAddressBasedRemoteInfoList(const IPAddressBasedRemoteInfo& value) { m_ipAddressBasedRemoteInfoListHasBeenSet = true; m_ipAddressBasedRemoteInfoList.push_back(value); return *this; }
-    inline ConfigurationSummary& AddIpAddressBasedRemoteInfoList(IPAddressBasedRemoteInfo&& value) { m_ipAddressBasedRemoteInfoListHasBeenSet = true; m_ipAddressBasedRemoteInfoList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Info about the remote server source code configuration.</p>
+   */
+  inline const RemoteSourceCodeAnalysisServerInfo& GetRemoteSourceCodeAnalysisServerInfo() const {
+    return m_remoteSourceCodeAnalysisServerInfo;
+  }
+  inline bool RemoteSourceCodeAnalysisServerInfoHasBeenSet() const { return m_remoteSourceCodeAnalysisServerInfoHasBeenSet; }
+  template <typename RemoteSourceCodeAnalysisServerInfoT = RemoteSourceCodeAnalysisServerInfo>
+  void SetRemoteSourceCodeAnalysisServerInfo(RemoteSourceCodeAnalysisServerInfoT&& value) {
+    m_remoteSourceCodeAnalysisServerInfoHasBeenSet = true;
+    m_remoteSourceCodeAnalysisServerInfo = std::forward<RemoteSourceCodeAnalysisServerInfoT>(value);
+  }
+  template <typename RemoteSourceCodeAnalysisServerInfoT = RemoteSourceCodeAnalysisServerInfo>
+  ConfigurationSummary& WithRemoteSourceCodeAnalysisServerInfo(RemoteSourceCodeAnalysisServerInfoT&& value) {
+    SetRemoteSourceCodeAnalysisServerInfo(std::forward<RemoteSourceCodeAnalysisServerInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of pipeline info configurations.</p>
-     */
-    inline const Aws::Vector<PipelineInfo>& GetPipelineInfoList() const{ return m_pipelineInfoList; }
-    inline bool PipelineInfoListHasBeenSet() const { return m_pipelineInfoListHasBeenSet; }
-    inline void SetPipelineInfoList(const Aws::Vector<PipelineInfo>& value) { m_pipelineInfoListHasBeenSet = true; m_pipelineInfoList = value; }
-    inline void SetPipelineInfoList(Aws::Vector<PipelineInfo>&& value) { m_pipelineInfoListHasBeenSet = true; m_pipelineInfoList = std::move(value); }
-    inline ConfigurationSummary& WithPipelineInfoList(const Aws::Vector<PipelineInfo>& value) { SetPipelineInfoList(value); return *this;}
-    inline ConfigurationSummary& WithPipelineInfoList(Aws::Vector<PipelineInfo>&& value) { SetPipelineInfoList(std::move(value)); return *this;}
-    inline ConfigurationSummary& AddPipelineInfoList(const PipelineInfo& value) { m_pipelineInfoListHasBeenSet = true; m_pipelineInfoList.push_back(value); return *this; }
-    inline ConfigurationSummary& AddPipelineInfoList(PipelineInfo&& value) { m_pipelineInfoListHasBeenSet = true; m_pipelineInfoList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of vCenter configurations.</p>
+   */
+  inline const Aws::Vector<VcenterBasedRemoteInfo>& GetVcenterBasedRemoteInfoList() const { return m_vcenterBasedRemoteInfoList; }
+  inline bool VcenterBasedRemoteInfoListHasBeenSet() const { return m_vcenterBasedRemoteInfoListHasBeenSet; }
+  template <typename VcenterBasedRemoteInfoListT = Aws::Vector<VcenterBasedRemoteInfo>>
+  void SetVcenterBasedRemoteInfoList(VcenterBasedRemoteInfoListT&& value) {
+    m_vcenterBasedRemoteInfoListHasBeenSet = true;
+    m_vcenterBasedRemoteInfoList = std::forward<VcenterBasedRemoteInfoListT>(value);
+  }
+  template <typename VcenterBasedRemoteInfoListT = Aws::Vector<VcenterBasedRemoteInfo>>
+  ConfigurationSummary& WithVcenterBasedRemoteInfoList(VcenterBasedRemoteInfoListT&& value) {
+    SetVcenterBasedRemoteInfoList(std::forward<VcenterBasedRemoteInfoListT>(value));
+    return *this;
+  }
+  template <typename VcenterBasedRemoteInfoListT = VcenterBasedRemoteInfo>
+  ConfigurationSummary& AddVcenterBasedRemoteInfoList(VcenterBasedRemoteInfoListT&& value) {
+    m_vcenterBasedRemoteInfoListHasBeenSet = true;
+    m_vcenterBasedRemoteInfoList.emplace_back(std::forward<VcenterBasedRemoteInfoListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Info about the remote server source code configuration.</p>
-     */
-    inline const RemoteSourceCodeAnalysisServerInfo& GetRemoteSourceCodeAnalysisServerInfo() const{ return m_remoteSourceCodeAnalysisServerInfo; }
-    inline bool RemoteSourceCodeAnalysisServerInfoHasBeenSet() const { return m_remoteSourceCodeAnalysisServerInfoHasBeenSet; }
-    inline void SetRemoteSourceCodeAnalysisServerInfo(const RemoteSourceCodeAnalysisServerInfo& value) { m_remoteSourceCodeAnalysisServerInfoHasBeenSet = true; m_remoteSourceCodeAnalysisServerInfo = value; }
-    inline void SetRemoteSourceCodeAnalysisServerInfo(RemoteSourceCodeAnalysisServerInfo&& value) { m_remoteSourceCodeAnalysisServerInfoHasBeenSet = true; m_remoteSourceCodeAnalysisServerInfo = std::move(value); }
-    inline ConfigurationSummary& WithRemoteSourceCodeAnalysisServerInfo(const RemoteSourceCodeAnalysisServerInfo& value) { SetRemoteSourceCodeAnalysisServerInfo(value); return *this;}
-    inline ConfigurationSummary& WithRemoteSourceCodeAnalysisServerInfo(RemoteSourceCodeAnalysisServerInfo&& value) { SetRemoteSourceCodeAnalysisServerInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of the version control configurations.</p>
+   */
+  inline const Aws::Vector<VersionControlInfo>& GetVersionControlInfoList() const { return m_versionControlInfoList; }
+  inline bool VersionControlInfoListHasBeenSet() const { return m_versionControlInfoListHasBeenSet; }
+  template <typename VersionControlInfoListT = Aws::Vector<VersionControlInfo>>
+  void SetVersionControlInfoList(VersionControlInfoListT&& value) {
+    m_versionControlInfoListHasBeenSet = true;
+    m_versionControlInfoList = std::forward<VersionControlInfoListT>(value);
+  }
+  template <typename VersionControlInfoListT = Aws::Vector<VersionControlInfo>>
+  ConfigurationSummary& WithVersionControlInfoList(VersionControlInfoListT&& value) {
+    SetVersionControlInfoList(std::forward<VersionControlInfoListT>(value));
+    return *this;
+  }
+  template <typename VersionControlInfoListT = VersionControlInfo>
+  ConfigurationSummary& AddVersionControlInfoList(VersionControlInfoListT&& value) {
+    m_versionControlInfoListHasBeenSet = true;
+    m_versionControlInfoList.emplace_back(std::forward<VersionControlInfoListT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<IPAddressBasedRemoteInfo> m_ipAddressBasedRemoteInfoList;
 
-    ///@{
-    /**
-     * <p>The list of vCenter configurations.</p>
-     */
-    inline const Aws::Vector<VcenterBasedRemoteInfo>& GetVcenterBasedRemoteInfoList() const{ return m_vcenterBasedRemoteInfoList; }
-    inline bool VcenterBasedRemoteInfoListHasBeenSet() const { return m_vcenterBasedRemoteInfoListHasBeenSet; }
-    inline void SetVcenterBasedRemoteInfoList(const Aws::Vector<VcenterBasedRemoteInfo>& value) { m_vcenterBasedRemoteInfoListHasBeenSet = true; m_vcenterBasedRemoteInfoList = value; }
-    inline void SetVcenterBasedRemoteInfoList(Aws::Vector<VcenterBasedRemoteInfo>&& value) { m_vcenterBasedRemoteInfoListHasBeenSet = true; m_vcenterBasedRemoteInfoList = std::move(value); }
-    inline ConfigurationSummary& WithVcenterBasedRemoteInfoList(const Aws::Vector<VcenterBasedRemoteInfo>& value) { SetVcenterBasedRemoteInfoList(value); return *this;}
-    inline ConfigurationSummary& WithVcenterBasedRemoteInfoList(Aws::Vector<VcenterBasedRemoteInfo>&& value) { SetVcenterBasedRemoteInfoList(std::move(value)); return *this;}
-    inline ConfigurationSummary& AddVcenterBasedRemoteInfoList(const VcenterBasedRemoteInfo& value) { m_vcenterBasedRemoteInfoListHasBeenSet = true; m_vcenterBasedRemoteInfoList.push_back(value); return *this; }
-    inline ConfigurationSummary& AddVcenterBasedRemoteInfoList(VcenterBasedRemoteInfo&& value) { m_vcenterBasedRemoteInfoListHasBeenSet = true; m_vcenterBasedRemoteInfoList.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<PipelineInfo> m_pipelineInfoList;
 
-    ///@{
-    /**
-     * <p>The list of the version control configurations.</p>
-     */
-    inline const Aws::Vector<VersionControlInfo>& GetVersionControlInfoList() const{ return m_versionControlInfoList; }
-    inline bool VersionControlInfoListHasBeenSet() const { return m_versionControlInfoListHasBeenSet; }
-    inline void SetVersionControlInfoList(const Aws::Vector<VersionControlInfo>& value) { m_versionControlInfoListHasBeenSet = true; m_versionControlInfoList = value; }
-    inline void SetVersionControlInfoList(Aws::Vector<VersionControlInfo>&& value) { m_versionControlInfoListHasBeenSet = true; m_versionControlInfoList = std::move(value); }
-    inline ConfigurationSummary& WithVersionControlInfoList(const Aws::Vector<VersionControlInfo>& value) { SetVersionControlInfoList(value); return *this;}
-    inline ConfigurationSummary& WithVersionControlInfoList(Aws::Vector<VersionControlInfo>&& value) { SetVersionControlInfoList(std::move(value)); return *this;}
-    inline ConfigurationSummary& AddVersionControlInfoList(const VersionControlInfo& value) { m_versionControlInfoListHasBeenSet = true; m_versionControlInfoList.push_back(value); return *this; }
-    inline ConfigurationSummary& AddVersionControlInfoList(VersionControlInfo&& value) { m_versionControlInfoListHasBeenSet = true; m_versionControlInfoList.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  RemoteSourceCodeAnalysisServerInfo m_remoteSourceCodeAnalysisServerInfo;
 
-    Aws::Vector<IPAddressBasedRemoteInfo> m_ipAddressBasedRemoteInfoList;
-    bool m_ipAddressBasedRemoteInfoListHasBeenSet = false;
+  Aws::Vector<VcenterBasedRemoteInfo> m_vcenterBasedRemoteInfoList;
 
-    Aws::Vector<PipelineInfo> m_pipelineInfoList;
-    bool m_pipelineInfoListHasBeenSet = false;
+  Aws::Vector<VersionControlInfo> m_versionControlInfoList;
+  bool m_ipAddressBasedRemoteInfoListHasBeenSet = false;
+  bool m_pipelineInfoListHasBeenSet = false;
+  bool m_remoteSourceCodeAnalysisServerInfoHasBeenSet = false;
+  bool m_vcenterBasedRemoteInfoListHasBeenSet = false;
+  bool m_versionControlInfoListHasBeenSet = false;
+};
 
-    RemoteSourceCodeAnalysisServerInfo m_remoteSourceCodeAnalysisServerInfo;
-    bool m_remoteSourceCodeAnalysisServerInfoHasBeenSet = false;
-
-    Aws::Vector<VcenterBasedRemoteInfo> m_vcenterBasedRemoteInfoList;
-    bool m_vcenterBasedRemoteInfoListHasBeenSet = false;
-
-    Aws::Vector<VersionControlInfo> m_versionControlInfoList;
-    bool m_versionControlInfoListHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MigrationHubStrategyRecommendations
-} // namespace Aws
+}  // namespace Model
+}  // namespace MigrationHubStrategyRecommendations
+}  // namespace Aws

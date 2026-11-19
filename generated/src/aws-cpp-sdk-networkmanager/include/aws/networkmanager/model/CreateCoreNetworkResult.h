@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/CoreNetwork.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class CreateCoreNetworkResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API CreateCoreNetworkResult();
-    AWS_NETWORKMANAGER_API CreateCoreNetworkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API CreateCoreNetworkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class CreateCoreNetworkResult {
+ public:
+  AWS_NETWORKMANAGER_API CreateCoreNetworkResult() = default;
+  AWS_NETWORKMANAGER_API CreateCoreNetworkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API CreateCoreNetworkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns details about a core network.</p>
+   */
+  inline const CoreNetwork& GetCoreNetwork() const { return m_coreNetwork; }
+  template <typename CoreNetworkT = CoreNetwork>
+  void SetCoreNetwork(CoreNetworkT&& value) {
+    m_coreNetworkHasBeenSet = true;
+    m_coreNetwork = std::forward<CoreNetworkT>(value);
+  }
+  template <typename CoreNetworkT = CoreNetwork>
+  CreateCoreNetworkResult& WithCoreNetwork(CoreNetworkT&& value) {
+    SetCoreNetwork(std::forward<CoreNetworkT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns details about a core network.</p>
-     */
-    inline const CoreNetwork& GetCoreNetwork() const{ return m_coreNetwork; }
-    inline void SetCoreNetwork(const CoreNetwork& value) { m_coreNetwork = value; }
-    inline void SetCoreNetwork(CoreNetwork&& value) { m_coreNetwork = std::move(value); }
-    inline CreateCoreNetworkResult& WithCoreNetwork(const CoreNetwork& value) { SetCoreNetwork(value); return *this;}
-    inline CreateCoreNetworkResult& WithCoreNetwork(CoreNetwork&& value) { SetCoreNetwork(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateCoreNetworkResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateCoreNetworkResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateCoreNetworkResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateCoreNetworkResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CoreNetwork m_coreNetwork;
+ private:
+  CoreNetwork m_coreNetwork;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_coreNetworkHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

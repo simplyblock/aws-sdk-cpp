@@ -11,57 +11,39 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppMesh
-{
-namespace Model
-{
+namespace Aws {
+namespace AppMesh {
+namespace Model {
 
-TlsValidationContextAcmTrust::TlsValidationContextAcmTrust() : 
-    m_certificateAuthorityArnsHasBeenSet(false)
-{
-}
+TlsValidationContextAcmTrust::TlsValidationContextAcmTrust(JsonView jsonValue) { *this = jsonValue; }
 
-TlsValidationContextAcmTrust::TlsValidationContextAcmTrust(JsonView jsonValue)
-  : TlsValidationContextAcmTrust()
-{
-  *this = jsonValue;
-}
-
-TlsValidationContextAcmTrust& TlsValidationContextAcmTrust::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("certificateAuthorityArns"))
-  {
+TlsValidationContextAcmTrust& TlsValidationContextAcmTrust::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("certificateAuthorityArns")) {
     Aws::Utils::Array<JsonView> certificateAuthorityArnsJsonList = jsonValue.GetArray("certificateAuthorityArns");
-    for(unsigned certificateAuthorityArnsIndex = 0; certificateAuthorityArnsIndex < certificateAuthorityArnsJsonList.GetLength(); ++certificateAuthorityArnsIndex)
-    {
+    for (unsigned certificateAuthorityArnsIndex = 0; certificateAuthorityArnsIndex < certificateAuthorityArnsJsonList.GetLength();
+         ++certificateAuthorityArnsIndex) {
       m_certificateAuthorityArns.push_back(certificateAuthorityArnsJsonList[certificateAuthorityArnsIndex].AsString());
     }
     m_certificateAuthorityArnsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue TlsValidationContextAcmTrust::Jsonize() const
-{
+JsonValue TlsValidationContextAcmTrust::Jsonize() const {
   JsonValue payload;
 
-  if(m_certificateAuthorityArnsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> certificateAuthorityArnsJsonList(m_certificateAuthorityArns.size());
-   for(unsigned certificateAuthorityArnsIndex = 0; certificateAuthorityArnsIndex < certificateAuthorityArnsJsonList.GetLength(); ++certificateAuthorityArnsIndex)
-   {
-     certificateAuthorityArnsJsonList[certificateAuthorityArnsIndex].AsString(m_certificateAuthorityArns[certificateAuthorityArnsIndex]);
-   }
-   payload.WithArray("certificateAuthorityArns", std::move(certificateAuthorityArnsJsonList));
-
+  if (m_certificateAuthorityArnsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> certificateAuthorityArnsJsonList(m_certificateAuthorityArns.size());
+    for (unsigned certificateAuthorityArnsIndex = 0; certificateAuthorityArnsIndex < certificateAuthorityArnsJsonList.GetLength();
+         ++certificateAuthorityArnsIndex) {
+      certificateAuthorityArnsJsonList[certificateAuthorityArnsIndex].AsString(m_certificateAuthorityArns[certificateAuthorityArnsIndex]);
+    }
+    payload.WithArray("certificateAuthorityArns", std::move(certificateAuthorityArnsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppMesh
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppMesh
+}  // namespace Aws

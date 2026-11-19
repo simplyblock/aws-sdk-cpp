@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/Instance.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
-  class GetInstanceResult
-  {
-  public:
-    AWS_LIGHTSAIL_API GetInstanceResult();
-    AWS_LIGHTSAIL_API GetInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LIGHTSAIL_API GetInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
+class GetInstanceResult {
+ public:
+  AWS_LIGHTSAIL_API GetInstanceResult() = default;
+  AWS_LIGHTSAIL_API GetInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LIGHTSAIL_API GetInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of key-value pairs containing information about the specified
+   * instance.</p>
+   */
+  inline const Instance& GetInstance() const { return m_instance; }
+  template <typename InstanceT = Instance>
+  void SetInstance(InstanceT&& value) {
+    m_instanceHasBeenSet = true;
+    m_instance = std::forward<InstanceT>(value);
+  }
+  template <typename InstanceT = Instance>
+  GetInstanceResult& WithInstance(InstanceT&& value) {
+    SetInstance(std::forward<InstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of key-value pairs containing information about the specified
-     * instance.</p>
-     */
-    inline const Instance& GetInstance() const{ return m_instance; }
-    inline void SetInstance(const Instance& value) { m_instance = value; }
-    inline void SetInstance(Instance&& value) { m_instance = std::move(value); }
-    inline GetInstanceResult& WithInstance(const Instance& value) { SetInstance(value); return *this;}
-    inline GetInstanceResult& WithInstance(Instance&& value) { SetInstance(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetInstanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetInstanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetInstanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetInstanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Instance m_instance;
+ private:
+  Instance m_instance;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-signer "C++ SDK for the AWS signer service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-signer "C++ SDK for AWS Signer" aws-cpp-sdk-core)
 
 file(GLOB AWS_SIGNER_HEADERS
     "include/aws/signer/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SIGNER_HEADERS
 
 file(GLOB AWS_SIGNER_MODEL_HEADERS
     "include/aws/signer/model/*.h"
+)
+
+file(GLOB AWS_SIGNER_INTERNAL_HEADERS
+    "include/aws/signer/internal/*.h"
 )
 
 file(GLOB AWS_SIGNER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SIGNER_MODEL_SOURCE
 
 file(GLOB SIGNER_UNIFIED_HEADERS
     ${AWS_SIGNER_HEADERS}
+    ${AWS_SIGNER_INTERNAL_HEADERS}
     ${AWS_SIGNER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\signer" FILES ${AWS_SIGNER_HEADERS})
+        source_group("Header Files\\aws\\signer\\internal" FILES ${AWS_SIGNER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\signer\\model" FILES ${AWS_SIGNER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SIGNER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SIGNER_MODEL_SOURCE})

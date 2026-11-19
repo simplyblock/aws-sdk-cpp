@@ -4,13 +4,15 @@
  */
 
 #include <aws/cloudtrail-data/CloudTrailDataEndpointProvider.h>
+#include <aws/cloudtrail-data/internal/CloudTrailDataEndpointRules.h>
 
-namespace Aws
-{
-namespace CloudTrailData
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CloudTrailData
-} // namespace Aws
+namespace Aws {
+namespace CloudTrailData {
+namespace Endpoint {
+CloudTrailDataEndpointProvider::CloudTrailDataEndpointProvider()
+    : CloudTrailDataDefaultEpProviderBase(Aws::CloudTrailData::CloudTrailDataEndpointRules::GetRulesBlob(),
+                                          Aws::CloudTrailData::CloudTrailDataEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CloudTrailData
+}  // namespace Aws

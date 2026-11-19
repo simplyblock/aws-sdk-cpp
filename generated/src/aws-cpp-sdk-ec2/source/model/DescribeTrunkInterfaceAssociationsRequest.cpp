@@ -3,61 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeTrunkInterfaceAssociationsRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DescribeTrunkInterfaceAssociationsRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DescribeTrunkInterfaceAssociationsRequest::DescribeTrunkInterfaceAssociationsRequest() : 
-    m_associationIdsHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String DescribeTrunkInterfaceAssociationsRequest::SerializePayload() const
-{
+Aws::String DescribeTrunkInterfaceAssociationsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeTrunkInterfaceAssociations&";
-  if(m_associationIdsHasBeenSet)
-  {
+  if (m_associationIdsHasBeenSet) {
     unsigned associationIdsCount = 1;
-    for(auto& item : m_associationIds)
-    {
-      ss << "AssociationId." << associationIdsCount << "="
-          << StringUtils::URLEncode(item.c_str()) << "&";
+    for (auto& item : m_associationIds) {
+      ss << "AssociationId." << associationIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
       associationIdsCount++;
     }
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_filtersHasBeenSet)
-  {
+  if (m_filtersHasBeenSet) {
     unsigned filtersCount = 1;
-    for(auto& item : m_filters)
-    {
+    for (auto& item : m_filters) {
       item.OutputToStream(ss, "Filter.", filtersCount, "");
       filtersCount++;
     }
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
+  if (m_maxResultsHasBeenSet) {
     ss << "MaxResults=" << m_maxResults << "&";
   }
 
@@ -65,8 +45,4 @@ Aws::String DescribeTrunkInterfaceAssociationsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeTrunkInterfaceAssociationsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeTrunkInterfaceAssociationsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

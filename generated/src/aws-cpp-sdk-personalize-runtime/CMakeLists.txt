@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-personalize-runtime "C++ SDK for the AWS personalize-runtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-personalize-runtime "C++ SDK for Amazon Personalize Runtime" aws-cpp-sdk-core)
 
 file(GLOB AWS_PERSONALIZE-RUNTIME_HEADERS
     "include/aws/personalize-runtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PERSONALIZE-RUNTIME_HEADERS
 
 file(GLOB AWS_PERSONALIZE-RUNTIME_MODEL_HEADERS
     "include/aws/personalize-runtime/model/*.h"
+)
+
+file(GLOB AWS_PERSONALIZE-RUNTIME_INTERNAL_HEADERS
+    "include/aws/personalize-runtime/internal/*.h"
 )
 
 file(GLOB AWS_PERSONALIZE-RUNTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PERSONALIZE-RUNTIME_MODEL_SOURCE
 
 file(GLOB PERSONALIZE-RUNTIME_UNIFIED_HEADERS
     ${AWS_PERSONALIZE-RUNTIME_HEADERS}
+    ${AWS_PERSONALIZE-RUNTIME_INTERNAL_HEADERS}
     ${AWS_PERSONALIZE-RUNTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\personalize-runtime" FILES ${AWS_PERSONALIZE-RUNTIME_HEADERS})
+        source_group("Header Files\\aws\\personalize-runtime\\internal" FILES ${AWS_PERSONALIZE-RUNTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\personalize-runtime\\model" FILES ${AWS_PERSONALIZE-RUNTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PERSONALIZE-RUNTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PERSONALIZE-RUNTIME_MODEL_SOURCE})

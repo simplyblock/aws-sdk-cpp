@@ -12,16 +12,4 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetInsightsByAssessmentRequest::GetInsightsByAssessmentRequest() : 
-    m_assessmentIdHasBeenSet(false)
-{
-}
-
-Aws::String GetInsightsByAssessmentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetInsightsByAssessmentRequest::SerializePayload() const { return {}; }

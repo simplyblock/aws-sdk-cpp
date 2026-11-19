@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/voice-id/VoiceID_EXPORTS.h>
 
-#include <aws/voice-id/VoiceIDEndpointRules.h>
-
-
-namespace Aws
-{
-namespace VoiceID
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace VoiceID {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using VoiceIDClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using VoiceIDEndpointProviderBase =
     EndpointProviderBase<VoiceIDClientConfiguration, VoiceIDBuiltInParameters, VoiceIDClientContextParameters>;
 
 using VoiceIDDefaultEpProviderBase =
-    DefaultEndpointProvider<VoiceIDClientConfiguration, VoiceIDBuiltInParameters, VoiceIDClientContextParameters>;
+    BDDEndpointProvider<VoiceIDClientConfiguration, VoiceIDBuiltInParameters, VoiceIDClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_VOICEID_API VoiceIDEndpointProvider : public VoiceIDDefaultEpProviderBase
-{
-public:
-    using VoiceIDResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_VOICEID_API VoiceIDEndpointProvider : public VoiceIDDefaultEpProviderBase {
+ public:
+  using VoiceIDResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    VoiceIDEndpointProvider()
-      : VoiceIDDefaultEpProviderBase(Aws::VoiceID::VoiceIDEndpointRules::GetRulesBlob(), Aws::VoiceID::VoiceIDEndpointRules::RulesBlobSize)
-    {}
+  VoiceIDEndpointProvider();
 
-    ~VoiceIDEndpointProvider()
-    {
-    }
+  ~VoiceIDEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace VoiceID
+}  // namespace Aws

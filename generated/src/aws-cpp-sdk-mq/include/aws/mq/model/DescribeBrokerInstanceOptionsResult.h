@@ -4,94 +4,119 @@
  */
 
 #pragma once
-#include <aws/mq/MQ_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mq/MQ_EXPORTS.h>
 #include <aws/mq/model/BrokerInstanceOption.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MQ
-{
-namespace Model
-{
-  class DescribeBrokerInstanceOptionsResult
-  {
-  public:
-    AWS_MQ_API DescribeBrokerInstanceOptionsResult();
-    AWS_MQ_API DescribeBrokerInstanceOptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MQ_API DescribeBrokerInstanceOptionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MQ {
+namespace Model {
+class DescribeBrokerInstanceOptionsResult {
+ public:
+  AWS_MQ_API DescribeBrokerInstanceOptionsResult() = default;
+  AWS_MQ_API DescribeBrokerInstanceOptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MQ_API DescribeBrokerInstanceOptionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>List of available broker instance options.</p>
+   */
+  inline const Aws::Vector<BrokerInstanceOption>& GetBrokerInstanceOptions() const { return m_brokerInstanceOptions; }
+  template <typename BrokerInstanceOptionsT = Aws::Vector<BrokerInstanceOption>>
+  void SetBrokerInstanceOptions(BrokerInstanceOptionsT&& value) {
+    m_brokerInstanceOptionsHasBeenSet = true;
+    m_brokerInstanceOptions = std::forward<BrokerInstanceOptionsT>(value);
+  }
+  template <typename BrokerInstanceOptionsT = Aws::Vector<BrokerInstanceOption>>
+  DescribeBrokerInstanceOptionsResult& WithBrokerInstanceOptions(BrokerInstanceOptionsT&& value) {
+    SetBrokerInstanceOptions(std::forward<BrokerInstanceOptionsT>(value));
+    return *this;
+  }
+  template <typename BrokerInstanceOptionsT = BrokerInstanceOption>
+  DescribeBrokerInstanceOptionsResult& AddBrokerInstanceOptions(BrokerInstanceOptionsT&& value) {
+    m_brokerInstanceOptionsHasBeenSet = true;
+    m_brokerInstanceOptions.emplace_back(std::forward<BrokerInstanceOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>List of available broker instance options.</p>
-     */
-    inline const Aws::Vector<BrokerInstanceOption>& GetBrokerInstanceOptions() const{ return m_brokerInstanceOptions; }
-    inline void SetBrokerInstanceOptions(const Aws::Vector<BrokerInstanceOption>& value) { m_brokerInstanceOptions = value; }
-    inline void SetBrokerInstanceOptions(Aws::Vector<BrokerInstanceOption>&& value) { m_brokerInstanceOptions = std::move(value); }
-    inline DescribeBrokerInstanceOptionsResult& WithBrokerInstanceOptions(const Aws::Vector<BrokerInstanceOption>& value) { SetBrokerInstanceOptions(value); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& WithBrokerInstanceOptions(Aws::Vector<BrokerInstanceOption>&& value) { SetBrokerInstanceOptions(std::move(value)); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& AddBrokerInstanceOptions(const BrokerInstanceOption& value) { m_brokerInstanceOptions.push_back(value); return *this; }
-    inline DescribeBrokerInstanceOptionsResult& AddBrokerInstanceOptions(BrokerInstanceOption&& value) { m_brokerInstanceOptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Required. The maximum number of instance options that can be returned per
+   * page (20 by default). This value must be an integer from 5 to 100.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline DescribeBrokerInstanceOptionsResult& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Required. The maximum number of instance options that can be returned per
-     * page (20 by default). This value must be an integer from 5 to 100.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline void SetMaxResults(int value) { m_maxResults = value; }
-    inline DescribeBrokerInstanceOptionsResult& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The token that specifies the next page of results Amazon MQ should return. To
+   * request the first page, leave nextToken empty.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeBrokerInstanceOptionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token that specifies the next page of results Amazon MQ should return. To
-     * request the first page, leave nextToken empty.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeBrokerInstanceOptionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeBrokerInstanceOptionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeBrokerInstanceOptionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeBrokerInstanceOptionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<BrokerInstanceOption> m_brokerInstanceOptions;
+ private:
+  Aws::Vector<BrokerInstanceOption> m_brokerInstanceOptions;
 
-    int m_maxResults;
+  int m_maxResults{0};
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_brokerInstanceOptionsHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MQ
-} // namespace Aws
+}  // namespace Model
+}  // namespace MQ
+}  // namespace Aws

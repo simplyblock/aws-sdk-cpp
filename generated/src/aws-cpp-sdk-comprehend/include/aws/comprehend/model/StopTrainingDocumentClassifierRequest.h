@@ -4,56 +4,55 @@
  */
 
 #pragma once
-#include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/comprehend/ComprehendRequest.h>
+#include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
+/**
+ */
+class StopTrainingDocumentClassifierRequest : public ComprehendRequest {
+ public:
+  AWS_COMPREHEND_API StopTrainingDocumentClassifierRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StopTrainingDocumentClassifier"; }
+
+  AWS_COMPREHEND_API Aws::String SerializePayload() const override;
+
+  AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) that identifies the document classifier
+   * currently being trained.</p>
    */
-  class StopTrainingDocumentClassifierRequest : public ComprehendRequest
-  {
-  public:
-    AWS_COMPREHEND_API StopTrainingDocumentClassifierRequest();
+  inline const Aws::String& GetDocumentClassifierArn() const { return m_documentClassifierArn; }
+  inline bool DocumentClassifierArnHasBeenSet() const { return m_documentClassifierArnHasBeenSet; }
+  template <typename DocumentClassifierArnT = Aws::String>
+  void SetDocumentClassifierArn(DocumentClassifierArnT&& value) {
+    m_documentClassifierArnHasBeenSet = true;
+    m_documentClassifierArn = std::forward<DocumentClassifierArnT>(value);
+  }
+  template <typename DocumentClassifierArnT = Aws::String>
+  StopTrainingDocumentClassifierRequest& WithDocumentClassifierArn(DocumentClassifierArnT&& value) {
+    SetDocumentClassifierArn(std::forward<DocumentClassifierArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_documentClassifierArn;
+  bool m_documentClassifierArnHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StopTrainingDocumentClassifier"; }
-
-    AWS_COMPREHEND_API Aws::String SerializePayload() const override;
-
-    AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) that identifies the document classifier
-     * currently being trained.</p>
-     */
-    inline const Aws::String& GetDocumentClassifierArn() const{ return m_documentClassifierArn; }
-    inline bool DocumentClassifierArnHasBeenSet() const { return m_documentClassifierArnHasBeenSet; }
-    inline void SetDocumentClassifierArn(const Aws::String& value) { m_documentClassifierArnHasBeenSet = true; m_documentClassifierArn = value; }
-    inline void SetDocumentClassifierArn(Aws::String&& value) { m_documentClassifierArnHasBeenSet = true; m_documentClassifierArn = std::move(value); }
-    inline void SetDocumentClassifierArn(const char* value) { m_documentClassifierArnHasBeenSet = true; m_documentClassifierArn.assign(value); }
-    inline StopTrainingDocumentClassifierRequest& WithDocumentClassifierArn(const Aws::String& value) { SetDocumentClassifierArn(value); return *this;}
-    inline StopTrainingDocumentClassifierRequest& WithDocumentClassifierArn(Aws::String&& value) { SetDocumentClassifierArn(std::move(value)); return *this;}
-    inline StopTrainingDocumentClassifierRequest& WithDocumentClassifierArn(const char* value) { SetDocumentClassifierArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_documentClassifierArn;
-    bool m_documentClassifierArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

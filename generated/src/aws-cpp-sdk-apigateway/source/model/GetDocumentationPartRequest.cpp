@@ -12,17 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDocumentationPartRequest::GetDocumentationPartRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_documentationPartIdHasBeenSet(false)
-{
-}
-
-Aws::String GetDocumentationPartRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDocumentationPartRequest::SerializePayload() const { return {}; }

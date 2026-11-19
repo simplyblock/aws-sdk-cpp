@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lex-models "C++ SDK for the AWS lex-models service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lex-models "C++ SDK for Amazon Lex Model Building Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_LEX-MODELS_HEADERS
     "include/aws/lex-models/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LEX-MODELS_HEADERS
 
 file(GLOB AWS_LEX-MODELS_MODEL_HEADERS
     "include/aws/lex-models/model/*.h"
+)
+
+file(GLOB AWS_LEX-MODELS_INTERNAL_HEADERS
+    "include/aws/lex-models/internal/*.h"
 )
 
 file(GLOB AWS_LEX-MODELS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LEX-MODELS_MODEL_SOURCE
 
 file(GLOB LEX-MODELS_UNIFIED_HEADERS
     ${AWS_LEX-MODELS_HEADERS}
+    ${AWS_LEX-MODELS_INTERNAL_HEADERS}
     ${AWS_LEX-MODELS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lex-models" FILES ${AWS_LEX-MODELS_HEADERS})
+        source_group("Header Files\\aws\\lex-models\\internal" FILES ${AWS_LEX-MODELS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lex-models\\model" FILES ${AWS_LEX-MODELS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LEX-MODELS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LEX-MODELS_MODEL_SOURCE})

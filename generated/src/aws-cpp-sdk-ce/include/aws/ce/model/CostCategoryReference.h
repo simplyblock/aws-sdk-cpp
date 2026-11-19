@@ -5,175 +5,240 @@
 
 #pragma once
 #include <aws/ce/CostExplorer_EXPORTS.h>
+#include <aws/ce/model/CostCategoryProcessingStatus.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ce/model/CostCategoryProcessingStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CostExplorer
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CostExplorer {
+namespace Model {
 
+/**
+ * <p>A reference to a cost category containing only enough information to identify
+ * the Cost Category.</p> <p>You can use this information to retrieve the full cost
+ * category information using <code>DescribeCostCategory</code>.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/CostCategoryReference">AWS
+ * API Reference</a></p>
+ */
+class CostCategoryReference {
+ public:
+  AWS_COSTEXPLORER_API CostCategoryReference() = default;
+  AWS_COSTEXPLORER_API CostCategoryReference(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COSTEXPLORER_API CostCategoryReference& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COSTEXPLORER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A reference to a Cost Category containing only enough information to identify
-   * the Cost Category.</p> <p>You can use this information to retrieve the full Cost
-   * Category information using <code>DescribeCostCategory</code>.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/CostCategoryReference">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for your cost category. </p>
    */
-  class CostCategoryReference
-  {
-  public:
-    AWS_COSTEXPLORER_API CostCategoryReference();
-    AWS_COSTEXPLORER_API CostCategoryReference(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COSTEXPLORER_API CostCategoryReference& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COSTEXPLORER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCostCategoryArn() const { return m_costCategoryArn; }
+  inline bool CostCategoryArnHasBeenSet() const { return m_costCategoryArnHasBeenSet; }
+  template <typename CostCategoryArnT = Aws::String>
+  void SetCostCategoryArn(CostCategoryArnT&& value) {
+    m_costCategoryArnHasBeenSet = true;
+    m_costCategoryArn = std::forward<CostCategoryArnT>(value);
+  }
+  template <typename CostCategoryArnT = Aws::String>
+  CostCategoryReference& WithCostCategoryArn(CostCategoryArnT&& value) {
+    SetCostCategoryArn(std::forward<CostCategoryArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The unique identifier for your Cost Category. </p>
-     */
-    inline const Aws::String& GetCostCategoryArn() const{ return m_costCategoryArn; }
-    inline bool CostCategoryArnHasBeenSet() const { return m_costCategoryArnHasBeenSet; }
-    inline void SetCostCategoryArn(const Aws::String& value) { m_costCategoryArnHasBeenSet = true; m_costCategoryArn = value; }
-    inline void SetCostCategoryArn(Aws::String&& value) { m_costCategoryArnHasBeenSet = true; m_costCategoryArn = std::move(value); }
-    inline void SetCostCategoryArn(const char* value) { m_costCategoryArnHasBeenSet = true; m_costCategoryArn.assign(value); }
-    inline CostCategoryReference& WithCostCategoryArn(const Aws::String& value) { SetCostCategoryArn(value); return *this;}
-    inline CostCategoryReference& WithCostCategoryArn(Aws::String&& value) { SetCostCategoryArn(std::move(value)); return *this;}
-    inline CostCategoryReference& WithCostCategoryArn(const char* value) { SetCostCategoryArn(value); return *this;}
-    ///@}
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CostCategoryReference& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CostCategoryReference& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CostCategoryReference& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CostCategoryReference& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The cost category's effective start date.</p>
+   */
+  inline const Aws::String& GetEffectiveStart() const { return m_effectiveStart; }
+  inline bool EffectiveStartHasBeenSet() const { return m_effectiveStartHasBeenSet; }
+  template <typename EffectiveStartT = Aws::String>
+  void SetEffectiveStart(EffectiveStartT&& value) {
+    m_effectiveStartHasBeenSet = true;
+    m_effectiveStart = std::forward<EffectiveStartT>(value);
+  }
+  template <typename EffectiveStartT = Aws::String>
+  CostCategoryReference& WithEffectiveStart(EffectiveStartT&& value) {
+    SetEffectiveStart(std::forward<EffectiveStartT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Cost Category's effective start date.</p>
-     */
-    inline const Aws::String& GetEffectiveStart() const{ return m_effectiveStart; }
-    inline bool EffectiveStartHasBeenSet() const { return m_effectiveStartHasBeenSet; }
-    inline void SetEffectiveStart(const Aws::String& value) { m_effectiveStartHasBeenSet = true; m_effectiveStart = value; }
-    inline void SetEffectiveStart(Aws::String&& value) { m_effectiveStartHasBeenSet = true; m_effectiveStart = std::move(value); }
-    inline void SetEffectiveStart(const char* value) { m_effectiveStartHasBeenSet = true; m_effectiveStart.assign(value); }
-    inline CostCategoryReference& WithEffectiveStart(const Aws::String& value) { SetEffectiveStart(value); return *this;}
-    inline CostCategoryReference& WithEffectiveStart(Aws::String&& value) { SetEffectiveStart(std::move(value)); return *this;}
-    inline CostCategoryReference& WithEffectiveStart(const char* value) { SetEffectiveStart(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The cost category's effective end date.</p>
+   */
+  inline const Aws::String& GetEffectiveEnd() const { return m_effectiveEnd; }
+  inline bool EffectiveEndHasBeenSet() const { return m_effectiveEndHasBeenSet; }
+  template <typename EffectiveEndT = Aws::String>
+  void SetEffectiveEnd(EffectiveEndT&& value) {
+    m_effectiveEndHasBeenSet = true;
+    m_effectiveEnd = std::forward<EffectiveEndT>(value);
+  }
+  template <typename EffectiveEndT = Aws::String>
+  CostCategoryReference& WithEffectiveEnd(EffectiveEndT&& value) {
+    SetEffectiveEnd(std::forward<EffectiveEndT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Cost Category's effective end date.</p>
-     */
-    inline const Aws::String& GetEffectiveEnd() const{ return m_effectiveEnd; }
-    inline bool EffectiveEndHasBeenSet() const { return m_effectiveEndHasBeenSet; }
-    inline void SetEffectiveEnd(const Aws::String& value) { m_effectiveEndHasBeenSet = true; m_effectiveEnd = value; }
-    inline void SetEffectiveEnd(Aws::String&& value) { m_effectiveEndHasBeenSet = true; m_effectiveEnd = std::move(value); }
-    inline void SetEffectiveEnd(const char* value) { m_effectiveEndHasBeenSet = true; m_effectiveEnd.assign(value); }
-    inline CostCategoryReference& WithEffectiveEnd(const Aws::String& value) { SetEffectiveEnd(value); return *this;}
-    inline CostCategoryReference& WithEffectiveEnd(Aws::String&& value) { SetEffectiveEnd(std::move(value)); return *this;}
-    inline CostCategoryReference& WithEffectiveEnd(const char* value) { SetEffectiveEnd(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of rules that are associated with a specific cost category. </p>
+   */
+  inline int GetNumberOfRules() const { return m_numberOfRules; }
+  inline bool NumberOfRulesHasBeenSet() const { return m_numberOfRulesHasBeenSet; }
+  inline void SetNumberOfRules(int value) {
+    m_numberOfRulesHasBeenSet = true;
+    m_numberOfRules = value;
+  }
+  inline CostCategoryReference& WithNumberOfRules(int value) {
+    SetNumberOfRules(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of rules that are associated with a specific Cost Category. </p>
-     */
-    inline int GetNumberOfRules() const{ return m_numberOfRules; }
-    inline bool NumberOfRulesHasBeenSet() const { return m_numberOfRulesHasBeenSet; }
-    inline void SetNumberOfRules(int value) { m_numberOfRulesHasBeenSet = true; m_numberOfRules = value; }
-    inline CostCategoryReference& WithNumberOfRules(int value) { SetNumberOfRules(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of processing statuses for Cost Management products for a specific
+   * cost category. </p>
+   */
+  inline const Aws::Vector<CostCategoryProcessingStatus>& GetProcessingStatus() const { return m_processingStatus; }
+  inline bool ProcessingStatusHasBeenSet() const { return m_processingStatusHasBeenSet; }
+  template <typename ProcessingStatusT = Aws::Vector<CostCategoryProcessingStatus>>
+  void SetProcessingStatus(ProcessingStatusT&& value) {
+    m_processingStatusHasBeenSet = true;
+    m_processingStatus = std::forward<ProcessingStatusT>(value);
+  }
+  template <typename ProcessingStatusT = Aws::Vector<CostCategoryProcessingStatus>>
+  CostCategoryReference& WithProcessingStatus(ProcessingStatusT&& value) {
+    SetProcessingStatus(std::forward<ProcessingStatusT>(value));
+    return *this;
+  }
+  template <typename ProcessingStatusT = CostCategoryProcessingStatus>
+  CostCategoryReference& AddProcessingStatus(ProcessingStatusT&& value) {
+    m_processingStatusHasBeenSet = true;
+    m_processingStatus.emplace_back(std::forward<ProcessingStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of processing statuses for Cost Management products for a specific
-     * cost category. </p>
-     */
-    inline const Aws::Vector<CostCategoryProcessingStatus>& GetProcessingStatus() const{ return m_processingStatus; }
-    inline bool ProcessingStatusHasBeenSet() const { return m_processingStatusHasBeenSet; }
-    inline void SetProcessingStatus(const Aws::Vector<CostCategoryProcessingStatus>& value) { m_processingStatusHasBeenSet = true; m_processingStatus = value; }
-    inline void SetProcessingStatus(Aws::Vector<CostCategoryProcessingStatus>&& value) { m_processingStatusHasBeenSet = true; m_processingStatus = std::move(value); }
-    inline CostCategoryReference& WithProcessingStatus(const Aws::Vector<CostCategoryProcessingStatus>& value) { SetProcessingStatus(value); return *this;}
-    inline CostCategoryReference& WithProcessingStatus(Aws::Vector<CostCategoryProcessingStatus>&& value) { SetProcessingStatus(std::move(value)); return *this;}
-    inline CostCategoryReference& AddProcessingStatus(const CostCategoryProcessingStatus& value) { m_processingStatusHasBeenSet = true; m_processingStatus.push_back(value); return *this; }
-    inline CostCategoryReference& AddProcessingStatus(CostCategoryProcessingStatus&& value) { m_processingStatusHasBeenSet = true; m_processingStatus.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of unique cost category values in a specific cost category. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetValues() const { return m_values; }
+  inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
+  template <typename ValuesT = Aws::Vector<Aws::String>>
+  void SetValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values = std::forward<ValuesT>(value);
+  }
+  template <typename ValuesT = Aws::Vector<Aws::String>>
+  CostCategoryReference& WithValues(ValuesT&& value) {
+    SetValues(std::forward<ValuesT>(value));
+    return *this;
+  }
+  template <typename ValuesT = Aws::String>
+  CostCategoryReference& AddValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values.emplace_back(std::forward<ValuesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of unique cost category values in a specific cost category. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetValues() const{ return m_values; }
-    inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
-    inline void SetValues(const Aws::Vector<Aws::String>& value) { m_valuesHasBeenSet = true; m_values = value; }
-    inline void SetValues(Aws::Vector<Aws::String>&& value) { m_valuesHasBeenSet = true; m_values = std::move(value); }
-    inline CostCategoryReference& WithValues(const Aws::Vector<Aws::String>& value) { SetValues(value); return *this;}
-    inline CostCategoryReference& WithValues(Aws::Vector<Aws::String>&& value) { SetValues(std::move(value)); return *this;}
-    inline CostCategoryReference& AddValues(const Aws::String& value) { m_valuesHasBeenSet = true; m_values.push_back(value); return *this; }
-    inline CostCategoryReference& AddValues(Aws::String&& value) { m_valuesHasBeenSet = true; m_values.push_back(std::move(value)); return *this; }
-    inline CostCategoryReference& AddValues(const char* value) { m_valuesHasBeenSet = true; m_values.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetDefaultValue() const{ return m_defaultValue; }
-    inline bool DefaultValueHasBeenSet() const { return m_defaultValueHasBeenSet; }
-    inline void SetDefaultValue(const Aws::String& value) { m_defaultValueHasBeenSet = true; m_defaultValue = value; }
-    inline void SetDefaultValue(Aws::String&& value) { m_defaultValueHasBeenSet = true; m_defaultValue = std::move(value); }
-    inline void SetDefaultValue(const char* value) { m_defaultValueHasBeenSet = true; m_defaultValue.assign(value); }
-    inline CostCategoryReference& WithDefaultValue(const Aws::String& value) { SetDefaultValue(value); return *this;}
-    inline CostCategoryReference& WithDefaultValue(Aws::String&& value) { SetDefaultValue(std::move(value)); return *this;}
-    inline CostCategoryReference& WithDefaultValue(const char* value) { SetDefaultValue(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetDefaultValue() const { return m_defaultValue; }
+  inline bool DefaultValueHasBeenSet() const { return m_defaultValueHasBeenSet; }
+  template <typename DefaultValueT = Aws::String>
+  void SetDefaultValue(DefaultValueT&& value) {
+    m_defaultValueHasBeenSet = true;
+    m_defaultValue = std::forward<DefaultValueT>(value);
+  }
+  template <typename DefaultValueT = Aws::String>
+  CostCategoryReference& WithDefaultValue(DefaultValueT&& value) {
+    SetDefaultValue(std::forward<DefaultValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_costCategoryArn;
-    bool m_costCategoryArnHasBeenSet = false;
+  ///@{
+  /**
+   * <p> The resource types supported by a specific cost category. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSupportedResourceTypes() const { return m_supportedResourceTypes; }
+  inline bool SupportedResourceTypesHasBeenSet() const { return m_supportedResourceTypesHasBeenSet; }
+  template <typename SupportedResourceTypesT = Aws::Vector<Aws::String>>
+  void SetSupportedResourceTypes(SupportedResourceTypesT&& value) {
+    m_supportedResourceTypesHasBeenSet = true;
+    m_supportedResourceTypes = std::forward<SupportedResourceTypesT>(value);
+  }
+  template <typename SupportedResourceTypesT = Aws::Vector<Aws::String>>
+  CostCategoryReference& WithSupportedResourceTypes(SupportedResourceTypesT&& value) {
+    SetSupportedResourceTypes(std::forward<SupportedResourceTypesT>(value));
+    return *this;
+  }
+  template <typename SupportedResourceTypesT = Aws::String>
+  CostCategoryReference& AddSupportedResourceTypes(SupportedResourceTypesT&& value) {
+    m_supportedResourceTypesHasBeenSet = true;
+    m_supportedResourceTypes.emplace_back(std::forward<SupportedResourceTypesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_costCategoryArn;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_effectiveStart;
-    bool m_effectiveStartHasBeenSet = false;
+  Aws::String m_effectiveStart;
 
-    Aws::String m_effectiveEnd;
-    bool m_effectiveEndHasBeenSet = false;
+  Aws::String m_effectiveEnd;
 
-    int m_numberOfRules;
-    bool m_numberOfRulesHasBeenSet = false;
+  int m_numberOfRules{0};
 
-    Aws::Vector<CostCategoryProcessingStatus> m_processingStatus;
-    bool m_processingStatusHasBeenSet = false;
+  Aws::Vector<CostCategoryProcessingStatus> m_processingStatus;
 
-    Aws::Vector<Aws::String> m_values;
-    bool m_valuesHasBeenSet = false;
+  Aws::Vector<Aws::String> m_values;
 
-    Aws::String m_defaultValue;
-    bool m_defaultValueHasBeenSet = false;
-  };
+  Aws::String m_defaultValue;
 
-} // namespace Model
-} // namespace CostExplorer
-} // namespace Aws
+  Aws::Vector<Aws::String> m_supportedResourceTypes;
+  bool m_costCategoryArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_effectiveStartHasBeenSet = false;
+  bool m_effectiveEndHasBeenSet = false;
+  bool m_numberOfRulesHasBeenSet = false;
+  bool m_processingStatusHasBeenSet = false;
+  bool m_valuesHasBeenSet = false;
+  bool m_defaultValueHasBeenSet = false;
+  bool m_supportedResourceTypesHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CostExplorer
+}  // namespace Aws

@@ -4,199 +4,242 @@
  */
 
 #pragma once
-#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
 #include <aws/iotdeviceadvisor/model/SuiteRunStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoTDeviceAdvisor
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTDeviceAdvisor {
+namespace Model {
 
+/**
+ * <p>Information about the suite run.</p> <p>Requires permission to access the <a
+ * href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">SuiteRunInformation</a>
+ * action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iotdeviceadvisor-2020-09-18/SuiteRunInformation">AWS
+ * API Reference</a></p>
+ */
+class SuiteRunInformation {
+ public:
+  AWS_IOTDEVICEADVISOR_API SuiteRunInformation() = default;
+  AWS_IOTDEVICEADVISOR_API SuiteRunInformation(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTDEVICEADVISOR_API SuiteRunInformation& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTDEVICEADVISOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about the suite run.</p> <p>Requires permission to access the <a
-   * href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">SuiteRunInformation</a>
-   * action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iotdeviceadvisor-2020-09-18/SuiteRunInformation">AWS
-   * API Reference</a></p>
+   * <p>Suite definition ID of the suite run.</p>
    */
-  class SuiteRunInformation
-  {
-  public:
-    AWS_IOTDEVICEADVISOR_API SuiteRunInformation();
-    AWS_IOTDEVICEADVISOR_API SuiteRunInformation(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTDEVICEADVISOR_API SuiteRunInformation& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTDEVICEADVISOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetSuiteDefinitionId() const { return m_suiteDefinitionId; }
+  inline bool SuiteDefinitionIdHasBeenSet() const { return m_suiteDefinitionIdHasBeenSet; }
+  template <typename SuiteDefinitionIdT = Aws::String>
+  void SetSuiteDefinitionId(SuiteDefinitionIdT&& value) {
+    m_suiteDefinitionIdHasBeenSet = true;
+    m_suiteDefinitionId = std::forward<SuiteDefinitionIdT>(value);
+  }
+  template <typename SuiteDefinitionIdT = Aws::String>
+  SuiteRunInformation& WithSuiteDefinitionId(SuiteDefinitionIdT&& value) {
+    SetSuiteDefinitionId(std::forward<SuiteDefinitionIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Suite definition version of the suite run.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionVersion() const { return m_suiteDefinitionVersion; }
+  inline bool SuiteDefinitionVersionHasBeenSet() const { return m_suiteDefinitionVersionHasBeenSet; }
+  template <typename SuiteDefinitionVersionT = Aws::String>
+  void SetSuiteDefinitionVersion(SuiteDefinitionVersionT&& value) {
+    m_suiteDefinitionVersionHasBeenSet = true;
+    m_suiteDefinitionVersion = std::forward<SuiteDefinitionVersionT>(value);
+  }
+  template <typename SuiteDefinitionVersionT = Aws::String>
+  SuiteRunInformation& WithSuiteDefinitionVersion(SuiteDefinitionVersionT&& value) {
+    SetSuiteDefinitionVersion(std::forward<SuiteDefinitionVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite definition ID of the suite run.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionId() const{ return m_suiteDefinitionId; }
-    inline bool SuiteDefinitionIdHasBeenSet() const { return m_suiteDefinitionIdHasBeenSet; }
-    inline void SetSuiteDefinitionId(const Aws::String& value) { m_suiteDefinitionIdHasBeenSet = true; m_suiteDefinitionId = value; }
-    inline void SetSuiteDefinitionId(Aws::String&& value) { m_suiteDefinitionIdHasBeenSet = true; m_suiteDefinitionId = std::move(value); }
-    inline void SetSuiteDefinitionId(const char* value) { m_suiteDefinitionIdHasBeenSet = true; m_suiteDefinitionId.assign(value); }
-    inline SuiteRunInformation& WithSuiteDefinitionId(const Aws::String& value) { SetSuiteDefinitionId(value); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionId(Aws::String&& value) { SetSuiteDefinitionId(std::move(value)); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionId(const char* value) { SetSuiteDefinitionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Suite definition name of the suite run.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionName() const { return m_suiteDefinitionName; }
+  inline bool SuiteDefinitionNameHasBeenSet() const { return m_suiteDefinitionNameHasBeenSet; }
+  template <typename SuiteDefinitionNameT = Aws::String>
+  void SetSuiteDefinitionName(SuiteDefinitionNameT&& value) {
+    m_suiteDefinitionNameHasBeenSet = true;
+    m_suiteDefinitionName = std::forward<SuiteDefinitionNameT>(value);
+  }
+  template <typename SuiteDefinitionNameT = Aws::String>
+  SuiteRunInformation& WithSuiteDefinitionName(SuiteDefinitionNameT&& value) {
+    SetSuiteDefinitionName(std::forward<SuiteDefinitionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite definition version of the suite run.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionVersion() const{ return m_suiteDefinitionVersion; }
-    inline bool SuiteDefinitionVersionHasBeenSet() const { return m_suiteDefinitionVersionHasBeenSet; }
-    inline void SetSuiteDefinitionVersion(const Aws::String& value) { m_suiteDefinitionVersionHasBeenSet = true; m_suiteDefinitionVersion = value; }
-    inline void SetSuiteDefinitionVersion(Aws::String&& value) { m_suiteDefinitionVersionHasBeenSet = true; m_suiteDefinitionVersion = std::move(value); }
-    inline void SetSuiteDefinitionVersion(const char* value) { m_suiteDefinitionVersionHasBeenSet = true; m_suiteDefinitionVersion.assign(value); }
-    inline SuiteRunInformation& WithSuiteDefinitionVersion(const Aws::String& value) { SetSuiteDefinitionVersion(value); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionVersion(Aws::String&& value) { SetSuiteDefinitionVersion(std::move(value)); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionVersion(const char* value) { SetSuiteDefinitionVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Suite run ID of the suite run.</p>
+   */
+  inline const Aws::String& GetSuiteRunId() const { return m_suiteRunId; }
+  inline bool SuiteRunIdHasBeenSet() const { return m_suiteRunIdHasBeenSet; }
+  template <typename SuiteRunIdT = Aws::String>
+  void SetSuiteRunId(SuiteRunIdT&& value) {
+    m_suiteRunIdHasBeenSet = true;
+    m_suiteRunId = std::forward<SuiteRunIdT>(value);
+  }
+  template <typename SuiteRunIdT = Aws::String>
+  SuiteRunInformation& WithSuiteRunId(SuiteRunIdT&& value) {
+    SetSuiteRunId(std::forward<SuiteRunIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite definition name of the suite run.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionName() const{ return m_suiteDefinitionName; }
-    inline bool SuiteDefinitionNameHasBeenSet() const { return m_suiteDefinitionNameHasBeenSet; }
-    inline void SetSuiteDefinitionName(const Aws::String& value) { m_suiteDefinitionNameHasBeenSet = true; m_suiteDefinitionName = value; }
-    inline void SetSuiteDefinitionName(Aws::String&& value) { m_suiteDefinitionNameHasBeenSet = true; m_suiteDefinitionName = std::move(value); }
-    inline void SetSuiteDefinitionName(const char* value) { m_suiteDefinitionNameHasBeenSet = true; m_suiteDefinitionName.assign(value); }
-    inline SuiteRunInformation& WithSuiteDefinitionName(const Aws::String& value) { SetSuiteDefinitionName(value); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionName(Aws::String&& value) { SetSuiteDefinitionName(std::move(value)); return *this;}
-    inline SuiteRunInformation& WithSuiteDefinitionName(const char* value) { SetSuiteDefinitionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Date (in Unix epoch time) when the suite run was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  SuiteRunInformation& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite run ID of the suite run.</p>
-     */
-    inline const Aws::String& GetSuiteRunId() const{ return m_suiteRunId; }
-    inline bool SuiteRunIdHasBeenSet() const { return m_suiteRunIdHasBeenSet; }
-    inline void SetSuiteRunId(const Aws::String& value) { m_suiteRunIdHasBeenSet = true; m_suiteRunId = value; }
-    inline void SetSuiteRunId(Aws::String&& value) { m_suiteRunIdHasBeenSet = true; m_suiteRunId = std::move(value); }
-    inline void SetSuiteRunId(const char* value) { m_suiteRunIdHasBeenSet = true; m_suiteRunId.assign(value); }
-    inline SuiteRunInformation& WithSuiteRunId(const Aws::String& value) { SetSuiteRunId(value); return *this;}
-    inline SuiteRunInformation& WithSuiteRunId(Aws::String&& value) { SetSuiteRunId(std::move(value)); return *this;}
-    inline SuiteRunInformation& WithSuiteRunId(const char* value) { SetSuiteRunId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Date (in Unix epoch time) when the suite run was started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartedAt() const { return m_startedAt; }
+  inline bool StartedAtHasBeenSet() const { return m_startedAtHasBeenSet; }
+  template <typename StartedAtT = Aws::Utils::DateTime>
+  void SetStartedAt(StartedAtT&& value) {
+    m_startedAtHasBeenSet = true;
+    m_startedAt = std::forward<StartedAtT>(value);
+  }
+  template <typename StartedAtT = Aws::Utils::DateTime>
+  SuiteRunInformation& WithStartedAt(StartedAtT&& value) {
+    SetStartedAt(std::forward<StartedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Date (in Unix epoch time) when the suite run was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline SuiteRunInformation& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline SuiteRunInformation& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Date (in Unix epoch time) when the suite run ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndAt() const { return m_endAt; }
+  inline bool EndAtHasBeenSet() const { return m_endAtHasBeenSet; }
+  template <typename EndAtT = Aws::Utils::DateTime>
+  void SetEndAt(EndAtT&& value) {
+    m_endAtHasBeenSet = true;
+    m_endAt = std::forward<EndAtT>(value);
+  }
+  template <typename EndAtT = Aws::Utils::DateTime>
+  SuiteRunInformation& WithEndAt(EndAtT&& value) {
+    SetEndAt(std::forward<EndAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Date (in Unix epoch time) when the suite run was started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartedAt() const{ return m_startedAt; }
-    inline bool StartedAtHasBeenSet() const { return m_startedAtHasBeenSet; }
-    inline void SetStartedAt(const Aws::Utils::DateTime& value) { m_startedAtHasBeenSet = true; m_startedAt = value; }
-    inline void SetStartedAt(Aws::Utils::DateTime&& value) { m_startedAtHasBeenSet = true; m_startedAt = std::move(value); }
-    inline SuiteRunInformation& WithStartedAt(const Aws::Utils::DateTime& value) { SetStartedAt(value); return *this;}
-    inline SuiteRunInformation& WithStartedAt(Aws::Utils::DateTime&& value) { SetStartedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Status of the suite run.</p>
+   */
+  inline SuiteRunStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(SuiteRunStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline SuiteRunInformation& WithStatus(SuiteRunStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Date (in Unix epoch time) when the suite run ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndAt() const{ return m_endAt; }
-    inline bool EndAtHasBeenSet() const { return m_endAtHasBeenSet; }
-    inline void SetEndAt(const Aws::Utils::DateTime& value) { m_endAtHasBeenSet = true; m_endAt = value; }
-    inline void SetEndAt(Aws::Utils::DateTime&& value) { m_endAtHasBeenSet = true; m_endAt = std::move(value); }
-    inline SuiteRunInformation& WithEndAt(const Aws::Utils::DateTime& value) { SetEndAt(value); return *this;}
-    inline SuiteRunInformation& WithEndAt(Aws::Utils::DateTime&& value) { SetEndAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Number of test cases that passed in the suite run.</p>
+   */
+  inline int GetPassed() const { return m_passed; }
+  inline bool PassedHasBeenSet() const { return m_passedHasBeenSet; }
+  inline void SetPassed(int value) {
+    m_passedHasBeenSet = true;
+    m_passed = value;
+  }
+  inline SuiteRunInformation& WithPassed(int value) {
+    SetPassed(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Status of the suite run.</p>
-     */
-    inline const SuiteRunStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const SuiteRunStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(SuiteRunStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline SuiteRunInformation& WithStatus(const SuiteRunStatus& value) { SetStatus(value); return *this;}
-    inline SuiteRunInformation& WithStatus(SuiteRunStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Number of test cases that failed in the suite run.</p>
+   */
+  inline int GetFailed() const { return m_failed; }
+  inline bool FailedHasBeenSet() const { return m_failedHasBeenSet; }
+  inline void SetFailed(int value) {
+    m_failedHasBeenSet = true;
+    m_failed = value;
+  }
+  inline SuiteRunInformation& WithFailed(int value) {
+    SetFailed(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_suiteDefinitionId;
 
-    ///@{
-    /**
-     * <p>Number of test cases that passed in the suite run.</p>
-     */
-    inline int GetPassed() const{ return m_passed; }
-    inline bool PassedHasBeenSet() const { return m_passedHasBeenSet; }
-    inline void SetPassed(int value) { m_passedHasBeenSet = true; m_passed = value; }
-    inline SuiteRunInformation& WithPassed(int value) { SetPassed(value); return *this;}
-    ///@}
+  Aws::String m_suiteDefinitionVersion;
 
-    ///@{
-    /**
-     * <p>Number of test cases that failed in the suite run.</p>
-     */
-    inline int GetFailed() const{ return m_failed; }
-    inline bool FailedHasBeenSet() const { return m_failedHasBeenSet; }
-    inline void SetFailed(int value) { m_failedHasBeenSet = true; m_failed = value; }
-    inline SuiteRunInformation& WithFailed(int value) { SetFailed(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_suiteDefinitionName;
 
-    Aws::String m_suiteDefinitionId;
-    bool m_suiteDefinitionIdHasBeenSet = false;
+  Aws::String m_suiteRunId;
 
-    Aws::String m_suiteDefinitionVersion;
-    bool m_suiteDefinitionVersionHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_suiteDefinitionName;
-    bool m_suiteDefinitionNameHasBeenSet = false;
+  Aws::Utils::DateTime m_startedAt{};
 
-    Aws::String m_suiteRunId;
-    bool m_suiteRunIdHasBeenSet = false;
+  Aws::Utils::DateTime m_endAt{};
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  SuiteRunStatus m_status{SuiteRunStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_startedAt;
-    bool m_startedAtHasBeenSet = false;
+  int m_passed{0};
 
-    Aws::Utils::DateTime m_endAt;
-    bool m_endAtHasBeenSet = false;
+  int m_failed{0};
+  bool m_suiteDefinitionIdHasBeenSet = false;
+  bool m_suiteDefinitionVersionHasBeenSet = false;
+  bool m_suiteDefinitionNameHasBeenSet = false;
+  bool m_suiteRunIdHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_startedAtHasBeenSet = false;
+  bool m_endAtHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_passedHasBeenSet = false;
+  bool m_failedHasBeenSet = false;
+};
 
-    SuiteRunStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    int m_passed;
-    bool m_passedHasBeenSet = false;
-
-    int m_failed;
-    bool m_failedHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTDeviceAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTDeviceAdvisor
+}  // namespace Aws

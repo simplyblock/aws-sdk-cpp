@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/DescribeAuthenticationProfilesResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/redshift/model/DescribeAuthenticationProfilesResult.h>
 
 #include <utility>
 
@@ -17,44 +17,40 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeAuthenticationProfilesResult::DescribeAuthenticationProfilesResult()
-{
-}
-
-DescribeAuthenticationProfilesResult::DescribeAuthenticationProfilesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeAuthenticationProfilesResult::DescribeAuthenticationProfilesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeAuthenticationProfilesResult& DescribeAuthenticationProfilesResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeAuthenticationProfilesResult& DescribeAuthenticationProfilesResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeAuthenticationProfilesResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeAuthenticationProfilesResult")) {
     resultNode = rootNode.FirstChild("DescribeAuthenticationProfilesResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode authenticationProfilesNode = resultNode.FirstChild("AuthenticationProfiles");
-    if(!authenticationProfilesNode.IsNull())
-    {
+    if (!authenticationProfilesNode.IsNull()) {
       XmlNode authenticationProfilesMember = authenticationProfilesNode.FirstChild("member");
-      while(!authenticationProfilesMember.IsNull())
-      {
+      m_authenticationProfilesHasBeenSet = !authenticationProfilesMember.IsNull();
+      while (!authenticationProfilesMember.IsNull()) {
         m_authenticationProfiles.push_back(authenticationProfilesMember);
         authenticationProfilesMember = authenticationProfilesMember.NextNode("member");
       }
 
+      m_authenticationProfilesHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::DescribeAuthenticationProfilesResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::DescribeAuthenticationProfilesResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

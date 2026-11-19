@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/quicksight/model/DescribeQPersonalizationConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/quicksight/model/DescribeQPersonalizationConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::QuickSight::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeQPersonalizationConfigurationRequest::DescribeQPersonalizationConfigurationRequest() : 
-    m_awsAccountIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeQPersonalizationConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeQPersonalizationConfigurationRequest::SerializePayload() const { return {}; }

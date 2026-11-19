@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeRoutingProfileRequest::DescribeRoutingProfileRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_routingProfileIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeRoutingProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeRoutingProfileRequest::SerializePayload() const { return {}; }

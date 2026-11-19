@@ -11,93 +11,60 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgent
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgent {
+namespace Model {
 
-PatternObjectFilter::PatternObjectFilter() : 
-    m_exclusionFiltersHasBeenSet(false),
-    m_inclusionFiltersHasBeenSet(false),
-    m_objectTypeHasBeenSet(false)
-{
-}
+PatternObjectFilter::PatternObjectFilter(JsonView jsonValue) { *this = jsonValue; }
 
-PatternObjectFilter::PatternObjectFilter(JsonView jsonValue)
-  : PatternObjectFilter()
-{
-  *this = jsonValue;
-}
-
-PatternObjectFilter& PatternObjectFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("exclusionFilters"))
-  {
-    Aws::Utils::Array<JsonView> exclusionFiltersJsonList = jsonValue.GetArray("exclusionFilters");
-    for(unsigned exclusionFiltersIndex = 0; exclusionFiltersIndex < exclusionFiltersJsonList.GetLength(); ++exclusionFiltersIndex)
-    {
-      m_exclusionFilters.push_back(exclusionFiltersJsonList[exclusionFiltersIndex].AsString());
-    }
-    m_exclusionFiltersHasBeenSet = true;
+PatternObjectFilter& PatternObjectFilter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("objectType")) {
+    m_objectType = jsonValue.GetString("objectType");
+    m_objectTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("inclusionFilters"))
-  {
+  if (jsonValue.ValueExists("inclusionFilters")) {
     Aws::Utils::Array<JsonView> inclusionFiltersJsonList = jsonValue.GetArray("inclusionFilters");
-    for(unsigned inclusionFiltersIndex = 0; inclusionFiltersIndex < inclusionFiltersJsonList.GetLength(); ++inclusionFiltersIndex)
-    {
+    for (unsigned inclusionFiltersIndex = 0; inclusionFiltersIndex < inclusionFiltersJsonList.GetLength(); ++inclusionFiltersIndex) {
       m_inclusionFilters.push_back(inclusionFiltersJsonList[inclusionFiltersIndex].AsString());
     }
     m_inclusionFiltersHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("objectType"))
-  {
-    m_objectType = jsonValue.GetString("objectType");
-
-    m_objectTypeHasBeenSet = true;
+  if (jsonValue.ValueExists("exclusionFilters")) {
+    Aws::Utils::Array<JsonView> exclusionFiltersJsonList = jsonValue.GetArray("exclusionFilters");
+    for (unsigned exclusionFiltersIndex = 0; exclusionFiltersIndex < exclusionFiltersJsonList.GetLength(); ++exclusionFiltersIndex) {
+      m_exclusionFilters.push_back(exclusionFiltersJsonList[exclusionFiltersIndex].AsString());
+    }
+    m_exclusionFiltersHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PatternObjectFilter::Jsonize() const
-{
+JsonValue PatternObjectFilter::Jsonize() const {
   JsonValue payload;
 
-  if(m_exclusionFiltersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> exclusionFiltersJsonList(m_exclusionFilters.size());
-   for(unsigned exclusionFiltersIndex = 0; exclusionFiltersIndex < exclusionFiltersJsonList.GetLength(); ++exclusionFiltersIndex)
-   {
-     exclusionFiltersJsonList[exclusionFiltersIndex].AsString(m_exclusionFilters[exclusionFiltersIndex]);
-   }
-   payload.WithArray("exclusionFilters", std::move(exclusionFiltersJsonList));
-
+  if (m_objectTypeHasBeenSet) {
+    payload.WithString("objectType", m_objectType);
   }
 
-  if(m_inclusionFiltersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> inclusionFiltersJsonList(m_inclusionFilters.size());
-   for(unsigned inclusionFiltersIndex = 0; inclusionFiltersIndex < inclusionFiltersJsonList.GetLength(); ++inclusionFiltersIndex)
-   {
-     inclusionFiltersJsonList[inclusionFiltersIndex].AsString(m_inclusionFilters[inclusionFiltersIndex]);
-   }
-   payload.WithArray("inclusionFilters", std::move(inclusionFiltersJsonList));
-
+  if (m_inclusionFiltersHasBeenSet) {
+    Aws::Utils::Array<JsonValue> inclusionFiltersJsonList(m_inclusionFilters.size());
+    for (unsigned inclusionFiltersIndex = 0; inclusionFiltersIndex < inclusionFiltersJsonList.GetLength(); ++inclusionFiltersIndex) {
+      inclusionFiltersJsonList[inclusionFiltersIndex].AsString(m_inclusionFilters[inclusionFiltersIndex]);
+    }
+    payload.WithArray("inclusionFilters", std::move(inclusionFiltersJsonList));
   }
 
-  if(m_objectTypeHasBeenSet)
-  {
-   payload.WithString("objectType", m_objectType);
-
+  if (m_exclusionFiltersHasBeenSet) {
+    Aws::Utils::Array<JsonValue> exclusionFiltersJsonList(m_exclusionFilters.size());
+    for (unsigned exclusionFiltersIndex = 0; exclusionFiltersIndex < exclusionFiltersJsonList.GetLength(); ++exclusionFiltersIndex) {
+      exclusionFiltersJsonList[exclusionFiltersIndex].AsString(m_exclusionFilters[exclusionFiltersIndex]);
+    }
+    payload.WithArray("exclusionFilters", std::move(exclusionFiltersJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

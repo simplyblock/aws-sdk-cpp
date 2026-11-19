@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticbeanstalk/model/DescribeInstancesHealthResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticbeanstalk/model/DescribeInstancesHealthResult.h>
 
 #include <utility>
 
@@ -17,54 +17,48 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeInstancesHealthResult::DescribeInstancesHealthResult()
-{
-}
+DescribeInstancesHealthResult::DescribeInstancesHealthResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeInstancesHealthResult::DescribeInstancesHealthResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeInstancesHealthResult& DescribeInstancesHealthResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeInstancesHealthResult& DescribeInstancesHealthResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeInstancesHealthResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeInstancesHealthResult")) {
     resultNode = rootNode.FirstChild("DescribeInstancesHealthResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode instanceHealthListNode = resultNode.FirstChild("InstanceHealthList");
-    if(!instanceHealthListNode.IsNull())
-    {
+    if (!instanceHealthListNode.IsNull()) {
       XmlNode instanceHealthListMember = instanceHealthListNode.FirstChild("member");
-      while(!instanceHealthListMember.IsNull())
-      {
+      m_instanceHealthListHasBeenSet = !instanceHealthListMember.IsNull();
+      while (!instanceHealthListMember.IsNull()) {
         m_instanceHealthList.push_back(instanceHealthListMember);
         instanceHealthListMember = instanceHealthListMember.NextNode("member");
       }
 
+      m_instanceHealthListHasBeenSet = true;
     }
     XmlNode refreshedAtNode = resultNode.FirstChild("RefreshedAt");
-    if(!refreshedAtNode.IsNull())
-    {
-      m_refreshedAt = DateTime(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(refreshedAtNode.GetText()).c_str()).c_str(), Aws::Utils::DateFormat::ISO_8601);
+    if (!refreshedAtNode.IsNull()) {
+      m_refreshedAt = DateTime(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(refreshedAtNode.GetText()).c_str()).c_str(),
+                               Aws::Utils::DateFormat::ISO_8601);
+      m_refreshedAtHasBeenSet = true;
     }
     XmlNode nextTokenNode = resultNode.FirstChild("NextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::DescribeInstancesHealthResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::DescribeInstancesHealthResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

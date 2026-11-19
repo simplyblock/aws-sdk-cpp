@@ -4,99 +4,106 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>Information about the current software installed on the
+ * cluster.</p>
+       <p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BrokerSoftwareInfo">AWS
+ * API Reference</a></p>
+ */
+class BrokerSoftwareInfo {
+ public:
+  AWS_KAFKA_API BrokerSoftwareInfo() = default;
+  AWS_KAFKA_API BrokerSoftwareInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API BrokerSoftwareInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * 
-            <p>Information about the current software installed on the
-   * cluster.</p>
-         <p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BrokerSoftwareInfo">AWS
-   * API Reference</a></p>
+   *
+          <p>The Amazon Resource Name (ARN) of the configuration used for the
+   * cluster. This field isn't visible in this preview release.</p>
+
    */
-  class BrokerSoftwareInfo
-  {
-  public:
-    AWS_KAFKA_API BrokerSoftwareInfo();
-    AWS_KAFKA_API BrokerSoftwareInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API BrokerSoftwareInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetConfigurationArn() const { return m_configurationArn; }
+  inline bool ConfigurationArnHasBeenSet() const { return m_configurationArnHasBeenSet; }
+  template <typename ConfigurationArnT = Aws::String>
+  void SetConfigurationArn(ConfigurationArnT&& value) {
+    m_configurationArnHasBeenSet = true;
+    m_configurationArn = std::forward<ConfigurationArnT>(value);
+  }
+  template <typename ConfigurationArnT = Aws::String>
+  BrokerSoftwareInfo& WithConfigurationArn(ConfigurationArnT&& value) {
+    SetConfigurationArn(std::forward<ConfigurationArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   *
+          <p>The revision of the configuration to use. This field isn't
+   * visible in this preview release.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) of the configuration used for the
-     * cluster. This field isn't visible in this preview release.</p>
-         
-     */
-    inline const Aws::String& GetConfigurationArn() const{ return m_configurationArn; }
-    inline bool ConfigurationArnHasBeenSet() const { return m_configurationArnHasBeenSet; }
-    inline void SetConfigurationArn(const Aws::String& value) { m_configurationArnHasBeenSet = true; m_configurationArn = value; }
-    inline void SetConfigurationArn(Aws::String&& value) { m_configurationArnHasBeenSet = true; m_configurationArn = std::move(value); }
-    inline void SetConfigurationArn(const char* value) { m_configurationArnHasBeenSet = true; m_configurationArn.assign(value); }
-    inline BrokerSoftwareInfo& WithConfigurationArn(const Aws::String& value) { SetConfigurationArn(value); return *this;}
-    inline BrokerSoftwareInfo& WithConfigurationArn(Aws::String&& value) { SetConfigurationArn(std::move(value)); return *this;}
-    inline BrokerSoftwareInfo& WithConfigurationArn(const char* value) { SetConfigurationArn(value); return *this;}
-    ///@}
+   */
+  inline long long GetConfigurationRevision() const { return m_configurationRevision; }
+  inline bool ConfigurationRevisionHasBeenSet() const { return m_configurationRevisionHasBeenSet; }
+  inline void SetConfigurationRevision(long long value) {
+    m_configurationRevisionHasBeenSet = true;
+    m_configurationRevision = value;
+  }
+  inline BrokerSoftwareInfo& WithConfigurationRevision(long long value) {
+    SetConfigurationRevision(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The revision of the configuration to use. This field isn't
-     * visible in this preview release.</p>
-         
-     */
-    inline long long GetConfigurationRevision() const{ return m_configurationRevision; }
-    inline bool ConfigurationRevisionHasBeenSet() const { return m_configurationRevisionHasBeenSet; }
-    inline void SetConfigurationRevision(long long value) { m_configurationRevisionHasBeenSet = true; m_configurationRevision = value; }
-    inline BrokerSoftwareInfo& WithConfigurationRevision(long long value) { SetConfigurationRevision(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The version of Apache Kafka.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The version of Apache Kafka.</p>
-         
-     */
-    inline const Aws::String& GetKafkaVersion() const{ return m_kafkaVersion; }
-    inline bool KafkaVersionHasBeenSet() const { return m_kafkaVersionHasBeenSet; }
-    inline void SetKafkaVersion(const Aws::String& value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion = value; }
-    inline void SetKafkaVersion(Aws::String&& value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion = std::move(value); }
-    inline void SetKafkaVersion(const char* value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion.assign(value); }
-    inline BrokerSoftwareInfo& WithKafkaVersion(const Aws::String& value) { SetKafkaVersion(value); return *this;}
-    inline BrokerSoftwareInfo& WithKafkaVersion(Aws::String&& value) { SetKafkaVersion(std::move(value)); return *this;}
-    inline BrokerSoftwareInfo& WithKafkaVersion(const char* value) { SetKafkaVersion(value); return *this;}
-    ///@}
-  private:
+   */
+  inline const Aws::String& GetKafkaVersion() const { return m_kafkaVersion; }
+  inline bool KafkaVersionHasBeenSet() const { return m_kafkaVersionHasBeenSet; }
+  template <typename KafkaVersionT = Aws::String>
+  void SetKafkaVersion(KafkaVersionT&& value) {
+    m_kafkaVersionHasBeenSet = true;
+    m_kafkaVersion = std::forward<KafkaVersionT>(value);
+  }
+  template <typename KafkaVersionT = Aws::String>
+  BrokerSoftwareInfo& WithKafkaVersion(KafkaVersionT&& value) {
+    SetKafkaVersion(std::forward<KafkaVersionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_configurationArn;
 
-    Aws::String m_configurationArn;
-    bool m_configurationArnHasBeenSet = false;
+  long long m_configurationRevision{0};
 
-    long long m_configurationRevision;
-    bool m_configurationRevisionHasBeenSet = false;
+  Aws::String m_kafkaVersion;
+  bool m_configurationArnHasBeenSet = false;
+  bool m_configurationRevisionHasBeenSet = false;
+  bool m_kafkaVersionHasBeenSet = false;
+};
 
-    Aws::String m_kafkaVersion;
-    bool m_kafkaVersionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

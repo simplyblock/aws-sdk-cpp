@@ -12,19 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetIntegrationResponseRequest::GetIntegrationResponseRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_resourceIdHasBeenSet(false),
-    m_httpMethodHasBeenSet(false),
-    m_statusCodeHasBeenSet(false)
-{
-}
-
-Aws::String GetIntegrationResponseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetIntegrationResponseRequest::SerializePayload() const { return {}; }

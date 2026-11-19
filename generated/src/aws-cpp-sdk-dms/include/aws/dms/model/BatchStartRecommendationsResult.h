@@ -4,66 +4,80 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/BatchStartRecommendationsErrorEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
-  class BatchStartRecommendationsResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult();
-    AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+class BatchStartRecommendationsResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API BatchStartRecommendationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list with error details about the analysis of each source database.</p>
+   */
+  inline const Aws::Vector<BatchStartRecommendationsErrorEntry>& GetErrorEntries() const { return m_errorEntries; }
+  template <typename ErrorEntriesT = Aws::Vector<BatchStartRecommendationsErrorEntry>>
+  void SetErrorEntries(ErrorEntriesT&& value) {
+    m_errorEntriesHasBeenSet = true;
+    m_errorEntries = std::forward<ErrorEntriesT>(value);
+  }
+  template <typename ErrorEntriesT = Aws::Vector<BatchStartRecommendationsErrorEntry>>
+  BatchStartRecommendationsResult& WithErrorEntries(ErrorEntriesT&& value) {
+    SetErrorEntries(std::forward<ErrorEntriesT>(value));
+    return *this;
+  }
+  template <typename ErrorEntriesT = BatchStartRecommendationsErrorEntry>
+  BatchStartRecommendationsResult& AddErrorEntries(ErrorEntriesT&& value) {
+    m_errorEntriesHasBeenSet = true;
+    m_errorEntries.emplace_back(std::forward<ErrorEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list with error details about the analysis of each source database.</p>
-     */
-    inline const Aws::Vector<BatchStartRecommendationsErrorEntry>& GetErrorEntries() const{ return m_errorEntries; }
-    inline void SetErrorEntries(const Aws::Vector<BatchStartRecommendationsErrorEntry>& value) { m_errorEntries = value; }
-    inline void SetErrorEntries(Aws::Vector<BatchStartRecommendationsErrorEntry>&& value) { m_errorEntries = std::move(value); }
-    inline BatchStartRecommendationsResult& WithErrorEntries(const Aws::Vector<BatchStartRecommendationsErrorEntry>& value) { SetErrorEntries(value); return *this;}
-    inline BatchStartRecommendationsResult& WithErrorEntries(Aws::Vector<BatchStartRecommendationsErrorEntry>&& value) { SetErrorEntries(std::move(value)); return *this;}
-    inline BatchStartRecommendationsResult& AddErrorEntries(const BatchStartRecommendationsErrorEntry& value) { m_errorEntries.push_back(value); return *this; }
-    inline BatchStartRecommendationsResult& AddErrorEntries(BatchStartRecommendationsErrorEntry&& value) { m_errorEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchStartRecommendationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchStartRecommendationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchStartRecommendationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchStartRecommendationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<BatchStartRecommendationsErrorEntry> m_errorEntries;
+ private:
+  Aws::Vector<BatchStartRecommendationsErrorEntry> m_errorEntries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_errorEntriesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

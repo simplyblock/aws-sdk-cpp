@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/JourneyDateRangeKpiResponse.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
-  class GetJourneyDateRangeKpiResult
-  {
-  public:
-    AWS_PINPOINT_API GetJourneyDateRangeKpiResult();
-    AWS_PINPOINT_API GetJourneyDateRangeKpiResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINT_API GetJourneyDateRangeKpiResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
+class GetJourneyDateRangeKpiResult {
+ public:
+  AWS_PINPOINT_API GetJourneyDateRangeKpiResult() = default;
+  AWS_PINPOINT_API GetJourneyDateRangeKpiResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINT_API GetJourneyDateRangeKpiResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const JourneyDateRangeKpiResponse& GetJourneyDateRangeKpiResponse() const{ return m_journeyDateRangeKpiResponse; }
-    inline void SetJourneyDateRangeKpiResponse(const JourneyDateRangeKpiResponse& value) { m_journeyDateRangeKpiResponse = value; }
-    inline void SetJourneyDateRangeKpiResponse(JourneyDateRangeKpiResponse&& value) { m_journeyDateRangeKpiResponse = std::move(value); }
-    inline GetJourneyDateRangeKpiResult& WithJourneyDateRangeKpiResponse(const JourneyDateRangeKpiResponse& value) { SetJourneyDateRangeKpiResponse(value); return *this;}
-    inline GetJourneyDateRangeKpiResult& WithJourneyDateRangeKpiResponse(JourneyDateRangeKpiResponse&& value) { SetJourneyDateRangeKpiResponse(std::move(value)); return *this;}
-    ///@}
+  inline const JourneyDateRangeKpiResponse& GetJourneyDateRangeKpiResponse() const { return m_journeyDateRangeKpiResponse; }
+  template <typename JourneyDateRangeKpiResponseT = JourneyDateRangeKpiResponse>
+  void SetJourneyDateRangeKpiResponse(JourneyDateRangeKpiResponseT&& value) {
+    m_journeyDateRangeKpiResponseHasBeenSet = true;
+    m_journeyDateRangeKpiResponse = std::forward<JourneyDateRangeKpiResponseT>(value);
+  }
+  template <typename JourneyDateRangeKpiResponseT = JourneyDateRangeKpiResponse>
+  GetJourneyDateRangeKpiResult& WithJourneyDateRangeKpiResponse(JourneyDateRangeKpiResponseT&& value) {
+    SetJourneyDateRangeKpiResponse(std::forward<JourneyDateRangeKpiResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetJourneyDateRangeKpiResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetJourneyDateRangeKpiResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetJourneyDateRangeKpiResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    JourneyDateRangeKpiResponse m_journeyDateRangeKpiResponse;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetJourneyDateRangeKpiResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  JourneyDateRangeKpiResponse m_journeyDateRangeKpiResponse;
 
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_journeyDateRangeKpiResponseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

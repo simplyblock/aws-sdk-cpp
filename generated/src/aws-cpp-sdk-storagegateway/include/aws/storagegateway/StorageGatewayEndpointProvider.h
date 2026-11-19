@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
 
-#include <aws/storagegateway/StorageGatewayEndpointRules.h>
-
-
-namespace Aws
-{
-namespace StorageGateway
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace StorageGateway {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using StorageGatewayClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using StorageGatewayEndpointProviderBase =
     EndpointProviderBase<StorageGatewayClientConfiguration, StorageGatewayBuiltInParameters, StorageGatewayClientContextParameters>;
 
 using StorageGatewayDefaultEpProviderBase =
-    DefaultEndpointProvider<StorageGatewayClientConfiguration, StorageGatewayBuiltInParameters, StorageGatewayClientContextParameters>;
+    BDDEndpointProvider<StorageGatewayClientConfiguration, StorageGatewayBuiltInParameters, StorageGatewayClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_STORAGEGATEWAY_API StorageGatewayEndpointProvider : public StorageGatewayDefaultEpProviderBase
-{
-public:
-    using StorageGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_STORAGEGATEWAY_API StorageGatewayEndpointProvider : public StorageGatewayDefaultEpProviderBase {
+ public:
+  using StorageGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    StorageGatewayEndpointProvider()
-      : StorageGatewayDefaultEpProviderBase(Aws::StorageGateway::StorageGatewayEndpointRules::GetRulesBlob(), Aws::StorageGateway::StorageGatewayEndpointRules::RulesBlobSize)
-    {}
+  StorageGatewayEndpointProvider();
 
-    ~StorageGatewayEndpointProvider()
-    {
-    }
+  ~StorageGatewayEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace StorageGateway
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace StorageGateway
+}  // namespace Aws

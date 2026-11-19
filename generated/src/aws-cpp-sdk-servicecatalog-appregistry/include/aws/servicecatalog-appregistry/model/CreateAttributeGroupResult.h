@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/servicecatalog-appregistry/AppRegistry_EXPORTS.h>
 #include <aws/servicecatalog-appregistry/model/AttributeGroup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppRegistry
-{
-namespace Model
-{
-  class CreateAttributeGroupResult
-  {
-  public:
-    AWS_APPREGISTRY_API CreateAttributeGroupResult();
-    AWS_APPREGISTRY_API CreateAttributeGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPREGISTRY_API CreateAttributeGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppRegistry {
+namespace Model {
+class CreateAttributeGroupResult {
+ public:
+  AWS_APPREGISTRY_API CreateAttributeGroupResult() = default;
+  AWS_APPREGISTRY_API CreateAttributeGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPREGISTRY_API CreateAttributeGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the attribute group.</p>
+   */
+  inline const AttributeGroup& GetAttributeGroup() const { return m_attributeGroup; }
+  template <typename AttributeGroupT = AttributeGroup>
+  void SetAttributeGroup(AttributeGroupT&& value) {
+    m_attributeGroupHasBeenSet = true;
+    m_attributeGroup = std::forward<AttributeGroupT>(value);
+  }
+  template <typename AttributeGroupT = AttributeGroup>
+  CreateAttributeGroupResult& WithAttributeGroup(AttributeGroupT&& value) {
+    SetAttributeGroup(std::forward<AttributeGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the attribute group.</p>
-     */
-    inline const AttributeGroup& GetAttributeGroup() const{ return m_attributeGroup; }
-    inline void SetAttributeGroup(const AttributeGroup& value) { m_attributeGroup = value; }
-    inline void SetAttributeGroup(AttributeGroup&& value) { m_attributeGroup = std::move(value); }
-    inline CreateAttributeGroupResult& WithAttributeGroup(const AttributeGroup& value) { SetAttributeGroup(value); return *this;}
-    inline CreateAttributeGroupResult& WithAttributeGroup(AttributeGroup&& value) { SetAttributeGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAttributeGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAttributeGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAttributeGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAttributeGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AttributeGroup m_attributeGroup;
+ private:
+  AttributeGroup m_attributeGroup;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attributeGroupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppRegistry
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppRegistry
+}  // namespace Aws

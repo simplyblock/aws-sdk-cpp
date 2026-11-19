@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
 #include <aws/rolesanywhere/model/ProfileDetail.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RolesAnywhere
-{
-namespace Model
-{
-  class GetProfileResult
-  {
-  public:
-    AWS_ROLESANYWHERE_API GetProfileResult();
-    AWS_ROLESANYWHERE_API GetProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROLESANYWHERE_API GetProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RolesAnywhere {
+namespace Model {
+class GetProfileResult {
+ public:
+  AWS_ROLESANYWHERE_API GetProfileResult() = default;
+  AWS_ROLESANYWHERE_API GetProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROLESANYWHERE_API GetProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The state of the profile after a read or write operation.</p>
+   */
+  inline const ProfileDetail& GetProfile() const { return m_profile; }
+  template <typename ProfileT = ProfileDetail>
+  void SetProfile(ProfileT&& value) {
+    m_profileHasBeenSet = true;
+    m_profile = std::forward<ProfileT>(value);
+  }
+  template <typename ProfileT = ProfileDetail>
+  GetProfileResult& WithProfile(ProfileT&& value) {
+    SetProfile(std::forward<ProfileT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the profile after a read or write operation.</p>
-     */
-    inline const ProfileDetail& GetProfile() const{ return m_profile; }
-    inline void SetProfile(const ProfileDetail& value) { m_profile = value; }
-    inline void SetProfile(ProfileDetail&& value) { m_profile = std::move(value); }
-    inline GetProfileResult& WithProfile(const ProfileDetail& value) { SetProfile(value); return *this;}
-    inline GetProfileResult& WithProfile(ProfileDetail&& value) { SetProfile(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetProfileResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetProfileResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetProfileResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetProfileResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ProfileDetail m_profile;
+ private:
+  ProfileDetail m_profile;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_profileHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RolesAnywhere
-} // namespace Aws
+}  // namespace Model
+}  // namespace RolesAnywhere
+}  // namespace Aws

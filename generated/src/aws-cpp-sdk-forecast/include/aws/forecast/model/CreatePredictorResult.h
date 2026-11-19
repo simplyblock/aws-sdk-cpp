@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/forecast/ForecastService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/forecast/ForecastService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ForecastService
-{
-namespace Model
-{
-  class CreatePredictorResult
-  {
-  public:
-    AWS_FORECASTSERVICE_API CreatePredictorResult();
-    AWS_FORECASTSERVICE_API CreatePredictorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FORECASTSERVICE_API CreatePredictorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ForecastService {
+namespace Model {
+class CreatePredictorResult {
+ public:
+  AWS_FORECASTSERVICE_API CreatePredictorResult() = default;
+  AWS_FORECASTSERVICE_API CreatePredictorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FORECASTSERVICE_API CreatePredictorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the predictor.</p>
+   */
+  inline const Aws::String& GetPredictorArn() const { return m_predictorArn; }
+  template <typename PredictorArnT = Aws::String>
+  void SetPredictorArn(PredictorArnT&& value) {
+    m_predictorArnHasBeenSet = true;
+    m_predictorArn = std::forward<PredictorArnT>(value);
+  }
+  template <typename PredictorArnT = Aws::String>
+  CreatePredictorResult& WithPredictorArn(PredictorArnT&& value) {
+    SetPredictorArn(std::forward<PredictorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the predictor.</p>
-     */
-    inline const Aws::String& GetPredictorArn() const{ return m_predictorArn; }
-    inline void SetPredictorArn(const Aws::String& value) { m_predictorArn = value; }
-    inline void SetPredictorArn(Aws::String&& value) { m_predictorArn = std::move(value); }
-    inline void SetPredictorArn(const char* value) { m_predictorArn.assign(value); }
-    inline CreatePredictorResult& WithPredictorArn(const Aws::String& value) { SetPredictorArn(value); return *this;}
-    inline CreatePredictorResult& WithPredictorArn(Aws::String&& value) { SetPredictorArn(std::move(value)); return *this;}
-    inline CreatePredictorResult& WithPredictorArn(const char* value) { SetPredictorArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreatePredictorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreatePredictorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreatePredictorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreatePredictorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_predictorArn;
+ private:
+  Aws::String m_predictorArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_predictorArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ForecastService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ForecastService
+}  // namespace Aws

@@ -4,75 +4,83 @@
  */
 
 #pragma once
-#include <aws/appstream/AppStream_EXPORTS.h>
 #include <aws/appstream/AppStreamRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/appstream/AppStream_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace AppStream
-{
-namespace Model
-{
+namespace Aws {
+namespace AppStream {
+namespace Model {
 
+/**
+ */
+class DescribeFleetsRequest : public AppStreamRequest {
+ public:
+  AWS_APPSTREAM_API DescribeFleetsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeFleets"; }
+
+  AWS_APPSTREAM_API Aws::String SerializePayload() const override;
+
+  AWS_APPSTREAM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The names of the fleets to describe.</p>
    */
-  class DescribeFleetsRequest : public AppStreamRequest
-  {
-  public:
-    AWS_APPSTREAM_API DescribeFleetsRequest();
+  inline const Aws::Vector<Aws::String>& GetNames() const { return m_names; }
+  inline bool NamesHasBeenSet() const { return m_namesHasBeenSet; }
+  template <typename NamesT = Aws::Vector<Aws::String>>
+  void SetNames(NamesT&& value) {
+    m_namesHasBeenSet = true;
+    m_names = std::forward<NamesT>(value);
+  }
+  template <typename NamesT = Aws::Vector<Aws::String>>
+  DescribeFleetsRequest& WithNames(NamesT&& value) {
+    SetNames(std::forward<NamesT>(value));
+    return *this;
+  }
+  template <typename NamesT = Aws::String>
+  DescribeFleetsRequest& AddNames(NamesT&& value) {
+    m_namesHasBeenSet = true;
+    m_names.emplace_back(std::forward<NamesT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeFleets"; }
+  ///@{
+  /**
+   * <p>The pagination token to use to retrieve the next page of results for this
+   * operation. If this value is null, it retrieves the first page.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeFleetsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_names;
 
-    AWS_APPSTREAM_API Aws::String SerializePayload() const override;
+  Aws::String m_nextToken;
+  bool m_namesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    AWS_APPSTREAM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The names of the fleets to describe.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetNames() const{ return m_names; }
-    inline bool NamesHasBeenSet() const { return m_namesHasBeenSet; }
-    inline void SetNames(const Aws::Vector<Aws::String>& value) { m_namesHasBeenSet = true; m_names = value; }
-    inline void SetNames(Aws::Vector<Aws::String>&& value) { m_namesHasBeenSet = true; m_names = std::move(value); }
-    inline DescribeFleetsRequest& WithNames(const Aws::Vector<Aws::String>& value) { SetNames(value); return *this;}
-    inline DescribeFleetsRequest& WithNames(Aws::Vector<Aws::String>&& value) { SetNames(std::move(value)); return *this;}
-    inline DescribeFleetsRequest& AddNames(const Aws::String& value) { m_namesHasBeenSet = true; m_names.push_back(value); return *this; }
-    inline DescribeFleetsRequest& AddNames(Aws::String&& value) { m_namesHasBeenSet = true; m_names.push_back(std::move(value)); return *this; }
-    inline DescribeFleetsRequest& AddNames(const char* value) { m_namesHasBeenSet = true; m_names.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The pagination token to use to retrieve the next page of results for this
-     * operation. If this value is null, it retrieves the first page.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline DescribeFleetsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeFleetsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeFleetsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_names;
-    bool m_namesHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

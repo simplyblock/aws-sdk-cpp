@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-organizations "C++ SDK for the AWS organizations service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-organizations "C++ SDK for AWS Organizations" aws-cpp-sdk-core)
 
 file(GLOB AWS_ORGANIZATIONS_HEADERS
     "include/aws/organizations/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ORGANIZATIONS_HEADERS
 
 file(GLOB AWS_ORGANIZATIONS_MODEL_HEADERS
     "include/aws/organizations/model/*.h"
+)
+
+file(GLOB AWS_ORGANIZATIONS_INTERNAL_HEADERS
+    "include/aws/organizations/internal/*.h"
 )
 
 file(GLOB AWS_ORGANIZATIONS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ORGANIZATIONS_MODEL_SOURCE
 
 file(GLOB ORGANIZATIONS_UNIFIED_HEADERS
     ${AWS_ORGANIZATIONS_HEADERS}
+    ${AWS_ORGANIZATIONS_INTERNAL_HEADERS}
     ${AWS_ORGANIZATIONS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\organizations" FILES ${AWS_ORGANIZATIONS_HEADERS})
+        source_group("Header Files\\aws\\organizations\\internal" FILES ${AWS_ORGANIZATIONS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\organizations\\model" FILES ${AWS_ORGANIZATIONS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ORGANIZATIONS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ORGANIZATIONS_MODEL_SOURCE})

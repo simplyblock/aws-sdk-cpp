@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
 
-#include <aws/logs/CloudWatchLogsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudWatchLogs
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudWatchLogs {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudWatchLogsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudWatchLogsEndpointProviderBase =
     EndpointProviderBase<CloudWatchLogsClientConfiguration, CloudWatchLogsBuiltInParameters, CloudWatchLogsClientContextParameters>;
 
 using CloudWatchLogsDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudWatchLogsClientConfiguration, CloudWatchLogsBuiltInParameters, CloudWatchLogsClientContextParameters>;
+    BDDEndpointProvider<CloudWatchLogsClientConfiguration, CloudWatchLogsBuiltInParameters, CloudWatchLogsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDWATCHLOGS_API CloudWatchLogsEndpointProvider : public CloudWatchLogsDefaultEpProviderBase
-{
-public:
-    using CloudWatchLogsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDWATCHLOGS_API CloudWatchLogsEndpointProvider : public CloudWatchLogsDefaultEpProviderBase {
+ public:
+  using CloudWatchLogsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudWatchLogsEndpointProvider()
-      : CloudWatchLogsDefaultEpProviderBase(Aws::CloudWatchLogs::CloudWatchLogsEndpointRules::GetRulesBlob(), Aws::CloudWatchLogs::CloudWatchLogsEndpointRules::RulesBlobSize)
-    {}
+  CloudWatchLogsEndpointProvider();
 
-    ~CloudWatchLogsEndpointProvider()
-    {
-    }
+  ~CloudWatchLogsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudWatchLogs
+}  // namespace Aws

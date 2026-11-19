@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-opensearchserverless "C++ SDK for the AWS opensearchserverless service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-opensearchserverless "C++ SDK for OpenSearch Service Serverless" aws-cpp-sdk-core)
 
 file(GLOB AWS_OPENSEARCHSERVERLESS_HEADERS
     "include/aws/opensearchserverless/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OPENSEARCHSERVERLESS_HEADERS
 
 file(GLOB AWS_OPENSEARCHSERVERLESS_MODEL_HEADERS
     "include/aws/opensearchserverless/model/*.h"
+)
+
+file(GLOB AWS_OPENSEARCHSERVERLESS_INTERNAL_HEADERS
+    "include/aws/opensearchserverless/internal/*.h"
 )
 
 file(GLOB AWS_OPENSEARCHSERVERLESS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OPENSEARCHSERVERLESS_MODEL_SOURCE
 
 file(GLOB OPENSEARCHSERVERLESS_UNIFIED_HEADERS
     ${AWS_OPENSEARCHSERVERLESS_HEADERS}
+    ${AWS_OPENSEARCHSERVERLESS_INTERNAL_HEADERS}
     ${AWS_OPENSEARCHSERVERLESS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\opensearchserverless" FILES ${AWS_OPENSEARCHSERVERLESS_HEADERS})
+        source_group("Header Files\\aws\\opensearchserverless\\internal" FILES ${AWS_OPENSEARCHSERVERLESS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\opensearchserverless\\model" FILES ${AWS_OPENSEARCHSERVERLESS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OPENSEARCHSERVERLESS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OPENSEARCHSERVERLESS_MODEL_SOURCE})

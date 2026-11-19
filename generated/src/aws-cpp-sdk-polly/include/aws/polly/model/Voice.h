@@ -4,167 +4,198 @@
  */
 
 #pragma once
-#include <aws/polly/Polly_EXPORTS.h>
-#include <aws/polly/model/Gender.h>
-#include <aws/polly/model/VoiceId.h>
-#include <aws/polly/model/LanguageCode.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/polly/Polly_EXPORTS.h>
 #include <aws/polly/model/Engine.h>
+#include <aws/polly/model/Gender.h>
+#include <aws/polly/model/LanguageCode.h>
+#include <aws/polly/model/VoiceId.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Polly
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Polly {
+namespace Model {
 
+/**
+ * <p>Description of the voice.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/polly-2016-06-10/Voice">AWS API
+ * Reference</a></p>
+ */
+class Voice {
+ public:
+  AWS_POLLY_API Voice() = default;
+  AWS_POLLY_API Voice(Aws::Utils::Json::JsonView jsonValue);
+  AWS_POLLY_API Voice& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_POLLY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Description of the voice.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/polly-2016-06-10/Voice">AWS API
-   * Reference</a></p>
+   * <p>Gender of the voice.</p>
    */
-  class Voice
-  {
-  public:
-    AWS_POLLY_API Voice();
-    AWS_POLLY_API Voice(Aws::Utils::Json::JsonView jsonValue);
-    AWS_POLLY_API Voice& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_POLLY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline Gender GetGender() const { return m_gender; }
+  inline bool GenderHasBeenSet() const { return m_genderHasBeenSet; }
+  inline void SetGender(Gender value) {
+    m_genderHasBeenSet = true;
+    m_gender = value;
+  }
+  inline Voice& WithGender(Gender value) {
+    SetGender(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Amazon Polly assigned voice ID. This is the ID that you specify when calling
+   * the <code>SynthesizeSpeech</code> operation.</p>
+   */
+  inline VoiceId GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  inline void SetId(VoiceId value) {
+    m_idHasBeenSet = true;
+    m_id = value;
+  }
+  inline Voice& WithId(VoiceId value) {
+    SetId(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Gender of the voice.</p>
-     */
-    inline const Gender& GetGender() const{ return m_gender; }
-    inline bool GenderHasBeenSet() const { return m_genderHasBeenSet; }
-    inline void SetGender(const Gender& value) { m_genderHasBeenSet = true; m_gender = value; }
-    inline void SetGender(Gender&& value) { m_genderHasBeenSet = true; m_gender = std::move(value); }
-    inline Voice& WithGender(const Gender& value) { SetGender(value); return *this;}
-    inline Voice& WithGender(Gender&& value) { SetGender(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Language code of the voice.</p>
+   */
+  inline LanguageCode GetLanguageCode() const { return m_languageCode; }
+  inline bool LanguageCodeHasBeenSet() const { return m_languageCodeHasBeenSet; }
+  inline void SetLanguageCode(LanguageCode value) {
+    m_languageCodeHasBeenSet = true;
+    m_languageCode = value;
+  }
+  inline Voice& WithLanguageCode(LanguageCode value) {
+    SetLanguageCode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Polly assigned voice ID. This is the ID that you specify when calling
-     * the <code>SynthesizeSpeech</code> operation.</p>
-     */
-    inline const VoiceId& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const VoiceId& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(VoiceId&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline Voice& WithId(const VoiceId& value) { SetId(value); return *this;}
-    inline Voice& WithId(VoiceId&& value) { SetId(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Human readable name of the language in English.</p>
+   */
+  inline const Aws::String& GetLanguageName() const { return m_languageName; }
+  inline bool LanguageNameHasBeenSet() const { return m_languageNameHasBeenSet; }
+  template <typename LanguageNameT = Aws::String>
+  void SetLanguageName(LanguageNameT&& value) {
+    m_languageNameHasBeenSet = true;
+    m_languageName = std::forward<LanguageNameT>(value);
+  }
+  template <typename LanguageNameT = Aws::String>
+  Voice& WithLanguageName(LanguageNameT&& value) {
+    SetLanguageName(std::forward<LanguageNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Language code of the voice.</p>
-     */
-    inline const LanguageCode& GetLanguageCode() const{ return m_languageCode; }
-    inline bool LanguageCodeHasBeenSet() const { return m_languageCodeHasBeenSet; }
-    inline void SetLanguageCode(const LanguageCode& value) { m_languageCodeHasBeenSet = true; m_languageCode = value; }
-    inline void SetLanguageCode(LanguageCode&& value) { m_languageCodeHasBeenSet = true; m_languageCode = std::move(value); }
-    inline Voice& WithLanguageCode(const LanguageCode& value) { SetLanguageCode(value); return *this;}
-    inline Voice& WithLanguageCode(LanguageCode&& value) { SetLanguageCode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Name of the voice (for example, Salli, Kendra, etc.). This provides a human
+   * readable voice name that you might display in your application.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Voice& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Human readable name of the language in English.</p>
-     */
-    inline const Aws::String& GetLanguageName() const{ return m_languageName; }
-    inline bool LanguageNameHasBeenSet() const { return m_languageNameHasBeenSet; }
-    inline void SetLanguageName(const Aws::String& value) { m_languageNameHasBeenSet = true; m_languageName = value; }
-    inline void SetLanguageName(Aws::String&& value) { m_languageNameHasBeenSet = true; m_languageName = std::move(value); }
-    inline void SetLanguageName(const char* value) { m_languageNameHasBeenSet = true; m_languageName.assign(value); }
-    inline Voice& WithLanguageName(const Aws::String& value) { SetLanguageName(value); return *this;}
-    inline Voice& WithLanguageName(Aws::String&& value) { SetLanguageName(std::move(value)); return *this;}
-    inline Voice& WithLanguageName(const char* value) { SetLanguageName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional codes for languages available for the specified voice in addition
+   * to its default language. </p> <p>For example, the default language for Aditi is
+   * Indian English (en-IN) because it was first used for that language. Since Aditi
+   * is bilingual and fluent in both Indian English and Hindi, this parameter would
+   * show the code <code>hi-IN</code>.</p>
+   */
+  inline const Aws::Vector<LanguageCode>& GetAdditionalLanguageCodes() const { return m_additionalLanguageCodes; }
+  inline bool AdditionalLanguageCodesHasBeenSet() const { return m_additionalLanguageCodesHasBeenSet; }
+  template <typename AdditionalLanguageCodesT = Aws::Vector<LanguageCode>>
+  void SetAdditionalLanguageCodes(AdditionalLanguageCodesT&& value) {
+    m_additionalLanguageCodesHasBeenSet = true;
+    m_additionalLanguageCodes = std::forward<AdditionalLanguageCodesT>(value);
+  }
+  template <typename AdditionalLanguageCodesT = Aws::Vector<LanguageCode>>
+  Voice& WithAdditionalLanguageCodes(AdditionalLanguageCodesT&& value) {
+    SetAdditionalLanguageCodes(std::forward<AdditionalLanguageCodesT>(value));
+    return *this;
+  }
+  inline Voice& AddAdditionalLanguageCodes(LanguageCode value) {
+    m_additionalLanguageCodesHasBeenSet = true;
+    m_additionalLanguageCodes.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the voice (for example, Salli, Kendra, etc.). This provides a human
-     * readable voice name that you might display in your application.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Voice& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Voice& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Voice& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies which engines (<code>standard</code>, <code>neural</code>,
+   * <code>long-form</code> or <code>generative</code>) are supported by a given
+   * voice.</p>
+   */
+  inline const Aws::Vector<Engine>& GetSupportedEngines() const { return m_supportedEngines; }
+  inline bool SupportedEnginesHasBeenSet() const { return m_supportedEnginesHasBeenSet; }
+  template <typename SupportedEnginesT = Aws::Vector<Engine>>
+  void SetSupportedEngines(SupportedEnginesT&& value) {
+    m_supportedEnginesHasBeenSet = true;
+    m_supportedEngines = std::forward<SupportedEnginesT>(value);
+  }
+  template <typename SupportedEnginesT = Aws::Vector<Engine>>
+  Voice& WithSupportedEngines(SupportedEnginesT&& value) {
+    SetSupportedEngines(std::forward<SupportedEnginesT>(value));
+    return *this;
+  }
+  inline Voice& AddSupportedEngines(Engine value) {
+    m_supportedEnginesHasBeenSet = true;
+    m_supportedEngines.push_back(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Gender m_gender{Gender::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Additional codes for languages available for the specified voice in addition
-     * to its default language. </p> <p>For example, the default language for Aditi is
-     * Indian English (en-IN) because it was first used for that language. Since Aditi
-     * is bilingual and fluent in both Indian English and Hindi, this parameter would
-     * show the code <code>hi-IN</code>.</p>
-     */
-    inline const Aws::Vector<LanguageCode>& GetAdditionalLanguageCodes() const{ return m_additionalLanguageCodes; }
-    inline bool AdditionalLanguageCodesHasBeenSet() const { return m_additionalLanguageCodesHasBeenSet; }
-    inline void SetAdditionalLanguageCodes(const Aws::Vector<LanguageCode>& value) { m_additionalLanguageCodesHasBeenSet = true; m_additionalLanguageCodes = value; }
-    inline void SetAdditionalLanguageCodes(Aws::Vector<LanguageCode>&& value) { m_additionalLanguageCodesHasBeenSet = true; m_additionalLanguageCodes = std::move(value); }
-    inline Voice& WithAdditionalLanguageCodes(const Aws::Vector<LanguageCode>& value) { SetAdditionalLanguageCodes(value); return *this;}
-    inline Voice& WithAdditionalLanguageCodes(Aws::Vector<LanguageCode>&& value) { SetAdditionalLanguageCodes(std::move(value)); return *this;}
-    inline Voice& AddAdditionalLanguageCodes(const LanguageCode& value) { m_additionalLanguageCodesHasBeenSet = true; m_additionalLanguageCodes.push_back(value); return *this; }
-    inline Voice& AddAdditionalLanguageCodes(LanguageCode&& value) { m_additionalLanguageCodesHasBeenSet = true; m_additionalLanguageCodes.push_back(std::move(value)); return *this; }
-    ///@}
+  VoiceId m_id{VoiceId::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies which engines (<code>standard</code>, <code>neural</code>,
-     * <code>long-form</code> or <code>generative</code>) are supported by a given
-     * voice.</p>
-     */
-    inline const Aws::Vector<Engine>& GetSupportedEngines() const{ return m_supportedEngines; }
-    inline bool SupportedEnginesHasBeenSet() const { return m_supportedEnginesHasBeenSet; }
-    inline void SetSupportedEngines(const Aws::Vector<Engine>& value) { m_supportedEnginesHasBeenSet = true; m_supportedEngines = value; }
-    inline void SetSupportedEngines(Aws::Vector<Engine>&& value) { m_supportedEnginesHasBeenSet = true; m_supportedEngines = std::move(value); }
-    inline Voice& WithSupportedEngines(const Aws::Vector<Engine>& value) { SetSupportedEngines(value); return *this;}
-    inline Voice& WithSupportedEngines(Aws::Vector<Engine>&& value) { SetSupportedEngines(std::move(value)); return *this;}
-    inline Voice& AddSupportedEngines(const Engine& value) { m_supportedEnginesHasBeenSet = true; m_supportedEngines.push_back(value); return *this; }
-    inline Voice& AddSupportedEngines(Engine&& value) { m_supportedEnginesHasBeenSet = true; m_supportedEngines.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  LanguageCode m_languageCode{LanguageCode::NOT_SET};
 
-    Gender m_gender;
-    bool m_genderHasBeenSet = false;
+  Aws::String m_languageName;
 
-    VoiceId m_id;
-    bool m_idHasBeenSet = false;
+  Aws::String m_name;
 
-    LanguageCode m_languageCode;
-    bool m_languageCodeHasBeenSet = false;
+  Aws::Vector<LanguageCode> m_additionalLanguageCodes;
 
-    Aws::String m_languageName;
-    bool m_languageNameHasBeenSet = false;
+  Aws::Vector<Engine> m_supportedEngines;
+  bool m_genderHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_languageCodeHasBeenSet = false;
+  bool m_languageNameHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_additionalLanguageCodesHasBeenSet = false;
+  bool m_supportedEnginesHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Vector<LanguageCode> m_additionalLanguageCodes;
-    bool m_additionalLanguageCodesHasBeenSet = false;
-
-    Aws::Vector<Engine> m_supportedEngines;
-    bool m_supportedEnginesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Polly
-} // namespace Aws
+}  // namespace Model
+}  // namespace Polly
+}  // namespace Aws

@@ -1,0 +1,1120 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/billing/BillingPaginationBase.h>
+#include <aws/billing/BillingServiceClientModel.h>
+#include <aws/billing/BillingWaiter.h>
+#include <aws/billing/Billing_EXPORTS.h>
+#include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
+#include <aws/core/client/ClientConfiguration.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+namespace Aws {
+namespace Billing {
+/**
+ * <p> You can use the Billing API to programatically list the billing views
+ * available to you for a given time period. A billing view represents a set of
+ * billing data. </p> <p>The Billing API provides the following endpoint:</p> <p>
+ * <code>https://billing.us-east-1.api.aws</code> </p>
+ */
+class AWS_BILLING_API BillingClient : public Aws::Client::AWSJsonClient,
+                                      public Aws::Client::ClientWithAsyncTemplateMethods<BillingClient>,
+                                      public BillingPaginationBase<BillingClient>,
+                                      public BillingWaiter<BillingClient> {
+ public:
+  typedef Aws::Client::AWSJsonClient BASECLASS;
+  static const char* GetServiceName();
+  static const char* GetAllocationTag();
+
+  typedef BillingClientConfiguration ClientConfigurationType;
+  typedef BillingEndpointProvider EndpointProviderType;
+
+  /**
+   * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client
+   * config is not specified, it will be initialized to default values.
+   */
+  BillingClient(const Aws::Billing::BillingClientConfiguration& clientConfiguration = Aws::Billing::BillingClientConfiguration(),
+                std::shared_ptr<BillingEndpointProviderBase> endpointProvider = nullptr);
+
+  /**
+   * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+   * is not specified, it will be initialized to default values.
+   */
+  BillingClient(const Aws::Auth::AWSCredentials& credentials, std::shared_ptr<BillingEndpointProviderBase> endpointProvider = nullptr,
+                const Aws::Billing::BillingClientConfiguration& clientConfiguration = Aws::Billing::BillingClientConfiguration());
+
+  /**
+   * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+   * the default http client factory will be used
+   */
+  BillingClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                std::shared_ptr<BillingEndpointProviderBase> endpointProvider = nullptr,
+                const Aws::Billing::BillingClientConfiguration& clientConfiguration = Aws::Billing::BillingClientConfiguration());
+
+  /* Legacy constructors due deprecation */
+  /**
+   * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client
+   * config is not specified, it will be initialized to default values.
+   */
+  BillingClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /**
+   * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+   * is not specified, it will be initialized to default values.
+   */
+  BillingClient(const Aws::Auth::AWSCredentials& credentials, const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /**
+   * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+   * the default http client factory will be used
+   */
+  BillingClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /* End of legacy constructors due deprecation */
+  virtual ~BillingClient();
+
+  /**
+   * <p>Private Pricing contracts let eligible payer accounts manage private pricing
+   * agreements with Amazon Web Services. This operation associates a private pricing
+   * contract with the caller's Amazon Web Services account. The caller must be a
+   * payer (management) account listed on the contract. This operation is idempotent,
+   * so retrying a request that already succeeded is safe.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/AssociateContract">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateContractOutcome AssociateContract(const Model::AssociateContractRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateContract that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename AssociateContractRequestT = Model::AssociateContractRequest>
+  Model::AssociateContractOutcomeCallable AssociateContractCallable(const AssociateContractRequestT& request) const {
+    return SubmitCallable(&BillingClient::AssociateContract, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateContract that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename AssociateContractRequestT = Model::AssociateContractRequest>
+  void AssociateContractAsync(const AssociateContractRequestT& request, const AssociateContractResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::AssociateContract, request, handler, context);
+  }
+
+  /**
+   * <p> Associates one or more source billing views with an existing billing view.
+   * This allows creating aggregate billing views that combine data from multiple
+   * sources. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/AssociateSourceViews">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateSourceViewsOutcome AssociateSourceViews(const Model::AssociateSourceViewsRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateSourceViews that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename AssociateSourceViewsRequestT = Model::AssociateSourceViewsRequest>
+  Model::AssociateSourceViewsOutcomeCallable AssociateSourceViewsCallable(const AssociateSourceViewsRequestT& request) const {
+    return SubmitCallable(&BillingClient::AssociateSourceViews, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateSourceViews that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename AssociateSourceViewsRequestT = Model::AssociateSourceViewsRequest>
+  void AssociateSourceViewsAsync(const AssociateSourceViewsRequestT& request, const AssociateSourceViewsResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::AssociateSourceViews, request, handler, context);
+  }
+
+  /**
+   * <p>Cancels a contractual investment attestation. This operation is idempotent,
+   * so retrying is safe. You can cancel an attestation only while it is still
+   * pending (its <code>isCancellable</code> value is
+   * <code>true</code>).</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/CancelContractualInvestmentAttestation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CancelContractualInvestmentAttestationOutcome CancelContractualInvestmentAttestation(
+      const Model::CancelContractualInvestmentAttestationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CancelContractualInvestmentAttestation that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CancelContractualInvestmentAttestationRequestT = Model::CancelContractualInvestmentAttestationRequest>
+  Model::CancelContractualInvestmentAttestationOutcomeCallable CancelContractualInvestmentAttestationCallable(
+      const CancelContractualInvestmentAttestationRequestT& request) const {
+    return SubmitCallable(&BillingClient::CancelContractualInvestmentAttestation, request);
+  }
+
+  /**
+   * An Async wrapper for CancelContractualInvestmentAttestation that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CancelContractualInvestmentAttestationRequestT = Model::CancelContractualInvestmentAttestationRequest>
+  void CancelContractualInvestmentAttestationAsync(const CancelContractualInvestmentAttestationRequestT& request,
+                                                   const CancelContractualInvestmentAttestationResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::CancelContractualInvestmentAttestation, request, handler, context);
+  }
+
+  /**
+   * <p> Creates a billing view with the specified billing view attributes.
+   * </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/CreateBillingView">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateBillingViewOutcome CreateBillingView(const Model::CreateBillingViewRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateBillingView that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateBillingViewRequestT = Model::CreateBillingViewRequest>
+  Model::CreateBillingViewOutcomeCallable CreateBillingViewCallable(const CreateBillingViewRequestT& request) const {
+    return SubmitCallable(&BillingClient::CreateBillingView, request);
+  }
+
+  /**
+   * An Async wrapper for CreateBillingView that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CreateBillingViewRequestT = Model::CreateBillingViewRequest>
+  void CreateBillingViewAsync(const CreateBillingViewRequestT& request, const CreateBillingViewResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::CreateBillingView, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an attestation that claims an investment award for a completed
+   * milestone or outcome within a private pricing contract. Supply a
+   * <code>clientToken</code> to make the request idempotent so a safe retry does not
+   * create a duplicate attestation. This operation starts an asynchronous review and
+   * returns an <code>attestationId</code> while the attestation is
+   * pending.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/CreateContractualInvestmentAttestation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateContractualInvestmentAttestationOutcome CreateContractualInvestmentAttestation(
+      const Model::CreateContractualInvestmentAttestationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateContractualInvestmentAttestation that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateContractualInvestmentAttestationRequestT = Model::CreateContractualInvestmentAttestationRequest>
+  Model::CreateContractualInvestmentAttestationOutcomeCallable CreateContractualInvestmentAttestationCallable(
+      const CreateContractualInvestmentAttestationRequestT& request) const {
+    return SubmitCallable(&BillingClient::CreateContractualInvestmentAttestation, request);
+  }
+
+  /**
+   * An Async wrapper for CreateContractualInvestmentAttestation that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateContractualInvestmentAttestationRequestT = Model::CreateContractualInvestmentAttestationRequest>
+  void CreateContractualInvestmentAttestationAsync(const CreateContractualInvestmentAttestationRequestT& request,
+                                                   const CreateContractualInvestmentAttestationResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::CreateContractualInvestmentAttestation, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes the specified billing view.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/DeleteBillingView">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteBillingViewOutcome DeleteBillingView(const Model::DeleteBillingViewRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteBillingView that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteBillingViewRequestT = Model::DeleteBillingViewRequest>
+  Model::DeleteBillingViewOutcomeCallable DeleteBillingViewCallable(const DeleteBillingViewRequestT& request) const {
+    return SubmitCallable(&BillingClient::DeleteBillingView, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteBillingView that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteBillingViewRequestT = Model::DeleteBillingViewRequest>
+  void DeleteBillingViewAsync(const DeleteBillingViewRequestT& request, const DeleteBillingViewResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::DeleteBillingView, request, handler, context);
+  }
+
+  /**
+   * <p>Removes the association between a private pricing contract and your Amazon
+   * Web Services account. The account must have been associated with the contract
+   * previously. This operation is idempotent, so retrying is safe.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/DisassociateContract">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateContractOutcome DisassociateContract(const Model::DisassociateContractRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateContract that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DisassociateContractRequestT = Model::DisassociateContractRequest>
+  Model::DisassociateContractOutcomeCallable DisassociateContractCallable(const DisassociateContractRequestT& request) const {
+    return SubmitCallable(&BillingClient::DisassociateContract, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateContract that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DisassociateContractRequestT = Model::DisassociateContractRequest>
+  void DisassociateContractAsync(const DisassociateContractRequestT& request, const DisassociateContractResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::DisassociateContract, request, handler, context);
+  }
+
+  /**
+   * <p> Removes the association between one or more source billing views and an
+   * existing billing view. This allows modifying the composition of aggregate
+   * billing views. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/DisassociateSourceViews">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateSourceViewsOutcome DisassociateSourceViews(const Model::DisassociateSourceViewsRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateSourceViews that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DisassociateSourceViewsRequestT = Model::DisassociateSourceViewsRequest>
+  Model::DisassociateSourceViewsOutcomeCallable DisassociateSourceViewsCallable(const DisassociateSourceViewsRequestT& request) const {
+    return SubmitCallable(&BillingClient::DisassociateSourceViews, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateSourceViews that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DisassociateSourceViewsRequestT = Model::DisassociateSourceViewsRequest>
+  void DisassociateSourceViewsAsync(const DisassociateSourceViewsRequestT& request,
+                                    const DisassociateSourceViewsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::DisassociateSourceViews, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves billing preferences for the specified feature. Each feature
+   * controls a distinct billing capability: which accounts can share Reserved
+   * Instances or credits, whether billing alerts are enabled, the historical record
+   * of sharing changes, per-credit options, and which accounts an individual
+   * Reserved Instance or Savings Plan is shared with.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetBillingPreferences">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetBillingPreferencesOutcome GetBillingPreferences(const Model::GetBillingPreferencesRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetBillingPreferences that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetBillingPreferencesRequestT = Model::GetBillingPreferencesRequest>
+  Model::GetBillingPreferencesOutcomeCallable GetBillingPreferencesCallable(const GetBillingPreferencesRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetBillingPreferences, request);
+  }
+
+  /**
+   * An Async wrapper for GetBillingPreferences that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetBillingPreferencesRequestT = Model::GetBillingPreferencesRequest>
+  void GetBillingPreferencesAsync(const GetBillingPreferencesRequestT& request, const GetBillingPreferencesResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetBillingPreferences, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the metadata associated to the specified billing view ARN.
+   * </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetBillingView">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetBillingViewOutcome GetBillingView(const Model::GetBillingViewRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetBillingView that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetBillingViewRequestT = Model::GetBillingViewRequest>
+  Model::GetBillingViewOutcomeCallable GetBillingViewCallable(const GetBillingViewRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetBillingView, request);
+  }
+
+  /**
+   * An Async wrapper for GetBillingView that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetBillingViewRequestT = Model::GetBillingViewRequest>
+  void GetBillingViewAsync(const GetBillingViewRequestT& request, const GetBillingViewResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetBillingView, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about a specific private pricing contract, including its
+   * term (duration), eligible payer accounts, investment accounts, and legal
+   * entities. This operation is read-only.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetContractInformation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetContractInformationOutcome GetContractInformation(const Model::GetContractInformationRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetContractInformation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetContractInformationRequestT = Model::GetContractInformationRequest>
+  Model::GetContractInformationOutcomeCallable GetContractInformationCallable(const GetContractInformationRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetContractInformation, request);
+  }
+
+  /**
+   * An Async wrapper for GetContractInformation that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetContractInformationRequestT = Model::GetContractInformationRequest>
+  void GetContractInformationAsync(const GetContractInformationRequestT& request,
+                                   const GetContractInformationResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetContractInformation, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the per-billing-month allocation history for credits applied to an
+   * Amazon Web Services account's bills. Traverses the consolidated billing family
+   * to capture cross-account credit applications. Supports pagination and optional
+   * filtering to a single credit.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetCreditAllocationHistory">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCreditAllocationHistoryOutcome GetCreditAllocationHistory(
+      const Model::GetCreditAllocationHistoryRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCreditAllocationHistory that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetCreditAllocationHistoryRequestT = Model::GetCreditAllocationHistoryRequest>
+  Model::GetCreditAllocationHistoryOutcomeCallable GetCreditAllocationHistoryCallable(
+      const GetCreditAllocationHistoryRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetCreditAllocationHistory, request);
+  }
+
+  /**
+   * An Async wrapper for GetCreditAllocationHistory that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetCreditAllocationHistoryRequestT = Model::GetCreditAllocationHistoryRequest>
+  void GetCreditAllocationHistoryAsync(const GetCreditAllocationHistoryRequestT& request,
+                                       const GetCreditAllocationHistoryResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetCreditAllocationHistory, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the list of Amazon Web Services account credits for the specified
+   * account. Each credit includes its identifier, type, monetary amounts, applicable
+   * products, expiration, sharing configuration, and current enabled status.</p>
+   * <p>When the caller is the management account of a consolidated billing family
+   * and <code>payerAccountFlag</code> is <code>true</code>, the response aggregates
+   * credits across the entire family. Otherwise, the response includes only credits
+   * owned by the account specified in <code>accountId</code>.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetCredits">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCreditsOutcome GetCredits(const Model::GetCreditsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCredits that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetCreditsRequestT = Model::GetCreditsRequest>
+  Model::GetCreditsOutcomeCallable GetCreditsCallable(const GetCreditsRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetCredits, request);
+  }
+
+  /**
+   * An Async wrapper for GetCredits that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetCreditsRequestT = Model::GetCreditsRequest>
+  void GetCreditsAsync(const GetCreditsRequestT& request, const GetCreditsResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetCredits, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a summary of Enterprise Support data aggregated across all accounts
+   * in the Enterprise Support profile.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetEnterpriseSupportChargeSummary">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetEnterpriseSupportChargeSummaryOutcome GetEnterpriseSupportChargeSummary(
+      const Model::GetEnterpriseSupportChargeSummaryRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetEnterpriseSupportChargeSummary that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename GetEnterpriseSupportChargeSummaryRequestT = Model::GetEnterpriseSupportChargeSummaryRequest>
+  Model::GetEnterpriseSupportChargeSummaryOutcomeCallable GetEnterpriseSupportChargeSummaryCallable(
+      const GetEnterpriseSupportChargeSummaryRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetEnterpriseSupportChargeSummary, request);
+  }
+
+  /**
+   * An Async wrapper for GetEnterpriseSupportChargeSummary that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetEnterpriseSupportChargeSummaryRequestT = Model::GetEnterpriseSupportChargeSummaryRequest>
+  void GetEnterpriseSupportChargeSummaryAsync(const GetEnterpriseSupportChargeSummaryRequestT& request,
+                                              const GetEnterpriseSupportChargeSummaryResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetEnterpriseSupportChargeSummary, request, handler, context);
+  }
+
+  /**
+   * <p>Returns Enterprise Support contract details.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetEnterpriseSupportContractDetails">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetEnterpriseSupportContractDetailsOutcome GetEnterpriseSupportContractDetails(
+      const Model::GetEnterpriseSupportContractDetailsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetEnterpriseSupportContractDetails that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetEnterpriseSupportContractDetailsRequestT = Model::GetEnterpriseSupportContractDetailsRequest>
+  Model::GetEnterpriseSupportContractDetailsOutcomeCallable GetEnterpriseSupportContractDetailsCallable(
+      const GetEnterpriseSupportContractDetailsRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetEnterpriseSupportContractDetails, request);
+  }
+
+  /**
+   * An Async wrapper for GetEnterpriseSupportContractDetails that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetEnterpriseSupportContractDetailsRequestT = Model::GetEnterpriseSupportContractDetailsRequest>
+  void GetEnterpriseSupportContractDetailsAsync(const GetEnterpriseSupportContractDetailsRequestT& request,
+                                                const GetEnterpriseSupportContractDetailsResponseReceivedHandler& handler,
+                                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetEnterpriseSupportContractDetails, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the resource-based policy document attached to the resource in
+   * <code>JSON</code> format. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetResourcePolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetResourcePolicyOutcome GetResourcePolicy(const Model::GetResourcePolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetResourcePolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetResourcePolicyRequestT = Model::GetResourcePolicyRequest>
+  Model::GetResourcePolicyOutcomeCallable GetResourcePolicyCallable(const GetResourcePolicyRequestT& request) const {
+    return SubmitCallable(&BillingClient::GetResourcePolicy, request);
+  }
+
+  /**
+   * An Async wrapper for GetResourcePolicy that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetResourcePolicyRequestT = Model::GetResourcePolicyRequest>
+  void GetResourcePolicyAsync(const GetResourcePolicyRequestT& request, const GetResourcePolicyResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::GetResourcePolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the segments of a billing view over a given time period. Each segment
+   * identifies the billing domain (<code>PRO_FORMA</code> or <code>BILLABLE</code>)
+   * and the account relationships that apply during its time range.</p> <p>If you
+   * don't provide an <code>arn</code>, the response includes segments for the
+   * caller's <code>PRIMARY</code> billing view.</p> <p>If a mid-period change
+   * occurs, the response includes multiple segments, each with its own time range.
+   * The response omits hidden segments, so the segments it returns might not cover
+   * the entire requested time period.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListBillingViewSegments">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBillingViewSegmentsOutcome ListBillingViewSegments(const Model::ListBillingViewSegmentsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListBillingViewSegments that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListBillingViewSegmentsRequestT = Model::ListBillingViewSegmentsRequest>
+  Model::ListBillingViewSegmentsOutcomeCallable ListBillingViewSegmentsCallable(const ListBillingViewSegmentsRequestT& request = {}) const {
+    return SubmitCallable(&BillingClient::ListBillingViewSegments, request);
+  }
+
+  /**
+   * An Async wrapper for ListBillingViewSegments that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListBillingViewSegmentsRequestT = Model::ListBillingViewSegmentsRequest>
+  void ListBillingViewSegmentsAsync(const ListBillingViewSegmentsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                    const ListBillingViewSegmentsRequestT& request = {}) const {
+    return SubmitAsync(&BillingClient::ListBillingViewSegments, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the billing views available for a given time period. </p> <p>Every
+   * Amazon Web Services account has a unique <code>PRIMARY</code> billing view that
+   * represents the billing data available by default. Accounts that use Billing
+   * Conductor also have <code>BILLING_GROUP</code> billing views representing pro
+   * forma costs associated with each created billing group.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListBillingViews">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBillingViewsOutcome ListBillingViews(const Model::ListBillingViewsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListBillingViews that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListBillingViewsRequestT = Model::ListBillingViewsRequest>
+  Model::ListBillingViewsOutcomeCallable ListBillingViewsCallable(const ListBillingViewsRequestT& request = {}) const {
+    return SubmitCallable(&BillingClient::ListBillingViews, request);
+  }
+
+  /**
+   * An Async wrapper for ListBillingViews that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListBillingViewsRequestT = Model::ListBillingViewsRequest>
+  void ListBillingViewsAsync(const ListBillingViewsResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                             const ListBillingViewsRequestT& request = {}) const {
+    return SubmitAsync(&BillingClient::ListBillingViews, request, handler, context);
+  }
+
+  /**
+   * <p>Returns Business Support charges broken down at the linked account level for
+   * a given billing month.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListBusinessSupportAccountCharges">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBusinessSupportAccountChargesOutcome ListBusinessSupportAccountCharges(
+      const Model::ListBusinessSupportAccountChargesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListBusinessSupportAccountCharges that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename ListBusinessSupportAccountChargesRequestT = Model::ListBusinessSupportAccountChargesRequest>
+  Model::ListBusinessSupportAccountChargesOutcomeCallable ListBusinessSupportAccountChargesCallable(
+      const ListBusinessSupportAccountChargesRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListBusinessSupportAccountCharges, request);
+  }
+
+  /**
+   * An Async wrapper for ListBusinessSupportAccountCharges that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListBusinessSupportAccountChargesRequestT = Model::ListBusinessSupportAccountChargesRequest>
+  void ListBusinessSupportAccountChargesAsync(const ListBusinessSupportAccountChargesRequestT& request,
+                                              const ListBusinessSupportAccountChargesResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListBusinessSupportAccountCharges, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the history of Business Support subscription contracts across
+   * accounts.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListBusinessSupportSubscriptionHistory">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBusinessSupportSubscriptionHistoryOutcome ListBusinessSupportSubscriptionHistory(
+      const Model::ListBusinessSupportSubscriptionHistoryRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListBusinessSupportSubscriptionHistory that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ListBusinessSupportSubscriptionHistoryRequestT = Model::ListBusinessSupportSubscriptionHistoryRequest>
+  Model::ListBusinessSupportSubscriptionHistoryOutcomeCallable ListBusinessSupportSubscriptionHistoryCallable(
+      const ListBusinessSupportSubscriptionHistoryRequestT& request = {}) const {
+    return SubmitCallable(&BillingClient::ListBusinessSupportSubscriptionHistory, request);
+  }
+
+  /**
+   * An Async wrapper for ListBusinessSupportSubscriptionHistory that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ListBusinessSupportSubscriptionHistoryRequestT = Model::ListBusinessSupportSubscriptionHistoryRequest>
+  void ListBusinessSupportSubscriptionHistoryAsync(const ListBusinessSupportSubscriptionHistoryResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                   const ListBusinessSupportSubscriptionHistoryRequestT& request = {}) const {
+    return SubmitAsync(&BillingClient::ListBusinessSupportSubscriptionHistory, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the private pricing contracts that your Amazon Web Services account is
+   * an eligible payer account of. This operation is read-only and
+   * paginated.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListContracts">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListContractsOutcome ListContracts(const Model::ListContractsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListContracts that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListContractsRequestT = Model::ListContractsRequest>
+  Model::ListContractsOutcomeCallable ListContractsCallable(const ListContractsRequestT& request = {}) const {
+    return SubmitCallable(&BillingClient::ListContracts, request);
+  }
+
+  /**
+   * An Async wrapper for ListContracts that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListContractsRequestT = Model::ListContractsRequest>
+  void ListContractsAsync(const ListContractsResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                          const ListContractsRequestT& request = {}) const {
+    return SubmitAsync(&BillingClient::ListContracts, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the investment attestations submitted under a specific private pricing
+   * contract. Use this operation to track attestation status, including the terminal
+   * statuses <code>DISBURSED</code>, <code>REJECTED</code>, and
+   * <code>CANCELLED</code>. This operation is read-only and paginated.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListContractualInvestmentAttestations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListContractualInvestmentAttestationsOutcome ListContractualInvestmentAttestations(
+      const Model::ListContractualInvestmentAttestationsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListContractualInvestmentAttestations that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ListContractualInvestmentAttestationsRequestT = Model::ListContractualInvestmentAttestationsRequest>
+  Model::ListContractualInvestmentAttestationsOutcomeCallable ListContractualInvestmentAttestationsCallable(
+      const ListContractualInvestmentAttestationsRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListContractualInvestmentAttestations, request);
+  }
+
+  /**
+   * An Async wrapper for ListContractualInvestmentAttestations that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ListContractualInvestmentAttestationsRequestT = Model::ListContractualInvestmentAttestationsRequest>
+  void ListContractualInvestmentAttestationsAsync(const ListContractualInvestmentAttestationsRequestT& request,
+                                                  const ListContractualInvestmentAttestationsResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListContractualInvestmentAttestations, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the investment summaries within a specific private pricing contract.
+   * This operation is read-only and paginated.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListContractualInvestmentSummaries">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListContractualInvestmentSummariesOutcome ListContractualInvestmentSummaries(
+      const Model::ListContractualInvestmentSummariesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListContractualInvestmentSummaries that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename ListContractualInvestmentSummariesRequestT = Model::ListContractualInvestmentSummariesRequest>
+  Model::ListContractualInvestmentSummariesOutcomeCallable ListContractualInvestmentSummariesCallable(
+      const ListContractualInvestmentSummariesRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListContractualInvestmentSummaries, request);
+  }
+
+  /**
+   * An Async wrapper for ListContractualInvestmentSummaries that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListContractualInvestmentSummariesRequestT = Model::ListContractualInvestmentSummariesRequest>
+  void ListContractualInvestmentSummariesAsync(const ListContractualInvestmentSummariesRequestT& request,
+                                               const ListContractualInvestmentSummariesResponseReceivedHandler& handler,
+                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListContractualInvestmentSummaries, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the investments within a specific investment summary. This operation is
+   * read-only and paginated.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListContractualInvestments">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListContractualInvestmentsOutcome ListContractualInvestments(
+      const Model::ListContractualInvestmentsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListContractualInvestments that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListContractualInvestmentsRequestT = Model::ListContractualInvestmentsRequest>
+  Model::ListContractualInvestmentsOutcomeCallable ListContractualInvestmentsCallable(
+      const ListContractualInvestmentsRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListContractualInvestments, request);
+  }
+
+  /**
+   * An Async wrapper for ListContractualInvestments that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListContractualInvestmentsRequestT = Model::ListContractualInvestmentsRequest>
+  void ListContractualInvestmentsAsync(const ListContractualInvestmentsRequestT& request,
+                                       const ListContractualInvestmentsResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListContractualInvestments, request, handler, context);
+  }
+
+  /**
+   * <p>Returns Support-eligible spend broken down at linked account
+   * level.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListEnterpriseSupportLinkedAccountCharges">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListEnterpriseSupportLinkedAccountChargesOutcome ListEnterpriseSupportLinkedAccountCharges(
+      const Model::ListEnterpriseSupportLinkedAccountChargesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListEnterpriseSupportLinkedAccountCharges that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ListEnterpriseSupportLinkedAccountChargesRequestT = Model::ListEnterpriseSupportLinkedAccountChargesRequest>
+  Model::ListEnterpriseSupportLinkedAccountChargesOutcomeCallable ListEnterpriseSupportLinkedAccountChargesCallable(
+      const ListEnterpriseSupportLinkedAccountChargesRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListEnterpriseSupportLinkedAccountCharges, request);
+  }
+
+  /**
+   * An Async wrapper for ListEnterpriseSupportLinkedAccountCharges that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ListEnterpriseSupportLinkedAccountChargesRequestT = Model::ListEnterpriseSupportLinkedAccountChargesRequest>
+  void ListEnterpriseSupportLinkedAccountChargesAsync(
+      const ListEnterpriseSupportLinkedAccountChargesRequestT& request,
+      const ListEnterpriseSupportLinkedAccountChargesResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListEnterpriseSupportLinkedAccountCharges, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the source views (managed Amazon Web Services billing views) associated
+   * with the billing view. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListSourceViewsForBillingView">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListSourceViewsForBillingViewOutcome ListSourceViewsForBillingView(
+      const Model::ListSourceViewsForBillingViewRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListSourceViewsForBillingView that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListSourceViewsForBillingViewRequestT = Model::ListSourceViewsForBillingViewRequest>
+  Model::ListSourceViewsForBillingViewOutcomeCallable ListSourceViewsForBillingViewCallable(
+      const ListSourceViewsForBillingViewRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListSourceViewsForBillingView, request);
+  }
+
+  /**
+   * An Async wrapper for ListSourceViewsForBillingView that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListSourceViewsForBillingViewRequestT = Model::ListSourceViewsForBillingViewRequest>
+  void ListSourceViewsForBillingViewAsync(const ListSourceViewsForBillingViewRequestT& request,
+                                          const ListSourceViewsForBillingViewResponseReceivedHandler& handler,
+                                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListSourceViewsForBillingView, request, handler, context);
+  }
+
+  /**
+   * <p>Lists tags associated with the billing view resource. </p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListTagsForResource">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTagsForResourceOutcome ListTagsForResource(const Model::ListTagsForResourceRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTagsForResource that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTagsForResourceRequestT = Model::ListTagsForResourceRequest>
+  Model::ListTagsForResourceOutcomeCallable ListTagsForResourceCallable(const ListTagsForResourceRequestT& request) const {
+    return SubmitCallable(&BillingClient::ListTagsForResource, request);
+  }
+
+  /**
+   * An Async wrapper for ListTagsForResource that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListTagsForResourceRequestT = Model::ListTagsForResourceRequest>
+  void ListTagsForResourceAsync(const ListTagsForResourceRequestT& request, const ListTagsForResourceResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::ListTagsForResource, request, handler, context);
+  }
+
+  /**
+   * <p>Redeems an Amazon Web Services promotional credit code on behalf of the
+   * calling account. On success, a new credit is added to the account's credit
+   * ledger with the amount, validity period, and applicable products defined by the
+   * promotion. The credit is then automatically applied to subsequent bills
+   * according to the standard credit application order.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/RedeemCredits">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RedeemCreditsOutcome RedeemCredits(const Model::RedeemCreditsRequest& request) const;
+
+  /**
+   * A Callable wrapper for RedeemCredits that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename RedeemCreditsRequestT = Model::RedeemCreditsRequest>
+  Model::RedeemCreditsOutcomeCallable RedeemCreditsCallable(const RedeemCreditsRequestT& request) const {
+    return SubmitCallable(&BillingClient::RedeemCredits, request);
+  }
+
+  /**
+   * An Async wrapper for RedeemCredits that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename RedeemCreditsRequestT = Model::RedeemCreditsRequest>
+  void RedeemCreditsAsync(const RedeemCreditsRequestT& request, const RedeemCreditsResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::RedeemCredits, request, handler, context);
+  }
+
+  /**
+   * <p>Splits the available balance of a credit into 2 to 99 new credits in the same
+   * account, and cancels the original credit. The new credits keep the original
+   * credit's end date and applicable products.</p> <p>The available balance is the
+   * remaining balance minus any amount reserved for a bill that isn't finalized. The
+   * portions must add up to exactly the available balance. Each portion must be at
+   * least 100.00 in the currency of the credit. For example, if the credit is in
+   * USD, each portion must be at least USD $100.00. A reserved amount stays on the
+   * original credit and still applies to that bill.</p> <p>A credit and every credit
+   * split from it count toward a limit of 100 credits. After a split, you can't
+   * split or transfer the original credit. You can split or transfer its new
+   * credits, and you can split a credit after you transfer it.</p> <p>You must own
+   * the credit or be the payer of the account that owns it. You can't undo a split.
+   * This operation is idempotent and supports a dry run.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/SplitCredit">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SplitCreditOutcome SplitCredit(const Model::SplitCreditRequest& request) const;
+
+  /**
+   * A Callable wrapper for SplitCredit that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SplitCreditRequestT = Model::SplitCreditRequest>
+  Model::SplitCreditOutcomeCallable SplitCreditCallable(const SplitCreditRequestT& request) const {
+    return SubmitCallable(&BillingClient::SplitCredit, request);
+  }
+
+  /**
+   * An Async wrapper for SplitCredit that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SplitCreditRequestT = Model::SplitCreditRequest>
+  void SplitCreditAsync(const SplitCreditRequestT& request, const SplitCreditResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::SplitCredit, request, handler, context);
+  }
+
+  /**
+   * <p> An API operation for adding one or more tags (key-value pairs) to a
+   * resource. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/TagResource">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::TagResourceOutcome TagResource(const Model::TagResourceRequest& request) const;
+
+  /**
+   * A Callable wrapper for TagResource that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename TagResourceRequestT = Model::TagResourceRequest>
+  Model::TagResourceOutcomeCallable TagResourceCallable(const TagResourceRequestT& request) const {
+    return SubmitCallable(&BillingClient::TagResource, request);
+  }
+
+  /**
+   * An Async wrapper for TagResource that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename TagResourceRequestT = Model::TagResourceRequest>
+  void TagResourceAsync(const TagResourceRequestT& request, const TagResourceResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::TagResource, request, handler, context);
+  }
+
+  /**
+   * <p>Moves a credit to another account in the same consolidated billing family.
+   * The credit keeps its ID, balance, end date, and applicable products. Only the
+   * account that owns the credit changes.</p> <p>The transfer removes the credit's
+   * sharing settings. The new owner or the payer can set them again. Any amount
+   * reserved for a bill that isn't finalized moves with the credit and still applies
+   * to that bill.</p> <p>You must be the payer of both accounts. You can't transfer
+   * a credit that has ended, has no available balance, or is the original credit of
+   * a split. A transfer creates no credit, so it doesn't count toward the split
+   * limit, and the payer can transfer the credit back. This operation is idempotent
+   * and supports a dry run.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/TransferCredit">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::TransferCreditOutcome TransferCredit(const Model::TransferCreditRequest& request) const;
+
+  /**
+   * A Callable wrapper for TransferCredit that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename TransferCreditRequestT = Model::TransferCreditRequest>
+  Model::TransferCreditOutcomeCallable TransferCreditCallable(const TransferCreditRequestT& request) const {
+    return SubmitCallable(&BillingClient::TransferCredit, request);
+  }
+
+  /**
+   * An Async wrapper for TransferCredit that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename TransferCreditRequestT = Model::TransferCreditRequest>
+  void TransferCreditAsync(const TransferCreditRequestT& request, const TransferCreditResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::TransferCredit, request, handler, context);
+  }
+
+  /**
+   * <p> Removes one or more tags from a resource. Specify only tag keys in your
+   * request. Don't specify the value. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/UntagResource">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UntagResourceOutcome UntagResource(const Model::UntagResourceRequest& request) const;
+
+  /**
+   * A Callable wrapper for UntagResource that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UntagResourceRequestT = Model::UntagResourceRequest>
+  Model::UntagResourceOutcomeCallable UntagResourceCallable(const UntagResourceRequestT& request) const {
+    return SubmitCallable(&BillingClient::UntagResource, request);
+  }
+
+  /**
+   * An Async wrapper for UntagResource that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UntagResourceRequestT = Model::UntagResourceRequest>
+  void UntagResourceAsync(const UntagResourceRequestT& request, const UntagResourceResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::UntagResource, request, handler, context);
+  }
+
+  /**
+   * <p>Updates billing preferences for the specified feature. Each feature targets a
+   * distinct billing capability and has its own set of supported keys. The action
+   * sets the value for each provided key; keys not present in the request are
+   * unchanged.</p> <p>To set sharing keys (<code>RI_SHARING</code>,
+   * <code>CREDIT_SHARING</code>, <code>CREDIT_LEVEL_SHARING</code>,
+   * <code>BENEFIT_LEVEL_SHARING</code>, and sharing keys under
+   * <code>CREDIT_PREFERENCE_OPTIONS</code>), you must use the management account of
+   * a consolidated billing family. To set the <code>credit/{creditId}/status</code>
+   * key, you must own the credit or use the management account of its
+   * family.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/UpdateBillingPreferences">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateBillingPreferencesOutcome UpdateBillingPreferences(const Model::UpdateBillingPreferencesRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateBillingPreferences that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateBillingPreferencesRequestT = Model::UpdateBillingPreferencesRequest>
+  Model::UpdateBillingPreferencesOutcomeCallable UpdateBillingPreferencesCallable(const UpdateBillingPreferencesRequestT& request) const {
+    return SubmitCallable(&BillingClient::UpdateBillingPreferences, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateBillingPreferences that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateBillingPreferencesRequestT = Model::UpdateBillingPreferencesRequest>
+  void UpdateBillingPreferencesAsync(const UpdateBillingPreferencesRequestT& request,
+                                     const UpdateBillingPreferencesResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::UpdateBillingPreferences, request, handler, context);
+  }
+
+  /**
+   * <p>An API to update the attributes of the billing view. </p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/UpdateBillingView">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateBillingViewOutcome UpdateBillingView(const Model::UpdateBillingViewRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateBillingView that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateBillingViewRequestT = Model::UpdateBillingViewRequest>
+  Model::UpdateBillingViewOutcomeCallable UpdateBillingViewCallable(const UpdateBillingViewRequestT& request) const {
+    return SubmitCallable(&BillingClient::UpdateBillingView, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateBillingView that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateBillingViewRequestT = Model::UpdateBillingViewRequest>
+  void UpdateBillingViewAsync(const UpdateBillingViewRequestT& request, const UpdateBillingViewResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BillingClient::UpdateBillingView, request, handler, context);
+  }
+
+  virtual void OverrideEndpoint(const Aws::String& endpoint);
+  virtual std::shared_ptr<BillingEndpointProviderBase>& accessEndpointProvider();
+
+ private:
+  friend class Aws::Client::ClientWithAsyncTemplateMethods<BillingClient>;
+  void init(const BillingClientConfiguration& clientConfiguration);
+
+  typedef Aws::Utils::Outcome<Aws::AmazonWebServiceResult<RESPONSE>, BillingError> InvokeOperationOutcome;
+
+  InvokeOperationOutcome InvokeServiceOperation(const AmazonWebServiceRequest& request, Aws::Http::HttpMethod httpMethod) const;
+
+  BillingClientConfiguration m_clientConfiguration;
+  std::shared_ptr<BillingEndpointProviderBase> m_endpointProvider;
+};
+
+}  // namespace Billing
+}  // namespace Aws

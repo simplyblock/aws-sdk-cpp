@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/xray/XRay_EXPORTS.h>
 #include <aws/xray/model/EncryptionConfig.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace XRay
-{
-namespace Model
-{
-  class GetEncryptionConfigResult
-  {
-  public:
-    AWS_XRAY_API GetEncryptionConfigResult();
-    AWS_XRAY_API GetEncryptionConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_XRAY_API GetEncryptionConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace XRay {
+namespace Model {
+class GetEncryptionConfigResult {
+ public:
+  AWS_XRAY_API GetEncryptionConfigResult() = default;
+  AWS_XRAY_API GetEncryptionConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_XRAY_API GetEncryptionConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The encryption configuration document.</p>
+   */
+  inline const EncryptionConfig& GetEncryptionConfig() const { return m_encryptionConfig; }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  void SetEncryptionConfig(EncryptionConfigT&& value) {
+    m_encryptionConfigHasBeenSet = true;
+    m_encryptionConfig = std::forward<EncryptionConfigT>(value);
+  }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  GetEncryptionConfigResult& WithEncryptionConfig(EncryptionConfigT&& value) {
+    SetEncryptionConfig(std::forward<EncryptionConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The encryption configuration document.</p>
-     */
-    inline const EncryptionConfig& GetEncryptionConfig() const{ return m_encryptionConfig; }
-    inline void SetEncryptionConfig(const EncryptionConfig& value) { m_encryptionConfig = value; }
-    inline void SetEncryptionConfig(EncryptionConfig&& value) { m_encryptionConfig = std::move(value); }
-    inline GetEncryptionConfigResult& WithEncryptionConfig(const EncryptionConfig& value) { SetEncryptionConfig(value); return *this;}
-    inline GetEncryptionConfigResult& WithEncryptionConfig(EncryptionConfig&& value) { SetEncryptionConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEncryptionConfigResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEncryptionConfigResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEncryptionConfigResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEncryptionConfigResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    EncryptionConfig m_encryptionConfig;
+ private:
+  EncryptionConfig m_encryptionConfig;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_encryptionConfigHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace XRay
-} // namespace Aws
+}  // namespace Model
+}  // namespace XRay
+}  // namespace Aws

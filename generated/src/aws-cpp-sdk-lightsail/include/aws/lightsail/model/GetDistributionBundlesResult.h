@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/DistributionBundle.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
-  class GetDistributionBundlesResult
-  {
-  public:
-    AWS_LIGHTSAIL_API GetDistributionBundlesResult();
-    AWS_LIGHTSAIL_API GetDistributionBundlesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LIGHTSAIL_API GetDistributionBundlesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
+class GetDistributionBundlesResult {
+ public:
+  AWS_LIGHTSAIL_API GetDistributionBundlesResult() = default;
+  AWS_LIGHTSAIL_API GetDistributionBundlesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LIGHTSAIL_API GetDistributionBundlesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object that describes a distribution bundle.</p>
+   */
+  inline const Aws::Vector<DistributionBundle>& GetBundles() const { return m_bundles; }
+  template <typename BundlesT = Aws::Vector<DistributionBundle>>
+  void SetBundles(BundlesT&& value) {
+    m_bundlesHasBeenSet = true;
+    m_bundles = std::forward<BundlesT>(value);
+  }
+  template <typename BundlesT = Aws::Vector<DistributionBundle>>
+  GetDistributionBundlesResult& WithBundles(BundlesT&& value) {
+    SetBundles(std::forward<BundlesT>(value));
+    return *this;
+  }
+  template <typename BundlesT = DistributionBundle>
+  GetDistributionBundlesResult& AddBundles(BundlesT&& value) {
+    m_bundlesHasBeenSet = true;
+    m_bundles.emplace_back(std::forward<BundlesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that describes a distribution bundle.</p>
-     */
-    inline const Aws::Vector<DistributionBundle>& GetBundles() const{ return m_bundles; }
-    inline void SetBundles(const Aws::Vector<DistributionBundle>& value) { m_bundles = value; }
-    inline void SetBundles(Aws::Vector<DistributionBundle>&& value) { m_bundles = std::move(value); }
-    inline GetDistributionBundlesResult& WithBundles(const Aws::Vector<DistributionBundle>& value) { SetBundles(value); return *this;}
-    inline GetDistributionBundlesResult& WithBundles(Aws::Vector<DistributionBundle>&& value) { SetBundles(std::move(value)); return *this;}
-    inline GetDistributionBundlesResult& AddBundles(const DistributionBundle& value) { m_bundles.push_back(value); return *this; }
-    inline GetDistributionBundlesResult& AddBundles(DistributionBundle&& value) { m_bundles.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDistributionBundlesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDistributionBundlesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDistributionBundlesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDistributionBundlesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DistributionBundle> m_bundles;
+ private:
+  Aws::Vector<DistributionBundle> m_bundles;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bundlesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

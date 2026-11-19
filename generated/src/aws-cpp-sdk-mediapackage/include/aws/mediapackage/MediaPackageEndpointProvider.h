@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/mediapackage/MediaPackage_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediapackage/MediaPackage_EXPORTS.h>
 
-#include <aws/mediapackage/MediaPackageEndpointRules.h>
-
-
-namespace Aws
-{
-namespace MediaPackage
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace MediaPackage {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using MediaPackageClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using MediaPackageEndpointProviderBase =
     EndpointProviderBase<MediaPackageClientConfiguration, MediaPackageBuiltInParameters, MediaPackageClientContextParameters>;
 
 using MediaPackageDefaultEpProviderBase =
-    DefaultEndpointProvider<MediaPackageClientConfiguration, MediaPackageBuiltInParameters, MediaPackageClientContextParameters>;
+    BDDEndpointProvider<MediaPackageClientConfiguration, MediaPackageBuiltInParameters, MediaPackageClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_MEDIAPACKAGE_API MediaPackageEndpointProvider : public MediaPackageDefaultEpProviderBase
-{
-public:
-    using MediaPackageResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_MEDIAPACKAGE_API MediaPackageEndpointProvider : public MediaPackageDefaultEpProviderBase {
+ public:
+  using MediaPackageResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    MediaPackageEndpointProvider()
-      : MediaPackageDefaultEpProviderBase(Aws::MediaPackage::MediaPackageEndpointRules::GetRulesBlob(), Aws::MediaPackage::MediaPackageEndpointRules::RulesBlobSize)
-    {}
+  MediaPackageEndpointProvider();
 
-    ~MediaPackageEndpointProvider()
-    {
-    }
+  ~MediaPackageEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace MediaPackage
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace MediaPackage
+}  // namespace Aws

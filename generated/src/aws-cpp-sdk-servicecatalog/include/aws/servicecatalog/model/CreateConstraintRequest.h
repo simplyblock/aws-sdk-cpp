@@ -4,197 +4,220 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
+
+/**
+ */
+class CreateConstraintRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API CreateConstraintRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateConstraint"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class CreateConstraintRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API CreateConstraintRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  CreateConstraintRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateConstraint"; }
+  ///@{
+  /**
+   * <p>The portfolio identifier.</p>
+   */
+  inline const Aws::String& GetPortfolioId() const { return m_portfolioId; }
+  inline bool PortfolioIdHasBeenSet() const { return m_portfolioIdHasBeenSet; }
+  template <typename PortfolioIdT = Aws::String>
+  void SetPortfolioId(PortfolioIdT&& value) {
+    m_portfolioIdHasBeenSet = true;
+    m_portfolioId = std::forward<PortfolioIdT>(value);
+  }
+  template <typename PortfolioIdT = Aws::String>
+  CreateConstraintRequest& WithPortfolioId(PortfolioIdT&& value) {
+    SetPortfolioId(std::forward<PortfolioIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The product identifier.</p>
+   */
+  inline const Aws::String& GetProductId() const { return m_productId; }
+  inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
+  template <typename ProductIdT = Aws::String>
+  void SetProductId(ProductIdT&& value) {
+    m_productIdHasBeenSet = true;
+    m_productId = std::forward<ProductIdT>(value);
+  }
+  template <typename ProductIdT = Aws::String>
+  CreateConstraintRequest& WithProductId(ProductIdT&& value) {
+    SetProductId(std::forward<ProductIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The constraint parameters, in JSON format. The syntax depends on the
+   * constraint type as follows:</p> <dl> <dt>LAUNCH</dt> <dd> <p>You are required to
+   * specify either the <code>RoleArn</code> or the <code>LocalRoleName</code> but
+   * can't use both.</p> <p>Specify the <code>RoleArn</code> property as follows:</p>
+   * <p> <code>{"RoleArn" : "arn:aws:iam::123456789012:role/LaunchRole"}</code> </p>
+   * <p>Specify the <code>LocalRoleName</code> property as follows:</p> <p>
+   * <code>{"LocalRoleName": "SCBasicLaunchRole"}</code> </p> <p>If you specify the
+   * <code>LocalRoleName</code> property, when an account uses the launch constraint,
+   * the IAM role with that name in the account will be used. This allows launch-role
+   * constraints to be account-agnostic so the administrator can create fewer
+   * resources per shared account.</p>  <p>The given role name must exist in
+   * the account used to create the launch constraint and the account of the user who
+   * launches a product with this launch constraint.</p>  <p>You cannot have
+   * both a <code>LAUNCH</code> and a <code>STACKSET</code> constraint.</p> <p>You
+   * also cannot have more than one <code>LAUNCH</code> constraint on a product and
+   * portfolio.</p> </dd> <dt>NOTIFICATION</dt> <dd> <p>Specify the
+   * <code>NotificationArns</code> property as follows:</p> <p>
+   * <code>{"NotificationArns" : ["arn:aws:sns:us-east-1:123456789012:Topic"]}</code>
+   * </p> </dd> <dt>RESOURCE_UPDATE</dt> <dd> <p>Specify the
+   * <code>TagUpdatesOnProvisionedProduct</code> property as follows:</p> <p>
+   * <code>{"Version":"2.0","Properties":{"TagUpdateOnProvisionedProduct":"String"}}</code>
+   * </p> <p>The <code>TagUpdatesOnProvisionedProduct</code> property accepts a
+   * string value of <code>ALLOWED</code> or <code>NOT_ALLOWED</code>.</p> </dd>
+   * <dt>STACKSET</dt> <dd> <p>Specify the <code>Parameters</code> property as
+   * follows:</p> <p> <code>{"Version": "String", "Properties": {"AccountList": [
+   * "String" ], "RegionList": [ "String" ], "AdminRole": "String", "ExecutionRole":
+   * "String"}}</code> </p> <p>You cannot have both a <code>LAUNCH</code> and a
+   * <code>STACKSET</code> constraint.</p> <p>You also cannot have more than one
+   * <code>STACKSET</code> constraint on a product and portfolio.</p> <p>Products
+   * with a <code>STACKSET</code> constraint will launch an CloudFormation stack
+   * set.</p> </dd> <dt>TEMPLATE</dt> <dd> <p>Specify the <code>Rules</code>
+   * property. For more information, see <a
+   * href="http://docs.aws.amazon.com/servicecatalog/latest/adminguide/reference-template_constraint_rules.html">Template
+   * Constraint Rules</a>.</p> </dd> </dl>
+   */
+  inline const Aws::String& GetParameters() const { return m_parameters; }
+  inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
+  template <typename ParametersT = Aws::String>
+  void SetParameters(ParametersT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters = std::forward<ParametersT>(value);
+  }
+  template <typename ParametersT = Aws::String>
+  CreateConstraintRequest& WithParameters(ParametersT&& value) {
+    SetParameters(std::forward<ParametersT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The type of constraint.</p> <ul> <li> <p> <code>LAUNCH</code> </p> </li> <li>
+   * <p> <code>NOTIFICATION</code> </p> </li> <li> <p> <code>RESOURCE_UPDATE</code>
+   * </p> </li> <li> <p> <code>STACKSET</code> </p> </li> <li> <p>
+   * <code>TEMPLATE</code> </p> </li> </ul>
+   */
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  CreateConstraintRequest& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline CreateConstraintRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline CreateConstraintRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the constraint.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateConstraintRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The portfolio identifier.</p>
-     */
-    inline const Aws::String& GetPortfolioId() const{ return m_portfolioId; }
-    inline bool PortfolioIdHasBeenSet() const { return m_portfolioIdHasBeenSet; }
-    inline void SetPortfolioId(const Aws::String& value) { m_portfolioIdHasBeenSet = true; m_portfolioId = value; }
-    inline void SetPortfolioId(Aws::String&& value) { m_portfolioIdHasBeenSet = true; m_portfolioId = std::move(value); }
-    inline void SetPortfolioId(const char* value) { m_portfolioIdHasBeenSet = true; m_portfolioId.assign(value); }
-    inline CreateConstraintRequest& WithPortfolioId(const Aws::String& value) { SetPortfolioId(value); return *this;}
-    inline CreateConstraintRequest& WithPortfolioId(Aws::String&& value) { SetPortfolioId(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithPortfolioId(const char* value) { SetPortfolioId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique identifier that you provide to ensure idempotency. If multiple
+   * requests differ only by the idempotency token, the same response is returned for
+   * each repeated request.</p>
+   */
+  inline const Aws::String& GetIdempotencyToken() const { return m_idempotencyToken; }
+  inline bool IdempotencyTokenHasBeenSet() const { return m_idempotencyTokenHasBeenSet; }
+  template <typename IdempotencyTokenT = Aws::String>
+  void SetIdempotencyToken(IdempotencyTokenT&& value) {
+    m_idempotencyTokenHasBeenSet = true;
+    m_idempotencyToken = std::forward<IdempotencyTokenT>(value);
+  }
+  template <typename IdempotencyTokenT = Aws::String>
+  CreateConstraintRequest& WithIdempotencyToken(IdempotencyTokenT&& value) {
+    SetIdempotencyToken(std::forward<IdempotencyTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
-    ///@{
-    /**
-     * <p>The product identifier.</p>
-     */
-    inline const Aws::String& GetProductId() const{ return m_productId; }
-    inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
-    inline void SetProductId(const Aws::String& value) { m_productIdHasBeenSet = true; m_productId = value; }
-    inline void SetProductId(Aws::String&& value) { m_productIdHasBeenSet = true; m_productId = std::move(value); }
-    inline void SetProductId(const char* value) { m_productIdHasBeenSet = true; m_productId.assign(value); }
-    inline CreateConstraintRequest& WithProductId(const Aws::String& value) { SetProductId(value); return *this;}
-    inline CreateConstraintRequest& WithProductId(Aws::String&& value) { SetProductId(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithProductId(const char* value) { SetProductId(value); return *this;}
-    ///@}
+  Aws::String m_portfolioId;
 
-    ///@{
-    /**
-     * <p>The constraint parameters, in JSON format. The syntax depends on the
-     * constraint type as follows:</p> <dl> <dt>LAUNCH</dt> <dd> <p>You are required to
-     * specify either the <code>RoleArn</code> or the <code>LocalRoleName</code> but
-     * can't use both.</p> <p>Specify the <code>RoleArn</code> property as follows:</p>
-     * <p> <code>{"RoleArn" : "arn:aws:iam::123456789012:role/LaunchRole"}</code> </p>
-     * <p>Specify the <code>LocalRoleName</code> property as follows:</p> <p>
-     * <code>{"LocalRoleName": "SCBasicLaunchRole"}</code> </p> <p>If you specify the
-     * <code>LocalRoleName</code> property, when an account uses the launch constraint,
-     * the IAM role with that name in the account will be used. This allows launch-role
-     * constraints to be account-agnostic so the administrator can create fewer
-     * resources per shared account.</p>  <p>The given role name must exist in
-     * the account used to create the launch constraint and the account of the user who
-     * launches a product with this launch constraint.</p>  <p>You cannot have
-     * both a <code>LAUNCH</code> and a <code>STACKSET</code> constraint.</p> <p>You
-     * also cannot have more than one <code>LAUNCH</code> constraint on a product and
-     * portfolio.</p> </dd> <dt>NOTIFICATION</dt> <dd> <p>Specify the
-     * <code>NotificationArns</code> property as follows:</p> <p>
-     * <code>{"NotificationArns" : ["arn:aws:sns:us-east-1:123456789012:Topic"]}</code>
-     * </p> </dd> <dt>RESOURCE_UPDATE</dt> <dd> <p>Specify the
-     * <code>TagUpdatesOnProvisionedProduct</code> property as follows:</p> <p>
-     * <code>{"Version":"2.0","Properties":{"TagUpdateOnProvisionedProduct":"String"}}</code>
-     * </p> <p>The <code>TagUpdatesOnProvisionedProduct</code> property accepts a
-     * string value of <code>ALLOWED</code> or <code>NOT_ALLOWED</code>.</p> </dd>
-     * <dt>STACKSET</dt> <dd> <p>Specify the <code>Parameters</code> property as
-     * follows:</p> <p> <code>{"Version": "String", "Properties": {"AccountList": [
-     * "String" ], "RegionList": [ "String" ], "AdminRole": "String", "ExecutionRole":
-     * "String"}}</code> </p> <p>You cannot have both a <code>LAUNCH</code> and a
-     * <code>STACKSET</code> constraint.</p> <p>You also cannot have more than one
-     * <code>STACKSET</code> constraint on a product and portfolio.</p> <p>Products
-     * with a <code>STACKSET</code> constraint will launch an CloudFormation stack
-     * set.</p> </dd> <dt>TEMPLATE</dt> <dd> <p>Specify the <code>Rules</code>
-     * property. For more information, see <a
-     * href="http://docs.aws.amazon.com/servicecatalog/latest/adminguide/reference-template_constraint_rules.html">Template
-     * Constraint Rules</a>.</p> </dd> </dl>
-     */
-    inline const Aws::String& GetParameters() const{ return m_parameters; }
-    inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
-    inline void SetParameters(const Aws::String& value) { m_parametersHasBeenSet = true; m_parameters = value; }
-    inline void SetParameters(Aws::String&& value) { m_parametersHasBeenSet = true; m_parameters = std::move(value); }
-    inline void SetParameters(const char* value) { m_parametersHasBeenSet = true; m_parameters.assign(value); }
-    inline CreateConstraintRequest& WithParameters(const Aws::String& value) { SetParameters(value); return *this;}
-    inline CreateConstraintRequest& WithParameters(Aws::String&& value) { SetParameters(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithParameters(const char* value) { SetParameters(value); return *this;}
-    ///@}
+  Aws::String m_productId;
 
-    ///@{
-    /**
-     * <p>The type of constraint.</p> <ul> <li> <p> <code>LAUNCH</code> </p> </li> <li>
-     * <p> <code>NOTIFICATION</code> </p> </li> <li> <p> <code>RESOURCE_UPDATE</code>
-     * </p> </li> <li> <p> <code>STACKSET</code> </p> </li> <li> <p>
-     * <code>TEMPLATE</code> </p> </li> </ul>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline CreateConstraintRequest& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline CreateConstraintRequest& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
+  Aws::String m_parameters;
 
-    ///@{
-    /**
-     * <p>The description of the constraint.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateConstraintRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateConstraintRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_type;
 
-    ///@{
-    /**
-     * <p>A unique identifier that you provide to ensure idempotency. If multiple
-     * requests differ only by the idempotency token, the same response is returned for
-     * each repeated request.</p>
-     */
-    inline const Aws::String& GetIdempotencyToken() const{ return m_idempotencyToken; }
-    inline bool IdempotencyTokenHasBeenSet() const { return m_idempotencyTokenHasBeenSet; }
-    inline void SetIdempotencyToken(const Aws::String& value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken = value; }
-    inline void SetIdempotencyToken(Aws::String&& value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken = std::move(value); }
-    inline void SetIdempotencyToken(const char* value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken.assign(value); }
-    inline CreateConstraintRequest& WithIdempotencyToken(const Aws::String& value) { SetIdempotencyToken(value); return *this;}
-    inline CreateConstraintRequest& WithIdempotencyToken(Aws::String&& value) { SetIdempotencyToken(std::move(value)); return *this;}
-    inline CreateConstraintRequest& WithIdempotencyToken(const char* value) { SetIdempotencyToken(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_description;
 
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
+  Aws::String m_idempotencyToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_portfolioIdHasBeenSet = false;
+  bool m_productIdHasBeenSet = false;
+  bool m_parametersHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_idempotencyTokenHasBeenSet = true;
+};
 
-    Aws::String m_portfolioId;
-    bool m_portfolioIdHasBeenSet = false;
-
-    Aws::String m_productId;
-    bool m_productIdHasBeenSet = false;
-
-    Aws::String m_parameters;
-    bool m_parametersHasBeenSet = false;
-
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_idempotencyToken;
-    bool m_idempotencyTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

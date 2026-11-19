@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
 #include <aws/iotfleetwise/model/DecoderManifestSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTFleetWise
-{
-namespace Model
-{
-  class ListDecoderManifestsResult
-  {
-  public:
-    AWS_IOTFLEETWISE_API ListDecoderManifestsResult();
-    AWS_IOTFLEETWISE_API ListDecoderManifestsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTFLEETWISE_API ListDecoderManifestsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTFleetWise {
+namespace Model {
+class ListDecoderManifestsResult {
+ public:
+  AWS_IOTFLEETWISE_API ListDecoderManifestsResult() = default;
+  AWS_IOTFLEETWISE_API ListDecoderManifestsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTFLEETWISE_API ListDecoderManifestsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> A list of information about each decoder manifest. </p>
+   */
+  inline const Aws::Vector<DecoderManifestSummary>& GetSummaries() const { return m_summaries; }
+  template <typename SummariesT = Aws::Vector<DecoderManifestSummary>>
+  void SetSummaries(SummariesT&& value) {
+    m_summariesHasBeenSet = true;
+    m_summaries = std::forward<SummariesT>(value);
+  }
+  template <typename SummariesT = Aws::Vector<DecoderManifestSummary>>
+  ListDecoderManifestsResult& WithSummaries(SummariesT&& value) {
+    SetSummaries(std::forward<SummariesT>(value));
+    return *this;
+  }
+  template <typename SummariesT = DecoderManifestSummary>
+  ListDecoderManifestsResult& AddSummaries(SummariesT&& value) {
+    m_summariesHasBeenSet = true;
+    m_summaries.emplace_back(std::forward<SummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A list of information about each decoder manifest. </p>
-     */
-    inline const Aws::Vector<DecoderManifestSummary>& GetSummaries() const{ return m_summaries; }
-    inline void SetSummaries(const Aws::Vector<DecoderManifestSummary>& value) { m_summaries = value; }
-    inline void SetSummaries(Aws::Vector<DecoderManifestSummary>&& value) { m_summaries = std::move(value); }
-    inline ListDecoderManifestsResult& WithSummaries(const Aws::Vector<DecoderManifestSummary>& value) { SetSummaries(value); return *this;}
-    inline ListDecoderManifestsResult& WithSummaries(Aws::Vector<DecoderManifestSummary>&& value) { SetSummaries(std::move(value)); return *this;}
-    inline ListDecoderManifestsResult& AddSummaries(const DecoderManifestSummary& value) { m_summaries.push_back(value); return *this; }
-    inline ListDecoderManifestsResult& AddSummaries(DecoderManifestSummary&& value) { m_summaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The token to retrieve the next set of results, or <code>null</code> if there
+   * are no more results. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDecoderManifestsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The token to retrieve the next set of results, or <code>null</code> if there
-     * are no more results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDecoderManifestsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDecoderManifestsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDecoderManifestsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDecoderManifestsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDecoderManifestsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDecoderManifestsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDecoderManifestsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DecoderManifestSummary> m_summaries;
+ private:
+  Aws::Vector<DecoderManifestSummary> m_summaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_summariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTFleetWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTFleetWise
+}  // namespace Aws

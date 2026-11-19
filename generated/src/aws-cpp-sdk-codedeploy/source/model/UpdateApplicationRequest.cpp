@@ -4,47 +4,45 @@
  */
 
 #include <aws/codedeploy/model/UpdateApplicationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateApplicationRequest::UpdateApplicationRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_newApplicationNameHasBeenSet(false)
-{
-}
+Aws::String UpdateApplicationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String UpdateApplicationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_applicationNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_newApplicationNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_newApplicationNameHasBeenSet)
-  {
-   payload.WithString("newApplicationName", m_newApplicationName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_applicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("applicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_newApplicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("newApplicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_newApplicationName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection UpdateApplicationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateApplicationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.UpdateApplication"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

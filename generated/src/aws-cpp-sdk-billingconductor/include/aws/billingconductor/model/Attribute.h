@@ -6,77 +6,78 @@
 #pragma once
 #include <aws/billingconductor/BillingConductor_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BillingConductor {
+namespace Model {
 
+/**
+ * <p>The key-value pair that represents the attribute by which the
+ * <code>BillingGroupCostReportResults</code> are grouped. For example, if you want
+ * a service-level breakdown for Amazon Simple Storage Service (Amazon S3) of the
+ * billing group, the attribute will be a key-value pair of
+ * <code>"PRODUCT_NAME"</code> and <code>"S3"</code>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/Attribute">AWS
+ * API Reference</a></p>
+ */
+class Attribute {
+ public:
+  AWS_BILLINGCONDUCTOR_API Attribute() = default;
+  AWS_BILLINGCONDUCTOR_API Attribute(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API Attribute& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The key-value pair that represents the attribute by which the
-   * <code>BillingGroupCostReportResults</code> are grouped. For example, if you want
-   * a service-level breakdown for Amazon Simple Storage Service (Amazon S3) of the
-   * billing group, the attribute will be a key-value pair of
-   * <code>"PRODUCT_NAME"</code> and <code>"S3"</code>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/Attribute">AWS
-   * API Reference</a></p>
+   * <p>The key in a key-value pair that describes the margin summary.</p>
    */
-  class Attribute
-  {
-  public:
-    AWS_BILLINGCONDUCTOR_API Attribute();
-    AWS_BILLINGCONDUCTOR_API Attribute(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API Attribute& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetKey() const { return m_key; }
+  inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
+  template <typename KeyT = Aws::String>
+  void SetKey(KeyT&& value) {
+    m_keyHasBeenSet = true;
+    m_key = std::forward<KeyT>(value);
+  }
+  template <typename KeyT = Aws::String>
+  Attribute& WithKey(KeyT&& value) {
+    SetKey(std::forward<KeyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The value in a key-value pair that describes the margin summary.</p>
+   */
+  inline const Aws::String& GetValue() const { return m_value; }
+  inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
+  template <typename ValueT = Aws::String>
+  void SetValue(ValueT&& value) {
+    m_valueHasBeenSet = true;
+    m_value = std::forward<ValueT>(value);
+  }
+  template <typename ValueT = Aws::String>
+  Attribute& WithValue(ValueT&& value) {
+    SetValue(std::forward<ValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_key;
 
-    ///@{
-    /**
-     * <p>The key in a key-value pair that describes the margin summary.</p>
-     */
-    inline const Aws::String& GetKey() const{ return m_key; }
-    inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
-    inline void SetKey(const Aws::String& value) { m_keyHasBeenSet = true; m_key = value; }
-    inline void SetKey(Aws::String&& value) { m_keyHasBeenSet = true; m_key = std::move(value); }
-    inline void SetKey(const char* value) { m_keyHasBeenSet = true; m_key.assign(value); }
-    inline Attribute& WithKey(const Aws::String& value) { SetKey(value); return *this;}
-    inline Attribute& WithKey(Aws::String&& value) { SetKey(std::move(value)); return *this;}
-    inline Attribute& WithKey(const char* value) { SetKey(value); return *this;}
-    ///@}
+  Aws::String m_value;
+  bool m_keyHasBeenSet = false;
+  bool m_valueHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The value in a key-value pair that describes the margin summary.</p>
-     */
-    inline const Aws::String& GetValue() const{ return m_value; }
-    inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
-    inline void SetValue(const Aws::String& value) { m_valueHasBeenSet = true; m_value = value; }
-    inline void SetValue(Aws::String&& value) { m_valueHasBeenSet = true; m_value = std::move(value); }
-    inline void SetValue(const char* value) { m_valueHasBeenSet = true; m_value.assign(value); }
-    inline Attribute& WithValue(const Aws::String& value) { SetValue(value); return *this;}
-    inline Attribute& WithValue(Aws::String&& value) { SetValue(std::move(value)); return *this;}
-    inline Attribute& WithValue(const char* value) { SetValue(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_key;
-    bool m_keyHasBeenSet = false;
-
-    Aws::String m_value;
-    bool m_valueHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

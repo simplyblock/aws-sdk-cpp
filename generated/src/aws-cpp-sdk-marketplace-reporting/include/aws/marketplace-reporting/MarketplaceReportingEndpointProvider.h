@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/marketplace-reporting/MarketplaceReporting_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/marketplace-reporting/MarketplaceReporting_EXPORTS.h>
 
-#include <aws/marketplace-reporting/MarketplaceReportingEndpointRules.h>
-
-
-namespace Aws
-{
-namespace MarketplaceReporting
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace MarketplaceReporting {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using MarketplaceReportingClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using MarketplaceReportingBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * The SDK must use service-specific type for each service per specification.
  */
 using MarketplaceReportingEndpointProviderBase =
-    EndpointProviderBase<MarketplaceReportingClientConfiguration, MarketplaceReportingBuiltInParameters, MarketplaceReportingClientContextParameters>;
+    EndpointProviderBase<MarketplaceReportingClientConfiguration, MarketplaceReportingBuiltInParameters,
+                         MarketplaceReportingClientContextParameters>;
 
 using MarketplaceReportingDefaultEpProviderBase =
-    DefaultEndpointProvider<MarketplaceReportingClientConfiguration, MarketplaceReportingBuiltInParameters, MarketplaceReportingClientContextParameters>;
+    BDDEndpointProvider<MarketplaceReportingClientConfiguration, MarketplaceReportingBuiltInParameters,
+                        MarketplaceReportingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_MARKETPLACEREPORTING_API MarketplaceReportingEndpointProvider : public MarketplaceReportingDefaultEpProviderBase
-{
-public:
-    using MarketplaceReportingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_MARKETPLACEREPORTING_API MarketplaceReportingEndpointProvider : public MarketplaceReportingDefaultEpProviderBase {
+ public:
+  using MarketplaceReportingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    MarketplaceReportingEndpointProvider()
-      : MarketplaceReportingDefaultEpProviderBase(Aws::MarketplaceReporting::MarketplaceReportingEndpointRules::GetRulesBlob(), Aws::MarketplaceReporting::MarketplaceReportingEndpointRules::RulesBlobSize)
-    {}
+  MarketplaceReportingEndpointProvider();
 
-    ~MarketplaceReportingEndpointProvider()
-    {
-    }
+  ~MarketplaceReportingEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace MarketplaceReporting
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace MarketplaceReporting
+}  // namespace Aws

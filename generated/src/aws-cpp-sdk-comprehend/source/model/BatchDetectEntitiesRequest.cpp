@@ -4,52 +4,48 @@
  */
 
 #include <aws/comprehend/model/BatchDetectEntitiesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::Comprehend::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-BatchDetectEntitiesRequest::BatchDetectEntitiesRequest() : 
-    m_textListHasBeenSet(false),
-    m_languageCode(LanguageCode::NOT_SET),
-    m_languageCodeHasBeenSet(false)
-{
-}
+Aws::String BatchDetectEntitiesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String BatchDetectEntitiesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_textListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> textListJsonList(m_textList.size());
-   for(unsigned textListIndex = 0; textListIndex < textListJsonList.GetLength(); ++textListIndex)
-   {
-     textListJsonList[textListIndex].AsString(m_textList[textListIndex]);
-   }
-   payload.WithArray("TextList", std::move(textListJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_textListHasBeenSet) {
+    mapSize++;
+  }
+  if (m_languageCodeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_languageCodeHasBeenSet)
-  {
-   payload.WithString("LanguageCode", LanguageCodeMapper::GetNameForLanguageCode(m_languageCode));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_textListHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TextList"));
+    encoder.WriteArrayStart(m_textList.size());
+    for (const auto& item_0 : m_textList) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_languageCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LanguageCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(LanguageCodeMapper::GetNameForLanguageCode(m_languageCode).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection BatchDetectEntitiesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection BatchDetectEntitiesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.BatchDetectEntities"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

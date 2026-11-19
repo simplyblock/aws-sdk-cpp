@@ -4,57 +4,78 @@
  */
 
 #pragma once
-#include <aws/support/Support_EXPORTS.h>
-#include <aws/support/SupportRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/support/SupportRequest.h>
+#include <aws/support/Support_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Support
-{
-namespace Model
-{
+namespace Aws {
+namespace Support {
+namespace Model {
 
+/**
+ */
+class ResolveCaseRequest : public SupportRequest {
+ public:
+  AWS_SUPPORT_API ResolveCaseRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ResolveCase"; }
+
+  AWS_SUPPORT_API Aws::String SerializePayload() const override;
+
+  AWS_SUPPORT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The support case ID requested or returned in the call. The case ID is an
+   * alphanumeric string formatted as shown in this example:
+   * case-<i>12345678910-exen-2025-c4c1d2bf33c5cf47</i> </p>
    */
-  class ResolveCaseRequest : public SupportRequest
-  {
-  public:
-    AWS_SUPPORT_API ResolveCaseRequest();
+  inline const Aws::String& GetCaseId() const { return m_caseId; }
+  inline bool CaseIdHasBeenSet() const { return m_caseIdHasBeenSet; }
+  template <typename CaseIdT = Aws::String>
+  void SetCaseId(CaseIdT&& value) {
+    m_caseIdHasBeenSet = true;
+    m_caseId = std::forward<CaseIdT>(value);
+  }
+  template <typename CaseIdT = Aws::String>
+  ResolveCaseRequest& WithCaseId(CaseIdT&& value) {
+    SetCaseId(std::forward<CaseIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ResolveCase"; }
+  ///@{
+  /**
+   * <p>Specifies whether to validate the request without actually resolving the
+   * case. When set to <code>true</code>, the request is validated but the case isn't
+   * resolved, and the operation returns a <code>DryRunOperationException</code>.
+   * When omitted or set to <code>false</code>, the request runs normally.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline ResolveCaseRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_caseId;
 
-    AWS_SUPPORT_API Aws::String SerializePayload() const override;
+  bool m_dryRun{false};
+  bool m_caseIdHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+};
 
-    AWS_SUPPORT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The support case ID requested or returned in the call. The case ID is an
-     * alphanumeric string formatted as shown in this example:
-     * case-<i>12345678910-2013-c4c1d2bf33c5cf47</i> </p>
-     */
-    inline const Aws::String& GetCaseId() const{ return m_caseId; }
-    inline bool CaseIdHasBeenSet() const { return m_caseIdHasBeenSet; }
-    inline void SetCaseId(const Aws::String& value) { m_caseIdHasBeenSet = true; m_caseId = value; }
-    inline void SetCaseId(Aws::String&& value) { m_caseIdHasBeenSet = true; m_caseId = std::move(value); }
-    inline void SetCaseId(const char* value) { m_caseIdHasBeenSet = true; m_caseId.assign(value); }
-    inline ResolveCaseRequest& WithCaseId(const Aws::String& value) { SetCaseId(value); return *this;}
-    inline ResolveCaseRequest& WithCaseId(Aws::String&& value) { SetCaseId(std::move(value)); return *this;}
-    inline ResolveCaseRequest& WithCaseId(const char* value) { SetCaseId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_caseId;
-    bool m_caseIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Support
-} // namespace Aws
+}  // namespace Model
+}  // namespace Support
+}  // namespace Aws

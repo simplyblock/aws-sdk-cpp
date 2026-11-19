@@ -4,79 +4,93 @@
  */
 
 #pragma once
-#include <aws/neptunedata/Neptunedata_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/Document.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace neptunedata
-{
-namespace Model
-{
-  class GetLoaderJobStatusResult
-  {
-  public:
-    AWS_NEPTUNEDATA_API GetLoaderJobStatusResult();
-    AWS_NEPTUNEDATA_API GetLoaderJobStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NEPTUNEDATA_API GetLoaderJobStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace neptunedata {
+namespace Model {
+class GetLoaderJobStatusResult {
+ public:
+  AWS_NEPTUNEDATA_API GetLoaderJobStatusResult() = default;
+  AWS_NEPTUNEDATA_API GetLoaderJobStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NEPTUNEDATA_API GetLoaderJobStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The HTTP response code for the request.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  GetLoaderJobStatusResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP response code for the request.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline GetLoaderJobStatusResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline GetLoaderJobStatusResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline GetLoaderJobStatusResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Status information about the load job, in a layout that could look like
+   * this:</p>
+   */
+  inline Aws::Utils::DocumentView GetPayload() const { return m_payload; }
+  template <typename PayloadT = Aws::Utils::Document>
+  void SetPayload(PayloadT&& value) {
+    m_payloadHasBeenSet = true;
+    m_payload = std::forward<PayloadT>(value);
+  }
+  template <typename PayloadT = Aws::Utils::Document>
+  GetLoaderJobStatusResult& WithPayload(PayloadT&& value) {
+    SetPayload(std::forward<PayloadT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Status information about the load job, in a layout that could look like
-     * this:</p>
-     */
-    inline Aws::Utils::DocumentView GetPayload() const{ return m_payload; }
-    inline void SetPayload(const Aws::Utils::Document& value) { m_payload = value; }
-    inline void SetPayload(Aws::Utils::Document&& value) { m_payload = std::move(value); }
-    inline GetLoaderJobStatusResult& WithPayload(const Aws::Utils::Document& value) { SetPayload(value); return *this;}
-    inline GetLoaderJobStatusResult& WithPayload(Aws::Utils::Document&& value) { SetPayload(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLoaderJobStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLoaderJobStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLoaderJobStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLoaderJobStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_status;
+ private:
+  Aws::String m_status;
 
-    Aws::Utils::Document m_payload;
+  Aws::Utils::Document m_payload;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_payloadHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace neptunedata
-} // namespace Aws
+}  // namespace Model
+}  // namespace neptunedata
+}  // namespace Aws

@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ControlTower
-{
-namespace Model
-{
+namespace Aws {
+namespace ControlTower {
+namespace Model {
 
-EnablementStatusSummary::EnablementStatusSummary() : 
-    m_lastOperationIdentifierHasBeenSet(false),
-    m_status(EnablementStatus::NOT_SET),
-    m_statusHasBeenSet(false)
-{
-}
+EnablementStatusSummary::EnablementStatusSummary(JsonView jsonValue) { *this = jsonValue; }
 
-EnablementStatusSummary::EnablementStatusSummary(JsonView jsonValue)
-  : EnablementStatusSummary()
-{
-  *this = jsonValue;
-}
-
-EnablementStatusSummary& EnablementStatusSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("lastOperationIdentifier"))
-  {
-    m_lastOperationIdentifier = jsonValue.GetString("lastOperationIdentifier");
-
-    m_lastOperationIdentifierHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("status"))
-  {
+EnablementStatusSummary& EnablementStatusSummary::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("status")) {
     m_status = EnablementStatusMapper::GetEnablementStatusForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("lastOperationIdentifier")) {
+    m_lastOperationIdentifier = jsonValue.GetString("lastOperationIdentifier");
+    m_lastOperationIdentifierHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue EnablementStatusSummary::Jsonize() const
-{
+JsonValue EnablementStatusSummary::Jsonize() const {
   JsonValue payload;
 
-  if(m_lastOperationIdentifierHasBeenSet)
-  {
-   payload.WithString("lastOperationIdentifier", m_lastOperationIdentifier);
-
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", EnablementStatusMapper::GetNameForEnablementStatus(m_status));
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", EnablementStatusMapper::GetNameForEnablementStatus(m_status));
+  if (m_lastOperationIdentifierHasBeenSet) {
+    payload.WithString("lastOperationIdentifier", m_lastOperationIdentifier);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ControlTower
-} // namespace Aws
+}  // namespace Model
+}  // namespace ControlTower
+}  // namespace Aws

@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/memorydb/model/BatchUpdateClusterRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MemoryDB::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-BatchUpdateClusterRequest::BatchUpdateClusterRequest() : 
-    m_clusterNamesHasBeenSet(false),
-    m_serviceUpdateHasBeenSet(false)
-{
-}
+Aws::String BatchUpdateClusterRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String BatchUpdateClusterRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_clusterNamesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> clusterNamesJsonList(m_clusterNames.size());
-   for(unsigned clusterNamesIndex = 0; clusterNamesIndex < clusterNamesJsonList.GetLength(); ++clusterNamesIndex)
-   {
-     clusterNamesJsonList[clusterNamesIndex].AsString(m_clusterNames[clusterNamesIndex]);
-   }
-   payload.WithArray("ClusterNames", std::move(clusterNamesJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_clusterNamesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_serviceUpdateHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_serviceUpdateHasBeenSet)
-  {
-   payload.WithObject("ServiceUpdate", m_serviceUpdate.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_clusterNamesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ClusterNames"));
+    encoder.WriteArrayStart(m_clusterNames.size());
+    for (const auto& item_0 : m_clusterNames) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_serviceUpdateHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServiceUpdate"));
+    m_serviceUpdate.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection BatchUpdateClusterRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection BatchUpdateClusterRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonMemoryDB.BatchUpdateCluster"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

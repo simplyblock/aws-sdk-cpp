@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetModelCustomizationJobRequest::GetModelCustomizationJobRequest() : 
-    m_jobIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetModelCustomizationJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetModelCustomizationJobRequest::SerializePayload() const { return {}; }

@@ -4,63 +4,82 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ecs/ECS_EXPORTS.h>
 #include <aws/ecs/model/Service.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class UpdateServiceResult
-  {
-  public:
-    AWS_ECS_API UpdateServiceResult();
-    AWS_ECS_API UpdateServiceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API UpdateServiceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+/**
+ * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/UpdateServiceResponse">AWS
+ * API Reference</a></p>
+ */
+class UpdateServiceResult {
+ public:
+  AWS_ECS_API UpdateServiceResult() = default;
+  AWS_ECS_API UpdateServiceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API UpdateServiceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The full description of your service following the update call.</p> <p>The
+   * response includes a <code>lifecycleHookDetails</code> field, which is an empty
+   * array when the service is created or updated. The values are populated when a
+   * lifecycle hook executes and are available as part of the service deployment
+   * details (<a
+   * href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html">DescribeServiceDeployments</a>).</p>
+   */
+  inline const Service& GetService() const { return m_service; }
+  template <typename ServiceT = Service>
+  void SetService(ServiceT&& value) {
+    m_serviceHasBeenSet = true;
+    m_service = std::forward<ServiceT>(value);
+  }
+  template <typename ServiceT = Service>
+  UpdateServiceResult& WithService(ServiceT&& value) {
+    SetService(std::forward<ServiceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The full description of your service following the update call.</p>
-     */
-    inline const Service& GetService() const{ return m_service; }
-    inline void SetService(const Service& value) { m_service = value; }
-    inline void SetService(Service&& value) { m_service = std::move(value); }
-    inline UpdateServiceResult& WithService(const Service& value) { SetService(value); return *this;}
-    inline UpdateServiceResult& WithService(Service&& value) { SetService(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateServiceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateServiceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateServiceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateServiceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Service m_service;
+ private:
+  Service m_service;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serviceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

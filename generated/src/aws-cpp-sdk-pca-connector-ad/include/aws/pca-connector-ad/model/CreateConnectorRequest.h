@@ -4,127 +4,145 @@
  */
 
 #pragma once
-#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
-#include <aws/pca-connector-ad/PcaConnectorAdRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/pca-connector-ad/model/VpcInformation.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pca-connector-ad/PcaConnectorAdRequest.h>
+#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
+#include <aws/pca-connector-ad/model/VpcInformation.h>
 
-namespace Aws
-{
-namespace PcaConnectorAd
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace PcaConnectorAd {
+namespace Model {
+
+/**
+ */
+class CreateConnectorRequest : public PcaConnectorAdRequest {
+ public:
+  AWS_PCACONNECTORAD_API CreateConnectorRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateConnector"; }
+
+  AWS_PCACONNECTORAD_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p> The Amazon Resource Name (ARN) of the certificate authority being used.</p>
    */
-  class CreateConnectorRequest : public PcaConnectorAdRequest
-  {
-  public:
-    AWS_PCACONNECTORAD_API CreateConnectorRequest();
+  inline const Aws::String& GetCertificateAuthorityArn() const { return m_certificateAuthorityArn; }
+  inline bool CertificateAuthorityArnHasBeenSet() const { return m_certificateAuthorityArnHasBeenSet; }
+  template <typename CertificateAuthorityArnT = Aws::String>
+  void SetCertificateAuthorityArn(CertificateAuthorityArnT&& value) {
+    m_certificateAuthorityArnHasBeenSet = true;
+    m_certificateAuthorityArn = std::forward<CertificateAuthorityArnT>(value);
+  }
+  template <typename CertificateAuthorityArnT = Aws::String>
+  CreateConnectorRequest& WithCertificateAuthorityArn(CertificateAuthorityArnT&& value) {
+    SetCertificateAuthorityArn(std::forward<CertificateAuthorityArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateConnector"; }
+  ///@{
+  /**
+   * <p>Idempotency token.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateConnectorRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PCACONNECTORAD_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The identifier of the Active Directory.</p>
+   */
+  inline const Aws::String& GetDirectoryId() const { return m_directoryId; }
+  inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
+  template <typename DirectoryIdT = Aws::String>
+  void SetDirectoryId(DirectoryIdT&& value) {
+    m_directoryIdHasBeenSet = true;
+    m_directoryId = std::forward<DirectoryIdT>(value);
+  }
+  template <typename DirectoryIdT = Aws::String>
+  CreateConnectorRequest& WithDirectoryId(DirectoryIdT&& value) {
+    SetDirectoryId(std::forward<DirectoryIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Metadata assigned to a connector consisting of a key-value pair.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateConnectorRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateConnectorRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The Amazon Resource Name (ARN) of the certificate authority being used.</p>
-     */
-    inline const Aws::String& GetCertificateAuthorityArn() const{ return m_certificateAuthorityArn; }
-    inline bool CertificateAuthorityArnHasBeenSet() const { return m_certificateAuthorityArnHasBeenSet; }
-    inline void SetCertificateAuthorityArn(const Aws::String& value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn = value; }
-    inline void SetCertificateAuthorityArn(Aws::String&& value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn = std::move(value); }
-    inline void SetCertificateAuthorityArn(const char* value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn.assign(value); }
-    inline CreateConnectorRequest& WithCertificateAuthorityArn(const Aws::String& value) { SetCertificateAuthorityArn(value); return *this;}
-    inline CreateConnectorRequest& WithCertificateAuthorityArn(Aws::String&& value) { SetCertificateAuthorityArn(std::move(value)); return *this;}
-    inline CreateConnectorRequest& WithCertificateAuthorityArn(const char* value) { SetCertificateAuthorityArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about your VPC and security groups used with the connector.</p>
+   */
+  inline const VpcInformation& GetVpcInformation() const { return m_vpcInformation; }
+  inline bool VpcInformationHasBeenSet() const { return m_vpcInformationHasBeenSet; }
+  template <typename VpcInformationT = VpcInformation>
+  void SetVpcInformation(VpcInformationT&& value) {
+    m_vpcInformationHasBeenSet = true;
+    m_vpcInformation = std::forward<VpcInformationT>(value);
+  }
+  template <typename VpcInformationT = VpcInformation>
+  CreateConnectorRequest& WithVpcInformation(VpcInformationT&& value) {
+    SetVpcInformation(std::forward<VpcInformationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateAuthorityArn;
 
-    ///@{
-    /**
-     * <p>Idempotency token.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateConnectorRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateConnectorRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateConnectorRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The identifier of the Active Directory.</p>
-     */
-    inline const Aws::String& GetDirectoryId() const{ return m_directoryId; }
-    inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
-    inline void SetDirectoryId(const Aws::String& value) { m_directoryIdHasBeenSet = true; m_directoryId = value; }
-    inline void SetDirectoryId(Aws::String&& value) { m_directoryIdHasBeenSet = true; m_directoryId = std::move(value); }
-    inline void SetDirectoryId(const char* value) { m_directoryIdHasBeenSet = true; m_directoryId.assign(value); }
-    inline CreateConnectorRequest& WithDirectoryId(const Aws::String& value) { SetDirectoryId(value); return *this;}
-    inline CreateConnectorRequest& WithDirectoryId(Aws::String&& value) { SetDirectoryId(std::move(value)); return *this;}
-    inline CreateConnectorRequest& WithDirectoryId(const char* value) { SetDirectoryId(value); return *this;}
-    ///@}
+  Aws::String m_directoryId;
 
-    ///@{
-    /**
-     * <p>Metadata assigned to a connector consisting of a key-value pair.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateConnectorRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateConnectorRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateConnectorRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateConnectorRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateConnectorRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateConnectorRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateConnectorRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateConnectorRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateConnectorRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    ///@{
-    /**
-     * <p>Security group IDs that describe the inbound and outbound rules.</p>
-     */
-    inline const VpcInformation& GetVpcInformation() const{ return m_vpcInformation; }
-    inline bool VpcInformationHasBeenSet() const { return m_vpcInformationHasBeenSet; }
-    inline void SetVpcInformation(const VpcInformation& value) { m_vpcInformationHasBeenSet = true; m_vpcInformation = value; }
-    inline void SetVpcInformation(VpcInformation&& value) { m_vpcInformationHasBeenSet = true; m_vpcInformation = std::move(value); }
-    inline CreateConnectorRequest& WithVpcInformation(const VpcInformation& value) { SetVpcInformation(value); return *this;}
-    inline CreateConnectorRequest& WithVpcInformation(VpcInformation&& value) { SetVpcInformation(std::move(value)); return *this;}
-    ///@}
-  private:
+  VpcInformation m_vpcInformation;
+  bool m_certificateAuthorityArnHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_directoryIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_vpcInformationHasBeenSet = false;
+};
 
-    Aws::String m_certificateAuthorityArn;
-    bool m_certificateAuthorityArnHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Aws::String m_directoryId;
-    bool m_directoryIdHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    VpcInformation m_vpcInformation;
-    bool m_vpcInformationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorAd
+}  // namespace Aws

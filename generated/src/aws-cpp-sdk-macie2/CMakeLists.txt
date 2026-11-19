@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-macie2 "C++ SDK for the AWS macie2 service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-macie2 "C++ SDK for Amazon Macie 2" aws-cpp-sdk-core)
 
 file(GLOB AWS_MACIE2_HEADERS
     "include/aws/macie2/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MACIE2_HEADERS
 
 file(GLOB AWS_MACIE2_MODEL_HEADERS
     "include/aws/macie2/model/*.h"
+)
+
+file(GLOB AWS_MACIE2_INTERNAL_HEADERS
+    "include/aws/macie2/internal/*.h"
 )
 
 file(GLOB AWS_MACIE2_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MACIE2_MODEL_SOURCE
 
 file(GLOB MACIE2_UNIFIED_HEADERS
     ${AWS_MACIE2_HEADERS}
+    ${AWS_MACIE2_INTERNAL_HEADERS}
     ${AWS_MACIE2_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\macie2" FILES ${AWS_MACIE2_HEADERS})
+        source_group("Header Files\\aws\\macie2\\internal" FILES ${AWS_MACIE2_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\macie2\\model" FILES ${AWS_MACIE2_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MACIE2_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MACIE2_MODEL_SOURCE})

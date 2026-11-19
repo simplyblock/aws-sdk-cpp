@@ -12,18 +12,4 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDevEnvironmentRequest::GetDevEnvironmentRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_projectNameHasBeenSet(false),
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetDevEnvironmentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDevEnvironmentRequest::SerializePayload() const { return {}; }

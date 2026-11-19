@@ -3,53 +3,35 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/PurchaseReservedDBInstancesOfferingRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/PurchaseReservedDBInstancesOfferingRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-PurchaseReservedDBInstancesOfferingRequest::PurchaseReservedDBInstancesOfferingRequest() : 
-    m_reservedDBInstancesOfferingIdHasBeenSet(false),
-    m_reservedDBInstanceIdHasBeenSet(false),
-    m_dBInstanceCount(0),
-    m_dBInstanceCountHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String PurchaseReservedDBInstancesOfferingRequest::SerializePayload() const
-{
+Aws::String PurchaseReservedDBInstancesOfferingRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=PurchaseReservedDBInstancesOffering&";
-  if(m_reservedDBInstancesOfferingIdHasBeenSet)
-  {
+  if (m_reservedDBInstancesOfferingIdHasBeenSet) {
     ss << "ReservedDBInstancesOfferingId=" << StringUtils::URLEncode(m_reservedDBInstancesOfferingId.c_str()) << "&";
   }
 
-  if(m_reservedDBInstanceIdHasBeenSet)
-  {
+  if (m_reservedDBInstanceIdHasBeenSet) {
     ss << "ReservedDBInstanceId=" << StringUtils::URLEncode(m_reservedDBInstanceId.c_str()) << "&";
   }
 
-  if(m_dBInstanceCountHasBeenSet)
-  {
+  if (m_dBInstanceCountHasBeenSet) {
     ss << "DBInstanceCount=" << m_dBInstanceCount << "&";
   }
 
-  if(m_tagsHasBeenSet)
-  {
-    if (m_tags.empty())
-    {
+  if (m_tagsHasBeenSet) {
+    if (m_tags.empty()) {
       ss << "Tags=&";
-    }
-    else
-    {
+    } else {
       unsigned tagsCount = 1;
-      for(auto& item : m_tags)
-      {
-        item.OutputToStream(ss, "Tags.member.", tagsCount, "");
+      for (auto& item : m_tags) {
+        item.OutputToStream(ss, "Tags.Tag.", tagsCount, "");
         tagsCount++;
       }
     }
@@ -59,8 +41,4 @@ Aws::String PurchaseReservedDBInstancesOfferingRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  PurchaseReservedDBInstancesOfferingRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void PurchaseReservedDBInstancesOfferingRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

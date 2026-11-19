@@ -3,58 +3,60 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/model/DescribeEntityAggregatesForOrganizationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Health::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeEntityAggregatesForOrganizationRequest::DescribeEntityAggregatesForOrganizationRequest() : 
-    m_eventArnsHasBeenSet(false),
-    m_awsAccountIdsHasBeenSet(false)
-{
-}
+Aws::String DescribeEntityAggregatesForOrganizationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeEntityAggregatesForOrganizationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_eventArnsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> eventArnsJsonList(m_eventArns.size());
-   for(unsigned eventArnsIndex = 0; eventArnsIndex < eventArnsJsonList.GetLength(); ++eventArnsIndex)
-   {
-     eventArnsJsonList[eventArnsIndex].AsString(m_eventArns[eventArnsIndex]);
-   }
-   payload.WithArray("eventArns", std::move(eventArnsJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_eventArnsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_awsAccountIdsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_filterHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_awsAccountIdsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> awsAccountIdsJsonList(m_awsAccountIds.size());
-   for(unsigned awsAccountIdsIndex = 0; awsAccountIdsIndex < awsAccountIdsJsonList.GetLength(); ++awsAccountIdsIndex)
-   {
-     awsAccountIdsJsonList[awsAccountIdsIndex].AsString(m_awsAccountIds[awsAccountIdsIndex]);
-   }
-   payload.WithArray("awsAccountIds", std::move(awsAccountIdsJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_eventArnsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("eventArns"));
+    encoder.WriteArrayStart(m_eventArns.size());
+    for (const auto& item_0 : m_eventArns) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_awsAccountIdsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("awsAccountIds"));
+    encoder.WriteArrayStart(m_awsAccountIds.size());
+    for (const auto& item_0 : m_awsAccountIds) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_filterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("filter"));
+    m_filter.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeEntityAggregatesForOrganizationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeEntityAggregatesForOrganizationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSHealth_20160804.DescribeEntityAggregatesForOrganization"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -5,69 +5,76 @@
 
 #pragma once
 #include <aws/codecommit/CodeCommit_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeCommit
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeCommit {
+namespace Model {
+/**
+ * <p>Represents the output of a put repository triggers operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PutRepositoryTriggersOutput">AWS
+ * API Reference</a></p>
+ */
+class PutRepositoryTriggersResult {
+ public:
+  AWS_CODECOMMIT_API PutRepositoryTriggersResult() = default;
+  AWS_CODECOMMIT_API PutRepositoryTriggersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECOMMIT_API PutRepositoryTriggersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the output of a put repository triggers operation.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PutRepositoryTriggersOutput">AWS
-   * API Reference</a></p>
+   * <p>The system-generated unique ID for the create or update operation.</p>
    */
-  class PutRepositoryTriggersResult
-  {
-  public:
-    AWS_CODECOMMIT_API PutRepositoryTriggersResult();
-    AWS_CODECOMMIT_API PutRepositoryTriggersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECOMMIT_API PutRepositoryTriggersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetConfigurationId() const { return m_configurationId; }
+  template <typename ConfigurationIdT = Aws::String>
+  void SetConfigurationId(ConfigurationIdT&& value) {
+    m_configurationIdHasBeenSet = true;
+    m_configurationId = std::forward<ConfigurationIdT>(value);
+  }
+  template <typename ConfigurationIdT = Aws::String>
+  PutRepositoryTriggersResult& WithConfigurationId(ConfigurationIdT&& value) {
+    SetConfigurationId(std::forward<ConfigurationIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The system-generated unique ID for the create or update operation.</p>
-     */
-    inline const Aws::String& GetConfigurationId() const{ return m_configurationId; }
-    inline void SetConfigurationId(const Aws::String& value) { m_configurationId = value; }
-    inline void SetConfigurationId(Aws::String&& value) { m_configurationId = std::move(value); }
-    inline void SetConfigurationId(const char* value) { m_configurationId.assign(value); }
-    inline PutRepositoryTriggersResult& WithConfigurationId(const Aws::String& value) { SetConfigurationId(value); return *this;}
-    inline PutRepositoryTriggersResult& WithConfigurationId(Aws::String&& value) { SetConfigurationId(std::move(value)); return *this;}
-    inline PutRepositoryTriggersResult& WithConfigurationId(const char* value) { SetConfigurationId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutRepositoryTriggersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutRepositoryTriggersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutRepositoryTriggersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutRepositoryTriggersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_configurationId;
 
-    Aws::String m_configurationId;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

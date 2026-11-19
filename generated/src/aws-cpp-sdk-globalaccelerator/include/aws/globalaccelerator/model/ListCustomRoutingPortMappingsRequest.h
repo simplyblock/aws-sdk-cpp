@@ -4,106 +4,119 @@
  */
 
 #pragma once
-#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
-#include <aws/globalaccelerator/GlobalAcceleratorRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/globalaccelerator/GlobalAcceleratorRequest.h>
+#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GlobalAccelerator
-{
-namespace Model
-{
+namespace Aws {
+namespace GlobalAccelerator {
+namespace Model {
 
+/**
+ */
+class ListCustomRoutingPortMappingsRequest : public GlobalAcceleratorRequest {
+ public:
+  AWS_GLOBALACCELERATOR_API ListCustomRoutingPortMappingsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListCustomRoutingPortMappings"; }
+
+  AWS_GLOBALACCELERATOR_API Aws::String SerializePayload() const override;
+
+  AWS_GLOBALACCELERATOR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) of the accelerator to list the custom routing
+   * port mappings for.</p>
    */
-  class ListCustomRoutingPortMappingsRequest : public GlobalAcceleratorRequest
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API ListCustomRoutingPortMappingsRequest();
+  inline const Aws::String& GetAcceleratorArn() const { return m_acceleratorArn; }
+  inline bool AcceleratorArnHasBeenSet() const { return m_acceleratorArnHasBeenSet; }
+  template <typename AcceleratorArnT = Aws::String>
+  void SetAcceleratorArn(AcceleratorArnT&& value) {
+    m_acceleratorArnHasBeenSet = true;
+    m_acceleratorArn = std::forward<AcceleratorArnT>(value);
+  }
+  template <typename AcceleratorArnT = Aws::String>
+  ListCustomRoutingPortMappingsRequest& WithAcceleratorArn(AcceleratorArnT&& value) {
+    SetAcceleratorArn(std::forward<AcceleratorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListCustomRoutingPortMappings"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the endpoint group to list the custom
+   * routing port mappings for.</p>
+   */
+  inline const Aws::String& GetEndpointGroupArn() const { return m_endpointGroupArn; }
+  inline bool EndpointGroupArnHasBeenSet() const { return m_endpointGroupArnHasBeenSet; }
+  template <typename EndpointGroupArnT = Aws::String>
+  void SetEndpointGroupArn(EndpointGroupArnT&& value) {
+    m_endpointGroupArnHasBeenSet = true;
+    m_endpointGroupArn = std::forward<EndpointGroupArnT>(value);
+  }
+  template <typename EndpointGroupArnT = Aws::String>
+  ListCustomRoutingPortMappingsRequest& WithEndpointGroupArn(EndpointGroupArnT&& value) {
+    SetEndpointGroupArn(std::forward<EndpointGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GLOBALACCELERATOR_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The number of destination port mappings that you want to return with this
+   * call. The default value is 10.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListCustomRoutingPortMappingsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_GLOBALACCELERATOR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The token for the next set of results. You receive this token from a previous
+   * call.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListCustomRoutingPortMappingsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceleratorArn;
 
+  Aws::String m_endpointGroupArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the accelerator to list the custom routing
-     * port mappings for.</p>
-     */
-    inline const Aws::String& GetAcceleratorArn() const{ return m_acceleratorArn; }
-    inline bool AcceleratorArnHasBeenSet() const { return m_acceleratorArnHasBeenSet; }
-    inline void SetAcceleratorArn(const Aws::String& value) { m_acceleratorArnHasBeenSet = true; m_acceleratorArn = value; }
-    inline void SetAcceleratorArn(Aws::String&& value) { m_acceleratorArnHasBeenSet = true; m_acceleratorArn = std::move(value); }
-    inline void SetAcceleratorArn(const char* value) { m_acceleratorArnHasBeenSet = true; m_acceleratorArn.assign(value); }
-    inline ListCustomRoutingPortMappingsRequest& WithAcceleratorArn(const Aws::String& value) { SetAcceleratorArn(value); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithAcceleratorArn(Aws::String&& value) { SetAcceleratorArn(std::move(value)); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithAcceleratorArn(const char* value) { SetAcceleratorArn(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the endpoint group to list the custom
-     * routing port mappings for.</p>
-     */
-    inline const Aws::String& GetEndpointGroupArn() const{ return m_endpointGroupArn; }
-    inline bool EndpointGroupArnHasBeenSet() const { return m_endpointGroupArnHasBeenSet; }
-    inline void SetEndpointGroupArn(const Aws::String& value) { m_endpointGroupArnHasBeenSet = true; m_endpointGroupArn = value; }
-    inline void SetEndpointGroupArn(Aws::String&& value) { m_endpointGroupArnHasBeenSet = true; m_endpointGroupArn = std::move(value); }
-    inline void SetEndpointGroupArn(const char* value) { m_endpointGroupArnHasBeenSet = true; m_endpointGroupArn.assign(value); }
-    inline ListCustomRoutingPortMappingsRequest& WithEndpointGroupArn(const Aws::String& value) { SetEndpointGroupArn(value); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithEndpointGroupArn(Aws::String&& value) { SetEndpointGroupArn(std::move(value)); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithEndpointGroupArn(const char* value) { SetEndpointGroupArn(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
+  bool m_acceleratorArnHasBeenSet = false;
+  bool m_endpointGroupArnHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The number of destination port mappings that you want to return with this
-     * call. The default value is 10.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListCustomRoutingPortMappingsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The token for the next set of results. You receive this token from a previous
-     * call.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListCustomRoutingPortMappingsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListCustomRoutingPortMappingsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceleratorArn;
-    bool m_acceleratorArnHasBeenSet = false;
-
-    Aws::String m_endpointGroupArn;
-    bool m_endpointGroupArnHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

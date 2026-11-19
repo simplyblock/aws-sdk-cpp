@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/apprunner/AppRunner_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/apprunner/AppRunnerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace AppRunner
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace AppRunner {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using AppRunnerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using AppRunnerEndpointProviderBase =
     EndpointProviderBase<AppRunnerClientConfiguration, AppRunnerBuiltInParameters, AppRunnerClientContextParameters>;
 
 using AppRunnerDefaultEpProviderBase =
-    DefaultEndpointProvider<AppRunnerClientConfiguration, AppRunnerBuiltInParameters, AppRunnerClientContextParameters>;
+    BDDEndpointProvider<AppRunnerClientConfiguration, AppRunnerBuiltInParameters, AppRunnerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_APPRUNNER_API AppRunnerEndpointProvider : public AppRunnerDefaultEpProviderBase
-{
-public:
-    using AppRunnerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_APPRUNNER_API AppRunnerEndpointProvider : public AppRunnerDefaultEpProviderBase {
+ public:
+  using AppRunnerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    AppRunnerEndpointProvider()
-      : AppRunnerDefaultEpProviderBase(Aws::AppRunner::AppRunnerEndpointRules::GetRulesBlob(), Aws::AppRunner::AppRunnerEndpointRules::RulesBlobSize)
-    {}
+  AppRunnerEndpointProvider();
 
-    ~AppRunnerEndpointProvider()
-    {
-    }
+  ~AppRunnerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace AppRunner
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace AppRunner
+}  // namespace Aws

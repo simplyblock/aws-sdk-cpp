@@ -4,13 +4,14 @@
  */
 
 #include <aws/fms/FMSEndpointProvider.h>
+#include <aws/fms/internal/FMSEndpointRules.h>
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace FMS
-} // namespace Aws
+namespace Aws {
+namespace FMS {
+namespace Endpoint {
+FMSEndpointProvider::FMSEndpointProvider()
+    : FMSDefaultEpProviderBase(Aws::FMS::FMSEndpointRules::GetRulesBlob(), Aws::FMS::FMSEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace FMS
+}  // namespace Aws

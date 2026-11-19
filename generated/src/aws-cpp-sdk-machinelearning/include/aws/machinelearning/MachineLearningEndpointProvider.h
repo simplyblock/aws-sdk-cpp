@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/machinelearning/MachineLearning_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/machinelearning/MachineLearning_EXPORTS.h>
 
-#include <aws/machinelearning/MachineLearningEndpointRules.h>
-
-
-namespace Aws
-{
-namespace MachineLearning
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace MachineLearning {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using MachineLearningClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using MachineLearningEndpointProviderBase =
     EndpointProviderBase<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
 
 using MachineLearningDefaultEpProviderBase =
-    DefaultEndpointProvider<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
+    BDDEndpointProvider<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_MACHINELEARNING_API MachineLearningEndpointProvider : public MachineLearningDefaultEpProviderBase
-{
-public:
-    using MachineLearningResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_MACHINELEARNING_API MachineLearningEndpointProvider : public MachineLearningDefaultEpProviderBase {
+ public:
+  using MachineLearningResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    MachineLearningEndpointProvider()
-      : MachineLearningDefaultEpProviderBase(Aws::MachineLearning::MachineLearningEndpointRules::GetRulesBlob(), Aws::MachineLearning::MachineLearningEndpointRules::RulesBlobSize)
-    {}
+  MachineLearningEndpointProvider();
 
-    ~MachineLearningEndpointProvider()
-    {
-    }
+  ~MachineLearningEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace MachineLearning
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace MachineLearning
+}  // namespace Aws

@@ -5,106 +5,115 @@
 
 #pragma once
 #include <aws/billingconductor/BillingConductor_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/billingconductor/model/ConflictExceptionReason.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BillingConductor {
+namespace Model {
 
+/**
+ * <p>You can cause an inconsistent state by updating or deleting a resource.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/ConflictException">AWS
+ * API Reference</a></p>
+ */
+class ConflictException {
+ public:
+  AWS_BILLINGCONDUCTOR_API ConflictException() = default;
+  AWS_BILLINGCONDUCTOR_API ConflictException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API ConflictException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ConflictException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>You can cause an inconsistent state by updating or deleting a resource.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/ConflictException">AWS
-   * API Reference</a></p>
+   * <p>Identifier of the resource in use. </p>
    */
-  class ConflictException
-  {
-  public:
-    AWS_BILLINGCONDUCTOR_API ConflictException();
-    AWS_BILLINGCONDUCTOR_API ConflictException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API ConflictException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BILLINGCONDUCTOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetResourceId() const { return m_resourceId; }
+  inline bool ResourceIdHasBeenSet() const { return m_resourceIdHasBeenSet; }
+  template <typename ResourceIdT = Aws::String>
+  void SetResourceId(ResourceIdT&& value) {
+    m_resourceIdHasBeenSet = true;
+    m_resourceId = std::forward<ResourceIdT>(value);
+  }
+  template <typename ResourceIdT = Aws::String>
+  ConflictException& WithResourceId(ResourceIdT&& value) {
+    SetResourceId(std::forward<ResourceIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Type of the resource in use. </p>
+   */
+  inline const Aws::String& GetResourceType() const { return m_resourceType; }
+  inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
+  template <typename ResourceTypeT = Aws::String>
+  void SetResourceType(ResourceTypeT&& value) {
+    m_resourceTypeHasBeenSet = true;
+    m_resourceType = std::forward<ResourceTypeT>(value);
+  }
+  template <typename ResourceTypeT = Aws::String>
+  ConflictException& WithResourceType(ResourceTypeT&& value) {
+    SetResourceType(std::forward<ResourceTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ConflictException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ConflictException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ConflictException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Reason for the inconsistent state. </p>
+   */
+  inline ConflictExceptionReason GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  inline void SetReason(ConflictExceptionReason value) {
+    m_reasonHasBeenSet = true;
+    m_reason = value;
+  }
+  inline ConflictException& WithReason(ConflictExceptionReason value) {
+    SetReason(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_message;
 
-    ///@{
-    /**
-     * <p>Identifier of the resource in use. </p>
-     */
-    inline const Aws::String& GetResourceId() const{ return m_resourceId; }
-    inline bool ResourceIdHasBeenSet() const { return m_resourceIdHasBeenSet; }
-    inline void SetResourceId(const Aws::String& value) { m_resourceIdHasBeenSet = true; m_resourceId = value; }
-    inline void SetResourceId(Aws::String&& value) { m_resourceIdHasBeenSet = true; m_resourceId = std::move(value); }
-    inline void SetResourceId(const char* value) { m_resourceIdHasBeenSet = true; m_resourceId.assign(value); }
-    inline ConflictException& WithResourceId(const Aws::String& value) { SetResourceId(value); return *this;}
-    inline ConflictException& WithResourceId(Aws::String&& value) { SetResourceId(std::move(value)); return *this;}
-    inline ConflictException& WithResourceId(const char* value) { SetResourceId(value); return *this;}
-    ///@}
+  Aws::String m_resourceId;
 
-    ///@{
-    /**
-     * <p>Type of the resource in use. </p>
-     */
-    inline const Aws::String& GetResourceType() const{ return m_resourceType; }
-    inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
-    inline void SetResourceType(const Aws::String& value) { m_resourceTypeHasBeenSet = true; m_resourceType = value; }
-    inline void SetResourceType(Aws::String&& value) { m_resourceTypeHasBeenSet = true; m_resourceType = std::move(value); }
-    inline void SetResourceType(const char* value) { m_resourceTypeHasBeenSet = true; m_resourceType.assign(value); }
-    inline ConflictException& WithResourceType(const Aws::String& value) { SetResourceType(value); return *this;}
-    inline ConflictException& WithResourceType(Aws::String&& value) { SetResourceType(std::move(value)); return *this;}
-    inline ConflictException& WithResourceType(const char* value) { SetResourceType(value); return *this;}
-    ///@}
+  Aws::String m_resourceType;
 
-    ///@{
-    /**
-     * <p>Reason for the inconsistent state. </p>
-     */
-    inline const ConflictExceptionReason& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const ConflictExceptionReason& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(ConflictExceptionReason&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline ConflictException& WithReason(const ConflictExceptionReason& value) { SetReason(value); return *this;}
-    inline ConflictException& WithReason(ConflictExceptionReason&& value) { SetReason(std::move(value)); return *this;}
-    ///@}
-  private:
+  ConflictExceptionReason m_reason{ConflictExceptionReason::NOT_SET};
+  bool m_messageHasBeenSet = false;
+  bool m_resourceIdHasBeenSet = false;
+  bool m_resourceTypeHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+};
 
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-
-    Aws::String m_resourceId;
-    bool m_resourceIdHasBeenSet = false;
-
-    Aws::String m_resourceType;
-    bool m_resourceTypeHasBeenSet = false;
-
-    ConflictExceptionReason m_reason;
-    bool m_reasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

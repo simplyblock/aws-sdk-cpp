@@ -12,15 +12,4 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-VerifySessionRequest::VerifySessionRequest()
-{
-}
-
-Aws::String VerifySessionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String VerifySessionRequest::SerializePayload() const { return {}; }

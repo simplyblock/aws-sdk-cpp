@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-marketplace-reporting "C++ SDK for the AWS marketplace-reporting service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-marketplace-reporting "C++ SDK for AWS Marketplace Reporting Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_MARKETPLACE-REPORTING_HEADERS
     "include/aws/marketplace-reporting/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MARKETPLACE-REPORTING_HEADERS
 
 file(GLOB AWS_MARKETPLACE-REPORTING_MODEL_HEADERS
     "include/aws/marketplace-reporting/model/*.h"
+)
+
+file(GLOB AWS_MARKETPLACE-REPORTING_INTERNAL_HEADERS
+    "include/aws/marketplace-reporting/internal/*.h"
 )
 
 file(GLOB AWS_MARKETPLACE-REPORTING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MARKETPLACE-REPORTING_MODEL_SOURCE
 
 file(GLOB MARKETPLACE-REPORTING_UNIFIED_HEADERS
     ${AWS_MARKETPLACE-REPORTING_HEADERS}
+    ${AWS_MARKETPLACE-REPORTING_INTERNAL_HEADERS}
     ${AWS_MARKETPLACE-REPORTING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\marketplace-reporting" FILES ${AWS_MARKETPLACE-REPORTING_HEADERS})
+        source_group("Header Files\\aws\\marketplace-reporting\\internal" FILES ${AWS_MARKETPLACE-REPORTING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\marketplace-reporting\\model" FILES ${AWS_MARKETPLACE-REPORTING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MARKETPLACE-REPORTING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MARKETPLACE-REPORTING_MODEL_SOURCE})

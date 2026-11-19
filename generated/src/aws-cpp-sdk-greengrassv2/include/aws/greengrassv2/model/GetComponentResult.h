@@ -4,101 +4,121 @@
  */
 
 #pragma once
-#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
-#include <aws/greengrassv2/model/RecipeOutputFormat.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/Array.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
+#include <aws/greengrassv2/model/RecipeOutputFormat.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GreengrassV2
-{
-namespace Model
-{
-  class GetComponentResult
-  {
-  public:
-    AWS_GREENGRASSV2_API GetComponentResult();
-    AWS_GREENGRASSV2_API GetComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GREENGRASSV2_API GetComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GreengrassV2 {
+namespace Model {
+class GetComponentResult {
+ public:
+  AWS_GREENGRASSV2_API GetComponentResult() = default;
+  AWS_GREENGRASSV2_API GetComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GREENGRASSV2_API GetComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The format of the recipe.</p>
+   */
+  inline RecipeOutputFormat GetRecipeOutputFormat() const { return m_recipeOutputFormat; }
+  inline void SetRecipeOutputFormat(RecipeOutputFormat value) {
+    m_recipeOutputFormatHasBeenSet = true;
+    m_recipeOutputFormat = value;
+  }
+  inline GetComponentResult& WithRecipeOutputFormat(RecipeOutputFormat value) {
+    SetRecipeOutputFormat(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The format of the recipe.</p>
-     */
-    inline const RecipeOutputFormat& GetRecipeOutputFormat() const{ return m_recipeOutputFormat; }
-    inline void SetRecipeOutputFormat(const RecipeOutputFormat& value) { m_recipeOutputFormat = value; }
-    inline void SetRecipeOutputFormat(RecipeOutputFormat&& value) { m_recipeOutputFormat = std::move(value); }
-    inline GetComponentResult& WithRecipeOutputFormat(const RecipeOutputFormat& value) { SetRecipeOutputFormat(value); return *this;}
-    inline GetComponentResult& WithRecipeOutputFormat(RecipeOutputFormat&& value) { SetRecipeOutputFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The recipe of the component version.</p>
+   */
+  inline const Aws::Utils::ByteBuffer& GetRecipe() const { return m_recipe; }
+  template <typename RecipeT = Aws::Utils::ByteBuffer>
+  void SetRecipe(RecipeT&& value) {
+    m_recipeHasBeenSet = true;
+    m_recipe = std::forward<RecipeT>(value);
+  }
+  template <typename RecipeT = Aws::Utils::ByteBuffer>
+  GetComponentResult& WithRecipe(RecipeT&& value) {
+    SetRecipe(std::forward<RecipeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The recipe of the component version.</p>
-     */
-    inline const Aws::Utils::ByteBuffer& GetRecipe() const{ return m_recipe; }
-    inline void SetRecipe(const Aws::Utils::ByteBuffer& value) { m_recipe = value; }
-    inline void SetRecipe(Aws::Utils::ByteBuffer&& value) { m_recipe = std::move(value); }
-    inline GetComponentResult& WithRecipe(const Aws::Utils::ByteBuffer& value) { SetRecipe(value); return *this;}
-    inline GetComponentResult& WithRecipe(Aws::Utils::ByteBuffer&& value) { SetRecipe(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of key-value pairs that contain metadata for the resource. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/greengrass/v2/developerguide/tag-resources.html">Tag
+   * your resources</a> in the <i>IoT Greengrass V2 Developer Guide</i>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  GetComponentResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  GetComponentResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of key-value pairs that contain metadata for the resource. For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/greengrass/v2/developerguide/tag-resources.html">Tag
-     * your resources</a> in the <i>IoT Greengrass V2 Developer Guide</i>.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline GetComponentResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline GetComponentResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline GetComponentResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline GetComponentResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetComponentResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetComponentResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetComponentResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetComponentResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetComponentResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetComponentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetComponentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetComponentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetComponentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RecipeOutputFormat m_recipeOutputFormat;
+ private:
+  RecipeOutputFormat m_recipeOutputFormat{RecipeOutputFormat::NOT_SET};
 
-    Aws::Utils::ByteBuffer m_recipe;
+  Aws::Utils::ByteBuffer m_recipe{};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_recipeOutputFormatHasBeenSet = false;
+  bool m_recipeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GreengrassV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace GreengrassV2
+}  // namespace Aws

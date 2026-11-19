@@ -12,18 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRouteResponseRequest::GetRouteResponseRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_routeIdHasBeenSet(false),
-    m_routeResponseIdHasBeenSet(false)
-{
-}
-
-Aws::String GetRouteResponseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRouteResponseRequest::SerializePayload() const { return {}; }

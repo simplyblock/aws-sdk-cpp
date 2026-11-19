@@ -4,47 +4,45 @@
  */
 
 #include <aws/codedeploy/model/DeleteDeploymentGroupRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteDeploymentGroupRequest::DeleteDeploymentGroupRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_deploymentGroupNameHasBeenSet(false)
-{
-}
+Aws::String DeleteDeploymentGroupRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteDeploymentGroupRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_applicationNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentGroupNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_deploymentGroupNameHasBeenSet)
-  {
-   payload.WithString("deploymentGroupName", m_deploymentGroupName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_applicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("applicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_deploymentGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_deploymentGroupName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteDeploymentGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteDeploymentGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.DeleteDeploymentGroup"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

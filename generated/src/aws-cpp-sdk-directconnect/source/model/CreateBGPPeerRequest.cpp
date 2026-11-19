@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/CreateBGPPeerRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateBGPPeerRequest::CreateBGPPeerRequest() : 
-    m_virtualInterfaceIdHasBeenSet(false),
-    m_newBGPPeerHasBeenSet(false)
-{
-}
+Aws::String CreateBGPPeerRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String CreateBGPPeerRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_virtualInterfaceIdHasBeenSet)
-  {
-   payload.WithString("virtualInterfaceId", m_virtualInterfaceId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_virtualInterfaceIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_newBGPPeerHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_newBGPPeerHasBeenSet)
-  {
-   payload.WithObject("newBGPPeer", m_newBGPPeer.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_virtualInterfaceIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("virtualInterfaceId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_virtualInterfaceId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_newBGPPeerHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("newBGPPeer"));
+    m_newBGPPeer.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection CreateBGPPeerRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateBGPPeerRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.CreateBGPPeer"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

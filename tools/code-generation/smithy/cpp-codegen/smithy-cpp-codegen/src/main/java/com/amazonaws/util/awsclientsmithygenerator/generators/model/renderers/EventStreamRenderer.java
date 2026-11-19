@@ -1,0 +1,492 @@
+/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+package com.amazonaws.util.awsclientsmithygenerator.generators.model.renderers;
+
+import com.amazonaws.util.awsclientsmithygenerator.generators.CppWriterDelegator;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.CppTypeMapper;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.MemberRenderer;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.protocol.FileKind;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.protocol.ProtocolTraits;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.RenderContext;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.ShapeClassifier.EventStreamInfo;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.ShapeRenderer;
+import software.amazon.smithy.model.shapes.MemberShape;
+import software.amazon.smithy.model.shapes.Shape;
+import software.amazon.smithy.model.shapes.StructureShape;
+import software.amazon.smithy.model.shapes.UnionShape;
+import software.amazon.smithy.model.traits.ErrorTrait;
+import software.amazon.smithy.model.traits.StreamingTrait;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Renders C++ event stream artifacts for response-side (simplex) streaming operations: the handler
+ * and initial response, driven by the classifier's {@link EventStreamInfo} list. Event structures
+ * are generated elsewhere (as reachable sub-objects) and only referenced here; the {@code @streaming}
+ * union data type is not emitted (realized through the handler, referenced by nothing). Payload
+ * (de)serialization points are protocol-agnostic TODO stubs via {@link ProtocolTraits}.
+ */
+public final class EventStreamRenderer implements ShapeRenderer {
+
+    private final List<EventStreamInfo> eventStreams;
+    private final RenderContext ctx;
+
+    public EventStreamRenderer(List<EventStreamInfo> eventStreams, RenderContext ctx) {
+        this.eventStreams = eventStreams;
+        this.ctx = ctx;
+    }
+
+    @Override
+    public void render(CppWriterDelegator writerDelegator) {
+        for (EventStreamInfo info : eventStreams) {
+            Optional<UnionShape> streamingUnion = findStreamingUnion(info.resultShape());
+            if (streamingUnion.isEmpty()) {
+                continue;
+            }
+            UnionShape union = streamingUnion.get();
+            List<MemberShape> events = new ArrayList<>();
+            List<MemberShape> exceptions = new ArrayList<>();
+            partitionMembers(union, events, exceptions);
+
+            renderHandlerHeader(writerDelegator, info.operationName(), events);
+            renderHandlerSource(writerDelegator, info.operationName(), events);
+            renderInitialResponse(writerDelegator, info.operationName(), info.resultShape());
+        }
+    }
+
+    /** Finds the @streaming union targeted by a member of the result structure, if any. */
+    private Optional<UnionShape> findStreamingUnion(StructureShape resultShape) {
+        for (MemberShape member : resultShape.getAllMembers().values()) {
+            Shape target = ctx.model().expectShape(member.getTarget());
+            if (target.isUnionShape() && target.hasTrait(StreamingTrait.class)) {
+                return target.asUnionShape();
+            }
+        }
+        return Optional.empty();
+    }
+
+    /** Splits union members into events (non-exception) and exceptions, preserving order. */
+    private void partitionMembers(UnionShape union, List<MemberShape> events, List<MemberShape> exceptions) {
+        for (MemberShape member : union.getAllMembers().values()) {
+            Shape target = ctx.model().expectShape(member.getTarget());
+            if (target.hasTrait(ErrorTrait.class)) {
+                exceptions.add(member);
+            } else {
+                events.add(member);
+            }
+        }
+    }
+
+    /** The C++ event type identifier (event shape name), e.g. "AlphaEvent". */
+    private String eventShapeName(MemberShape member) {
+        return member.getTarget().getName();
+    }
+
+    /** The wire member key, e.g. "alpha". */
+    private String wireKey(MemberShape member) {
+        return member.getMemberName();
+    }
+
+    /** The EventType enum constant: wire member key uppercased, e.g. "ALPHA". */
+    private String enumConstant(MemberShape member) {
+        return wireKey(member).toUpperCase();
+    }
+
+    // ---- Handler ------------------------------------------------------------
+
+    private void renderHandlerHeader(CppWriterDelegator writerDelegator, String opName,
+                                     List<MemberShape> events) {
+        String className = opName + "Handler";
+        String fileName = "include/aws/" + ctx.smithyServiceName() + "/model/" + className + ".h";
+        writerDelegator.useFileWriter(fileName, writer -> {
+            writer.write("#pragma once");
+            writer.write("#include <aws/core/client/AWSError.h>");
+            writer.write("#include <aws/core/utils/HashingUtils.h>");
+            writer.write("#include <aws/core/utils/event/EventStreamHandler.h>");
+            writer.write("#include <aws/$1L/$2LErrors.h>", ctx.smithyServiceName(), ctx.classNamePrefix());
+            writer.write("#include <aws/$1L/$2L_EXPORTS.h>", ctx.smithyServiceName(), ctx.classNamePrefix());
+            writer.write("#include <aws/$1L/model/$2LInitialResponse.h>", ctx.smithyServiceName(), opName);
+            for (MemberShape event : events) {
+                boolean emptyEvent = ctx.model().expectShape(event.getTarget()).members().isEmpty();
+                if (!emptyEvent) {
+                    writer.write("#include <aws/$1L/model/$2L.h>", ctx.smithyServiceName(), eventShapeName(event));
+                }
+            }
+            writer.write("");
+            ModelFile.modelNamespace(writer, ctx.namespace(), () -> {
+
+            StringBuilder enumBody = new StringBuilder("enum class ")
+                .append(opName).append("EventType { INITIAL_RESPONSE, ");
+            for (MemberShape event : events) {
+                enumBody.append(enumConstant(event)).append(", ");
+            }
+            enumBody.append("UNKNOWN };");
+            writer.write("$L", enumBody.toString());
+            writer.write("");
+
+            writer.openBlock("class $1L : public Aws::Utils::Event::EventStreamHandler {", "};", className, () -> {
+                writer.write("typedef std::function<void(const $1LInitialResponse&)> $1LInitialResponseCallback;", opName);
+                writer.write("typedef std::function<void(const $1LInitialResponse&, const Utils::Event::InitialResponseType)> $1LInitialResponseCallbackEx;", opName);
+                for (MemberShape event : events) {
+                    String ev = eventShapeName(event);
+                    boolean emptyEvent = ctx.model().expectShape(event.getTarget()).members().isEmpty();
+                    if (emptyEvent) {
+                        writer.write("typedef std::function<void()> $1LCallback;", ev);
+                    } else {
+                        writer.write("typedef std::function<void(const $1L&)> $1LCallback;", ev);
+                    }
+                }
+                writer.write("typedef std::function<void(const Aws::Client::AWSError<$1LErrors>& error)> ErrorCallback;", ctx.classNamePrefix());
+                writer.write("");
+                writer.dedent();
+                writer.write("public:");
+                writer.indent();
+                writer.write("$1L $2L();", ctx.exportMacro(), className);
+                writer.write("$1L $2L& operator=(const $2L&) = default;", ctx.exportMacro(), className);
+                writer.write("$1L $2L(const $2L&) = default;", ctx.exportMacro(), className);
+                writer.write("");
+                writer.write("$1L virtual void OnEvent() override;", ctx.exportMacro());
+                writer.write("");
+                writer.write("///@{");
+                writer.write("/**");
+                writer.write(" * Sets an initial response callback. This callback gets called on the initial $1L Operation response.", opName);
+                writer.write(" *   This can be either \"initial-response\" decoded event frame or decoded HTTP headers received on connection.");
+                writer.write(" *   This callback may get called more than once (i.e. on connection headers received and then on the initial-response event received).");
+                writer.write(" * @param callback");
+                writer.write(" */");
+                writer.write("inline void SetInitialResponseCallbackEx(const $1LInitialResponseCallbackEx& callback) { m_onInitialResponse = callback; }", opName);
+                writer.write("/**");
+                writer.write(" * Sets an initial response callback (a legacy one that does not distinguish whether response originates from headers or from the event).");
+                writer.write(" */");
+                writer.openBlock("inline void SetInitialResponseCallback(const $1LInitialResponseCallback& noArgCallback) {", "}", opName, () -> {
+                    writer.write("m_onInitialResponse = [noArgCallback](const $1LInitialResponse& rs, const Utils::Event::InitialResponseType) {", opName);
+                    writer.write("return noArgCallback(rs);");
+                    writer.write("};");
+                });
+                writer.write("///@}");
+                for (MemberShape event : events) {
+                    String ev = eventShapeName(event);
+                    writer.write("inline void Set$1LCallback(const $1LCallback& callback) { m_on$1L = callback; }", ev);
+                }
+                writer.write("inline void SetOnErrorCallback(const ErrorCallback& callback) { m_onError = callback; }");
+                writer.write("");
+                writer.write("inline $1LInitialResponseCallbackEx& GetInitialResponseCallbackEx() { return m_onInitialResponse; }", opName);
+                writer.write("");
+                writer.dedent();
+                writer.write("private:");
+                writer.indent();
+                writer.write("$1L void HandleEventInMessage();", ctx.exportMacro());
+                writer.write("$1L void HandleErrorInMessage();", ctx.exportMacro());
+                writer.write("$1L void MarshallError(const Aws::String& errorCode, const Aws::String& errorMessage);", ctx.exportMacro());
+                writer.write("");
+                writer.write("$1LInitialResponseCallbackEx m_onInitialResponse;", opName);
+                for (MemberShape event : events) {
+                    String ev = eventShapeName(event);
+                    writer.write("$1LCallback m_on$1L;", ev);
+                }
+                writer.write("ErrorCallback m_onError;");
+            });
+            writer.write("");
+
+            writer.writeNamespaceOpen(opName + "EventMapper");
+            writer.write("$1L $2LEventType Get$2LEventTypeForName(const Aws::String& name);", ctx.exportMacro(), opName);
+            writer.write("");
+            writer.write("$1L Aws::String GetNameFor$2LEventType($2LEventType value);", ctx.exportMacro(), opName);
+            writer.writeNamespaceClose(opName + "EventMapper");
+            });
+        });
+    }
+
+    private void renderHandlerSource(CppWriterDelegator writerDelegator, String opName,
+                                     List<MemberShape> events) {
+        String className = opName + "Handler";
+        String fileName = "source/model/" + className + ".cpp";
+        String tag = opName.toUpperCase() + "_HANDLER_CLASS_TAG";
+        writerDelegator.useFileWriter(fileName, writer -> {
+            // The handler parses event/exception payloads with the protocol's serializer.
+            List<String> includes = new java.util.ArrayList<>();
+            includes.add("aws/core/client/CoreErrors.h");
+            includes.add("aws/core/utils/event/EventStreamErrors.h");
+            includes.add("aws/core/utils/logging/LogMacros.h");
+            includes.add("aws/" + ctx.smithyServiceName() + "/" + ctx.classNamePrefix() + "ErrorMarshaller.h");
+            includes.add("aws/" + ctx.smithyServiceName() + "/model/" + opName + "Handler.h");
+            IncludeSets.emitSourceIncludes(writer, includes,
+                ctx.protocolTraits(), FileKind.EVENT_HANDLER_SOURCE);
+            writer.write("");
+            writer.write("using namespace Aws::$1L::Model;", ctx.namespace());
+            writer.write("using namespace Aws::Utils::Event;");
+            IncludeSets.emitUsings(writer, ctx.protocolTraits().serdeUsings(FileKind.EVENT_HANDLER_SOURCE));
+            writer.write("");
+            writer.write("AWS_CORE_API extern const char MESSAGE_LOWER_CASE[];");
+            writer.write("AWS_CORE_API extern const char MESSAGE_CAMEL_CASE[];");
+            writer.write("");
+            ModelFile.modelNamespace(writer, ctx.namespace(), () -> {
+            writer.write("using namespace Aws::Client;");
+            writer.write("");
+            writer.write("static const char $1L[] = \"$2LHandler\";", tag, opName);
+            writer.write("");
+
+            writer.openBlock("$1L::$1L() : EventStreamHandler() {", "}", className, () -> {
+                writer.openBlock("m_onInitialResponse = [&](const $1LInitialResponse&, const Utils::Event::InitialResponseType eventType) {", "};", opName, () -> {
+                    writer.write("AWS_LOGSTREAM_TRACE($1L, \"$2L initial response received from \" << (eventType == Utils::Event::InitialResponseType::ON_EVENT ? \"event\" : \"http headers\"));", tag, opName);
+                });
+                for (MemberShape event : events) {
+                    String ev = eventShapeName(event);
+                    boolean emptyEvent = ctx.model().expectShape(event.getTarget()).members().isEmpty();
+                    if (emptyEvent) {
+                        writer.openBlock("m_on$1L = [&]() {", "};", ev, () -> {
+                            writer.write("AWS_LOGSTREAM_TRACE($1L, \"$2L received.\");", tag, ev);
+                        });
+                    } else {
+                        writer.openBlock("m_on$1L = [&](const $1L&) {", "};", ev, () -> {
+                            writer.write("AWS_LOGSTREAM_TRACE($1L, \"$2L received.\");", tag, ev);
+                        });
+                    }
+                }
+                writer.openBlock("m_onError = [&](const AWSError<$1LErrors>& error) {", "};", ctx.classNamePrefix(), () -> {
+                    writer.write("AWS_LOGSTREAM_TRACE($1L, \"$2L Errors received, \" << error);", tag, ctx.classNamePrefix());
+                });
+            });
+            writer.write("");
+
+            writer.openBlock("void $1L::OnEvent() {", "}", className, () -> {
+                writer.openBlock("if (!*this) {", "}", () -> {
+                    writer.write("AWSError<CoreErrors> error = EventStreamErrorsMapper::GetAwsErrorForEventStreamError(GetInternalError());");
+                    writer.write("error.SetMessage(GetEventPayloadAsString());");
+                    writer.write("m_onError(AWSError<$1LErrors>(error));", ctx.classNamePrefix());
+                    writer.write("return;");
+                });
+                writer.write("const auto& headers = GetEventHeaders();");
+                writer.write("auto messageTypeHeaderIter = headers.find(MESSAGE_TYPE_HEADER);");
+                writer.openBlock("if (messageTypeHeaderIter == headers.end()) {", "}", () -> {
+                    writer.write("AWS_LOGSTREAM_WARN($1L, \"Header: \" << MESSAGE_TYPE_HEADER << \" not found in the message.\");", tag);
+                    writer.write("return;");
+                });
+                writer.openBlock("switch (Aws::Utils::Event::Message::GetMessageTypeForName(messageTypeHeaderIter->second.GetEventHeaderValueAsString())) {", "}", () -> {
+                    writer.write("case Aws::Utils::Event::Message::MessageType::EVENT:");
+                    writer.write("HandleEventInMessage();");
+                    writer.write("break;");
+                    writer.write("case Aws::Utils::Event::Message::MessageType::REQUEST_LEVEL_ERROR:");
+                    writer.openBlock("case Aws::Utils::Event::Message::MessageType::REQUEST_LEVEL_EXCEPTION: {", "}", () -> {
+                        writer.write("HandleErrorInMessage();");
+                        writer.write("break;");
+                    });
+                    writer.write("default:");
+                    writer.write("AWS_LOGSTREAM_WARN($1L, \"Unexpected message type: \" << messageTypeHeaderIter->second.GetEventHeaderValueAsString());", tag);
+                    writer.write("break;");
+                });
+            });
+            writer.write("");
+
+            writer.openBlock("void $1L::HandleEventInMessage() {", "}", className, () -> {
+                writer.write("const auto& headers = GetEventHeaders();");
+                writer.write("auto eventTypeHeaderIter = headers.find(EVENT_TYPE_HEADER);");
+                writer.openBlock("if (eventTypeHeaderIter == headers.end()) {", "}", () -> {
+                    writer.write("AWS_LOGSTREAM_WARN($1L, \"Header: \" << EVENT_TYPE_HEADER << \" not found in the message.\");", tag);
+                    writer.write("return;");
+                });
+                writer.openBlock("switch ($1LEventMapper::Get$1LEventTypeForName(eventTypeHeaderIter->second.GetEventHeaderValueAsString())) {", "}", opName, () -> {
+                    writer.openBlock("case $1LEventType::INITIAL_RESPONSE: {", "}", opName, () -> {
+                        ctx.protocolTraits().writeInitialResponseHandlerConstruction(writer, opName + "InitialResponse", tag);
+                        writer.write("m_onInitialResponse(event, Utils::Event::InitialResponseType::ON_EVENT);");
+                        writer.write("break;");
+                    });
+                    for (MemberShape event : events) {
+                        writer.openBlock("case $1LEventType::$2L: {", "}", opName, enumConstant(event), () -> {
+                            boolean emptyEvent = ctx.model().expectShape(event.getTarget()).members().isEmpty();
+                            String callbackMember = "m_on" + eventShapeName(event);
+                            if (emptyEvent) {
+                                writer.write("$L();", callbackMember);
+                            } else {
+                                ctx.protocolTraits().writeEventPayloadDecode(writer, eventShapeName(event), callbackMember);
+                            }
+                            writer.write("break;");
+                        });
+                    }
+                    writer.write("default:");
+                    writer.write("AWS_LOGSTREAM_WARN($1L, \"Unexpected event type: \" << eventTypeHeaderIter->second.GetEventHeaderValueAsString());", tag);
+                    writer.write("break;");
+                });
+            });
+            writer.write("");
+
+            writer.openBlock("void $1L::HandleErrorInMessage() {", "}", className, () -> {
+                writer.write("const auto& headers = GetEventHeaders();");
+                writer.write("Aws::String errorCode;");
+                writer.write("Aws::String errorMessage;");
+                writer.write("auto errorHeaderIter = headers.find(ERROR_CODE_HEADER);");
+                writer.openBlock("if (errorHeaderIter == headers.end()) {", "}", () -> {
+                    writer.write("errorHeaderIter = headers.find(EXCEPTION_TYPE_HEADER);");
+                    writer.openBlock("if (errorHeaderIter == headers.end()) {", "}", () -> {
+                        writer.write("AWS_LOGSTREAM_WARN($1L, \"Error type was not found in the event message.\");", tag);
+                        writer.write("return;");
+                    });
+                });
+                writer.write("errorCode = errorHeaderIter->second.GetEventHeaderValueAsString();");
+                writer.write("errorHeaderIter = headers.find(ERROR_MESSAGE_HEADER);");
+                writer.openBlock("if (errorHeaderIter == headers.end()) {", "}", () -> {
+                    writer.write("// TODO: read error message from payload once protocol-specific serde lands");
+                    ctx.protocolTraits().writeErrorPayloadParse(writer);
+                });
+                writer.openBlock("else {", "}", () -> {
+                    writer.write("errorMessage = errorHeaderIter->second.GetEventHeaderValueAsString();");
+                });
+                writer.write("MarshallError(errorCode, errorMessage);");
+            });
+            writer.write("");
+
+            // MarshallError (verbatim from C2J)
+            writer.openBlock("void $1L::MarshallError(const Aws::String& errorCode, const Aws::String& errorMessage) {", "}", className, () -> {
+                writer.write("$1LErrorMarshaller errorMarshaller;", ctx.classNamePrefix());
+                writer.write("AWSError<CoreErrors> error;");
+                writer.openBlock("if (errorCode.empty()) {", "}", () -> {
+                    writer.write("error = AWSError<CoreErrors>(CoreErrors::UNKNOWN, \"\", errorMessage, false);");
+                });
+                writer.openBlock("else {", "}", () -> {
+                    writer.write("error = errorMarshaller.FindErrorByName(errorCode.c_str());");
+                    writer.openBlock("if (error.GetErrorType() != CoreErrors::UNKNOWN) {", "}", () -> {
+                        writer.write("AWS_LOGSTREAM_WARN($1L, \"Encountered AWSError '\" << errorCode.c_str() << \"': \" << errorMessage.c_str());", tag);
+                        writer.write("error.SetExceptionName(errorCode);");
+                        writer.write("error.SetMessage(errorMessage);");
+                    });
+                    writer.openBlock("else {", "}", () -> {
+                        writer.write("AWS_LOGSTREAM_WARN($1L, \"Encountered Unknown AWSError '\" << errorCode.c_str() << \"': \" << errorMessage.c_str());", tag);
+                        writer.write("error = AWSError<CoreErrors>(CoreErrors::UNKNOWN, errorCode, \"Unable to parse ExceptionName: \" + errorCode + \" Message: \" + errorMessage, false);");
+                    });
+                });
+                writer.write("m_onError(AWSError<$1LErrors>(error));", ctx.namespace());
+            });
+            writer.write("");
+
+            writer.writeNamespaceOpen(opName + "EventMapper");
+            writer.write("static const int INITIAL_RESPONSE_HASH = Aws::Utils::HashingUtils::HashString(\"initial-response\");");
+            for (MemberShape event : events) {
+                writer.write("static const int $1L_HASH = Aws::Utils::HashingUtils::HashString(\"$2L\");",
+                    enumConstant(event), wireKey(event));
+            }
+            writer.write("");
+            writer.openBlock("$1LEventType Get$1LEventTypeForName(const Aws::String& name) {", "}", opName, () -> {
+                writer.write("int hashCode = Aws::Utils::HashingUtils::HashString(name.c_str());");
+                writer.openBlock("if (hashCode == INITIAL_RESPONSE_HASH) {", "}", () -> {
+                    writer.write("return $1LEventType::INITIAL_RESPONSE;", opName);
+                });
+                for (MemberShape event : events) {
+                    writer.openBlock("else if (hashCode == $1L_HASH) {", "}", enumConstant(event), () -> {
+                        writer.write("return $1LEventType::$2L;", opName, enumConstant(event));
+                    });
+                }
+                writer.write("return $1LEventType::UNKNOWN;", opName);
+            });
+            writer.write("");
+            writer.openBlock("Aws::String GetNameFor$1LEventType($1LEventType value) {", "}", opName, () -> {
+                writer.openBlock("switch (value) {", "}", () -> {
+                    writer.write("case $1LEventType::INITIAL_RESPONSE:", opName);
+                    writer.write("return \"initial-response\";");
+                    for (MemberShape event : events) {
+                        writer.write("case $1LEventType::$2L:", opName, enumConstant(event));
+                        writer.write("return \"$1L\";", wireKey(event));
+                    }
+                    writer.write("default:");
+                    writer.write("return \"Unknown\";");
+                });
+            });
+            writer.writeNamespaceClose(opName + "EventMapper");
+            });
+        });
+    }
+
+    // ---- Initial response ---------------------------------------------------
+
+    /**
+     * Builds a synthetic {@code <op>InitialResponse} from the result's non-event-stream members
+     * (the {@code @streaming} union member excluded), mirroring C2J {@code addEventStreamInitialResponse}.
+     */
+    private StructureShape initialResponseShape(String opName, StructureShape resultShape) {
+        StructureShape.Builder builder = StructureShape.builder()
+            .id("com.amazonaws.smithy.synthetic#" + opName + "InitialResponse");
+        for (MemberShape member : resultShape.getAllMembers().values()) {
+            Shape target = ctx.model().expectShape(member.getTarget());
+            boolean isEventStream = target.isUnionShape() && target.hasTrait(StreamingTrait.class);
+            if (!isEventStream) {
+                builder.addMember(member.getMemberName(), member.getTarget(),
+                    b -> member.getAllTraits().values().forEach(b::addTrait));
+            }
+        }
+        return builder.build();
+    }
+
+    private void renderInitialResponse(CppWriterDelegator writerDelegator, String opName,
+                                       StructureShape resultShape) {
+        String className = opName + "InitialResponse";
+        StructureShape shape = initialResponseShape(opName, resultShape);
+        boolean hasMembers = !shape.getAllMembers().isEmpty();
+
+        String headerFile = "include/aws/" + ctx.smithyServiceName() + "/model/" + className + ".h";
+        writerDelegator.useFileWriter(headerFile, writer -> {
+            writer.write("#pragma once");
+            List<String> includes = new java.util.ArrayList<>();
+            includes.add("<aws/core/http/HttpTypes.h>");
+            includes.add("<aws/" + ctx.smithyServiceName() + "/" + ctx.classNamePrefix() + "_EXPORTS.h>");
+            includes.addAll(CppTypeMapper.getIncludesForShape(shape, ctx.model(), ctx.smithyServiceName()));
+            IncludeSets.emitAngleIncludes(writer, includes);
+            if (hasMembers) {
+                writer.write("");
+                writer.write("#include <utility>");
+            }
+            writer.write("");
+            ModelFile.modelNamespace(writer, ctx.namespace(),
+                () -> ctx.protocolTraits().writeShapeForwardDeclarations(writer),
+                () -> {
+            writer.write("");
+            writer.openBlock("class $L {", "};", className, () -> {
+                writer.write("public:");
+                // Any protocol-specific extra ctor (e.g. the JSON/CBOR header-collection ctor) sits
+                // before the serialize method (mainline ordering); REST-XML adds none.
+                ctx.protocolTraits().writeSerdeMethodDecls(writer, ctx.exportMacro(), className,
+                    () -> ctx.protocolTraits().writeInitialResponseCtorDecl(writer, ctx.exportMacro(), className));
+                // Accessors + private section for the result's non-streaming members. A memberless
+                // InitialResponse ends right after its serde decls (no private:), matching C2J.
+                if (hasMembers) {
+                    MemberRenderer members = MemberRenderer.forStructure(ctx.model(), shape, className)
+                        .wideIntegers(ctx.protocolTraits().widensIntegers());
+                    writer.write("");
+                    members.renderPublicAccessors(writer);
+                    writer.dedent();
+                    writer.write("private:");
+                    writer.indent();
+                    members.renderPrivateSection(writer);
+                }
+            });
+            writer.write("");
+                });
+        });
+
+        String sourceFile = "source/model/" + className + ".cpp";
+        writerDelegator.useFileWriter(sourceFile, writer -> {
+            List<String> includes = new java.util.ArrayList<>();
+            includes.add("aws/core/utils/StringUtils.h");
+            includes.add("aws/" + ctx.smithyServiceName() + "/model/" + className + ".h");
+            includes.add("utility");
+            IncludeSets.emitSourceIncludes(writer, includes,
+                ctx.protocolTraits(), FileKind.INITIAL_RESPONSE_SOURCE);
+            writer.write("");
+            IncludeSets.emitUsings(writer, ctx.protocolTraits().serdeUsings(FileKind.INITIAL_RESPONSE_SOURCE));
+            writer.write("");
+            // The serde impls are wrapped in an explicit namespace block (not a `using`),
+            // matching C2J, which renders InitialResponse via the sub-object source template.
+            ModelFile.modelNamespace(writer, ctx.namespace(), () -> {
+            writer.write("");
+            ctx.protocolTraits().writeSerdeMethodImpls(writer, className);
+            writer.write("");
+            // Any protocol-specific extra ctor impl (JSON/CBOR header-collection ctor); REST-XML adds none.
+            ctx.protocolTraits().writeInitialResponseCtorImpl(writer, className);
+            writer.write("");
+            });
+        });
+    }
+
+}

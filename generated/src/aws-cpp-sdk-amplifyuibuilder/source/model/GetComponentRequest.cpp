@@ -12,18 +12,4 @@ using namespace Aws::AmplifyUIBuilder::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetComponentRequest::GetComponentRequest() : 
-    m_appIdHasBeenSet(false),
-    m_environmentNameHasBeenSet(false),
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetComponentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetComponentRequest::SerializePayload() const { return {}; }

@@ -12,24 +12,12 @@ using namespace Aws::chatbot::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListTagsForResourceRequest::ListTagsForResourceRequest() : 
-    m_resourceARNHasBeenSet(false)
-{
-}
-
-Aws::String ListTagsForResourceRequest::SerializePayload() const
-{
+Aws::String ListTagsForResourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_resourceARNHasBeenSet)
-  {
-   payload.WithString("ResourceARN", m_resourceARN);
-
+  if (m_resourceARNHasBeenSet) {
+    payload.WithString("ResourceARN", m_resourceARN);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

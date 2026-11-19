@@ -4,13 +4,15 @@
  */
 
 #include <aws/personalize-events/PersonalizeEventsEndpointProvider.h>
+#include <aws/personalize-events/internal/PersonalizeEventsEndpointRules.h>
 
-namespace Aws
-{
-namespace PersonalizeEvents
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace PersonalizeEvents
-} // namespace Aws
+namespace Aws {
+namespace PersonalizeEvents {
+namespace Endpoint {
+PersonalizeEventsEndpointProvider::PersonalizeEventsEndpointProvider()
+    : PersonalizeEventsDefaultEpProviderBase(Aws::PersonalizeEvents::PersonalizeEventsEndpointRules::GetRulesBlob(),
+                                             Aws::PersonalizeEvents::PersonalizeEventsEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace PersonalizeEvents
+}  // namespace Aws

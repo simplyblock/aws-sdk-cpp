@@ -4,13 +4,15 @@
  */
 
 #include <aws/ssm-quicksetup/SSMQuickSetupEndpointProvider.h>
+#include <aws/ssm-quicksetup/internal/SSMQuickSetupEndpointRules.h>
 
-namespace Aws
-{
-namespace SSMQuickSetup
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace SSMQuickSetup
-} // namespace Aws
+namespace Aws {
+namespace SSMQuickSetup {
+namespace Endpoint {
+SSMQuickSetupEndpointProvider::SSMQuickSetupEndpointProvider()
+    : SSMQuickSetupDefaultEpProviderBase(Aws::SSMQuickSetup::SSMQuickSetupEndpointRules::GetRulesBlob(),
+                                         Aws::SSMQuickSetup::SSMQuickSetupEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace SSMQuickSetup
+}  // namespace Aws

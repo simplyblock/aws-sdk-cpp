@@ -4,64 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/healthlake/HealthLake_EXPORTS.h>
 #include <aws/healthlake/model/ImportJobProperties.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace HealthLake
-{
-namespace Model
-{
-  class DescribeFHIRImportJobResult
-  {
-  public:
-    AWS_HEALTHLAKE_API DescribeFHIRImportJobResult();
-    AWS_HEALTHLAKE_API DescribeFHIRImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_HEALTHLAKE_API DescribeFHIRImportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace HealthLake {
+namespace Model {
+class DescribeFHIRImportJobResult {
+ public:
+  AWS_HEALTHLAKE_API DescribeFHIRImportJobResult() = default;
+  AWS_HEALTHLAKE_API DescribeFHIRImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_HEALTHLAKE_API DescribeFHIRImportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The import job properties.</p>
+   */
+  inline const ImportJobProperties& GetImportJobProperties() const { return m_importJobProperties; }
+  template <typename ImportJobPropertiesT = ImportJobProperties>
+  void SetImportJobProperties(ImportJobPropertiesT&& value) {
+    m_importJobPropertiesHasBeenSet = true;
+    m_importJobProperties = std::forward<ImportJobPropertiesT>(value);
+  }
+  template <typename ImportJobPropertiesT = ImportJobProperties>
+  DescribeFHIRImportJobResult& WithImportJobProperties(ImportJobPropertiesT&& value) {
+    SetImportJobProperties(std::forward<ImportJobPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The properties of the Import job request, including the ID, ARN, name, status
-     * of the job, and the progress report of the job.</p>
-     */
-    inline const ImportJobProperties& GetImportJobProperties() const{ return m_importJobProperties; }
-    inline void SetImportJobProperties(const ImportJobProperties& value) { m_importJobProperties = value; }
-    inline void SetImportJobProperties(ImportJobProperties&& value) { m_importJobProperties = std::move(value); }
-    inline DescribeFHIRImportJobResult& WithImportJobProperties(const ImportJobProperties& value) { SetImportJobProperties(value); return *this;}
-    inline DescribeFHIRImportJobResult& WithImportJobProperties(ImportJobProperties&& value) { SetImportJobProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeFHIRImportJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeFHIRImportJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeFHIRImportJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeFHIRImportJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ImportJobProperties m_importJobProperties;
+ private:
+  ImportJobProperties m_importJobProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_importJobPropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace HealthLake
-} // namespace Aws
+}  // namespace Model
+}  // namespace HealthLake
+}  // namespace Aws

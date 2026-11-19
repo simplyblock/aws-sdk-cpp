@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/imagebuilder/model/DeleteDistributionConfigurationResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/imagebuilder/model/DeleteDistributionConfigurationResult.h>
 
 #include <utility>
 
@@ -16,31 +16,22 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteDistributionConfigurationResult::DeleteDistributionConfigurationResult()
-{
-}
-
-DeleteDistributionConfigurationResult::DeleteDistributionConfigurationResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+DeleteDistributionConfigurationResult::DeleteDistributionConfigurationResult(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   *this = result;
 }
 
-DeleteDistributionConfigurationResult& DeleteDistributionConfigurationResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+DeleteDistributionConfigurationResult& DeleteDistributionConfigurationResult::operator=(
+    const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("requestId"))
-  {
+  if (jsonValue.ValueExists("requestId")) {
     m_requestId = jsonValue.GetString("requestId");
-
+    m_requestIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("distributionConfigurationArn"))
-  {
+  if (jsonValue.ValueExists("distributionConfigurationArn")) {
     m_distributionConfigurationArn = jsonValue.GetString("distributionConfigurationArn");
-
+    m_distributionConfigurationArnHasBeenSet = true;
   }
-
-
 
   return *this;
 }

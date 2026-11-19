@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cloudtrail-data "C++ SDK for the AWS cloudtrail-data service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cloudtrail-data "C++ SDK for AWS CloudTrail Data Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLOUDTRAIL-DATA_HEADERS
     "include/aws/cloudtrail-data/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLOUDTRAIL-DATA_HEADERS
 
 file(GLOB AWS_CLOUDTRAIL-DATA_MODEL_HEADERS
     "include/aws/cloudtrail-data/model/*.h"
+)
+
+file(GLOB AWS_CLOUDTRAIL-DATA_INTERNAL_HEADERS
+    "include/aws/cloudtrail-data/internal/*.h"
 )
 
 file(GLOB AWS_CLOUDTRAIL-DATA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLOUDTRAIL-DATA_MODEL_SOURCE
 
 file(GLOB CLOUDTRAIL-DATA_UNIFIED_HEADERS
     ${AWS_CLOUDTRAIL-DATA_HEADERS}
+    ${AWS_CLOUDTRAIL-DATA_INTERNAL_HEADERS}
     ${AWS_CLOUDTRAIL-DATA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cloudtrail-data" FILES ${AWS_CLOUDTRAIL-DATA_HEADERS})
+        source_group("Header Files\\aws\\cloudtrail-data\\internal" FILES ${AWS_CLOUDTRAIL-DATA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cloudtrail-data\\model" FILES ${AWS_CLOUDTRAIL-DATA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLOUDTRAIL-DATA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLOUDTRAIL-DATA_MODEL_SOURCE})

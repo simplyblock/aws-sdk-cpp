@@ -4,78 +4,79 @@
  */
 
 #pragma once
-#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ManagedBlockchain
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ManagedBlockchain {
+namespace Model {
 
+/**
+ * <p>Attributes of Hyperledger Fabric for a peer node on a Hyperledger Fabric
+ * network on Managed Blockchain.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/managedblockchain-2018-09-24/NodeFabricAttributes">AWS
+ * API Reference</a></p>
+ */
+class NodeFabricAttributes {
+ public:
+  AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes() = default;
+  AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MANAGEDBLOCKCHAIN_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Attributes of Hyperledger Fabric for a peer node on a Hyperledger Fabric
-   * network on Managed Blockchain.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/managedblockchain-2018-09-24/NodeFabricAttributes">AWS
-   * API Reference</a></p>
+   * <p>The endpoint that identifies the peer node for all services except peer
+   * channel-based event services.</p>
    */
-  class NodeFabricAttributes
-  {
-  public:
-    AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes();
-    AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MANAGEDBLOCKCHAIN_API NodeFabricAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MANAGEDBLOCKCHAIN_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPeerEndpoint() const { return m_peerEndpoint; }
+  inline bool PeerEndpointHasBeenSet() const { return m_peerEndpointHasBeenSet; }
+  template <typename PeerEndpointT = Aws::String>
+  void SetPeerEndpoint(PeerEndpointT&& value) {
+    m_peerEndpointHasBeenSet = true;
+    m_peerEndpoint = std::forward<PeerEndpointT>(value);
+  }
+  template <typename PeerEndpointT = Aws::String>
+  NodeFabricAttributes& WithPeerEndpoint(PeerEndpointT&& value) {
+    SetPeerEndpoint(std::forward<PeerEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The endpoint that identifies the peer node for peer channel-based event
+   * services.</p>
+   */
+  inline const Aws::String& GetPeerEventEndpoint() const { return m_peerEventEndpoint; }
+  inline bool PeerEventEndpointHasBeenSet() const { return m_peerEventEndpointHasBeenSet; }
+  template <typename PeerEventEndpointT = Aws::String>
+  void SetPeerEventEndpoint(PeerEventEndpointT&& value) {
+    m_peerEventEndpointHasBeenSet = true;
+    m_peerEventEndpoint = std::forward<PeerEventEndpointT>(value);
+  }
+  template <typename PeerEventEndpointT = Aws::String>
+  NodeFabricAttributes& WithPeerEventEndpoint(PeerEventEndpointT&& value) {
+    SetPeerEventEndpoint(std::forward<PeerEventEndpointT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_peerEndpoint;
 
-    ///@{
-    /**
-     * <p>The endpoint that identifies the peer node for all services except peer
-     * channel-based event services.</p>
-     */
-    inline const Aws::String& GetPeerEndpoint() const{ return m_peerEndpoint; }
-    inline bool PeerEndpointHasBeenSet() const { return m_peerEndpointHasBeenSet; }
-    inline void SetPeerEndpoint(const Aws::String& value) { m_peerEndpointHasBeenSet = true; m_peerEndpoint = value; }
-    inline void SetPeerEndpoint(Aws::String&& value) { m_peerEndpointHasBeenSet = true; m_peerEndpoint = std::move(value); }
-    inline void SetPeerEndpoint(const char* value) { m_peerEndpointHasBeenSet = true; m_peerEndpoint.assign(value); }
-    inline NodeFabricAttributes& WithPeerEndpoint(const Aws::String& value) { SetPeerEndpoint(value); return *this;}
-    inline NodeFabricAttributes& WithPeerEndpoint(Aws::String&& value) { SetPeerEndpoint(std::move(value)); return *this;}
-    inline NodeFabricAttributes& WithPeerEndpoint(const char* value) { SetPeerEndpoint(value); return *this;}
-    ///@}
+  Aws::String m_peerEventEndpoint;
+  bool m_peerEndpointHasBeenSet = false;
+  bool m_peerEventEndpointHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The endpoint that identifies the peer node for peer channel-based event
-     * services.</p>
-     */
-    inline const Aws::String& GetPeerEventEndpoint() const{ return m_peerEventEndpoint; }
-    inline bool PeerEventEndpointHasBeenSet() const { return m_peerEventEndpointHasBeenSet; }
-    inline void SetPeerEventEndpoint(const Aws::String& value) { m_peerEventEndpointHasBeenSet = true; m_peerEventEndpoint = value; }
-    inline void SetPeerEventEndpoint(Aws::String&& value) { m_peerEventEndpointHasBeenSet = true; m_peerEventEndpoint = std::move(value); }
-    inline void SetPeerEventEndpoint(const char* value) { m_peerEventEndpointHasBeenSet = true; m_peerEventEndpoint.assign(value); }
-    inline NodeFabricAttributes& WithPeerEventEndpoint(const Aws::String& value) { SetPeerEventEndpoint(value); return *this;}
-    inline NodeFabricAttributes& WithPeerEventEndpoint(Aws::String&& value) { SetPeerEventEndpoint(std::move(value)); return *this;}
-    inline NodeFabricAttributes& WithPeerEventEndpoint(const char* value) { SetPeerEventEndpoint(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_peerEndpoint;
-    bool m_peerEndpointHasBeenSet = false;
-
-    Aws::String m_peerEventEndpoint;
-    bool m_peerEventEndpointHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ManagedBlockchain
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedBlockchain
+}  // namespace Aws

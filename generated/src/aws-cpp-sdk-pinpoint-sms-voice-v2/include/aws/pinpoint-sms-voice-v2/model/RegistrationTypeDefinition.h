@@ -4,95 +4,108 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/RegistrationTypeDisplayHints.h>
 #include <aws/pinpoint-sms-voice-v2/model/SupportedAssociation.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
 
+/**
+ * <p>Provides information on the supported registration type.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-sms-voice-v2-2022-03-31/RegistrationTypeDefinition">AWS
+ * API Reference</a></p>
+ */
+class RegistrationTypeDefinition {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition() = default;
+  AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINTSMSVOICEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides information on the supported registration type.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-sms-voice-v2-2022-03-31/RegistrationTypeDefinition">AWS
-   * API Reference</a></p>
+   * <p>The type of registration form. The list of <b>RegistrationTypes</b> can be
+   * found using the <a>DescribeRegistrationTypeDefinitions</a> action.</p>
    */
-  class RegistrationTypeDefinition
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition();
-    AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINTSMSVOICEV2_API RegistrationTypeDefinition& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINTSMSVOICEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetRegistrationType() const { return m_registrationType; }
+  inline bool RegistrationTypeHasBeenSet() const { return m_registrationTypeHasBeenSet; }
+  template <typename RegistrationTypeT = Aws::String>
+  void SetRegistrationType(RegistrationTypeT&& value) {
+    m_registrationTypeHasBeenSet = true;
+    m_registrationType = std::forward<RegistrationTypeT>(value);
+  }
+  template <typename RegistrationTypeT = Aws::String>
+  RegistrationTypeDefinition& WithRegistrationType(RegistrationTypeT&& value) {
+    SetRegistrationType(std::forward<RegistrationTypeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The supported association behavior for the registration type.</p>
+   */
+  inline const Aws::Vector<SupportedAssociation>& GetSupportedAssociations() const { return m_supportedAssociations; }
+  inline bool SupportedAssociationsHasBeenSet() const { return m_supportedAssociationsHasBeenSet; }
+  template <typename SupportedAssociationsT = Aws::Vector<SupportedAssociation>>
+  void SetSupportedAssociations(SupportedAssociationsT&& value) {
+    m_supportedAssociationsHasBeenSet = true;
+    m_supportedAssociations = std::forward<SupportedAssociationsT>(value);
+  }
+  template <typename SupportedAssociationsT = Aws::Vector<SupportedAssociation>>
+  RegistrationTypeDefinition& WithSupportedAssociations(SupportedAssociationsT&& value) {
+    SetSupportedAssociations(std::forward<SupportedAssociationsT>(value));
+    return *this;
+  }
+  template <typename SupportedAssociationsT = SupportedAssociation>
+  RegistrationTypeDefinition& AddSupportedAssociations(SupportedAssociationsT&& value) {
+    m_supportedAssociationsHasBeenSet = true;
+    m_supportedAssociations.emplace_back(std::forward<SupportedAssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of registration form. The list of <b>RegistrationTypes</b> can be
-     * found using the <a>DescribeRegistrationTypeDefinitions</a> action.</p>
-     */
-    inline const Aws::String& GetRegistrationType() const{ return m_registrationType; }
-    inline bool RegistrationTypeHasBeenSet() const { return m_registrationTypeHasBeenSet; }
-    inline void SetRegistrationType(const Aws::String& value) { m_registrationTypeHasBeenSet = true; m_registrationType = value; }
-    inline void SetRegistrationType(Aws::String&& value) { m_registrationTypeHasBeenSet = true; m_registrationType = std::move(value); }
-    inline void SetRegistrationType(const char* value) { m_registrationTypeHasBeenSet = true; m_registrationType.assign(value); }
-    inline RegistrationTypeDefinition& WithRegistrationType(const Aws::String& value) { SetRegistrationType(value); return *this;}
-    inline RegistrationTypeDefinition& WithRegistrationType(Aws::String&& value) { SetRegistrationType(std::move(value)); return *this;}
-    inline RegistrationTypeDefinition& WithRegistrationType(const char* value) { SetRegistrationType(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides help information on the registration.</p>
+   */
+  inline const RegistrationTypeDisplayHints& GetDisplayHints() const { return m_displayHints; }
+  inline bool DisplayHintsHasBeenSet() const { return m_displayHintsHasBeenSet; }
+  template <typename DisplayHintsT = RegistrationTypeDisplayHints>
+  void SetDisplayHints(DisplayHintsT&& value) {
+    m_displayHintsHasBeenSet = true;
+    m_displayHints = std::forward<DisplayHintsT>(value);
+  }
+  template <typename DisplayHintsT = RegistrationTypeDisplayHints>
+  RegistrationTypeDefinition& WithDisplayHints(DisplayHintsT&& value) {
+    SetDisplayHints(std::forward<DisplayHintsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_registrationType;
 
-    ///@{
-    /**
-     * <p>The supported association behavior for the registration type.</p>
-     */
-    inline const Aws::Vector<SupportedAssociation>& GetSupportedAssociations() const{ return m_supportedAssociations; }
-    inline bool SupportedAssociationsHasBeenSet() const { return m_supportedAssociationsHasBeenSet; }
-    inline void SetSupportedAssociations(const Aws::Vector<SupportedAssociation>& value) { m_supportedAssociationsHasBeenSet = true; m_supportedAssociations = value; }
-    inline void SetSupportedAssociations(Aws::Vector<SupportedAssociation>&& value) { m_supportedAssociationsHasBeenSet = true; m_supportedAssociations = std::move(value); }
-    inline RegistrationTypeDefinition& WithSupportedAssociations(const Aws::Vector<SupportedAssociation>& value) { SetSupportedAssociations(value); return *this;}
-    inline RegistrationTypeDefinition& WithSupportedAssociations(Aws::Vector<SupportedAssociation>&& value) { SetSupportedAssociations(std::move(value)); return *this;}
-    inline RegistrationTypeDefinition& AddSupportedAssociations(const SupportedAssociation& value) { m_supportedAssociationsHasBeenSet = true; m_supportedAssociations.push_back(value); return *this; }
-    inline RegistrationTypeDefinition& AddSupportedAssociations(SupportedAssociation&& value) { m_supportedAssociationsHasBeenSet = true; m_supportedAssociations.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<SupportedAssociation> m_supportedAssociations;
 
-    ///@{
-    /**
-     * <p>Provides help information on the registration.</p>
-     */
-    inline const RegistrationTypeDisplayHints& GetDisplayHints() const{ return m_displayHints; }
-    inline bool DisplayHintsHasBeenSet() const { return m_displayHintsHasBeenSet; }
-    inline void SetDisplayHints(const RegistrationTypeDisplayHints& value) { m_displayHintsHasBeenSet = true; m_displayHints = value; }
-    inline void SetDisplayHints(RegistrationTypeDisplayHints&& value) { m_displayHintsHasBeenSet = true; m_displayHints = std::move(value); }
-    inline RegistrationTypeDefinition& WithDisplayHints(const RegistrationTypeDisplayHints& value) { SetDisplayHints(value); return *this;}
-    inline RegistrationTypeDefinition& WithDisplayHints(RegistrationTypeDisplayHints&& value) { SetDisplayHints(std::move(value)); return *this;}
-    ///@}
-  private:
+  RegistrationTypeDisplayHints m_displayHints;
+  bool m_registrationTypeHasBeenSet = false;
+  bool m_supportedAssociationsHasBeenSet = false;
+  bool m_displayHintsHasBeenSet = false;
+};
 
-    Aws::String m_registrationType;
-    bool m_registrationTypeHasBeenSet = false;
-
-    Aws::Vector<SupportedAssociation> m_supportedAssociations;
-    bool m_supportedAssociationsHasBeenSet = false;
-
-    RegistrationTypeDisplayHints m_displayHints;
-    bool m_displayHintsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

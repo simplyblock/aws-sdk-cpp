@@ -4,52 +4,48 @@
  */
 
 #include <aws/codedeploy/model/BatchGetApplicationRevisionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-BatchGetApplicationRevisionsRequest::BatchGetApplicationRevisionsRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_revisionsHasBeenSet(false)
-{
-}
+Aws::String BatchGetApplicationRevisionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String BatchGetApplicationRevisionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_applicationNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_revisionsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_revisionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> revisionsJsonList(m_revisions.size());
-   for(unsigned revisionsIndex = 0; revisionsIndex < revisionsJsonList.GetLength(); ++revisionsIndex)
-   {
-     revisionsJsonList[revisionsIndex].AsObject(m_revisions[revisionsIndex].Jsonize());
-   }
-   payload.WithArray("revisions", std::move(revisionsJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_applicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("applicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_revisionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("revisions"));
+    encoder.WriteArrayStart(m_revisions.size());
+    for (const auto& item_0 : m_revisions) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection BatchGetApplicationRevisionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection BatchGetApplicationRevisionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.BatchGetApplicationRevisions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

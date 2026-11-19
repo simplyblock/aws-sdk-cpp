@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/route53/model/ActivateKeySigningKeyRequest.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/route53/model/ActivateKeySigningKeyRequest.h>
 
 #include <utility>
 
@@ -14,15 +14,4 @@ using namespace Aws::Route53::Model;
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-ActivateKeySigningKeyRequest::ActivateKeySigningKeyRequest() : 
-    m_hostedZoneIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String ActivateKeySigningKeyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
+Aws::String ActivateKeySigningKeyRequest::SerializePayload() const { return {}; }

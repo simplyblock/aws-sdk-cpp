@@ -4,79 +4,99 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/qbusiness/QBusiness_EXPORTS.h>
 #include <aws/qbusiness/model/GroupStatusDetail.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QBusiness
-{
-namespace Model
-{
-  class GetGroupResult
-  {
-  public:
-    AWS_QBUSINESS_API GetGroupResult();
-    AWS_QBUSINESS_API GetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QBUSINESS_API GetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QBusiness {
+namespace Model {
+class GetGroupResult {
+ public:
+  AWS_QBUSINESS_API GetGroupResult() = default;
+  AWS_QBUSINESS_API GetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QBUSINESS_API GetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The current status of the group.</p>
+   */
+  inline const GroupStatusDetail& GetStatus() const { return m_status; }
+  template <typename StatusT = GroupStatusDetail>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = GroupStatusDetail>
+  GetGroupResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the group.</p>
-     */
-    inline const GroupStatusDetail& GetStatus() const{ return m_status; }
-    inline void SetStatus(const GroupStatusDetail& value) { m_status = value; }
-    inline void SetStatus(GroupStatusDetail&& value) { m_status = std::move(value); }
-    inline GetGroupResult& WithStatus(const GroupStatusDetail& value) { SetStatus(value); return *this;}
-    inline GetGroupResult& WithStatus(GroupStatusDetail&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status history of the group.</p>
+   */
+  inline const Aws::Vector<GroupStatusDetail>& GetStatusHistory() const { return m_statusHistory; }
+  template <typename StatusHistoryT = Aws::Vector<GroupStatusDetail>>
+  void SetStatusHistory(StatusHistoryT&& value) {
+    m_statusHistoryHasBeenSet = true;
+    m_statusHistory = std::forward<StatusHistoryT>(value);
+  }
+  template <typename StatusHistoryT = Aws::Vector<GroupStatusDetail>>
+  GetGroupResult& WithStatusHistory(StatusHistoryT&& value) {
+    SetStatusHistory(std::forward<StatusHistoryT>(value));
+    return *this;
+  }
+  template <typename StatusHistoryT = GroupStatusDetail>
+  GetGroupResult& AddStatusHistory(StatusHistoryT&& value) {
+    m_statusHistoryHasBeenSet = true;
+    m_statusHistory.emplace_back(std::forward<StatusHistoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status history of the group.</p>
-     */
-    inline const Aws::Vector<GroupStatusDetail>& GetStatusHistory() const{ return m_statusHistory; }
-    inline void SetStatusHistory(const Aws::Vector<GroupStatusDetail>& value) { m_statusHistory = value; }
-    inline void SetStatusHistory(Aws::Vector<GroupStatusDetail>&& value) { m_statusHistory = std::move(value); }
-    inline GetGroupResult& WithStatusHistory(const Aws::Vector<GroupStatusDetail>& value) { SetStatusHistory(value); return *this;}
-    inline GetGroupResult& WithStatusHistory(Aws::Vector<GroupStatusDetail>&& value) { SetStatusHistory(std::move(value)); return *this;}
-    inline GetGroupResult& AddStatusHistory(const GroupStatusDetail& value) { m_statusHistory.push_back(value); return *this; }
-    inline GetGroupResult& AddStatusHistory(GroupStatusDetail&& value) { m_statusHistory.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    GroupStatusDetail m_status;
+ private:
+  GroupStatusDetail m_status;
 
-    Aws::Vector<GroupStatusDetail> m_statusHistory;
+  Aws::Vector<GroupStatusDetail> m_statusHistory;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_statusHistoryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QBusiness
-} // namespace Aws
+}  // namespace Model
+}  // namespace QBusiness
+}  // namespace Aws

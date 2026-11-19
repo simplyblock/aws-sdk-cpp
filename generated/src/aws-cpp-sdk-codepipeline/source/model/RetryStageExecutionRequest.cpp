@@ -4,61 +4,61 @@
  */
 
 #include <aws/codepipeline/model/RetryStageExecutionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RetryStageExecutionRequest::RetryStageExecutionRequest() : 
-    m_pipelineNameHasBeenSet(false),
-    m_stageNameHasBeenSet(false),
-    m_pipelineExecutionIdHasBeenSet(false),
-    m_retryMode(StageRetryMode::NOT_SET),
-    m_retryModeHasBeenSet(false)
-{
+Aws::String RetryStageExecutionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pipelineNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stageNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pipelineExecutionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_retryModeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_pipelineNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pipelineName.c_str()));
+  }
+
+  if (m_stageNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("stageName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_stageName.c_str()));
+  }
+
+  if (m_pipelineExecutionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineExecutionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pipelineExecutionId.c_str()));
+  }
+
+  if (m_retryModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("retryMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(StageRetryModeMapper::GetNameForStageRetryMode(m_retryMode).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String RetryStageExecutionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_pipelineNameHasBeenSet)
-  {
-   payload.WithString("pipelineName", m_pipelineName);
-
-  }
-
-  if(m_stageNameHasBeenSet)
-  {
-   payload.WithString("stageName", m_stageName);
-
-  }
-
-  if(m_pipelineExecutionIdHasBeenSet)
-  {
-   payload.WithString("pipelineExecutionId", m_pipelineExecutionId);
-
-  }
-
-  if(m_retryModeHasBeenSet)
-  {
-   payload.WithString("retryMode", StageRetryModeMapper::GetNameForStageRetryMode(m_retryMode));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection RetryStageExecutionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RetryStageExecutionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.RetryStageExecution"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

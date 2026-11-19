@@ -4,92 +4,112 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/redshift/model/ResponseMetadata.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/HsmClientCertificate.h>
+#include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/HsmClientCertificateMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeHsmClientCertificatesResult {
+ public:
+  AWS_REDSHIFT_API DescribeHsmClientCertificatesResult() = default;
+  AWS_REDSHIFT_API DescribeHsmClientCertificatesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API DescribeHsmClientCertificatesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/HsmClientCertificateMessage">AWS
-   * API Reference</a></p>
+   * <p>A value that indicates the starting point for the next set of response
+   * records in a subsequent request. If a value is returned in a response, you can
+   * retrieve the next set of records by providing this returned marker value in the
+   * <code>Marker</code> parameter and retrying the command. If the
+   * <code>Marker</code> field is empty, all response records have been retrieved for
+   * the request. </p>
    */
-  class DescribeHsmClientCertificatesResult
-  {
-  public:
-    AWS_REDSHIFT_API DescribeHsmClientCertificatesResult();
-    AWS_REDSHIFT_API DescribeHsmClientCertificatesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API DescribeHsmClientCertificatesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeHsmClientCertificatesResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of the identifiers for one or more HSM client certificates used by
+   * Amazon Redshift clusters to store and retrieve database encryption keys in an
+   * HSM.</p>
+   */
+  inline const Aws::Vector<HsmClientCertificate>& GetHsmClientCertificates() const { return m_hsmClientCertificates; }
+  template <typename HsmClientCertificatesT = Aws::Vector<HsmClientCertificate>>
+  void SetHsmClientCertificates(HsmClientCertificatesT&& value) {
+    m_hsmClientCertificatesHasBeenSet = true;
+    m_hsmClientCertificates = std::forward<HsmClientCertificatesT>(value);
+  }
+  template <typename HsmClientCertificatesT = Aws::Vector<HsmClientCertificate>>
+  DescribeHsmClientCertificatesResult& WithHsmClientCertificates(HsmClientCertificatesT&& value) {
+    SetHsmClientCertificates(std::forward<HsmClientCertificatesT>(value));
+    return *this;
+  }
+  template <typename HsmClientCertificatesT = HsmClientCertificate>
+  DescribeHsmClientCertificatesResult& AddHsmClientCertificates(HsmClientCertificatesT&& value) {
+    m_hsmClientCertificatesHasBeenSet = true;
+    m_hsmClientCertificates.emplace_back(std::forward<HsmClientCertificatesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A value that indicates the starting point for the next set of response
-     * records in a subsequent request. If a value is returned in a response, you can
-     * retrieve the next set of records by providing this returned marker value in the
-     * <code>Marker</code> parameter and retrying the command. If the
-     * <code>Marker</code> field is empty, all response records have been retrieved for
-     * the request. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeHsmClientCertificatesResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeHsmClientCertificatesResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeHsmClientCertificatesResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of the identifiers for one or more HSM client certificates used by
-     * Amazon Redshift clusters to store and retrieve database encryption keys in an
-     * HSM.</p>
-     */
-    inline const Aws::Vector<HsmClientCertificate>& GetHsmClientCertificates() const{ return m_hsmClientCertificates; }
-    inline void SetHsmClientCertificates(const Aws::Vector<HsmClientCertificate>& value) { m_hsmClientCertificates = value; }
-    inline void SetHsmClientCertificates(Aws::Vector<HsmClientCertificate>&& value) { m_hsmClientCertificates = std::move(value); }
-    inline DescribeHsmClientCertificatesResult& WithHsmClientCertificates(const Aws::Vector<HsmClientCertificate>& value) { SetHsmClientCertificates(value); return *this;}
-    inline DescribeHsmClientCertificatesResult& WithHsmClientCertificates(Aws::Vector<HsmClientCertificate>&& value) { SetHsmClientCertificates(std::move(value)); return *this;}
-    inline DescribeHsmClientCertificatesResult& AddHsmClientCertificates(const HsmClientCertificate& value) { m_hsmClientCertificates.push_back(value); return *this; }
-    inline DescribeHsmClientCertificatesResult& AddHsmClientCertificates(HsmClientCertificate&& value) { m_hsmClientCertificates.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeHsmClientCertificatesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeHsmClientCertificatesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeHsmClientCertificatesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::Vector<HsmClientCertificate> m_hsmClientCertificates;
 
-    Aws::Vector<HsmClientCertificate> m_hsmClientCertificates;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_hsmClientCertificatesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

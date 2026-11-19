@@ -4,202 +4,263 @@
  */
 
 #pragma once
-#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
-#include <aws/trustedadvisor/TrustedAdvisorRequest.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/trustedadvisor/TrustedAdvisorRequest.h>
+#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
+#include <aws/trustedadvisor/model/RecommendationLanguage.h>
 #include <aws/trustedadvisor/model/RecommendationPillar.h>
 #include <aws/trustedadvisor/model/RecommendationSource.h>
 #include <aws/trustedadvisor/model/RecommendationStatus.h>
 #include <aws/trustedadvisor/model/RecommendationType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace TrustedAdvisor
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace TrustedAdvisor {
+namespace Model {
 
+/**
+ */
+class ListRecommendationsRequest : public TrustedAdvisorRequest {
+ public:
+  AWS_TRUSTEDADVISOR_API ListRecommendationsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListRecommendations"; }
+
+  AWS_TRUSTEDADVISOR_API Aws::String SerializePayload() const override;
+
+  AWS_TRUSTEDADVISOR_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The token for the next set of results. Use the value returned in the previous
+   * response in the next request to retrieve the next set of results. </p>
    */
-  class ListRecommendationsRequest : public TrustedAdvisorRequest
-  {
-  public:
-    AWS_TRUSTEDADVISOR_API ListRecommendationsRequest();
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRecommendationsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListRecommendations"; }
+  ///@{
+  /**
+   * <p>The maximum number of results to return per page.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListRecommendationsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_TRUSTEDADVISOR_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The type of the Recommendation</p>
+   */
+  inline RecommendationType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(RecommendationType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline ListRecommendationsRequest& WithType(RecommendationType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_TRUSTEDADVISOR_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The status of the Recommendation</p>
+   */
+  inline RecommendationStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(RecommendationStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ListRecommendationsRequest& WithStatus(RecommendationStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The pillar of the Recommendation</p>
+   */
+  inline RecommendationPillar GetPillar() const { return m_pillar; }
+  inline bool PillarHasBeenSet() const { return m_pillarHasBeenSet; }
+  inline void SetPillar(RecommendationPillar value) {
+    m_pillarHasBeenSet = true;
+    m_pillar = value;
+  }
+  inline ListRecommendationsRequest& WithPillar(RecommendationPillar value) {
+    SetPillar(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>After the last update of the Recommendation</p>
-     */
-    inline const Aws::Utils::DateTime& GetAfterLastUpdatedAt() const{ return m_afterLastUpdatedAt; }
-    inline bool AfterLastUpdatedAtHasBeenSet() const { return m_afterLastUpdatedAtHasBeenSet; }
-    inline void SetAfterLastUpdatedAt(const Aws::Utils::DateTime& value) { m_afterLastUpdatedAtHasBeenSet = true; m_afterLastUpdatedAt = value; }
-    inline void SetAfterLastUpdatedAt(Aws::Utils::DateTime&& value) { m_afterLastUpdatedAtHasBeenSet = true; m_afterLastUpdatedAt = std::move(value); }
-    inline ListRecommendationsRequest& WithAfterLastUpdatedAt(const Aws::Utils::DateTime& value) { SetAfterLastUpdatedAt(value); return *this;}
-    inline ListRecommendationsRequest& WithAfterLastUpdatedAt(Aws::Utils::DateTime&& value) { SetAfterLastUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The aws service associated with the Recommendation</p>
+   */
+  inline const Aws::String& GetAwsService() const { return m_awsService; }
+  inline bool AwsServiceHasBeenSet() const { return m_awsServiceHasBeenSet; }
+  template <typename AwsServiceT = Aws::String>
+  void SetAwsService(AwsServiceT&& value) {
+    m_awsServiceHasBeenSet = true;
+    m_awsService = std::forward<AwsServiceT>(value);
+  }
+  template <typename AwsServiceT = Aws::String>
+  ListRecommendationsRequest& WithAwsService(AwsServiceT&& value) {
+    SetAwsService(std::forward<AwsServiceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The aws service associated with the Recommendation</p>
-     */
-    inline const Aws::String& GetAwsService() const{ return m_awsService; }
-    inline bool AwsServiceHasBeenSet() const { return m_awsServiceHasBeenSet; }
-    inline void SetAwsService(const Aws::String& value) { m_awsServiceHasBeenSet = true; m_awsService = value; }
-    inline void SetAwsService(Aws::String&& value) { m_awsServiceHasBeenSet = true; m_awsService = std::move(value); }
-    inline void SetAwsService(const char* value) { m_awsServiceHasBeenSet = true; m_awsService.assign(value); }
-    inline ListRecommendationsRequest& WithAwsService(const Aws::String& value) { SetAwsService(value); return *this;}
-    inline ListRecommendationsRequest& WithAwsService(Aws::String&& value) { SetAwsService(std::move(value)); return *this;}
-    inline ListRecommendationsRequest& WithAwsService(const char* value) { SetAwsService(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The source of the Recommendation</p>
+   */
+  inline RecommendationSource GetSource() const { return m_source; }
+  inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
+  inline void SetSource(RecommendationSource value) {
+    m_sourceHasBeenSet = true;
+    m_source = value;
+  }
+  inline ListRecommendationsRequest& WithSource(RecommendationSource value) {
+    SetSource(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Before the last update of the Recommendation</p>
-     */
-    inline const Aws::Utils::DateTime& GetBeforeLastUpdatedAt() const{ return m_beforeLastUpdatedAt; }
-    inline bool BeforeLastUpdatedAtHasBeenSet() const { return m_beforeLastUpdatedAtHasBeenSet; }
-    inline void SetBeforeLastUpdatedAt(const Aws::Utils::DateTime& value) { m_beforeLastUpdatedAtHasBeenSet = true; m_beforeLastUpdatedAt = value; }
-    inline void SetBeforeLastUpdatedAt(Aws::Utils::DateTime&& value) { m_beforeLastUpdatedAtHasBeenSet = true; m_beforeLastUpdatedAt = std::move(value); }
-    inline ListRecommendationsRequest& WithBeforeLastUpdatedAt(const Aws::Utils::DateTime& value) { SetBeforeLastUpdatedAt(value); return *this;}
-    inline ListRecommendationsRequest& WithBeforeLastUpdatedAt(Aws::Utils::DateTime&& value) { SetBeforeLastUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The check identifier of the Recommendation</p>
+   */
+  inline const Aws::String& GetCheckIdentifier() const { return m_checkIdentifier; }
+  inline bool CheckIdentifierHasBeenSet() const { return m_checkIdentifierHasBeenSet; }
+  template <typename CheckIdentifierT = Aws::String>
+  void SetCheckIdentifier(CheckIdentifierT&& value) {
+    m_checkIdentifierHasBeenSet = true;
+    m_checkIdentifier = std::forward<CheckIdentifierT>(value);
+  }
+  template <typename CheckIdentifierT = Aws::String>
+  ListRecommendationsRequest& WithCheckIdentifier(CheckIdentifierT&& value) {
+    SetCheckIdentifier(std::forward<CheckIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The check identifier of the Recommendation</p>
-     */
-    inline const Aws::String& GetCheckIdentifier() const{ return m_checkIdentifier; }
-    inline bool CheckIdentifierHasBeenSet() const { return m_checkIdentifierHasBeenSet; }
-    inline void SetCheckIdentifier(const Aws::String& value) { m_checkIdentifierHasBeenSet = true; m_checkIdentifier = value; }
-    inline void SetCheckIdentifier(Aws::String&& value) { m_checkIdentifierHasBeenSet = true; m_checkIdentifier = std::move(value); }
-    inline void SetCheckIdentifier(const char* value) { m_checkIdentifierHasBeenSet = true; m_checkIdentifier.assign(value); }
-    inline ListRecommendationsRequest& WithCheckIdentifier(const Aws::String& value) { SetCheckIdentifier(value); return *this;}
-    inline ListRecommendationsRequest& WithCheckIdentifier(Aws::String&& value) { SetCheckIdentifier(std::move(value)); return *this;}
-    inline ListRecommendationsRequest& WithCheckIdentifier(const char* value) { SetCheckIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>After the last update of the Recommendation</p>
+   */
+  inline const Aws::Utils::DateTime& GetAfterLastUpdatedAt() const { return m_afterLastUpdatedAt; }
+  inline bool AfterLastUpdatedAtHasBeenSet() const { return m_afterLastUpdatedAtHasBeenSet; }
+  template <typename AfterLastUpdatedAtT = Aws::Utils::DateTime>
+  void SetAfterLastUpdatedAt(AfterLastUpdatedAtT&& value) {
+    m_afterLastUpdatedAtHasBeenSet = true;
+    m_afterLastUpdatedAt = std::forward<AfterLastUpdatedAtT>(value);
+  }
+  template <typename AfterLastUpdatedAtT = Aws::Utils::DateTime>
+  ListRecommendationsRequest& WithAfterLastUpdatedAt(AfterLastUpdatedAtT&& value) {
+    SetAfterLastUpdatedAt(std::forward<AfterLastUpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of results to return per page.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListRecommendationsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Before the last update of the Recommendation</p>
+   */
+  inline const Aws::Utils::DateTime& GetBeforeLastUpdatedAt() const { return m_beforeLastUpdatedAt; }
+  inline bool BeforeLastUpdatedAtHasBeenSet() const { return m_beforeLastUpdatedAtHasBeenSet; }
+  template <typename BeforeLastUpdatedAtT = Aws::Utils::DateTime>
+  void SetBeforeLastUpdatedAt(BeforeLastUpdatedAtT&& value) {
+    m_beforeLastUpdatedAtHasBeenSet = true;
+    m_beforeLastUpdatedAt = std::forward<BeforeLastUpdatedAtT>(value);
+  }
+  template <typename BeforeLastUpdatedAtT = Aws::Utils::DateTime>
+  ListRecommendationsRequest& WithBeforeLastUpdatedAt(BeforeLastUpdatedAtT&& value) {
+    SetBeforeLastUpdatedAt(std::forward<BeforeLastUpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of results. Use the value returned in the previous
-     * response in the next request to retrieve the next set of results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListRecommendationsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRecommendationsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRecommendationsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ISO 639-1 code for the language that you want your recommendations to
+   * appear in.</p>
+   */
+  inline RecommendationLanguage GetLanguage() const { return m_language; }
+  inline bool LanguageHasBeenSet() const { return m_languageHasBeenSet; }
+  inline void SetLanguage(RecommendationLanguage value) {
+    m_languageHasBeenSet = true;
+    m_language = value;
+  }
+  inline ListRecommendationsRequest& WithLanguage(RecommendationLanguage value) {
+    SetLanguage(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The pillar of the Recommendation</p>
-     */
-    inline const RecommendationPillar& GetPillar() const{ return m_pillar; }
-    inline bool PillarHasBeenSet() const { return m_pillarHasBeenSet; }
-    inline void SetPillar(const RecommendationPillar& value) { m_pillarHasBeenSet = true; m_pillar = value; }
-    inline void SetPillar(RecommendationPillar&& value) { m_pillarHasBeenSet = true; m_pillar = std::move(value); }
-    inline ListRecommendationsRequest& WithPillar(const RecommendationPillar& value) { SetPillar(value); return *this;}
-    inline ListRecommendationsRequest& WithPillar(RecommendationPillar&& value) { SetPillar(std::move(value)); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>The source of the Recommendation</p>
-     */
-    inline const RecommendationSource& GetSource() const{ return m_source; }
-    inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
-    inline void SetSource(const RecommendationSource& value) { m_sourceHasBeenSet = true; m_source = value; }
-    inline void SetSource(RecommendationSource&& value) { m_sourceHasBeenSet = true; m_source = std::move(value); }
-    inline ListRecommendationsRequest& WithSource(const RecommendationSource& value) { SetSource(value); return *this;}
-    inline ListRecommendationsRequest& WithSource(RecommendationSource&& value) { SetSource(std::move(value)); return *this;}
-    ///@}
+  RecommendationType m_type{RecommendationType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The status of the Recommendation</p>
-     */
-    inline const RecommendationStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const RecommendationStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(RecommendationStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline ListRecommendationsRequest& WithStatus(const RecommendationStatus& value) { SetStatus(value); return *this;}
-    inline ListRecommendationsRequest& WithStatus(RecommendationStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  RecommendationStatus m_status{RecommendationStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The type of the Recommendation</p>
-     */
-    inline const RecommendationType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const RecommendationType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(RecommendationType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline ListRecommendationsRequest& WithType(const RecommendationType& value) { SetType(value); return *this;}
-    inline ListRecommendationsRequest& WithType(RecommendationType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  RecommendationPillar m_pillar{RecommendationPillar::NOT_SET};
 
-    Aws::Utils::DateTime m_afterLastUpdatedAt;
-    bool m_afterLastUpdatedAtHasBeenSet = false;
+  Aws::String m_awsService;
 
-    Aws::String m_awsService;
-    bool m_awsServiceHasBeenSet = false;
+  RecommendationSource m_source{RecommendationSource::NOT_SET};
 
-    Aws::Utils::DateTime m_beforeLastUpdatedAt;
-    bool m_beforeLastUpdatedAtHasBeenSet = false;
+  Aws::String m_checkIdentifier;
 
-    Aws::String m_checkIdentifier;
-    bool m_checkIdentifierHasBeenSet = false;
+  Aws::Utils::DateTime m_afterLastUpdatedAt{};
 
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
+  Aws::Utils::DateTime m_beforeLastUpdatedAt{};
 
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
+  RecommendationLanguage m_language{RecommendationLanguage::NOT_SET};
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_pillarHasBeenSet = false;
+  bool m_awsServiceHasBeenSet = false;
+  bool m_sourceHasBeenSet = false;
+  bool m_checkIdentifierHasBeenSet = false;
+  bool m_afterLastUpdatedAtHasBeenSet = false;
+  bool m_beforeLastUpdatedAtHasBeenSet = false;
+  bool m_languageHasBeenSet = false;
+};
 
-    RecommendationPillar m_pillar;
-    bool m_pillarHasBeenSet = false;
-
-    RecommendationSource m_source;
-    bool m_sourceHasBeenSet = false;
-
-    RecommendationStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    RecommendationType m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TrustedAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace TrustedAdvisor
+}  // namespace Aws

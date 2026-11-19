@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
 
-#include <aws/payment-cryptography-data/PaymentCryptographyDataEndpointRules.h>
-
-
-namespace Aws
-{
-namespace PaymentCryptographyData
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace PaymentCryptographyData {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using PaymentCryptographyDataClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using PaymentCryptographyDataBuiltInParameters = Aws::Endpoint::BuiltInParameter
  * The SDK must use service-specific type for each service per specification.
  */
 using PaymentCryptographyDataEndpointProviderBase =
-    EndpointProviderBase<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters, PaymentCryptographyDataClientContextParameters>;
+    EndpointProviderBase<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters,
+                         PaymentCryptographyDataClientContextParameters>;
 
 using PaymentCryptographyDataDefaultEpProviderBase =
-    DefaultEndpointProvider<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters, PaymentCryptographyDataClientContextParameters>;
+    BDDEndpointProvider<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters,
+                        PaymentCryptographyDataClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_PAYMENTCRYPTOGRAPHYDATA_API PaymentCryptographyDataEndpointProvider : public PaymentCryptographyDataDefaultEpProviderBase
-{
-public:
-    using PaymentCryptographyDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_PAYMENTCRYPTOGRAPHYDATA_API PaymentCryptographyDataEndpointProvider : public PaymentCryptographyDataDefaultEpProviderBase {
+ public:
+  using PaymentCryptographyDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    PaymentCryptographyDataEndpointProvider()
-      : PaymentCryptographyDataDefaultEpProviderBase(Aws::PaymentCryptographyData::PaymentCryptographyDataEndpointRules::GetRulesBlob(), Aws::PaymentCryptographyData::PaymentCryptographyDataEndpointRules::RulesBlobSize)
-    {}
+  PaymentCryptographyDataEndpointProvider();
 
-    ~PaymentCryptographyDataEndpointProvider()
-    {
-    }
+  ~PaymentCryptographyDataEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace PaymentCryptographyData
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace PaymentCryptographyData
+}  // namespace Aws

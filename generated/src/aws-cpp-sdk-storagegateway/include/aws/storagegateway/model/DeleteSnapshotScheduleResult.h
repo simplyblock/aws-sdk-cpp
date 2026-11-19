@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace StorageGateway
-{
-namespace Model
-{
-  class DeleteSnapshotScheduleResult
-  {
-  public:
-    AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult();
-    AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace StorageGateway {
+namespace Model {
+class DeleteSnapshotScheduleResult {
+ public:
+  AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult() = default;
+  AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_STORAGEGATEWAY_API DeleteSnapshotScheduleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The volume which snapshot schedule was deleted.</p>
+   */
+  inline const Aws::String& GetVolumeARN() const { return m_volumeARN; }
+  template <typename VolumeARNT = Aws::String>
+  void SetVolumeARN(VolumeARNT&& value) {
+    m_volumeARNHasBeenSet = true;
+    m_volumeARN = std::forward<VolumeARNT>(value);
+  }
+  template <typename VolumeARNT = Aws::String>
+  DeleteSnapshotScheduleResult& WithVolumeARN(VolumeARNT&& value) {
+    SetVolumeARN(std::forward<VolumeARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The volume which snapshot schedule was deleted.</p>
-     */
-    inline const Aws::String& GetVolumeARN() const{ return m_volumeARN; }
-    inline void SetVolumeARN(const Aws::String& value) { m_volumeARN = value; }
-    inline void SetVolumeARN(Aws::String&& value) { m_volumeARN = std::move(value); }
-    inline void SetVolumeARN(const char* value) { m_volumeARN.assign(value); }
-    inline DeleteSnapshotScheduleResult& WithVolumeARN(const Aws::String& value) { SetVolumeARN(value); return *this;}
-    inline DeleteSnapshotScheduleResult& WithVolumeARN(Aws::String&& value) { SetVolumeARN(std::move(value)); return *this;}
-    inline DeleteSnapshotScheduleResult& WithVolumeARN(const char* value) { SetVolumeARN(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteSnapshotScheduleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteSnapshotScheduleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteSnapshotScheduleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteSnapshotScheduleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_volumeARN;
+ private:
+  Aws::String m_volumeARN;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_volumeARNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace StorageGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace StorageGateway
+}  // namespace Aws

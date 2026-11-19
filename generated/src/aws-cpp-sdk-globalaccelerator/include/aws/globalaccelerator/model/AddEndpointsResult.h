@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/EndpointDescription.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class AddEndpointsResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API AddEndpointsResult();
-    AWS_GLOBALACCELERATOR_API AddEndpointsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API AddEndpointsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class AddEndpointsResult {
+ public:
+  AWS_GLOBALACCELERATOR_API AddEndpointsResult() = default;
+  AWS_GLOBALACCELERATOR_API AddEndpointsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API AddEndpointsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of endpoint objects.</p>
+   */
+  inline const Aws::Vector<EndpointDescription>& GetEndpointDescriptions() const { return m_endpointDescriptions; }
+  template <typename EndpointDescriptionsT = Aws::Vector<EndpointDescription>>
+  void SetEndpointDescriptions(EndpointDescriptionsT&& value) {
+    m_endpointDescriptionsHasBeenSet = true;
+    m_endpointDescriptions = std::forward<EndpointDescriptionsT>(value);
+  }
+  template <typename EndpointDescriptionsT = Aws::Vector<EndpointDescription>>
+  AddEndpointsResult& WithEndpointDescriptions(EndpointDescriptionsT&& value) {
+    SetEndpointDescriptions(std::forward<EndpointDescriptionsT>(value));
+    return *this;
+  }
+  template <typename EndpointDescriptionsT = EndpointDescription>
+  AddEndpointsResult& AddEndpointDescriptions(EndpointDescriptionsT&& value) {
+    m_endpointDescriptionsHasBeenSet = true;
+    m_endpointDescriptions.emplace_back(std::forward<EndpointDescriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of endpoint objects.</p>
-     */
-    inline const Aws::Vector<EndpointDescription>& GetEndpointDescriptions() const{ return m_endpointDescriptions; }
-    inline void SetEndpointDescriptions(const Aws::Vector<EndpointDescription>& value) { m_endpointDescriptions = value; }
-    inline void SetEndpointDescriptions(Aws::Vector<EndpointDescription>&& value) { m_endpointDescriptions = std::move(value); }
-    inline AddEndpointsResult& WithEndpointDescriptions(const Aws::Vector<EndpointDescription>& value) { SetEndpointDescriptions(value); return *this;}
-    inline AddEndpointsResult& WithEndpointDescriptions(Aws::Vector<EndpointDescription>&& value) { SetEndpointDescriptions(std::move(value)); return *this;}
-    inline AddEndpointsResult& AddEndpointDescriptions(const EndpointDescription& value) { m_endpointDescriptions.push_back(value); return *this; }
-    inline AddEndpointsResult& AddEndpointDescriptions(EndpointDescription&& value) { m_endpointDescriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the endpoint group.</p>
+   */
+  inline const Aws::String& GetEndpointGroupArn() const { return m_endpointGroupArn; }
+  template <typename EndpointGroupArnT = Aws::String>
+  void SetEndpointGroupArn(EndpointGroupArnT&& value) {
+    m_endpointGroupArnHasBeenSet = true;
+    m_endpointGroupArn = std::forward<EndpointGroupArnT>(value);
+  }
+  template <typename EndpointGroupArnT = Aws::String>
+  AddEndpointsResult& WithEndpointGroupArn(EndpointGroupArnT&& value) {
+    SetEndpointGroupArn(std::forward<EndpointGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the endpoint group.</p>
-     */
-    inline const Aws::String& GetEndpointGroupArn() const{ return m_endpointGroupArn; }
-    inline void SetEndpointGroupArn(const Aws::String& value) { m_endpointGroupArn = value; }
-    inline void SetEndpointGroupArn(Aws::String&& value) { m_endpointGroupArn = std::move(value); }
-    inline void SetEndpointGroupArn(const char* value) { m_endpointGroupArn.assign(value); }
-    inline AddEndpointsResult& WithEndpointGroupArn(const Aws::String& value) { SetEndpointGroupArn(value); return *this;}
-    inline AddEndpointsResult& WithEndpointGroupArn(Aws::String&& value) { SetEndpointGroupArn(std::move(value)); return *this;}
-    inline AddEndpointsResult& WithEndpointGroupArn(const char* value) { SetEndpointGroupArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AddEndpointsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AddEndpointsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AddEndpointsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AddEndpointsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<EndpointDescription> m_endpointDescriptions;
+ private:
+  Aws::Vector<EndpointDescription> m_endpointDescriptions;
 
-    Aws::String m_endpointGroupArn;
+  Aws::String m_endpointGroupArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_endpointDescriptionsHasBeenSet = false;
+  bool m_endpointGroupArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

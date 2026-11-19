@@ -3,33 +3,26 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/StartDBInstanceRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/StartDBInstanceRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-StartDBInstanceRequest::StartDBInstanceRequest() : 
-    m_dBInstanceIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String StartDBInstanceRequest::SerializePayload() const
-{
+Aws::String StartDBInstanceRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=StartDBInstance&";
-  if(m_dBInstanceIdentifierHasBeenSet)
-  {
+  if (m_dBInstanceIdentifierHasBeenSet) {
     ss << "DBInstanceIdentifier=" << StringUtils::URLEncode(m_dBInstanceIdentifier.c_str()) << "&";
+  }
+
+  if (m_dBCapacityReservationIdentifierHasBeenSet) {
+    ss << "DBCapacityReservationIdentifier=" << StringUtils::URLEncode(m_dBCapacityReservationIdentifier.c_str()) << "&";
   }
 
   ss << "Version=2014-10-31";
   return ss.str();
 }
 
-
-void  StartDBInstanceRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void StartDBInstanceRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

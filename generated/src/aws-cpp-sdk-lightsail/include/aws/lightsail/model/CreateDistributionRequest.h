@@ -4,221 +4,453 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
-#include <aws/lightsail/LightsailRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/lightsail/model/InputOrigin.h>
-#include <aws/lightsail/model/CacheBehavior.h>
-#include <aws/lightsail/model/CacheSettings.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lightsail/model/IpAddressType.h>
-#include <aws/lightsail/model/ViewerMinimumTlsProtocolVersionEnum.h>
+#include <aws/lightsail/LightsailRequest.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
+#include <aws/lightsail/model/CacheBehavior.h>
 #include <aws/lightsail/model/CacheBehaviorPerPath.h>
+#include <aws/lightsail/model/CacheSettings.h>
+#include <aws/lightsail/model/DistributionCustomErrorResponse.h>
+#include <aws/lightsail/model/InputOrigin.h>
+#include <aws/lightsail/model/IpAddressType.h>
 #include <aws/lightsail/model/Tag.h>
+#include <aws/lightsail/model/ViewerMinimumTlsProtocolVersionEnum.h>
+#include <aws/lightsail/model/WafRule.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Lightsail
-{
-namespace Model
-{
+namespace Aws {
+namespace Lightsail {
+namespace Model {
 
+/**
+ */
+class CreateDistributionRequest : public LightsailRequest {
+ public:
+  AWS_LIGHTSAIL_API CreateDistributionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDistribution"; }
+
+  AWS_LIGHTSAIL_API Aws::String SerializePayload() const override;
+
+  AWS_LIGHTSAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name for the distribution.</p>
    */
-  class CreateDistributionRequest : public LightsailRequest
-  {
-  public:
-    AWS_LIGHTSAIL_API CreateDistributionRequest();
+  inline const Aws::String& GetDistributionName() const { return m_distributionName; }
+  inline bool DistributionNameHasBeenSet() const { return m_distributionNameHasBeenSet; }
+  template <typename DistributionNameT = Aws::String>
+  void SetDistributionName(DistributionNameT&& value) {
+    m_distributionNameHasBeenSet = true;
+    m_distributionName = std::forward<DistributionNameT>(value);
+  }
+  template <typename DistributionNameT = Aws::String>
+  CreateDistributionRequest& WithDistributionName(DistributionNameT&& value) {
+    SetDistributionName(std::forward<DistributionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDistribution"; }
+  ///@{
+  /**
+   * <p>An object that describes the origin resource for the distribution, such as a
+   * Lightsail instance, bucket, or load balancer.</p> <p>The distribution pulls,
+   * caches, and serves content from the origin.</p>
+   */
+  inline const InputOrigin& GetOrigin() const { return m_origin; }
+  inline bool OriginHasBeenSet() const { return m_originHasBeenSet; }
+  template <typename OriginT = InputOrigin>
+  void SetOrigin(OriginT&& value) {
+    m_originHasBeenSet = true;
+    m_origin = std::forward<OriginT>(value);
+  }
+  template <typename OriginT = InputOrigin>
+  CreateDistributionRequest& WithOrigin(OriginT&& value) {
+    SetOrigin(std::forward<OriginT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LIGHTSAIL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An object that describes the default cache behavior for the distribution.</p>
+   */
+  inline const CacheBehavior& GetDefaultCacheBehavior() const { return m_defaultCacheBehavior; }
+  inline bool DefaultCacheBehaviorHasBeenSet() const { return m_defaultCacheBehaviorHasBeenSet; }
+  template <typename DefaultCacheBehaviorT = CacheBehavior>
+  void SetDefaultCacheBehavior(DefaultCacheBehaviorT&& value) {
+    m_defaultCacheBehaviorHasBeenSet = true;
+    m_defaultCacheBehavior = std::forward<DefaultCacheBehaviorT>(value);
+  }
+  template <typename DefaultCacheBehaviorT = CacheBehavior>
+  CreateDistributionRequest& WithDefaultCacheBehavior(DefaultCacheBehaviorT&& value) {
+    SetDefaultCacheBehavior(std::forward<DefaultCacheBehaviorT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LIGHTSAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>An object that describes the cache behavior settings for the
+   * distribution.</p>
+   */
+  inline const CacheSettings& GetCacheBehaviorSettings() const { return m_cacheBehaviorSettings; }
+  inline bool CacheBehaviorSettingsHasBeenSet() const { return m_cacheBehaviorSettingsHasBeenSet; }
+  template <typename CacheBehaviorSettingsT = CacheSettings>
+  void SetCacheBehaviorSettings(CacheBehaviorSettingsT&& value) {
+    m_cacheBehaviorSettingsHasBeenSet = true;
+    m_cacheBehaviorSettings = std::forward<CacheBehaviorSettingsT>(value);
+  }
+  template <typename CacheBehaviorSettingsT = CacheSettings>
+  CreateDistributionRequest& WithCacheBehaviorSettings(CacheBehaviorSettingsT&& value) {
+    SetCacheBehaviorSettings(std::forward<CacheBehaviorSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An array of objects that describe the per-path cache behavior for the
+   * distribution.</p>
+   */
+  inline const Aws::Vector<CacheBehaviorPerPath>& GetCacheBehaviors() const { return m_cacheBehaviors; }
+  inline bool CacheBehaviorsHasBeenSet() const { return m_cacheBehaviorsHasBeenSet; }
+  template <typename CacheBehaviorsT = Aws::Vector<CacheBehaviorPerPath>>
+  void SetCacheBehaviors(CacheBehaviorsT&& value) {
+    m_cacheBehaviorsHasBeenSet = true;
+    m_cacheBehaviors = std::forward<CacheBehaviorsT>(value);
+  }
+  template <typename CacheBehaviorsT = Aws::Vector<CacheBehaviorPerPath>>
+  CreateDistributionRequest& WithCacheBehaviors(CacheBehaviorsT&& value) {
+    SetCacheBehaviors(std::forward<CacheBehaviorsT>(value));
+    return *this;
+  }
+  template <typename CacheBehaviorsT = CacheBehaviorPerPath>
+  CreateDistributionRequest& AddCacheBehaviors(CacheBehaviorsT&& value) {
+    m_cacheBehaviorsHasBeenSet = true;
+    m_cacheBehaviors.emplace_back(std::forward<CacheBehaviorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name for the distribution.</p>
-     */
-    inline const Aws::String& GetDistributionName() const{ return m_distributionName; }
-    inline bool DistributionNameHasBeenSet() const { return m_distributionNameHasBeenSet; }
-    inline void SetDistributionName(const Aws::String& value) { m_distributionNameHasBeenSet = true; m_distributionName = value; }
-    inline void SetDistributionName(Aws::String&& value) { m_distributionNameHasBeenSet = true; m_distributionName = std::move(value); }
-    inline void SetDistributionName(const char* value) { m_distributionNameHasBeenSet = true; m_distributionName.assign(value); }
-    inline CreateDistributionRequest& WithDistributionName(const Aws::String& value) { SetDistributionName(value); return *this;}
-    inline CreateDistributionRequest& WithDistributionName(Aws::String&& value) { SetDistributionName(std::move(value)); return *this;}
-    inline CreateDistributionRequest& WithDistributionName(const char* value) { SetDistributionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The bundle ID to use for the distribution.</p> <p>A distribution bundle
+   * describes the specifications of your distribution, such as the monthly cost and
+   * monthly network transfer quota.</p> <p>Use the
+   * <code>GetDistributionBundles</code> action to get a list of distribution bundle
+   * IDs that you can specify.</p>
+   */
+  inline const Aws::String& GetBundleId() const { return m_bundleId; }
+  inline bool BundleIdHasBeenSet() const { return m_bundleIdHasBeenSet; }
+  template <typename BundleIdT = Aws::String>
+  void SetBundleId(BundleIdT&& value) {
+    m_bundleIdHasBeenSet = true;
+    m_bundleId = std::forward<BundleIdT>(value);
+  }
+  template <typename BundleIdT = Aws::String>
+  CreateDistributionRequest& WithBundleId(BundleIdT&& value) {
+    SetBundleId(std::forward<BundleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that describes the origin resource for the distribution, such as a
-     * Lightsail instance, bucket, or load balancer.</p> <p>The distribution pulls,
-     * caches, and serves content from the origin.</p>
-     */
-    inline const InputOrigin& GetOrigin() const{ return m_origin; }
-    inline bool OriginHasBeenSet() const { return m_originHasBeenSet; }
-    inline void SetOrigin(const InputOrigin& value) { m_originHasBeenSet = true; m_origin = value; }
-    inline void SetOrigin(InputOrigin&& value) { m_originHasBeenSet = true; m_origin = std::move(value); }
-    inline CreateDistributionRequest& WithOrigin(const InputOrigin& value) { SetOrigin(value); return *this;}
-    inline CreateDistributionRequest& WithOrigin(InputOrigin&& value) { SetOrigin(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP address type for the distribution.</p> <p>The possible values are
+   * <code>ipv4</code> for IPv4 only, and <code>dualstack</code> for IPv4 and
+   * IPv6.</p> <p>The default value is <code>dualstack</code>.</p>
+   */
+  inline IpAddressType GetIpAddressType() const { return m_ipAddressType; }
+  inline bool IpAddressTypeHasBeenSet() const { return m_ipAddressTypeHasBeenSet; }
+  inline void SetIpAddressType(IpAddressType value) {
+    m_ipAddressTypeHasBeenSet = true;
+    m_ipAddressType = value;
+  }
+  inline CreateDistributionRequest& WithIpAddressType(IpAddressType value) {
+    SetIpAddressType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that describes the default cache behavior for the distribution.</p>
-     */
-    inline const CacheBehavior& GetDefaultCacheBehavior() const{ return m_defaultCacheBehavior; }
-    inline bool DefaultCacheBehaviorHasBeenSet() const { return m_defaultCacheBehaviorHasBeenSet; }
-    inline void SetDefaultCacheBehavior(const CacheBehavior& value) { m_defaultCacheBehaviorHasBeenSet = true; m_defaultCacheBehavior = value; }
-    inline void SetDefaultCacheBehavior(CacheBehavior&& value) { m_defaultCacheBehaviorHasBeenSet = true; m_defaultCacheBehavior = std::move(value); }
-    inline CreateDistributionRequest& WithDefaultCacheBehavior(const CacheBehavior& value) { SetDefaultCacheBehavior(value); return *this;}
-    inline CreateDistributionRequest& WithDefaultCacheBehavior(CacheBehavior&& value) { SetDefaultCacheBehavior(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tag keys and optional values to add to the distribution during
+   * create.</p> <p>Use the <code>TagResource</code> action to tag a resource after
+   * it's created.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateDistributionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateDistributionRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that describes the cache behavior settings for the
-     * distribution.</p>
-     */
-    inline const CacheSettings& GetCacheBehaviorSettings() const{ return m_cacheBehaviorSettings; }
-    inline bool CacheBehaviorSettingsHasBeenSet() const { return m_cacheBehaviorSettingsHasBeenSet; }
-    inline void SetCacheBehaviorSettings(const CacheSettings& value) { m_cacheBehaviorSettingsHasBeenSet = true; m_cacheBehaviorSettings = value; }
-    inline void SetCacheBehaviorSettings(CacheSettings&& value) { m_cacheBehaviorSettingsHasBeenSet = true; m_cacheBehaviorSettings = std::move(value); }
-    inline CreateDistributionRequest& WithCacheBehaviorSettings(const CacheSettings& value) { SetCacheBehaviorSettings(value); return *this;}
-    inline CreateDistributionRequest& WithCacheBehaviorSettings(CacheSettings&& value) { SetCacheBehaviorSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the SSL/TLS certificate that you want to attach to the
+   * distribution.</p> <p>Use the <a
+   * href="https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetCertificates.html">GetCertificates</a>
+   * action to get a list of certificate names that you can specify.</p>
+   */
+  inline const Aws::String& GetCertificateName() const { return m_certificateName; }
+  inline bool CertificateNameHasBeenSet() const { return m_certificateNameHasBeenSet; }
+  template <typename CertificateNameT = Aws::String>
+  void SetCertificateName(CertificateNameT&& value) {
+    m_certificateNameHasBeenSet = true;
+    m_certificateName = std::forward<CertificateNameT>(value);
+  }
+  template <typename CertificateNameT = Aws::String>
+  CreateDistributionRequest& WithCertificateName(CertificateNameT&& value) {
+    SetCertificateName(std::forward<CertificateNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects that describe the per-path cache behavior for the
-     * distribution.</p>
-     */
-    inline const Aws::Vector<CacheBehaviorPerPath>& GetCacheBehaviors() const{ return m_cacheBehaviors; }
-    inline bool CacheBehaviorsHasBeenSet() const { return m_cacheBehaviorsHasBeenSet; }
-    inline void SetCacheBehaviors(const Aws::Vector<CacheBehaviorPerPath>& value) { m_cacheBehaviorsHasBeenSet = true; m_cacheBehaviors = value; }
-    inline void SetCacheBehaviors(Aws::Vector<CacheBehaviorPerPath>&& value) { m_cacheBehaviorsHasBeenSet = true; m_cacheBehaviors = std::move(value); }
-    inline CreateDistributionRequest& WithCacheBehaviors(const Aws::Vector<CacheBehaviorPerPath>& value) { SetCacheBehaviors(value); return *this;}
-    inline CreateDistributionRequest& WithCacheBehaviors(Aws::Vector<CacheBehaviorPerPath>&& value) { SetCacheBehaviors(std::move(value)); return *this;}
-    inline CreateDistributionRequest& AddCacheBehaviors(const CacheBehaviorPerPath& value) { m_cacheBehaviorsHasBeenSet = true; m_cacheBehaviors.push_back(value); return *this; }
-    inline CreateDistributionRequest& AddCacheBehaviors(CacheBehaviorPerPath&& value) { m_cacheBehaviorsHasBeenSet = true; m_cacheBehaviors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The minimum TLS protocol version for the SSL/TLS certificate.</p>
+   */
+  inline ViewerMinimumTlsProtocolVersionEnum GetViewerMinimumTlsProtocolVersion() const { return m_viewerMinimumTlsProtocolVersion; }
+  inline bool ViewerMinimumTlsProtocolVersionHasBeenSet() const { return m_viewerMinimumTlsProtocolVersionHasBeenSet; }
+  inline void SetViewerMinimumTlsProtocolVersion(ViewerMinimumTlsProtocolVersionEnum value) {
+    m_viewerMinimumTlsProtocolVersionHasBeenSet = true;
+    m_viewerMinimumTlsProtocolVersion = value;
+  }
+  inline CreateDistributionRequest& WithViewerMinimumTlsProtocolVersion(ViewerMinimumTlsProtocolVersionEnum value) {
+    SetViewerMinimumTlsProtocolVersion(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The bundle ID to use for the distribution.</p> <p>A distribution bundle
-     * describes the specifications of your distribution, such as the monthly cost and
-     * monthly network transfer quota.</p> <p>Use the
-     * <code>GetDistributionBundles</code> action to get a list of distribution bundle
-     * IDs that you can specify.</p>
-     */
-    inline const Aws::String& GetBundleId() const{ return m_bundleId; }
-    inline bool BundleIdHasBeenSet() const { return m_bundleIdHasBeenSet; }
-    inline void SetBundleId(const Aws::String& value) { m_bundleIdHasBeenSet = true; m_bundleId = value; }
-    inline void SetBundleId(Aws::String&& value) { m_bundleIdHasBeenSet = true; m_bundleId = std::move(value); }
-    inline void SetBundleId(const char* value) { m_bundleIdHasBeenSet = true; m_bundleId.assign(value); }
-    inline CreateDistributionRequest& WithBundleId(const Aws::String& value) { SetBundleId(value); return *this;}
-    inline CreateDistributionRequest& WithBundleId(Aws::String&& value) { SetBundleId(std::move(value)); return *this;}
-    inline CreateDistributionRequest& WithBundleId(const char* value) { SetBundleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether to enable private origin access for the distribution. With
+   * private origin access, the distribution can serve objects that aren't publicly
+   * accessible from a Lightsail bucket.</p> <p>Lightsail grants the distribution
+   * permission to read the bucket's objects. Enabling private origin access doesn't
+   * change the bucket's access settings, and you can still retrieve publicly
+   * accessible objects directly from the bucket's endpoint.</p>  <p>You can
+   * enable private origin access only when the distribution's origin is a Lightsail
+   * bucket. If the origin is another resource type, the request fails.</p>
+   */
+  inline bool GetEnablePrivateOriginAccess() const { return m_enablePrivateOriginAccess; }
+  inline bool EnablePrivateOriginAccessHasBeenSet() const { return m_enablePrivateOriginAccessHasBeenSet; }
+  inline void SetEnablePrivateOriginAccess(bool value) {
+    m_enablePrivateOriginAccessHasBeenSet = true;
+    m_enablePrivateOriginAccess = value;
+  }
+  inline CreateDistributionRequest& WithEnablePrivateOriginAccess(bool value) {
+    SetEnablePrivateOriginAccess(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP address type for the distribution.</p> <p>The possible values are
-     * <code>ipv4</code> for IPv4 only, and <code>dualstack</code> for IPv4 and
-     * IPv6.</p> <p>The default value is <code>dualstack</code>.</p>
-     */
-    inline const IpAddressType& GetIpAddressType() const{ return m_ipAddressType; }
-    inline bool IpAddressTypeHasBeenSet() const { return m_ipAddressTypeHasBeenSet; }
-    inline void SetIpAddressType(const IpAddressType& value) { m_ipAddressTypeHasBeenSet = true; m_ipAddressType = value; }
-    inline void SetIpAddressType(IpAddressType&& value) { m_ipAddressTypeHasBeenSet = true; m_ipAddressType = std::move(value); }
-    inline CreateDistributionRequest& WithIpAddressType(const IpAddressType& value) { SetIpAddressType(value); return *this;}
-    inline CreateDistributionRequest& WithIpAddressType(IpAddressType&& value) { SetIpAddressType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The object (for example, <code>index.html</code>) that the distribution
+   * returns when a viewer requests the root URL of the distribution (<code>/</code>)
+   * instead of a specific object. The object that you specify must be available from
+   * the origin.</p>
+   */
+  inline const Aws::String& GetDefaultRootObject() const { return m_defaultRootObject; }
+  inline bool DefaultRootObjectHasBeenSet() const { return m_defaultRootObjectHasBeenSet; }
+  template <typename DefaultRootObjectT = Aws::String>
+  void SetDefaultRootObject(DefaultRootObjectT&& value) {
+    m_defaultRootObjectHasBeenSet = true;
+    m_defaultRootObject = std::forward<DefaultRootObjectT>(value);
+  }
+  template <typename DefaultRootObjectT = Aws::String>
+  CreateDistributionRequest& WithDefaultRootObject(DefaultRootObjectT&& value) {
+    SetDefaultRootObject(std::forward<DefaultRootObjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tag keys and optional values to add to the distribution during
-     * create.</p> <p>Use the <code>TagResource</code> action to tag a resource after
-     * it's created.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateDistributionRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateDistributionRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateDistributionRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateDistributionRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An array of objects that describe the custom error responses for the
+   * distribution. With a custom error response, you can specify the page to return
+   * when the origin responds with a given HTTP error code. You can also specify the
+   * HTTP status code to send to the viewer.</p>
+   */
+  inline const Aws::Vector<DistributionCustomErrorResponse>& GetCustomErrorResponses() const { return m_customErrorResponses; }
+  inline bool CustomErrorResponsesHasBeenSet() const { return m_customErrorResponsesHasBeenSet; }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  void SetCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses = std::forward<CustomErrorResponsesT>(value);
+  }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  CreateDistributionRequest& WithCustomErrorResponses(CustomErrorResponsesT&& value) {
+    SetCustomErrorResponses(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  template <typename CustomErrorResponsesT = DistributionCustomErrorResponse>
+  CreateDistributionRequest& AddCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses.emplace_back(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the SSL/TLS certificate that you want to attach to the
-     * distribution.</p> <p>Use the <a
-     * href="https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetCertificates.html">GetCertificates</a>
-     * action to get a list of certificate names that you can specify.</p>
-     */
-    inline const Aws::String& GetCertificateName() const{ return m_certificateName; }
-    inline bool CertificateNameHasBeenSet() const { return m_certificateNameHasBeenSet; }
-    inline void SetCertificateName(const Aws::String& value) { m_certificateNameHasBeenSet = true; m_certificateName = value; }
-    inline void SetCertificateName(Aws::String&& value) { m_certificateNameHasBeenSet = true; m_certificateName = std::move(value); }
-    inline void SetCertificateName(const char* value) { m_certificateNameHasBeenSet = true; m_certificateName.assign(value); }
-    inline CreateDistributionRequest& WithCertificateName(const Aws::String& value) { SetCertificateName(value); return *this;}
-    inline CreateDistributionRequest& WithCertificateName(Aws::String&& value) { SetCertificateName(std::move(value)); return *this;}
-    inline CreateDistributionRequest& WithCertificateName(const char* value) { SetCertificateName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether to enable Web Application Firewall (WAF) for the
+   * distribution. WAF inspects viewer requests and blocks requests that match the
+   * WAF rule groups that you enable.</p> <p>When you enable WAF without specifying
+   * the <code>wafRules</code> parameter, the distribution has no WAF rule groups
+   * enabled and doesn't block any requests.</p>  <p>WAF is available only for
+   * distributions that use the <code>medium_1_0</code> or <code>large_1_0</code>
+   * bundle.</p>
+   */
+  inline bool GetEnableWaf() const { return m_enableWaf; }
+  inline bool EnableWafHasBeenSet() const { return m_enableWafHasBeenSet; }
+  inline void SetEnableWaf(bool value) {
+    m_enableWafHasBeenSet = true;
+    m_enableWaf = value;
+  }
+  inline CreateDistributionRequest& WithEnableWaf(bool value) {
+    SetEnableWaf(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The minimum TLS protocol version for the SSL/TLS certificate.</p>
-     */
-    inline const ViewerMinimumTlsProtocolVersionEnum& GetViewerMinimumTlsProtocolVersion() const{ return m_viewerMinimumTlsProtocolVersion; }
-    inline bool ViewerMinimumTlsProtocolVersionHasBeenSet() const { return m_viewerMinimumTlsProtocolVersionHasBeenSet; }
-    inline void SetViewerMinimumTlsProtocolVersion(const ViewerMinimumTlsProtocolVersionEnum& value) { m_viewerMinimumTlsProtocolVersionHasBeenSet = true; m_viewerMinimumTlsProtocolVersion = value; }
-    inline void SetViewerMinimumTlsProtocolVersion(ViewerMinimumTlsProtocolVersionEnum&& value) { m_viewerMinimumTlsProtocolVersionHasBeenSet = true; m_viewerMinimumTlsProtocolVersion = std::move(value); }
-    inline CreateDistributionRequest& WithViewerMinimumTlsProtocolVersion(const ViewerMinimumTlsProtocolVersionEnum& value) { SetViewerMinimumTlsProtocolVersion(value); return *this;}
-    inline CreateDistributionRequest& WithViewerMinimumTlsProtocolVersion(ViewerMinimumTlsProtocolVersionEnum&& value) { SetViewerMinimumTlsProtocolVersion(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>An array of objects that describe the WAF rule groups to enable for the
+   * distribution.</p> <p>The WAF rule groups that you can specify depend on the
+   * bundle of the distribution:</p> <ul> <li> <p> <code>medium_1_0</code> – Supports
+   * the <code>AWSManagedRulesCommonRuleSet</code>,
+   * <code>AWSManagedRulesKnownBadInputsRuleSet</code>, and
+   * <code>AWSManagedRulesAnonymousIpList</code> rule groups.</p> </li> <li> <p>
+   * <code>large_1_0</code> – Supports the rule groups for <code>medium_1_0</code>,
+   * plus <code>AWSManagedRulesAdminProtectionRuleSet</code>,
+   * <code>AWSManagedRulesSQLiRuleSet</code>,
+   * <code>AWSManagedRulesLinuxRuleSet</code>,
+   * <code>AWSManagedRulesUnixRuleSet</code>,
+   * <code>AWSManagedRulesWindowsRuleSet</code>,
+   * <code>AWSManagedRulesPHPRuleSet</code>,
+   * <code>AWSManagedRulesWordPressRuleSet</code>,
+   * <code>AWSManagedRulesAmazonIpReputationList</code>,
+   * <code>AWSManagedRulesATPRuleSet</code>, <code>AWSManagedRulesACFPRuleSet</code>,
+   * and <code>AWSManagedRulesBotControlRuleSet</code> rule groups.</p> </li> </ul>
+   */
+  inline const Aws::Vector<WafRule>& GetWafRules() const { return m_wafRules; }
+  inline bool WafRulesHasBeenSet() const { return m_wafRulesHasBeenSet; }
+  template <typename WafRulesT = Aws::Vector<WafRule>>
+  void SetWafRules(WafRulesT&& value) {
+    m_wafRulesHasBeenSet = true;
+    m_wafRules = std::forward<WafRulesT>(value);
+  }
+  template <typename WafRulesT = Aws::Vector<WafRule>>
+  CreateDistributionRequest& WithWafRules(WafRulesT&& value) {
+    SetWafRules(std::forward<WafRulesT>(value));
+    return *this;
+  }
+  template <typename WafRulesT = WafRule>
+  CreateDistributionRequest& AddWafRules(WafRulesT&& value) {
+    m_wafRulesHasBeenSet = true;
+    m_wafRules.emplace_back(std::forward<WafRulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_distributionName;
-    bool m_distributionNameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The Lightsail subdomain to create and associate with the distribution (for
+   * example, <code>mysite</code>, for the web address
+   * <code>mysite.amazonlightsail.com</code>).</p> <p>After the distribution is
+   * deployed, Lightsail creates the subdomain and associates it with the
+   * distribution. If Lightsail can't create or associate the subdomain, it still
+   * creates the distribution, but the <code>CreateDistribution</code> operation
+   * fails and the <code>state</code> of the distribution's <code>subdomain</code> is
+   * <code>Error</code>. To check the status, use the <code>subdomain</code>
+   * parameter of the distribution.</p>
+   */
+  inline const Aws::String& GetSubdomainName() const { return m_subdomainName; }
+  inline bool SubdomainNameHasBeenSet() const { return m_subdomainNameHasBeenSet; }
+  template <typename SubdomainNameT = Aws::String>
+  void SetSubdomainName(SubdomainNameT&& value) {
+    m_subdomainNameHasBeenSet = true;
+    m_subdomainName = std::forward<SubdomainNameT>(value);
+  }
+  template <typename SubdomainNameT = Aws::String>
+  CreateDistributionRequest& WithSubdomainName(SubdomainNameT&& value) {
+    SetSubdomainName(std::forward<SubdomainNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_distributionName;
 
-    InputOrigin m_origin;
-    bool m_originHasBeenSet = false;
+  InputOrigin m_origin;
 
-    CacheBehavior m_defaultCacheBehavior;
-    bool m_defaultCacheBehaviorHasBeenSet = false;
+  CacheBehavior m_defaultCacheBehavior;
 
-    CacheSettings m_cacheBehaviorSettings;
-    bool m_cacheBehaviorSettingsHasBeenSet = false;
+  CacheSettings m_cacheBehaviorSettings;
 
-    Aws::Vector<CacheBehaviorPerPath> m_cacheBehaviors;
-    bool m_cacheBehaviorsHasBeenSet = false;
+  Aws::Vector<CacheBehaviorPerPath> m_cacheBehaviors;
 
-    Aws::String m_bundleId;
-    bool m_bundleIdHasBeenSet = false;
+  Aws::String m_bundleId;
 
-    IpAddressType m_ipAddressType;
-    bool m_ipAddressTypeHasBeenSet = false;
+  IpAddressType m_ipAddressType{IpAddressType::NOT_SET};
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::String m_certificateName;
-    bool m_certificateNameHasBeenSet = false;
+  Aws::String m_certificateName;
 
-    ViewerMinimumTlsProtocolVersionEnum m_viewerMinimumTlsProtocolVersion;
-    bool m_viewerMinimumTlsProtocolVersionHasBeenSet = false;
-  };
+  ViewerMinimumTlsProtocolVersionEnum m_viewerMinimumTlsProtocolVersion{ViewerMinimumTlsProtocolVersionEnum::NOT_SET};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+  bool m_enablePrivateOriginAccess{false};
+
+  Aws::String m_defaultRootObject;
+
+  Aws::Vector<DistributionCustomErrorResponse> m_customErrorResponses;
+
+  bool m_enableWaf{false};
+
+  Aws::Vector<WafRule> m_wafRules;
+
+  Aws::String m_subdomainName;
+  bool m_distributionNameHasBeenSet = false;
+  bool m_originHasBeenSet = false;
+  bool m_defaultCacheBehaviorHasBeenSet = false;
+  bool m_cacheBehaviorSettingsHasBeenSet = false;
+  bool m_cacheBehaviorsHasBeenSet = false;
+  bool m_bundleIdHasBeenSet = false;
+  bool m_ipAddressTypeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_certificateNameHasBeenSet = false;
+  bool m_viewerMinimumTlsProtocolVersionHasBeenSet = false;
+  bool m_enablePrivateOriginAccessHasBeenSet = false;
+  bool m_defaultRootObjectHasBeenSet = false;
+  bool m_customErrorResponsesHasBeenSet = false;
+  bool m_enableWafHasBeenSet = false;
+  bool m_wafRulesHasBeenSet = false;
+  bool m_subdomainNameHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

@@ -4,67 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/NetworkInterfacePermission.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of CreateNetworkInterfacePermission.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionResult">AWS
+ * API Reference</a></p>
+ */
+class CreateNetworkInterfacePermissionResponse {
+ public:
+  AWS_EC2_API CreateNetworkInterfacePermissionResponse() = default;
+  AWS_EC2_API CreateNetworkInterfacePermissionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateNetworkInterfacePermissionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of CreateNetworkInterfacePermission.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionResult">AWS
-   * API Reference</a></p>
+   * <p>Information about the permission for the network interface.</p>
    */
-  class CreateNetworkInterfacePermissionResponse
-  {
-  public:
-    AWS_EC2_API CreateNetworkInterfacePermissionResponse();
-    AWS_EC2_API CreateNetworkInterfacePermissionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateNetworkInterfacePermissionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const NetworkInterfacePermission& GetInterfacePermission() const { return m_interfacePermission; }
+  template <typename InterfacePermissionT = NetworkInterfacePermission>
+  void SetInterfacePermission(InterfacePermissionT&& value) {
+    m_interfacePermissionHasBeenSet = true;
+    m_interfacePermission = std::forward<InterfacePermissionT>(value);
+  }
+  template <typename InterfacePermissionT = NetworkInterfacePermission>
+  CreateNetworkInterfacePermissionResponse& WithInterfacePermission(InterfacePermissionT&& value) {
+    SetInterfacePermission(std::forward<InterfacePermissionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the permission for the network interface.</p>
-     */
-    inline const NetworkInterfacePermission& GetInterfacePermission() const{ return m_interfacePermission; }
-    inline void SetInterfacePermission(const NetworkInterfacePermission& value) { m_interfacePermission = value; }
-    inline void SetInterfacePermission(NetworkInterfacePermission&& value) { m_interfacePermission = std::move(value); }
-    inline CreateNetworkInterfacePermissionResponse& WithInterfacePermission(const NetworkInterfacePermission& value) { SetInterfacePermission(value); return *this;}
-    inline CreateNetworkInterfacePermissionResponse& WithInterfacePermission(NetworkInterfacePermission&& value) { SetInterfacePermission(std::move(value)); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateNetworkInterfacePermissionResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateNetworkInterfacePermissionResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateNetworkInterfacePermissionResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  NetworkInterfacePermission m_interfacePermission;
 
-    NetworkInterfacePermission m_interfacePermission;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_interfacePermissionHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

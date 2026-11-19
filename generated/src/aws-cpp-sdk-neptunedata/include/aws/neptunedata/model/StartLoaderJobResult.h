@@ -4,86 +4,99 @@
  */
 
 #pragma once
-#include <aws/neptunedata/Neptunedata_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace neptunedata
-{
-namespace Model
-{
-  class StartLoaderJobResult
-  {
-  public:
-    AWS_NEPTUNEDATA_API StartLoaderJobResult();
-    AWS_NEPTUNEDATA_API StartLoaderJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NEPTUNEDATA_API StartLoaderJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace neptunedata {
+namespace Model {
+class StartLoaderJobResult {
+ public:
+  AWS_NEPTUNEDATA_API StartLoaderJobResult() = default;
+  AWS_NEPTUNEDATA_API StartLoaderJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NEPTUNEDATA_API StartLoaderJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The HTTP return code indicating the status of the load job.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  StartLoaderJobResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP return code indicating the status of the load job.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline StartLoaderJobResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline StartLoaderJobResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline StartLoaderJobResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains a <code>loadId</code> name-value pair that provides an identifier
+   * for the load operation.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetPayload() const { return m_payload; }
+  template <typename PayloadT = Aws::Map<Aws::String, Aws::String>>
+  void SetPayload(PayloadT&& value) {
+    m_payloadHasBeenSet = true;
+    m_payload = std::forward<PayloadT>(value);
+  }
+  template <typename PayloadT = Aws::Map<Aws::String, Aws::String>>
+  StartLoaderJobResult& WithPayload(PayloadT&& value) {
+    SetPayload(std::forward<PayloadT>(value));
+    return *this;
+  }
+  template <typename PayloadKeyT = Aws::String, typename PayloadValueT = Aws::String>
+  StartLoaderJobResult& AddPayload(PayloadKeyT&& key, PayloadValueT&& value) {
+    m_payloadHasBeenSet = true;
+    m_payload.emplace(std::forward<PayloadKeyT>(key), std::forward<PayloadValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains a <code>loadId</code> name-value pair that provides an identifier
-     * for the load operation.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetPayload() const{ return m_payload; }
-    inline void SetPayload(const Aws::Map<Aws::String, Aws::String>& value) { m_payload = value; }
-    inline void SetPayload(Aws::Map<Aws::String, Aws::String>&& value) { m_payload = std::move(value); }
-    inline StartLoaderJobResult& WithPayload(const Aws::Map<Aws::String, Aws::String>& value) { SetPayload(value); return *this;}
-    inline StartLoaderJobResult& WithPayload(Aws::Map<Aws::String, Aws::String>&& value) { SetPayload(std::move(value)); return *this;}
-    inline StartLoaderJobResult& AddPayload(const Aws::String& key, const Aws::String& value) { m_payload.emplace(key, value); return *this; }
-    inline StartLoaderJobResult& AddPayload(Aws::String&& key, const Aws::String& value) { m_payload.emplace(std::move(key), value); return *this; }
-    inline StartLoaderJobResult& AddPayload(const Aws::String& key, Aws::String&& value) { m_payload.emplace(key, std::move(value)); return *this; }
-    inline StartLoaderJobResult& AddPayload(Aws::String&& key, Aws::String&& value) { m_payload.emplace(std::move(key), std::move(value)); return *this; }
-    inline StartLoaderJobResult& AddPayload(const char* key, Aws::String&& value) { m_payload.emplace(key, std::move(value)); return *this; }
-    inline StartLoaderJobResult& AddPayload(Aws::String&& key, const char* value) { m_payload.emplace(std::move(key), value); return *this; }
-    inline StartLoaderJobResult& AddPayload(const char* key, const char* value) { m_payload.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartLoaderJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartLoaderJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartLoaderJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartLoaderJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_status;
+ private:
+  Aws::String m_status;
 
-    Aws::Map<Aws::String, Aws::String> m_payload;
+  Aws::Map<Aws::String, Aws::String> m_payload;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_payloadHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace neptunedata
-} // namespace Aws
+}  // namespace Model
+}  // namespace neptunedata
+}  // namespace Aws

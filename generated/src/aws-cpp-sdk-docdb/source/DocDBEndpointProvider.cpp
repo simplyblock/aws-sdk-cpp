@@ -4,13 +4,14 @@
  */
 
 #include <aws/docdb/DocDBEndpointProvider.h>
+#include <aws/docdb/internal/DocDBEndpointRules.h>
 
-namespace Aws
-{
-namespace DocDB
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace DocDB
-} // namespace Aws
+namespace Aws {
+namespace DocDB {
+namespace Endpoint {
+DocDBEndpointProvider::DocDBEndpointProvider()
+    : DocDBDefaultEpProviderBase(Aws::DocDB::DocDBEndpointRules::GetRulesBlob(), Aws::DocDB::DocDBEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace DocDB
+}  // namespace Aws

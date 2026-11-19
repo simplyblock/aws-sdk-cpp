@@ -34,6 +34,12 @@
             "version": "2016-08-04",
             "operations": [
                 {
+                    "target": "com.amazonaws.health#ConfigureTags"
+                },
+                {
+                    "target": "com.amazonaws.health#ConfigureTagsForOrganization"
+                },
+                {
                     "target": "com.amazonaws.health#DescribeAffectedAccountsForOrganization"
                 },
                 {
@@ -70,10 +76,43 @@
                     "target": "com.amazonaws.health#DescribeHealthServiceStatusForOrganization"
                 },
                 {
+                    "target": "com.amazonaws.health#DescribeServiceLifecycle"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTagKeys"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTagKeysForOrganization"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTags"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTagsForOrganization"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTagsOnboardingStatus"
+                },
+                {
+                    "target": "com.amazonaws.health#DescribeTagsOnboardingStatusForOrganization"
+                },
+                {
                     "target": "com.amazonaws.health#DisableHealthServiceAccessForOrganization"
                 },
                 {
+                    "target": "com.amazonaws.health#DisableTags"
+                },
+                {
+                    "target": "com.amazonaws.health#DisableTagsForOrganization"
+                },
+                {
                     "target": "com.amazonaws.health#EnableHealthServiceAccessForOrganization"
+                },
+                {
+                    "target": "com.amazonaws.health#EnableTags"
+                },
+                {
+                    "target": "com.amazonaws.health#EnableTagsForOrganization"
                 }
             ],
             "traits": {
@@ -88,8 +127,354 @@
                     "name": "health"
                 },
                 "aws.protocols#awsJson1_1": {},
-                "smithy.api#documentation": "<fullname>Health</fullname>\n         <p>The Health API provides access to the Health information that appears in the\n            <a href=\"https://health.aws.amazon.com/health/home\">Health Dashboard</a>. You can use\n         the API operations to get information about events that might affect your Amazon Web Services and resources.</p>\n         <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call the Health API from an\n            Amazon Web Services account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a\n            <code>SubscriptionRequiredException</code> error.</p>\n         <p>For API access, you need an access key ID and a secret access key. Use temporary\n         credentials instead of long-term access keys when possible. Temporary credentials include\n         an access key ID, a secret access key, and a security token that indicates when the\n         credentials expire. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html\">Best practices for managing\n            Amazon Web Services access keys</a> in the <i>Amazon Web Services General Reference</i>.</p>\n         <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to call the\n         Health API operations. Health supports a multi-Region application architecture\n         and has two regional endpoints in an active-passive configuration. You can use the high\n         availability endpoint example to determine which Amazon Web Services Region is active, so that you can\n         get the latest information from the API. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/health-api.html\">Accessing the Health\n            API</a> in the <i>Health User Guide</i>.</p>\n         <p>For authentication of requests, Health uses the <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing\n            Process</a>.</p>\n         <p>If your Amazon Web Services account is part of Organizations, you can use the Health organizational\n         view feature. This feature provides a centralized view of Health events across all\n         accounts in your organization. You can aggregate Health events in real time to\n         identify accounts in your organization that are affected by an operational event or get\n         notified of security vulnerabilities. Use the organizational view API operations to enable\n         this feature and return event information. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating\n            Health events</a> in the <i>Health User Guide</i>.</p>\n         <note>\n            <p>When you use the Health API operations to return Health events, see the\n            following recommendations:</p>\n            <ul>\n               <li>\n                  <p>Use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html#AWSHealth-Type-Event-eventScopeCode\">eventScopeCode</a> parameter to specify whether to return Health\n                  events that are public or account-specific.</p>\n               </li>\n               <li>\n                  <p>Use pagination to view all events from the response. For example, if you call\n                  the <code>DescribeEventsForOrganization</code> operation to get all events in your\n                  organization, you might receive several page results. Specify the\n                     <code>nextToken</code> in the next request to return more results.</p>\n               </li>\n            </ul>\n         </note>",
+                "smithy.api#documentation": "<fullname>Health</fullname>\n         <p>The Health API provides access to the Health information that appears in the\n            <a href=\"https://health.aws.amazon.com/health/home\">Health Dashboard</a>. You can use\n         the API operations to get information about events that might affect your Amazon Web Services services and resources.</p>\n         <p>You must have an Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you're in an Amazon Web Services Region that doesn't offer one of these Amazon Web Services Support plans, or if you haven't transitioned to one of these plans, you can use the Health API with a Business, Enterprise On-Ramp, or Enterprise Support plan. If you call the Health API from an\n         Amazon Web Services account that isn't enrolled in one of these plans, then you receive a\n         <code>SubscriptionRequiredException</code> error.</p>\n         <p>For API access, you need an access key ID and a secret access key. Use temporary\n         credentials instead of long-term access keys when possible. Temporary credentials include\n         an access key ID, a secret access key, and a security token that indicates when the\n         credentials expire. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html\">Best practices for managing\n            Amazon Web Services access keys</a> in the <i>Amazon Web Services General Reference</i>.</p>\n         <p>You can use the Health endpoint health.us-east-1.amazonaws.com (HTTPS) to call the\n         Health API operations. Health supports a multi-Region application architecture\n         and has two regional endpoints in an active-passive configuration. You can use the high\n         availability endpoint example to determine which Amazon Web Services Region is active, so that you can\n         get the latest information from the API. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/health-api.html\">Accessing the Health\n            API</a> in the <i>Health User Guide</i>.</p>\n         <p>For authentication of requests, Health uses the <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing\n            Process</a>.</p>\n         <p>If your Amazon Web Services account is part of Organizations, you can use the Health organizational\n         view feature. This feature provides a centralized view of Health events across all\n         accounts in your organization. You can aggregate Health events in real time to\n         identify accounts in your organization that are affected by an operational event or get\n         notified of security vulnerabilities. Use the organizational view API operations to enable\n         this feature and return event information. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating\n            Health events</a> in the <i>Health User Guide</i>.</p>\n         <note>\n            <p>When you use the Health API operations to return Health events, see the\n            following recommendations:</p>\n            <ul>\n               <li>\n                  <p>Use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html#AWSHealth-Type-Event-eventScopeCode\">eventScopeCode</a> parameter to specify whether to return Health\n                  events that are public or account-specific.</p>\n               </li>\n               <li>\n                  <p>Use pagination to view all events from the response. For example, if you call\n                  the <code>DescribeEventsForOrganization</code> operation to get all events in your\n                  organization, you might receive several page results. Specify the\n                     <code>nextToken</code> in the next request to return more results.</p>\n               </li>\n            </ul>\n         </note>",
                 "smithy.api#title": "AWS Health APIs and Notifications",
+                "smithy.protocols#rpcv2Cbor": {},
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-us-gov"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-iso"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-iso-b"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-iso-e"
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-iso-f"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-cn"
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                },
+                                "aws-global"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                },
+                                "aws-cn-global"
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://health-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://health.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://health-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://global.health.amazonaws.com",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingName": "health",
+                                            "signingRegion": "us-east-1"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://global.health.amazonaws.com.cn",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingName": "health",
+                                            "signingRegion": "cn-northwest-1"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://health.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 24,
+                    "nodes": "/////wAAAAH/////AAAAAAAAABYAAAADAAAAAQAAAAQF9eENAAAAAgAAAAUF9eENAAAAAwAAABIAAAAGAAAABAAAAA4AAAAHAAAABQAAAA4AAAAIAAAABgAAAA4AAAAJAAAABwAAAA4AAAAKAAAACAAAAA4AAAALAAAACgAAAA4AAAAMAAAACwAAAA4AAAANAAAADAX14QEF9eECAAAADAAAABEAAAAPAAAADgX14QoAAAAQAAAADwX14QsF9eEMAAAADQX14QcF9eEIAAAACQAAABQAAAATAAAADAX14QYF9eEJAAAADAAAABUF9eECAAAADQX14QEF9eEGAAAAAwAAABgAAAAXAAAADAX14QMF9eEFAAAADAX14QMF9eEE"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -97,30 +482,244 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
+                        {
+                            "conditions": [
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "isSet",
+                                            "argv": [
+                                                {
+                                                    "ref": "Endpoint"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "booleanEquals",
+                                    "argv": [
+                                        {
+                                            "ref": "UseDualStack"
+                                        },
+                                        false
+                                    ]
+                                },
+                                {
+                                    "fn": "isSet",
+                                    "argv": [
+                                        {
+                                            "ref": "Region"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "aws.partition",
+                                    "argv": [
+                                        {
+                                            "ref": "Region"
+                                        }
+                                    ],
+                                    "assign": "PartitionResult"
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-cn"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-us-gov"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-iso"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-iso-b"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-iso-e"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "fn": "not",
+                                    "argv": [
+                                        {
+                                            "fn": "stringEquals",
+                                            "argv": [
+                                                {
+                                                    "fn": "getAttr",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "PartitionResult"
+                                                        },
+                                                        "name"
+                                                    ]
+                                                },
+                                                "aws-iso-f"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rules": [
+                                {
+                                    "conditions": [
+                                        {
+                                            "fn": "booleanEquals",
+                                            "argv": [
+                                                {
+                                                    "ref": "UseFIPS"
+                                                },
+                                                true
+                                            ]
+                                        }
+                                    ],
+                                    "endpoint": {
+                                        "url": "https://health-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                        "properties": {},
+                                        "headers": {}
+                                    },
+                                    "type": "endpoint"
+                                },
+                                {
+                                    "conditions": [],
+                                    "endpoint": {
+                                        "url": "https://health.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                        "properties": {},
+                                        "headers": {}
+                                    },
+                                    "type": "endpoint"
+                                }
+                            ],
+                            "type": "tree"
+                        },
                         {
                             "conditions": [
                                 {
@@ -132,7 +731,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -175,7 +773,8 @@
                                     },
                                     "type": "endpoint"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [
@@ -188,7 +787,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -202,7 +800,6 @@
                                             "assign": "PartitionResult"
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
                                         {
                                             "conditions": [
@@ -225,7 +822,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -260,7 +856,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -271,14 +866,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -292,14 +889,12 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
                                                         {
                                                             "fn": "booleanEquals",
                                                             "argv": [
-                                                                true,
                                                                 {
                                                                     "fn": "getAttr",
                                                                     "argv": [
@@ -308,11 +903,11 @@
                                                                         },
                                                                         "supportsFIPS"
                                                                     ]
-                                                                }
+                                                                },
+                                                                true
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -323,14 +918,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS is enabled but this partition does not support FIPS",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -344,7 +941,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -364,7 +960,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -375,14 +970,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "DualStack is enabled but this partition does not support DualStack",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -447,9 +1044,11 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [],
@@ -674,17 +1273,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -695,17 +1283,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -722,17 +1299,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -743,17 +1309,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -812,10 +1367,547 @@
                             "expect": {
                                 "error": "Invalid Configuration: Missing Region"
                             }
+                        },
+                        {
+                            "documentation": "For region us-east-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-east-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-east-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-east-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-east-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-east-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-east-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-east-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region aws-global with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingName": "health",
+                                                "signingRegion": "us-east-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://global.health.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "aws-global",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-north-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.cn-north-1.amazonaws.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-north-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-north-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.cn-north-1.api.amazonwebservices.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-north-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-north-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.cn-north-1.amazonaws.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-north-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-north-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.cn-north-1.api.amazonwebservices.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-north-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region aws-cn-global with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingName": "health",
+                                                "signingRegion": "cn-northwest-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://global.health.amazonaws.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "aws-cn-global",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-gov-east-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-gov-east-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-gov-east-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-gov-east-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-iso-east-1.c2s.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-iso-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-iso-east-1.c2s.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-iso-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-isob-east-1.sc2s.sgov.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isob-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-iso-east-1.api.aws.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-iso-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-iso-east-1.api.aws.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-iso-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-isob-east-1.sc2s.sgov.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isob-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-isob-east-1.api.aws.scloud"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isob-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-isob-east-1.api.aws.scloud"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isob-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-isof-south-1.csp.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.us-isof-south-1.api.aws.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-isof-south-1.csp.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.us-isof-south-1.api.aws.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region eu-isoe-west-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.eu-isoe-west-1.cloud.adc-e.uk"
+                                }
+                            },
+                            "params": {
+                                "Region": "eu-isoe-west-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region eu-isoe-west-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.eu-isoe-west-1.api.cloud-aws.adc-e.uk"
+                                }
+                            },
+                            "params": {
+                                "Region": "eu-isoe-west-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region eu-isoe-west-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.eu-isoe-west-1.cloud.adc-e.uk"
+                                }
+                            },
+                            "params": {
+                                "Region": "eu-isoe-west-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region eu-isoe-west-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.eu-isoe-west-1.api.cloud-aws.adc-e.uk"
+                                }
+                            },
+                            "params": {
+                                "Region": "eu-isoe-west-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region eusc-de-east-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.eusc-de-east-1.api.amazonwebservices.eu"
+                                }
+                            },
+                            "params": {
+                                "Region": "eusc-de-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region eusc-de-east-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health.eusc-de-east-1.api.amazonwebservices.eu"
+                                }
+                            },
+                            "params": {
+                                "Region": "eusc-de-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region eusc-de-east-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.eusc-de-east-1.api.amazonwebservices.eu"
+                                }
+                            },
+                            "params": {
+                                "Region": "eusc-de-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region eusc-de-east-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://health-fips.eusc-de-east-1.api.amazonwebservices.eu"
+                                }
+                            },
+                            "params": {
+                                "Region": "eusc-de-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with region set and fips disabled and dualstack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://example.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false,
+                                "Endpoint": "https://example.com"
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with region not set and fips disabled and dualstack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "url": "https://example.com"
+                                }
+                            },
+                            "params": {
+                                "UseFIPS": false,
+                                "UseDualStack": false,
+                                "Endpoint": "https://example.com"
+                            }
+                        },
+                        {
+                            "documentation": "Missing region",
+                            "expect": {
+                                "error": "Invalid Configuration: Missing Region"
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with fips enabled and dualstack disabled",
+                            "expect": {
+                                "error": "Invalid Configuration: FIPS and custom endpoint are not supported"
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false,
+                                "Endpoint": "https://example.com"
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with fips disabled and dualstack enabled",
+                            "expect": {
+                                "error": "Invalid Configuration: Dualstack and custom endpoint are not supported"
+                            },
+                            "params": {
+                                "Region": "us-east-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true,
+                                "Endpoint": "https://example.com"
+                            }
                         }
                     ],
                     "version": "1.0"
                 }
+            }
+        },
+        "com.amazonaws.health#AccountEntity": {
+            "type": "structure",
+            "members": {
+                "accountId": {
+                    "target": "com.amazonaws.health#accountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The 12-digit Amazon Web Services account numbers that contains the affected entities.</p>"
+                    }
+                },
+                "accountTags": {
+                    "target": "com.amazonaws.health#AccountTagSet",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag key-value pairs attached to the affected account.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>An entity representing an affected account, including its account ID and associated tags.</p>"
             }
         },
         "com.amazonaws.health#AccountEntityAggregate": {
@@ -849,6 +1941,164 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.health#AccountEntityAggregate"
+            }
+        },
+        "com.amazonaws.health#AccountTag": {
+            "type": "structure",
+            "members": {
+                "key": {
+                    "target": "com.amazonaws.health#tagKey",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag key.</p>"
+                    }
+                },
+                "value": {
+                    "target": "com.amazonaws.health#tagValue",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag value.</p>"
+                    }
+                },
+                "type": {
+                    "target": "com.amazonaws.health#AccountTagType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of tag (resource tag or account tag).</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A tag key-value pair associated with a resource in an account.</p>"
+            }
+        },
+        "com.amazonaws.health#AccountTagKey": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 127
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}$"
+            }
+        },
+        "com.amazonaws.health#AccountTagList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#AccountTag"
+            }
+        },
+        "com.amazonaws.health#AccountTagSet": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#AccountTagKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#AccountTagValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#AccountTagType": {
+            "type": "enum",
+            "members": {
+                "ACCOUNT_RESOURCE_TAG": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACCOUNT_RESOURCE_TAG"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#AccountTagValue": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 255
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}$"
+            }
+        },
+        "com.amazonaws.health#AffectedAccountEntityList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#AccountEntity"
+            }
+        },
+        "com.amazonaws.health#AffectedAccountFilter": {
+            "type": "structure",
+            "members": {
+                "eventArn": {
+                    "target": "com.amazonaws.health#eventArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The unique identifier for the event. The event ARN has the\n<code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i>\n            </code>\nformat.</p>\n         <p>For example, an event ARN might look like the following:</p>\n         <p>\n            <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code>\n         </p>"
+                    }
+                },
+                "tags": {
+                    "target": "com.amazonaws.health#AffectedAccountsForOrganizationTagFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p>\n         <p>An account is returned when its own tags, or the tags of one of its affected resources, match.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A filter for narrowing down affected accounts in an organization event.</p>"
+            }
+        },
+        "com.amazonaws.health#AffectedAccountsForOrganizationTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#AffectedAccountsForOrganizationTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#AffectedAccountsForOrganizationTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
+            }
+        },
+        "com.amazonaws.health#AffectedEntitiesForOrganizationTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#AffectedEntitiesForOrganizationTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#AffectedEntitiesForOrganizationTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
             }
         },
         "com.amazonaws.health#AffectedEntity": {
@@ -893,18 +2143,42 @@
                 "statusCode": {
                     "target": "com.amazonaws.health#entityStatusCode",
                     "traits": {
-                        "smithy.api#documentation": "<p>The most recent status of the entity affected by the event. The possible values are\n            <code>IMPAIRED</code>, <code>UNIMPAIRED</code>, and <code>UNKNOWN</code>.</p>"
+                        "smithy.api#documentation": "<p>The most recent status of the entity affected by the event. The possible values are\n            <code>IMPAIRED</code>, <code>UNIMPAIRED</code>, <code>UNKNOWN</code>, <code>PENDING</code>, and <code>RESOLVED</code>.</p>"
+                    }
+                },
+                "resourceTags": {
+                    "target": "com.amazonaws.health#ResourceTagSet",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of resource tag key-value pairs attached to the affected entity.</p>"
+                    }
+                },
+                "accountTags": {
+                    "target": "com.amazonaws.health#AccountTagSet",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of account tag key-value pairs attached to the affected entity.</p>"
                     }
                 },
                 "tags": {
                     "target": "com.amazonaws.health#tagSet",
                     "traits": {
-                        "smithy.api#documentation": "<p>A map of entity tags attached to the affected entity.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>A map of resource tag key-value pairs attached to the affected entity.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
+                    }
+                },
+                "entityMetadata": {
+                    "target": "com.amazonaws.health#entityMetadata",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Additional metadata about the affected entity.</p>"
                     }
                 }
             },
             "traits": {
                 "smithy.api#documentation": "<p>Information about an entity that is affected by a Health event.</p>"
+            }
+        },
+        "com.amazonaws.health#Boolean": {
+            "type": "boolean",
+            "traits": {
+                "smithy.api#default": false
             }
         },
         "com.amazonaws.health#ConcurrentModificationException": {
@@ -917,6 +2191,114 @@
             "traits": {
                 "smithy.api#documentation": "<p>\n            <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> is already in progress. Wait for the\n         action to complete before trying again. To get the current status, use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeHealthServiceStatusForOrganization.html\">DescribeHealthServiceStatusForOrganization</a> operation.</p>",
                 "smithy.api#error": "client"
+            }
+        },
+        "com.amazonaws.health#ConfigureTags": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.health#ConfigureTagsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.health#ConfigureTagsResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Configures which resource tag keys are tracked by Health for your account. This operation replaces the existing configuration with the specified tag keys. Only configured tag keys will appear in Health event data.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.health#ConfigureTagsForOrganizationRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.health#ConfigureTagsForOrganizationResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Configures which tag keys are tracked by Health for all accounts in your organization. This operation replaces the existing configuration with the specified tag keys. Only configured tag keys will appear in Health event data across the organization.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsForOrganizationRequest": {
+            "type": "structure",
+            "members": {
+                "tagKeys": {
+                    "target": "com.amazonaws.health#ConfigureTagsForOrganizationTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of tag keys to configure for Health event tracking across the organization.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsForOrganizationResponse": {
+            "type": "structure",
+            "members": {
+                "configuredTagKeys": {
+                    "target": "com.amazonaws.health#ConfigureTagsForOrganizationTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of tag keys that were successfully configured for the organization.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsForOrganizationTagKeyList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagKeyForOrganization"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsRequest": {
+            "type": "structure",
+            "members": {
+                "tagKeys": {
+                    "target": "com.amazonaws.health#ConfigureTagsResourceTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of resource tag keys to configure for Health event tracking.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsResourceTagKeyList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#ResourceTagKey"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#ConfigureTagsResponse": {
+            "type": "structure",
+            "members": {
+                "configuredTagKeys": {
+                    "target": "com.amazonaws.health#ConfigureTagsResourceTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of resource tag keys that were successfully configured.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.health#DateTimeRange": {
@@ -984,6 +2366,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
                     }
+                },
+                "filter": {
+                    "target": "com.amazonaws.health#AffectedAccountFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Values to narrow the results returned.</p>"
+                    }
                 }
             },
             "traits": {
@@ -999,10 +2387,16 @@
                         "smithy.api#documentation": "<p>A JSON set of elements of the affected accounts.</p>"
                     }
                 },
+                "affectedAccountEntities": {
+                    "target": "com.amazonaws.health#AffectedAccountEntityList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of affected account entities, including account IDs and their associated tags.</p>"
+                    }
+                },
                 "eventScopeCode": {
                     "target": "com.amazonaws.health#eventScopeCode",
                     "traits": {
-                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Services service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "nextToken": {
@@ -1033,7 +2427,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Returns a list of entities that have been affected by the specified events, based on the\n         specified filter criteria. Entities can refer to individual customer resources, groups of\n         customer resources, or any other construct, depending on the Amazon Web Service. Events that\n         have impact beyond that of the affected entities, or where the extent of impact is unknown,\n         include at least one entity indicating this.</p>\n         <p>At least one event ARN is required.</p>\n         <note>\n            <ul>\n               <li>\n                  <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n               </li>\n               <li>\n                  <p>This operation supports resource-level permissions. You can use this operation to allow or deny access to specific Health events. For more\n                  information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p>\n               </li>\n            </ul>\n         </note>",
+                "smithy.api#documentation": "<p>Returns a list of entities that have been affected by the specified events, based on the\n         specified filter criteria. Entities can refer to individual customer resources, groups of\n         customer resources, or any other construct, depending on the Amazon Web Services service. Events that\n         have impact beyond that of the affected entities, or where the extent of impact is unknown,\n         include at least one entity indicating this.</p>\n         <p>At least one event ARN is required.</p>\n         <note>\n            <ul>\n               <li>\n                  <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n               </li>\n               <li>\n                  <p>This operation supports resource-level permissions. You can use this operation to allow or deny access to specific Health events. For more\n                  information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p>\n               </li>\n            </ul>\n         </note>",
                 "smithy.api#idempotent": {},
                 "smithy.api#paginated": {
                     "inputToken": "nextToken",
@@ -1060,7 +2454,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Returns a list of entities that have been affected by one or more events for one or more\n         accounts in your organization in Organizations, based on the filter criteria. Entities can refer\n         to individual customer resources, groups of customer resources, or any other construct,\n         depending on the Amazon Web Service.</p>\n         <p>At least one event Amazon Resource Name (ARN) and account ID are required.</p>\n         <p>Before you can call this operation, you must first enable Health to work with\n         Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's\n         management account.</p>\n         <note>\n            <ul>\n               <li>\n                  <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n               </li>\n               <li>\n                  <p>This operation doesn't support resource-level permissions. You can't use this operation to allow or deny access to specific Health events. For more\n                  information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p>\n               </li>\n            </ul>\n         </note>",
+                "smithy.api#documentation": "<p>Returns a list of entities that have been affected by one or more events for one or more\n         accounts in your organization in Organizations, based on the filter criteria. Entities can refer\n         to individual customer resources, groups of customer resources, or any other construct,\n         depending on the Amazon Web Services service.</p>\n         <p>At least one event Amazon Resource Name (ARN) and account ID are required.</p>\n         <p>Before you can call this operation, you must first enable Health to work with\n         Organizations. To do this, call the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EnableHealthServiceAccessForOrganization.html\">EnableHealthServiceAccessForOrganization</a> operation from your organization's\n         management account.</p>\n         <note>\n            <ul>\n               <li>\n                  <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n               </li>\n               <li>\n                  <p>This operation doesn't support resource-level permissions. You can't use this operation to allow or deny access to specific Health events. For more\n                  information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html#resource-action-based-conditions\">Resource- and action-based conditions</a> in the <i>Health User Guide</i>.</p>\n               </li>\n            </ul>\n         </note>",
                 "smithy.api#idempotent": {},
                 "smithy.api#paginated": {
                     "inputToken": "nextToken",
@@ -1103,7 +2497,7 @@
                 "maxResults": {
                     "target": "com.amazonaws.health#maxResultsLowerRange",
                     "traits": {
-                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>"
                     }
                 },
                 "organizationEntityAccountFilters": {
@@ -1166,9 +2560,9 @@
                     }
                 },
                 "maxResults": {
-                    "target": "com.amazonaws.health#maxResults",
+                    "target": "com.amazonaws.health#maxResultsLowerRange",
                     "traits": {
-                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>"
                     }
                 }
             },
@@ -1194,6 +2588,33 @@
             },
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeAffectedEntitiesTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#DescribeAffectedEntitiesTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeAffectedEntitiesTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
             }
         },
         "com.amazonaws.health#DescribeEntityAggregates": {
@@ -1237,6 +2658,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of 12-digit Amazon Web Services account numbers that contains the affected entities.</p>"
                     }
+                },
+                "filter": {
+                    "target": "com.amazonaws.health#OrganizationEntityAggregateFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Values to narrow the results returned.</p>"
+                    }
                 }
             },
             "traits": {
@@ -1265,6 +2692,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of event ARNs (unique identifiers). For example: <code>\"arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-CDE456\", \"arn:aws:health:us-west-1::event/EBS/AWS_EBS_LOST_VOLUME/AWS_EBS_LOST_VOLUME_CHI789_JKL101\"</code>\n         </p>"
                     }
+                },
+                "filter": {
+                    "target": "com.amazonaws.health#EntityAggregateFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Values to narrow the results returned.</p>"
+                    }
                 }
             },
             "traits": {
@@ -1283,6 +2716,33 @@
             },
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeEntityAggregatesTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#DescribeEntityAggregatesTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeEntityAggregatesTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
             }
         },
         "com.amazonaws.health#DescribeEventAggregates": {
@@ -1521,7 +2981,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Returns the event types that meet the specified filter criteria. You can use this API\n         operation to find information about the Health event, such as the category, Amazon Web Service, and event code. The metadata for each event appears in the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EventType.html\">EventType</a> object. </p>\n         <p>If you don't specify a filter criteria, the API operation returns all event types, in no\n         particular order. </p>\n         <note>\n            <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Returns the event types that meet the specified filter criteria. You can use this API\n         operation to find information about the Health event, such as the category, Amazon Web Services service, and event code. The metadata for each event appears in the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_EventType.html\">EventType</a> object. </p>\n         <p>If you don't specify a filter criteria, the API operation returns all event types, in no\n         particular order. </p>\n         <note>\n            <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the next request to return more results.</p>\n         </note>",
                 "smithy.api#idempotent": {},
                 "smithy.api#paginated": {
                     "inputToken": "nextToken",
@@ -1655,7 +3115,7 @@
                 "maxResults": {
                     "target": "com.amazonaws.health#maxResultsLowerRange",
                     "traits": {
-                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>"
                     }
                 },
                 "locale": {
@@ -1705,9 +3165,9 @@
                     }
                 },
                 "maxResults": {
-                    "target": "com.amazonaws.health#maxResults",
+                    "target": "com.amazonaws.health#maxResultsLowerRange",
                     "traits": {
-                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 1 and 100, inclusive.</p>"
                     }
                 },
                 "locale": {
@@ -1741,6 +3201,33 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.health#DescribeEventsTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#DescribeEventsTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeEventsTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
+            }
+        },
         "com.amazonaws.health#DescribeHealthServiceStatusForOrganization": {
             "type": "operation",
             "input": {
@@ -1768,6 +3255,391 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.health#DescribeServiceLifecycle": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.health#DescribeServiceLifecycleRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeServiceLifecycleResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.health#InvalidPaginationToken"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Returns lifecycle information for Amazon Web Services services, including end-of-life dates, version recommendations, and lifecycle events.</p>",
+                "smithy.api#examples": [
+                    {
+                        "title": "To retrieve service lifecycle information",
+                        "documentation": "The following example returns service lifecycle information, including support milestones and lifecycle events for each service version.",
+                        "input": {
+                            "maxResults": 5
+                        },
+                        "output": {
+                            "serviceLifecycles": [
+                                {
+                                    "service": "BEDROCK",
+                                    "version": "ai21.jamba-1-5-large-v1:0",
+                                    "title": "AI21 Labs Jamba 1.5 Large",
+                                    "lifecycleEvents": [
+                                        {
+                                            "lifecycleEventType": "STANDARD_SUPPORT_END",
+                                            "date": "2026-05-26T00:00:00Z",
+                                            "regions": [
+                                                "all"
+                                            ],
+                                            "impactRisks": [
+                                                "END_OF_SUPPORT"
+                                            ],
+                                            "description": "Model enters Legacy state — no longer actively maintained. Public extended access (pricing may increase) starts 2026-08-26"
+                                        },
+                                        {
+                                            "lifecycleEventType": "EXTENDED_SUPPORT_END",
+                                            "date": "2026-11-26T00:00:00Z",
+                                            "regions": [
+                                                "all"
+                                            ],
+                                            "impactRisks": [
+                                                "AVAILABILITY"
+                                            ],
+                                            "description": "Model is no longer available for inference"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "service": "BEDROCK",
+                                    "version": "amazon.nova-2-lite-v1:0",
+                                    "title": "Amazon Nova 2 Lite",
+                                    "lifecycleEvents": [
+                                        {
+                                            "lifecycleEventType": "SUPPORTED",
+                                            "date": "2025-12-02T00:00:00Z",
+                                            "regions": [
+                                                "all"
+                                            ],
+                                            "impactRisks": [],
+                                            "description": "Amazon Nova 2 Lite available on Amazon Bedrock"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "nextToken": "AQICAHjDhCYeYPq-zXMzcdNOIWJQKCUN1s1J84fdK4ztGn9uoAExampleTokenExampleTokenExampleToken"
+                        }
+                    }
+                ],
+                "smithy.api#idempotent": {},
+                "smithy.api#paginated": {
+                    "inputToken": "nextToken",
+                    "outputToken": "nextToken",
+                    "items": "serviceLifecycles",
+                    "pageSize": "maxResults"
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeServiceLifecycleRequest": {
+            "type": "structure",
+            "members": {
+                "filter": {
+                    "target": "com.amazonaws.health#ServiceLifecycleFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Values to narrow the results returned.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                },
+                "maxResults": {
+                    "target": "com.amazonaws.health#LifecycleMaxResults",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.health#DescribeServiceLifecycleResponse": {
+            "type": "structure",
+            "members": {
+                "serviceLifecycles": {
+                    "target": "com.amazonaws.health#ServiceLifecycleList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of service lifecycle entries matching the filter criteria.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagKeys": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagKeysResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the list of resource tag keys configured for Health event tracking in your account.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagKeysForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagKeysForOrganizationResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the list of tag keys configured for Health event tracking across your organization.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagKeysForOrganizationResponse": {
+            "type": "structure",
+            "members": {
+                "keys": {
+                    "target": "com.amazonaws.health#OrganizationTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of configured tag keys for the organization and their status.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagKeysResponse": {
+            "type": "structure",
+            "members": {
+                "keys": {
+                    "target": "com.amazonaws.health#ResourceTagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of configured resource tag keys and their status.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTags": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.health#DescribeTagsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagsResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.health#InvalidPaginationToken"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the resource tags associated with Health events for your account. Use this operation to retrieve the actual tag key-value pairs attached to affected entities.</p>",
+                "smithy.api#idempotent": {},
+                "smithy.api#paginated": {
+                    "inputToken": "nextToken",
+                    "outputToken": "nextToken",
+                    "items": "tags",
+                    "pageSize": "maxResults"
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeTagsForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.health#DescribeTagsForOrganizationRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagsForOrganizationResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.health#InvalidPaginationToken"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the tags associated with Health events across all accounts in your organization.</p>",
+                "smithy.api#idempotent": {},
+                "smithy.api#paginated": {
+                    "inputToken": "nextToken",
+                    "outputToken": "nextToken",
+                    "items": "tags",
+                    "pageSize": "maxResults"
+                }
+            }
+        },
+        "com.amazonaws.health#DescribeTagsForOrganizationFilter": {
+            "type": "structure",
+            "members": {
+                "tagTypes": {
+                    "target": "com.amazonaws.health#OrganizationTagTypeFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The types of tags to include in the results.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A filter for narrowing down the tags returned by DescribeTagsForOrganization.</p>"
+            }
+        },
+        "com.amazonaws.health#DescribeTagsForOrganizationRequest": {
+            "type": "structure",
+            "members": {
+                "filter": {
+                    "target": "com.amazonaws.health#DescribeTagsForOrganizationFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Values to narrow the results returned.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                },
+                "maxResults": {
+                    "target": "com.amazonaws.health#maxResultsLowerRange",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsForOrganizationResponse": {
+            "type": "structure",
+            "members": {
+                "tags": {
+                    "target": "com.amazonaws.health#OrganizationTagList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of tags associated with Health events across the organization.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsOnboardingStatus": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagsOnboardingStatusResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the current onboarding status of the Health tags feature for your account.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsOnboardingStatusForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "com.amazonaws.health#DescribeTagsOnboardingStatusForOrganizationResponse"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the current onboarding status of the Health tags feature for your organization.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsOnboardingStatusForOrganizationResponse": {
+            "type": "structure",
+            "members": {
+                "status": {
+                    "target": "com.amazonaws.health#TagsOnboardingStatusForOrganization",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current onboarding status of the tags feature for the organization.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsOnboardingStatusResponse": {
+            "type": "structure",
+            "members": {
+                "status": {
+                    "target": "com.amazonaws.health#TagsOnboardingStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current onboarding status of the tags feature for the account.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsRequest": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                },
+                "maxResults": {
+                    "target": "com.amazonaws.health#maxResultsLowerRange",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of items to return in one batch, between 10 and 100, inclusive.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.health#DescribeTagsResponse": {
+            "type": "structure",
+            "members": {
+                "tags": {
+                    "target": "com.amazonaws.health#AccountTagList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of resource tags associated with Health events.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.health#nextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If the results of a search are large, only a portion of the\nresults are returned, and a <code>nextToken</code> pagination token is returned in the response. To\nretrieve the next batch of results, reissue the search request and include the returned token.\nWhen all results have been returned, the response does not contain a pagination token value.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.health#DisableHealthServiceAccessForOrganization": {
             "type": "operation",
             "input": {
@@ -1786,6 +3658,32 @@
                 "smithy.api#idempotent": {}
             }
         },
+        "com.amazonaws.health#DisableTags": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Disables the Health tags feature for your account. After disabling, Health events will no longer include resource tag information. Previously configured tag keys are discarded.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#DisableTagsForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Disables the Health tags feature for all accounts in your organization.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
         "com.amazonaws.health#EnableHealthServiceAccessForOrganization": {
             "type": "operation",
             "input": {
@@ -1800,7 +3698,33 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Enables Health to work with Organizations. You can use the organizational view feature\n         to aggregate events from all Amazon Web Services accounts in your organization in a centralized location. </p>\n         <p>This operation also creates a service-linked role for the management account in the\n         organization. </p>\n         <note>\n            <p>To call this operation, you must meet the following requirements:</p>\n            <ul>\n               <li>\n                  <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call\n                  the Health API from an Amazon Web Services account that doesn't have a\n                  Business, Enterprise On-Ramp, or Enterprise Support plan, you receive a <code>SubscriptionRequiredException</code>\n                  error.</p>\n               </li>\n               <li>\n                  <p>You must have permission to call this operation from the organization's\n                  management account. For example IAM policies, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html\">Health\n                     identity-based policy examples</a>.</p>\n               </li>\n            </ul>\n         </note>\n         <p>If you don't have the required support plan, you can instead use the Health console\n         to enable the organizational view feature. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating\n            Health events</a> in the <i>Health User Guide</i>.</p>",
+                "smithy.api#documentation": "<p>Enables Health to work with Organizations. You can use the organizational view feature\n         to aggregate events from all Amazon Web Services accounts in your organization in a centralized location. </p>\n         <p>This operation also creates a service-linked role for the management account in the\n         organization. </p>\n         <note>\n            <p>To call this operation, you must meet the following requirements:</p>\n            <ul>\n               <li>\n                  <p>You must have a Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan from <a href=\"http://aws.amazon.com/premiumsupport/\">Amazon Web Services Support</a> to use the Health API. If you call\n                  the Health API from an Amazon Web Services account that doesn't have a\n                  Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan, you receive a <code>SubscriptionRequiredException</code>\n                  error.</p>\n               </li>\n               <li>\n                  <p>You must have permission to call this operation from the organization's\n                  management account. For example IAM policies, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/security_iam_id-based-policy-examples.html\">Health\n                     identity-based policy examples</a>.</p>\n               </li>\n            </ul>\n         </note>\n         <p>If you don't have the required support plan, you can instead use the Health console\n         to enable the organizational view feature. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html\">Aggregating\n            Health events</a> in the <i>Health User Guide</i>.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#EnableTags": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Enables the Health tags feature for your account. Once enabled, Health events will include resource tag information for affected entities. If the feature is already enabled, this operation has no effect.</p>",
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.health#EnableTagsForOrganization": {
+            "type": "operation",
+            "input": {
+                "target": "smithy.api#Unit"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Enables the Health tags feature for all accounts in your organization. Once enabled, Health events will include resource tag information for affected entities across your organization.</p>",
                 "smithy.api#idempotent": {}
             }
         },
@@ -1824,6 +3748,12 @@
                     "target": "com.amazonaws.health#entityStatusCodeList",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of entity status codes.</p>"
+                    }
+                },
+                "tags": {
+                    "target": "com.amazonaws.health#AffectedEntitiesForOrganizationTagFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p>\n         <p>An entity is returned when the tags of the resource, or of the account it belongs to, match. When you specify several filters in <code>organizationEntityAccountFilters</code>, the tags must be identical in every filter.</p>"
                     }
                 }
             },
@@ -1856,6 +3786,20 @@
             },
             "traits": {
                 "smithy.api#documentation": "<p>The number of entities that are affected by one or more events. Returned by the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEntityAggregates.html\">DescribeEntityAggregates</a> operation.</p>"
+            }
+        },
+        "com.amazonaws.health#EntityAggregateFilter": {
+            "type": "structure",
+            "members": {
+                "tags": {
+                    "target": "com.amazonaws.health#DescribeEntityAggregatesTagFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p>\n         <p>Only entities whose tags match are included in the aggregates.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A filter for narrowing down the entity aggregates returned by DescribeEntityAggregates.</p>"
             }
         },
         "com.amazonaws.health#EntityAggregateList": {
@@ -1893,9 +3837,9 @@
                     }
                 },
                 "tags": {
-                    "target": "com.amazonaws.health#tagFilter",
+                    "target": "com.amazonaws.health#DescribeAffectedEntitiesTagFilter",
                     "traits": {
-                        "smithy.api#documentation": "<p>A map of entity tags attached to the affected entity.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>A map of resource tag key-value pairs to filter affected entities.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
                     }
                 },
                 "statusCodes": {
@@ -1927,7 +3871,7 @@
                 "service": {
                     "target": "com.amazonaws.health#service",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
                     }
                 },
                 "eventTypeCode": {
@@ -1981,7 +3925,19 @@
                 "eventScopeCode": {
                     "target": "com.amazonaws.health#eventScopeCode",
                     "traits": {
-                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Services service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
+                    }
+                },
+                "actionability": {
+                    "target": "com.amazonaws.health#EventActionability",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required.\nEvents with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>"
+                    }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventPersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>"
                     }
                 }
             },
@@ -2008,6 +3964,41 @@
             },
             "traits": {
                 "smithy.api#documentation": "<p>The values used to filter results from the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventDetailsForOrganization.html\">DescribeEventDetailsForOrganization</a> and <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntitiesForOrganization.html\">DescribeAffectedEntitiesForOrganization</a> operations.</p>"
+            }
+        },
+        "com.amazonaws.health#EventActionability": {
+            "type": "enum",
+            "members": {
+                "ACTION_REQUIRED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACTION_REQUIRED"
+                    }
+                },
+                "ACTION_MAY_BE_REQUIRED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACTION_MAY_BE_REQUIRED"
+                    }
+                },
+                "INFORMATIONAL": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "INFORMATIONAL"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#EventActionabilityList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#EventActionability"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 3
+                }
             }
         },
         "com.amazonaws.health#EventAggregate": {
@@ -2121,6 +4112,12 @@
         "com.amazonaws.health#EventFilter": {
             "type": "structure",
             "members": {
+                "actionabilities": {
+                    "target": "com.amazonaws.health#EventActionabilityList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of actionability values to filter events. Use this to filter events based on whether they require action (<code>ACTION_REQUIRED</code>), may require action (<code>ACTION_MAY_BE_REQUIRED</code>) or are informational (<code>INFORMATIONAL</code>).</p>"
+                    }
+                },
                 "eventArns": {
                     "target": "com.amazonaws.health#eventArnList",
                     "traits": {
@@ -2136,7 +4133,7 @@
                 "services": {
                     "target": "com.amazonaws.health#serviceList",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
                     }
                 },
                 "regions": {
@@ -2188,15 +4185,21 @@
                     }
                 },
                 "tags": {
-                    "target": "com.amazonaws.health#tagFilter",
+                    "target": "com.amazonaws.health#DescribeEventsTagFilter",
                     "traits": {
-                        "smithy.api#documentation": "<p>A map of entity tags attached to the affected entity.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>A map of resource tag key-value pairs to filter affected entities.</p>\n         <note>\n            <p>Currently, the <code>tags</code> property isn't supported.</p>\n         </note>"
                     }
                 },
                 "eventStatusCodes": {
                     "target": "com.amazonaws.health#eventStatusCodeList",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of event status codes.</p>"
+                    }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventPersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona values to filter events. Use this to filter events based on their target audience: <code>OPERATIONS</code>, <code>SECURITY</code>, or <code>BILLING</code>.</p>"
                     }
                 }
             },
@@ -2210,13 +4213,48 @@
                 "target": "com.amazonaws.health#Event"
             }
         },
+        "com.amazonaws.health#EventPersona": {
+            "type": "enum",
+            "members": {
+                "OPERATIONS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "OPERATIONS"
+                    }
+                },
+                "SECURITY": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SECURITY"
+                    }
+                },
+                "BILLING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "BILLING"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#EventPersonaList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#EventPersona"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 3
+                }
+            }
+        },
         "com.amazonaws.health#EventType": {
             "type": "structure",
             "members": {
                 "service": {
                     "target": "com.amazonaws.health#service",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services service that is affected by the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
                     }
                 },
                 "code": {
@@ -2229,6 +4267,18 @@
                     "target": "com.amazonaws.health#eventTypeCategory",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of event type category codes. Possible values are\n<code>issue</code>, <code>accountNotification</code>, or <code>scheduledChange</code>. Currently,\nthe <code>investigation</code> value isn't supported at this time.</p>"
+                    }
+                },
+                "actionability": {
+                    "target": "com.amazonaws.health#EventTypeActionability",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required.\nEvents with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>"
+                    }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventTypePersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>"
                     }
                 }
             },
@@ -2244,6 +4294,41 @@
                     "max": 100
                 },
                 "smithy.api#pattern": "^[^:/]{3,100}$"
+            }
+        },
+        "com.amazonaws.health#EventTypeActionability": {
+            "type": "enum",
+            "members": {
+                "ACTION_REQUIRED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACTION_REQUIRED"
+                    }
+                },
+                "ACTION_MAY_BE_REQUIRED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACTION_MAY_BE_REQUIRED"
+                    }
+                },
+                "INFORMATIONAL": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "INFORMATIONAL"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#EventTypeActionabilityList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#EventTypeActionability"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 3
+                }
             }
         },
         "com.amazonaws.health#EventTypeCategoryList": {
@@ -2282,13 +4367,25 @@
                 "services": {
                     "target": "com.amazonaws.health#serviceList",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
                     }
                 },
                 "eventTypeCategories": {
                     "target": "com.amazonaws.health#EventTypeCategoryList",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of event type category codes. Possible values are\n<code>issue</code>, <code>accountNotification</code>, or <code>scheduledChange</code>. Currently,\nthe <code>investigation</code> value isn't supported at this time.</p>"
+                    }
+                },
+                "actionabilities": {
+                    "target": "com.amazonaws.health#EventTypeActionabilityList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of actionability values to filter event types. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>.</p>"
+                    }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventTypePersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona classifications to filter event types. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>.</p>"
                     }
                 }
             },
@@ -2302,6 +4399,47 @@
                 "target": "com.amazonaws.health#EventType"
             }
         },
+        "com.amazonaws.health#EventTypePersona": {
+            "type": "enum",
+            "members": {
+                "OPERATIONS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "OPERATIONS"
+                    }
+                },
+                "SECURITY": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SECURITY"
+                    }
+                },
+                "BILLING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "BILLING"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#EventTypePersonaList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#EventTypePersona"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 3
+                }
+            }
+        },
+        "com.amazonaws.health#ImpactRiskList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#string"
+            }
+        },
         "com.amazonaws.health#InvalidPaginationToken": {
             "type": "structure",
             "members": {
@@ -2312,6 +4450,59 @@
             "traits": {
                 "smithy.api#documentation": "<p>The specified pagination token (<code>nextToken</code>) is not valid.</p>",
                 "smithy.api#error": "client"
+            }
+        },
+        "com.amazonaws.health#LifecycleEvent": {
+            "type": "structure",
+            "members": {
+                "lifecycleEventType": {
+                    "target": "com.amazonaws.health#string",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of lifecycle event (for example, end-of-support, end-of-life).</p>"
+                    }
+                },
+                "date": {
+                    "target": "com.amazonaws.health#timestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The date of the lifecycle event.</p>"
+                    }
+                },
+                "regions": {
+                    "target": "com.amazonaws.health#regionList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services Regions affected by this lifecycle event.</p>"
+                    }
+                },
+                "impactRisks": {
+                    "target": "com.amazonaws.health#ImpactRiskList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The potential impact risks associated with this lifecycle event.</p>"
+                    }
+                },
+                "description": {
+                    "target": "com.amazonaws.health#string",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A description of the lifecycle event.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A lifecycle event for an Amazon Web Services service version, such as end-of-support or end-of-life.</p>"
+            }
+        },
+        "com.amazonaws.health#LifecycleEventList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#LifecycleEvent"
+            }
+        },
+        "com.amazonaws.health#LifecycleMaxResults": {
+            "type": "integer",
+            "traits": {
+                "smithy.api#range": {
+                    "min": 1,
+                    "max": 20
+                }
             }
         },
         "com.amazonaws.health#OrganizationAccountIdsList": {
@@ -2403,6 +4594,47 @@
                 "smithy.api#documentation": "<p>The aggregate results of entities affected by the specified event in your organization.\n         The results are aggregated by the entity status codes for the specified set of accountsIDs.</p>"
             }
         },
+        "com.amazonaws.health#OrganizationEntityAggregateFilter": {
+            "type": "structure",
+            "members": {
+                "tags": {
+                    "target": "com.amazonaws.health#OrganizationEntityAggregateTagFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p>\n         <p>Only entities whose tags match are included in the aggregates.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A filter for narrowing down the entity aggregates returned by DescribeEntityAggregatesForOrganization.</p>"
+            }
+        },
+        "com.amazonaws.health#OrganizationEntityAggregateTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#OrganizationEntityAggregateTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#OrganizationEntityAggregateTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
+            }
+        },
         "com.amazonaws.health#OrganizationEntityAggregatesList": {
             "type": "list",
             "member": {
@@ -2433,7 +4665,7 @@
                 "service": {
                     "target": "com.amazonaws.health#service",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Service that is affected by the event, such as EC2 and RDS.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services service that is affected by the event, such as EC2 and RDS.</p>"
                     }
                 },
                 "eventTypeCode": {
@@ -2451,7 +4683,7 @@
                 "eventScopeCode": {
                     "target": "com.amazonaws.health#eventScopeCode",
                     "traits": {
-                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>This parameter specifies if the Health event is a public Amazon Web Services service event or an account-specific event.</p>\n         <ul>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the\n                  <code>affectedAccounts</code> value is always empty.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then\n               the <code>affectedAccounts</code> value lists the affected Amazon Web Services accounts in your\n               organization. For example, if an event affects a service such as Amazon Elastic Compute Cloud and you\n               have Amazon Web Services accounts that use that service, those account IDs appear in the\n               response.</p>\n            </li>\n            <li>\n               <p>If the <code>eventScopeCode</code> value is <code>NONE</code>, then the\n                  <code>eventArn</code> that you specified in the request is invalid or doesn't\n               exist.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "region": {
@@ -2482,6 +4714,18 @@
                     "target": "com.amazonaws.health#eventStatusCode",
                     "traits": {
                         "smithy.api#documentation": "<p>The most recent status of the event. Possible values are <code>open</code>,\n            <code>closed</code>, and <code>upcoming</code>.</p>"
+                    }
+                },
+                "actionability": {
+                    "target": "com.amazonaws.health#EventActionability",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required.\nEvents with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>"
+                    }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventPersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>"
                     }
                 }
             },
@@ -2563,7 +4807,7 @@
                 "errorMessage": {
                     "target": "com.amazonaws.health#string",
                     "traits": {
-                        "smithy.api#documentation": "<p>A message that describes the error.</p>\n         <p>If you call the <code>DescribeEventDetailsForOrganization</code> operation and receive one of the following errors, follow the recommendations in the message:</p>\n         <ul>\n            <li>\n               <p>We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.</p>\n            </li>\n            <li>\n               <p>We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.</p>\n            </li>\n            <li>\n               <p>Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the\nHealth API. You must have either a Business, Enterprise On-Ramp, or Enterprise Support plan.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>A message that describes the error.</p>\n         <p>If you call the <code>DescribeEventDetailsForOrganization</code> operation and receive one of the following errors, follow the recommendations in the message:</p>\n         <ul>\n            <li>\n               <p>We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.</p>\n            </li>\n            <li>\n               <p>We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.</p>\n            </li>\n            <li>\n               <p>Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the\nHealth API. You must have either a Amazon Web Services Business Support+, Amazon Web Services Enterprise Support, or Amazon Web Services Unified Operations plan.</p>\n            </li>\n         </ul>"
                     }
                 }
             },
@@ -2574,6 +4818,12 @@
         "com.amazonaws.health#OrganizationEventFilter": {
             "type": "structure",
             "members": {
+                "actionabilities": {
+                    "target": "com.amazonaws.health#EventActionabilityList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of actionability values to filter events. Use this to filter events based on whether they require action (<code>ACTION_REQUIRED</code>), may require action (<code>ACTION_MAY_BE_REQUIRED</code>) or are informational (<code>INFORMATIONAL</code>).</p>"
+                    }
+                },
                 "eventTypeCodes": {
                     "target": "com.amazonaws.health#eventTypeList2",
                     "traits": {
@@ -2589,7 +4839,7 @@
                 "services": {
                     "target": "com.amazonaws.health#serviceList",
                     "traits": {
-                        "smithy.api#documentation": "<p>The Amazon Web Services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
+                        "smithy.api#documentation": "<p>The Amazon Web Services services associated with the event. For example, <code>EC2</code>, <code>RDS</code>.</p>"
                     }
                 },
                 "regions": {
@@ -2630,6 +4880,18 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of event status codes.</p>"
                     }
+                },
+                "personas": {
+                    "target": "com.amazonaws.health#EventPersonaList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of persona values to filter events. Use this to filter events based on their target audience: <code>OPERATIONS</code>, <code>SECURITY</code>, or <code>BILLING</code>.</p>"
+                    }
+                },
+                "tags": {
+                    "target": "com.amazonaws.health#OrganizationEventTagFilter",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A map of tag keys to lists of tag values. A tag matches when its key is in the map and its value is one of the values listed for that key. Matching is case sensitive, and the filter matches when at least one key in the map matches.</p>\n         <p>An event is returned when one of its affected accounts, or one of the entities of those accounts, has tags that match.</p>"
+                    }
                 }
             },
             "traits": {
@@ -2640,6 +4902,355 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.health#OrganizationEvent"
+            }
+        },
+        "com.amazonaws.health#OrganizationEventTagFilter": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#TagFilterKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#OrganizationEventTagValueList"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#OrganizationEventTagValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#TagFilterValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                }
+            }
+        },
+        "com.amazonaws.health#OrganizationTag": {
+            "type": "structure",
+            "members": {
+                "key": {
+                    "target": "com.amazonaws.health#tagKey",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag key.</p>"
+                    }
+                },
+                "value": {
+                    "target": "com.amazonaws.health#tagValue",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag value.</p>"
+                    }
+                },
+                "type": {
+                    "target": "com.amazonaws.health#OrganizationTagType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of organization tag.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A tag key-value pair associated with a resource across an organization.</p>"
+            }
+        },
+        "com.amazonaws.health#OrganizationTagKey": {
+            "type": "structure",
+            "members": {
+                "key": {
+                    "target": "com.amazonaws.health#OrganizationTagKey2",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag key name.</p>"
+                    }
+                },
+                "enabledForEventBridge": {
+                    "target": "com.amazonaws.health#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#documentation": "<p>Whether this tag key is enabled for EventBridge notifications.</p>"
+                    }
+                },
+                "status": {
+                    "target": "com.amazonaws.health#TagKeyStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the tag key configuration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A tag key configured for Health event tracking across an organization.</p>"
+            }
+        },
+        "com.amazonaws.health#OrganizationTagKey2": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 127
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:/=+\\-@]{1,127}$"
+            }
+        },
+        "com.amazonaws.health#OrganizationTagKeyList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#OrganizationTagKey"
+            }
+        },
+        "com.amazonaws.health#OrganizationTagList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#OrganizationTag"
+            }
+        },
+        "com.amazonaws.health#OrganizationTagType": {
+            "type": "enum",
+            "members": {
+                "ORGANIZATION_RESOURCE_TAG": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ORGANIZATION_RESOURCE_TAG"
+                    }
+                },
+                "ORGANIZATION_ACCOUNT_TAG": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ORGANIZATION_ACCOUNT_TAG"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#OrganizationTagTypeFilter": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#OrganizationTagType"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 2
+                }
+            }
+        },
+        "com.amazonaws.health#ResourceTagKey": {
+            "type": "structure",
+            "members": {
+                "key": {
+                    "target": "com.amazonaws.health#ResourceTagKey2",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag key name.</p>"
+                    }
+                },
+                "enabledForEventBridge": {
+                    "target": "com.amazonaws.health#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#documentation": "<p>Whether this tag key is enabled for EventBridge notifications.</p>"
+                    }
+                },
+                "status": {
+                    "target": "com.amazonaws.health#TagKeyStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the tag key configuration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A resource tag key configured for Health event tracking.</p>"
+            }
+        },
+        "com.amazonaws.health#ResourceTagKey2": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 127
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}$"
+            }
+        },
+        "com.amazonaws.health#ResourceTagKeyList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#ResourceTagKey"
+            }
+        },
+        "com.amazonaws.health#ResourceTagSet": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#ResourceTagKey2"
+            },
+            "value": {
+                "target": "com.amazonaws.health#ResourceTagValue"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 10
+                }
+            }
+        },
+        "com.amazonaws.health#ResourceTagValue": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 255
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}$"
+            }
+        },
+        "com.amazonaws.health#ServiceLifecycle": {
+            "type": "structure",
+            "members": {
+                "service": {
+                    "target": "com.amazonaws.health#service",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the Amazon Web Services service.</p>"
+                    }
+                },
+                "version": {
+                    "target": "com.amazonaws.health#string",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The version of the service.</p>"
+                    }
+                },
+                "title": {
+                    "target": "com.amazonaws.health#string",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A human-readable title for the lifecycle entry.</p>"
+                    }
+                },
+                "recommendedVersion": {
+                    "target": "com.amazonaws.health#string",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The recommended version to upgrade to.</p>"
+                    }
+                },
+                "lifecycleEvents": {
+                    "target": "com.amazonaws.health#LifecycleEventList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of lifecycle events for this service version.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Contains lifecycle information for an Amazon Web Services service version, including lifecycle events and version recommendations.</p>"
+            }
+        },
+        "com.amazonaws.health#ServiceLifecycleFilter": {
+            "type": "structure",
+            "members": {
+                "service": {
+                    "target": "com.amazonaws.health#service",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services service name to filter by.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A filter for narrowing down service lifecycle results.</p>"
+            }
+        },
+        "com.amazonaws.health#ServiceLifecycleList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.health#ServiceLifecycle"
+            }
+        },
+        "com.amazonaws.health#TagFilterKey": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 127
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{1,127}$"
+            }
+        },
+        "com.amazonaws.health#TagFilterValue": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 255
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9 _.:\\/=+\\-@]{0,255}$"
+            }
+        },
+        "com.amazonaws.health#TagKeyForOrganization": {
+            "type": "structure",
+            "members": {
+                "key": {
+                    "target": "com.amazonaws.health#OrganizationTagKey2",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The tag key name.</p>"
+                    }
+                },
+                "enabledForEventBridge": {
+                    "target": "com.amazonaws.health#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#documentation": "<p>Whether this tag key is enabled for EventBridge notifications.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A tag key configured for an organization.</p>"
+            }
+        },
+        "com.amazonaws.health#TagKeyStatus": {
+            "type": "enum",
+            "members": {
+                "PENDING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "PENDING"
+                    }
+                },
+                "ACTIVE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ACTIVE"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#TagsOnboardingStatus": {
+            "type": "enum",
+            "members": {
+                "ENABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ENABLED"
+                    }
+                },
+                "DISABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DISABLED"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.health#TagsOnboardingStatusForOrganization": {
+            "type": "enum",
+            "members": {
+                "ENABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ENABLED"
+                    }
+                },
+                "DISABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DISABLED"
+                    }
+                }
             }
         },
         "com.amazonaws.health#UnsupportedLocale": {
@@ -2680,7 +5291,7 @@
                     "min": 6,
                     "max": 18
                 },
-                "smithy.api#pattern": "^[a-z]{2}\\-[0-9a-z\\-]{4,16}$"
+                "smithy.api#pattern": "^[a-z]{2,4}\\-[0-9a-z\\-]{4,16}$"
             }
         },
         "com.amazonaws.health#availabilityZones": {
@@ -2738,6 +5349,33 @@
                 "smithy.api#length": {
                     "min": 1,
                     "max": 99
+                }
+            }
+        },
+        "com.amazonaws.health#entityMetadata": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.health#entityMetadataKey"
+            },
+            "value": {
+                "target": "com.amazonaws.health#entityMetadataValue"
+            }
+        },
+        "com.amazonaws.health#entityMetadataKey": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 1024
+                }
+            }
+        },
+        "com.amazonaws.health#entityMetadataValue": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 1024
                 }
             }
         },
@@ -3096,18 +5734,6 @@
         },
         "com.amazonaws.health#string": {
             "type": "string"
-        },
-        "com.amazonaws.health#tagFilter": {
-            "type": "list",
-            "member": {
-                "target": "com.amazonaws.health#tagSet"
-            },
-            "traits": {
-                "smithy.api#length": {
-                    "min": 0,
-                    "max": 50
-                }
-            }
         },
         "com.amazonaws.health#tagKey": {
             "type": "string",

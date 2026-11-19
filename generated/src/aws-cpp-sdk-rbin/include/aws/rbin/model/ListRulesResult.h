@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/rbin/RecycleBin_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rbin/RecycleBin_EXPORTS.h>
 #include <aws/rbin/model/RuleSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RecycleBin
-{
-namespace Model
-{
-  class ListRulesResult
-  {
-  public:
-    AWS_RECYCLEBIN_API ListRulesResult();
-    AWS_RECYCLEBIN_API ListRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RECYCLEBIN_API ListRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RecycleBin {
+namespace Model {
+class ListRulesResult {
+ public:
+  AWS_RECYCLEBIN_API ListRulesResult() = default;
+  AWS_RECYCLEBIN_API ListRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RECYCLEBIN_API ListRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the retention rules.</p>
+   */
+  inline const Aws::Vector<RuleSummary>& GetRules() const { return m_rules; }
+  template <typename RulesT = Aws::Vector<RuleSummary>>
+  void SetRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules = std::forward<RulesT>(value);
+  }
+  template <typename RulesT = Aws::Vector<RuleSummary>>
+  ListRulesResult& WithRules(RulesT&& value) {
+    SetRules(std::forward<RulesT>(value));
+    return *this;
+  }
+  template <typename RulesT = RuleSummary>
+  ListRulesResult& AddRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules.emplace_back(std::forward<RulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the retention rules.</p>
-     */
-    inline const Aws::Vector<RuleSummary>& GetRules() const{ return m_rules; }
-    inline void SetRules(const Aws::Vector<RuleSummary>& value) { m_rules = value; }
-    inline void SetRules(Aws::Vector<RuleSummary>&& value) { m_rules = std::move(value); }
-    inline ListRulesResult& WithRules(const Aws::Vector<RuleSummary>& value) { SetRules(value); return *this;}
-    inline ListRulesResult& WithRules(Aws::Vector<RuleSummary>&& value) { SetRules(std::move(value)); return *this;}
-    inline ListRulesResult& AddRules(const RuleSummary& value) { m_rules.push_back(value); return *this; }
-    inline ListRulesResult& AddRules(RuleSummary&& value) { m_rules.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRulesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListRulesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRulesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRulesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListRulesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListRulesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListRulesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListRulesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<RuleSummary> m_rules;
+ private:
+  Aws::Vector<RuleSummary> m_rules;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_rulesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RecycleBin
-} // namespace Aws
+}  // namespace Model
+}  // namespace RecycleBin
+}  // namespace Aws

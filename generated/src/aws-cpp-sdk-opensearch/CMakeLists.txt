@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-opensearch "C++ SDK for the AWS opensearch service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-opensearch "C++ SDK for Amazon OpenSearch Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_OPENSEARCH_HEADERS
     "include/aws/opensearch/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OPENSEARCH_HEADERS
 
 file(GLOB AWS_OPENSEARCH_MODEL_HEADERS
     "include/aws/opensearch/model/*.h"
+)
+
+file(GLOB AWS_OPENSEARCH_INTERNAL_HEADERS
+    "include/aws/opensearch/internal/*.h"
 )
 
 file(GLOB AWS_OPENSEARCH_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OPENSEARCH_MODEL_SOURCE
 
 file(GLOB OPENSEARCH_UNIFIED_HEADERS
     ${AWS_OPENSEARCH_HEADERS}
+    ${AWS_OPENSEARCH_INTERNAL_HEADERS}
     ${AWS_OPENSEARCH_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\opensearch" FILES ${AWS_OPENSEARCH_HEADERS})
+        source_group("Header Files\\aws\\opensearch\\internal" FILES ${AWS_OPENSEARCH_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\opensearch\\model" FILES ${AWS_OPENSEARCH_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OPENSEARCH_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OPENSEARCH_MODEL_SOURCE})

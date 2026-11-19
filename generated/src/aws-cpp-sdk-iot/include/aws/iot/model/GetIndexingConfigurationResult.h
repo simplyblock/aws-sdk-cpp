@@ -4,77 +4,93 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/iot/model/ThingIndexingConfiguration.h>
-#include <aws/iot/model/ThingGroupIndexingConfiguration.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+#include <aws/iot/model/ThingGroupIndexingConfiguration.h>
+#include <aws/iot/model/ThingIndexingConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class GetIndexingConfigurationResult
-  {
-  public:
-    AWS_IOT_API GetIndexingConfigurationResult();
-    AWS_IOT_API GetIndexingConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API GetIndexingConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class GetIndexingConfigurationResult {
+ public:
+  AWS_IOT_API GetIndexingConfigurationResult() = default;
+  AWS_IOT_API GetIndexingConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API GetIndexingConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Thing indexing configuration.</p>
+   */
+  inline const ThingIndexingConfiguration& GetThingIndexingConfiguration() const { return m_thingIndexingConfiguration; }
+  template <typename ThingIndexingConfigurationT = ThingIndexingConfiguration>
+  void SetThingIndexingConfiguration(ThingIndexingConfigurationT&& value) {
+    m_thingIndexingConfigurationHasBeenSet = true;
+    m_thingIndexingConfiguration = std::forward<ThingIndexingConfigurationT>(value);
+  }
+  template <typename ThingIndexingConfigurationT = ThingIndexingConfiguration>
+  GetIndexingConfigurationResult& WithThingIndexingConfiguration(ThingIndexingConfigurationT&& value) {
+    SetThingIndexingConfiguration(std::forward<ThingIndexingConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Thing indexing configuration.</p>
-     */
-    inline const ThingIndexingConfiguration& GetThingIndexingConfiguration() const{ return m_thingIndexingConfiguration; }
-    inline void SetThingIndexingConfiguration(const ThingIndexingConfiguration& value) { m_thingIndexingConfiguration = value; }
-    inline void SetThingIndexingConfiguration(ThingIndexingConfiguration&& value) { m_thingIndexingConfiguration = std::move(value); }
-    inline GetIndexingConfigurationResult& WithThingIndexingConfiguration(const ThingIndexingConfiguration& value) { SetThingIndexingConfiguration(value); return *this;}
-    inline GetIndexingConfigurationResult& WithThingIndexingConfiguration(ThingIndexingConfiguration&& value) { SetThingIndexingConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The index configuration.</p>
+   */
+  inline const ThingGroupIndexingConfiguration& GetThingGroupIndexingConfiguration() const { return m_thingGroupIndexingConfiguration; }
+  template <typename ThingGroupIndexingConfigurationT = ThingGroupIndexingConfiguration>
+  void SetThingGroupIndexingConfiguration(ThingGroupIndexingConfigurationT&& value) {
+    m_thingGroupIndexingConfigurationHasBeenSet = true;
+    m_thingGroupIndexingConfiguration = std::forward<ThingGroupIndexingConfigurationT>(value);
+  }
+  template <typename ThingGroupIndexingConfigurationT = ThingGroupIndexingConfiguration>
+  GetIndexingConfigurationResult& WithThingGroupIndexingConfiguration(ThingGroupIndexingConfigurationT&& value) {
+    SetThingGroupIndexingConfiguration(std::forward<ThingGroupIndexingConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The index configuration.</p>
-     */
-    inline const ThingGroupIndexingConfiguration& GetThingGroupIndexingConfiguration() const{ return m_thingGroupIndexingConfiguration; }
-    inline void SetThingGroupIndexingConfiguration(const ThingGroupIndexingConfiguration& value) { m_thingGroupIndexingConfiguration = value; }
-    inline void SetThingGroupIndexingConfiguration(ThingGroupIndexingConfiguration&& value) { m_thingGroupIndexingConfiguration = std::move(value); }
-    inline GetIndexingConfigurationResult& WithThingGroupIndexingConfiguration(const ThingGroupIndexingConfiguration& value) { SetThingGroupIndexingConfiguration(value); return *this;}
-    inline GetIndexingConfigurationResult& WithThingGroupIndexingConfiguration(ThingGroupIndexingConfiguration&& value) { SetThingGroupIndexingConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetIndexingConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetIndexingConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetIndexingConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetIndexingConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ThingIndexingConfiguration m_thingIndexingConfiguration;
+ private:
+  ThingIndexingConfiguration m_thingIndexingConfiguration;
 
-    ThingGroupIndexingConfiguration m_thingGroupIndexingConfiguration;
+  ThingGroupIndexingConfiguration m_thingGroupIndexingConfiguration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_thingIndexingConfigurationHasBeenSet = false;
+  bool m_thingGroupIndexingConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

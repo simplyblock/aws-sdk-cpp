@@ -4,13 +4,39 @@
  */
 
 #include <aws/bedrock-agent/BedrockAgentEndpointProvider.h>
+#include <aws/bedrock-agent/internal/BedrockAgentEndpointRules.h>
 
-namespace Aws
-{
-namespace BedrockAgent
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace BedrockAgent
-} // namespace Aws
+namespace Aws {
+#ifndef AWS_BEDROCKAGENT_EXPORTS  // Except for Windows DLL
+namespace Endpoint {
+/**
+ * Instantiate endpoint providers
+ */
+template class Aws::Endpoint::EndpointProviderBase<BedrockAgent::Endpoint::BedrockAgentClientConfiguration,
+                                                   BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
+                                                   BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
+
+template class Aws::Endpoint::BDDEndpointProvider<BedrockAgent::Endpoint::BedrockAgentClientConfiguration,
+                                                  BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
+                                                  BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
+}  // namespace Endpoint
+#endif
+
+namespace BedrockAgent {
+namespace Endpoint {
+BedrockAgentEndpointProvider::BedrockAgentEndpointProvider()
+    : BedrockAgentDefaultEpProviderBase(Aws::BedrockAgent::BedrockAgentEndpointRules::GetRulesBlob(),
+                                        Aws::BedrockAgent::BedrockAgentEndpointRules::RulesBlobSize) {}
+
+void BedrockAgentBuiltInParameters::SetFromClientConfiguration(const BedrockAgentClientConfiguration& config) {
+  SetFromClientConfiguration(static_cast<const BedrockAgentClientConfiguration::BaseClientConfigClass&>(config));
+}
+
+void BedrockAgentBuiltInParameters::SetFromClientConfiguration(const BedrockAgentClientConfiguration& config,
+                                                               const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const BedrockAgentClientConfiguration::BaseClientConfigClass&>(config), serviceName);
+}
+
+}  // namespace Endpoint
+}  // namespace BedrockAgent
+}  // namespace Aws

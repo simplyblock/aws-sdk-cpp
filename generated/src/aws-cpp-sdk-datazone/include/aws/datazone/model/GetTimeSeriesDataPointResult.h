@@ -4,124 +4,153 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/datazone/model/TimeSeriesEntityType.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/TimeSeriesDataPointFormOutput.h>
+#include <aws/datazone/model/TimeSeriesEntityType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataZone
-{
-namespace Model
-{
-  class GetTimeSeriesDataPointResult
-  {
-  public:
-    AWS_DATAZONE_API GetTimeSeriesDataPointResult();
-    AWS_DATAZONE_API GetTimeSeriesDataPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATAZONE_API GetTimeSeriesDataPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataZone {
+namespace Model {
+class GetTimeSeriesDataPointResult {
+ public:
+  AWS_DATAZONE_API GetTimeSeriesDataPointResult() = default;
+  AWS_DATAZONE_API GetTimeSeriesDataPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATAZONE_API GetTimeSeriesDataPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the Amazon DataZone domain that houses the asset data point that
+   * you want to get.</p>
+   */
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  GetTimeSeriesDataPointResult& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon DataZone domain that houses the asset data point that
-     * you want to get.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline void SetDomainId(const Aws::String& value) { m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainId.assign(value); }
-    inline GetTimeSeriesDataPointResult& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline GetTimeSeriesDataPointResult& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the asset for which you want to get the data point.</p>
+   */
+  inline const Aws::String& GetEntityId() const { return m_entityId; }
+  template <typename EntityIdT = Aws::String>
+  void SetEntityId(EntityIdT&& value) {
+    m_entityIdHasBeenSet = true;
+    m_entityId = std::forward<EntityIdT>(value);
+  }
+  template <typename EntityIdT = Aws::String>
+  GetTimeSeriesDataPointResult& WithEntityId(EntityIdT&& value) {
+    SetEntityId(std::forward<EntityIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the asset for which you want to get the data point.</p>
-     */
-    inline const Aws::String& GetEntityId() const{ return m_entityId; }
-    inline void SetEntityId(const Aws::String& value) { m_entityId = value; }
-    inline void SetEntityId(Aws::String&& value) { m_entityId = std::move(value); }
-    inline void SetEntityId(const char* value) { m_entityId.assign(value); }
-    inline GetTimeSeriesDataPointResult& WithEntityId(const Aws::String& value) { SetEntityId(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithEntityId(Aws::String&& value) { SetEntityId(std::move(value)); return *this;}
-    inline GetTimeSeriesDataPointResult& WithEntityId(const char* value) { SetEntityId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the asset for which you want to get the data point.</p>
+   */
+  inline TimeSeriesEntityType GetEntityType() const { return m_entityType; }
+  inline void SetEntityType(TimeSeriesEntityType value) {
+    m_entityTypeHasBeenSet = true;
+    m_entityType = value;
+  }
+  inline GetTimeSeriesDataPointResult& WithEntityType(TimeSeriesEntityType value) {
+    SetEntityType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the asset for which you want to get the data point.</p>
-     */
-    inline const TimeSeriesEntityType& GetEntityType() const{ return m_entityType; }
-    inline void SetEntityType(const TimeSeriesEntityType& value) { m_entityType = value; }
-    inline void SetEntityType(TimeSeriesEntityType&& value) { m_entityType = std::move(value); }
-    inline GetTimeSeriesDataPointResult& WithEntityType(const TimeSeriesEntityType& value) { SetEntityType(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithEntityType(TimeSeriesEntityType&& value) { SetEntityType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the time series form that houses the data point that you want to
+   * get.</p>
+   */
+  inline const Aws::String& GetFormName() const { return m_formName; }
+  template <typename FormNameT = Aws::String>
+  void SetFormName(FormNameT&& value) {
+    m_formNameHasBeenSet = true;
+    m_formName = std::forward<FormNameT>(value);
+  }
+  template <typename FormNameT = Aws::String>
+  GetTimeSeriesDataPointResult& WithFormName(FormNameT&& value) {
+    SetFormName(std::forward<FormNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time series form that houses the data point that you want to get.</p>
-     */
-    inline const TimeSeriesDataPointFormOutput& GetForm() const{ return m_form; }
-    inline void SetForm(const TimeSeriesDataPointFormOutput& value) { m_form = value; }
-    inline void SetForm(TimeSeriesDataPointFormOutput&& value) { m_form = std::move(value); }
-    inline GetTimeSeriesDataPointResult& WithForm(const TimeSeriesDataPointFormOutput& value) { SetForm(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithForm(TimeSeriesDataPointFormOutput&& value) { SetForm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time series form that houses the data point that you want to get.</p>
+   */
+  inline const TimeSeriesDataPointFormOutput& GetForm() const { return m_form; }
+  template <typename FormT = TimeSeriesDataPointFormOutput>
+  void SetForm(FormT&& value) {
+    m_formHasBeenSet = true;
+    m_form = std::forward<FormT>(value);
+  }
+  template <typename FormT = TimeSeriesDataPointFormOutput>
+  GetTimeSeriesDataPointResult& WithForm(FormT&& value) {
+    SetForm(std::forward<FormT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the time series form that houses the data point that you want to
-     * get.</p>
-     */
-    inline const Aws::String& GetFormName() const{ return m_formName; }
-    inline void SetFormName(const Aws::String& value) { m_formName = value; }
-    inline void SetFormName(Aws::String&& value) { m_formName = std::move(value); }
-    inline void SetFormName(const char* value) { m_formName.assign(value); }
-    inline GetTimeSeriesDataPointResult& WithFormName(const Aws::String& value) { SetFormName(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithFormName(Aws::String&& value) { SetFormName(std::move(value)); return *this;}
-    inline GetTimeSeriesDataPointResult& WithFormName(const char* value) { SetFormName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTimeSeriesDataPointResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTimeSeriesDataPointResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTimeSeriesDataPointResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTimeSeriesDataPointResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_domainId;
+ private:
+  Aws::String m_domainId;
 
-    Aws::String m_entityId;
+  Aws::String m_entityId;
 
-    TimeSeriesEntityType m_entityType;
+  TimeSeriesEntityType m_entityType{TimeSeriesEntityType::NOT_SET};
 
-    TimeSeriesDataPointFormOutput m_form;
+  Aws::String m_formName;
 
-    Aws::String m_formName;
+  TimeSeriesDataPointFormOutput m_form;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_domainIdHasBeenSet = false;
+  bool m_entityIdHasBeenSet = false;
+  bool m_entityTypeHasBeenSet = false;
+  bool m_formNameHasBeenSet = false;
+  bool m_formHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

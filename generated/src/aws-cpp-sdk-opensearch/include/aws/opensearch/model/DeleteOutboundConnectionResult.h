@@ -4,68 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/opensearch/model/OutboundConnection.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
+/**
+ * <p>Details about the deleted outbound connection.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteOutboundConnectionResponse">AWS
+ * API Reference</a></p>
+ */
+class DeleteOutboundConnectionResult {
+ public:
+  AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult() = default;
+  AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Details about the deleted outbound connection.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteOutboundConnectionResponse">AWS
-   * API Reference</a></p>
+   * <p>The deleted inbound connection.</p>
    */
-  class DeleteOutboundConnectionResult
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult();
-    AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OPENSEARCHSERVICE_API DeleteOutboundConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const OutboundConnection& GetConnection() const { return m_connection; }
+  template <typename ConnectionT = OutboundConnection>
+  void SetConnection(ConnectionT&& value) {
+    m_connectionHasBeenSet = true;
+    m_connection = std::forward<ConnectionT>(value);
+  }
+  template <typename ConnectionT = OutboundConnection>
+  DeleteOutboundConnectionResult& WithConnection(ConnectionT&& value) {
+    SetConnection(std::forward<ConnectionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The deleted inbound connection.</p>
-     */
-    inline const OutboundConnection& GetConnection() const{ return m_connection; }
-    inline void SetConnection(const OutboundConnection& value) { m_connection = value; }
-    inline void SetConnection(OutboundConnection&& value) { m_connection = std::move(value); }
-    inline DeleteOutboundConnectionResult& WithConnection(const OutboundConnection& value) { SetConnection(value); return *this;}
-    inline DeleteOutboundConnectionResult& WithConnection(OutboundConnection&& value) { SetConnection(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteOutboundConnectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteOutboundConnectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteOutboundConnectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteOutboundConnectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  OutboundConnection m_connection;
 
-    OutboundConnection m_connection;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_connectionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

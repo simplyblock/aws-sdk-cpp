@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/s3-crt/model/GetObjectTorrentResult.h>
 #include <aws/core/AmazonWebServiceResult.h>
-#include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/s3-crt/model/GetObjectTorrentResult.h>
 
 #include <utility>
 
@@ -16,54 +16,25 @@ using namespace Aws::Utils::Stream;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetObjectTorrentResult::GetObjectTorrentResult() : 
-    m_requestCharged(RequestCharged::NOT_SET)
-{
-}
+GetObjectTorrentResult::GetObjectTorrentResult(Aws::AmazonWebServiceResult<ResponseStream>&& result) { *this = std::move(result); }
 
-GetObjectTorrentResult::GetObjectTorrentResult(GetObjectTorrentResult&& toMove) : 
-    m_body(std::move(toMove.m_body)),
-    m_requestCharged(toMove.m_requestCharged),
-    m_requestId(std::move(toMove.m_requestId))
-{
-}
-
-GetObjectTorrentResult& GetObjectTorrentResult::operator=(GetObjectTorrentResult&& toMove)
-{
-   if(this == &toMove)
-   {
-      return *this;
-   }
-
-   m_body = std::move(toMove.m_body);
-   m_requestCharged = toMove.m_requestCharged;
-   m_requestId = std::move(toMove.m_requestId);
-
-   return *this;
-}
-
-GetObjectTorrentResult::GetObjectTorrentResult(Aws::AmazonWebServiceResult<ResponseStream>&& result)
-  : GetObjectTorrentResult()
-{
-  *this = std::move(result);
-}
-
-GetObjectTorrentResult& GetObjectTorrentResult::operator =(Aws::AmazonWebServiceResult<ResponseStream>&& result)
-{
+GetObjectTorrentResult& GetObjectTorrentResult::operator=(Aws::AmazonWebServiceResult<ResponseStream>&& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   m_body = result.TakeOwnershipOfPayload();
+  m_bodyHasBeenSet = true;
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestChargedIter = headers.find("x-amz-request-charged");
-  if(requestChargedIter != headers.end())
-  {
+  if (requestChargedIter != headers.end()) {
     m_requestCharged = RequestChargedMapper::GetRequestChargedForName(requestChargedIter->second);
+    m_requestChargedHasBeenSet = true;
   }
 
   const auto& requestIdIter = headers.find("x-amz-request-id");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
 
-   return *this;
+  return *this;
 }

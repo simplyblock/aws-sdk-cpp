@@ -4,47 +4,45 @@
  */
 
 #include <aws/comprehend/model/DescribeFlywheelIterationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::Comprehend::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeFlywheelIterationRequest::DescribeFlywheelIterationRequest() : 
-    m_flywheelArnHasBeenSet(false),
-    m_flywheelIterationIdHasBeenSet(false)
-{
-}
+Aws::String DescribeFlywheelIterationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeFlywheelIterationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_flywheelArnHasBeenSet)
-  {
-   payload.WithString("FlywheelArn", m_flywheelArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_flywheelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_flywheelIterationIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_flywheelIterationIdHasBeenSet)
-  {
-   payload.WithString("FlywheelIterationId", m_flywheelIterationId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_flywheelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FlywheelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_flywheelArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_flywheelIterationIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FlywheelIterationId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_flywheelIterationId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeFlywheelIterationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeFlywheelIterationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.DescribeFlywheelIteration"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

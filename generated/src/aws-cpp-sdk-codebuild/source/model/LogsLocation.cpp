@@ -4,154 +4,519 @@
  */
 
 #include <aws/codebuild/model/LogsLocation.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeBuild {
+namespace Model {
 
-LogsLocation::LogsLocation() : 
-    m_groupNameHasBeenSet(false),
-    m_streamNameHasBeenSet(false),
-    m_deepLinkHasBeenSet(false),
-    m_s3DeepLinkHasBeenSet(false),
-    m_cloudWatchLogsArnHasBeenSet(false),
-    m_s3LogsArnHasBeenSet(false),
-    m_cloudWatchLogsHasBeenSet(false),
-    m_s3LogsHasBeenSet(false)
-{
-}
+LogsLocation::LogsLocation(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-LogsLocation::LogsLocation(JsonView jsonValue)
-  : LogsLocation()
-{
-  *this = jsonValue;
-}
+LogsLocation& LogsLocation::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-LogsLocation& LogsLocation::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("groupName"))
-  {
-    m_groupName = jsonValue.GetString("groupName");
+              if (initialKeyStr == "groupName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_groupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_groupName = ss.str();
+                  }
+                }
+                m_groupNameHasBeenSet = true;
+              }
 
-    m_groupNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "streamName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_streamName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_streamName = ss.str();
+                  }
+                }
+                m_streamNameHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("streamName"))
-  {
-    m_streamName = jsonValue.GetString("streamName");
+              else if (initialKeyStr == "deepLink") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_deepLink = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_deepLink = ss.str();
+                  }
+                }
+                m_deepLinkHasBeenSet = true;
+              }
 
-    m_streamNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "s3DeepLink") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3DeepLink = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3DeepLink = ss.str();
+                  }
+                }
+                m_s3DeepLinkHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("deepLink"))
-  {
-    m_deepLink = jsonValue.GetString("deepLink");
+              else if (initialKeyStr == "cloudWatchLogsArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_cloudWatchLogsArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_cloudWatchLogsArn = ss.str();
+                  }
+                }
+                m_cloudWatchLogsArnHasBeenSet = true;
+              }
 
-    m_deepLinkHasBeenSet = true;
-  }
+              else if (initialKeyStr == "s3LogsArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3LogsArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3LogsArn = ss.str();
+                  }
+                }
+                m_s3LogsArnHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("s3DeepLink"))
-  {
-    m_s3DeepLink = jsonValue.GetString("s3DeepLink");
+              else if (initialKeyStr == "cloudWatchLogs") {
+                m_cloudWatchLogs = CloudWatchLogsConfig(decoder);
+                m_cloudWatchLogsHasBeenSet = true;
+              }
 
-    m_s3DeepLinkHasBeenSet = true;
-  }
+              else if (initialKeyStr == "s3Logs") {
+                m_s3Logs = S3LogsConfig(decoder);
+                m_s3LogsHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("LogsLocation", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("cloudWatchLogsArn"))
-  {
-    m_cloudWatchLogsArn = jsonValue.GetString("cloudWatchLogsArn");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_cloudWatchLogsArnHasBeenSet = true;
-  }
+            if (initialKeyStr == "groupName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_groupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_groupName = ss.str();
+                }
+              }
+              m_groupNameHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("s3LogsArn"))
-  {
-    m_s3LogsArn = jsonValue.GetString("s3LogsArn");
+            else if (initialKeyStr == "streamName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_streamName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_streamName = ss.str();
+                }
+              }
+              m_streamNameHasBeenSet = true;
+            }
 
-    m_s3LogsArnHasBeenSet = true;
-  }
+            else if (initialKeyStr == "deepLink") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_deepLink = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_deepLink = ss.str();
+                }
+              }
+              m_deepLinkHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("cloudWatchLogs"))
-  {
-    m_cloudWatchLogs = jsonValue.GetObject("cloudWatchLogs");
+            else if (initialKeyStr == "s3DeepLink") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3DeepLink = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3DeepLink = ss.str();
+                }
+              }
+              m_s3DeepLinkHasBeenSet = true;
+            }
 
-    m_cloudWatchLogsHasBeenSet = true;
-  }
+            else if (initialKeyStr == "cloudWatchLogsArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_cloudWatchLogsArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_cloudWatchLogsArn = ss.str();
+                }
+              }
+              m_cloudWatchLogsArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("s3Logs"))
-  {
-    m_s3Logs = jsonValue.GetObject("s3Logs");
+            else if (initialKeyStr == "s3LogsArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3LogsArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3LogsArn = ss.str();
+                }
+              }
+              m_s3LogsArnHasBeenSet = true;
+            }
 
-    m_s3LogsHasBeenSet = true;
+            else if (initialKeyStr == "cloudWatchLogs") {
+              m_cloudWatchLogs = CloudWatchLogsConfig(decoder);
+              m_cloudWatchLogsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "s3Logs") {
+              m_s3Logs = S3LogsConfig(decoder);
+              m_s3LogsHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue LogsLocation::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_groupNameHasBeenSet)
-  {
-   payload.WithString("groupName", m_groupName);
-
+void LogsLocation::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_groupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_streamNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deepLinkHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3DeepLinkHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cloudWatchLogsArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3LogsArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cloudWatchLogsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3LogsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_streamNameHasBeenSet)
-  {
-   payload.WithString("streamName", m_streamName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_groupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("groupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_groupName.c_str()));
   }
 
-  if(m_deepLinkHasBeenSet)
-  {
-   payload.WithString("deepLink", m_deepLink);
-
+  if (m_streamNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("streamName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_streamName.c_str()));
   }
 
-  if(m_s3DeepLinkHasBeenSet)
-  {
-   payload.WithString("s3DeepLink", m_s3DeepLink);
-
+  if (m_deepLinkHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deepLink"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_deepLink.c_str()));
   }
 
-  if(m_cloudWatchLogsArnHasBeenSet)
-  {
-   payload.WithString("cloudWatchLogsArn", m_cloudWatchLogsArn);
-
+  if (m_s3DeepLinkHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("s3DeepLink"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3DeepLink.c_str()));
   }
 
-  if(m_s3LogsArnHasBeenSet)
-  {
-   payload.WithString("s3LogsArn", m_s3LogsArn);
-
+  if (m_cloudWatchLogsArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("cloudWatchLogsArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_cloudWatchLogsArn.c_str()));
   }
 
-  if(m_cloudWatchLogsHasBeenSet)
-  {
-   payload.WithObject("cloudWatchLogs", m_cloudWatchLogs.Jsonize());
-
+  if (m_s3LogsArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("s3LogsArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3LogsArn.c_str()));
   }
 
-  if(m_s3LogsHasBeenSet)
-  {
-   payload.WithObject("s3Logs", m_s3Logs.Jsonize());
-
+  if (m_cloudWatchLogsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("cloudWatchLogs"));
+    m_cloudWatchLogs.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_s3LogsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("s3Logs"));
+    m_s3Logs.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

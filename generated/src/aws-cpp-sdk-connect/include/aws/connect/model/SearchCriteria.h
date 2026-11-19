@@ -5,172 +5,376 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/connect/model/AgentHierarchyGroups.h>
-#include <aws/connect/model/ContactAnalysis.h>
-#include <aws/connect/model/SearchableContactAttributes.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/connect/model/AiAgentsCriteria.h>
 #include <aws/connect/model/Channel.h>
+#include <aws/connect/model/ContactAnalysis.h>
 #include <aws/connect/model/ContactInitiationMethod.h>
+#include <aws/connect/model/ControlPlaneTagFilter.h>
+#include <aws/connect/model/NameCriteria.h>
+#include <aws/connect/model/SearchContactsAdditionalTimeRange.h>
+#include <aws/connect/model/SearchableContactAttributes.h>
+#include <aws/connect/model/SearchableRoutingCriteria.h>
+#include <aws/connect/model/SearchableSegmentAttributes.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>A structure of search criteria to be used to return contacts.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchCriteria">AWS
+ * API Reference</a></p>
+ */
+class SearchCriteria {
+ public:
+  AWS_CONNECT_API SearchCriteria() = default;
+  AWS_CONNECT_API SearchCriteria(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API SearchCriteria& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A structure of search criteria to be used to return contacts.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchCriteria">AWS
-   * API Reference</a></p>
+   * <p>Name of the contact.</p>
    */
-  class SearchCriteria
-  {
-  public:
-    AWS_CONNECT_API SearchCriteria();
-    AWS_CONNECT_API SearchCriteria(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API SearchCriteria& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const NameCriteria& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = NameCriteria>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = NameCriteria>
+  SearchCriteria& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifiers of agents who handled the contacts.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAgentIds() const { return m_agentIds; }
+  inline bool AgentIdsHasBeenSet() const { return m_agentIdsHasBeenSet; }
+  template <typename AgentIdsT = Aws::Vector<Aws::String>>
+  void SetAgentIds(AgentIdsT&& value) {
+    m_agentIdsHasBeenSet = true;
+    m_agentIds = std::forward<AgentIdsT>(value);
+  }
+  template <typename AgentIdsT = Aws::Vector<Aws::String>>
+  SearchCriteria& WithAgentIds(AgentIdsT&& value) {
+    SetAgentIds(std::forward<AgentIdsT>(value));
+    return *this;
+  }
+  template <typename AgentIdsT = Aws::String>
+  SearchCriteria& AddAgentIds(AgentIdsT&& value) {
+    m_agentIdsHasBeenSet = true;
+    m_agentIds.emplace_back(std::forward<AgentIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifiers of agents who handled the contacts.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetAgentIds() const{ return m_agentIds; }
-    inline bool AgentIdsHasBeenSet() const { return m_agentIdsHasBeenSet; }
-    inline void SetAgentIds(const Aws::Vector<Aws::String>& value) { m_agentIdsHasBeenSet = true; m_agentIds = value; }
-    inline void SetAgentIds(Aws::Vector<Aws::String>&& value) { m_agentIdsHasBeenSet = true; m_agentIds = std::move(value); }
-    inline SearchCriteria& WithAgentIds(const Aws::Vector<Aws::String>& value) { SetAgentIds(value); return *this;}
-    inline SearchCriteria& WithAgentIds(Aws::Vector<Aws::String>&& value) { SetAgentIds(std::move(value)); return *this;}
-    inline SearchCriteria& AddAgentIds(const Aws::String& value) { m_agentIdsHasBeenSet = true; m_agentIds.push_back(value); return *this; }
-    inline SearchCriteria& AddAgentIds(Aws::String&& value) { m_agentIdsHasBeenSet = true; m_agentIds.push_back(std::move(value)); return *this; }
-    inline SearchCriteria& AddAgentIds(const char* value) { m_agentIdsHasBeenSet = true; m_agentIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The agent hierarchy groups of the agent at the time of handling the
+   * contact.</p>
+   */
+  inline const AgentHierarchyGroups& GetAgentHierarchyGroups() const { return m_agentHierarchyGroups; }
+  inline bool AgentHierarchyGroupsHasBeenSet() const { return m_agentHierarchyGroupsHasBeenSet; }
+  template <typename AgentHierarchyGroupsT = AgentHierarchyGroups>
+  void SetAgentHierarchyGroups(AgentHierarchyGroupsT&& value) {
+    m_agentHierarchyGroupsHasBeenSet = true;
+    m_agentHierarchyGroups = std::forward<AgentHierarchyGroupsT>(value);
+  }
+  template <typename AgentHierarchyGroupsT = AgentHierarchyGroups>
+  SearchCriteria& WithAgentHierarchyGroups(AgentHierarchyGroupsT&& value) {
+    SetAgentHierarchyGroups(std::forward<AgentHierarchyGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The agent hierarchy groups of the agent at the time of handling the
-     * contact.</p>
-     */
-    inline const AgentHierarchyGroups& GetAgentHierarchyGroups() const{ return m_agentHierarchyGroups; }
-    inline bool AgentHierarchyGroupsHasBeenSet() const { return m_agentHierarchyGroupsHasBeenSet; }
-    inline void SetAgentHierarchyGroups(const AgentHierarchyGroups& value) { m_agentHierarchyGroupsHasBeenSet = true; m_agentHierarchyGroups = value; }
-    inline void SetAgentHierarchyGroups(AgentHierarchyGroups&& value) { m_agentHierarchyGroupsHasBeenSet = true; m_agentHierarchyGroups = std::move(value); }
-    inline SearchCriteria& WithAgentHierarchyGroups(const AgentHierarchyGroups& value) { SetAgentHierarchyGroups(value); return *this;}
-    inline SearchCriteria& WithAgentHierarchyGroups(AgentHierarchyGroups&& value) { SetAgentHierarchyGroups(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of channels associated with contacts.</p>
+   */
+  inline const Aws::Vector<Channel>& GetChannels() const { return m_channels; }
+  inline bool ChannelsHasBeenSet() const { return m_channelsHasBeenSet; }
+  template <typename ChannelsT = Aws::Vector<Channel>>
+  void SetChannels(ChannelsT&& value) {
+    m_channelsHasBeenSet = true;
+    m_channels = std::forward<ChannelsT>(value);
+  }
+  template <typename ChannelsT = Aws::Vector<Channel>>
+  SearchCriteria& WithChannels(ChannelsT&& value) {
+    SetChannels(std::forward<ChannelsT>(value));
+    return *this;
+  }
+  inline SearchCriteria& AddChannels(Channel value) {
+    m_channelsHasBeenSet = true;
+    m_channels.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of channels associated with contacts.</p>
-     */
-    inline const Aws::Vector<Channel>& GetChannels() const{ return m_channels; }
-    inline bool ChannelsHasBeenSet() const { return m_channelsHasBeenSet; }
-    inline void SetChannels(const Aws::Vector<Channel>& value) { m_channelsHasBeenSet = true; m_channels = value; }
-    inline void SetChannels(Aws::Vector<Channel>&& value) { m_channelsHasBeenSet = true; m_channels = std::move(value); }
-    inline SearchCriteria& WithChannels(const Aws::Vector<Channel>& value) { SetChannels(value); return *this;}
-    inline SearchCriteria& WithChannels(Aws::Vector<Channel>&& value) { SetChannels(std::move(value)); return *this;}
-    inline SearchCriteria& AddChannels(const Channel& value) { m_channelsHasBeenSet = true; m_channels.push_back(value); return *this; }
-    inline SearchCriteria& AddChannels(Channel&& value) { m_channelsHasBeenSet = true; m_channels.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Search criteria based on analysis outputs from Connect Customer Contact
+   * Lens.</p>
+   */
+  inline const ContactAnalysis& GetContactAnalysis() const { return m_contactAnalysis; }
+  inline bool ContactAnalysisHasBeenSet() const { return m_contactAnalysisHasBeenSet; }
+  template <typename ContactAnalysisT = ContactAnalysis>
+  void SetContactAnalysis(ContactAnalysisT&& value) {
+    m_contactAnalysisHasBeenSet = true;
+    m_contactAnalysis = std::forward<ContactAnalysisT>(value);
+  }
+  template <typename ContactAnalysisT = ContactAnalysis>
+  SearchCriteria& WithContactAnalysis(ContactAnalysisT&& value) {
+    SetContactAnalysis(std::forward<ContactAnalysisT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Search criteria based on analysis outputs from Amazon Connect Contact
-     * Lens.</p>
-     */
-    inline const ContactAnalysis& GetContactAnalysis() const{ return m_contactAnalysis; }
-    inline bool ContactAnalysisHasBeenSet() const { return m_contactAnalysisHasBeenSet; }
-    inline void SetContactAnalysis(const ContactAnalysis& value) { m_contactAnalysisHasBeenSet = true; m_contactAnalysis = value; }
-    inline void SetContactAnalysis(ContactAnalysis&& value) { m_contactAnalysisHasBeenSet = true; m_contactAnalysis = std::move(value); }
-    inline SearchCriteria& WithContactAnalysis(const ContactAnalysis& value) { SetContactAnalysis(value); return *this;}
-    inline SearchCriteria& WithContactAnalysis(ContactAnalysis&& value) { SetContactAnalysis(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of initiation methods associated with contacts.</p>
+   */
+  inline const Aws::Vector<ContactInitiationMethod>& GetInitiationMethods() const { return m_initiationMethods; }
+  inline bool InitiationMethodsHasBeenSet() const { return m_initiationMethodsHasBeenSet; }
+  template <typename InitiationMethodsT = Aws::Vector<ContactInitiationMethod>>
+  void SetInitiationMethods(InitiationMethodsT&& value) {
+    m_initiationMethodsHasBeenSet = true;
+    m_initiationMethods = std::forward<InitiationMethodsT>(value);
+  }
+  template <typename InitiationMethodsT = Aws::Vector<ContactInitiationMethod>>
+  SearchCriteria& WithInitiationMethods(InitiationMethodsT&& value) {
+    SetInitiationMethods(std::forward<InitiationMethodsT>(value));
+    return *this;
+  }
+  inline SearchCriteria& AddInitiationMethods(ContactInitiationMethod value) {
+    m_initiationMethodsHasBeenSet = true;
+    m_initiationMethods.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of initiation methods associated with contacts.</p>
-     */
-    inline const Aws::Vector<ContactInitiationMethod>& GetInitiationMethods() const{ return m_initiationMethods; }
-    inline bool InitiationMethodsHasBeenSet() const { return m_initiationMethodsHasBeenSet; }
-    inline void SetInitiationMethods(const Aws::Vector<ContactInitiationMethod>& value) { m_initiationMethodsHasBeenSet = true; m_initiationMethods = value; }
-    inline void SetInitiationMethods(Aws::Vector<ContactInitiationMethod>&& value) { m_initiationMethodsHasBeenSet = true; m_initiationMethods = std::move(value); }
-    inline SearchCriteria& WithInitiationMethods(const Aws::Vector<ContactInitiationMethod>& value) { SetInitiationMethods(value); return *this;}
-    inline SearchCriteria& WithInitiationMethods(Aws::Vector<ContactInitiationMethod>&& value) { SetInitiationMethods(std::move(value)); return *this;}
-    inline SearchCriteria& AddInitiationMethods(const ContactInitiationMethod& value) { m_initiationMethodsHasBeenSet = true; m_initiationMethods.push_back(value); return *this; }
-    inline SearchCriteria& AddInitiationMethods(ContactInitiationMethod&& value) { m_initiationMethodsHasBeenSet = true; m_initiationMethods.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of queue IDs associated with contacts.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetQueueIds() const { return m_queueIds; }
+  inline bool QueueIdsHasBeenSet() const { return m_queueIdsHasBeenSet; }
+  template <typename QueueIdsT = Aws::Vector<Aws::String>>
+  void SetQueueIds(QueueIdsT&& value) {
+    m_queueIdsHasBeenSet = true;
+    m_queueIds = std::forward<QueueIdsT>(value);
+  }
+  template <typename QueueIdsT = Aws::Vector<Aws::String>>
+  SearchCriteria& WithQueueIds(QueueIdsT&& value) {
+    SetQueueIds(std::forward<QueueIdsT>(value));
+    return *this;
+  }
+  template <typename QueueIdsT = Aws::String>
+  SearchCriteria& AddQueueIds(QueueIdsT&& value) {
+    m_queueIdsHasBeenSet = true;
+    m_queueIds.emplace_back(std::forward<QueueIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of queue IDs associated with contacts.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetQueueIds() const{ return m_queueIds; }
-    inline bool QueueIdsHasBeenSet() const { return m_queueIdsHasBeenSet; }
-    inline void SetQueueIds(const Aws::Vector<Aws::String>& value) { m_queueIdsHasBeenSet = true; m_queueIds = value; }
-    inline void SetQueueIds(Aws::Vector<Aws::String>&& value) { m_queueIdsHasBeenSet = true; m_queueIds = std::move(value); }
-    inline SearchCriteria& WithQueueIds(const Aws::Vector<Aws::String>& value) { SetQueueIds(value); return *this;}
-    inline SearchCriteria& WithQueueIds(Aws::Vector<Aws::String>&& value) { SetQueueIds(std::move(value)); return *this;}
-    inline SearchCriteria& AddQueueIds(const Aws::String& value) { m_queueIdsHasBeenSet = true; m_queueIds.push_back(value); return *this; }
-    inline SearchCriteria& AddQueueIds(Aws::String&& value) { m_queueIdsHasBeenSet = true; m_queueIds.push_back(std::move(value)); return *this; }
-    inline SearchCriteria& AddQueueIds(const char* value) { m_queueIdsHasBeenSet = true; m_queueIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Routing criteria for the contact.</p>
+   */
+  inline const SearchableRoutingCriteria& GetRoutingCriteria() const { return m_routingCriteria; }
+  inline bool RoutingCriteriaHasBeenSet() const { return m_routingCriteriaHasBeenSet; }
+  template <typename RoutingCriteriaT = SearchableRoutingCriteria>
+  void SetRoutingCriteria(RoutingCriteriaT&& value) {
+    m_routingCriteriaHasBeenSet = true;
+    m_routingCriteria = std::forward<RoutingCriteriaT>(value);
+  }
+  template <typename RoutingCriteriaT = SearchableRoutingCriteria>
+  SearchCriteria& WithRoutingCriteria(RoutingCriteriaT&& value) {
+    SetRoutingCriteria(std::forward<RoutingCriteriaT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The search criteria based on user-defined contact attributes that have been
-     * configured for contact search. For more information, see <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/search-custom-attributes.html">Search
-     * by custom contact attributes</a> in the <i>Amazon Connect Administrator
-     * Guide</i>.</p>  <p>To use <code>SearchableContactAttributes</code> in
-     * a search request, the <code>GetContactAttributes</code> action is required to
-     * perform an API request. For more information, see <a
-     * href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonconnect.html#amazonconnect-actions-as-permissions">https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonconnect.html#amazonconnect-actions-as-permissions</a>Actions
-     * defined by Amazon Connect.</p> 
-     */
-    inline const SearchableContactAttributes& GetSearchableContactAttributes() const{ return m_searchableContactAttributes; }
-    inline bool SearchableContactAttributesHasBeenSet() const { return m_searchableContactAttributesHasBeenSet; }
-    inline void SetSearchableContactAttributes(const SearchableContactAttributes& value) { m_searchableContactAttributesHasBeenSet = true; m_searchableContactAttributes = value; }
-    inline void SetSearchableContactAttributes(SearchableContactAttributes&& value) { m_searchableContactAttributesHasBeenSet = true; m_searchableContactAttributes = std::move(value); }
-    inline SearchCriteria& WithSearchableContactAttributes(const SearchableContactAttributes& value) { SetSearchableContactAttributes(value); return *this;}
-    inline SearchCriteria& WithSearchableContactAttributes(SearchableContactAttributes&& value) { SetSearchableContactAttributes(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Additional TimeRange used to filter contacts.</p>
+   */
+  inline const SearchContactsAdditionalTimeRange& GetAdditionalTimeRange() const { return m_additionalTimeRange; }
+  inline bool AdditionalTimeRangeHasBeenSet() const { return m_additionalTimeRangeHasBeenSet; }
+  template <typename AdditionalTimeRangeT = SearchContactsAdditionalTimeRange>
+  void SetAdditionalTimeRange(AdditionalTimeRangeT&& value) {
+    m_additionalTimeRangeHasBeenSet = true;
+    m_additionalTimeRange = std::forward<AdditionalTimeRangeT>(value);
+  }
+  template <typename AdditionalTimeRangeT = SearchContactsAdditionalTimeRange>
+  SearchCriteria& WithAdditionalTimeRange(AdditionalTimeRangeT&& value) {
+    SetAdditionalTimeRange(std::forward<AdditionalTimeRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Aws::String> m_agentIds;
-    bool m_agentIdsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The search criteria based on user-defined contact attributes that have been
+   * configured for contact search. For more information, see <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/search-custom-attributes.html">Search
+   * by custom contact attributes</a> in the <i>Connect Customer Administrator
+   * Guide</i>.</p>  <p>To use <code>SearchableContactAttributes</code> in
+   * a search request, the <code>GetContactAttributes</code> action is required to
+   * perform an API request. For more information, see <a
+   * href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonconnect.html#amazonconnect-actions-as-permissions">https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonconnect.html#amazonconnect-actions-as-permissions</a>Actions
+   * defined by Connect Customer.</p>
+   */
+  inline const SearchableContactAttributes& GetSearchableContactAttributes() const { return m_searchableContactAttributes; }
+  inline bool SearchableContactAttributesHasBeenSet() const { return m_searchableContactAttributesHasBeenSet; }
+  template <typename SearchableContactAttributesT = SearchableContactAttributes>
+  void SetSearchableContactAttributes(SearchableContactAttributesT&& value) {
+    m_searchableContactAttributesHasBeenSet = true;
+    m_searchableContactAttributes = std::forward<SearchableContactAttributesT>(value);
+  }
+  template <typename SearchableContactAttributesT = SearchableContactAttributes>
+  SearchCriteria& WithSearchableContactAttributes(SearchableContactAttributesT&& value) {
+    SetSearchableContactAttributes(std::forward<SearchableContactAttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AgentHierarchyGroups m_agentHierarchyGroups;
-    bool m_agentHierarchyGroupsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The search criteria based on searchable segment attributes of a contact.</p>
+   */
+  inline const SearchableSegmentAttributes& GetSearchableSegmentAttributes() const { return m_searchableSegmentAttributes; }
+  inline bool SearchableSegmentAttributesHasBeenSet() const { return m_searchableSegmentAttributesHasBeenSet; }
+  template <typename SearchableSegmentAttributesT = SearchableSegmentAttributes>
+  void SetSearchableSegmentAttributes(SearchableSegmentAttributesT&& value) {
+    m_searchableSegmentAttributesHasBeenSet = true;
+    m_searchableSegmentAttributes = std::forward<SearchableSegmentAttributesT>(value);
+  }
+  template <typename SearchableSegmentAttributesT = SearchableSegmentAttributes>
+  SearchCriteria& WithSearchableSegmentAttributes(SearchableSegmentAttributesT&& value) {
+    SetSearchableSegmentAttributes(std::forward<SearchableSegmentAttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Channel> m_channels;
-    bool m_channelsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The list of active regions for contacts in ACGR instances.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetActiveRegions() const { return m_activeRegions; }
+  inline bool ActiveRegionsHasBeenSet() const { return m_activeRegionsHasBeenSet; }
+  template <typename ActiveRegionsT = Aws::Vector<Aws::String>>
+  void SetActiveRegions(ActiveRegionsT&& value) {
+    m_activeRegionsHasBeenSet = true;
+    m_activeRegions = std::forward<ActiveRegionsT>(value);
+  }
+  template <typename ActiveRegionsT = Aws::Vector<Aws::String>>
+  SearchCriteria& WithActiveRegions(ActiveRegionsT&& value) {
+    SetActiveRegions(std::forward<ActiveRegionsT>(value));
+    return *this;
+  }
+  template <typename ActiveRegionsT = Aws::String>
+  SearchCriteria& AddActiveRegions(ActiveRegionsT&& value) {
+    m_activeRegionsHasBeenSet = true;
+    m_activeRegions.emplace_back(std::forward<ActiveRegionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ContactAnalysis m_contactAnalysis;
-    bool m_contactAnalysisHasBeenSet = false;
+  ///@{
 
-    Aws::Vector<ContactInitiationMethod> m_initiationMethods;
-    bool m_initiationMethodsHasBeenSet = false;
+  inline const ControlPlaneTagFilter& GetContactTags() const { return m_contactTags; }
+  inline bool ContactTagsHasBeenSet() const { return m_contactTagsHasBeenSet; }
+  template <typename ContactTagsT = ControlPlaneTagFilter>
+  void SetContactTags(ContactTagsT&& value) {
+    m_contactTagsHasBeenSet = true;
+    m_contactTags = std::forward<ContactTagsT>(value);
+  }
+  template <typename ContactTagsT = ControlPlaneTagFilter>
+  SearchCriteria& WithContactTags(ContactTagsT&& value) {
+    SetContactTags(std::forward<ContactTagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Aws::String> m_queueIds;
-    bool m_queueIdsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>AI Agent search criteria definitions.</p>
+   */
+  inline const AiAgentsCriteria& GetAiAgents() const { return m_aiAgents; }
+  inline bool AiAgentsHasBeenSet() const { return m_aiAgentsHasBeenSet; }
+  template <typename AiAgentsT = AiAgentsCriteria>
+  void SetAiAgents(AiAgentsT&& value) {
+    m_aiAgentsHasBeenSet = true;
+    m_aiAgents = std::forward<AiAgentsT>(value);
+  }
+  template <typename AiAgentsT = AiAgentsCriteria>
+  SearchCriteria& WithAiAgents(AiAgentsT&& value) {
+    SetAiAgents(std::forward<AiAgentsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  NameCriteria m_name;
 
-    SearchableContactAttributes m_searchableContactAttributes;
-    bool m_searchableContactAttributesHasBeenSet = false;
-  };
+  Aws::Vector<Aws::String> m_agentIds;
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+  AgentHierarchyGroups m_agentHierarchyGroups;
+
+  Aws::Vector<Channel> m_channels;
+
+  ContactAnalysis m_contactAnalysis;
+
+  Aws::Vector<ContactInitiationMethod> m_initiationMethods;
+
+  Aws::Vector<Aws::String> m_queueIds;
+
+  SearchableRoutingCriteria m_routingCriteria;
+
+  SearchContactsAdditionalTimeRange m_additionalTimeRange;
+
+  SearchableContactAttributes m_searchableContactAttributes;
+
+  SearchableSegmentAttributes m_searchableSegmentAttributes;
+
+  Aws::Vector<Aws::String> m_activeRegions;
+
+  ControlPlaneTagFilter m_contactTags;
+
+  AiAgentsCriteria m_aiAgents;
+  bool m_nameHasBeenSet = false;
+  bool m_agentIdsHasBeenSet = false;
+  bool m_agentHierarchyGroupsHasBeenSet = false;
+  bool m_channelsHasBeenSet = false;
+  bool m_contactAnalysisHasBeenSet = false;
+  bool m_initiationMethodsHasBeenSet = false;
+  bool m_queueIdsHasBeenSet = false;
+  bool m_routingCriteriaHasBeenSet = false;
+  bool m_additionalTimeRangeHasBeenSet = false;
+  bool m_searchableContactAttributesHasBeenSet = false;
+  bool m_searchableSegmentAttributesHasBeenSet = false;
+  bool m_activeRegionsHasBeenSet = false;
+  bool m_contactTagsHasBeenSet = false;
+  bool m_aiAgentsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -4,13 +4,15 @@
  */
 
 #include <aws/codeguruprofiler/CodeGuruProfilerEndpointProvider.h>
+#include <aws/codeguruprofiler/internal/CodeGuruProfilerEndpointRules.h>
 
-namespace Aws
-{
-namespace CodeGuruProfiler
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CodeGuruProfiler
-} // namespace Aws
+namespace Aws {
+namespace CodeGuruProfiler {
+namespace Endpoint {
+CodeGuruProfilerEndpointProvider::CodeGuruProfilerEndpointProvider()
+    : CodeGuruProfilerDefaultEpProviderBase(Aws::CodeGuruProfiler::CodeGuruProfilerEndpointRules::GetRulesBlob(),
+                                            Aws::CodeGuruProfiler::CodeGuruProfilerEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CodeGuruProfiler
+}  // namespace Aws

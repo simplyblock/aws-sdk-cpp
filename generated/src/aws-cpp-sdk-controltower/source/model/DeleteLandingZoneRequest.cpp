@@ -12,24 +12,12 @@ using namespace Aws::ControlTower::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteLandingZoneRequest::DeleteLandingZoneRequest() : 
-    m_landingZoneIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteLandingZoneRequest::SerializePayload() const
-{
+Aws::String DeleteLandingZoneRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_landingZoneIdentifierHasBeenSet)
-  {
-   payload.WithString("landingZoneIdentifier", m_landingZoneIdentifier);
-
+  if (m_landingZoneIdentifierHasBeenSet) {
+    payload.WithString("landingZoneIdentifier", m_landingZoneIdentifier);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

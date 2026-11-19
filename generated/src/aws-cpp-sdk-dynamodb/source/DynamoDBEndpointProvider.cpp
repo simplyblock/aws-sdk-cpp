@@ -4,40 +4,48 @@
  */
 
 #include <aws/dynamodb/DynamoDBEndpointProvider.h>
+#include <aws/dynamodb/internal/DynamoDBEndpointRules.h>
 
-namespace Aws
-{
-#ifndef AWS_DYNAMODB_EXPORTS // Except for Windows DLL
-namespace Endpoint
-{
+namespace Aws {
+#ifndef AWS_DYNAMODB_EXPORTS  // Except for Windows DLL
+namespace Endpoint {
 /**
  * Instantiate endpoint providers
  */
 template class Aws::Endpoint::EndpointProviderBase<DynamoDB::Endpoint::DynamoDBClientConfiguration,
-    DynamoDB::Endpoint::DynamoDBBuiltInParameters,
-    DynamoDB::Endpoint::DynamoDBClientContextParameters>;
+                                                   DynamoDB::Endpoint::DynamoDBBuiltInParameters,
+                                                   DynamoDB::Endpoint::DynamoDBClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<DynamoDB::Endpoint::DynamoDBClientConfiguration,
-    DynamoDB::Endpoint::DynamoDBBuiltInParameters,
-    DynamoDB::Endpoint::DynamoDBClientContextParameters>;
-} // namespace Endpoint
+template class Aws::Endpoint::BDDEndpointProvider<DynamoDB::Endpoint::DynamoDBClientConfiguration,
+                                                  DynamoDB::Endpoint::DynamoDBBuiltInParameters,
+                                                  DynamoDB::Endpoint::DynamoDBClientContextParameters>;
+}  // namespace Endpoint
 #endif
 
-namespace DynamoDB
-{
-namespace Endpoint
-{
-  void DynamoDBBuiltInParameters::SetFromClientConfiguration(const DynamoDBClientConfiguration& config)
-  {
-    SetFromClientConfiguration(static_cast<const DynamoDBClientConfiguration::BaseClientConfigClass&>(config));
+namespace DynamoDB {
+namespace Endpoint {
+DynamoDBEndpointProvider::DynamoDBEndpointProvider()
+    : DynamoDBDefaultEpProviderBase(Aws::DynamoDB::DynamoDBEndpointRules::GetRulesBlob(),
+                                    Aws::DynamoDB::DynamoDBEndpointRules::RulesBlobSize) {}
 
-    if(!config.accountId.empty()) {
-      SetStringParameter("AccountId", config.accountId);
-    }
-    if(!config.accountIdEndpointMode.empty()) {
-      SetStringParameter("AccountIdEndpointMode", config.accountIdEndpointMode);
-    }
+void DynamoDBBuiltInParameters::SetFromClientConfiguration(const DynamoDBClientConfiguration& config) {
+  SetFromClientConfiguration(static_cast<const DynamoDBClientConfiguration::BaseClientConfigClass&>(config));
+  SetServiceSpecificParameters(config);
+}
+
+void DynamoDBBuiltInParameters::SetFromClientConfiguration(const DynamoDBClientConfiguration& config, const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const DynamoDBClientConfiguration::BaseClientConfigClass&>(config), serviceName);
+  SetServiceSpecificParameters(config);
+}
+
+void DynamoDBBuiltInParameters::SetServiceSpecificParameters(const DynamoDBClientConfiguration& config) {
+  if (!config.accountId.empty()) {
+    SetStringParameter("AccountId", config.accountId);
   }
-} // namespace Endpoint
-} // namespace DynamoDB
-} // namespace Aws
+  if (!config.accountIdEndpointMode.empty()) {
+    SetStringParameter("AccountIdEndpointMode", config.accountIdEndpointMode);
+  }
+}
+}  // namespace Endpoint
+}  // namespace DynamoDB
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-entityresolution "C++ SDK for the AWS entityresolution service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-entityresolution "C++ SDK for AWS EntityResolution" aws-cpp-sdk-core)
 
 file(GLOB AWS_ENTITYRESOLUTION_HEADERS
     "include/aws/entityresolution/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ENTITYRESOLUTION_HEADERS
 
 file(GLOB AWS_ENTITYRESOLUTION_MODEL_HEADERS
     "include/aws/entityresolution/model/*.h"
+)
+
+file(GLOB AWS_ENTITYRESOLUTION_INTERNAL_HEADERS
+    "include/aws/entityresolution/internal/*.h"
 )
 
 file(GLOB AWS_ENTITYRESOLUTION_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ENTITYRESOLUTION_MODEL_SOURCE
 
 file(GLOB ENTITYRESOLUTION_UNIFIED_HEADERS
     ${AWS_ENTITYRESOLUTION_HEADERS}
+    ${AWS_ENTITYRESOLUTION_INTERNAL_HEADERS}
     ${AWS_ENTITYRESOLUTION_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\entityresolution" FILES ${AWS_ENTITYRESOLUTION_HEADERS})
+        source_group("Header Files\\aws\\entityresolution\\internal" FILES ${AWS_ENTITYRESOLUTION_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\entityresolution\\model" FILES ${AWS_ENTITYRESOLUTION_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ENTITYRESOLUTION_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ENTITYRESOLUTION_MODEL_SOURCE})

@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace StorageGateway
-{
-namespace Model
-{
-  class CreateTapePoolResult
-  {
-  public:
-    AWS_STORAGEGATEWAY_API CreateTapePoolResult();
-    AWS_STORAGEGATEWAY_API CreateTapePoolResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_STORAGEGATEWAY_API CreateTapePoolResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace StorageGateway {
+namespace Model {
+class CreateTapePoolResult {
+ public:
+  AWS_STORAGEGATEWAY_API CreateTapePoolResult() = default;
+  AWS_STORAGEGATEWAY_API CreateTapePoolResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_STORAGEGATEWAY_API CreateTapePoolResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique Amazon Resource Name (ARN) that represents the custom tape pool.
+   * Use the <a>ListTapePools</a> operation to return a list of tape pools for your
+   * account and Amazon Web Services Region.</p>
+   */
+  inline const Aws::String& GetPoolARN() const { return m_poolARN; }
+  template <typename PoolARNT = Aws::String>
+  void SetPoolARN(PoolARNT&& value) {
+    m_poolARNHasBeenSet = true;
+    m_poolARN = std::forward<PoolARNT>(value);
+  }
+  template <typename PoolARNT = Aws::String>
+  CreateTapePoolResult& WithPoolARN(PoolARNT&& value) {
+    SetPoolARN(std::forward<PoolARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique Amazon Resource Name (ARN) that represents the custom tape pool.
-     * Use the <a>ListTapePools</a> operation to return a list of tape pools for your
-     * account and Amazon Web Services Region.</p>
-     */
-    inline const Aws::String& GetPoolARN() const{ return m_poolARN; }
-    inline void SetPoolARN(const Aws::String& value) { m_poolARN = value; }
-    inline void SetPoolARN(Aws::String&& value) { m_poolARN = std::move(value); }
-    inline void SetPoolARN(const char* value) { m_poolARN.assign(value); }
-    inline CreateTapePoolResult& WithPoolARN(const Aws::String& value) { SetPoolARN(value); return *this;}
-    inline CreateTapePoolResult& WithPoolARN(Aws::String&& value) { SetPoolARN(std::move(value)); return *this;}
-    inline CreateTapePoolResult& WithPoolARN(const char* value) { SetPoolARN(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTapePoolResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTapePoolResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTapePoolResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTapePoolResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_poolARN;
+ private:
+  Aws::String m_poolARN;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_poolARNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace StorageGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace StorageGateway
+}  // namespace Aws

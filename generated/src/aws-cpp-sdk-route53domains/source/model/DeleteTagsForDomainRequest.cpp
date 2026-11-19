@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/model/DeleteTagsForDomainRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Route53Domains::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteTagsForDomainRequest::DeleteTagsForDomainRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_tagsToDeleteHasBeenSet(false)
-{
-}
+Aws::String DeleteTagsForDomainRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteTagsForDomainRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_domainNameHasBeenSet)
-  {
-   payload.WithString("DomainName", m_domainName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_domainNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsToDeleteHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagsToDeleteHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsToDeleteJsonList(m_tagsToDelete.size());
-   for(unsigned tagsToDeleteIndex = 0; tagsToDeleteIndex < tagsToDeleteJsonList.GetLength(); ++tagsToDeleteIndex)
-   {
-     tagsToDeleteJsonList[tagsToDeleteIndex].AsString(m_tagsToDelete[tagsToDeleteIndex]);
-   }
-   payload.WithArray("TagsToDelete", std::move(tagsToDeleteJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_domainNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DomainName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_domainName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagsToDeleteHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TagsToDelete"));
+    encoder.WriteArrayStart(m_tagsToDelete.size());
+    for (const auto& item_0 : m_tagsToDelete) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteTagsForDomainRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteTagsForDomainRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Route53Domains_v20140515.DeleteTagsForDomain"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -4,58 +4,55 @@
  */
 
 #pragma once
-#include <aws/iotwireless/IoTWireless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotwireless/IoTWireless_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoTWireless
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTWireless {
+namespace Model {
 
+/**
+ * <p>IP address used for resolving device location.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iotwireless-2020-11-22/Ip">AWS API
+ * Reference</a></p>
+ */
+class Ip {
+ public:
+  AWS_IOTWIRELESS_API Ip() = default;
+  AWS_IOTWIRELESS_API Ip(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTWIRELESS_API Ip& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTWIRELESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>IP address used for resolving device location.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iotwireless-2020-11-22/Ip">AWS API
-   * Reference</a></p>
+   * <p>IP address information.</p>
    */
-  class Ip
-  {
-  public:
-    AWS_IOTWIRELESS_API Ip();
-    AWS_IOTWIRELESS_API Ip(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTWIRELESS_API Ip& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTWIRELESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetIpAddress() const { return m_ipAddress; }
+  inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
+  template <typename IpAddressT = Aws::String>
+  void SetIpAddress(IpAddressT&& value) {
+    m_ipAddressHasBeenSet = true;
+    m_ipAddress = std::forward<IpAddressT>(value);
+  }
+  template <typename IpAddressT = Aws::String>
+  Ip& WithIpAddress(IpAddressT&& value) {
+    SetIpAddress(std::forward<IpAddressT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_ipAddress;
+  bool m_ipAddressHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>IP address information.</p>
-     */
-    inline const Aws::String& GetIpAddress() const{ return m_ipAddress; }
-    inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
-    inline void SetIpAddress(const Aws::String& value) { m_ipAddressHasBeenSet = true; m_ipAddress = value; }
-    inline void SetIpAddress(Aws::String&& value) { m_ipAddressHasBeenSet = true; m_ipAddress = std::move(value); }
-    inline void SetIpAddress(const char* value) { m_ipAddressHasBeenSet = true; m_ipAddress.assign(value); }
-    inline Ip& WithIpAddress(const Aws::String& value) { SetIpAddress(value); return *this;}
-    inline Ip& WithIpAddress(Aws::String&& value) { SetIpAddress(std::move(value)); return *this;}
-    inline Ip& WithIpAddress(const char* value) { SetIpAddress(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_ipAddress;
-    bool m_ipAddressHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTWireless
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTWireless
+}  // namespace Aws

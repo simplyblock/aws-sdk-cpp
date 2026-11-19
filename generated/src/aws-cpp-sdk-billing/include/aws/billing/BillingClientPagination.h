@@ -1,0 +1,57 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/billing/BillingClient.h>
+#include <aws/billing/model/GetCreditAllocationHistoryPaginationTraits.h>
+#include <aws/billing/model/ListBillingViewSegmentsPaginationTraits.h>
+#include <aws/billing/model/ListBillingViewsPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportAccountChargesPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportSubscriptionHistoryPaginationTraits.h>
+#include <aws/billing/model/ListContractsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentAttestationsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentSummariesPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentsPaginationTraits.h>
+#include <aws/billing/model/ListEnterpriseSupportLinkedAccountChargesPaginationTraits.h>
+#include <aws/billing/model/ListSourceViewsForBillingViewPaginationTraits.h>
+#include <aws/core/utils/pagination/Paginator.h>
+
+namespace Aws {
+namespace Billing {
+
+using GetCreditAllocationHistoryPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::GetCreditAllocationHistoryRequest,
+                                      Pagination::GetCreditAllocationHistoryPaginationTraits<BillingClient>>;
+using ListBillingViewsPaginator = Aws::Utils::Pagination::Paginator<BillingClient, Model::ListBillingViewsRequest,
+                                                                    Pagination::ListBillingViewsPaginationTraits<BillingClient>>;
+using ListBillingViewSegmentsPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListBillingViewSegmentsRequest,
+                                      Pagination::ListBillingViewSegmentsPaginationTraits<BillingClient>>;
+using ListBusinessSupportAccountChargesPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListBusinessSupportAccountChargesRequest,
+                                      Pagination::ListBusinessSupportAccountChargesPaginationTraits<BillingClient>>;
+using ListBusinessSupportSubscriptionHistoryPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListBusinessSupportSubscriptionHistoryRequest,
+                                      Pagination::ListBusinessSupportSubscriptionHistoryPaginationTraits<BillingClient>>;
+using ListContractsPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListContractsRequest, Pagination::ListContractsPaginationTraits<BillingClient>>;
+using ListContractualInvestmentAttestationsPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListContractualInvestmentAttestationsRequest,
+                                      Pagination::ListContractualInvestmentAttestationsPaginationTraits<BillingClient>>;
+using ListContractualInvestmentsPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListContractualInvestmentsRequest,
+                                      Pagination::ListContractualInvestmentsPaginationTraits<BillingClient>>;
+using ListContractualInvestmentSummariesPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListContractualInvestmentSummariesRequest,
+                                      Pagination::ListContractualInvestmentSummariesPaginationTraits<BillingClient>>;
+using ListEnterpriseSupportLinkedAccountChargesPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListEnterpriseSupportLinkedAccountChargesRequest,
+                                      Pagination::ListEnterpriseSupportLinkedAccountChargesPaginationTraits<BillingClient>>;
+using ListSourceViewsForBillingViewPaginator =
+    Aws::Utils::Pagination::Paginator<BillingClient, Model::ListSourceViewsForBillingViewRequest,
+                                      Pagination::ListSourceViewsForBillingViewPaginationTraits<BillingClient>>;
+
+}  // namespace Billing
+}  // namespace Aws

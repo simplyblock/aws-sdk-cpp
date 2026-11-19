@@ -4,49 +4,51 @@
  */
 
 #pragma once
-#include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mediapackagev2
-{
-namespace Model
-{
-  class DeleteChannelPolicyResult
-  {
-  public:
-    AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult();
-    AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mediapackagev2 {
+namespace Model {
+class DeleteChannelPolicyResult {
+ public:
+  AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult() = default;
+  AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIAPACKAGEV2_API DeleteChannelPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteChannelPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteChannelPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteChannelPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteChannelPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace mediapackagev2
-} // namespace Aws
+}  // namespace Model
+}  // namespace mediapackagev2
+}  // namespace Aws

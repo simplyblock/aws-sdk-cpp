@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-internetmonitor "C++ SDK for the AWS internetmonitor service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-internetmonitor "C++ SDK for Amazon CloudWatch Internet Monitor" aws-cpp-sdk-core)
 
 file(GLOB AWS_INTERNETMONITOR_HEADERS
     "include/aws/internetmonitor/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_INTERNETMONITOR_HEADERS
 
 file(GLOB AWS_INTERNETMONITOR_MODEL_HEADERS
     "include/aws/internetmonitor/model/*.h"
+)
+
+file(GLOB AWS_INTERNETMONITOR_INTERNAL_HEADERS
+    "include/aws/internetmonitor/internal/*.h"
 )
 
 file(GLOB AWS_INTERNETMONITOR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_INTERNETMONITOR_MODEL_SOURCE
 
 file(GLOB INTERNETMONITOR_UNIFIED_HEADERS
     ${AWS_INTERNETMONITOR_HEADERS}
+    ${AWS_INTERNETMONITOR_INTERNAL_HEADERS}
     ${AWS_INTERNETMONITOR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\internetmonitor" FILES ${AWS_INTERNETMONITOR_HEADERS})
+        source_group("Header Files\\aws\\internetmonitor\\internal" FILES ${AWS_INTERNETMONITOR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\internetmonitor\\model" FILES ${AWS_INTERNETMONITOR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_INTERNETMONITOR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_INTERNETMONITOR_MODEL_SOURCE})

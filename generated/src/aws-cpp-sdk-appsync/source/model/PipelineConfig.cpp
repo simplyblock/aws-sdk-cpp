@@ -11,57 +11,37 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppSync
-{
-namespace Model
-{
+namespace Aws {
+namespace AppSync {
+namespace Model {
 
-PipelineConfig::PipelineConfig() : 
-    m_functionsHasBeenSet(false)
-{
-}
+PipelineConfig::PipelineConfig(JsonView jsonValue) { *this = jsonValue; }
 
-PipelineConfig::PipelineConfig(JsonView jsonValue)
-  : PipelineConfig()
-{
-  *this = jsonValue;
-}
-
-PipelineConfig& PipelineConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("functions"))
-  {
+PipelineConfig& PipelineConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("functions")) {
     Aws::Utils::Array<JsonView> functionsJsonList = jsonValue.GetArray("functions");
-    for(unsigned functionsIndex = 0; functionsIndex < functionsJsonList.GetLength(); ++functionsIndex)
-    {
+    for (unsigned functionsIndex = 0; functionsIndex < functionsJsonList.GetLength(); ++functionsIndex) {
       m_functions.push_back(functionsJsonList[functionsIndex].AsString());
     }
     m_functionsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PipelineConfig::Jsonize() const
-{
+JsonValue PipelineConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_functionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> functionsJsonList(m_functions.size());
-   for(unsigned functionsIndex = 0; functionsIndex < functionsJsonList.GetLength(); ++functionsIndex)
-   {
-     functionsJsonList[functionsIndex].AsString(m_functions[functionsIndex]);
-   }
-   payload.WithArray("functions", std::move(functionsJsonList));
-
+  if (m_functionsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> functionsJsonList(m_functions.size());
+    for (unsigned functionsIndex = 0; functionsIndex < functionsJsonList.GetLength(); ++functionsIndex) {
+      functionsJsonList[functionsIndex].AsString(m_functions[functionsIndex]);
+    }
+    payload.WithArray("functions", std::move(functionsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

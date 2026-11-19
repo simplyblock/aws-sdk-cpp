@@ -4,13 +4,14 @@
  */
 
 #include <aws/drs/DrsEndpointProvider.h>
+#include <aws/drs/internal/DrsEndpointRules.h>
 
-namespace Aws
-{
-namespace drs
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace drs
-} // namespace Aws
+namespace Aws {
+namespace drs {
+namespace Endpoint {
+DrsEndpointProvider::DrsEndpointProvider()
+    : DrsDefaultEpProviderBase(Aws::drs::DrsEndpointRules::GetRulesBlob(), Aws::drs::DrsEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace drs
+}  // namespace Aws

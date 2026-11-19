@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
 
-#include <aws/wisdom/ConnectWisdomServiceEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ConnectWisdomService
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ConnectWisdomService {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ConnectWisdomServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using ConnectWisdomServiceBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * The SDK must use service-specific type for each service per specification.
  */
 using ConnectWisdomServiceEndpointProviderBase =
-    EndpointProviderBase<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters, ConnectWisdomServiceClientContextParameters>;
+    EndpointProviderBase<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters,
+                         ConnectWisdomServiceClientContextParameters>;
 
 using ConnectWisdomServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters, ConnectWisdomServiceClientContextParameters>;
+    BDDEndpointProvider<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters,
+                        ConnectWisdomServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CONNECTWISDOMSERVICE_API ConnectWisdomServiceEndpointProvider : public ConnectWisdomServiceDefaultEpProviderBase
-{
-public:
-    using ConnectWisdomServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CONNECTWISDOMSERVICE_API ConnectWisdomServiceEndpointProvider : public ConnectWisdomServiceDefaultEpProviderBase {
+ public:
+  using ConnectWisdomServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ConnectWisdomServiceEndpointProvider()
-      : ConnectWisdomServiceDefaultEpProviderBase(Aws::ConnectWisdomService::ConnectWisdomServiceEndpointRules::GetRulesBlob(), Aws::ConnectWisdomService::ConnectWisdomServiceEndpointRules::RulesBlobSize)
-    {}
+  ConnectWisdomServiceEndpointProvider();
 
-    ~ConnectWisdomServiceEndpointProvider()
-    {
-    }
+  ~ConnectWisdomServiceEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ConnectWisdomService
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ConnectWisdomService
+}  // namespace Aws

@@ -12,32 +12,18 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSessionRequest::GetSessionRequest() : 
-    m_sessionIdHasBeenSet(false)
-{
-}
-
-Aws::String GetSessionRequest::SerializePayload() const
-{
+Aws::String GetSessionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_sessionIdHasBeenSet)
-  {
-   payload.WithString("SessionId", m_sessionId);
-
+  if (m_sessionIdHasBeenSet) {
+    payload.WithString("SessionId", m_sessionId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetSessionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetSessionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.GetSession"));
   return headers;
-
 }
-
-
-
-

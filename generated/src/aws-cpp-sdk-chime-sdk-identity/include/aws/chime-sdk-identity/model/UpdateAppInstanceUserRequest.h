@@ -4,87 +4,94 @@
  */
 
 #pragma once
-#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/chime-sdk-identity/ChimeSDKIdentityRequest.h>
+#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
+namespace Aws {
+namespace ChimeSDKIdentity {
+namespace Model {
 
+/**
+ */
+class UpdateAppInstanceUserRequest : public ChimeSDKIdentityRequest {
+ public:
+  AWS_CHIMESDKIDENTITY_API UpdateAppInstanceUserRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateAppInstanceUser"; }
+
+  AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the <code>AppInstanceUser</code>.</p>
    */
-  class UpdateAppInstanceUserRequest : public ChimeSDKIdentityRequest
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API UpdateAppInstanceUserRequest();
+  inline const Aws::String& GetAppInstanceUserArn() const { return m_appInstanceUserArn; }
+  inline bool AppInstanceUserArnHasBeenSet() const { return m_appInstanceUserArnHasBeenSet; }
+  template <typename AppInstanceUserArnT = Aws::String>
+  void SetAppInstanceUserArn(AppInstanceUserArnT&& value) {
+    m_appInstanceUserArnHasBeenSet = true;
+    m_appInstanceUserArn = std::forward<AppInstanceUserArnT>(value);
+  }
+  template <typename AppInstanceUserArnT = Aws::String>
+  UpdateAppInstanceUserRequest& WithAppInstanceUserArn(AppInstanceUserArnT&& value) {
+    SetAppInstanceUserArn(std::forward<AppInstanceUserArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateAppInstanceUser"; }
+  ///@{
+  /**
+   * <p>The name of the <code>AppInstanceUser</code>.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateAppInstanceUserRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The metadata of the <code>AppInstanceUser</code>.</p>
+   */
+  inline const Aws::String& GetMetadata() const { return m_metadata; }
+  inline bool MetadataHasBeenSet() const { return m_metadataHasBeenSet; }
+  template <typename MetadataT = Aws::String>
+  void SetMetadata(MetadataT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata = std::forward<MetadataT>(value);
+  }
+  template <typename MetadataT = Aws::String>
+  UpdateAppInstanceUserRequest& WithMetadata(MetadataT&& value) {
+    SetMetadata(std::forward<MetadataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_appInstanceUserArn;
 
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The ARN of the <code>AppInstanceUser</code>.</p>
-     */
-    inline const Aws::String& GetAppInstanceUserArn() const{ return m_appInstanceUserArn; }
-    inline bool AppInstanceUserArnHasBeenSet() const { return m_appInstanceUserArnHasBeenSet; }
-    inline void SetAppInstanceUserArn(const Aws::String& value) { m_appInstanceUserArnHasBeenSet = true; m_appInstanceUserArn = value; }
-    inline void SetAppInstanceUserArn(Aws::String&& value) { m_appInstanceUserArnHasBeenSet = true; m_appInstanceUserArn = std::move(value); }
-    inline void SetAppInstanceUserArn(const char* value) { m_appInstanceUserArnHasBeenSet = true; m_appInstanceUserArn.assign(value); }
-    inline UpdateAppInstanceUserRequest& WithAppInstanceUserArn(const Aws::String& value) { SetAppInstanceUserArn(value); return *this;}
-    inline UpdateAppInstanceUserRequest& WithAppInstanceUserArn(Aws::String&& value) { SetAppInstanceUserArn(std::move(value)); return *this;}
-    inline UpdateAppInstanceUserRequest& WithAppInstanceUserArn(const char* value) { SetAppInstanceUserArn(value); return *this;}
-    ///@}
+  Aws::String m_metadata;
+  bool m_appInstanceUserArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_metadataHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the <code>AppInstanceUser</code>.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateAppInstanceUserRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateAppInstanceUserRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateAppInstanceUserRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The metadata of the <code>AppInstanceUser</code>.</p>
-     */
-    inline const Aws::String& GetMetadata() const{ return m_metadata; }
-    inline bool MetadataHasBeenSet() const { return m_metadataHasBeenSet; }
-    inline void SetMetadata(const Aws::String& value) { m_metadataHasBeenSet = true; m_metadata = value; }
-    inline void SetMetadata(Aws::String&& value) { m_metadataHasBeenSet = true; m_metadata = std::move(value); }
-    inline void SetMetadata(const char* value) { m_metadataHasBeenSet = true; m_metadata.assign(value); }
-    inline UpdateAppInstanceUserRequest& WithMetadata(const Aws::String& value) { SetMetadata(value); return *this;}
-    inline UpdateAppInstanceUserRequest& WithMetadata(Aws::String&& value) { SetMetadata(std::move(value)); return *this;}
-    inline UpdateAppInstanceUserRequest& WithMetadata(const char* value) { SetMetadata(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_appInstanceUserArn;
-    bool m_appInstanceUserArnHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_metadata;
-    bool m_metadataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

@@ -4,13 +4,15 @@
  */
 
 #include <aws/codeartifact/CodeArtifactEndpointProvider.h>
+#include <aws/codeartifact/internal/CodeArtifactEndpointRules.h>
 
-namespace Aws
-{
-namespace CodeArtifact
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CodeArtifact
-} // namespace Aws
+namespace Aws {
+namespace CodeArtifact {
+namespace Endpoint {
+CodeArtifactEndpointProvider::CodeArtifactEndpointProvider()
+    : CodeArtifactDefaultEpProviderBase(Aws::CodeArtifact::CodeArtifactEndpointRules::GetRulesBlob(),
+                                        Aws::CodeArtifact::CodeArtifactEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CodeArtifact
+}  // namespace Aws

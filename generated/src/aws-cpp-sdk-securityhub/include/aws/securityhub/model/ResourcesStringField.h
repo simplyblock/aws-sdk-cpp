@@ -1,0 +1,45 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
+enum class ResourcesStringField {
+  NOT_SET,
+  ResourceGuid,
+  ResourceId,
+  AccountId,
+  AccountName,
+  Region,
+  ResourceProvider,
+  ResourceOwnerAccountId,
+  ResourceOwnerOrgId,
+  ResourceCloudPartition,
+  ResourceRegion,
+  ResourceCategory,
+  ResourceType,
+  ResourceName,
+  FindingsSummary_FindingType,
+  FindingsSummary_ProductName,
+  ResourceSubCategory,
+  DiscoveryType,
+  ResourceInfo_AIDetails_HostResourceGuid,
+  ResourceInfo_AIDetails_HostResourceType,
+  ResourceInfo_AIDetails_CanonicalId,
+  ResourceCriticality
+};
+
+namespace ResourcesStringFieldMapper {
+AWS_SECURITYHUB_API ResourcesStringField GetResourcesStringFieldForName(const Aws::String& name);
+
+AWS_SECURITYHUB_API Aws::String GetNameForResourcesStringField(ResourcesStringField value);
+}  // namespace ResourcesStringFieldMapper
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

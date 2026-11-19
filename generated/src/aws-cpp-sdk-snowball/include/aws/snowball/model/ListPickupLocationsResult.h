@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/snowball/Snowball_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/snowball/model/Address.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Snowball
-{
-namespace Model
-{
-  class ListPickupLocationsResult
-  {
-  public:
-    AWS_SNOWBALL_API ListPickupLocationsResult();
-    AWS_SNOWBALL_API ListPickupLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SNOWBALL_API ListPickupLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace Snowball {
+namespace Model {
+class ListPickupLocationsResult {
+ public:
+  AWS_SNOWBALL_API ListPickupLocationsResult() = default;
+  AWS_SNOWBALL_API ListPickupLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_SNOWBALL_API ListPickupLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the address of pickup locations.</p>
+   */
+  inline const Aws::Vector<Address>& GetAddresses() const { return m_addresses; }
+  template <typename AddressesT = Aws::Vector<Address>>
+  void SetAddresses(AddressesT&& value) {
+    m_addressesHasBeenSet = true;
+    m_addresses = std::forward<AddressesT>(value);
+  }
+  template <typename AddressesT = Aws::Vector<Address>>
+  ListPickupLocationsResult& WithAddresses(AddressesT&& value) {
+    SetAddresses(std::forward<AddressesT>(value));
+    return *this;
+  }
+  template <typename AddressesT = Address>
+  ListPickupLocationsResult& AddAddresses(AddressesT&& value) {
+    m_addressesHasBeenSet = true;
+    m_addresses.emplace_back(std::forward<AddressesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the address of pickup locations.</p>
-     */
-    inline const Aws::Vector<Address>& GetAddresses() const{ return m_addresses; }
-    inline void SetAddresses(const Aws::Vector<Address>& value) { m_addresses = value; }
-    inline void SetAddresses(Aws::Vector<Address>&& value) { m_addresses = std::move(value); }
-    inline ListPickupLocationsResult& WithAddresses(const Aws::Vector<Address>& value) { SetAddresses(value); return *this;}
-    inline ListPickupLocationsResult& WithAddresses(Aws::Vector<Address>&& value) { SetAddresses(std::move(value)); return *this;}
-    inline ListPickupLocationsResult& AddAddresses(const Address& value) { m_addresses.push_back(value); return *this; }
-    inline ListPickupLocationsResult& AddAddresses(Address&& value) { m_addresses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>HTTP requests are stateless. To identify what object comes "next" in the list
+   * of <code>ListPickupLocationsResult</code> objects, you have the option of
+   * specifying <code>NextToken</code> as the starting point for your returned
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListPickupLocationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>HTTP requests are stateless. To identify what object comes "next" in the list
-     * of <code>ListPickupLocationsResult</code> objects, you have the option of
-     * specifying <code>NextToken</code> as the starting point for your returned
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListPickupLocationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListPickupLocationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListPickupLocationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListPickupLocationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListPickupLocationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListPickupLocationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListPickupLocationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Address> m_addresses;
+ private:
+  Aws::Vector<Address> m_addresses;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_addressesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Model
+}  // namespace Snowball
+}  // namespace Aws

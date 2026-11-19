@@ -13,6 +13,8 @@
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/stream/ResponseStream.h>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/crt/Optional.h>
 #include <aws/core/monitoring/HttpClientMetrics.h>
 #include <memory>
 #include <functional>
@@ -59,10 +61,14 @@ namespace Aws
         extern AWS_CORE_API const char AWS_TRAILER_HEADER[];
         extern AWS_CORE_API const char SDK_INVOCATION_ID_HEADER[];
         extern AWS_CORE_API const char SDK_REQUEST_HEADER[];
+        extern AWS_CORE_API const char SMITHY_PROTOCOL_HEADER[];
         extern AWS_CORE_API const char X_AMZN_TRACE_ID_HEADER[];
         extern AWS_CORE_API const char CHUNKED_VALUE[];
         extern AWS_CORE_API const char AWS_CHUNKED_VALUE[];
+        extern AWS_CORE_API const char EXPECT_HEADER[];
+        extern AWS_CORE_API const char EXPECT_100_CONTINUE_VALUE[];
         extern AWS_CORE_API const char X_AMZN_ERROR_TYPE[];
+        extern AWS_CORE_API const char X_AMZN_QUERY_MODE[];
 
         class HttpRequest;
         class HttpResponse;
@@ -396,6 +402,19 @@ namespace Aws
                 SetHeaderValue(CONTENT_TYPE_HEADER, value);
             }
 
+            /**
+             * Has content-encoding header.
+             */
+            inline bool HasContentEncoding() const { return HasHeader(CONTENT_ENCODING_HEADER); }
+            /**
+             * Gets content-encoding header.
+             */
+            inline const Aws::String& GetContentEncoding() const { return GetHeaderValue(CONTENT_ENCODING_HEADER); }
+            /**
+             * Sets content-encoding header.
+             */
+            inline void SetContentEncoding(const Aws::String& value) { SetHeaderValue(CONTENT_ENCODING_HEADER, value); }
+
             inline bool HasTransferEncoding() const
             {
                 return HasHeader(TRANSFER_ENCODING_HEADER);
@@ -542,6 +561,33 @@ namespace Aws
             inline void SetSigningRegion(const Aws::String& region) { m_signingRegion = region; }
 
             /**
+            * Gets the per-attempt signing timestamp override set for clock-skew correction, if any.
+            */
+            inline const Aws::Crt::Optional<Aws::Utils::DateTime>& GetSigningTimestampOverride() const { return m_signingTimestampOverride; }
+            /**
+            * Sets an explicit signing timestamp for this attempt (now() + AttemptSkew). The signer uses it
+            * instead of its own clock; set per attempt so concurrent operations don't share skew state.
+            */
+            inline void SetSigningTimestampOverride(const Aws::Utils::DateTime& signingTime) { m_signingTimestampOverride = signingTime; }
+
+            /**
+             * Gets the raw client time (no skew applied) at which the final response's headers arrived for this attempt, if
+             * the HTTP client recorded it.
+             */
+            inline const Aws::Crt::Optional<Aws::Utils::DateTime>& GetResponseHeadersReceivedTime() const {
+              return m_responseHeadersReceivedTime;
+            }
+            /**
+             * Records when the response headers arrived, before the body is read. Set by the HTTP client; used as the
+             * response-received time for clock-skew correction.
+             */
+            inline void SetResponseHeadersReceivedTime(const Aws::Utils::DateTime& time) { m_responseHeadersReceivedTime = time; }
+            /**
+             * Clears the response headers received time; called at the start of each attempt.
+             */
+            inline void ClearResponseHeadersReceivedTime() { m_responseHeadersReceivedTime.reset(); }
+
+            /**
              * Add a request metric
              * @param key, HttpClientMetricsKey defined in HttpClientMetrics.cpp
              * @param value, the corresponding value of this key measured during http request.
@@ -567,8 +613,11 @@ namespace Aws
             Aws::String GetResolvedRemoteHost() const { return m_resolvedRemoteHost; }
             void SetResolvedRemoteHost(const Aws::String& ip) { m_resolvedRemoteHost = ip; }
 
-            bool IsEventStreamRequest() { return m_isEvenStreamRequest; }
+            bool IsEventStreamRequest() const { return m_isEvenStreamRequest; }
             void SetEventStreamRequest(bool eventStreamRequest) { m_isEvenStreamRequest = eventStreamRequest; }
+            
+            bool HasEventStreamResponse() const { return m_hasEvenStreamResponse; }
+            void SetHasEventStreamResponse(bool hasEventStreamResponse) { m_hasEvenStreamResponse = hasEventStreamResponse; }
 
             virtual std::shared_ptr<Aws::Crt::Http::HttpRequest> ToCrtHttpRequest();
 
@@ -592,11 +641,14 @@ namespace Aws
             URI m_uri;
             HttpMethod m_method;
             bool m_isEvenStreamRequest = false;
+            bool m_hasEvenStreamResponse{false};
             HeadersReceivedEventHandler m_onHeadersReceived;
             DataReceivedEventHandler m_onDataReceived;
             DataSentEventHandler m_onDataSent;
             ContinueRequestHandler m_continueRequest;
             Aws::String m_signingRegion;
+            Aws::Crt::Optional<Aws::Utils::DateTime> m_signingTimestampOverride;
+            Aws::Crt::Optional<Aws::Utils::DateTime> m_responseHeadersReceivedTime;
             Aws::String m_signingAccessKey;
             Aws::String m_resolvedRemoteHost;
             Aws::Monitoring::HttpClientMetricsCollection m_httpRequestMetrics;

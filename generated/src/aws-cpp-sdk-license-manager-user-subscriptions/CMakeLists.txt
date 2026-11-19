@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-license-manager-user-subscriptions "C++ SDK for the AWS license-manager-user-subscriptions service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-license-manager-user-subscriptions "C++ SDK for AWS License Manager User Subscriptions" aws-cpp-sdk-core)
 
 file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_HEADERS
     "include/aws/license-manager-user-subscriptions/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_HEADERS
 
 file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_MODEL_HEADERS
     "include/aws/license-manager-user-subscriptions/model/*.h"
+)
+
+file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_INTERNAL_HEADERS
+    "include/aws/license-manager-user-subscriptions/internal/*.h"
 )
 
 file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_MODEL_SOURCE
 
 file(GLOB LICENSE-MANAGER-USER-SUBSCRIPTIONS_UNIFIED_HEADERS
     ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_HEADERS}
+    ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_INTERNAL_HEADERS}
     ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\license-manager-user-subscriptions" FILES ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_HEADERS})
+        source_group("Header Files\\aws\\license-manager-user-subscriptions\\internal" FILES ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\license-manager-user-subscriptions\\model" FILES ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LICENSE-MANAGER-USER-SUBSCRIPTIONS_MODEL_SOURCE})

@@ -42,6 +42,8 @@ namespace Aws
              */
             const char* GetLogTag() const override { return "WinHttpSyncHttpClient"; }
 
+            bool IsDefaultAwsHttpClient() const override { return true; }
+
         private:
             // WinHttp specific implementations
             void* OpenRequest(const std::shared_ptr<HttpRequest>& request, void* connection, const Aws::StringStream& ss) const override;
@@ -59,6 +61,7 @@ namespace Aws
 
             bool m_usingProxy = false;
             bool m_verifySSL = true;
+            bool m_useAnonymousAuth = false;
             Aws::Http::Version m_version = Aws::Http::Version::HTTP_VERSION_2TLS;
             Aws::WString m_proxyUserName;
             Aws::WString m_proxyPassword;

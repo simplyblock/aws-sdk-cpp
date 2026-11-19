@@ -3,71 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticmapreduce/model/InstanceFleetProvisioningSpecifications.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/elasticmapreduce/model/InstanceFleetProvisioningSpecifications.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EMR
-{
-namespace Model
-{
+namespace Aws {
+namespace EMR {
+namespace Model {
 
-InstanceFleetProvisioningSpecifications::InstanceFleetProvisioningSpecifications() : 
-    m_spotSpecificationHasBeenSet(false),
-    m_onDemandSpecificationHasBeenSet(false)
-{
-}
+InstanceFleetProvisioningSpecifications::InstanceFleetProvisioningSpecifications(JsonView jsonValue) { *this = jsonValue; }
 
-InstanceFleetProvisioningSpecifications::InstanceFleetProvisioningSpecifications(JsonView jsonValue)
-  : InstanceFleetProvisioningSpecifications()
-{
-  *this = jsonValue;
-}
-
-InstanceFleetProvisioningSpecifications& InstanceFleetProvisioningSpecifications::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("SpotSpecification"))
-  {
+InstanceFleetProvisioningSpecifications& InstanceFleetProvisioningSpecifications::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("SpotSpecification")) {
     m_spotSpecification = jsonValue.GetObject("SpotSpecification");
-
     m_spotSpecificationHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("OnDemandSpecification"))
-  {
+  if (jsonValue.ValueExists("OnDemandSpecification")) {
     m_onDemandSpecification = jsonValue.GetObject("OnDemandSpecification");
-
     m_onDemandSpecificationHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue InstanceFleetProvisioningSpecifications::Jsonize() const
-{
+JsonValue InstanceFleetProvisioningSpecifications::Jsonize() const {
   JsonValue payload;
 
-  if(m_spotSpecificationHasBeenSet)
-  {
-   payload.WithObject("SpotSpecification", m_spotSpecification.Jsonize());
-
+  if (m_spotSpecificationHasBeenSet) {
+    payload.WithObject("SpotSpecification", m_spotSpecification.Jsonize());
   }
 
-  if(m_onDemandSpecificationHasBeenSet)
-  {
-   payload.WithObject("OnDemandSpecification", m_onDemandSpecification.Jsonize());
-
+  if (m_onDemandSpecificationHasBeenSet) {
+    payload.WithObject("OnDemandSpecification", m_onDemandSpecification.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

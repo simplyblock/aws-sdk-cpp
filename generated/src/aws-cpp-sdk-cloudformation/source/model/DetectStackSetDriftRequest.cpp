@@ -10,46 +10,27 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DetectStackSetDriftRequest::DetectStackSetDriftRequest() : 
-    m_stackSetNameHasBeenSet(false),
-    m_operationPreferencesHasBeenSet(false),
-    m_operationId(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_operationIdHasBeenSet(true),
-    m_callAs(CallAs::NOT_SET),
-    m_callAsHasBeenSet(false)
-{
-}
-
-Aws::String DetectStackSetDriftRequest::SerializePayload() const
-{
+Aws::String DetectStackSetDriftRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DetectStackSetDrift&";
-  if(m_stackSetNameHasBeenSet)
-  {
+  if (m_stackSetNameHasBeenSet) {
     ss << "StackSetName=" << StringUtils::URLEncode(m_stackSetName.c_str()) << "&";
   }
 
-  if(m_operationPreferencesHasBeenSet)
-  {
+  if (m_operationPreferencesHasBeenSet) {
     m_operationPreferences.OutputToStream(ss, "OperationPreferences");
   }
 
-  if(m_operationIdHasBeenSet)
-  {
+  if (m_operationIdHasBeenSet) {
     ss << "OperationId=" << StringUtils::URLEncode(m_operationId.c_str()) << "&";
   }
 
-  if(m_callAsHasBeenSet)
-  {
-    ss << "CallAs=" << CallAsMapper::GetNameForCallAs(m_callAs) << "&";
+  if (m_callAsHasBeenSet) {
+    ss << "CallAs=" << StringUtils::URLEncode(CallAsMapper::GetNameForCallAs(m_callAs)) << "&";
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  DetectStackSetDriftRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DetectStackSetDriftRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

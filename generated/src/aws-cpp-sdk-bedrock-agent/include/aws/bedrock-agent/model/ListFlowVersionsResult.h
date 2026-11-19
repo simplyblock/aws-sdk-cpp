@@ -5,82 +5,100 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/bedrock-agent/model/FlowVersionSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
-  class ListFlowVersionsResult
-  {
-  public:
-    AWS_BEDROCKAGENT_API ListFlowVersionsResult();
-    AWS_BEDROCKAGENT_API ListFlowVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCKAGENT_API ListFlowVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
+class ListFlowVersionsResult {
+ public:
+  AWS_BEDROCKAGENT_API ListFlowVersionsResult() = default;
+  AWS_BEDROCKAGENT_API ListFlowVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCKAGENT_API ListFlowVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list, each member of which contains information about a flow.</p>
+   */
+  inline const Aws::Vector<FlowVersionSummary>& GetFlowVersionSummaries() const { return m_flowVersionSummaries; }
+  template <typename FlowVersionSummariesT = Aws::Vector<FlowVersionSummary>>
+  void SetFlowVersionSummaries(FlowVersionSummariesT&& value) {
+    m_flowVersionSummariesHasBeenSet = true;
+    m_flowVersionSummaries = std::forward<FlowVersionSummariesT>(value);
+  }
+  template <typename FlowVersionSummariesT = Aws::Vector<FlowVersionSummary>>
+  ListFlowVersionsResult& WithFlowVersionSummaries(FlowVersionSummariesT&& value) {
+    SetFlowVersionSummaries(std::forward<FlowVersionSummariesT>(value));
+    return *this;
+  }
+  template <typename FlowVersionSummariesT = FlowVersionSummary>
+  ListFlowVersionsResult& AddFlowVersionSummaries(FlowVersionSummariesT&& value) {
+    m_flowVersionSummariesHasBeenSet = true;
+    m_flowVersionSummaries.emplace_back(std::forward<FlowVersionSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list, each member of which contains information about a flow.</p>
-     */
-    inline const Aws::Vector<FlowVersionSummary>& GetFlowVersionSummaries() const{ return m_flowVersionSummaries; }
-    inline void SetFlowVersionSummaries(const Aws::Vector<FlowVersionSummary>& value) { m_flowVersionSummaries = value; }
-    inline void SetFlowVersionSummaries(Aws::Vector<FlowVersionSummary>&& value) { m_flowVersionSummaries = std::move(value); }
-    inline ListFlowVersionsResult& WithFlowVersionSummaries(const Aws::Vector<FlowVersionSummary>& value) { SetFlowVersionSummaries(value); return *this;}
-    inline ListFlowVersionsResult& WithFlowVersionSummaries(Aws::Vector<FlowVersionSummary>&& value) { SetFlowVersionSummaries(std::move(value)); return *this;}
-    inline ListFlowVersionsResult& AddFlowVersionSummaries(const FlowVersionSummary& value) { m_flowVersionSummaries.push_back(value); return *this; }
-    inline ListFlowVersionsResult& AddFlowVersionSummaries(FlowVersionSummary&& value) { m_flowVersionSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If the total number of results is greater than the <code>maxResults</code>
+   * value provided in the request, use this token when making another request in the
+   * <code>nextToken</code> field to return the next batch of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFlowVersionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the total number of results is greater than the <code>maxResults</code>
-     * value provided in the request, use this token when making another request in the
-     * <code>nextToken</code> field to return the next batch of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFlowVersionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFlowVersionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFlowVersionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFlowVersionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFlowVersionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFlowVersionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFlowVersionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FlowVersionSummary> m_flowVersionSummaries;
+ private:
+  Aws::Vector<FlowVersionSummary> m_flowVersionSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_flowVersionSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

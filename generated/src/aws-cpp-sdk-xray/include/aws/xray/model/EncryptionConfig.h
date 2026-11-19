@@ -4,93 +4,98 @@
  */
 
 #pragma once
-#include <aws/xray/XRay_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/xray/XRay_EXPORTS.h>
 #include <aws/xray/model/EncryptionStatus.h>
 #include <aws/xray/model/EncryptionType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace XRay
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace XRay {
+namespace Model {
 
+/**
+ * <p>A configuration document that specifies encryption configuration
+ * settings.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/EncryptionConfig">AWS
+ * API Reference</a></p>
+ */
+class EncryptionConfig {
+ public:
+  AWS_XRAY_API EncryptionConfig() = default;
+  AWS_XRAY_API EncryptionConfig(Aws::Utils::Json::JsonView jsonValue);
+  AWS_XRAY_API EncryptionConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_XRAY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A configuration document that specifies encryption configuration
-   * settings.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/EncryptionConfig">AWS
-   * API Reference</a></p>
+   * <p>The ID of the KMS key used for encryption, if applicable.</p>
    */
-  class EncryptionConfig
-  {
-  public:
-    AWS_XRAY_API EncryptionConfig();
-    AWS_XRAY_API EncryptionConfig(Aws::Utils::Json::JsonView jsonValue);
-    AWS_XRAY_API EncryptionConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_XRAY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetKeyId() const { return m_keyId; }
+  inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
+  template <typename KeyIdT = Aws::String>
+  void SetKeyId(KeyIdT&& value) {
+    m_keyIdHasBeenSet = true;
+    m_keyId = std::forward<KeyIdT>(value);
+  }
+  template <typename KeyIdT = Aws::String>
+  EncryptionConfig& WithKeyId(KeyIdT&& value) {
+    SetKeyId(std::forward<KeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The encryption status. While the status is <code>UPDATING</code>, X-Ray may
+   * encrypt data with a combination of the new and old settings.</p>
+   */
+  inline EncryptionStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(EncryptionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline EncryptionConfig& WithStatus(EncryptionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the KMS key used for encryption, if applicable.</p>
-     */
-    inline const Aws::String& GetKeyId() const{ return m_keyId; }
-    inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
-    inline void SetKeyId(const Aws::String& value) { m_keyIdHasBeenSet = true; m_keyId = value; }
-    inline void SetKeyId(Aws::String&& value) { m_keyIdHasBeenSet = true; m_keyId = std::move(value); }
-    inline void SetKeyId(const char* value) { m_keyIdHasBeenSet = true; m_keyId.assign(value); }
-    inline EncryptionConfig& WithKeyId(const Aws::String& value) { SetKeyId(value); return *this;}
-    inline EncryptionConfig& WithKeyId(Aws::String&& value) { SetKeyId(std::move(value)); return *this;}
-    inline EncryptionConfig& WithKeyId(const char* value) { SetKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of encryption. Set to <code>KMS</code> for encryption with KMS keys.
+   * Set to <code>NONE</code> for default encryption.</p>
+   */
+  inline EncryptionType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(EncryptionType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline EncryptionConfig& WithType(EncryptionType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_keyId;
 
-    ///@{
-    /**
-     * <p>The encryption status. While the status is <code>UPDATING</code>, X-Ray may
-     * encrypt data with a combination of the new and old settings.</p>
-     */
-    inline const EncryptionStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const EncryptionStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(EncryptionStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline EncryptionConfig& WithStatus(const EncryptionStatus& value) { SetStatus(value); return *this;}
-    inline EncryptionConfig& WithStatus(EncryptionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  EncryptionStatus m_status{EncryptionStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The type of encryption. Set to <code>KMS</code> for encryption with KMS keys.
-     * Set to <code>NONE</code> for default encryption.</p>
-     */
-    inline const EncryptionType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const EncryptionType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(EncryptionType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline EncryptionConfig& WithType(const EncryptionType& value) { SetType(value); return *this;}
-    inline EncryptionConfig& WithType(EncryptionType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  EncryptionType m_type{EncryptionType::NOT_SET};
+  bool m_keyIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    Aws::String m_keyId;
-    bool m_keyIdHasBeenSet = false;
-
-    EncryptionStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    EncryptionType m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace XRay
-} // namespace Aws
+}  // namespace Model
+}  // namespace XRay
+}  // namespace Aws

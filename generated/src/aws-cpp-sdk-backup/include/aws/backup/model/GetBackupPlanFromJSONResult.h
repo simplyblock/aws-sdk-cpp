@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
 #include <aws/backup/model/BackupPlan.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
-  class GetBackupPlanFromJSONResult
-  {
-  public:
-    AWS_BACKUP_API GetBackupPlanFromJSONResult();
-    AWS_BACKUP_API GetBackupPlanFromJSONResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUP_API GetBackupPlanFromJSONResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
+class GetBackupPlanFromJSONResult {
+ public:
+  AWS_BACKUP_API GetBackupPlanFromJSONResult() = default;
+  AWS_BACKUP_API GetBackupPlanFromJSONResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUP_API GetBackupPlanFromJSONResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Specifies the body of a backup plan. Includes a <code>BackupPlanName</code>
+   * and one or more sets of <code>Rules</code>.</p>
+   */
+  inline const BackupPlan& GetBackupPlan() const { return m_backupPlan; }
+  template <typename BackupPlanT = BackupPlan>
+  void SetBackupPlan(BackupPlanT&& value) {
+    m_backupPlanHasBeenSet = true;
+    m_backupPlan = std::forward<BackupPlanT>(value);
+  }
+  template <typename BackupPlanT = BackupPlan>
+  GetBackupPlanFromJSONResult& WithBackupPlan(BackupPlanT&& value) {
+    SetBackupPlan(std::forward<BackupPlanT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the body of a backup plan. Includes a <code>BackupPlanName</code>
-     * and one or more sets of <code>Rules</code>.</p>
-     */
-    inline const BackupPlan& GetBackupPlan() const{ return m_backupPlan; }
-    inline void SetBackupPlan(const BackupPlan& value) { m_backupPlan = value; }
-    inline void SetBackupPlan(BackupPlan&& value) { m_backupPlan = std::move(value); }
-    inline GetBackupPlanFromJSONResult& WithBackupPlan(const BackupPlan& value) { SetBackupPlan(value); return *this;}
-    inline GetBackupPlanFromJSONResult& WithBackupPlan(BackupPlan&& value) { SetBackupPlan(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBackupPlanFromJSONResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBackupPlanFromJSONResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBackupPlanFromJSONResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBackupPlanFromJSONResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    BackupPlan m_backupPlan;
+ private:
+  BackupPlan m_backupPlan;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_backupPlanHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

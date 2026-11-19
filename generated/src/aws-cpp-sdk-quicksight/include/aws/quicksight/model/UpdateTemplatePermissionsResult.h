@@ -4,107 +4,137 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/ResourcePermission.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class UpdateTemplatePermissionsResult
-  {
-  public:
-    AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult();
-    AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class UpdateTemplatePermissionsResult {
+ public:
+  AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult() = default;
+  AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API UpdateTemplatePermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID for the template.</p>
+   */
+  inline const Aws::String& GetTemplateId() const { return m_templateId; }
+  template <typename TemplateIdT = Aws::String>
+  void SetTemplateId(TemplateIdT&& value) {
+    m_templateIdHasBeenSet = true;
+    m_templateId = std::forward<TemplateIdT>(value);
+  }
+  template <typename TemplateIdT = Aws::String>
+  UpdateTemplatePermissionsResult& WithTemplateId(TemplateIdT&& value) {
+    SetTemplateId(std::forward<TemplateIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID for the template.</p>
-     */
-    inline const Aws::String& GetTemplateId() const{ return m_templateId; }
-    inline void SetTemplateId(const Aws::String& value) { m_templateId = value; }
-    inline void SetTemplateId(Aws::String&& value) { m_templateId = std::move(value); }
-    inline void SetTemplateId(const char* value) { m_templateId.assign(value); }
-    inline UpdateTemplatePermissionsResult& WithTemplateId(const Aws::String& value) { SetTemplateId(value); return *this;}
-    inline UpdateTemplatePermissionsResult& WithTemplateId(Aws::String&& value) { SetTemplateId(std::move(value)); return *this;}
-    inline UpdateTemplatePermissionsResult& WithTemplateId(const char* value) { SetTemplateId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the template.</p>
+   */
+  inline const Aws::String& GetTemplateArn() const { return m_templateArn; }
+  template <typename TemplateArnT = Aws::String>
+  void SetTemplateArn(TemplateArnT&& value) {
+    m_templateArnHasBeenSet = true;
+    m_templateArn = std::forward<TemplateArnT>(value);
+  }
+  template <typename TemplateArnT = Aws::String>
+  UpdateTemplatePermissionsResult& WithTemplateArn(TemplateArnT&& value) {
+    SetTemplateArn(std::forward<TemplateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the template.</p>
-     */
-    inline const Aws::String& GetTemplateArn() const{ return m_templateArn; }
-    inline void SetTemplateArn(const Aws::String& value) { m_templateArn = value; }
-    inline void SetTemplateArn(Aws::String&& value) { m_templateArn = std::move(value); }
-    inline void SetTemplateArn(const char* value) { m_templateArn.assign(value); }
-    inline UpdateTemplatePermissionsResult& WithTemplateArn(const Aws::String& value) { SetTemplateArn(value); return *this;}
-    inline UpdateTemplatePermissionsResult& WithTemplateArn(Aws::String&& value) { SetTemplateArn(std::move(value)); return *this;}
-    inline UpdateTemplatePermissionsResult& WithTemplateArn(const char* value) { SetTemplateArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of resource permissions to be set on the template.</p>
+   */
+  inline const Aws::Vector<ResourcePermission>& GetPermissions() const { return m_permissions; }
+  template <typename PermissionsT = Aws::Vector<ResourcePermission>>
+  void SetPermissions(PermissionsT&& value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions = std::forward<PermissionsT>(value);
+  }
+  template <typename PermissionsT = Aws::Vector<ResourcePermission>>
+  UpdateTemplatePermissionsResult& WithPermissions(PermissionsT&& value) {
+    SetPermissions(std::forward<PermissionsT>(value));
+    return *this;
+  }
+  template <typename PermissionsT = ResourcePermission>
+  UpdateTemplatePermissionsResult& AddPermissions(PermissionsT&& value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions.emplace_back(std::forward<PermissionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of resource permissions to be set on the template.</p>
-     */
-    inline const Aws::Vector<ResourcePermission>& GetPermissions() const{ return m_permissions; }
-    inline void SetPermissions(const Aws::Vector<ResourcePermission>& value) { m_permissions = value; }
-    inline void SetPermissions(Aws::Vector<ResourcePermission>&& value) { m_permissions = std::move(value); }
-    inline UpdateTemplatePermissionsResult& WithPermissions(const Aws::Vector<ResourcePermission>& value) { SetPermissions(value); return *this;}
-    inline UpdateTemplatePermissionsResult& WithPermissions(Aws::Vector<ResourcePermission>&& value) { SetPermissions(std::move(value)); return *this;}
-    inline UpdateTemplatePermissionsResult& AddPermissions(const ResourcePermission& value) { m_permissions.push_back(value); return *this; }
-    inline UpdateTemplatePermissionsResult& AddPermissions(ResourcePermission&& value) { m_permissions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateTemplatePermissionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateTemplatePermissionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateTemplatePermissionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateTemplatePermissionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline UpdateTemplatePermissionsResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateTemplatePermissionsResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_templateId;
+ private:
+  Aws::String m_templateId;
 
-    Aws::String m_templateArn;
+  Aws::String m_templateArn;
 
-    Aws::Vector<ResourcePermission> m_permissions;
+  Aws::Vector<ResourcePermission> m_permissions;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_templateIdHasBeenSet = false;
+  bool m_templateArnHasBeenSet = false;
+  bool m_permissionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

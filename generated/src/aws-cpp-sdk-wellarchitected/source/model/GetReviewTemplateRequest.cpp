@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/wellarchitected/model/GetReviewTemplateRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/wellarchitected/model/GetReviewTemplateRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::WellArchitected::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetReviewTemplateRequest::GetReviewTemplateRequest() : 
-    m_templateArnHasBeenSet(false)
-{
-}
-
-Aws::String GetReviewTemplateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetReviewTemplateRequest::SerializePayload() const { return {}; }

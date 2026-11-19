@@ -4,108 +4,127 @@
  */
 
 #pragma once
-#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
-#include <aws/iotfleetwise/IoTFleetWiseRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/iotfleetwise/model/FormattedVss.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotfleetwise/IoTFleetWiseRequest.h>
+#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
+#include <aws/iotfleetwise/model/FormattedVss.h>
 #include <aws/iotfleetwise/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IoTFleetWise
-{
-namespace Model
-{
+namespace Aws {
+namespace IoTFleetWise {
+namespace Model {
 
+/**
+ */
+class ImportSignalCatalogRequest : public IoTFleetWiseRequest {
+ public:
+  AWS_IOTFLEETWISE_API ImportSignalCatalogRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ImportSignalCatalog"; }
+
+  AWS_IOTFLEETWISE_API Aws::String SerializePayload() const override;
+
+  AWS_IOTFLEETWISE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the signal catalog to import.</p>
    */
-  class ImportSignalCatalogRequest : public IoTFleetWiseRequest
-  {
-  public:
-    AWS_IOTFLEETWISE_API ImportSignalCatalogRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ImportSignalCatalogRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ImportSignalCatalog"; }
+  ///@{
+  /**
+   * <p> A brief description of the signal catalog. </p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  ImportSignalCatalogRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IOTFLEETWISE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The contents of the Vehicle Signal Specification (VSS) configuration. VSS is
+   * a precise language used to describe and model signals in vehicle networks.</p>
+   */
+  inline const FormattedVss& GetVss() const { return m_vss; }
+  inline bool VssHasBeenSet() const { return m_vssHasBeenSet; }
+  template <typename VssT = FormattedVss>
+  void SetVss(VssT&& value) {
+    m_vssHasBeenSet = true;
+    m_vss = std::forward<VssT>(value);
+  }
+  template <typename VssT = FormattedVss>
+  ImportSignalCatalogRequest& WithVss(VssT&& value) {
+    SetVss(std::forward<VssT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IOTFLEETWISE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Metadata that can be used to manage the signal catalog.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  ImportSignalCatalogRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  ImportSignalCatalogRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The name of the signal catalog to import.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ImportSignalCatalogRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ImportSignalCatalogRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ImportSignalCatalogRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  FormattedVss m_vss;
 
-    ///@{
-    /**
-     * <p> A brief description of the signal catalog. </p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline ImportSignalCatalogRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline ImportSignalCatalogRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline ImportSignalCatalogRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_vssHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The contents of the Vehicle Signal Specification (VSS) configuration. VSS is
-     * a precise language used to describe and model signals in vehicle networks.</p>
-     */
-    inline const FormattedVss& GetVss() const{ return m_vss; }
-    inline bool VssHasBeenSet() const { return m_vssHasBeenSet; }
-    inline void SetVss(const FormattedVss& value) { m_vssHasBeenSet = true; m_vss = value; }
-    inline void SetVss(FormattedVss&& value) { m_vssHasBeenSet = true; m_vss = std::move(value); }
-    inline ImportSignalCatalogRequest& WithVss(const FormattedVss& value) { SetVss(value); return *this;}
-    inline ImportSignalCatalogRequest& WithVss(FormattedVss&& value) { SetVss(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Metadata that can be used to manage the signal catalog.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ImportSignalCatalogRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline ImportSignalCatalogRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ImportSignalCatalogRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline ImportSignalCatalogRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    FormattedVss m_vss;
-    bool m_vssHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTFleetWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTFleetWise
+}  // namespace Aws

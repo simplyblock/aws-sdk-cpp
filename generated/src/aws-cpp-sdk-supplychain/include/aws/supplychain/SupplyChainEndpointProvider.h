@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/supplychain/SupplyChain_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/supplychain/SupplyChain_EXPORTS.h>
 
-#include <aws/supplychain/SupplyChainEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SupplyChain
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SupplyChain {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SupplyChainClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SupplyChainEndpointProviderBase =
     EndpointProviderBase<SupplyChainClientConfiguration, SupplyChainBuiltInParameters, SupplyChainClientContextParameters>;
 
 using SupplyChainDefaultEpProviderBase =
-    DefaultEndpointProvider<SupplyChainClientConfiguration, SupplyChainBuiltInParameters, SupplyChainClientContextParameters>;
+    BDDEndpointProvider<SupplyChainClientConfiguration, SupplyChainBuiltInParameters, SupplyChainClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SUPPLYCHAIN_API SupplyChainEndpointProvider : public SupplyChainDefaultEpProviderBase
-{
-public:
-    using SupplyChainResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SUPPLYCHAIN_API SupplyChainEndpointProvider : public SupplyChainDefaultEpProviderBase {
+ public:
+  using SupplyChainResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SupplyChainEndpointProvider()
-      : SupplyChainDefaultEpProviderBase(Aws::SupplyChain::SupplyChainEndpointRules::GetRulesBlob(), Aws::SupplyChain::SupplyChainEndpointRules::RulesBlobSize)
-    {}
+  SupplyChainEndpointProvider();
 
-    ~SupplyChainEndpointProvider()
-    {
-    }
+  ~SupplyChainEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SupplyChain
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SupplyChain
+}  // namespace Aws

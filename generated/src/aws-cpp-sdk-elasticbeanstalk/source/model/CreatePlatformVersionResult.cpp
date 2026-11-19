@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticbeanstalk/model/CreatePlatformVersionResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticbeanstalk/model/CreatePlatformVersionResult.h>
 
 #include <utility>
 
@@ -17,43 +17,36 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreatePlatformVersionResult::CreatePlatformVersionResult()
-{
-}
+CreatePlatformVersionResult::CreatePlatformVersionResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-CreatePlatformVersionResult::CreatePlatformVersionResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-CreatePlatformVersionResult& CreatePlatformVersionResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreatePlatformVersionResult& CreatePlatformVersionResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreatePlatformVersionResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreatePlatformVersionResult")) {
     resultNode = rootNode.FirstChild("CreatePlatformVersionResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode platformSummaryNode = resultNode.FirstChild("PlatformSummary");
-    if(!platformSummaryNode.IsNull())
-    {
+    if (!platformSummaryNode.IsNull()) {
       m_platformSummary = platformSummaryNode;
+      m_platformSummaryHasBeenSet = true;
     }
     XmlNode builderNode = resultNode.FirstChild("Builder");
-    if(!builderNode.IsNull())
-    {
+    if (!builderNode.IsNull()) {
       m_builder = builderNode;
+      m_builderHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::CreatePlatformVersionResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::CreatePlatformVersionResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

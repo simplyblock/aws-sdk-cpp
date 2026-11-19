@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/Collaboration.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class GetCollaborationResult
-  {
-  public:
-    AWS_CLEANROOMS_API GetCollaborationResult();
-    AWS_CLEANROOMS_API GetCollaborationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API GetCollaborationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class GetCollaborationResult {
+ public:
+  AWS_CLEANROOMS_API GetCollaborationResult() = default;
+  AWS_CLEANROOMS_API GetCollaborationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API GetCollaborationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The entire collaboration for this identifier.</p>
+   */
+  inline const Collaboration& GetCollaboration() const { return m_collaboration; }
+  template <typename CollaborationT = Collaboration>
+  void SetCollaboration(CollaborationT&& value) {
+    m_collaborationHasBeenSet = true;
+    m_collaboration = std::forward<CollaborationT>(value);
+  }
+  template <typename CollaborationT = Collaboration>
+  GetCollaborationResult& WithCollaboration(CollaborationT&& value) {
+    SetCollaboration(std::forward<CollaborationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The entire collaboration for this identifier.</p>
-     */
-    inline const Collaboration& GetCollaboration() const{ return m_collaboration; }
-    inline void SetCollaboration(const Collaboration& value) { m_collaboration = value; }
-    inline void SetCollaboration(Collaboration&& value) { m_collaboration = std::move(value); }
-    inline GetCollaborationResult& WithCollaboration(const Collaboration& value) { SetCollaboration(value); return *this;}
-    inline GetCollaborationResult& WithCollaboration(Collaboration&& value) { SetCollaboration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCollaborationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCollaborationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCollaborationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCollaborationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Collaboration m_collaboration;
+ private:
+  Collaboration m_collaboration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_collaborationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

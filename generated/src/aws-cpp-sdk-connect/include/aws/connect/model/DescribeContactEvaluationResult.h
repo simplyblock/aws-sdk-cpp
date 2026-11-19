@@ -7,74 +7,90 @@
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/Evaluation.h>
 #include <aws/connect/model/EvaluationFormContent.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class DescribeContactEvaluationResult
-  {
-  public:
-    AWS_CONNECT_API DescribeContactEvaluationResult();
-    AWS_CONNECT_API DescribeContactEvaluationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API DescribeContactEvaluationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class DescribeContactEvaluationResult {
+ public:
+  AWS_CONNECT_API DescribeContactEvaluationResult() = default;
+  AWS_CONNECT_API DescribeContactEvaluationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API DescribeContactEvaluationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the evaluation form completed for a specific contact.</p>
+   */
+  inline const Evaluation& GetEvaluation() const { return m_evaluation; }
+  template <typename EvaluationT = Evaluation>
+  void SetEvaluation(EvaluationT&& value) {
+    m_evaluationHasBeenSet = true;
+    m_evaluation = std::forward<EvaluationT>(value);
+  }
+  template <typename EvaluationT = Evaluation>
+  DescribeContactEvaluationResult& WithEvaluation(EvaluationT&& value) {
+    SetEvaluation(std::forward<EvaluationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the evaluation form completed for a specific contact.</p>
-     */
-    inline const Evaluation& GetEvaluation() const{ return m_evaluation; }
-    inline void SetEvaluation(const Evaluation& value) { m_evaluation = value; }
-    inline void SetEvaluation(Evaluation&& value) { m_evaluation = std::move(value); }
-    inline DescribeContactEvaluationResult& WithEvaluation(const Evaluation& value) { SetEvaluation(value); return *this;}
-    inline DescribeContactEvaluationResult& WithEvaluation(Evaluation&& value) { SetEvaluation(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the evaluation form.</p>
+   */
+  inline const EvaluationFormContent& GetEvaluationForm() const { return m_evaluationForm; }
+  template <typename EvaluationFormT = EvaluationFormContent>
+  void SetEvaluationForm(EvaluationFormT&& value) {
+    m_evaluationFormHasBeenSet = true;
+    m_evaluationForm = std::forward<EvaluationFormT>(value);
+  }
+  template <typename EvaluationFormT = EvaluationFormContent>
+  DescribeContactEvaluationResult& WithEvaluationForm(EvaluationFormT&& value) {
+    SetEvaluationForm(std::forward<EvaluationFormT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the evaluation form.</p>
-     */
-    inline const EvaluationFormContent& GetEvaluationForm() const{ return m_evaluationForm; }
-    inline void SetEvaluationForm(const EvaluationFormContent& value) { m_evaluationForm = value; }
-    inline void SetEvaluationForm(EvaluationFormContent&& value) { m_evaluationForm = std::move(value); }
-    inline DescribeContactEvaluationResult& WithEvaluationForm(const EvaluationFormContent& value) { SetEvaluationForm(value); return *this;}
-    inline DescribeContactEvaluationResult& WithEvaluationForm(EvaluationFormContent&& value) { SetEvaluationForm(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeContactEvaluationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeContactEvaluationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeContactEvaluationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeContactEvaluationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Evaluation m_evaluation;
+ private:
+  Evaluation m_evaluation;
 
-    EvaluationFormContent m_evaluationForm;
+  EvaluationFormContent m_evaluationForm;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_evaluationHasBeenSet = false;
+  bool m_evaluationFormHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

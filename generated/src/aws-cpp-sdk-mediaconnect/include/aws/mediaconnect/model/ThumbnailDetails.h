@@ -4,128 +4,149 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/MessageDetail.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
 
+/**
+ * <p> The details of the thumbnail, including thumbnail base64 string, timecode
+ * and the time when thumbnail was generated.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/ThumbnailDetails">AWS
+ * API Reference</a></p>
+ */
+class ThumbnailDetails {
+ public:
+  AWS_MEDIACONNECT_API ThumbnailDetails() = default;
+  AWS_MEDIACONNECT_API ThumbnailDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API ThumbnailDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * The details of the thumbnail, including thumbnail base64 string, timecode and
-   * the time when thumbnail was generated.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/ThumbnailDetails">AWS
-   * API Reference</a></p>
+   * <p> The ARN of the flow that DescribeFlowSourceThumbnail was performed on.</p>
    */
-  class ThumbnailDetails
-  {
-  public:
-    AWS_MEDIACONNECT_API ThumbnailDetails();
-    AWS_MEDIACONNECT_API ThumbnailDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API ThumbnailDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetFlowArn() const { return m_flowArn; }
+  inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
+  template <typename FlowArnT = Aws::String>
+  void SetFlowArn(FlowArnT&& value) {
+    m_flowArnHasBeenSet = true;
+    m_flowArn = std::forward<FlowArnT>(value);
+  }
+  template <typename FlowArnT = Aws::String>
+  ThumbnailDetails& WithFlowArn(FlowArnT&& value) {
+    SetFlowArn(std::forward<FlowArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Thumbnail Base64 string. </p>
+   */
+  inline const Aws::String& GetThumbnail() const { return m_thumbnail; }
+  inline bool ThumbnailHasBeenSet() const { return m_thumbnailHasBeenSet; }
+  template <typename ThumbnailT = Aws::String>
+  void SetThumbnail(ThumbnailT&& value) {
+    m_thumbnailHasBeenSet = true;
+    m_thumbnail = std::forward<ThumbnailT>(value);
+  }
+  template <typename ThumbnailT = Aws::String>
+  ThumbnailDetails& WithThumbnail(ThumbnailT&& value) {
+    SetThumbnail(std::forward<ThumbnailT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ARN of the flow that DescribeFlowSourceThumbnail was performed on.
-     */
-    inline const Aws::String& GetFlowArn() const{ return m_flowArn; }
-    inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
-    inline void SetFlowArn(const Aws::String& value) { m_flowArnHasBeenSet = true; m_flowArn = value; }
-    inline void SetFlowArn(Aws::String&& value) { m_flowArnHasBeenSet = true; m_flowArn = std::move(value); }
-    inline void SetFlowArn(const char* value) { m_flowArnHasBeenSet = true; m_flowArn.assign(value); }
-    inline ThumbnailDetails& WithFlowArn(const Aws::String& value) { SetFlowArn(value); return *this;}
-    inline ThumbnailDetails& WithFlowArn(Aws::String&& value) { SetFlowArn(std::move(value)); return *this;}
-    inline ThumbnailDetails& WithFlowArn(const char* value) { SetFlowArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Status code and messages about the flow source thumbnail.</p>
+   */
+  inline const Aws::Vector<MessageDetail>& GetThumbnailMessages() const { return m_thumbnailMessages; }
+  inline bool ThumbnailMessagesHasBeenSet() const { return m_thumbnailMessagesHasBeenSet; }
+  template <typename ThumbnailMessagesT = Aws::Vector<MessageDetail>>
+  void SetThumbnailMessages(ThumbnailMessagesT&& value) {
+    m_thumbnailMessagesHasBeenSet = true;
+    m_thumbnailMessages = std::forward<ThumbnailMessagesT>(value);
+  }
+  template <typename ThumbnailMessagesT = Aws::Vector<MessageDetail>>
+  ThumbnailDetails& WithThumbnailMessages(ThumbnailMessagesT&& value) {
+    SetThumbnailMessages(std::forward<ThumbnailMessagesT>(value));
+    return *this;
+  }
+  template <typename ThumbnailMessagesT = MessageDetail>
+  ThumbnailDetails& AddThumbnailMessages(ThumbnailMessagesT&& value) {
+    m_thumbnailMessagesHasBeenSet = true;
+    m_thumbnailMessages.emplace_back(std::forward<ThumbnailMessagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Thumbnail Base64 string.
-     */
-    inline const Aws::String& GetThumbnail() const{ return m_thumbnail; }
-    inline bool ThumbnailHasBeenSet() const { return m_thumbnailHasBeenSet; }
-    inline void SetThumbnail(const Aws::String& value) { m_thumbnailHasBeenSet = true; m_thumbnail = value; }
-    inline void SetThumbnail(Aws::String&& value) { m_thumbnailHasBeenSet = true; m_thumbnail = std::move(value); }
-    inline void SetThumbnail(const char* value) { m_thumbnailHasBeenSet = true; m_thumbnail.assign(value); }
-    inline ThumbnailDetails& WithThumbnail(const Aws::String& value) { SetThumbnail(value); return *this;}
-    inline ThumbnailDetails& WithThumbnail(Aws::String&& value) { SetThumbnail(std::move(value)); return *this;}
-    inline ThumbnailDetails& WithThumbnail(const char* value) { SetThumbnail(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Timecode of thumbnail.</p>
+   */
+  inline const Aws::String& GetTimecode() const { return m_timecode; }
+  inline bool TimecodeHasBeenSet() const { return m_timecodeHasBeenSet; }
+  template <typename TimecodeT = Aws::String>
+  void SetTimecode(TimecodeT&& value) {
+    m_timecodeHasBeenSet = true;
+    m_timecode = std::forward<TimecodeT>(value);
+  }
+  template <typename TimecodeT = Aws::String>
+  ThumbnailDetails& WithTimecode(TimecodeT&& value) {
+    SetTimecode(std::forward<TimecodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Status code and messages about the flow source thumbnail.
-     */
-    inline const Aws::Vector<MessageDetail>& GetThumbnailMessages() const{ return m_thumbnailMessages; }
-    inline bool ThumbnailMessagesHasBeenSet() const { return m_thumbnailMessagesHasBeenSet; }
-    inline void SetThumbnailMessages(const Aws::Vector<MessageDetail>& value) { m_thumbnailMessagesHasBeenSet = true; m_thumbnailMessages = value; }
-    inline void SetThumbnailMessages(Aws::Vector<MessageDetail>&& value) { m_thumbnailMessagesHasBeenSet = true; m_thumbnailMessages = std::move(value); }
-    inline ThumbnailDetails& WithThumbnailMessages(const Aws::Vector<MessageDetail>& value) { SetThumbnailMessages(value); return *this;}
-    inline ThumbnailDetails& WithThumbnailMessages(Aws::Vector<MessageDetail>&& value) { SetThumbnailMessages(std::move(value)); return *this;}
-    inline ThumbnailDetails& AddThumbnailMessages(const MessageDetail& value) { m_thumbnailMessagesHasBeenSet = true; m_thumbnailMessages.push_back(value); return *this; }
-    inline ThumbnailDetails& AddThumbnailMessages(MessageDetail&& value) { m_thumbnailMessagesHasBeenSet = true; m_thumbnailMessages.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The timestamp of when thumbnail was generated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetTimestamp() const { return m_timestamp; }
+  inline bool TimestampHasBeenSet() const { return m_timestampHasBeenSet; }
+  template <typename TimestampT = Aws::Utils::DateTime>
+  void SetTimestamp(TimestampT&& value) {
+    m_timestampHasBeenSet = true;
+    m_timestamp = std::forward<TimestampT>(value);
+  }
+  template <typename TimestampT = Aws::Utils::DateTime>
+  ThumbnailDetails& WithTimestamp(TimestampT&& value) {
+    SetTimestamp(std::forward<TimestampT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_flowArn;
 
-    ///@{
-    /**
-     * Timecode of thumbnail.
-     */
-    inline const Aws::String& GetTimecode() const{ return m_timecode; }
-    inline bool TimecodeHasBeenSet() const { return m_timecodeHasBeenSet; }
-    inline void SetTimecode(const Aws::String& value) { m_timecodeHasBeenSet = true; m_timecode = value; }
-    inline void SetTimecode(Aws::String&& value) { m_timecodeHasBeenSet = true; m_timecode = std::move(value); }
-    inline void SetTimecode(const char* value) { m_timecodeHasBeenSet = true; m_timecode.assign(value); }
-    inline ThumbnailDetails& WithTimecode(const Aws::String& value) { SetTimecode(value); return *this;}
-    inline ThumbnailDetails& WithTimecode(Aws::String&& value) { SetTimecode(std::move(value)); return *this;}
-    inline ThumbnailDetails& WithTimecode(const char* value) { SetTimecode(value); return *this;}
-    ///@}
+  Aws::String m_thumbnail;
 
-    ///@{
-    /**
-     * The timestamp of when thumbnail was generated.
-     */
-    inline const Aws::Utils::DateTime& GetTimestamp() const{ return m_timestamp; }
-    inline bool TimestampHasBeenSet() const { return m_timestampHasBeenSet; }
-    inline void SetTimestamp(const Aws::Utils::DateTime& value) { m_timestampHasBeenSet = true; m_timestamp = value; }
-    inline void SetTimestamp(Aws::Utils::DateTime&& value) { m_timestampHasBeenSet = true; m_timestamp = std::move(value); }
-    inline ThumbnailDetails& WithTimestamp(const Aws::Utils::DateTime& value) { SetTimestamp(value); return *this;}
-    inline ThumbnailDetails& WithTimestamp(Aws::Utils::DateTime&& value) { SetTimestamp(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Vector<MessageDetail> m_thumbnailMessages;
 
-    Aws::String m_flowArn;
-    bool m_flowArnHasBeenSet = false;
+  Aws::String m_timecode;
 
-    Aws::String m_thumbnail;
-    bool m_thumbnailHasBeenSet = false;
+  Aws::Utils::DateTime m_timestamp{};
+  bool m_flowArnHasBeenSet = false;
+  bool m_thumbnailHasBeenSet = false;
+  bool m_thumbnailMessagesHasBeenSet = false;
+  bool m_timecodeHasBeenSet = false;
+  bool m_timestampHasBeenSet = false;
+};
 
-    Aws::Vector<MessageDetail> m_thumbnailMessages;
-    bool m_thumbnailMessagesHasBeenSet = false;
-
-    Aws::String m_timecode;
-    bool m_timecodeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_timestamp;
-    bool m_timestampHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

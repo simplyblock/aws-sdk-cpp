@@ -3,53 +3,50 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/DescribeBundleAssociationsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeBundleAssociationsRequest::DescribeBundleAssociationsRequest() : 
-    m_bundleIdHasBeenSet(false),
-    m_associatedResourceTypesHasBeenSet(false)
-{
-}
+Aws::String DescribeBundleAssociationsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeBundleAssociationsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_bundleIdHasBeenSet)
-  {
-   payload.WithString("BundleId", m_bundleId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_bundleIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_associatedResourceTypesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_associatedResourceTypesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> associatedResourceTypesJsonList(m_associatedResourceTypes.size());
-   for(unsigned associatedResourceTypesIndex = 0; associatedResourceTypesIndex < associatedResourceTypesJsonList.GetLength(); ++associatedResourceTypesIndex)
-   {
-     associatedResourceTypesJsonList[associatedResourceTypesIndex].AsString(BundleAssociatedResourceTypeMapper::GetNameForBundleAssociatedResourceType(m_associatedResourceTypes[associatedResourceTypesIndex]));
-   }
-   payload.WithArray("AssociatedResourceTypes", std::move(associatedResourceTypesJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_bundleIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BundleId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_bundleId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_associatedResourceTypesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AssociatedResourceTypes"));
+    encoder.WriteArrayStart(m_associatedResourceTypes.size());
+    for (const auto& item_0 : m_associatedResourceTypes) {
+      encoder.WriteText(
+          Aws::Crt::ByteCursorFromCString(BundleAssociatedResourceTypeMapper::GetNameForBundleAssociatedResourceType(item_0).c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeBundleAssociationsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeBundleAssociationsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.DescribeBundleAssociations"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

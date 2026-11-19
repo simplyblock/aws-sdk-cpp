@@ -4,65 +4,75 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
 #include <aws/kinesisvideo/model/ImageGenerationConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KinesisVideo
-{
-namespace Model
-{
-  class DescribeImageGenerationConfigurationResult
-  {
-  public:
-    AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult();
-    AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisVideo {
+namespace Model {
+class DescribeImageGenerationConfigurationResult {
+ public:
+  AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult() = default;
+  AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KINESISVIDEO_API DescribeImageGenerationConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The structure that contains the information required for the Kinesis video
+   * stream (KVS) images delivery. If this structure is null, the configuration will
+   * be deleted from the stream.</p>
+   */
+  inline const ImageGenerationConfiguration& GetImageGenerationConfiguration() const { return m_imageGenerationConfiguration; }
+  template <typename ImageGenerationConfigurationT = ImageGenerationConfiguration>
+  void SetImageGenerationConfiguration(ImageGenerationConfigurationT&& value) {
+    m_imageGenerationConfigurationHasBeenSet = true;
+    m_imageGenerationConfiguration = std::forward<ImageGenerationConfigurationT>(value);
+  }
+  template <typename ImageGenerationConfigurationT = ImageGenerationConfiguration>
+  DescribeImageGenerationConfigurationResult& WithImageGenerationConfiguration(ImageGenerationConfigurationT&& value) {
+    SetImageGenerationConfiguration(std::forward<ImageGenerationConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The structure that contains the information required for the Kinesis video
-     * stream (KVS) images delivery. If this structure is null, the configuration will
-     * be deleted from the stream.</p>
-     */
-    inline const ImageGenerationConfiguration& GetImageGenerationConfiguration() const{ return m_imageGenerationConfiguration; }
-    inline void SetImageGenerationConfiguration(const ImageGenerationConfiguration& value) { m_imageGenerationConfiguration = value; }
-    inline void SetImageGenerationConfiguration(ImageGenerationConfiguration&& value) { m_imageGenerationConfiguration = std::move(value); }
-    inline DescribeImageGenerationConfigurationResult& WithImageGenerationConfiguration(const ImageGenerationConfiguration& value) { SetImageGenerationConfiguration(value); return *this;}
-    inline DescribeImageGenerationConfigurationResult& WithImageGenerationConfiguration(ImageGenerationConfiguration&& value) { SetImageGenerationConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeImageGenerationConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeImageGenerationConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeImageGenerationConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeImageGenerationConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ImageGenerationConfiguration m_imageGenerationConfiguration;
+ private:
+  ImageGenerationConfiguration m_imageGenerationConfiguration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_imageGenerationConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace KinesisVideo
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisVideo
+}  // namespace Aws

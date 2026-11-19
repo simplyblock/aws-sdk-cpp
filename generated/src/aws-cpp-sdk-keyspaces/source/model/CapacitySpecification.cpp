@@ -3,87 +3,190 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/keyspaces/model/CapacitySpecification.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Keyspaces
-{
-namespace Model
-{
+namespace Aws {
+namespace Keyspaces {
+namespace Model {
 
-CapacitySpecification::CapacitySpecification() : 
-    m_throughputMode(ThroughputMode::NOT_SET),
-    m_throughputModeHasBeenSet(false),
-    m_readCapacityUnits(0),
-    m_readCapacityUnitsHasBeenSet(false),
-    m_writeCapacityUnits(0),
-    m_writeCapacityUnitsHasBeenSet(false)
-{
-}
+CapacitySpecification::CapacitySpecification(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-CapacitySpecification::CapacitySpecification(JsonView jsonValue)
-  : CapacitySpecification()
-{
-  *this = jsonValue;
-}
+CapacitySpecification& CapacitySpecification::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-CapacitySpecification& CapacitySpecification::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("throughputMode"))
-  {
-    m_throughputMode = ThroughputModeMapper::GetThroughputModeForName(jsonValue.GetString("throughputMode"));
+              if (initialKeyStr == "throughputMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_throughputMode = ThroughputModeMapper::GetThroughputModeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_throughputModeHasBeenSet = true;
+              }
 
-    m_throughputModeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "readCapacityUnits") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_readCapacityUnits = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_readCapacityUnits = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_readCapacityUnitsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("readCapacityUnits"))
-  {
-    m_readCapacityUnits = jsonValue.GetInt64("readCapacityUnits");
+              else if (initialKeyStr == "writeCapacityUnits") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_writeCapacityUnits = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_writeCapacityUnits = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_writeCapacityUnitsHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("CapacitySpecification", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_readCapacityUnitsHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("writeCapacityUnits"))
-  {
-    m_writeCapacityUnits = jsonValue.GetInt64("writeCapacityUnits");
+            if (initialKeyStr == "throughputMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_throughputMode = ThroughputModeMapper::GetThroughputModeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_throughputModeHasBeenSet = true;
+            }
 
-    m_writeCapacityUnitsHasBeenSet = true;
+            else if (initialKeyStr == "readCapacityUnits") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_readCapacityUnits = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_readCapacityUnits = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_readCapacityUnitsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "writeCapacityUnits") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_writeCapacityUnits = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_writeCapacityUnits = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_writeCapacityUnitsHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue CapacitySpecification::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_throughputModeHasBeenSet)
-  {
-   payload.WithString("throughputMode", ThroughputModeMapper::GetNameForThroughputMode(m_throughputMode));
+void CapacitySpecification::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_throughputModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_readCapacityUnitsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_writeCapacityUnitsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_readCapacityUnitsHasBeenSet)
-  {
-   payload.WithInt64("readCapacityUnits", m_readCapacityUnits);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_throughputModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("throughputMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ThroughputModeMapper::GetNameForThroughputMode(m_throughputMode).c_str()));
   }
 
-  if(m_writeCapacityUnitsHasBeenSet)
-  {
-   payload.WithInt64("writeCapacityUnits", m_writeCapacityUnits);
-
+  if (m_readCapacityUnitsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("readCapacityUnits"));
+    (m_readCapacityUnits >= 0) ? encoder.WriteUInt(m_readCapacityUnits) : encoder.WriteNegInt(m_readCapacityUnits);
   }
 
-  return payload;
+  if (m_writeCapacityUnitsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("writeCapacityUnits"));
+    (m_writeCapacityUnits >= 0) ? encoder.WriteUInt(m_writeCapacityUnits) : encoder.WriteNegInt(m_writeCapacityUnits);
+  }
 }
 
-} // namespace Model
-} // namespace Keyspaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace Keyspaces
+}  // namespace Aws

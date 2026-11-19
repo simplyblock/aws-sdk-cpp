@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/keyspaces/model/DeleteTypeRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Keyspaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteTypeRequest::DeleteTypeRequest() : 
-    m_keyspaceNameHasBeenSet(false),
-    m_typeNameHasBeenSet(false)
-{
-}
+Aws::String DeleteTypeRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteTypeRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_keyspaceNameHasBeenSet)
-  {
-   payload.WithString("keyspaceName", m_keyspaceName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_keyspaceNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_typeNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_typeNameHasBeenSet)
-  {
-   payload.WithString("typeName", m_typeName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_keyspaceNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("keyspaceName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_keyspaceName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_typeNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("typeName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_typeName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteTypeRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteTypeRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "KeyspacesService.DeleteType"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

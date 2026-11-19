@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
 #include <aws/timestream-write/model/Table.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamWrite
-{
-namespace Model
-{
-  class CreateTableResult
-  {
-  public:
-    AWS_TIMESTREAMWRITE_API CreateTableResult();
-    AWS_TIMESTREAMWRITE_API CreateTableResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TIMESTREAMWRITE_API CreateTableResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamWrite {
+namespace Model {
+class CreateTableResult {
+ public:
+  AWS_TIMESTREAMWRITE_API CreateTableResult() = default;
+  AWS_TIMESTREAMWRITE_API CreateTableResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TIMESTREAMWRITE_API CreateTableResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The newly created Timestream table.</p>
+   */
+  inline const Table& GetTable() const { return m_table; }
+  template <typename TableT = Table>
+  void SetTable(TableT&& value) {
+    m_tableHasBeenSet = true;
+    m_table = std::forward<TableT>(value);
+  }
+  template <typename TableT = Table>
+  CreateTableResult& WithTable(TableT&& value) {
+    SetTable(std::forward<TableT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The newly created Timestream table.</p>
-     */
-    inline const Table& GetTable() const{ return m_table; }
-    inline void SetTable(const Table& value) { m_table = value; }
-    inline void SetTable(Table&& value) { m_table = std::move(value); }
-    inline CreateTableResult& WithTable(const Table& value) { SetTable(value); return *this;}
-    inline CreateTableResult& WithTable(Table&& value) { SetTable(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTableResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTableResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTableResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTableResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Table m_table;
+ private:
+  Table m_table;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_tableHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TimestreamWrite
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamWrite
+}  // namespace Aws

@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AmplifyUIBuilder
-{
-namespace Model
-{
+namespace Aws {
+namespace AmplifyUIBuilder {
+namespace Model {
 
-SortProperty::SortProperty() : 
-    m_fieldHasBeenSet(false),
-    m_direction(SortDirection::NOT_SET),
-    m_directionHasBeenSet(false)
-{
-}
+SortProperty::SortProperty(JsonView jsonValue) { *this = jsonValue; }
 
-SortProperty::SortProperty(JsonView jsonValue)
-  : SortProperty()
-{
-  *this = jsonValue;
-}
-
-SortProperty& SortProperty::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("field"))
-  {
+SortProperty& SortProperty::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("field")) {
     m_field = jsonValue.GetString("field");
-
     m_fieldHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("direction"))
-  {
+  if (jsonValue.ValueExists("direction")) {
     m_direction = SortDirectionMapper::GetSortDirectionForName(jsonValue.GetString("direction"));
-
     m_directionHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue SortProperty::Jsonize() const
-{
+JsonValue SortProperty::Jsonize() const {
   JsonValue payload;
 
-  if(m_fieldHasBeenSet)
-  {
-   payload.WithString("field", m_field);
-
+  if (m_fieldHasBeenSet) {
+    payload.WithString("field", m_field);
   }
 
-  if(m_directionHasBeenSet)
-  {
-   payload.WithString("direction", SortDirectionMapper::GetNameForSortDirection(m_direction));
+  if (m_directionHasBeenSet) {
+    payload.WithString("direction", SortDirectionMapper::GetNameForSortDirection(m_direction));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AmplifyUIBuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyUIBuilder
+}  // namespace Aws

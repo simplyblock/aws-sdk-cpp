@@ -4,102 +4,122 @@
  */
 
 #pragma once
-#include <aws/iam/IAM_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iam/IAM_EXPORTS.h>
 #include <aws/iam/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace IAM
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace IAM {
+namespace Model {
+/**
+ * <p>Contains the response to a successful <a
+ * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRolePolicy.html">GetRolePolicy</a>
+ * request. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetRolePolicyResponse">AWS
+ * API Reference</a></p>
+ */
+class GetRolePolicyResult {
+ public:
+  AWS_IAM_API GetRolePolicyResult() = default;
+  AWS_IAM_API GetRolePolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_IAM_API GetRolePolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the response to a successful <a>GetRolePolicy</a> request.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetRolePolicyResponse">AWS
-   * API Reference</a></p>
+   * <p>The role the policy is associated with.</p>
    */
-  class GetRolePolicyResult
-  {
-  public:
-    AWS_IAM_API GetRolePolicyResult();
-    AWS_IAM_API GetRolePolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_IAM_API GetRolePolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetRoleName() const { return m_roleName; }
+  template <typename RoleNameT = Aws::String>
+  void SetRoleName(RoleNameT&& value) {
+    m_roleNameHasBeenSet = true;
+    m_roleName = std::forward<RoleNameT>(value);
+  }
+  template <typename RoleNameT = Aws::String>
+  GetRolePolicyResult& WithRoleName(RoleNameT&& value) {
+    SetRoleName(std::forward<RoleNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the policy.</p>
+   */
+  inline const Aws::String& GetPolicyName() const { return m_policyName; }
+  template <typename PolicyNameT = Aws::String>
+  void SetPolicyName(PolicyNameT&& value) {
+    m_policyNameHasBeenSet = true;
+    m_policyName = std::forward<PolicyNameT>(value);
+  }
+  template <typename PolicyNameT = Aws::String>
+  GetRolePolicyResult& WithPolicyName(PolicyNameT&& value) {
+    SetPolicyName(std::forward<PolicyNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The role the policy is associated with.</p>
-     */
-    inline const Aws::String& GetRoleName() const{ return m_roleName; }
-    inline void SetRoleName(const Aws::String& value) { m_roleName = value; }
-    inline void SetRoleName(Aws::String&& value) { m_roleName = std::move(value); }
-    inline void SetRoleName(const char* value) { m_roleName.assign(value); }
-    inline GetRolePolicyResult& WithRoleName(const Aws::String& value) { SetRoleName(value); return *this;}
-    inline GetRolePolicyResult& WithRoleName(Aws::String&& value) { SetRoleName(std::move(value)); return *this;}
-    inline GetRolePolicyResult& WithRoleName(const char* value) { SetRoleName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The policy document.</p> <p>IAM stores policies in JSON format. However,
+   * resources that were created using CloudFormation templates can be formatted in
+   * YAML. CloudFormation always converts a YAML policy to JSON format before
+   * submitting it to IAM.</p>
+   */
+  inline const Aws::String& GetPolicyDocument() const { return m_policyDocument; }
+  template <typename PolicyDocumentT = Aws::String>
+  void SetPolicyDocument(PolicyDocumentT&& value) {
+    m_policyDocumentHasBeenSet = true;
+    m_policyDocument = std::forward<PolicyDocumentT>(value);
+  }
+  template <typename PolicyDocumentT = Aws::String>
+  GetRolePolicyResult& WithPolicyDocument(PolicyDocumentT&& value) {
+    SetPolicyDocument(std::forward<PolicyDocumentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the policy.</p>
-     */
-    inline const Aws::String& GetPolicyName() const{ return m_policyName; }
-    inline void SetPolicyName(const Aws::String& value) { m_policyName = value; }
-    inline void SetPolicyName(Aws::String&& value) { m_policyName = std::move(value); }
-    inline void SetPolicyName(const char* value) { m_policyName.assign(value); }
-    inline GetRolePolicyResult& WithPolicyName(const Aws::String& value) { SetPolicyName(value); return *this;}
-    inline GetRolePolicyResult& WithPolicyName(Aws::String&& value) { SetPolicyName(std::move(value)); return *this;}
-    inline GetRolePolicyResult& WithPolicyName(const char* value) { SetPolicyName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The policy document.</p> <p>IAM stores policies in JSON format. However,
-     * resources that were created using CloudFormation templates can be formatted in
-     * YAML. CloudFormation always converts a YAML policy to JSON format before
-     * submitting it to IAM.</p>
-     */
-    inline const Aws::String& GetPolicyDocument() const{ return m_policyDocument; }
-    inline void SetPolicyDocument(const Aws::String& value) { m_policyDocument = value; }
-    inline void SetPolicyDocument(Aws::String&& value) { m_policyDocument = std::move(value); }
-    inline void SetPolicyDocument(const char* value) { m_policyDocument.assign(value); }
-    inline GetRolePolicyResult& WithPolicyDocument(const Aws::String& value) { SetPolicyDocument(value); return *this;}
-    inline GetRolePolicyResult& WithPolicyDocument(Aws::String&& value) { SetPolicyDocument(std::move(value)); return *this;}
-    inline GetRolePolicyResult& WithPolicyDocument(const char* value) { SetPolicyDocument(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetRolePolicyResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetRolePolicyResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetRolePolicyResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_roleName;
 
-    Aws::String m_roleName;
+  Aws::String m_policyName;
 
-    Aws::String m_policyName;
+  Aws::String m_policyDocument;
 
-    Aws::String m_policyDocument;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_roleNameHasBeenSet = false;
+  bool m_policyNameHasBeenSet = false;
+  bool m_policyDocumentHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace IAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace IAM
+}  // namespace Aws

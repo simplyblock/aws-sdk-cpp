@@ -4,118 +4,135 @@
  */
 
 #pragma once
-#include <aws/ivschat/Ivschat_EXPORTS.h>
-#include <aws/ivschat/IvschatRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ivschat/IvschatRequest.h>
+#include <aws/ivschat/Ivschat_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ivschat
-{
-namespace Model
-{
+namespace Aws {
+namespace ivschat {
+namespace Model {
 
+/**
+ */
+class ListRoomsRequest : public IvschatRequest {
+ public:
+  AWS_IVSCHAT_API ListRoomsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListRooms"; }
+
+  AWS_IVSCHAT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>Filters the list to match the specified room name.</p>
    */
-  class ListRoomsRequest : public IvschatRequest
-  {
-  public:
-    AWS_IVSCHAT_API ListRoomsRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ListRoomsRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListRooms"; }
+  ///@{
+  /**
+   * <p>The first room to retrieve. This is used for pagination; see the
+   * <code>nextToken</code> response field.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRoomsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IVSCHAT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Maximum number of rooms to return. Default: 50.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListRoomsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Filters the list to match the specified message review handler URI.</p>
+   */
+  inline const Aws::String& GetMessageReviewHandlerUri() const { return m_messageReviewHandlerUri; }
+  inline bool MessageReviewHandlerUriHasBeenSet() const { return m_messageReviewHandlerUriHasBeenSet; }
+  template <typename MessageReviewHandlerUriT = Aws::String>
+  void SetMessageReviewHandlerUri(MessageReviewHandlerUriT&& value) {
+    m_messageReviewHandlerUriHasBeenSet = true;
+    m_messageReviewHandlerUri = std::forward<MessageReviewHandlerUriT>(value);
+  }
+  template <typename MessageReviewHandlerUriT = Aws::String>
+  ListRoomsRequest& WithMessageReviewHandlerUri(MessageReviewHandlerUriT&& value) {
+    SetMessageReviewHandlerUri(std::forward<MessageReviewHandlerUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Filters the list to match the specified room name.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ListRoomsRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ListRoomsRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ListRoomsRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Logging-configuration identifier.</p>
+   */
+  inline const Aws::String& GetLoggingConfigurationIdentifier() const { return m_loggingConfigurationIdentifier; }
+  inline bool LoggingConfigurationIdentifierHasBeenSet() const { return m_loggingConfigurationIdentifierHasBeenSet; }
+  template <typename LoggingConfigurationIdentifierT = Aws::String>
+  void SetLoggingConfigurationIdentifier(LoggingConfigurationIdentifierT&& value) {
+    m_loggingConfigurationIdentifierHasBeenSet = true;
+    m_loggingConfigurationIdentifier = std::forward<LoggingConfigurationIdentifierT>(value);
+  }
+  template <typename LoggingConfigurationIdentifierT = Aws::String>
+  ListRoomsRequest& WithLoggingConfigurationIdentifier(LoggingConfigurationIdentifierT&& value) {
+    SetLoggingConfigurationIdentifier(std::forward<LoggingConfigurationIdentifierT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The first room to retrieve. This is used for pagination; see the
-     * <code>nextToken</code> response field.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListRoomsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRoomsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRoomsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>Maximum number of rooms to return. Default: 50.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListRoomsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>Filters the list to match the specified message review handler URI.</p>
-     */
-    inline const Aws::String& GetMessageReviewHandlerUri() const{ return m_messageReviewHandlerUri; }
-    inline bool MessageReviewHandlerUriHasBeenSet() const { return m_messageReviewHandlerUriHasBeenSet; }
-    inline void SetMessageReviewHandlerUri(const Aws::String& value) { m_messageReviewHandlerUriHasBeenSet = true; m_messageReviewHandlerUri = value; }
-    inline void SetMessageReviewHandlerUri(Aws::String&& value) { m_messageReviewHandlerUriHasBeenSet = true; m_messageReviewHandlerUri = std::move(value); }
-    inline void SetMessageReviewHandlerUri(const char* value) { m_messageReviewHandlerUriHasBeenSet = true; m_messageReviewHandlerUri.assign(value); }
-    inline ListRoomsRequest& WithMessageReviewHandlerUri(const Aws::String& value) { SetMessageReviewHandlerUri(value); return *this;}
-    inline ListRoomsRequest& WithMessageReviewHandlerUri(Aws::String&& value) { SetMessageReviewHandlerUri(std::move(value)); return *this;}
-    inline ListRoomsRequest& WithMessageReviewHandlerUri(const char* value) { SetMessageReviewHandlerUri(value); return *this;}
-    ///@}
+  Aws::String m_messageReviewHandlerUri;
 
-    ///@{
-    /**
-     * <p>Logging-configuration identifier.</p>
-     */
-    inline const Aws::String& GetLoggingConfigurationIdentifier() const{ return m_loggingConfigurationIdentifier; }
-    inline bool LoggingConfigurationIdentifierHasBeenSet() const { return m_loggingConfigurationIdentifierHasBeenSet; }
-    inline void SetLoggingConfigurationIdentifier(const Aws::String& value) { m_loggingConfigurationIdentifierHasBeenSet = true; m_loggingConfigurationIdentifier = value; }
-    inline void SetLoggingConfigurationIdentifier(Aws::String&& value) { m_loggingConfigurationIdentifierHasBeenSet = true; m_loggingConfigurationIdentifier = std::move(value); }
-    inline void SetLoggingConfigurationIdentifier(const char* value) { m_loggingConfigurationIdentifierHasBeenSet = true; m_loggingConfigurationIdentifier.assign(value); }
-    inline ListRoomsRequest& WithLoggingConfigurationIdentifier(const Aws::String& value) { SetLoggingConfigurationIdentifier(value); return *this;}
-    inline ListRoomsRequest& WithLoggingConfigurationIdentifier(Aws::String&& value) { SetLoggingConfigurationIdentifier(std::move(value)); return *this;}
-    inline ListRoomsRequest& WithLoggingConfigurationIdentifier(const char* value) { SetLoggingConfigurationIdentifier(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_loggingConfigurationIdentifier;
+  bool m_nameHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_messageReviewHandlerUriHasBeenSet = false;
+  bool m_loggingConfigurationIdentifierHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_messageReviewHandlerUri;
-    bool m_messageReviewHandlerUriHasBeenSet = false;
-
-    Aws::String m_loggingConfigurationIdentifier;
-    bool m_loggingConfigurationIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ivschat
-} // namespace Aws
+}  // namespace Model
+}  // namespace ivschat
+}  // namespace Aws

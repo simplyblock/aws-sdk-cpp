@@ -4,128 +4,144 @@
  */
 
 #pragma once
-#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
-#include <aws/iottwinmaker/IoTTwinMakerRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iottwinmaker/IoTTwinMakerRequest.h>
+#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IoTTwinMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace IoTTwinMaker {
+namespace Model {
 
+/**
+ */
+class CreateWorkspaceRequest : public IoTTwinMakerRequest {
+ public:
+  AWS_IOTTWINMAKER_API CreateWorkspaceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateWorkspace"; }
+
+  AWS_IOTTWINMAKER_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID of the workspace.</p>
    */
-  class CreateWorkspaceRequest : public IoTTwinMakerRequest
-  {
-  public:
-    AWS_IOTTWINMAKER_API CreateWorkspaceRequest();
+  inline const Aws::String& GetWorkspaceId() const { return m_workspaceId; }
+  inline bool WorkspaceIdHasBeenSet() const { return m_workspaceIdHasBeenSet; }
+  template <typename WorkspaceIdT = Aws::String>
+  void SetWorkspaceId(WorkspaceIdT&& value) {
+    m_workspaceIdHasBeenSet = true;
+    m_workspaceId = std::forward<WorkspaceIdT>(value);
+  }
+  template <typename WorkspaceIdT = Aws::String>
+  CreateWorkspaceRequest& WithWorkspaceId(WorkspaceIdT&& value) {
+    SetWorkspaceId(std::forward<WorkspaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateWorkspace"; }
+  ///@{
+  /**
+   * <p>The description of the workspace.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateWorkspaceRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IOTTWINMAKER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The ARN of the S3 bucket where resources associated with the workspace are
+   * stored.</p>
+   */
+  inline const Aws::String& GetS3Location() const { return m_s3Location; }
+  inline bool S3LocationHasBeenSet() const { return m_s3LocationHasBeenSet; }
+  template <typename S3LocationT = Aws::String>
+  void SetS3Location(S3LocationT&& value) {
+    m_s3LocationHasBeenSet = true;
+    m_s3Location = std::forward<S3LocationT>(value);
+  }
+  template <typename S3LocationT = Aws::String>
+  CreateWorkspaceRequest& WithS3Location(S3LocationT&& value) {
+    SetS3Location(std::forward<S3LocationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the execution role associated with the workspace.</p>
+   */
+  inline const Aws::String& GetRole() const { return m_role; }
+  inline bool RoleHasBeenSet() const { return m_roleHasBeenSet; }
+  template <typename RoleT = Aws::String>
+  void SetRole(RoleT&& value) {
+    m_roleHasBeenSet = true;
+    m_role = std::forward<RoleT>(value);
+  }
+  template <typename RoleT = Aws::String>
+  CreateWorkspaceRequest& WithRole(RoleT&& value) {
+    SetRole(std::forward<RoleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the workspace.</p>
-     */
-    inline const Aws::String& GetWorkspaceId() const{ return m_workspaceId; }
-    inline bool WorkspaceIdHasBeenSet() const { return m_workspaceIdHasBeenSet; }
-    inline void SetWorkspaceId(const Aws::String& value) { m_workspaceIdHasBeenSet = true; m_workspaceId = value; }
-    inline void SetWorkspaceId(Aws::String&& value) { m_workspaceIdHasBeenSet = true; m_workspaceId = std::move(value); }
-    inline void SetWorkspaceId(const char* value) { m_workspaceIdHasBeenSet = true; m_workspaceId.assign(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceId(const Aws::String& value) { SetWorkspaceId(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceId(Aws::String&& value) { SetWorkspaceId(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceId(const char* value) { SetWorkspaceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Metadata that you can use to manage the workspace</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateWorkspaceRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateWorkspaceRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_workspaceId;
 
-    ///@{
-    /**
-     * <p>The description of the workspace.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateWorkspaceRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateWorkspaceRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The ARN of the S3 bucket where resources associated with the workspace are
-     * stored.</p>
-     */
-    inline const Aws::String& GetS3Location() const{ return m_s3Location; }
-    inline bool S3LocationHasBeenSet() const { return m_s3LocationHasBeenSet; }
-    inline void SetS3Location(const Aws::String& value) { m_s3LocationHasBeenSet = true; m_s3Location = value; }
-    inline void SetS3Location(Aws::String&& value) { m_s3LocationHasBeenSet = true; m_s3Location = std::move(value); }
-    inline void SetS3Location(const char* value) { m_s3LocationHasBeenSet = true; m_s3Location.assign(value); }
-    inline CreateWorkspaceRequest& WithS3Location(const Aws::String& value) { SetS3Location(value); return *this;}
-    inline CreateWorkspaceRequest& WithS3Location(Aws::String&& value) { SetS3Location(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithS3Location(const char* value) { SetS3Location(value); return *this;}
-    ///@}
+  Aws::String m_s3Location;
 
-    ///@{
-    /**
-     * <p>The ARN of the execution role associated with the workspace.</p>
-     */
-    inline const Aws::String& GetRole() const{ return m_role; }
-    inline bool RoleHasBeenSet() const { return m_roleHasBeenSet; }
-    inline void SetRole(const Aws::String& value) { m_roleHasBeenSet = true; m_role = value; }
-    inline void SetRole(Aws::String&& value) { m_roleHasBeenSet = true; m_role = std::move(value); }
-    inline void SetRole(const char* value) { m_roleHasBeenSet = true; m_role.assign(value); }
-    inline CreateWorkspaceRequest& WithRole(const Aws::String& value) { SetRole(value); return *this;}
-    inline CreateWorkspaceRequest& WithRole(Aws::String&& value) { SetRole(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithRole(const char* value) { SetRole(value); return *this;}
-    ///@}
+  Aws::String m_role;
 
-    ///@{
-    /**
-     * <p>Metadata that you can use to manage the workspace</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateWorkspaceRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateWorkspaceRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_workspaceIdHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_s3LocationHasBeenSet = false;
+  bool m_roleHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_workspaceId;
-    bool m_workspaceIdHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_s3Location;
-    bool m_s3LocationHasBeenSet = false;
-
-    Aws::String m_role;
-    bool m_roleHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTTwinMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTTwinMaker
+}  // namespace Aws

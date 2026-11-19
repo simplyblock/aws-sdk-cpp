@@ -4,160 +4,235 @@
  */
 
 #pragma once
-#include <aws/s3/S3_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/s3/model/StorageClass.h>
-#include <aws/s3/model/Owner.h>
-#include <aws/s3/model/Initiator.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3/S3_EXPORTS.h>
 #include <aws/s3/model/ChecksumAlgorithm.h>
+#include <aws/s3/model/ChecksumType.h>
+#include <aws/s3/model/Initiator.h>
+#include <aws/s3/model/Owner.h>
+#include <aws/s3/model/StorageClass.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace S3
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3 {
+namespace Model {
 
+/**
+ * <p>Container for the <code>MultipartUpload</code> for the Amazon S3
+ * object.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/MultipartUpload">AWS
+ * API Reference</a></p>
+ */
+class MultipartUpload {
+ public:
+  AWS_S3_API MultipartUpload() = default;
+  AWS_S3_API MultipartUpload(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_S3_API MultipartUpload& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_S3_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+
+  ///@{
   /**
-   * <p>Container for the <code>MultipartUpload</code> for the Amazon S3
-   * object.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/MultipartUpload">AWS
-   * API Reference</a></p>
+   * <p>Upload ID that identifies the multipart upload.</p>
    */
-  class MultipartUpload
-  {
-  public:
-    AWS_S3_API MultipartUpload();
-    AWS_S3_API MultipartUpload(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_S3_API MultipartUpload& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  MultipartUpload& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_S3_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+  ///@{
+  /**
+   * <p>Key of the object for which the multipart upload was initiated.</p>
+   */
+  inline const Aws::String& GetKey() const { return m_key; }
+  inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
+  template <typename KeyT = Aws::String>
+  void SetKey(KeyT&& value) {
+    m_keyHasBeenSet = true;
+    m_key = std::forward<KeyT>(value);
+  }
+  template <typename KeyT = Aws::String>
+  MultipartUpload& WithKey(KeyT&& value) {
+    SetKey(std::forward<KeyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Date and time at which the multipart upload was initiated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetInitiated() const { return m_initiated; }
+  inline bool InitiatedHasBeenSet() const { return m_initiatedHasBeenSet; }
+  template <typename InitiatedT = Aws::Utils::DateTime>
+  void SetInitiated(InitiatedT&& value) {
+    m_initiatedHasBeenSet = true;
+    m_initiated = std::forward<InitiatedT>(value);
+  }
+  template <typename InitiatedT = Aws::Utils::DateTime>
+  MultipartUpload& WithInitiated(InitiatedT&& value) {
+    SetInitiated(std::forward<InitiatedT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Upload ID that identifies the multipart upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadIdHasBeenSet = true; m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadIdHasBeenSet = true; m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadIdHasBeenSet = true; m_uploadId.assign(value); }
-    inline MultipartUpload& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline MultipartUpload& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline MultipartUpload& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The class of storage used to store the object.</p>  <p> <b>Directory
+   * buckets</b> - Directory buckets only support <code>EXPRESS_ONEZONE</code> (the
+   * S3 Express One Zone storage class) in Availability Zones and
+   * <code>ONEZONE_IA</code> (the S3 One Zone-Infrequent Access storage class) in
+   * Dedicated Local Zones.</p>
+   */
+  inline StorageClass GetStorageClass() const { return m_storageClass; }
+  inline bool StorageClassHasBeenSet() const { return m_storageClassHasBeenSet; }
+  inline void SetStorageClass(StorageClass value) {
+    m_storageClassHasBeenSet = true;
+    m_storageClass = value;
+  }
+  inline MultipartUpload& WithStorageClass(StorageClass value) {
+    SetStorageClass(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Key of the object for which the multipart upload was initiated.</p>
-     */
-    inline const Aws::String& GetKey() const{ return m_key; }
-    inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
-    inline void SetKey(const Aws::String& value) { m_keyHasBeenSet = true; m_key = value; }
-    inline void SetKey(Aws::String&& value) { m_keyHasBeenSet = true; m_key = std::move(value); }
-    inline void SetKey(const char* value) { m_keyHasBeenSet = true; m_key.assign(value); }
-    inline MultipartUpload& WithKey(const Aws::String& value) { SetKey(value); return *this;}
-    inline MultipartUpload& WithKey(Aws::String&& value) { SetKey(std::move(value)); return *this;}
-    inline MultipartUpload& WithKey(const char* value) { SetKey(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the owner of the object that is part of the multipart upload. </p>
+   *  <p> <b>Directory buckets</b> - The bucket owner is returned as the object
+   * owner for all the objects.</p>
+   */
+  inline const Owner& GetOwner() const { return m_owner; }
+  inline bool OwnerHasBeenSet() const { return m_ownerHasBeenSet; }
+  template <typename OwnerT = Owner>
+  void SetOwner(OwnerT&& value) {
+    m_ownerHasBeenSet = true;
+    m_owner = std::forward<OwnerT>(value);
+  }
+  template <typename OwnerT = Owner>
+  MultipartUpload& WithOwner(OwnerT&& value) {
+    SetOwner(std::forward<OwnerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Date and time at which the multipart upload was initiated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetInitiated() const{ return m_initiated; }
-    inline bool InitiatedHasBeenSet() const { return m_initiatedHasBeenSet; }
-    inline void SetInitiated(const Aws::Utils::DateTime& value) { m_initiatedHasBeenSet = true; m_initiated = value; }
-    inline void SetInitiated(Aws::Utils::DateTime&& value) { m_initiatedHasBeenSet = true; m_initiated = std::move(value); }
-    inline MultipartUpload& WithInitiated(const Aws::Utils::DateTime& value) { SetInitiated(value); return *this;}
-    inline MultipartUpload& WithInitiated(Aws::Utils::DateTime&& value) { SetInitiated(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Identifies who initiated the multipart upload.</p>
+   */
+  inline const Initiator& GetInitiator() const { return m_initiator; }
+  inline bool InitiatorHasBeenSet() const { return m_initiatorHasBeenSet; }
+  template <typename InitiatorT = Initiator>
+  void SetInitiator(InitiatorT&& value) {
+    m_initiatorHasBeenSet = true;
+    m_initiator = std::forward<InitiatorT>(value);
+  }
+  template <typename InitiatorT = Initiator>
+  MultipartUpload& WithInitiator(InitiatorT&& value) {
+    SetInitiator(std::forward<InitiatorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The class of storage used to store the object.</p>  <p> <b>Directory
-     * buckets</b> - Only the S3 Express One Zone storage class is supported by
-     * directory buckets to store objects.</p> 
-     */
-    inline const StorageClass& GetStorageClass() const{ return m_storageClass; }
-    inline bool StorageClassHasBeenSet() const { return m_storageClassHasBeenSet; }
-    inline void SetStorageClass(const StorageClass& value) { m_storageClassHasBeenSet = true; m_storageClass = value; }
-    inline void SetStorageClass(StorageClass&& value) { m_storageClassHasBeenSet = true; m_storageClass = std::move(value); }
-    inline MultipartUpload& WithStorageClass(const StorageClass& value) { SetStorageClass(value); return *this;}
-    inline MultipartUpload& WithStorageClass(StorageClass&& value) { SetStorageClass(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The algorithm that was used to create a checksum of the object.</p>
+   */
+  inline ChecksumAlgorithm GetChecksumAlgorithm() const { return m_checksumAlgorithm; }
+  inline bool ChecksumAlgorithmHasBeenSet() const { return m_checksumAlgorithmHasBeenSet; }
+  inline void SetChecksumAlgorithm(ChecksumAlgorithm value) {
+    m_checksumAlgorithmHasBeenSet = true;
+    m_checksumAlgorithm = value;
+  }
+  inline MultipartUpload& WithChecksumAlgorithm(ChecksumAlgorithm value) {
+    SetChecksumAlgorithm(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the owner of the object that is part of the multipart upload. </p>
-     *  <p> <b>Directory buckets</b> - The bucket owner is returned as the object
-     * owner for all the objects.</p> 
-     */
-    inline const Owner& GetOwner() const{ return m_owner; }
-    inline bool OwnerHasBeenSet() const { return m_ownerHasBeenSet; }
-    inline void SetOwner(const Owner& value) { m_ownerHasBeenSet = true; m_owner = value; }
-    inline void SetOwner(Owner&& value) { m_ownerHasBeenSet = true; m_owner = std::move(value); }
-    inline MultipartUpload& WithOwner(const Owner& value) { SetOwner(value); return *this;}
-    inline MultipartUpload& WithOwner(Owner&& value) { SetOwner(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The checksum type that is used to calculate the object’s checksum value. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline ChecksumType GetChecksumType() const { return m_checksumType; }
+  inline bool ChecksumTypeHasBeenSet() const { return m_checksumTypeHasBeenSet; }
+  inline void SetChecksumType(ChecksumType value) {
+    m_checksumTypeHasBeenSet = true;
+    m_checksumType = value;
+  }
+  inline MultipartUpload& WithChecksumType(ChecksumType value) {
+    SetChecksumType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Identifies who initiated the multipart upload.</p>
-     */
-    inline const Initiator& GetInitiator() const{ return m_initiator; }
-    inline bool InitiatorHasBeenSet() const { return m_initiatorHasBeenSet; }
-    inline void SetInitiator(const Initiator& value) { m_initiatorHasBeenSet = true; m_initiator = value; }
-    inline void SetInitiator(Initiator&& value) { m_initiatorHasBeenSet = true; m_initiator = std::move(value); }
-    inline MultipartUpload& WithInitiator(const Initiator& value) { SetInitiator(value); return *this;}
-    inline MultipartUpload& WithInitiator(Initiator&& value) { SetInitiator(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Version ID of the object.</p> <p>Returns the Version ID of the object for the
+   * multipart upload, if bucket versioning is enabled.</p>  <p>This
+   * functionality is not supported for directory buckets.</p>
+   */
+  inline const Aws::String& GetVersionId() const { return m_versionId; }
+  inline bool VersionIdHasBeenSet() const { return m_versionIdHasBeenSet; }
+  template <typename VersionIdT = Aws::String>
+  void SetVersionId(VersionIdT&& value) {
+    m_versionIdHasBeenSet = true;
+    m_versionId = std::forward<VersionIdT>(value);
+  }
+  template <typename VersionIdT = Aws::String>
+  MultipartUpload& WithVersionId(VersionIdT&& value) {
+    SetVersionId(std::forward<VersionIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_uploadId;
 
-    ///@{
-    /**
-     * <p>The algorithm that was used to create a checksum of the object.</p>
-     */
-    inline const ChecksumAlgorithm& GetChecksumAlgorithm() const{ return m_checksumAlgorithm; }
-    inline bool ChecksumAlgorithmHasBeenSet() const { return m_checksumAlgorithmHasBeenSet; }
-    inline void SetChecksumAlgorithm(const ChecksumAlgorithm& value) { m_checksumAlgorithmHasBeenSet = true; m_checksumAlgorithm = value; }
-    inline void SetChecksumAlgorithm(ChecksumAlgorithm&& value) { m_checksumAlgorithmHasBeenSet = true; m_checksumAlgorithm = std::move(value); }
-    inline MultipartUpload& WithChecksumAlgorithm(const ChecksumAlgorithm& value) { SetChecksumAlgorithm(value); return *this;}
-    inline MultipartUpload& WithChecksumAlgorithm(ChecksumAlgorithm&& value) { SetChecksumAlgorithm(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_key;
 
-    Aws::String m_uploadId;
-    bool m_uploadIdHasBeenSet = false;
+  Aws::Utils::DateTime m_initiated{};
 
-    Aws::String m_key;
-    bool m_keyHasBeenSet = false;
+  StorageClass m_storageClass{StorageClass::NOT_SET};
 
-    Aws::Utils::DateTime m_initiated;
-    bool m_initiatedHasBeenSet = false;
+  Owner m_owner;
 
-    StorageClass m_storageClass;
-    bool m_storageClassHasBeenSet = false;
+  Initiator m_initiator;
 
-    Owner m_owner;
-    bool m_ownerHasBeenSet = false;
+  ChecksumAlgorithm m_checksumAlgorithm{ChecksumAlgorithm::NOT_SET};
 
-    Initiator m_initiator;
-    bool m_initiatorHasBeenSet = false;
+  ChecksumType m_checksumType{ChecksumType::NOT_SET};
 
-    ChecksumAlgorithm m_checksumAlgorithm;
-    bool m_checksumAlgorithmHasBeenSet = false;
-  };
+  Aws::String m_versionId;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_keyHasBeenSet = false;
+  bool m_initiatedHasBeenSet = false;
+  bool m_storageClassHasBeenSet = false;
+  bool m_ownerHasBeenSet = false;
+  bool m_initiatorHasBeenSet = false;
+  bool m_checksumAlgorithmHasBeenSet = false;
+  bool m_checksumTypeHasBeenSet = false;
+  bool m_versionIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace S3
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3
+}  // namespace Aws

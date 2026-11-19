@@ -3,74 +3,73 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/CopyWorkspaceImageRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CopyWorkspaceImageRequest::CopyWorkspaceImageRequest() : 
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_sourceImageIdHasBeenSet(false),
-    m_sourceRegionHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CopyWorkspaceImageRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceImageIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceRegionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_sourceImageIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourceImageId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sourceImageId.c_str()));
+  }
+
+  if (m_sourceRegionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourceRegion"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sourceRegion.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CopyWorkspaceImageRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
-  }
-
-  if(m_sourceImageIdHasBeenSet)
-  {
-   payload.WithString("SourceImageId", m_sourceImageId);
-
-  }
-
-  if(m_sourceRegionHasBeenSet)
-  {
-   payload.WithString("SourceRegion", m_sourceRegion);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CopyWorkspaceImageRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CopyWorkspaceImageRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.CopyWorkspaceImage"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,99 +3,148 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/transcribe/model/Rule.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace TranscribeService
-{
-namespace Model
-{
+namespace Aws {
+namespace TranscribeService {
+namespace Model {
 
-Rule::Rule() : 
-    m_nonTalkTimeFilterHasBeenSet(false),
-    m_interruptionFilterHasBeenSet(false),
-    m_transcriptFilterHasBeenSet(false),
-    m_sentimentFilterHasBeenSet(false)
-{
-}
+Rule::Rule(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-Rule::Rule(JsonView jsonValue)
-  : Rule()
-{
-  *this = jsonValue;
-}
+Rule& Rule::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-Rule& Rule::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("NonTalkTimeFilter"))
-  {
-    m_nonTalkTimeFilter = jsonValue.GetObject("NonTalkTimeFilter");
+              if (initialKeyStr == "NonTalkTimeFilter") {
+                m_nonTalkTimeFilter = NonTalkTimeFilter(decoder);
+                m_nonTalkTimeFilterHasBeenSet = true;
+              }
 
-    m_nonTalkTimeFilterHasBeenSet = true;
-  }
+              else if (initialKeyStr == "InterruptionFilter") {
+                m_interruptionFilter = InterruptionFilter(decoder);
+                m_interruptionFilterHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("InterruptionFilter"))
-  {
-    m_interruptionFilter = jsonValue.GetObject("InterruptionFilter");
+              else if (initialKeyStr == "TranscriptFilter") {
+                m_transcriptFilter = TranscriptFilter(decoder);
+                m_transcriptFilterHasBeenSet = true;
+              }
 
-    m_interruptionFilterHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SentimentFilter") {
+                m_sentimentFilter = SentimentFilter(decoder);
+                m_sentimentFilterHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("Rule", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("TranscriptFilter"))
-  {
-    m_transcriptFilter = jsonValue.GetObject("TranscriptFilter");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_transcriptFilterHasBeenSet = true;
-  }
+            if (initialKeyStr == "NonTalkTimeFilter") {
+              m_nonTalkTimeFilter = NonTalkTimeFilter(decoder);
+              m_nonTalkTimeFilterHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("SentimentFilter"))
-  {
-    m_sentimentFilter = jsonValue.GetObject("SentimentFilter");
+            else if (initialKeyStr == "InterruptionFilter") {
+              m_interruptionFilter = InterruptionFilter(decoder);
+              m_interruptionFilterHasBeenSet = true;
+            }
 
-    m_sentimentFilterHasBeenSet = true;
+            else if (initialKeyStr == "TranscriptFilter") {
+              m_transcriptFilter = TranscriptFilter(decoder);
+              m_transcriptFilterHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SentimentFilter") {
+              m_sentimentFilter = SentimentFilter(decoder);
+              m_sentimentFilterHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue Rule::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_nonTalkTimeFilterHasBeenSet)
-  {
-   payload.WithObject("NonTalkTimeFilter", m_nonTalkTimeFilter.Jsonize());
-
+void Rule::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nonTalkTimeFilterHasBeenSet) {
+    mapSize++;
+  }
+  if (m_interruptionFilterHasBeenSet) {
+    mapSize++;
+  }
+  if (m_transcriptFilterHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sentimentFilterHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_interruptionFilterHasBeenSet)
-  {
-   payload.WithObject("InterruptionFilter", m_interruptionFilter.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_nonTalkTimeFilterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NonTalkTimeFilter"));
+    m_nonTalkTimeFilter.CborEncode(encoder);
   }
 
-  if(m_transcriptFilterHasBeenSet)
-  {
-   payload.WithObject("TranscriptFilter", m_transcriptFilter.Jsonize());
-
+  if (m_interruptionFilterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("InterruptionFilter"));
+    m_interruptionFilter.CborEncode(encoder);
   }
 
-  if(m_sentimentFilterHasBeenSet)
-  {
-   payload.WithObject("SentimentFilter", m_sentimentFilter.Jsonize());
-
+  if (m_transcriptFilterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TranscriptFilter"));
+    m_transcriptFilter.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_sentimentFilterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SentimentFilter"));
+    m_sentimentFilter.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace TranscribeService
+}  // namespace Aws

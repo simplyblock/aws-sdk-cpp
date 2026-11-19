@@ -3,56 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/textract/model/GetExpenseAnalysisRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Textract::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetExpenseAnalysisRequest::GetExpenseAnalysisRequest() : 
-    m_jobIdHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
+Aws::String GetExpenseAnalysisRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_jobIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_jobIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("JobId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_jobId.c_str()));
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String GetExpenseAnalysisRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_jobIdHasBeenSet)
-  {
-   payload.WithString("JobId", m_jobId);
-
-  }
-
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection GetExpenseAnalysisRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetExpenseAnalysisRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Textract.GetExpenseAnalysis"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

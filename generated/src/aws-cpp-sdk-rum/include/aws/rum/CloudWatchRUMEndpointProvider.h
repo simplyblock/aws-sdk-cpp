@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/rum/CloudWatchRUM_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rum/CloudWatchRUM_EXPORTS.h>
 
-#include <aws/rum/CloudWatchRUMEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudWatchRUM
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudWatchRUM {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudWatchRUMClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudWatchRUMEndpointProviderBase =
     EndpointProviderBase<CloudWatchRUMClientConfiguration, CloudWatchRUMBuiltInParameters, CloudWatchRUMClientContextParameters>;
 
 using CloudWatchRUMDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudWatchRUMClientConfiguration, CloudWatchRUMBuiltInParameters, CloudWatchRUMClientContextParameters>;
+    BDDEndpointProvider<CloudWatchRUMClientConfiguration, CloudWatchRUMBuiltInParameters, CloudWatchRUMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDWATCHRUM_API CloudWatchRUMEndpointProvider : public CloudWatchRUMDefaultEpProviderBase
-{
-public:
-    using CloudWatchRUMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDWATCHRUM_API CloudWatchRUMEndpointProvider : public CloudWatchRUMDefaultEpProviderBase {
+ public:
+  using CloudWatchRUMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudWatchRUMEndpointProvider()
-      : CloudWatchRUMDefaultEpProviderBase(Aws::CloudWatchRUM::CloudWatchRUMEndpointRules::GetRulesBlob(), Aws::CloudWatchRUM::CloudWatchRUMEndpointRules::RulesBlobSize)
-    {}
+  CloudWatchRUMEndpointProvider();
 
-    ~CloudWatchRUMEndpointProvider()
-    {
-    }
+  ~CloudWatchRUMEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudWatchRUM
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudWatchRUM
+}  // namespace Aws

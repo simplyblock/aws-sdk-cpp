@@ -4,134 +4,155 @@
  */
 
 #pragma once
-#include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
 #include <aws/clouddirectory/CloudDirectoryRequest.h>
+#include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
+#include <aws/clouddirectory/model/FacetAttribute.h>
+#include <aws/clouddirectory/model/FacetStyle.h>
+#include <aws/clouddirectory/model/ObjectType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/clouddirectory/model/ObjectType.h>
-#include <aws/clouddirectory/model/FacetStyle.h>
-#include <aws/clouddirectory/model/FacetAttribute.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudDirectory
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudDirectory {
+namespace Model {
 
+/**
+ */
+class CreateFacetRequest : public CloudDirectoryRequest {
+ public:
+  AWS_CLOUDDIRECTORY_API CreateFacetRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateFacet"; }
+
+  AWS_CLOUDDIRECTORY_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUDDIRECTORY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The schema ARN in which the new <a>Facet</a> will be created. For more
+   * information, see <a>arns</a>.</p>
    */
-  class CreateFacetRequest : public CloudDirectoryRequest
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API CreateFacetRequest();
+  inline const Aws::String& GetSchemaArn() const { return m_schemaArn; }
+  inline bool SchemaArnHasBeenSet() const { return m_schemaArnHasBeenSet; }
+  template <typename SchemaArnT = Aws::String>
+  void SetSchemaArn(SchemaArnT&& value) {
+    m_schemaArnHasBeenSet = true;
+    m_schemaArn = std::forward<SchemaArnT>(value);
+  }
+  template <typename SchemaArnT = Aws::String>
+  CreateFacetRequest& WithSchemaArn(SchemaArnT&& value) {
+    SetSchemaArn(std::forward<SchemaArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateFacet"; }
+  ///@{
+  /**
+   * <p>The name of the <a>Facet</a>, which is unique for a given schema.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateFacetRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDDIRECTORY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The attributes that are associated with the <a>Facet</a>.</p>
+   */
+  inline const Aws::Vector<FacetAttribute>& GetAttributes() const { return m_attributes; }
+  inline bool AttributesHasBeenSet() const { return m_attributesHasBeenSet; }
+  template <typename AttributesT = Aws::Vector<FacetAttribute>>
+  void SetAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes = std::forward<AttributesT>(value);
+  }
+  template <typename AttributesT = Aws::Vector<FacetAttribute>>
+  CreateFacetRequest& WithAttributes(AttributesT&& value) {
+    SetAttributes(std::forward<AttributesT>(value));
+    return *this;
+  }
+  template <typename AttributesT = FacetAttribute>
+  CreateFacetRequest& AddAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes.emplace_back(std::forward<AttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDDIRECTORY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Specifies whether a given object created from this facet is of type node,
+   * leaf node, policy or index.</p> <ul> <li> <p>Node: Can have multiple children
+   * but one parent.</p> </li> </ul> <ul> <li> <p>Leaf node: Cannot have children but
+   * can have multiple parents.</p> </li> </ul> <ul> <li> <p>Policy: Allows you to
+   * store a policy document and policy type. For more information, see <a
+   * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directory.html#key_concepts_policies">Policies</a>.</p>
+   * </li> </ul> <ul> <li> <p>Index: Can be created with the Index API.</p> </li>
+   * </ul>
+   */
+  inline ObjectType GetObjectType() const { return m_objectType; }
+  inline bool ObjectTypeHasBeenSet() const { return m_objectTypeHasBeenSet; }
+  inline void SetObjectType(ObjectType value) {
+    m_objectTypeHasBeenSet = true;
+    m_objectType = value;
+  }
+  inline CreateFacetRequest& WithObjectType(ObjectType value) {
+    SetObjectType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>There are two different styles that you can define on any given facet,
+   * <code>Static</code> and <code>Dynamic</code>. For static facets, all attributes
+   * must be defined in the schema. For dynamic facets, attributes can be defined
+   * during data plane operations.</p>
+   */
+  inline FacetStyle GetFacetStyle() const { return m_facetStyle; }
+  inline bool FacetStyleHasBeenSet() const { return m_facetStyleHasBeenSet; }
+  inline void SetFacetStyle(FacetStyle value) {
+    m_facetStyleHasBeenSet = true;
+    m_facetStyle = value;
+  }
+  inline CreateFacetRequest& WithFacetStyle(FacetStyle value) {
+    SetFacetStyle(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_schemaArn;
 
-    ///@{
-    /**
-     * <p>The schema ARN in which the new <a>Facet</a> will be created. For more
-     * information, see <a>arns</a>.</p>
-     */
-    inline const Aws::String& GetSchemaArn() const{ return m_schemaArn; }
-    inline bool SchemaArnHasBeenSet() const { return m_schemaArnHasBeenSet; }
-    inline void SetSchemaArn(const Aws::String& value) { m_schemaArnHasBeenSet = true; m_schemaArn = value; }
-    inline void SetSchemaArn(Aws::String&& value) { m_schemaArnHasBeenSet = true; m_schemaArn = std::move(value); }
-    inline void SetSchemaArn(const char* value) { m_schemaArnHasBeenSet = true; m_schemaArn.assign(value); }
-    inline CreateFacetRequest& WithSchemaArn(const Aws::String& value) { SetSchemaArn(value); return *this;}
-    inline CreateFacetRequest& WithSchemaArn(Aws::String&& value) { SetSchemaArn(std::move(value)); return *this;}
-    inline CreateFacetRequest& WithSchemaArn(const char* value) { SetSchemaArn(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the <a>Facet</a>, which is unique for a given schema.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateFacetRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateFacetRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateFacetRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::Vector<FacetAttribute> m_attributes;
 
-    ///@{
-    /**
-     * <p>The attributes that are associated with the <a>Facet</a>.</p>
-     */
-    inline const Aws::Vector<FacetAttribute>& GetAttributes() const{ return m_attributes; }
-    inline bool AttributesHasBeenSet() const { return m_attributesHasBeenSet; }
-    inline void SetAttributes(const Aws::Vector<FacetAttribute>& value) { m_attributesHasBeenSet = true; m_attributes = value; }
-    inline void SetAttributes(Aws::Vector<FacetAttribute>&& value) { m_attributesHasBeenSet = true; m_attributes = std::move(value); }
-    inline CreateFacetRequest& WithAttributes(const Aws::Vector<FacetAttribute>& value) { SetAttributes(value); return *this;}
-    inline CreateFacetRequest& WithAttributes(Aws::Vector<FacetAttribute>&& value) { SetAttributes(std::move(value)); return *this;}
-    inline CreateFacetRequest& AddAttributes(const FacetAttribute& value) { m_attributesHasBeenSet = true; m_attributes.push_back(value); return *this; }
-    inline CreateFacetRequest& AddAttributes(FacetAttribute&& value) { m_attributesHasBeenSet = true; m_attributes.push_back(std::move(value)); return *this; }
-    ///@}
+  ObjectType m_objectType{ObjectType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies whether a given object created from this facet is of type node,
-     * leaf node, policy or index.</p> <ul> <li> <p>Node: Can have multiple children
-     * but one parent.</p> </li> </ul> <ul> <li> <p>Leaf node: Cannot have children but
-     * can have multiple parents.</p> </li> </ul> <ul> <li> <p>Policy: Allows you to
-     * store a policy document and policy type. For more information, see <a
-     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directory.html#key_concepts_policies">Policies</a>.</p>
-     * </li> </ul> <ul> <li> <p>Index: Can be created with the Index API.</p> </li>
-     * </ul>
-     */
-    inline const ObjectType& GetObjectType() const{ return m_objectType; }
-    inline bool ObjectTypeHasBeenSet() const { return m_objectTypeHasBeenSet; }
-    inline void SetObjectType(const ObjectType& value) { m_objectTypeHasBeenSet = true; m_objectType = value; }
-    inline void SetObjectType(ObjectType&& value) { m_objectTypeHasBeenSet = true; m_objectType = std::move(value); }
-    inline CreateFacetRequest& WithObjectType(const ObjectType& value) { SetObjectType(value); return *this;}
-    inline CreateFacetRequest& WithObjectType(ObjectType&& value) { SetObjectType(std::move(value)); return *this;}
-    ///@}
+  FacetStyle m_facetStyle{FacetStyle::NOT_SET};
+  bool m_schemaArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_attributesHasBeenSet = false;
+  bool m_objectTypeHasBeenSet = false;
+  bool m_facetStyleHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>There are two different styles that you can define on any given facet,
-     * <code>Static</code> and <code>Dynamic</code>. For static facets, all attributes
-     * must be defined in the schema. For dynamic facets, attributes can be defined
-     * during data plane operations.</p>
-     */
-    inline const FacetStyle& GetFacetStyle() const{ return m_facetStyle; }
-    inline bool FacetStyleHasBeenSet() const { return m_facetStyleHasBeenSet; }
-    inline void SetFacetStyle(const FacetStyle& value) { m_facetStyleHasBeenSet = true; m_facetStyle = value; }
-    inline void SetFacetStyle(FacetStyle&& value) { m_facetStyleHasBeenSet = true; m_facetStyle = std::move(value); }
-    inline CreateFacetRequest& WithFacetStyle(const FacetStyle& value) { SetFacetStyle(value); return *this;}
-    inline CreateFacetRequest& WithFacetStyle(FacetStyle&& value) { SetFacetStyle(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_schemaArn;
-    bool m_schemaArnHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Vector<FacetAttribute> m_attributes;
-    bool m_attributesHasBeenSet = false;
-
-    ObjectType m_objectType;
-    bool m_objectTypeHasBeenSet = false;
-
-    FacetStyle m_facetStyle;
-    bool m_facetStyleHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

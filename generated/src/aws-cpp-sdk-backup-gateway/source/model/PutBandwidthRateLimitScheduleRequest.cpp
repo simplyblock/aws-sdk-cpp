@@ -4,52 +4,48 @@
  */
 
 #include <aws/backup-gateway/model/PutBandwidthRateLimitScheduleRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::BackupGateway::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutBandwidthRateLimitScheduleRequest::PutBandwidthRateLimitScheduleRequest() : 
-    m_bandwidthRateLimitIntervalsHasBeenSet(false),
-    m_gatewayArnHasBeenSet(false)
-{
-}
+Aws::String PutBandwidthRateLimitScheduleRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String PutBandwidthRateLimitScheduleRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_bandwidthRateLimitIntervalsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> bandwidthRateLimitIntervalsJsonList(m_bandwidthRateLimitIntervals.size());
-   for(unsigned bandwidthRateLimitIntervalsIndex = 0; bandwidthRateLimitIntervalsIndex < bandwidthRateLimitIntervalsJsonList.GetLength(); ++bandwidthRateLimitIntervalsIndex)
-   {
-     bandwidthRateLimitIntervalsJsonList[bandwidthRateLimitIntervalsIndex].AsObject(m_bandwidthRateLimitIntervals[bandwidthRateLimitIntervalsIndex].Jsonize());
-   }
-   payload.WithArray("BandwidthRateLimitIntervals", std::move(bandwidthRateLimitIntervalsJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_gatewayArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_bandwidthRateLimitIntervalsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_gatewayArnHasBeenSet)
-  {
-   payload.WithString("GatewayArn", m_gatewayArn);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_gatewayArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GatewayArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_gatewayArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_bandwidthRateLimitIntervalsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BandwidthRateLimitIntervals"));
+    encoder.WriteArrayStart(m_bandwidthRateLimitIntervals.size());
+    for (const auto& item_0 : m_bandwidthRateLimitIntervals) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection PutBandwidthRateLimitScheduleRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutBandwidthRateLimitScheduleRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BackupOnPremises_v20210101.PutBandwidthRateLimitSchedule"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

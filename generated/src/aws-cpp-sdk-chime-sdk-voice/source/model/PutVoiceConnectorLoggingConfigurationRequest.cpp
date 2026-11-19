@@ -12,25 +12,12 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutVoiceConnectorLoggingConfigurationRequest::PutVoiceConnectorLoggingConfigurationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false),
-    m_loggingConfigurationHasBeenSet(false)
-{
-}
-
-Aws::String PutVoiceConnectorLoggingConfigurationRequest::SerializePayload() const
-{
+Aws::String PutVoiceConnectorLoggingConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_loggingConfigurationHasBeenSet)
-  {
-   payload.WithObject("LoggingConfiguration", m_loggingConfiguration.Jsonize());
-
+  if (m_loggingConfigurationHasBeenSet) {
+    payload.WithObject("LoggingConfiguration", m_loggingConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

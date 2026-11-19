@@ -3,56 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/DescribeConnectionAliasPermissionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeConnectionAliasPermissionsRequest::DescribeConnectionAliasPermissionsRequest() : 
-    m_aliasIdHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
+Aws::String DescribeConnectionAliasPermissionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_aliasIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_aliasIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AliasId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_aliasId.c_str()));
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DescribeConnectionAliasPermissionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_aliasIdHasBeenSet)
-  {
-   payload.WithString("AliasId", m_aliasId);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DescribeConnectionAliasPermissionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeConnectionAliasPermissionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.DescribeConnectionAliasPermissions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

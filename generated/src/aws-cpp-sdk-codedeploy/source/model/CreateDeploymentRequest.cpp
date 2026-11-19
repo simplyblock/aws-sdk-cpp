@@ -4,112 +4,134 @@
  */
 
 #include <aws/codedeploy/model/CreateDeploymentRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateDeploymentRequest::CreateDeploymentRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_deploymentGroupNameHasBeenSet(false),
-    m_revisionHasBeenSet(false),
-    m_deploymentConfigNameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_ignoreApplicationStopFailures(false),
-    m_ignoreApplicationStopFailuresHasBeenSet(false),
-    m_targetInstancesHasBeenSet(false),
-    m_autoRollbackConfigurationHasBeenSet(false),
-    m_updateOutdatedInstancesOnly(false),
-    m_updateOutdatedInstancesOnlyHasBeenSet(false),
-    m_fileExistsBehavior(FileExistsBehavior::NOT_SET),
-    m_fileExistsBehaviorHasBeenSet(false),
-    m_overrideAlarmConfigurationHasBeenSet(false)
-{
+Aws::String CreateDeploymentRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_applicationNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_revisionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentConfigNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ignoreApplicationStopFailuresHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetInstancesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_autoRollbackConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_updateOutdatedInstancesOnlyHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fileExistsBehaviorHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_overrideAlarmConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ec2DeploymentOptionsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_applicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("applicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationName.c_str()));
+  }
+
+  if (m_deploymentGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_deploymentGroupName.c_str()));
+  }
+
+  if (m_revisionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("revision"));
+    m_revision.CborEncode(encoder);
+  }
+
+  if (m_deploymentConfigNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentConfigName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_deploymentConfigName.c_str()));
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_ignoreApplicationStopFailuresHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ignoreApplicationStopFailures"));
+    encoder.WriteBool(m_ignoreApplicationStopFailures);
+  }
+
+  if (m_targetInstancesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("targetInstances"));
+    m_targetInstances.CborEncode(encoder);
+  }
+
+  if (m_autoRollbackConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("autoRollbackConfiguration"));
+    m_autoRollbackConfiguration.CborEncode(encoder);
+  }
+
+  if (m_updateOutdatedInstancesOnlyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("updateOutdatedInstancesOnly"));
+    encoder.WriteBool(m_updateOutdatedInstancesOnly);
+  }
+
+  if (m_fileExistsBehaviorHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("fileExistsBehavior"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(FileExistsBehaviorMapper::GetNameForFileExistsBehavior(m_fileExistsBehavior).c_str()));
+  }
+
+  if (m_deploymentModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(DeploymentModeMapper::GetNameForDeploymentMode(m_deploymentMode).c_str()));
+  }
+
+  if (m_overrideAlarmConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("overrideAlarmConfiguration"));
+    m_overrideAlarmConfiguration.CborEncode(encoder);
+  }
+
+  if (m_ec2DeploymentOptionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ec2DeploymentOptions"));
+    m_ec2DeploymentOptions.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateDeploymentRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
-  }
-
-  if(m_deploymentGroupNameHasBeenSet)
-  {
-   payload.WithString("deploymentGroupName", m_deploymentGroupName);
-
-  }
-
-  if(m_revisionHasBeenSet)
-  {
-   payload.WithObject("revision", m_revision.Jsonize());
-
-  }
-
-  if(m_deploymentConfigNameHasBeenSet)
-  {
-   payload.WithString("deploymentConfigName", m_deploymentConfigName);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
-  }
-
-  if(m_ignoreApplicationStopFailuresHasBeenSet)
-  {
-   payload.WithBool("ignoreApplicationStopFailures", m_ignoreApplicationStopFailures);
-
-  }
-
-  if(m_targetInstancesHasBeenSet)
-  {
-   payload.WithObject("targetInstances", m_targetInstances.Jsonize());
-
-  }
-
-  if(m_autoRollbackConfigurationHasBeenSet)
-  {
-   payload.WithObject("autoRollbackConfiguration", m_autoRollbackConfiguration.Jsonize());
-
-  }
-
-  if(m_updateOutdatedInstancesOnlyHasBeenSet)
-  {
-   payload.WithBool("updateOutdatedInstancesOnly", m_updateOutdatedInstancesOnly);
-
-  }
-
-  if(m_fileExistsBehaviorHasBeenSet)
-  {
-   payload.WithString("fileExistsBehavior", FileExistsBehaviorMapper::GetNameForFileExistsBehavior(m_fileExistsBehavior));
-  }
-
-  if(m_overrideAlarmConfigurationHasBeenSet)
-  {
-   payload.WithObject("overrideAlarmConfiguration", m_overrideAlarmConfiguration.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateDeploymentRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateDeploymentRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.CreateDeployment"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

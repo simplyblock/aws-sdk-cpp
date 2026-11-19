@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-chime-sdk-messaging "C++ SDK for the AWS chime-sdk-messaging service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-chime-sdk-messaging "C++ SDK for Amazon Chime SDK Messaging" aws-cpp-sdk-core)
 
 file(GLOB AWS_CHIME-SDK-MESSAGING_HEADERS
     "include/aws/chime-sdk-messaging/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CHIME-SDK-MESSAGING_HEADERS
 
 file(GLOB AWS_CHIME-SDK-MESSAGING_MODEL_HEADERS
     "include/aws/chime-sdk-messaging/model/*.h"
+)
+
+file(GLOB AWS_CHIME-SDK-MESSAGING_INTERNAL_HEADERS
+    "include/aws/chime-sdk-messaging/internal/*.h"
 )
 
 file(GLOB AWS_CHIME-SDK-MESSAGING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CHIME-SDK-MESSAGING_MODEL_SOURCE
 
 file(GLOB CHIME-SDK-MESSAGING_UNIFIED_HEADERS
     ${AWS_CHIME-SDK-MESSAGING_HEADERS}
+    ${AWS_CHIME-SDK-MESSAGING_INTERNAL_HEADERS}
     ${AWS_CHIME-SDK-MESSAGING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\chime-sdk-messaging" FILES ${AWS_CHIME-SDK-MESSAGING_HEADERS})
+        source_group("Header Files\\aws\\chime-sdk-messaging\\internal" FILES ${AWS_CHIME-SDK-MESSAGING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\chime-sdk-messaging\\model" FILES ${AWS_CHIME-SDK-MESSAGING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CHIME-SDK-MESSAGING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CHIME-SDK-MESSAGING_MODEL_SOURCE})

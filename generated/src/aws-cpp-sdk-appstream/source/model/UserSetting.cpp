@@ -4,85 +4,169 @@
  */
 
 #include <aws/appstream/model/UserSetting.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppStream
-{
-namespace Model
-{
+namespace Aws {
+namespace AppStream {
+namespace Model {
 
-UserSetting::UserSetting() : 
-    m_action(Action::NOT_SET),
-    m_actionHasBeenSet(false),
-    m_permission(Permission::NOT_SET),
-    m_permissionHasBeenSet(false),
-    m_maximumLength(0),
-    m_maximumLengthHasBeenSet(false)
-{
-}
+UserSetting::UserSetting(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-UserSetting::UserSetting(JsonView jsonValue)
-  : UserSetting()
-{
-  *this = jsonValue;
-}
+UserSetting& UserSetting::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-UserSetting& UserSetting::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Action"))
-  {
-    m_action = ActionMapper::GetActionForName(jsonValue.GetString("Action"));
+              if (initialKeyStr == "Action") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_action = ActionMapper::GetActionForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_actionHasBeenSet = true;
+              }
 
-    m_actionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Permission") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_permission =
+                      PermissionMapper::GetPermissionForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_permissionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Permission"))
-  {
-    m_permission = PermissionMapper::GetPermissionForName(jsonValue.GetString("Permission"));
+              else if (initialKeyStr == "MaximumLength") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_maximumLength = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_maximumLength = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_maximumLengthHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("UserSetting", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_permissionHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("MaximumLength"))
-  {
-    m_maximumLength = jsonValue.GetInteger("MaximumLength");
+            if (initialKeyStr == "Action") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_action = ActionMapper::GetActionForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_actionHasBeenSet = true;
+            }
 
-    m_maximumLengthHasBeenSet = true;
+            else if (initialKeyStr == "Permission") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_permission =
+                    PermissionMapper::GetPermissionForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_permissionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "MaximumLength") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_maximumLength = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_maximumLength = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_maximumLengthHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue UserSetting::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_actionHasBeenSet)
-  {
-   payload.WithString("Action", ActionMapper::GetNameForAction(m_action));
+void UserSetting::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_actionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_permissionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maximumLengthHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_permissionHasBeenSet)
-  {
-   payload.WithString("Permission", PermissionMapper::GetNameForPermission(m_permission));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_actionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Action"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ActionMapper::GetNameForAction(m_action).c_str()));
   }
 
-  if(m_maximumLengthHasBeenSet)
-  {
-   payload.WithInteger("MaximumLength", m_maximumLength);
-
+  if (m_permissionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Permission"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PermissionMapper::GetNameForPermission(m_permission).c_str()));
   }
 
-  return payload;
+  if (m_maximumLengthHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaximumLength"));
+    (m_maximumLength >= 0) ? encoder.WriteUInt(m_maximumLength) : encoder.WriteNegInt(m_maximumLength);
+  }
 }
 
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

@@ -4,71 +4,87 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the output of ApplySecurityGroupsToLoadBalancer.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/ApplySecurityGroupsToLoadBalancerOutput">AWS
+ * API Reference</a></p>
+ */
+class ApplySecurityGroupsToLoadBalancerResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult() = default;
+  AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of ApplySecurityGroupsToLoadBalancer.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/ApplySecurityGroupsToLoadBalancerOutput">AWS
-   * API Reference</a></p>
+   * <p>The IDs of the security groups associated with the load balancer.</p>
    */
-  class ApplySecurityGroupsToLoadBalancerResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult();
-    AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API ApplySecurityGroupsToLoadBalancerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetSecurityGroups() const { return m_securityGroups; }
+  template <typename SecurityGroupsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroups(SecurityGroupsT&& value) {
+    m_securityGroupsHasBeenSet = true;
+    m_securityGroups = std::forward<SecurityGroupsT>(value);
+  }
+  template <typename SecurityGroupsT = Aws::Vector<Aws::String>>
+  ApplySecurityGroupsToLoadBalancerResult& WithSecurityGroups(SecurityGroupsT&& value) {
+    SetSecurityGroups(std::forward<SecurityGroupsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupsT = Aws::String>
+  ApplySecurityGroupsToLoadBalancerResult& AddSecurityGroups(SecurityGroupsT&& value) {
+    m_securityGroupsHasBeenSet = true;
+    m_securityGroups.emplace_back(std::forward<SecurityGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The IDs of the security groups associated with the load balancer.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroups() const{ return m_securityGroups; }
-    inline void SetSecurityGroups(const Aws::Vector<Aws::String>& value) { m_securityGroups = value; }
-    inline void SetSecurityGroups(Aws::Vector<Aws::String>&& value) { m_securityGroups = std::move(value); }
-    inline ApplySecurityGroupsToLoadBalancerResult& WithSecurityGroups(const Aws::Vector<Aws::String>& value) { SetSecurityGroups(value); return *this;}
-    inline ApplySecurityGroupsToLoadBalancerResult& WithSecurityGroups(Aws::Vector<Aws::String>&& value) { SetSecurityGroups(std::move(value)); return *this;}
-    inline ApplySecurityGroupsToLoadBalancerResult& AddSecurityGroups(const Aws::String& value) { m_securityGroups.push_back(value); return *this; }
-    inline ApplySecurityGroupsToLoadBalancerResult& AddSecurityGroups(Aws::String&& value) { m_securityGroups.push_back(std::move(value)); return *this; }
-    inline ApplySecurityGroupsToLoadBalancerResult& AddSecurityGroups(const char* value) { m_securityGroups.push_back(value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ApplySecurityGroupsToLoadBalancerResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ApplySecurityGroupsToLoadBalancerResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ApplySecurityGroupsToLoadBalancerResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_securityGroups;
 
-    Aws::Vector<Aws::String> m_securityGroups;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_securityGroupsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

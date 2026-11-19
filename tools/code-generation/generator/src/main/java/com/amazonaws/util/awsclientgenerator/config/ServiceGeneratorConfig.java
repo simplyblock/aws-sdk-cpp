@@ -8,11 +8,13 @@ package com.amazonaws.util.awsclientgenerator.config;
 import com.amazonaws.util.awsclientgenerator.SdkSpec;
 import com.amazonaws.util.awsclientgenerator.config.exceptions.GeneratorNotImplementedException;
 import com.amazonaws.util.awsclientgenerator.generators.ClientGenerator;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.CborCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.JsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.QueryCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.RestXmlCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.apigateway.APIGatewayRestJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.apigatewayv2.APIGatewayV2RestJsonCppClientGenerator;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.bedrock.BedrockRestJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.docdb.DocDBCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.dynamodb.DynamoDBJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.ec2.Ec2CppClientGenerator;
@@ -20,6 +22,8 @@ import com.amazonaws.util.awsclientgenerator.generators.cpp.eventbridge.EventBri
 import com.amazonaws.util.awsclientgenerator.generators.cpp.glacier.GlacierRestJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.lambda.LambdaRestJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.machinelearning.MachineLearningJsonCppClientGenerator;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.monitoring.CloudwatchMonitoringCborCppClientGenerator;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.monitoring.CloudwatchMonitoringJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.neptune.NeptuneCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.polly.PollyCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.rds.RDSCppClientGenerator;
@@ -27,6 +31,7 @@ import com.amazonaws.util.awsclientgenerator.generators.cpp.s3.S3RestXmlCppClien
 import com.amazonaws.util.awsclientgenerator.generators.cpp.s3control.S3ControlRestXmlCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.sqs.SQSJsonCppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.cpp.sqs.SQSQueryXmlCppClientGenerator;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.dsql.DsqlCppClientGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +47,8 @@ public class ServiceGeneratorConfig {
             LANGUAGE_PROTOCOL_DEFAULT_MAPPING.put("cpp-application-json", new JsonCppClientGenerator());
             LANGUAGE_PROTOCOL_DEFAULT_MAPPING.put("cpp-rest-xml", new RestXmlCppClientGenerator());
             LANGUAGE_PROTOCOL_DEFAULT_MAPPING.put("cpp-query", new QueryCppClientGenerator());
+            LANGUAGE_PROTOCOL_DEFAULT_MAPPING.put("cpp-smithy-rpc-v2-cbor", new CborCppClientGenerator());
+            LANGUAGE_PROTOCOL_DEFAULT_MAPPING.put("cpp-ec2", new Ec2CppClientGenerator());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,7 +73,19 @@ public class ServiceGeneratorConfig {
             SPEC_OVERRIDE_MAPPING.put("cpp-docdb-query", new DocDBCppClientGenerator());
             SPEC_OVERRIDE_MAPPING.put("cpp-neptune-query", new NeptuneCppClientGenerator());
             SPEC_OVERRIDE_MAPPING.put("cpp-eventbridge-json", new EventBridgeCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-dsql-rest-json", new DsqlCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-monitoring-json", new CloudwatchMonitoringJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-monitoring-smithy-rpc-v2-cbor", new CloudwatchMonitoringCborCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-rest-json", new BedrockRestJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-runtime-rest-json", new BedrockRestJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-agent-rest-json", new BedrockRestJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-agent-runtime-rest-json", new BedrockRestJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-data-automation-rest-json", new BedrockRestJsonCppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-bedrock-data-automation-runtime-json", new BedrockRestJsonCppClientGenerator());
 
+            // protocol tests clients
+            SPEC_OVERRIDE_MAPPING.put("cpp-ec2-protocol-ec2", new Ec2CppClientGenerator());
+            SPEC_OVERRIDE_MAPPING.put("cpp-rpcv2protocol-smithy-rpc-v2-cbor", new CborCppClientGenerator());
         } catch (Exception e) {
             e.printStackTrace();
         }

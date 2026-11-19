@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/UserDefinedFunction.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class GetUserDefinedFunctionsResult
-  {
-  public:
-    AWS_GLUE_API GetUserDefinedFunctionsResult();
-    AWS_GLUE_API GetUserDefinedFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API GetUserDefinedFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class GetUserDefinedFunctionsResult {
+ public:
+  AWS_GLUE_API GetUserDefinedFunctionsResult() = default;
+  AWS_GLUE_API GetUserDefinedFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API GetUserDefinedFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of requested function definitions.</p>
+   */
+  inline const Aws::Vector<UserDefinedFunction>& GetUserDefinedFunctions() const { return m_userDefinedFunctions; }
+  template <typename UserDefinedFunctionsT = Aws::Vector<UserDefinedFunction>>
+  void SetUserDefinedFunctions(UserDefinedFunctionsT&& value) {
+    m_userDefinedFunctionsHasBeenSet = true;
+    m_userDefinedFunctions = std::forward<UserDefinedFunctionsT>(value);
+  }
+  template <typename UserDefinedFunctionsT = Aws::Vector<UserDefinedFunction>>
+  GetUserDefinedFunctionsResult& WithUserDefinedFunctions(UserDefinedFunctionsT&& value) {
+    SetUserDefinedFunctions(std::forward<UserDefinedFunctionsT>(value));
+    return *this;
+  }
+  template <typename UserDefinedFunctionsT = UserDefinedFunction>
+  GetUserDefinedFunctionsResult& AddUserDefinedFunctions(UserDefinedFunctionsT&& value) {
+    m_userDefinedFunctionsHasBeenSet = true;
+    m_userDefinedFunctions.emplace_back(std::forward<UserDefinedFunctionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of requested function definitions.</p>
-     */
-    inline const Aws::Vector<UserDefinedFunction>& GetUserDefinedFunctions() const{ return m_userDefinedFunctions; }
-    inline void SetUserDefinedFunctions(const Aws::Vector<UserDefinedFunction>& value) { m_userDefinedFunctions = value; }
-    inline void SetUserDefinedFunctions(Aws::Vector<UserDefinedFunction>&& value) { m_userDefinedFunctions = std::move(value); }
-    inline GetUserDefinedFunctionsResult& WithUserDefinedFunctions(const Aws::Vector<UserDefinedFunction>& value) { SetUserDefinedFunctions(value); return *this;}
-    inline GetUserDefinedFunctionsResult& WithUserDefinedFunctions(Aws::Vector<UserDefinedFunction>&& value) { SetUserDefinedFunctions(std::move(value)); return *this;}
-    inline GetUserDefinedFunctionsResult& AddUserDefinedFunctions(const UserDefinedFunction& value) { m_userDefinedFunctions.push_back(value); return *this; }
-    inline GetUserDefinedFunctionsResult& AddUserDefinedFunctions(UserDefinedFunction&& value) { m_userDefinedFunctions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A continuation token, if the list of functions returned does not include the
+   * last requested function.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetUserDefinedFunctionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A continuation token, if the list of functions returned does not include the
-     * last requested function.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetUserDefinedFunctionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetUserDefinedFunctionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetUserDefinedFunctionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetUserDefinedFunctionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetUserDefinedFunctionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetUserDefinedFunctionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetUserDefinedFunctionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UserDefinedFunction> m_userDefinedFunctions;
+ private:
+  Aws::Vector<UserDefinedFunction> m_userDefinedFunctions;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_userDefinedFunctionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

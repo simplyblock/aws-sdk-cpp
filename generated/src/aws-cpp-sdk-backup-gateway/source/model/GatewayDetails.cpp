@@ -4,152 +4,624 @@
  */
 
 #include <aws/backup-gateway/model/GatewayDetails.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace BackupGateway {
+namespace Model {
 
-GatewayDetails::GatewayDetails() : 
-    m_gatewayArnHasBeenSet(false),
-    m_gatewayDisplayNameHasBeenSet(false),
-    m_gatewayType(GatewayType::NOT_SET),
-    m_gatewayTypeHasBeenSet(false),
-    m_hypervisorIdHasBeenSet(false),
-    m_lastSeenTimeHasBeenSet(false),
-    m_maintenanceStartTimeHasBeenSet(false),
-    m_nextUpdateAvailabilityTimeHasBeenSet(false),
-    m_vpcEndpointHasBeenSet(false)
-{
-}
+GatewayDetails::GatewayDetails(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-GatewayDetails::GatewayDetails(JsonView jsonValue)
-  : GatewayDetails()
-{
-  *this = jsonValue;
-}
+GatewayDetails& GatewayDetails::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-GatewayDetails& GatewayDetails::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("GatewayArn"))
-  {
-    m_gatewayArn = jsonValue.GetString("GatewayArn");
+              if (initialKeyStr == "GatewayArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_gatewayArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_gatewayArn = ss.str();
+                  }
+                }
+                m_gatewayArnHasBeenSet = true;
+              }
 
-    m_gatewayArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "GatewayDisplayName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_gatewayDisplayName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_gatewayDisplayName = ss.str();
+                  }
+                }
+                m_gatewayDisplayNameHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("GatewayDisplayName"))
-  {
-    m_gatewayDisplayName = jsonValue.GetString("GatewayDisplayName");
+              else if (initialKeyStr == "GatewayType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_gatewayType = GatewayTypeMapper::GetGatewayTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_gatewayTypeHasBeenSet = true;
+              }
 
-    m_gatewayDisplayNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "HypervisorId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_hypervisorId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_hypervisorId = ss.str();
+                  }
+                }
+                m_hypervisorIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("GatewayType"))
-  {
-    m_gatewayType = GatewayTypeMapper::GetGatewayTypeForName(jsonValue.GetString("GatewayType"));
+              else if (initialKeyStr == "LastSeenTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_lastSeenTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_lastSeenTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_lastSeenTimeHasBeenSet = true;
+              }
 
-    m_gatewayTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "MaintenanceStartTime") {
+                m_maintenanceStartTime = MaintenanceStartTime(decoder);
+                m_maintenanceStartTimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("HypervisorId"))
-  {
-    m_hypervisorId = jsonValue.GetString("HypervisorId");
+              else if (initialKeyStr == "NextUpdateAvailabilityTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_nextUpdateAvailabilityTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_nextUpdateAvailabilityTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_nextUpdateAvailabilityTimeHasBeenSet = true;
+              }
 
-    m_hypervisorIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "VpcEndpoint") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_vpcEndpoint = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_vpcEndpoint = ss.str();
+                  }
+                }
+                m_vpcEndpointHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("LastSeenTime"))
-  {
-    m_lastSeenTime = jsonValue.GetDouble("LastSeenTime");
+              else if (initialKeyStr == "DeprecationDate") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_deprecationDate = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_deprecationDate = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_deprecationDateHasBeenSet = true;
+              }
 
-    m_lastSeenTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SoftwareVersion") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_softwareVersion = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_softwareVersion = ss.str();
+                  }
+                }
+                m_softwareVersionHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("GatewayDetails", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("MaintenanceStartTime"))
-  {
-    m_maintenanceStartTime = jsonValue.GetObject("MaintenanceStartTime");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_maintenanceStartTimeHasBeenSet = true;
-  }
+            if (initialKeyStr == "GatewayArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_gatewayArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_gatewayArn = ss.str();
+                }
+              }
+              m_gatewayArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("NextUpdateAvailabilityTime"))
-  {
-    m_nextUpdateAvailabilityTime = jsonValue.GetDouble("NextUpdateAvailabilityTime");
+            else if (initialKeyStr == "GatewayDisplayName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_gatewayDisplayName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_gatewayDisplayName = ss.str();
+                }
+              }
+              m_gatewayDisplayNameHasBeenSet = true;
+            }
 
-    m_nextUpdateAvailabilityTimeHasBeenSet = true;
-  }
+            else if (initialKeyStr == "GatewayType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_gatewayType =
+                    GatewayTypeMapper::GetGatewayTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_gatewayTypeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VpcEndpoint"))
-  {
-    m_vpcEndpoint = jsonValue.GetString("VpcEndpoint");
+            else if (initialKeyStr == "HypervisorId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_hypervisorId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_hypervisorId = ss.str();
+                }
+              }
+              m_hypervisorIdHasBeenSet = true;
+            }
 
-    m_vpcEndpointHasBeenSet = true;
+            else if (initialKeyStr == "LastSeenTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_lastSeenTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_lastSeenTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_lastSeenTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "MaintenanceStartTime") {
+              m_maintenanceStartTime = MaintenanceStartTime(decoder);
+              m_maintenanceStartTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "NextUpdateAvailabilityTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_nextUpdateAvailabilityTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_nextUpdateAvailabilityTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_nextUpdateAvailabilityTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "VpcEndpoint") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_vpcEndpoint = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_vpcEndpoint = ss.str();
+                }
+              }
+              m_vpcEndpointHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DeprecationDate") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_deprecationDate = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_deprecationDate = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_deprecationDateHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SoftwareVersion") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_softwareVersion = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_softwareVersion = ss.str();
+                }
+              }
+              m_softwareVersionHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue GatewayDetails::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_gatewayArnHasBeenSet)
-  {
-   payload.WithString("GatewayArn", m_gatewayArn);
-
+void GatewayDetails::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_gatewayArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gatewayDisplayNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gatewayTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_hypervisorIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lastSeenTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maintenanceStartTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextUpdateAvailabilityTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcEndpointHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deprecationDateHasBeenSet) {
+    mapSize++;
+  }
+  if (m_softwareVersionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_gatewayDisplayNameHasBeenSet)
-  {
-   payload.WithString("GatewayDisplayName", m_gatewayDisplayName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_gatewayArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GatewayArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_gatewayArn.c_str()));
   }
 
-  if(m_gatewayTypeHasBeenSet)
-  {
-   payload.WithString("GatewayType", GatewayTypeMapper::GetNameForGatewayType(m_gatewayType));
+  if (m_gatewayDisplayNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GatewayDisplayName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_gatewayDisplayName.c_str()));
   }
 
-  if(m_hypervisorIdHasBeenSet)
-  {
-   payload.WithString("HypervisorId", m_hypervisorId);
-
+  if (m_gatewayTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GatewayType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(GatewayTypeMapper::GetNameForGatewayType(m_gatewayType).c_str()));
   }
 
-  if(m_lastSeenTimeHasBeenSet)
-  {
-   payload.WithDouble("LastSeenTime", m_lastSeenTime.SecondsWithMSPrecision());
+  if (m_hypervisorIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HypervisorId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hypervisorId.c_str()));
   }
 
-  if(m_maintenanceStartTimeHasBeenSet)
-  {
-   payload.WithObject("MaintenanceStartTime", m_maintenanceStartTime.Jsonize());
-
+  if (m_lastSeenTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LastSeenTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_lastSeenTime.Seconds());
   }
 
-  if(m_nextUpdateAvailabilityTimeHasBeenSet)
-  {
-   payload.WithDouble("NextUpdateAvailabilityTime", m_nextUpdateAvailabilityTime.SecondsWithMSPrecision());
+  if (m_maintenanceStartTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaintenanceStartTime"));
+    m_maintenanceStartTime.CborEncode(encoder);
   }
 
-  if(m_vpcEndpointHasBeenSet)
-  {
-   payload.WithString("VpcEndpoint", m_vpcEndpoint);
-
+  if (m_nextUpdateAvailabilityTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextUpdateAvailabilityTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_nextUpdateAvailabilityTime.Seconds());
   }
 
-  return payload;
+  if (m_vpcEndpointHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcEndpoint"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_vpcEndpoint.c_str()));
+  }
+
+  if (m_deprecationDateHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeprecationDate"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_deprecationDate.Seconds());
+  }
+
+  if (m_softwareVersionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SoftwareVersion"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_softwareVersion.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace BackupGateway
+}  // namespace Aws

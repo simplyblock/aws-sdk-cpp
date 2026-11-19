@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/glue/model/RegisterSchemaVersionResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/glue/model/RegisterSchemaVersionResult.h>
 
 #include <utility>
 
@@ -17,47 +17,30 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-RegisterSchemaVersionResult::RegisterSchemaVersionResult() : 
-    m_versionNumber(0),
-    m_status(SchemaVersionStatus::NOT_SET)
-{
-}
+RegisterSchemaVersionResult::RegisterSchemaVersionResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-RegisterSchemaVersionResult::RegisterSchemaVersionResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : RegisterSchemaVersionResult()
-{
-  *this = result;
-}
-
-RegisterSchemaVersionResult& RegisterSchemaVersionResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+RegisterSchemaVersionResult& RegisterSchemaVersionResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("SchemaVersionId"))
-  {
+  if (jsonValue.ValueExists("SchemaVersionId")) {
     m_schemaVersionId = jsonValue.GetString("SchemaVersionId");
-
+    m_schemaVersionIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("VersionNumber"))
-  {
+  if (jsonValue.ValueExists("VersionNumber")) {
     m_versionNumber = jsonValue.GetInt64("VersionNumber");
-
+    m_versionNumberHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Status"))
-  {
+  if (jsonValue.ValueExists("Status")) {
     m_status = SchemaVersionStatusMapper::GetSchemaVersionStatusForName(jsonValue.GetString("Status"));
-
+    m_statusHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

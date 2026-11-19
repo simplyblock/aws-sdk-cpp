@@ -12,17 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteChannelNamespaceRequest::DeleteChannelNamespaceRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteChannelNamespaceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteChannelNamespaceRequest::SerializePayload() const { return {}; }

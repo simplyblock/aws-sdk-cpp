@@ -4,68 +4,75 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace StorageGateway
-{
-namespace Model
-{
-  /**
-   * <p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose
-   * bandwidth rate information was deleted.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DeleteBandwidthRateLimitOutput">AWS
-   * API Reference</a></p>
-   */
-  class DeleteBandwidthRateLimitResult
-  {
-  public:
-    AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult();
-    AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace StorageGateway {
+namespace Model {
+/**
+ * <p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose
+ * bandwidth rate information was deleted.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DeleteBandwidthRateLimitOutput">AWS
+ * API Reference</a></p>
+ */
+class DeleteBandwidthRateLimitResult {
+ public:
+  AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult() = default;
+  AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_STORAGEGATEWAY_API DeleteBandwidthRateLimitResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetGatewayARN() const{ return m_gatewayARN; }
-    inline void SetGatewayARN(const Aws::String& value) { m_gatewayARN = value; }
-    inline void SetGatewayARN(Aws::String&& value) { m_gatewayARN = std::move(value); }
-    inline void SetGatewayARN(const char* value) { m_gatewayARN.assign(value); }
-    inline DeleteBandwidthRateLimitResult& WithGatewayARN(const Aws::String& value) { SetGatewayARN(value); return *this;}
-    inline DeleteBandwidthRateLimitResult& WithGatewayARN(Aws::String&& value) { SetGatewayARN(std::move(value)); return *this;}
-    inline DeleteBandwidthRateLimitResult& WithGatewayARN(const char* value) { SetGatewayARN(value); return *this;}
-    ///@}
+  inline const Aws::String& GetGatewayARN() const { return m_gatewayARN; }
+  template <typename GatewayARNT = Aws::String>
+  void SetGatewayARN(GatewayARNT&& value) {
+    m_gatewayARNHasBeenSet = true;
+    m_gatewayARN = std::forward<GatewayARNT>(value);
+  }
+  template <typename GatewayARNT = Aws::String>
+  DeleteBandwidthRateLimitResult& WithGatewayARN(GatewayARNT&& value) {
+    SetGatewayARN(std::forward<GatewayARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteBandwidthRateLimitResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteBandwidthRateLimitResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteBandwidthRateLimitResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_gatewayARN;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteBandwidthRateLimitResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_gatewayARN;
 
-} // namespace Model
-} // namespace StorageGateway
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_gatewayARNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace StorageGateway
+}  // namespace Aws

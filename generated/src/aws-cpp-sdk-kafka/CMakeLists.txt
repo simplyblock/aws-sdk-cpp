@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-kafka "C++ SDK for the AWS kafka service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-kafka "C++ SDK for Managed Streaming for Kafka" aws-cpp-sdk-core)
 
 file(GLOB AWS_KAFKA_HEADERS
     "include/aws/kafka/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KAFKA_HEADERS
 
 file(GLOB AWS_KAFKA_MODEL_HEADERS
     "include/aws/kafka/model/*.h"
+)
+
+file(GLOB AWS_KAFKA_INTERNAL_HEADERS
+    "include/aws/kafka/internal/*.h"
 )
 
 file(GLOB AWS_KAFKA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KAFKA_MODEL_SOURCE
 
 file(GLOB KAFKA_UNIFIED_HEADERS
     ${AWS_KAFKA_HEADERS}
+    ${AWS_KAFKA_INTERNAL_HEADERS}
     ${AWS_KAFKA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\kafka" FILES ${AWS_KAFKA_HEADERS})
+        source_group("Header Files\\aws\\kafka\\internal" FILES ${AWS_KAFKA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\kafka\\model" FILES ${AWS_KAFKA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KAFKA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KAFKA_MODEL_SOURCE})

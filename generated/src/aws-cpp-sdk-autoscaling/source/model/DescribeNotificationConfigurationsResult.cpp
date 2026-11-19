@@ -4,10 +4,10 @@
  */
 
 #include <aws/autoscaling/model/DescribeNotificationConfigurationsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
@@ -17,49 +17,45 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeNotificationConfigurationsResult::DescribeNotificationConfigurationsResult()
-{
-}
-
-DescribeNotificationConfigurationsResult::DescribeNotificationConfigurationsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeNotificationConfigurationsResult::DescribeNotificationConfigurationsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeNotificationConfigurationsResult& DescribeNotificationConfigurationsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeNotificationConfigurationsResult& DescribeNotificationConfigurationsResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeNotificationConfigurationsResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeNotificationConfigurationsResult")) {
     resultNode = rootNode.FirstChild("DescribeNotificationConfigurationsResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode notificationConfigurationsNode = resultNode.FirstChild("NotificationConfigurations");
-    if(!notificationConfigurationsNode.IsNull())
-    {
+    if (!notificationConfigurationsNode.IsNull()) {
       XmlNode notificationConfigurationsMember = notificationConfigurationsNode.FirstChild("member");
-      while(!notificationConfigurationsMember.IsNull())
-      {
+      m_notificationConfigurationsHasBeenSet = !notificationConfigurationsMember.IsNull();
+      while (!notificationConfigurationsMember.IsNull()) {
         m_notificationConfigurations.push_back(notificationConfigurationsMember);
         notificationConfigurationsMember = notificationConfigurationsMember.NextNode("member");
       }
 
+      m_notificationConfigurationsHasBeenSet = true;
     }
     XmlNode nextTokenNode = resultNode.FirstChild("NextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::AutoScaling::Model::DescribeNotificationConfigurationsResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::AutoScaling::Model::DescribeNotificationConfigurationsResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

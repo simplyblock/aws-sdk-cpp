@@ -4,110 +4,119 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>A configuration option setting for the environment.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsElasticBeanstalkEnvironmentOptionSetting">AWS
+ * API Reference</a></p>
+ */
+class AwsElasticBeanstalkEnvironmentOptionSetting {
+ public:
+  AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting() = default;
+  AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A configuration option setting for the environment.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsElasticBeanstalkEnvironmentOptionSetting">AWS
-   * API Reference</a></p>
+   * <p>The type of resource that the configuration option is associated with.</p>
    */
-  class AwsElasticBeanstalkEnvironmentOptionSetting
-  {
-  public:
-    AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting();
-    AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API AwsElasticBeanstalkEnvironmentOptionSetting& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetNamespace() const { return m_namespace; }
+  inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
+  template <typename NamespaceT = Aws::String>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = Aws::String>
+  AwsElasticBeanstalkEnvironmentOptionSetting& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the option.</p>
+   */
+  inline const Aws::String& GetOptionName() const { return m_optionName; }
+  inline bool OptionNameHasBeenSet() const { return m_optionNameHasBeenSet; }
+  template <typename OptionNameT = Aws::String>
+  void SetOptionName(OptionNameT&& value) {
+    m_optionNameHasBeenSet = true;
+    m_optionName = std::forward<OptionNameT>(value);
+  }
+  template <typename OptionNameT = Aws::String>
+  AwsElasticBeanstalkEnvironmentOptionSetting& WithOptionName(OptionNameT&& value) {
+    SetOptionName(std::forward<OptionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of resource that the configuration option is associated with.</p>
-     */
-    inline const Aws::String& GetNamespace() const{ return m_namespace; }
-    inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
-    inline void SetNamespace(const Aws::String& value) { m_namespaceHasBeenSet = true; m_namespace = value; }
-    inline void SetNamespace(Aws::String&& value) { m_namespaceHasBeenSet = true; m_namespace = std::move(value); }
-    inline void SetNamespace(const char* value) { m_namespaceHasBeenSet = true; m_namespace.assign(value); }
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithNamespace(const Aws::String& value) { SetNamespace(value); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithNamespace(Aws::String&& value) { SetNamespace(std::move(value)); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithNamespace(const char* value) { SetNamespace(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the resource.</p>
+   */
+  inline const Aws::String& GetResourceName() const { return m_resourceName; }
+  inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
+  template <typename ResourceNameT = Aws::String>
+  void SetResourceName(ResourceNameT&& value) {
+    m_resourceNameHasBeenSet = true;
+    m_resourceName = std::forward<ResourceNameT>(value);
+  }
+  template <typename ResourceNameT = Aws::String>
+  AwsElasticBeanstalkEnvironmentOptionSetting& WithResourceName(ResourceNameT&& value) {
+    SetResourceName(std::forward<ResourceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the option.</p>
-     */
-    inline const Aws::String& GetOptionName() const{ return m_optionName; }
-    inline bool OptionNameHasBeenSet() const { return m_optionNameHasBeenSet; }
-    inline void SetOptionName(const Aws::String& value) { m_optionNameHasBeenSet = true; m_optionName = value; }
-    inline void SetOptionName(Aws::String&& value) { m_optionNameHasBeenSet = true; m_optionName = std::move(value); }
-    inline void SetOptionName(const char* value) { m_optionNameHasBeenSet = true; m_optionName.assign(value); }
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithOptionName(const Aws::String& value) { SetOptionName(value); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithOptionName(Aws::String&& value) { SetOptionName(std::move(value)); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithOptionName(const char* value) { SetOptionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The value of the configuration setting.</p>
+   */
+  inline const Aws::String& GetValue() const { return m_value; }
+  inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
+  template <typename ValueT = Aws::String>
+  void SetValue(ValueT&& value) {
+    m_valueHasBeenSet = true;
+    m_value = std::forward<ValueT>(value);
+  }
+  template <typename ValueT = Aws::String>
+  AwsElasticBeanstalkEnvironmentOptionSetting& WithValue(ValueT&& value) {
+    SetValue(std::forward<ValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_namespace;
 
-    ///@{
-    /**
-     * <p>The name of the resource.</p>
-     */
-    inline const Aws::String& GetResourceName() const{ return m_resourceName; }
-    inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
-    inline void SetResourceName(const Aws::String& value) { m_resourceNameHasBeenSet = true; m_resourceName = value; }
-    inline void SetResourceName(Aws::String&& value) { m_resourceNameHasBeenSet = true; m_resourceName = std::move(value); }
-    inline void SetResourceName(const char* value) { m_resourceNameHasBeenSet = true; m_resourceName.assign(value); }
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithResourceName(const Aws::String& value) { SetResourceName(value); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithResourceName(Aws::String&& value) { SetResourceName(std::move(value)); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithResourceName(const char* value) { SetResourceName(value); return *this;}
-    ///@}
+  Aws::String m_optionName;
 
-    ///@{
-    /**
-     * <p>The value of the configuration setting.</p>
-     */
-    inline const Aws::String& GetValue() const{ return m_value; }
-    inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
-    inline void SetValue(const Aws::String& value) { m_valueHasBeenSet = true; m_value = value; }
-    inline void SetValue(Aws::String&& value) { m_valueHasBeenSet = true; m_value = std::move(value); }
-    inline void SetValue(const char* value) { m_valueHasBeenSet = true; m_value.assign(value); }
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithValue(const Aws::String& value) { SetValue(value); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithValue(Aws::String&& value) { SetValue(std::move(value)); return *this;}
-    inline AwsElasticBeanstalkEnvironmentOptionSetting& WithValue(const char* value) { SetValue(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_resourceName;
 
-    Aws::String m_namespace;
-    bool m_namespaceHasBeenSet = false;
+  Aws::String m_value;
+  bool m_namespaceHasBeenSet = false;
+  bool m_optionNameHasBeenSet = false;
+  bool m_resourceNameHasBeenSet = false;
+  bool m_valueHasBeenSet = false;
+};
 
-    Aws::String m_optionName;
-    bool m_optionNameHasBeenSet = false;
-
-    Aws::String m_resourceName;
-    bool m_resourceNameHasBeenSet = false;
-
-    Aws::String m_value;
-    bool m_valueHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

@@ -11,57 +11,37 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Athena
-{
-namespace Model
-{
+namespace Aws {
+namespace Athena {
+namespace Model {
 
-ResultSetMetadata::ResultSetMetadata() : 
-    m_columnInfoHasBeenSet(false)
-{
-}
+ResultSetMetadata::ResultSetMetadata(JsonView jsonValue) { *this = jsonValue; }
 
-ResultSetMetadata::ResultSetMetadata(JsonView jsonValue)
-  : ResultSetMetadata()
-{
-  *this = jsonValue;
-}
-
-ResultSetMetadata& ResultSetMetadata::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ColumnInfo"))
-  {
+ResultSetMetadata& ResultSetMetadata::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ColumnInfo")) {
     Aws::Utils::Array<JsonView> columnInfoJsonList = jsonValue.GetArray("ColumnInfo");
-    for(unsigned columnInfoIndex = 0; columnInfoIndex < columnInfoJsonList.GetLength(); ++columnInfoIndex)
-    {
+    for (unsigned columnInfoIndex = 0; columnInfoIndex < columnInfoJsonList.GetLength(); ++columnInfoIndex) {
       m_columnInfo.push_back(columnInfoJsonList[columnInfoIndex].AsObject());
     }
     m_columnInfoHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ResultSetMetadata::Jsonize() const
-{
+JsonValue ResultSetMetadata::Jsonize() const {
   JsonValue payload;
 
-  if(m_columnInfoHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> columnInfoJsonList(m_columnInfo.size());
-   for(unsigned columnInfoIndex = 0; columnInfoIndex < columnInfoJsonList.GetLength(); ++columnInfoIndex)
-   {
-     columnInfoJsonList[columnInfoIndex].AsObject(m_columnInfo[columnInfoIndex].Jsonize());
-   }
-   payload.WithArray("ColumnInfo", std::move(columnInfoJsonList));
-
+  if (m_columnInfoHasBeenSet) {
+    Aws::Utils::Array<JsonValue> columnInfoJsonList(m_columnInfo.size());
+    for (unsigned columnInfoIndex = 0; columnInfoIndex < columnInfoJsonList.GetLength(); ++columnInfoIndex) {
+      columnInfoJsonList[columnInfoIndex].AsObject(m_columnInfo[columnInfoIndex].Jsonize());
+    }
+    payload.WithArray("ColumnInfo", std::move(columnInfoJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

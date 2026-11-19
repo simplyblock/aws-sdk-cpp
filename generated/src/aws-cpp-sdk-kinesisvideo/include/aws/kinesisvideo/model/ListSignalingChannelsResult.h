@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
 #include <aws/kinesisvideo/model/ChannelInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KinesisVideo
-{
-namespace Model
-{
-  class ListSignalingChannelsResult
-  {
-  public:
-    AWS_KINESISVIDEO_API ListSignalingChannelsResult();
-    AWS_KINESISVIDEO_API ListSignalingChannelsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KINESISVIDEO_API ListSignalingChannelsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisVideo {
+namespace Model {
+class ListSignalingChannelsResult {
+ public:
+  AWS_KINESISVIDEO_API ListSignalingChannelsResult() = default;
+  AWS_KINESISVIDEO_API ListSignalingChannelsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KINESISVIDEO_API ListSignalingChannelsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of <code>ChannelInfo</code> objects.</p>
+   */
+  inline const Aws::Vector<ChannelInfo>& GetChannelInfoList() const { return m_channelInfoList; }
+  template <typename ChannelInfoListT = Aws::Vector<ChannelInfo>>
+  void SetChannelInfoList(ChannelInfoListT&& value) {
+    m_channelInfoListHasBeenSet = true;
+    m_channelInfoList = std::forward<ChannelInfoListT>(value);
+  }
+  template <typename ChannelInfoListT = Aws::Vector<ChannelInfo>>
+  ListSignalingChannelsResult& WithChannelInfoList(ChannelInfoListT&& value) {
+    SetChannelInfoList(std::forward<ChannelInfoListT>(value));
+    return *this;
+  }
+  template <typename ChannelInfoListT = ChannelInfo>
+  ListSignalingChannelsResult& AddChannelInfoList(ChannelInfoListT&& value) {
+    m_channelInfoListHasBeenSet = true;
+    m_channelInfoList.emplace_back(std::forward<ChannelInfoListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>ChannelInfo</code> objects.</p>
-     */
-    inline const Aws::Vector<ChannelInfo>& GetChannelInfoList() const{ return m_channelInfoList; }
-    inline void SetChannelInfoList(const Aws::Vector<ChannelInfo>& value) { m_channelInfoList = value; }
-    inline void SetChannelInfoList(Aws::Vector<ChannelInfo>&& value) { m_channelInfoList = std::move(value); }
-    inline ListSignalingChannelsResult& WithChannelInfoList(const Aws::Vector<ChannelInfo>& value) { SetChannelInfoList(value); return *this;}
-    inline ListSignalingChannelsResult& WithChannelInfoList(Aws::Vector<ChannelInfo>&& value) { SetChannelInfoList(std::move(value)); return *this;}
-    inline ListSignalingChannelsResult& AddChannelInfoList(const ChannelInfo& value) { m_channelInfoList.push_back(value); return *this; }
-    inline ListSignalingChannelsResult& AddChannelInfoList(ChannelInfo&& value) { m_channelInfoList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If the response is truncated, the call returns this element with a token. To
+   * get the next batch of streams, use this token in your next request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSignalingChannelsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the response is truncated, the call returns this element with a token. To
-     * get the next batch of streams, use this token in your next request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSignalingChannelsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSignalingChannelsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSignalingChannelsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSignalingChannelsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSignalingChannelsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSignalingChannelsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSignalingChannelsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ChannelInfo> m_channelInfoList;
+ private:
+  Aws::Vector<ChannelInfo> m_channelInfoList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelInfoListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace KinesisVideo
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisVideo
+}  // namespace Aws

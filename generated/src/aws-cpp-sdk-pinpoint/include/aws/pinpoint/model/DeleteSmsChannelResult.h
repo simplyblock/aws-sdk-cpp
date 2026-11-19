@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/SMSChannelResponse.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
-  class DeleteSmsChannelResult
-  {
-  public:
-    AWS_PINPOINT_API DeleteSmsChannelResult();
-    AWS_PINPOINT_API DeleteSmsChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINT_API DeleteSmsChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
+class DeleteSmsChannelResult {
+ public:
+  AWS_PINPOINT_API DeleteSmsChannelResult() = default;
+  AWS_PINPOINT_API DeleteSmsChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINT_API DeleteSmsChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const SMSChannelResponse& GetSMSChannelResponse() const{ return m_sMSChannelResponse; }
-    inline void SetSMSChannelResponse(const SMSChannelResponse& value) { m_sMSChannelResponse = value; }
-    inline void SetSMSChannelResponse(SMSChannelResponse&& value) { m_sMSChannelResponse = std::move(value); }
-    inline DeleteSmsChannelResult& WithSMSChannelResponse(const SMSChannelResponse& value) { SetSMSChannelResponse(value); return *this;}
-    inline DeleteSmsChannelResult& WithSMSChannelResponse(SMSChannelResponse&& value) { SetSMSChannelResponse(std::move(value)); return *this;}
-    ///@}
+  inline const SMSChannelResponse& GetSMSChannelResponse() const { return m_sMSChannelResponse; }
+  template <typename SMSChannelResponseT = SMSChannelResponse>
+  void SetSMSChannelResponse(SMSChannelResponseT&& value) {
+    m_sMSChannelResponseHasBeenSet = true;
+    m_sMSChannelResponse = std::forward<SMSChannelResponseT>(value);
+  }
+  template <typename SMSChannelResponseT = SMSChannelResponse>
+  DeleteSmsChannelResult& WithSMSChannelResponse(SMSChannelResponseT&& value) {
+    SetSMSChannelResponse(std::forward<SMSChannelResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteSmsChannelResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteSmsChannelResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteSmsChannelResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    SMSChannelResponse m_sMSChannelResponse;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteSmsChannelResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  SMSChannelResponse m_sMSChannelResponse;
 
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sMSChannelResponseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

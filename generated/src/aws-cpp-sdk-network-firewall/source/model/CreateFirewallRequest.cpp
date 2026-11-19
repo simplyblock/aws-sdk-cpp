@@ -3,117 +3,190 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/model/CreateFirewallRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::NetworkFirewall::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateFirewallRequest::CreateFirewallRequest() : 
-    m_firewallNameHasBeenSet(false),
-    m_firewallPolicyArnHasBeenSet(false),
-    m_vpcIdHasBeenSet(false),
-    m_subnetMappingsHasBeenSet(false),
-    m_deleteProtection(false),
-    m_deleteProtectionHasBeenSet(false),
-    m_subnetChangeProtection(false),
-    m_subnetChangeProtectionHasBeenSet(false),
-    m_firewallPolicyChangeProtection(false),
-    m_firewallPolicyChangeProtectionHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_encryptionConfigurationHasBeenSet(false)
-{
+Aws::String CreateFirewallRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_firewallNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_firewallPolicyArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subnetMappingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deleteProtectionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subnetChangeProtectionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_firewallPolicyChangeProtectionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_enabledAnalysisTypesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_transitGatewayIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_availabilityZoneMappingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_availabilityZoneChangeProtectionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_natGatewayCreateMappingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_proxySettingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcEndpointHasBeenSet) {
+    mapSize++;
+  }
+  if (m_transparentFilteringNatScopeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_firewallNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FirewallName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_firewallName.c_str()));
+  }
+
+  if (m_firewallPolicyArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FirewallPolicyArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_firewallPolicyArn.c_str()));
+  }
+
+  if (m_vpcIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_vpcId.c_str()));
+  }
+
+  if (m_subnetMappingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubnetMappings"));
+    encoder.WriteArrayStart(m_subnetMappings.size());
+    for (const auto& item_0 : m_subnetMappings) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_deleteProtectionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeleteProtection"));
+    encoder.WriteBool(m_deleteProtection);
+  }
+
+  if (m_subnetChangeProtectionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubnetChangeProtection"));
+    encoder.WriteBool(m_subnetChangeProtection);
+  }
+
+  if (m_firewallPolicyChangeProtectionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FirewallPolicyChangeProtection"));
+    encoder.WriteBool(m_firewallPolicyChangeProtection);
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_encryptionConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EncryptionConfiguration"));
+    m_encryptionConfiguration.CborEncode(encoder);
+  }
+
+  if (m_enabledAnalysisTypesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EnabledAnalysisTypes"));
+    encoder.WriteArrayStart(m_enabledAnalysisTypes.size());
+    for (const auto& item_0 : m_enabledAnalysisTypes) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(EnabledAnalysisTypeMapper::GetNameForEnabledAnalysisType(item_0).c_str()));
+    }
+  }
+
+  if (m_transitGatewayIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TransitGatewayId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_transitGatewayId.c_str()));
+  }
+
+  if (m_availabilityZoneMappingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AvailabilityZoneMappings"));
+    encoder.WriteArrayStart(m_availabilityZoneMappings.size());
+    for (const auto& item_0 : m_availabilityZoneMappings) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_availabilityZoneChangeProtectionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AvailabilityZoneChangeProtection"));
+    encoder.WriteBool(m_availabilityZoneChangeProtection);
+  }
+
+  if (m_natGatewayCreateMappingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NatGatewayCreateMappings"));
+    encoder.WriteArrayStart(m_natGatewayCreateMappings.size());
+    for (const auto& item_0 : m_natGatewayCreateMappings) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_proxySettingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProxySettings"));
+    m_proxySettings.CborEncode(encoder);
+  }
+
+  if (m_vpcEndpointHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcEndpoint"));
+    m_vpcEndpoint.CborEncode(encoder);
+  }
+
+  if (m_transparentFilteringNatScopeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TransparentFilteringNatScope"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(
+        TransparentFilteringNatScopeMapper::GetNameForTransparentFilteringNatScope(m_transparentFilteringNatScope).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateFirewallRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_firewallNameHasBeenSet)
-  {
-   payload.WithString("FirewallName", m_firewallName);
-
-  }
-
-  if(m_firewallPolicyArnHasBeenSet)
-  {
-   payload.WithString("FirewallPolicyArn", m_firewallPolicyArn);
-
-  }
-
-  if(m_vpcIdHasBeenSet)
-  {
-   payload.WithString("VpcId", m_vpcId);
-
-  }
-
-  if(m_subnetMappingsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> subnetMappingsJsonList(m_subnetMappings.size());
-   for(unsigned subnetMappingsIndex = 0; subnetMappingsIndex < subnetMappingsJsonList.GetLength(); ++subnetMappingsIndex)
-   {
-     subnetMappingsJsonList[subnetMappingsIndex].AsObject(m_subnetMappings[subnetMappingsIndex].Jsonize());
-   }
-   payload.WithArray("SubnetMappings", std::move(subnetMappingsJsonList));
-
-  }
-
-  if(m_deleteProtectionHasBeenSet)
-  {
-   payload.WithBool("DeleteProtection", m_deleteProtection);
-
-  }
-
-  if(m_subnetChangeProtectionHasBeenSet)
-  {
-   payload.WithBool("SubnetChangeProtection", m_subnetChangeProtection);
-
-  }
-
-  if(m_firewallPolicyChangeProtectionHasBeenSet)
-  {
-   payload.WithBool("FirewallPolicyChangeProtection", m_firewallPolicyChangeProtection);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  if(m_encryptionConfigurationHasBeenSet)
-  {
-   payload.WithObject("EncryptionConfiguration", m_encryptionConfiguration.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateFirewallRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateFirewallRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "NetworkFirewall_20201112.CreateFirewall"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

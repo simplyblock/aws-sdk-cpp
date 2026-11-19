@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/taxsettings/TaxSettings_EXPORTS.h>
 #include <aws/taxsettings/model/TaxRegistration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
-  class GetTaxRegistrationResult
-  {
-  public:
-    AWS_TAXSETTINGS_API GetTaxRegistrationResult();
-    AWS_TAXSETTINGS_API GetTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TAXSETTINGS_API GetTaxRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
+class GetTaxRegistrationResult {
+ public:
+  AWS_TAXSETTINGS_API GetTaxRegistrationResult() = default;
+  AWS_TAXSETTINGS_API GetTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TAXSETTINGS_API GetTaxRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>TRN information of the account mentioned in the request. </p>
+   */
+  inline const TaxRegistration& GetTaxRegistration() const { return m_taxRegistration; }
+  template <typename TaxRegistrationT = TaxRegistration>
+  void SetTaxRegistration(TaxRegistrationT&& value) {
+    m_taxRegistrationHasBeenSet = true;
+    m_taxRegistration = std::forward<TaxRegistrationT>(value);
+  }
+  template <typename TaxRegistrationT = TaxRegistration>
+  GetTaxRegistrationResult& WithTaxRegistration(TaxRegistrationT&& value) {
+    SetTaxRegistration(std::forward<TaxRegistrationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>TRN information of the account mentioned in the request. </p>
-     */
-    inline const TaxRegistration& GetTaxRegistration() const{ return m_taxRegistration; }
-    inline void SetTaxRegistration(const TaxRegistration& value) { m_taxRegistration = value; }
-    inline void SetTaxRegistration(TaxRegistration&& value) { m_taxRegistration = std::move(value); }
-    inline GetTaxRegistrationResult& WithTaxRegistration(const TaxRegistration& value) { SetTaxRegistration(value); return *this;}
-    inline GetTaxRegistrationResult& WithTaxRegistration(TaxRegistration&& value) { SetTaxRegistration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTaxRegistrationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTaxRegistrationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTaxRegistrationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTaxRegistrationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TaxRegistration m_taxRegistration;
+ private:
+  TaxRegistration m_taxRegistration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_taxRegistrationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

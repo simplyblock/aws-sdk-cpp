@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-freetier "C++ SDK for the AWS freetier service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-freetier "C++ SDK for AWS Free Tier" aws-cpp-sdk-core)
 
 file(GLOB AWS_FREETIER_HEADERS
     "include/aws/freetier/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_FREETIER_HEADERS
 
 file(GLOB AWS_FREETIER_MODEL_HEADERS
     "include/aws/freetier/model/*.h"
+)
+
+file(GLOB AWS_FREETIER_INTERNAL_HEADERS
+    "include/aws/freetier/internal/*.h"
 )
 
 file(GLOB AWS_FREETIER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_FREETIER_MODEL_SOURCE
 
 file(GLOB FREETIER_UNIFIED_HEADERS
     ${AWS_FREETIER_HEADERS}
+    ${AWS_FREETIER_INTERNAL_HEADERS}
     ${AWS_FREETIER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\freetier" FILES ${AWS_FREETIER_HEADERS})
+        source_group("Header Files\\aws\\freetier\\internal" FILES ${AWS_FREETIER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\freetier\\model" FILES ${AWS_FREETIER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_FREETIER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_FREETIER_MODEL_SOURCE})

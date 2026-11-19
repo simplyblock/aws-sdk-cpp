@@ -10,40 +10,24 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-PutNotificationConfigurationRequest::PutNotificationConfigurationRequest() : 
-    m_autoScalingGroupNameHasBeenSet(false),
-    m_topicARNHasBeenSet(false),
-    m_notificationTypesHasBeenSet(false)
-{
-}
-
-Aws::String PutNotificationConfigurationRequest::SerializePayload() const
-{
+Aws::String PutNotificationConfigurationRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=PutNotificationConfiguration&";
-  if(m_autoScalingGroupNameHasBeenSet)
-  {
+  if (m_autoScalingGroupNameHasBeenSet) {
     ss << "AutoScalingGroupName=" << StringUtils::URLEncode(m_autoScalingGroupName.c_str()) << "&";
   }
 
-  if(m_topicARNHasBeenSet)
-  {
+  if (m_topicARNHasBeenSet) {
     ss << "TopicARN=" << StringUtils::URLEncode(m_topicARN.c_str()) << "&";
   }
 
-  if(m_notificationTypesHasBeenSet)
-  {
-    if (m_notificationTypes.empty())
-    {
+  if (m_notificationTypesHasBeenSet) {
+    if (m_notificationTypes.empty()) {
       ss << "NotificationTypes=&";
-    }
-    else
-    {
+    } else {
       unsigned notificationTypesCount = 1;
-      for(auto& item : m_notificationTypes)
-      {
-        ss << "NotificationTypes.member." << notificationTypesCount << "="
-            << StringUtils::URLEncode(item.c_str()) << "&";
+      for (auto& item : m_notificationTypes) {
+        ss << "NotificationTypes.member." << notificationTypesCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
         notificationTypesCount++;
       }
     }
@@ -53,8 +37,4 @@ Aws::String PutNotificationConfigurationRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  PutNotificationConfigurationRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void PutNotificationConfigurationRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

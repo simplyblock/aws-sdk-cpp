@@ -6,67 +6,76 @@
 #pragma once
 #include <aws/accessanalyzer/AccessAnalyzer_EXPORTS.h>
 #include <aws/accessanalyzer/model/AnalyzedResource.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AccessAnalyzer
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AccessAnalyzer {
+namespace Model {
+/**
+ * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetAnalyzedResourceResponse">AWS
+ * API Reference</a></p>
+ */
+class GetAnalyzedResourceResult {
+ public:
+  AWS_ACCESSANALYZER_API GetAnalyzedResourceResult() = default;
+  AWS_ACCESSANALYZER_API GetAnalyzedResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ACCESSANALYZER_API GetAnalyzedResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetAnalyzedResourceResponse">AWS
-   * API Reference</a></p>
+   * <p>An <code>AnalyzedResource</code> object that contains information that IAM
+   * Access Analyzer found when it analyzed the resource.</p>
    */
-  class GetAnalyzedResourceResult
-  {
-  public:
-    AWS_ACCESSANALYZER_API GetAnalyzedResourceResult();
-    AWS_ACCESSANALYZER_API GetAnalyzedResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ACCESSANALYZER_API GetAnalyzedResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const AnalyzedResource& GetResource() const { return m_resource; }
+  template <typename ResourceT = AnalyzedResource>
+  void SetResource(ResourceT&& value) {
+    m_resourceHasBeenSet = true;
+    m_resource = std::forward<ResourceT>(value);
+  }
+  template <typename ResourceT = AnalyzedResource>
+  GetAnalyzedResourceResult& WithResource(ResourceT&& value) {
+    SetResource(std::forward<ResourceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>An <code>AnalyzedResource</code> object that contains information that IAM
-     * Access Analyzer found when it analyzed the resource.</p>
-     */
-    inline const AnalyzedResource& GetResource() const{ return m_resource; }
-    inline void SetResource(const AnalyzedResource& value) { m_resource = value; }
-    inline void SetResource(AnalyzedResource&& value) { m_resource = std::move(value); }
-    inline GetAnalyzedResourceResult& WithResource(const AnalyzedResource& value) { SetResource(value); return *this;}
-    inline GetAnalyzedResourceResult& WithResource(AnalyzedResource&& value) { SetResource(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAnalyzedResourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAnalyzedResourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAnalyzedResourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAnalyzedResourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  AnalyzedResource m_resource;
 
-    AnalyzedResource m_resource;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace AccessAnalyzer
-} // namespace Aws
+}  // namespace Model
+}  // namespace AccessAnalyzer
+}  // namespace Aws

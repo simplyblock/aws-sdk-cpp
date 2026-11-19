@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/neptune/Neptune_EXPORTS.h>
 #include <aws/neptune/model/DBInstance.h>
 #include <aws/neptune/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Neptune
-{
-namespace Model
-{
-  class ModifyDBInstanceResult
-  {
-  public:
-    AWS_NEPTUNE_API ModifyDBInstanceResult();
-    AWS_NEPTUNE_API ModifyDBInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_NEPTUNE_API ModifyDBInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Neptune {
+namespace Model {
+class ModifyDBInstanceResult {
+ public:
+  AWS_NEPTUNE_API ModifyDBInstanceResult() = default;
+  AWS_NEPTUNE_API ModifyDBInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_NEPTUNE_API ModifyDBInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const DBInstance& GetDBInstance() const{ return m_dBInstance; }
-    inline void SetDBInstance(const DBInstance& value) { m_dBInstance = value; }
-    inline void SetDBInstance(DBInstance&& value) { m_dBInstance = std::move(value); }
-    inline ModifyDBInstanceResult& WithDBInstance(const DBInstance& value) { SetDBInstance(value); return *this;}
-    inline ModifyDBInstanceResult& WithDBInstance(DBInstance&& value) { SetDBInstance(std::move(value)); return *this;}
-    ///@}
+  inline const DBInstance& GetDBInstance() const { return m_dBInstance; }
+  template <typename DBInstanceT = DBInstance>
+  void SetDBInstance(DBInstanceT&& value) {
+    m_dBInstanceHasBeenSet = true;
+    m_dBInstance = std::forward<DBInstanceT>(value);
+  }
+  template <typename DBInstanceT = DBInstance>
+  ModifyDBInstanceResult& WithDBInstance(DBInstanceT&& value) {
+    SetDBInstance(std::forward<DBInstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ModifyDBInstanceResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ModifyDBInstanceResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    DBInstance m_dBInstance;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ModifyDBInstanceResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  DBInstance m_dBInstance;
 
-} // namespace Model
-} // namespace Neptune
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dBInstanceHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Neptune
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lexv2-models/model/BatchDeleteCustomVocabularyItemRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lexv2-models/model/BatchDeleteCustomVocabularyItemRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,18 @@ using namespace Aws::LexModelsV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-BatchDeleteCustomVocabularyItemRequest::BatchDeleteCustomVocabularyItemRequest() : 
-    m_botIdHasBeenSet(false),
-    m_botVersionHasBeenSet(false),
-    m_localeIdHasBeenSet(false),
-    m_customVocabularyItemListHasBeenSet(false)
-{
-}
-
-Aws::String BatchDeleteCustomVocabularyItemRequest::SerializePayload() const
-{
+Aws::String BatchDeleteCustomVocabularyItemRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_customVocabularyItemListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> customVocabularyItemListJsonList(m_customVocabularyItemList.size());
-   for(unsigned customVocabularyItemListIndex = 0; customVocabularyItemListIndex < customVocabularyItemListJsonList.GetLength(); ++customVocabularyItemListIndex)
-   {
-     customVocabularyItemListJsonList[customVocabularyItemListIndex].AsObject(m_customVocabularyItemList[customVocabularyItemListIndex].Jsonize());
-   }
-   payload.WithArray("customVocabularyItemList", std::move(customVocabularyItemListJsonList));
-
+  if (m_customVocabularyItemListHasBeenSet) {
+    Aws::Utils::Array<JsonValue> customVocabularyItemListJsonList(m_customVocabularyItemList.size());
+    for (unsigned customVocabularyItemListIndex = 0; customVocabularyItemListIndex < customVocabularyItemListJsonList.GetLength();
+         ++customVocabularyItemListIndex) {
+      customVocabularyItemListJsonList[customVocabularyItemListIndex].AsObject(
+          m_customVocabularyItemList[customVocabularyItemListIndex].Jsonize());
+    }
+    payload.WithArray("customVocabularyItemList", std::move(customVocabularyItemListJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

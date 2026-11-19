@@ -4,90 +4,99 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ * <p>Provides a record of an event that affects a bot alias. For example, when the
+ * version of a bot that the alias points to changes.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/BotAliasHistoryEvent">AWS
+ * API Reference</a></p>
+ */
+class BotAliasHistoryEvent {
+ public:
+  AWS_LEXMODELSV2_API BotAliasHistoryEvent() = default;
+  AWS_LEXMODELSV2_API BotAliasHistoryEvent(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXMODELSV2_API BotAliasHistoryEvent& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXMODELSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides a record of an event that affects a bot alias. For example, when the
-   * version of a bot that the alias points to changes.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/BotAliasHistoryEvent">AWS
-   * API Reference</a></p>
+   * <p>The version of the bot that was used in the event. </p>
    */
-  class BotAliasHistoryEvent
-  {
-  public:
-    AWS_LEXMODELSV2_API BotAliasHistoryEvent();
-    AWS_LEXMODELSV2_API BotAliasHistoryEvent(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXMODELSV2_API BotAliasHistoryEvent& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXMODELSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetBotVersion() const { return m_botVersion; }
+  inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
+  template <typename BotVersionT = Aws::String>
+  void SetBotVersion(BotVersionT&& value) {
+    m_botVersionHasBeenSet = true;
+    m_botVersion = std::forward<BotVersionT>(value);
+  }
+  template <typename BotVersionT = Aws::String>
+  BotAliasHistoryEvent& WithBotVersion(BotVersionT&& value) {
+    SetBotVersion(std::forward<BotVersionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The date and time that the event started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartDate() const { return m_startDate; }
+  inline bool StartDateHasBeenSet() const { return m_startDateHasBeenSet; }
+  template <typename StartDateT = Aws::Utils::DateTime>
+  void SetStartDate(StartDateT&& value) {
+    m_startDateHasBeenSet = true;
+    m_startDate = std::forward<StartDateT>(value);
+  }
+  template <typename StartDateT = Aws::Utils::DateTime>
+  BotAliasHistoryEvent& WithStartDate(StartDateT&& value) {
+    SetStartDate(std::forward<StartDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the bot that was used in the event. </p>
-     */
-    inline const Aws::String& GetBotVersion() const{ return m_botVersion; }
-    inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
-    inline void SetBotVersion(const Aws::String& value) { m_botVersionHasBeenSet = true; m_botVersion = value; }
-    inline void SetBotVersion(Aws::String&& value) { m_botVersionHasBeenSet = true; m_botVersion = std::move(value); }
-    inline void SetBotVersion(const char* value) { m_botVersionHasBeenSet = true; m_botVersion.assign(value); }
-    inline BotAliasHistoryEvent& WithBotVersion(const Aws::String& value) { SetBotVersion(value); return *this;}
-    inline BotAliasHistoryEvent& WithBotVersion(Aws::String&& value) { SetBotVersion(std::move(value)); return *this;}
-    inline BotAliasHistoryEvent& WithBotVersion(const char* value) { SetBotVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the event ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndDate() const { return m_endDate; }
+  inline bool EndDateHasBeenSet() const { return m_endDateHasBeenSet; }
+  template <typename EndDateT = Aws::Utils::DateTime>
+  void SetEndDate(EndDateT&& value) {
+    m_endDateHasBeenSet = true;
+    m_endDate = std::forward<EndDateT>(value);
+  }
+  template <typename EndDateT = Aws::Utils::DateTime>
+  BotAliasHistoryEvent& WithEndDate(EndDateT&& value) {
+    SetEndDate(std::forward<EndDateT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_botVersion;
 
-    ///@{
-    /**
-     * <p>The date and time that the event started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartDate() const{ return m_startDate; }
-    inline bool StartDateHasBeenSet() const { return m_startDateHasBeenSet; }
-    inline void SetStartDate(const Aws::Utils::DateTime& value) { m_startDateHasBeenSet = true; m_startDate = value; }
-    inline void SetStartDate(Aws::Utils::DateTime&& value) { m_startDateHasBeenSet = true; m_startDate = std::move(value); }
-    inline BotAliasHistoryEvent& WithStartDate(const Aws::Utils::DateTime& value) { SetStartDate(value); return *this;}
-    inline BotAliasHistoryEvent& WithStartDate(Aws::Utils::DateTime&& value) { SetStartDate(std::move(value)); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_startDate{};
 
-    ///@{
-    /**
-     * <p>The date and time that the event ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndDate() const{ return m_endDate; }
-    inline bool EndDateHasBeenSet() const { return m_endDateHasBeenSet; }
-    inline void SetEndDate(const Aws::Utils::DateTime& value) { m_endDateHasBeenSet = true; m_endDate = value; }
-    inline void SetEndDate(Aws::Utils::DateTime&& value) { m_endDateHasBeenSet = true; m_endDate = std::move(value); }
-    inline BotAliasHistoryEvent& WithEndDate(const Aws::Utils::DateTime& value) { SetEndDate(value); return *this;}
-    inline BotAliasHistoryEvent& WithEndDate(Aws::Utils::DateTime&& value) { SetEndDate(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Utils::DateTime m_endDate{};
+  bool m_botVersionHasBeenSet = false;
+  bool m_startDateHasBeenSet = false;
+  bool m_endDateHasBeenSet = false;
+};
 
-    Aws::String m_botVersion;
-    bool m_botVersionHasBeenSet = false;
-
-    Aws::Utils::DateTime m_startDate;
-    bool m_startDateHasBeenSet = false;
-
-    Aws::Utils::DateTime m_endDate;
-    bool m_endDateHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

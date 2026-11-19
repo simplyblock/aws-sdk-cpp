@@ -4,92 +4,138 @@
  */
 
 #pragma once
-#include <aws/identitystore/IdentityStore_EXPORTS.h>
-#include <aws/identitystore/IdentityStoreRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/identitystore/IdentityStoreRequest.h>
+#include <aws/identitystore/IdentityStore_EXPORTS.h>
 #include <aws/identitystore/model/AttributeOperation.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IdentityStore
-{
-namespace Model
-{
+namespace Aws {
+namespace IdentityStore {
+namespace Model {
 
+/**
+ */
+class UpdateGroupRequest : public IdentityStoreRequest {
+ public:
+  AWS_IDENTITYSTORE_API UpdateGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateGroup"; }
+
+  AWS_IDENTITYSTORE_API Aws::String SerializePayload() const override;
+
+  AWS_IDENTITYSTORE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The globally unique identifier for the identity store.</p> <p>You can specify
+   * the identity store by ID or by Amazon Resource Name (ARN). For example, identity
+   * store ID <code>d-1234567890</code> or identity store ARN
+   * <code>arn:aws:identitystore::111122223333:identitystore/d-1234567890</code>.</p>
    */
-  class UpdateGroupRequest : public IdentityStoreRequest
-  {
-  public:
-    AWS_IDENTITYSTORE_API UpdateGroupRequest();
+  inline const Aws::String& GetIdentityStoreId() const { return m_identityStoreId; }
+  inline bool IdentityStoreIdHasBeenSet() const { return m_identityStoreIdHasBeenSet; }
+  template <typename IdentityStoreIdT = Aws::String>
+  void SetIdentityStoreId(IdentityStoreIdT&& value) {
+    m_identityStoreIdHasBeenSet = true;
+    m_identityStoreId = std::forward<IdentityStoreIdT>(value);
+  }
+  template <typename IdentityStoreIdT = Aws::String>
+  UpdateGroupRequest& WithIdentityStoreId(IdentityStoreIdT&& value) {
+    SetIdentityStoreId(std::forward<IdentityStoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateGroup"; }
+  ///@{
+  /**
+   * <p>The identifier for a group in the identity store.</p> <p>You can specify the
+   * group by ID or by Amazon Resource Name (ARN). For example, group ID
+   * <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code> or group ARN
+   * <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>
+   */
+  inline const Aws::String& GetGroupId() const { return m_groupId; }
+  inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
+  template <typename GroupIdT = Aws::String>
+  void SetGroupId(GroupIdT&& value) {
+    m_groupIdHasBeenSet = true;
+    m_groupId = std::forward<GroupIdT>(value);
+  }
+  template <typename GroupIdT = Aws::String>
+  UpdateGroupRequest& WithGroupId(GroupIdT&& value) {
+    SetGroupId(std::forward<GroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IDENTITYSTORE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A list of <code>AttributeOperation</code> objects to apply to the requested
+   * group. These operations might add, replace, or remove an attribute. For more
+   * information on the attributes that can be added, replaced, or removed, see <a
+   * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html">Group</a>.</p>
+   */
+  inline const Aws::Vector<AttributeOperation>& GetOperations() const { return m_operations; }
+  inline bool OperationsHasBeenSet() const { return m_operationsHasBeenSet; }
+  template <typename OperationsT = Aws::Vector<AttributeOperation>>
+  void SetOperations(OperationsT&& value) {
+    m_operationsHasBeenSet = true;
+    m_operations = std::forward<OperationsT>(value);
+  }
+  template <typename OperationsT = Aws::Vector<AttributeOperation>>
+  UpdateGroupRequest& WithOperations(OperationsT&& value) {
+    SetOperations(std::forward<OperationsT>(value));
+    return *this;
+  }
+  template <typename OperationsT = AttributeOperation>
+  UpdateGroupRequest& AddOperations(OperationsT&& value) {
+    m_operationsHasBeenSet = true;
+    m_operations.emplace_back(std::forward<OperationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IDENTITYSTORE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The expected current revision of the group. When you provide this value, the
+   * update is applied only if it matches the current revision of the group in the
+   * identity store, which prevents you from overwriting concurrent changes. If the
+   * value doesn't match, the operation fails with a <code>ConflictException</code>.
+   * If you don't provide this value, the update is applied unconditionally.</p>
+   */
+  inline const Aws::String& GetRevision() const { return m_revision; }
+  inline bool RevisionHasBeenSet() const { return m_revisionHasBeenSet; }
+  template <typename RevisionT = Aws::String>
+  void SetRevision(RevisionT&& value) {
+    m_revisionHasBeenSet = true;
+    m_revision = std::forward<RevisionT>(value);
+  }
+  template <typename RevisionT = Aws::String>
+  UpdateGroupRequest& WithRevision(RevisionT&& value) {
+    SetRevision(std::forward<RevisionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_identityStoreId;
 
+  Aws::String m_groupId;
 
-    ///@{
-    /**
-     * <p>The globally unique identifier for the identity store.</p>
-     */
-    inline const Aws::String& GetIdentityStoreId() const{ return m_identityStoreId; }
-    inline bool IdentityStoreIdHasBeenSet() const { return m_identityStoreIdHasBeenSet; }
-    inline void SetIdentityStoreId(const Aws::String& value) { m_identityStoreIdHasBeenSet = true; m_identityStoreId = value; }
-    inline void SetIdentityStoreId(Aws::String&& value) { m_identityStoreIdHasBeenSet = true; m_identityStoreId = std::move(value); }
-    inline void SetIdentityStoreId(const char* value) { m_identityStoreIdHasBeenSet = true; m_identityStoreId.assign(value); }
-    inline UpdateGroupRequest& WithIdentityStoreId(const Aws::String& value) { SetIdentityStoreId(value); return *this;}
-    inline UpdateGroupRequest& WithIdentityStoreId(Aws::String&& value) { SetIdentityStoreId(std::move(value)); return *this;}
-    inline UpdateGroupRequest& WithIdentityStoreId(const char* value) { SetIdentityStoreId(value); return *this;}
-    ///@}
+  Aws::Vector<AttributeOperation> m_operations;
 
-    ///@{
-    /**
-     * <p>The identifier for a group in the identity store.</p>
-     */
-    inline const Aws::String& GetGroupId() const{ return m_groupId; }
-    inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
-    inline void SetGroupId(const Aws::String& value) { m_groupIdHasBeenSet = true; m_groupId = value; }
-    inline void SetGroupId(Aws::String&& value) { m_groupIdHasBeenSet = true; m_groupId = std::move(value); }
-    inline void SetGroupId(const char* value) { m_groupIdHasBeenSet = true; m_groupId.assign(value); }
-    inline UpdateGroupRequest& WithGroupId(const Aws::String& value) { SetGroupId(value); return *this;}
-    inline UpdateGroupRequest& WithGroupId(Aws::String&& value) { SetGroupId(std::move(value)); return *this;}
-    inline UpdateGroupRequest& WithGroupId(const char* value) { SetGroupId(value); return *this;}
-    ///@}
+  Aws::String m_revision;
+  bool m_identityStoreIdHasBeenSet = false;
+  bool m_groupIdHasBeenSet = false;
+  bool m_operationsHasBeenSet = false;
+  bool m_revisionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A list of <code>AttributeOperation</code> objects to apply to the requested
-     * group. These operations might add, replace, or remove an attribute.</p>
-     */
-    inline const Aws::Vector<AttributeOperation>& GetOperations() const{ return m_operations; }
-    inline bool OperationsHasBeenSet() const { return m_operationsHasBeenSet; }
-    inline void SetOperations(const Aws::Vector<AttributeOperation>& value) { m_operationsHasBeenSet = true; m_operations = value; }
-    inline void SetOperations(Aws::Vector<AttributeOperation>&& value) { m_operationsHasBeenSet = true; m_operations = std::move(value); }
-    inline UpdateGroupRequest& WithOperations(const Aws::Vector<AttributeOperation>& value) { SetOperations(value); return *this;}
-    inline UpdateGroupRequest& WithOperations(Aws::Vector<AttributeOperation>&& value) { SetOperations(std::move(value)); return *this;}
-    inline UpdateGroupRequest& AddOperations(const AttributeOperation& value) { m_operationsHasBeenSet = true; m_operations.push_back(value); return *this; }
-    inline UpdateGroupRequest& AddOperations(AttributeOperation&& value) { m_operationsHasBeenSet = true; m_operations.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_identityStoreId;
-    bool m_identityStoreIdHasBeenSet = false;
-
-    Aws::String m_groupId;
-    bool m_groupIdHasBeenSet = false;
-
-    Aws::Vector<AttributeOperation> m_operations;
-    bool m_operationsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IdentityStore
-} // namespace Aws
+}  // namespace Model
+}  // namespace IdentityStore
+}  // namespace Aws

@@ -4,13 +4,15 @@
  */
 
 #include <aws/geo-routes/GeoRoutesEndpointProvider.h>
+#include <aws/geo-routes/internal/GeoRoutesEndpointRules.h>
 
-namespace Aws
-{
-namespace GeoRoutes
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace GeoRoutes
-} // namespace Aws
+namespace Aws {
+namespace GeoRoutes {
+namespace Endpoint {
+GeoRoutesEndpointProvider::GeoRoutesEndpointProvider()
+    : GeoRoutesDefaultEpProviderBase(Aws::GeoRoutes::GeoRoutesEndpointRules::GetRulesBlob(),
+                                     Aws::GeoRoutes::GeoRoutesEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace GeoRoutes
+}  // namespace Aws

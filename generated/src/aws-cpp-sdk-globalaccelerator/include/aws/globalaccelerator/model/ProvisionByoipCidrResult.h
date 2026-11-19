@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/ByoipCidr.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class ProvisionByoipCidrResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult();
-    AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class ProvisionByoipCidrResult {
+ public:
+  AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult() = default;
+  AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API ProvisionByoipCidrResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the address range.</p>
+   */
+  inline const ByoipCidr& GetByoipCidr() const { return m_byoipCidr; }
+  template <typename ByoipCidrT = ByoipCidr>
+  void SetByoipCidr(ByoipCidrT&& value) {
+    m_byoipCidrHasBeenSet = true;
+    m_byoipCidr = std::forward<ByoipCidrT>(value);
+  }
+  template <typename ByoipCidrT = ByoipCidr>
+  ProvisionByoipCidrResult& WithByoipCidr(ByoipCidrT&& value) {
+    SetByoipCidr(std::forward<ByoipCidrT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the address range.</p>
-     */
-    inline const ByoipCidr& GetByoipCidr() const{ return m_byoipCidr; }
-    inline void SetByoipCidr(const ByoipCidr& value) { m_byoipCidr = value; }
-    inline void SetByoipCidr(ByoipCidr&& value) { m_byoipCidr = std::move(value); }
-    inline ProvisionByoipCidrResult& WithByoipCidr(const ByoipCidr& value) { SetByoipCidr(value); return *this;}
-    inline ProvisionByoipCidrResult& WithByoipCidr(ByoipCidr&& value) { SetByoipCidr(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ProvisionByoipCidrResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ProvisionByoipCidrResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ProvisionByoipCidrResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ProvisionByoipCidrResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ByoipCidr m_byoipCidr;
+ private:
+  ByoipCidr m_byoipCidr;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_byoipCidrHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

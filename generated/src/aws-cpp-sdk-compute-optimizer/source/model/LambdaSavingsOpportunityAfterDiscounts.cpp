@@ -4,71 +4,121 @@
  */
 
 #include <aws/compute-optimizer/model/LambdaSavingsOpportunityAfterDiscounts.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-LambdaSavingsOpportunityAfterDiscounts::LambdaSavingsOpportunityAfterDiscounts() : 
-    m_savingsOpportunityPercentage(0.0),
-    m_savingsOpportunityPercentageHasBeenSet(false),
-    m_estimatedMonthlySavingsHasBeenSet(false)
-{
+LambdaSavingsOpportunityAfterDiscounts::LambdaSavingsOpportunityAfterDiscounts(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-LambdaSavingsOpportunityAfterDiscounts::LambdaSavingsOpportunityAfterDiscounts(JsonView jsonValue)
-  : LambdaSavingsOpportunityAfterDiscounts()
-{
-  *this = jsonValue;
-}
+LambdaSavingsOpportunityAfterDiscounts& LambdaSavingsOpportunityAfterDiscounts::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-LambdaSavingsOpportunityAfterDiscounts& LambdaSavingsOpportunityAfterDiscounts::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("savingsOpportunityPercentage"))
-  {
-    m_savingsOpportunityPercentage = jsonValue.GetDouble("savingsOpportunityPercentage");
+              if (initialKeyStr == "savingsOpportunityPercentage") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_savingsOpportunityPercentage = val.value();
+                }
+                m_savingsOpportunityPercentageHasBeenSet = true;
+              }
 
-    m_savingsOpportunityPercentageHasBeenSet = true;
-  }
+              else if (initialKeyStr == "estimatedMonthlySavings") {
+                m_estimatedMonthlySavings = LambdaEstimatedMonthlySavings(decoder);
+                m_estimatedMonthlySavingsHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("LambdaSavingsOpportunityAfterDiscounts", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("estimatedMonthlySavings"))
-  {
-    m_estimatedMonthlySavings = jsonValue.GetObject("estimatedMonthlySavings");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_estimatedMonthlySavingsHasBeenSet = true;
+            if (initialKeyStr == "savingsOpportunityPercentage") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_savingsOpportunityPercentage = val.value();
+              }
+              m_savingsOpportunityPercentageHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "estimatedMonthlySavings") {
+              m_estimatedMonthlySavings = LambdaEstimatedMonthlySavings(decoder);
+              m_estimatedMonthlySavingsHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue LambdaSavingsOpportunityAfterDiscounts::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_savingsOpportunityPercentageHasBeenSet)
-  {
-   payload.WithDouble("savingsOpportunityPercentage", m_savingsOpportunityPercentage);
-
+void LambdaSavingsOpportunityAfterDiscounts::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_savingsOpportunityPercentageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_estimatedMonthlySavingsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_estimatedMonthlySavingsHasBeenSet)
-  {
-   payload.WithObject("estimatedMonthlySavings", m_estimatedMonthlySavings.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_savingsOpportunityPercentageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("savingsOpportunityPercentage"));
+    encoder.WriteFloat(m_savingsOpportunityPercentage);
   }
 
-  return payload;
+  if (m_estimatedMonthlySavingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("estimatedMonthlySavings"));
+    m_estimatedMonthlySavings.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

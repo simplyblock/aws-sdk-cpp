@@ -6,73 +6,74 @@
 #pragma once
 #include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKIdentity {
+namespace Model {
 
+/**
+ * <p>The details of a user or bot.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-identity-2021-04-20/Identity">AWS
+ * API Reference</a></p>
+ */
+class Identity {
+ public:
+  AWS_CHIMESDKIDENTITY_API Identity() = default;
+  AWS_CHIMESDKIDENTITY_API Identity(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKIDENTITY_API Identity& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKIDENTITY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The details of a user or bot.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-identity-2021-04-20/Identity">AWS
-   * API Reference</a></p>
+   * <p>The ARN in an Identity.</p>
    */
-  class Identity
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API Identity();
-    AWS_CHIMESDKIDENTITY_API Identity(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKIDENTITY_API Identity& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKIDENTITY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  Identity& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name in an Identity.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Identity& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
-    ///@{
-    /**
-     * <p>The ARN in an Identity.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline Identity& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline Identity& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline Identity& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  Aws::String m_name;
+  bool m_arnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name in an Identity.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Identity& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Identity& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Identity& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

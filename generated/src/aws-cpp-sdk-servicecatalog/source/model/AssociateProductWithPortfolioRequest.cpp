@@ -3,62 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/AssociateProductWithPortfolioRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-AssociateProductWithPortfolioRequest::AssociateProductWithPortfolioRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_productIdHasBeenSet(false),
-    m_portfolioIdHasBeenSet(false),
-    m_sourcePortfolioIdHasBeenSet(false)
-{
+Aws::String AssociateProductWithPortfolioRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_productIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourcePortfolioIdHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_productIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProductId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_productId.c_str()));
+  }
+
+  if (m_portfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_portfolioId.c_str()));
+  }
+
+  if (m_sourcePortfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourcePortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sourcePortfolioId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String AssociateProductWithPortfolioRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_productIdHasBeenSet)
-  {
-   payload.WithString("ProductId", m_productId);
-
-  }
-
-  if(m_portfolioIdHasBeenSet)
-  {
-   payload.WithString("PortfolioId", m_portfolioId);
-
-  }
-
-  if(m_sourcePortfolioIdHasBeenSet)
-  {
-   payload.WithString("SourcePortfolioId", m_sourcePortfolioId);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection AssociateProductWithPortfolioRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection AssociateProductWithPortfolioRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.AssociateProductWithPortfolio"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

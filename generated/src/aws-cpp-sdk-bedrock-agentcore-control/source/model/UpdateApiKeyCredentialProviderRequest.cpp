@@ -1,0 +1,35 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/bedrock-agentcore-control/model/UpdateApiKeyCredentialProviderRequest.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+#include <utility>
+
+using namespace Aws::BedrockAgentCoreControl::Model;
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+Aws::String UpdateApiKeyCredentialProviderRequest::SerializePayload() const {
+  JsonValue payload;
+
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
+  }
+
+  if (m_apiKeyHasBeenSet) {
+    payload.WithString("apiKey", m_apiKey);
+  }
+
+  if (m_apiKeySecretConfigHasBeenSet) {
+    payload.WithObject("apiKeySecretConfig", m_apiKeySecretConfig.Jsonize());
+  }
+
+  if (m_apiKeySecretSourceHasBeenSet) {
+    payload.WithString("apiKeySecretSource", SecretSourceTypeMapper::GetNameForSecretSourceType(m_apiKeySecretSource));
+  }
+
+  return payload.View().WriteReadable();
+}

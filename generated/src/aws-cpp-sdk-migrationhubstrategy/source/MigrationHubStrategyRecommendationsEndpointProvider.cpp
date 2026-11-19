@@ -4,13 +4,16 @@
  */
 
 #include <aws/migrationhubstrategy/MigrationHubStrategyRecommendationsEndpointProvider.h>
+#include <aws/migrationhubstrategy/internal/MigrationHubStrategyRecommendationsEndpointRules.h>
 
-namespace Aws
-{
-namespace MigrationHubStrategyRecommendations
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace MigrationHubStrategyRecommendations
-} // namespace Aws
+namespace Aws {
+namespace MigrationHubStrategyRecommendations {
+namespace Endpoint {
+MigrationHubStrategyRecommendationsEndpointProvider::MigrationHubStrategyRecommendationsEndpointProvider()
+    : MigrationHubStrategyRecommendationsDefaultEpProviderBase(
+          Aws::MigrationHubStrategyRecommendations::MigrationHubStrategyRecommendationsEndpointRules::GetRulesBlob(),
+          Aws::MigrationHubStrategyRecommendations::MigrationHubStrategyRecommendationsEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace MigrationHubStrategyRecommendations
+}  // namespace Aws

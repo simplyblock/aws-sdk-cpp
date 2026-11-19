@@ -12,17 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteRestoreTestingSelectionRequest::DeleteRestoreTestingSelectionRequest() : 
-    m_restoreTestingPlanNameHasBeenSet(false),
-    m_restoreTestingSelectionNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteRestoreTestingSelectionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteRestoreTestingSelectionRequest::SerializePayload() const { return {}; }

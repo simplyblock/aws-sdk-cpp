@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/xray/XRay_EXPORTS.h>
 #include <aws/xray/model/SamplingRuleRecord.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace XRay
-{
-namespace Model
-{
-  class DeleteSamplingRuleResult
-  {
-  public:
-    AWS_XRAY_API DeleteSamplingRuleResult();
-    AWS_XRAY_API DeleteSamplingRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_XRAY_API DeleteSamplingRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace XRay {
+namespace Model {
+class DeleteSamplingRuleResult {
+ public:
+  AWS_XRAY_API DeleteSamplingRuleResult() = default;
+  AWS_XRAY_API DeleteSamplingRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_XRAY_API DeleteSamplingRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The deleted rule definition and metadata.</p>
+   */
+  inline const SamplingRuleRecord& GetSamplingRuleRecord() const { return m_samplingRuleRecord; }
+  template <typename SamplingRuleRecordT = SamplingRuleRecord>
+  void SetSamplingRuleRecord(SamplingRuleRecordT&& value) {
+    m_samplingRuleRecordHasBeenSet = true;
+    m_samplingRuleRecord = std::forward<SamplingRuleRecordT>(value);
+  }
+  template <typename SamplingRuleRecordT = SamplingRuleRecord>
+  DeleteSamplingRuleResult& WithSamplingRuleRecord(SamplingRuleRecordT&& value) {
+    SetSamplingRuleRecord(std::forward<SamplingRuleRecordT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The deleted rule definition and metadata.</p>
-     */
-    inline const SamplingRuleRecord& GetSamplingRuleRecord() const{ return m_samplingRuleRecord; }
-    inline void SetSamplingRuleRecord(const SamplingRuleRecord& value) { m_samplingRuleRecord = value; }
-    inline void SetSamplingRuleRecord(SamplingRuleRecord&& value) { m_samplingRuleRecord = std::move(value); }
-    inline DeleteSamplingRuleResult& WithSamplingRuleRecord(const SamplingRuleRecord& value) { SetSamplingRuleRecord(value); return *this;}
-    inline DeleteSamplingRuleResult& WithSamplingRuleRecord(SamplingRuleRecord&& value) { SetSamplingRuleRecord(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteSamplingRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteSamplingRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteSamplingRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteSamplingRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SamplingRuleRecord m_samplingRuleRecord;
+ private:
+  SamplingRuleRecord m_samplingRuleRecord;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_samplingRuleRecordHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace XRay
-} // namespace Aws
+}  // namespace Model
+}  // namespace XRay
+}  // namespace Aws

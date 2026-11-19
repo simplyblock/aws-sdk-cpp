@@ -4,162 +4,248 @@
  */
 
 #pragma once
-#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/ConnectRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/connect/model/RuleTriggerEventSource.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/connect/model/RulePublishStatus.h>
+#include <aws/connect/Connect_EXPORTS.h>
+#include <aws/connect/model/PreEvaluationFilters.h>
 #include <aws/connect/model/RuleAction.h>
-#include <utility>
+#include <aws/connect/model/RulePublishStatus.h>
+#include <aws/connect/model/RuleTriggerEventSource.h>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Connect {
+namespace Model {
+
+/**
+ */
+class CreateRuleRequest : public ConnectRequest {
+ public:
+  AWS_CONNECT_API CreateRuleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateRule"; }
+
+  AWS_CONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the Connect Customer instance. You can <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
+   * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
    */
-  class CreateRuleRequest : public ConnectRequest
-  {
-  public:
-    AWS_CONNECT_API CreateRuleRequest();
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  CreateRuleRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateRule"; }
+  ///@{
+  /**
+   * <p>A unique name for the rule.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateRuleRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The event source to trigger the rule.</p>
+   */
+  inline const RuleTriggerEventSource& GetTriggerEventSource() const { return m_triggerEventSource; }
+  inline bool TriggerEventSourceHasBeenSet() const { return m_triggerEventSourceHasBeenSet; }
+  template <typename TriggerEventSourceT = RuleTriggerEventSource>
+  void SetTriggerEventSource(TriggerEventSourceT&& value) {
+    m_triggerEventSourceHasBeenSet = true;
+    m_triggerEventSource = std::forward<TriggerEventSourceT>(value);
+  }
+  template <typename TriggerEventSourceT = RuleTriggerEventSource>
+  CreateRuleRequest& WithTriggerEventSource(TriggerEventSourceT&& value) {
+    SetTriggerEventSource(std::forward<TriggerEventSourceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The conditions of the rule.</p>
+   */
+  inline const Aws::String& GetFunction() const { return m_function; }
+  inline bool FunctionHasBeenSet() const { return m_functionHasBeenSet; }
+  template <typename FunctionT = Aws::String>
+  void SetFunction(FunctionT&& value) {
+    m_functionHasBeenSet = true;
+    m_function = std::forward<FunctionT>(value);
+  }
+  template <typename FunctionT = Aws::String>
+  CreateRuleRequest& WithFunction(FunctionT&& value) {
+    SetFunction(std::forward<FunctionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Connect instance. You can <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
-     * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline CreateRuleRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline CreateRuleRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline CreateRuleRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of actions to be run when the rule is triggered.</p>
+   */
+  inline const Aws::Vector<RuleAction>& GetActions() const { return m_actions; }
+  inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
+  template <typename ActionsT = Aws::Vector<RuleAction>>
+  void SetActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions = std::forward<ActionsT>(value);
+  }
+  template <typename ActionsT = Aws::Vector<RuleAction>>
+  CreateRuleRequest& WithActions(ActionsT&& value) {
+    SetActions(std::forward<ActionsT>(value));
+    return *this;
+  }
+  template <typename ActionsT = RuleAction>
+  CreateRuleRequest& AddActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions.emplace_back(std::forward<ActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique name for the rule.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateRuleRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateRuleRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateRuleRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The publish status of the rule.</p>
+   */
+  inline RulePublishStatus GetPublishStatus() const { return m_publishStatus; }
+  inline bool PublishStatusHasBeenSet() const { return m_publishStatusHasBeenSet; }
+  inline void SetPublishStatus(RulePublishStatus value) {
+    m_publishStatusHasBeenSet = true;
+    m_publishStatus = value;
+  }
+  inline CreateRuleRequest& WithPublishStatus(RulePublishStatus value) {
+    SetPublishStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The event source to trigger the rule.</p>
-     */
-    inline const RuleTriggerEventSource& GetTriggerEventSource() const{ return m_triggerEventSource; }
-    inline bool TriggerEventSourceHasBeenSet() const { return m_triggerEventSourceHasBeenSet; }
-    inline void SetTriggerEventSource(const RuleTriggerEventSource& value) { m_triggerEventSourceHasBeenSet = true; m_triggerEventSource = value; }
-    inline void SetTriggerEventSource(RuleTriggerEventSource&& value) { m_triggerEventSourceHasBeenSet = true; m_triggerEventSource = std::move(value); }
-    inline CreateRuleRequest& WithTriggerEventSource(const RuleTriggerEventSource& value) { SetTriggerEventSource(value); return *this;}
-    inline CreateRuleRequest& WithTriggerEventSource(RuleTriggerEventSource&& value) { SetTriggerEventSource(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The pre-evaluation filters for the rule, that restrict the rule to be applied
+   * to only certain resources based on the resource's attributes, such as tags
+   * assigned to a contact. The pre-evaluation filters are applied even before rule
+   * conditions are evaluated and are used to enforce tag-based-access-control while
+   * applying rules.</p>
+   */
+  inline const PreEvaluationFilters& GetPreEvaluationFilters() const { return m_preEvaluationFilters; }
+  inline bool PreEvaluationFiltersHasBeenSet() const { return m_preEvaluationFiltersHasBeenSet; }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  void SetPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    m_preEvaluationFiltersHasBeenSet = true;
+    m_preEvaluationFilters = std::forward<PreEvaluationFiltersT>(value);
+  }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  CreateRuleRequest& WithPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    SetPreEvaluationFilters(std::forward<PreEvaluationFiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The conditions of the rule.</p>
-     */
-    inline const Aws::String& GetFunction() const{ return m_function; }
-    inline bool FunctionHasBeenSet() const { return m_functionHasBeenSet; }
-    inline void SetFunction(const Aws::String& value) { m_functionHasBeenSet = true; m_function = value; }
-    inline void SetFunction(Aws::String&& value) { m_functionHasBeenSet = true; m_function = std::move(value); }
-    inline void SetFunction(const char* value) { m_functionHasBeenSet = true; m_function.assign(value); }
-    inline CreateRuleRequest& WithFunction(const Aws::String& value) { SetFunction(value); return *this;}
-    inline CreateRuleRequest& WithFunction(Aws::String&& value) { SetFunction(std::move(value)); return *this;}
-    inline CreateRuleRequest& WithFunction(const char* value) { SetFunction(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the
+   * idempotency of the request. If not provided, the Amazon Web Services SDK
+   * populates this field. For more information about idempotency, see <a
+   * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+   * retries safe with idempotent APIs</a>.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateRuleRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of actions to be run when the rule is triggered.</p>
-     */
-    inline const Aws::Vector<RuleAction>& GetActions() const{ return m_actions; }
-    inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
-    inline void SetActions(const Aws::Vector<RuleAction>& value) { m_actionsHasBeenSet = true; m_actions = value; }
-    inline void SetActions(Aws::Vector<RuleAction>&& value) { m_actionsHasBeenSet = true; m_actions = std::move(value); }
-    inline CreateRuleRequest& WithActions(const Aws::Vector<RuleAction>& value) { SetActions(value); return *this;}
-    inline CreateRuleRequest& WithActions(Aws::Vector<RuleAction>&& value) { SetActions(std::move(value)); return *this;}
-    inline CreateRuleRequest& AddActions(const RuleAction& value) { m_actionsHasBeenSet = true; m_actions.push_back(value); return *this; }
-    inline CreateRuleRequest& AddActions(RuleAction&& value) { m_actionsHasBeenSet = true; m_actions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource. For
+   * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateRuleRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateRuleRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceId;
 
-    ///@{
-    /**
-     * <p>The publish status of the rule.</p>
-     */
-    inline const RulePublishStatus& GetPublishStatus() const{ return m_publishStatus; }
-    inline bool PublishStatusHasBeenSet() const { return m_publishStatusHasBeenSet; }
-    inline void SetPublishStatus(const RulePublishStatus& value) { m_publishStatusHasBeenSet = true; m_publishStatus = value; }
-    inline void SetPublishStatus(RulePublishStatus&& value) { m_publishStatusHasBeenSet = true; m_publishStatus = std::move(value); }
-    inline CreateRuleRequest& WithPublishStatus(const RulePublishStatus& value) { SetPublishStatus(value); return *this;}
-    inline CreateRuleRequest& WithPublishStatus(RulePublishStatus&& value) { SetPublishStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. If not provided, the Amazon Web Services SDK
-     * populates this field. For more information about idempotency, see <a
-     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
-     * retries safe with idempotent APIs</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateRuleRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateRuleRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateRuleRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  RuleTriggerEventSource m_triggerEventSource;
 
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
+  Aws::String m_function;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<RuleAction> m_actions;
 
-    RuleTriggerEventSource m_triggerEventSource;
-    bool m_triggerEventSourceHasBeenSet = false;
+  RulePublishStatus m_publishStatus{RulePublishStatus::NOT_SET};
 
-    Aws::String m_function;
-    bool m_functionHasBeenSet = false;
+  PreEvaluationFilters m_preEvaluationFilters;
 
-    Aws::Vector<RuleAction> m_actions;
-    bool m_actionsHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    RulePublishStatus m_publishStatus;
-    bool m_publishStatusHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_triggerEventSourceHasBeenSet = false;
+  bool m_functionHasBeenSet = false;
+  bool m_actionsHasBeenSet = false;
+  bool m_publishStatusHasBeenSet = false;
+  bool m_preEvaluationFiltersHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

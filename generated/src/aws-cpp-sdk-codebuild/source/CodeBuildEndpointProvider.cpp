@@ -4,13 +4,15 @@
  */
 
 #include <aws/codebuild/CodeBuildEndpointProvider.h>
+#include <aws/codebuild/internal/CodeBuildEndpointRules.h>
 
-namespace Aws
-{
-namespace CodeBuild
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CodeBuild
-} // namespace Aws
+namespace Aws {
+namespace CodeBuild {
+namespace Endpoint {
+CodeBuildEndpointProvider::CodeBuildEndpointProvider()
+    : CodeBuildDefaultEpProviderBase(Aws::CodeBuild::CodeBuildEndpointRules::GetRulesBlob(),
+                                     Aws::CodeBuild::CodeBuildEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CodeBuild
+}  // namespace Aws

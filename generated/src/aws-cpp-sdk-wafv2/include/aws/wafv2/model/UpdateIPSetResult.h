@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/wafv2/WAFV2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wafv2/WAFV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WAFV2
-{
-namespace Model
-{
-  class UpdateIPSetResult
-  {
-  public:
-    AWS_WAFV2_API UpdateIPSetResult();
-    AWS_WAFV2_API UpdateIPSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WAFV2_API UpdateIPSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WAFV2 {
+namespace Model {
+class UpdateIPSetResult {
+ public:
+  AWS_WAFV2_API UpdateIPSetResult() = default;
+  AWS_WAFV2_API UpdateIPSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WAFV2_API UpdateIPSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A token used for optimistic locking. WAF returns this token to your
+   * <code>update</code> requests. You use <code>NextLockToken</code> in the same
+   * manner as you use <code>LockToken</code>. </p>
+   */
+  inline const Aws::String& GetNextLockToken() const { return m_nextLockToken; }
+  template <typename NextLockTokenT = Aws::String>
+  void SetNextLockToken(NextLockTokenT&& value) {
+    m_nextLockTokenHasBeenSet = true;
+    m_nextLockToken = std::forward<NextLockTokenT>(value);
+  }
+  template <typename NextLockTokenT = Aws::String>
+  UpdateIPSetResult& WithNextLockToken(NextLockTokenT&& value) {
+    SetNextLockToken(std::forward<NextLockTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token used for optimistic locking. WAF returns this token to your
-     * <code>update</code> requests. You use <code>NextLockToken</code> in the same
-     * manner as you use <code>LockToken</code>. </p>
-     */
-    inline const Aws::String& GetNextLockToken() const{ return m_nextLockToken; }
-    inline void SetNextLockToken(const Aws::String& value) { m_nextLockToken = value; }
-    inline void SetNextLockToken(Aws::String&& value) { m_nextLockToken = std::move(value); }
-    inline void SetNextLockToken(const char* value) { m_nextLockToken.assign(value); }
-    inline UpdateIPSetResult& WithNextLockToken(const Aws::String& value) { SetNextLockToken(value); return *this;}
-    inline UpdateIPSetResult& WithNextLockToken(Aws::String&& value) { SetNextLockToken(std::move(value)); return *this;}
-    inline UpdateIPSetResult& WithNextLockToken(const char* value) { SetNextLockToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateIPSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateIPSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateIPSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateIPSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextLockToken;
+ private:
+  Aws::String m_nextLockToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextLockTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WAFV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAFV2
+}  // namespace Aws

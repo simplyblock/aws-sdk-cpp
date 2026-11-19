@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/directory-service-data/DirectoryServiceData_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/directory-service-data/DirectoryServiceData_EXPORTS.h>
 
-#include <aws/directory-service-data/DirectoryServiceDataEndpointRules.h>
-
-
-namespace Aws
-{
-namespace DirectoryServiceData
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace DirectoryServiceData {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using DirectoryServiceDataClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using DirectoryServiceDataBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * The SDK must use service-specific type for each service per specification.
  */
 using DirectoryServiceDataEndpointProviderBase =
-    EndpointProviderBase<DirectoryServiceDataClientConfiguration, DirectoryServiceDataBuiltInParameters, DirectoryServiceDataClientContextParameters>;
+    EndpointProviderBase<DirectoryServiceDataClientConfiguration, DirectoryServiceDataBuiltInParameters,
+                         DirectoryServiceDataClientContextParameters>;
 
 using DirectoryServiceDataDefaultEpProviderBase =
-    DefaultEndpointProvider<DirectoryServiceDataClientConfiguration, DirectoryServiceDataBuiltInParameters, DirectoryServiceDataClientContextParameters>;
+    BDDEndpointProvider<DirectoryServiceDataClientConfiguration, DirectoryServiceDataBuiltInParameters,
+                        DirectoryServiceDataClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_DIRECTORYSERVICEDATA_API DirectoryServiceDataEndpointProvider : public DirectoryServiceDataDefaultEpProviderBase
-{
-public:
-    using DirectoryServiceDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_DIRECTORYSERVICEDATA_API DirectoryServiceDataEndpointProvider : public DirectoryServiceDataDefaultEpProviderBase {
+ public:
+  using DirectoryServiceDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    DirectoryServiceDataEndpointProvider()
-      : DirectoryServiceDataDefaultEpProviderBase(Aws::DirectoryServiceData::DirectoryServiceDataEndpointRules::GetRulesBlob(), Aws::DirectoryServiceData::DirectoryServiceDataEndpointRules::RulesBlobSize)
-    {}
+  DirectoryServiceDataEndpointProvider();
 
-    ~DirectoryServiceDataEndpointProvider()
-    {
-    }
+  ~DirectoryServiceDataEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace DirectoryServiceData
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace DirectoryServiceData
+}  // namespace Aws

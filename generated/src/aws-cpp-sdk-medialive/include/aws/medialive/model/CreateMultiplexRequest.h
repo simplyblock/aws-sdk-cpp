@@ -4,133 +4,156 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
-#include <aws/medialive/MediaLiveRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/medialive/model/MultiplexSettings.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLiveRequest.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/medialive/model/MultiplexSettings.h>
 
-namespace Aws
-{
-namespace MediaLive
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace MediaLive {
+namespace Model {
+
+/**
+ * A request to create a multiplex.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateMultiplexRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateMultiplexRequest : public MediaLiveRequest {
+ public:
+  AWS_MEDIALIVE_API CreateMultiplexRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateMultiplex"; }
+
+  AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * A request to create a multiplex.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateMultiplexRequest">AWS
-   * API Reference</a></p>
+   * A list of availability zones for the multiplex. You must specify exactly two.
    */
-  class CreateMultiplexRequest : public MediaLiveRequest
-  {
-  public:
-    AWS_MEDIALIVE_API CreateMultiplexRequest();
+  inline const Aws::Vector<Aws::String>& GetAvailabilityZones() const { return m_availabilityZones; }
+  inline bool AvailabilityZonesHasBeenSet() const { return m_availabilityZonesHasBeenSet; }
+  template <typename AvailabilityZonesT = Aws::Vector<Aws::String>>
+  void SetAvailabilityZones(AvailabilityZonesT&& value) {
+    m_availabilityZonesHasBeenSet = true;
+    m_availabilityZones = std::forward<AvailabilityZonesT>(value);
+  }
+  template <typename AvailabilityZonesT = Aws::Vector<Aws::String>>
+  CreateMultiplexRequest& WithAvailabilityZones(AvailabilityZonesT&& value) {
+    SetAvailabilityZones(std::forward<AvailabilityZonesT>(value));
+    return *this;
+  }
+  template <typename AvailabilityZonesT = Aws::String>
+  CreateMultiplexRequest& AddAvailabilityZones(AvailabilityZonesT&& value) {
+    m_availabilityZonesHasBeenSet = true;
+    m_availabilityZones.emplace_back(std::forward<AvailabilityZonesT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateMultiplex"; }
+  ///@{
+  /**
+   * Configuration for a multiplex event.
+   */
+  inline const MultiplexSettings& GetMultiplexSettings() const { return m_multiplexSettings; }
+  inline bool MultiplexSettingsHasBeenSet() const { return m_multiplexSettingsHasBeenSet; }
+  template <typename MultiplexSettingsT = MultiplexSettings>
+  void SetMultiplexSettings(MultiplexSettingsT&& value) {
+    m_multiplexSettingsHasBeenSet = true;
+    m_multiplexSettings = std::forward<MultiplexSettingsT>(value);
+  }
+  template <typename MultiplexSettingsT = MultiplexSettings>
+  CreateMultiplexRequest& WithMultiplexSettings(MultiplexSettingsT&& value) {
+    SetMultiplexSettings(std::forward<MultiplexSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * Name of multiplex.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateMultiplexRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-
-    ///@{
-    /**
-     * A list of availability zones for the multiplex. You must specify exactly two.
-     */
-    inline const Aws::Vector<Aws::String>& GetAvailabilityZones() const{ return m_availabilityZones; }
-    inline bool AvailabilityZonesHasBeenSet() const { return m_availabilityZonesHasBeenSet; }
-    inline void SetAvailabilityZones(const Aws::Vector<Aws::String>& value) { m_availabilityZonesHasBeenSet = true; m_availabilityZones = value; }
-    inline void SetAvailabilityZones(Aws::Vector<Aws::String>&& value) { m_availabilityZonesHasBeenSet = true; m_availabilityZones = std::move(value); }
-    inline CreateMultiplexRequest& WithAvailabilityZones(const Aws::Vector<Aws::String>& value) { SetAvailabilityZones(value); return *this;}
-    inline CreateMultiplexRequest& WithAvailabilityZones(Aws::Vector<Aws::String>&& value) { SetAvailabilityZones(std::move(value)); return *this;}
-    inline CreateMultiplexRequest& AddAvailabilityZones(const Aws::String& value) { m_availabilityZonesHasBeenSet = true; m_availabilityZones.push_back(value); return *this; }
-    inline CreateMultiplexRequest& AddAvailabilityZones(Aws::String&& value) { m_availabilityZonesHasBeenSet = true; m_availabilityZones.push_back(std::move(value)); return *this; }
-    inline CreateMultiplexRequest& AddAvailabilityZones(const char* value) { m_availabilityZonesHasBeenSet = true; m_availabilityZones.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * Configuration for a multiplex event.
-     */
-    inline const MultiplexSettings& GetMultiplexSettings() const{ return m_multiplexSettings; }
-    inline bool MultiplexSettingsHasBeenSet() const { return m_multiplexSettingsHasBeenSet; }
-    inline void SetMultiplexSettings(const MultiplexSettings& value) { m_multiplexSettingsHasBeenSet = true; m_multiplexSettings = value; }
-    inline void SetMultiplexSettings(MultiplexSettings&& value) { m_multiplexSettingsHasBeenSet = true; m_multiplexSettings = std::move(value); }
-    inline CreateMultiplexRequest& WithMultiplexSettings(const MultiplexSettings& value) { SetMultiplexSettings(value); return *this;}
-    inline CreateMultiplexRequest& WithMultiplexSettings(MultiplexSettings&& value) { SetMultiplexSettings(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * Name of multiplex.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateMultiplexRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateMultiplexRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateMultiplexRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * Unique request ID. This prevents retries from creating multiple
+  ///@{
+  /**
+   * Unique request ID. This prevents retries from creating multiple
 resources.
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline bool RequestIdHasBeenSet() const { return m_requestIdHasBeenSet; }
-    inline void SetRequestId(const Aws::String& value) { m_requestIdHasBeenSet = true; m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestIdHasBeenSet = true; m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestIdHasBeenSet = true; m_requestId.assign(value); }
-    inline CreateMultiplexRequest& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateMultiplexRequest& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateMultiplexRequest& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  inline bool RequestIdHasBeenSet() const { return m_requestIdHasBeenSet; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateMultiplexRequest& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A collection of key-value pairs.
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateMultiplexRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateMultiplexRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateMultiplexRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateMultiplexRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateMultiplexRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateMultiplexRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateMultiplexRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateMultiplexRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateMultiplexRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  ///@{
+  /**
+   * A collection of key-value pairs.
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateMultiplexRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateMultiplexRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_availabilityZones;
 
-    Aws::Vector<Aws::String> m_availabilityZones;
-    bool m_availabilityZonesHasBeenSet = false;
+  MultiplexSettings m_multiplexSettings;
 
-    MultiplexSettings m_multiplexSettings;
-    bool m_multiplexSettingsHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_requestId{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    Aws::String m_requestId;
-    bool m_requestIdHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_availabilityZonesHasBeenSet = false;
+  bool m_multiplexSettingsHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

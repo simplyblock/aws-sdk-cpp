@@ -6,207 +6,351 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/ActionType.h>
-#include <aws/connect/model/TaskActionDefinition.h>
-#include <aws/connect/model/EventBridgeActionDefinition.h>
 #include <aws/connect/model/AssignContactCategoryActionDefinition.h>
-#include <aws/connect/model/SendNotificationActionDefinition.h>
+#include <aws/connect/model/AssignSlaActionDefinition.h>
 #include <aws/connect/model/CreateCaseActionDefinition.h>
-#include <aws/connect/model/UpdateCaseActionDefinition.h>
+#include <aws/connect/model/EndAssociatedEmailsActionDefinition.h>
 #include <aws/connect/model/EndAssociatedTasksActionDefinition.h>
+#include <aws/connect/model/EventBridgeActionDefinition.h>
+#include <aws/connect/model/ExtractInformationActionDefinition.h>
+#include <aws/connect/model/SendInAppNotificationActionDefinition.h>
+#include <aws/connect/model/SendNotificationActionDefinition.h>
 #include <aws/connect/model/SubmitAutoEvaluationActionDefinition.h>
+#include <aws/connect/model/TaskActionDefinition.h>
+#include <aws/connect/model/UpdateCaseActionDefinition.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>Information about the action to be performed when a rule is
+ * triggered.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/RuleAction">AWS
+ * API Reference</a></p>
+ */
+class RuleAction {
+ public:
+  AWS_CONNECT_API RuleAction() = default;
+  AWS_CONNECT_API RuleAction(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API RuleAction& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about the action to be performed when a rule is
-   * triggered.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/RuleAction">AWS
-   * API Reference</a></p>
+   * <p>The type of action that creates a rule.</p>
    */
-  class RuleAction
-  {
-  public:
-    AWS_CONNECT_API RuleAction();
-    AWS_CONNECT_API RuleAction(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API RuleAction& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ActionType GetActionType() const { return m_actionType; }
+  inline bool ActionTypeHasBeenSet() const { return m_actionTypeHasBeenSet; }
+  inline void SetActionType(ActionType value) {
+    m_actionTypeHasBeenSet = true;
+    m_actionType = value;
+  }
+  inline RuleAction& WithActionType(ActionType value) {
+    SetActionType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Information about the task action. This field is required if
+   * <code>TriggerEventSource</code> is one of the following values:
+   * <code>OnZendeskTicketCreate</code> | <code>OnZendeskTicketStatusUpdate</code> |
+   * <code>OnSalesforceCaseCreate</code> </p>
+   */
+  inline const TaskActionDefinition& GetTaskAction() const { return m_taskAction; }
+  inline bool TaskActionHasBeenSet() const { return m_taskActionHasBeenSet; }
+  template <typename TaskActionT = TaskActionDefinition>
+  void SetTaskAction(TaskActionT&& value) {
+    m_taskActionHasBeenSet = true;
+    m_taskAction = std::forward<TaskActionT>(value);
+  }
+  template <typename TaskActionT = TaskActionDefinition>
+  RuleAction& WithTaskAction(TaskActionT&& value) {
+    SetTaskAction(std::forward<TaskActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of action that creates a rule.</p>
-     */
-    inline const ActionType& GetActionType() const{ return m_actionType; }
-    inline bool ActionTypeHasBeenSet() const { return m_actionTypeHasBeenSet; }
-    inline void SetActionType(const ActionType& value) { m_actionTypeHasBeenSet = true; m_actionType = value; }
-    inline void SetActionType(ActionType&& value) { m_actionTypeHasBeenSet = true; m_actionType = std::move(value); }
-    inline RuleAction& WithActionType(const ActionType& value) { SetActionType(value); return *this;}
-    inline RuleAction& WithActionType(ActionType&& value) { SetActionType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the EventBridge action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
+   * | <code>OnRealTimeCallAnalysisAvailable</code> |
+   * <code>OnRealTimeChatAnalysisAvailable</code> |
+   * <code>OnPostChatAnalysisAvailable</code> |
+   * <code>OnContactEvaluationSubmit</code> | <code>OnMetricDataUpdate</code> </p>
+   */
+  inline const EventBridgeActionDefinition& GetEventBridgeAction() const { return m_eventBridgeAction; }
+  inline bool EventBridgeActionHasBeenSet() const { return m_eventBridgeActionHasBeenSet; }
+  template <typename EventBridgeActionT = EventBridgeActionDefinition>
+  void SetEventBridgeAction(EventBridgeActionT&& value) {
+    m_eventBridgeActionHasBeenSet = true;
+    m_eventBridgeAction = std::forward<EventBridgeActionT>(value);
+  }
+  template <typename EventBridgeActionT = EventBridgeActionDefinition>
+  RuleAction& WithEventBridgeAction(EventBridgeActionT&& value) {
+    SetEventBridgeAction(std::forward<EventBridgeActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the task action. This field is required if
-     * <code>TriggerEventSource</code> is one of the following values:
-     * <code>OnZendeskTicketCreate</code> | <code>OnZendeskTicketStatusUpdate</code> |
-     * <code>OnSalesforceCaseCreate</code> </p>
-     */
-    inline const TaskActionDefinition& GetTaskAction() const{ return m_taskAction; }
-    inline bool TaskActionHasBeenSet() const { return m_taskActionHasBeenSet; }
-    inline void SetTaskAction(const TaskActionDefinition& value) { m_taskActionHasBeenSet = true; m_taskAction = value; }
-    inline void SetTaskAction(TaskActionDefinition&& value) { m_taskActionHasBeenSet = true; m_taskAction = std::move(value); }
-    inline RuleAction& WithTaskAction(const TaskActionDefinition& value) { SetTaskAction(value); return *this;}
-    inline RuleAction& WithTaskAction(TaskActionDefinition&& value) { SetTaskAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the contact category action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
+   * | <code>OnRealTimeCallAnalysisAvailable</code> |
+   * <code>OnRealTimeChatAnalysisAvailable</code> |
+   * <code>OnPostChatAnalysisAvailable</code> | <code>OnZendeskTicketCreate</code> |
+   * <code>OnZendeskTicketStatusUpdate</code> | <code>OnSalesforceCaseCreate</code>
+   * </p>
+   */
+  inline const AssignContactCategoryActionDefinition& GetAssignContactCategoryAction() const { return m_assignContactCategoryAction; }
+  inline bool AssignContactCategoryActionHasBeenSet() const { return m_assignContactCategoryActionHasBeenSet; }
+  template <typename AssignContactCategoryActionT = AssignContactCategoryActionDefinition>
+  void SetAssignContactCategoryAction(AssignContactCategoryActionT&& value) {
+    m_assignContactCategoryActionHasBeenSet = true;
+    m_assignContactCategoryAction = std::forward<AssignContactCategoryActionT>(value);
+  }
+  template <typename AssignContactCategoryActionT = AssignContactCategoryActionDefinition>
+  RuleAction& WithAssignContactCategoryAction(AssignContactCategoryActionT&& value) {
+    SetAssignContactCategoryAction(std::forward<AssignContactCategoryActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the EventBridge action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
-     * | <code>OnRealTimeCallAnalysisAvailable</code> |
-     * <code>OnRealTimeChatAnalysisAvailable</code> |
-     * <code>OnPostChatAnalysisAvailable</code> |
-     * <code>OnContactEvaluationSubmit</code> | <code>OnMetricDataUpdate</code> </p>
-     */
-    inline const EventBridgeActionDefinition& GetEventBridgeAction() const{ return m_eventBridgeAction; }
-    inline bool EventBridgeActionHasBeenSet() const { return m_eventBridgeActionHasBeenSet; }
-    inline void SetEventBridgeAction(const EventBridgeActionDefinition& value) { m_eventBridgeActionHasBeenSet = true; m_eventBridgeAction = value; }
-    inline void SetEventBridgeAction(EventBridgeActionDefinition&& value) { m_eventBridgeActionHasBeenSet = true; m_eventBridgeAction = std::move(value); }
-    inline RuleAction& WithEventBridgeAction(const EventBridgeActionDefinition& value) { SetEventBridgeAction(value); return *this;}
-    inline RuleAction& WithEventBridgeAction(EventBridgeActionDefinition&& value) { SetEventBridgeAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the send notification action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
+   * | <code>OnRealTimeCallAnalysisAvailable</code> |
+   * <code>OnRealTimeChatAnalysisAvailable</code> |
+   * <code>OnPostChatAnalysisAvailable</code> |
+   * <code>OnContactEvaluationSubmit</code> | <code>OnMetricDataUpdate</code> </p>
+   */
+  inline const SendNotificationActionDefinition& GetSendNotificationAction() const { return m_sendNotificationAction; }
+  inline bool SendNotificationActionHasBeenSet() const { return m_sendNotificationActionHasBeenSet; }
+  template <typename SendNotificationActionT = SendNotificationActionDefinition>
+  void SetSendNotificationAction(SendNotificationActionT&& value) {
+    m_sendNotificationActionHasBeenSet = true;
+    m_sendNotificationAction = std::forward<SendNotificationActionT>(value);
+  }
+  template <typename SendNotificationActionT = SendNotificationActionDefinition>
+  RuleAction& WithSendNotificationAction(SendNotificationActionT&& value) {
+    SetSendNotificationAction(std::forward<SendNotificationActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the contact category action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
-     * | <code>OnRealTimeCallAnalysisAvailable</code> |
-     * <code>OnRealTimeChatAnalysisAvailable</code> |
-     * <code>OnPostChatAnalysisAvailable</code> | <code>OnZendeskTicketCreate</code> |
-     * <code>OnZendeskTicketStatusUpdate</code> | <code>OnSalesforceCaseCreate</code>
-     * </p>
-     */
-    inline const AssignContactCategoryActionDefinition& GetAssignContactCategoryAction() const{ return m_assignContactCategoryAction; }
-    inline bool AssignContactCategoryActionHasBeenSet() const { return m_assignContactCategoryActionHasBeenSet; }
-    inline void SetAssignContactCategoryAction(const AssignContactCategoryActionDefinition& value) { m_assignContactCategoryActionHasBeenSet = true; m_assignContactCategoryAction = value; }
-    inline void SetAssignContactCategoryAction(AssignContactCategoryActionDefinition&& value) { m_assignContactCategoryActionHasBeenSet = true; m_assignContactCategoryAction = std::move(value); }
-    inline RuleAction& WithAssignContactCategoryAction(const AssignContactCategoryActionDefinition& value) { SetAssignContactCategoryAction(value); return *this;}
-    inline RuleAction& WithAssignContactCategoryAction(AssignContactCategoryActionDefinition&& value) { SetAssignContactCategoryAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the create case action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
+   * | <code>OnPostChatAnalysisAvailable</code>.</p>
+   */
+  inline const CreateCaseActionDefinition& GetCreateCaseAction() const { return m_createCaseAction; }
+  inline bool CreateCaseActionHasBeenSet() const { return m_createCaseActionHasBeenSet; }
+  template <typename CreateCaseActionT = CreateCaseActionDefinition>
+  void SetCreateCaseAction(CreateCaseActionT&& value) {
+    m_createCaseActionHasBeenSet = true;
+    m_createCaseAction = std::forward<CreateCaseActionT>(value);
+  }
+  template <typename CreateCaseActionT = CreateCaseActionDefinition>
+  RuleAction& WithCreateCaseAction(CreateCaseActionT&& value) {
+    SetCreateCaseAction(std::forward<CreateCaseActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the send notification action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
-     * | <code>OnRealTimeCallAnalysisAvailable</code> |
-     * <code>OnRealTimeChatAnalysisAvailable</code> |
-     * <code>OnPostChatAnalysisAvailable</code> |
-     * <code>OnContactEvaluationSubmit</code> | <code>OnMetricDataUpdate</code> </p>
-     */
-    inline const SendNotificationActionDefinition& GetSendNotificationAction() const{ return m_sendNotificationAction; }
-    inline bool SendNotificationActionHasBeenSet() const { return m_sendNotificationActionHasBeenSet; }
-    inline void SetSendNotificationAction(const SendNotificationActionDefinition& value) { m_sendNotificationActionHasBeenSet = true; m_sendNotificationAction = value; }
-    inline void SetSendNotificationAction(SendNotificationActionDefinition&& value) { m_sendNotificationActionHasBeenSet = true; m_sendNotificationAction = std::move(value); }
-    inline RuleAction& WithSendNotificationAction(const SendNotificationActionDefinition& value) { SetSendNotificationAction(value); return *this;}
-    inline RuleAction& WithSendNotificationAction(SendNotificationActionDefinition&& value) { SetSendNotificationAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the update case action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnCaseCreate</code> |
+   * <code>OnCaseUpdate</code>.</p>
+   */
+  inline const UpdateCaseActionDefinition& GetUpdateCaseAction() const { return m_updateCaseAction; }
+  inline bool UpdateCaseActionHasBeenSet() const { return m_updateCaseActionHasBeenSet; }
+  template <typename UpdateCaseActionT = UpdateCaseActionDefinition>
+  void SetUpdateCaseAction(UpdateCaseActionT&& value) {
+    m_updateCaseActionHasBeenSet = true;
+    m_updateCaseAction = std::forward<UpdateCaseActionT>(value);
+  }
+  template <typename UpdateCaseActionT = UpdateCaseActionDefinition>
+  RuleAction& WithUpdateCaseAction(UpdateCaseActionT&& value) {
+    SetUpdateCaseAction(std::forward<UpdateCaseActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the create case action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnPostCallAnalysisAvailable</code>
-     * | <code>OnPostChatAnalysisAvailable</code>.</p>
-     */
-    inline const CreateCaseActionDefinition& GetCreateCaseAction() const{ return m_createCaseAction; }
-    inline bool CreateCaseActionHasBeenSet() const { return m_createCaseActionHasBeenSet; }
-    inline void SetCreateCaseAction(const CreateCaseActionDefinition& value) { m_createCaseActionHasBeenSet = true; m_createCaseAction = value; }
-    inline void SetCreateCaseAction(CreateCaseActionDefinition&& value) { m_createCaseActionHasBeenSet = true; m_createCaseAction = std::move(value); }
-    inline RuleAction& WithCreateCaseAction(const CreateCaseActionDefinition& value) { SetCreateCaseAction(value); return *this;}
-    inline RuleAction& WithCreateCaseAction(CreateCaseActionDefinition&& value) { SetCreateCaseAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the assign SLA action.</p>
+   */
+  inline const AssignSlaActionDefinition& GetAssignSlaAction() const { return m_assignSlaAction; }
+  inline bool AssignSlaActionHasBeenSet() const { return m_assignSlaActionHasBeenSet; }
+  template <typename AssignSlaActionT = AssignSlaActionDefinition>
+  void SetAssignSlaAction(AssignSlaActionT&& value) {
+    m_assignSlaActionHasBeenSet = true;
+    m_assignSlaAction = std::forward<AssignSlaActionT>(value);
+  }
+  template <typename AssignSlaActionT = AssignSlaActionDefinition>
+  RuleAction& WithAssignSlaAction(AssignSlaActionT&& value) {
+    SetAssignSlaAction(std::forward<AssignSlaActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the update case action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnCaseCreate</code> |
-     * <code>OnCaseUpdate</code>.</p>
-     */
-    inline const UpdateCaseActionDefinition& GetUpdateCaseAction() const{ return m_updateCaseAction; }
-    inline bool UpdateCaseActionHasBeenSet() const { return m_updateCaseActionHasBeenSet; }
-    inline void SetUpdateCaseAction(const UpdateCaseActionDefinition& value) { m_updateCaseActionHasBeenSet = true; m_updateCaseAction = value; }
-    inline void SetUpdateCaseAction(UpdateCaseActionDefinition&& value) { m_updateCaseActionHasBeenSet = true; m_updateCaseAction = std::move(value); }
-    inline RuleAction& WithUpdateCaseAction(const UpdateCaseActionDefinition& value) { SetUpdateCaseAction(value); return *this;}
-    inline RuleAction& WithUpdateCaseAction(UpdateCaseActionDefinition&& value) { SetUpdateCaseAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the end associated tasks action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnCaseUpdate</code>.</p>
+   */
+  inline const EndAssociatedTasksActionDefinition& GetEndAssociatedTasksAction() const { return m_endAssociatedTasksAction; }
+  inline bool EndAssociatedTasksActionHasBeenSet() const { return m_endAssociatedTasksActionHasBeenSet; }
+  template <typename EndAssociatedTasksActionT = EndAssociatedTasksActionDefinition>
+  void SetEndAssociatedTasksAction(EndAssociatedTasksActionT&& value) {
+    m_endAssociatedTasksActionHasBeenSet = true;
+    m_endAssociatedTasksAction = std::forward<EndAssociatedTasksActionT>(value);
+  }
+  template <typename EndAssociatedTasksActionT = EndAssociatedTasksActionDefinition>
+  RuleAction& WithEndAssociatedTasksAction(EndAssociatedTasksActionT&& value) {
+    SetEndAssociatedTasksAction(std::forward<EndAssociatedTasksActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the end associated tasks action.</p> <p>Supported only for
-     * <code>TriggerEventSource</code> values: <code>OnCaseUpdate</code>.</p>
-     */
-    inline const EndAssociatedTasksActionDefinition& GetEndAssociatedTasksAction() const{ return m_endAssociatedTasksAction; }
-    inline bool EndAssociatedTasksActionHasBeenSet() const { return m_endAssociatedTasksActionHasBeenSet; }
-    inline void SetEndAssociatedTasksAction(const EndAssociatedTasksActionDefinition& value) { m_endAssociatedTasksActionHasBeenSet = true; m_endAssociatedTasksAction = value; }
-    inline void SetEndAssociatedTasksAction(EndAssociatedTasksActionDefinition&& value) { m_endAssociatedTasksActionHasBeenSet = true; m_endAssociatedTasksAction = std::move(value); }
-    inline RuleAction& WithEndAssociatedTasksAction(const EndAssociatedTasksActionDefinition& value) { SetEndAssociatedTasksAction(value); return *this;}
-    inline RuleAction& WithEndAssociatedTasksAction(EndAssociatedTasksActionDefinition&& value) { SetEndAssociatedTasksAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the end associated emails action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnCaseUpdate</code>.</p>
+   */
+  inline const EndAssociatedEmailsActionDefinition& GetEndAssociatedEmailsAction() const { return m_endAssociatedEmailsAction; }
+  inline bool EndAssociatedEmailsActionHasBeenSet() const { return m_endAssociatedEmailsActionHasBeenSet; }
+  template <typename EndAssociatedEmailsActionT = EndAssociatedEmailsActionDefinition>
+  void SetEndAssociatedEmailsAction(EndAssociatedEmailsActionT&& value) {
+    m_endAssociatedEmailsActionHasBeenSet = true;
+    m_endAssociatedEmailsAction = std::forward<EndAssociatedEmailsActionT>(value);
+  }
+  template <typename EndAssociatedEmailsActionT = EndAssociatedEmailsActionDefinition>
+  RuleAction& WithEndAssociatedEmailsAction(EndAssociatedEmailsActionT&& value) {
+    SetEndAssociatedEmailsAction(std::forward<EndAssociatedEmailsActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the submit automated evaluation action.</p>
-     */
-    inline const SubmitAutoEvaluationActionDefinition& GetSubmitAutoEvaluationAction() const{ return m_submitAutoEvaluationAction; }
-    inline bool SubmitAutoEvaluationActionHasBeenSet() const { return m_submitAutoEvaluationActionHasBeenSet; }
-    inline void SetSubmitAutoEvaluationAction(const SubmitAutoEvaluationActionDefinition& value) { m_submitAutoEvaluationActionHasBeenSet = true; m_submitAutoEvaluationAction = value; }
-    inline void SetSubmitAutoEvaluationAction(SubmitAutoEvaluationActionDefinition&& value) { m_submitAutoEvaluationActionHasBeenSet = true; m_submitAutoEvaluationAction = std::move(value); }
-    inline RuleAction& WithSubmitAutoEvaluationAction(const SubmitAutoEvaluationActionDefinition& value) { SetSubmitAutoEvaluationAction(value); return *this;}
-    inline RuleAction& WithSubmitAutoEvaluationAction(SubmitAutoEvaluationActionDefinition&& value) { SetSubmitAutoEvaluationAction(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Information about the submit automated evaluation action.</p>
+   */
+  inline const SubmitAutoEvaluationActionDefinition& GetSubmitAutoEvaluationAction() const { return m_submitAutoEvaluationAction; }
+  inline bool SubmitAutoEvaluationActionHasBeenSet() const { return m_submitAutoEvaluationActionHasBeenSet; }
+  template <typename SubmitAutoEvaluationActionT = SubmitAutoEvaluationActionDefinition>
+  void SetSubmitAutoEvaluationAction(SubmitAutoEvaluationActionT&& value) {
+    m_submitAutoEvaluationActionHasBeenSet = true;
+    m_submitAutoEvaluationAction = std::forward<SubmitAutoEvaluationActionT>(value);
+  }
+  template <typename SubmitAutoEvaluationActionT = SubmitAutoEvaluationActionDefinition>
+  RuleAction& WithSubmitAutoEvaluationAction(SubmitAutoEvaluationActionT&& value) {
+    SetSubmitAutoEvaluationAction(std::forward<SubmitAutoEvaluationActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ActionType m_actionType;
-    bool m_actionTypeHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Information about the extract information action.</p>
+   */
+  inline const ExtractInformationActionDefinition& GetExtractInformationAction() const { return m_extractInformationAction; }
+  inline bool ExtractInformationActionHasBeenSet() const { return m_extractInformationActionHasBeenSet; }
+  template <typename ExtractInformationActionT = ExtractInformationActionDefinition>
+  void SetExtractInformationAction(ExtractInformationActionT&& value) {
+    m_extractInformationActionHasBeenSet = true;
+    m_extractInformationAction = std::forward<ExtractInformationActionT>(value);
+  }
+  template <typename ExtractInformationActionT = ExtractInformationActionDefinition>
+  RuleAction& WithExtractInformationAction(ExtractInformationActionT&& value) {
+    SetExtractInformationAction(std::forward<ExtractInformationActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    TaskActionDefinition m_taskAction;
-    bool m_taskActionHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Information about the send in-app notification action.</p> <p>Supported only
+   * for <code>TriggerEventSource</code> values:
+   * <code>OnPostCallAnalysisAvailable</code> |
+   * <code>OnRealTimeCallAnalysisAvailable</code> |
+   * <code>OnRealTimeChatAnalysisAvailable</code> |
+   * <code>OnPostChatAnalysisAvailable</code> | <code>OnAfterCallWorkAvailable</code>
+   * | <code>OnAfterChatWorkAvailable</code> | <code>OnEmailAnalysisAvailable</code>
+   * | <code>OnContactEvaluationSubmit</code> | <code>OnCaseCreate</code> |
+   * <code>OnCaseUpdate</code> | <code>OnSlaBreach</code> |
+   * <code>OnSchedulePublish</code> | <code>OnScheduleUpdate</code> |
+   * <code>OnScheduleTimeOffRequestActivity</code> </p>
+   */
+  inline const SendInAppNotificationActionDefinition& GetSendInAppNotificationAction() const { return m_sendInAppNotificationAction; }
+  inline bool SendInAppNotificationActionHasBeenSet() const { return m_sendInAppNotificationActionHasBeenSet; }
+  template <typename SendInAppNotificationActionT = SendInAppNotificationActionDefinition>
+  void SetSendInAppNotificationAction(SendInAppNotificationActionT&& value) {
+    m_sendInAppNotificationActionHasBeenSet = true;
+    m_sendInAppNotificationAction = std::forward<SendInAppNotificationActionT>(value);
+  }
+  template <typename SendInAppNotificationActionT = SendInAppNotificationActionDefinition>
+  RuleAction& WithSendInAppNotificationAction(SendInAppNotificationActionT&& value) {
+    SetSendInAppNotificationAction(std::forward<SendInAppNotificationActionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ActionType m_actionType{ActionType::NOT_SET};
 
-    EventBridgeActionDefinition m_eventBridgeAction;
-    bool m_eventBridgeActionHasBeenSet = false;
+  TaskActionDefinition m_taskAction;
 
-    AssignContactCategoryActionDefinition m_assignContactCategoryAction;
-    bool m_assignContactCategoryActionHasBeenSet = false;
+  EventBridgeActionDefinition m_eventBridgeAction;
 
-    SendNotificationActionDefinition m_sendNotificationAction;
-    bool m_sendNotificationActionHasBeenSet = false;
+  AssignContactCategoryActionDefinition m_assignContactCategoryAction;
 
-    CreateCaseActionDefinition m_createCaseAction;
-    bool m_createCaseActionHasBeenSet = false;
+  SendNotificationActionDefinition m_sendNotificationAction;
 
-    UpdateCaseActionDefinition m_updateCaseAction;
-    bool m_updateCaseActionHasBeenSet = false;
+  CreateCaseActionDefinition m_createCaseAction;
 
-    EndAssociatedTasksActionDefinition m_endAssociatedTasksAction;
-    bool m_endAssociatedTasksActionHasBeenSet = false;
+  UpdateCaseActionDefinition m_updateCaseAction;
 
-    SubmitAutoEvaluationActionDefinition m_submitAutoEvaluationAction;
-    bool m_submitAutoEvaluationActionHasBeenSet = false;
-  };
+  AssignSlaActionDefinition m_assignSlaAction;
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+  EndAssociatedTasksActionDefinition m_endAssociatedTasksAction;
+
+  EndAssociatedEmailsActionDefinition m_endAssociatedEmailsAction;
+
+  SubmitAutoEvaluationActionDefinition m_submitAutoEvaluationAction;
+
+  ExtractInformationActionDefinition m_extractInformationAction;
+
+  SendInAppNotificationActionDefinition m_sendInAppNotificationAction;
+  bool m_actionTypeHasBeenSet = false;
+  bool m_taskActionHasBeenSet = false;
+  bool m_eventBridgeActionHasBeenSet = false;
+  bool m_assignContactCategoryActionHasBeenSet = false;
+  bool m_sendNotificationActionHasBeenSet = false;
+  bool m_createCaseActionHasBeenSet = false;
+  bool m_updateCaseActionHasBeenSet = false;
+  bool m_assignSlaActionHasBeenSet = false;
+  bool m_endAssociatedTasksActionHasBeenSet = false;
+  bool m_endAssociatedEmailsActionHasBeenSet = false;
+  bool m_submitAutoEvaluationActionHasBeenSet = false;
+  bool m_extractInformationActionHasBeenSet = false;
+  bool m_sendInAppNotificationActionHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

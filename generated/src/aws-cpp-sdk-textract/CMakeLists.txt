@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-textract "C++ SDK for the AWS textract service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-textract "C++ SDK for Amazon Textract" aws-cpp-sdk-core)
 
 file(GLOB AWS_TEXTRACT_HEADERS
     "include/aws/textract/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_TEXTRACT_HEADERS
 
 file(GLOB AWS_TEXTRACT_MODEL_HEADERS
     "include/aws/textract/model/*.h"
+)
+
+file(GLOB AWS_TEXTRACT_INTERNAL_HEADERS
+    "include/aws/textract/internal/*.h"
 )
 
 file(GLOB AWS_TEXTRACT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_TEXTRACT_MODEL_SOURCE
 
 file(GLOB TEXTRACT_UNIFIED_HEADERS
     ${AWS_TEXTRACT_HEADERS}
+    ${AWS_TEXTRACT_INTERNAL_HEADERS}
     ${AWS_TEXTRACT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\textract" FILES ${AWS_TEXTRACT_HEADERS})
+        source_group("Header Files\\aws\\textract\\internal" FILES ${AWS_TEXTRACT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\textract\\model" FILES ${AWS_TEXTRACT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_TEXTRACT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_TEXTRACT_MODEL_SOURCE})

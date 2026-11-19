@@ -6,67 +6,61 @@
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
 #include <aws/support/SupportErrors.h>
+#include <aws/support/model/ThrottlingException.h>
 
 using namespace Aws::Client;
 using namespace Aws::Utils;
 using namespace Aws::Support;
+using namespace Aws::Support::Model;
 
-namespace Aws
-{
-namespace Support
-{
-namespace SupportErrorMapper
-{
+namespace Aws {
+namespace Support {
+template <>
+AWS_SUPPORT_API ThrottlingException SupportError::GetModeledError() {
+  assert(this->GetErrorType() == SupportErrors::THROTTLING);
+  return ThrottlingException(this->GetJsonPayload().View());
+}
+
+namespace SupportErrorMapper {
 
 static const int CASE_ID_NOT_FOUND_HASH = HashingUtils::HashString("CaseIdNotFound");
 static const int CASE_CREATION_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("CaseCreationLimitExceeded");
 static const int ATTACHMENT_SET_SIZE_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("AttachmentSetSizeLimitExceeded");
 static const int ATTACHMENT_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("AttachmentLimitExceeded");
+static const int UPLOAD_ID_NOT_FOUND_HASH = HashingUtils::HashString("UploadIdNotFound");
 static const int ATTACHMENT_ID_NOT_FOUND_HASH = HashingUtils::HashString("AttachmentIdNotFound");
 static const int ATTACHMENT_SET_ID_NOT_FOUND_HASH = HashingUtils::HashString("AttachmentSetIdNotFound");
+static const int DRY_RUN_OPERATION_HASH = HashingUtils::HashString("DryRunOperationException");
 static const int ATTACHMENT_SET_EXPIRED_HASH = HashingUtils::HashString("AttachmentSetExpired");
 static const int DESCRIBE_ATTACHMENT_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("DescribeAttachmentLimitExceeded");
 
-
-AWSError<CoreErrors> GetErrorForName(const char* errorName)
-{
+AWSError<CoreErrors> GetErrorForName(const char* errorName) {
   int hashCode = HashingUtils::HashString(errorName);
 
-  if (hashCode == CASE_ID_NOT_FOUND_HASH)
-  {
+  if (hashCode == CASE_ID_NOT_FOUND_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::CASE_ID_NOT_FOUND), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == CASE_CREATION_LIMIT_EXCEEDED_HASH)
-  {
+  } else if (hashCode == CASE_CREATION_LIMIT_EXCEEDED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::CASE_CREATION_LIMIT_EXCEEDED), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == ATTACHMENT_SET_SIZE_LIMIT_EXCEEDED_HASH)
-  {
+  } else if (hashCode == ATTACHMENT_SET_SIZE_LIMIT_EXCEEDED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::ATTACHMENT_SET_SIZE_LIMIT_EXCEEDED), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == ATTACHMENT_LIMIT_EXCEEDED_HASH)
-  {
+  } else if (hashCode == ATTACHMENT_LIMIT_EXCEEDED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::ATTACHMENT_LIMIT_EXCEEDED), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == ATTACHMENT_ID_NOT_FOUND_HASH)
-  {
+  } else if (hashCode == UPLOAD_ID_NOT_FOUND_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::UPLOAD_ID_NOT_FOUND), RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == ATTACHMENT_ID_NOT_FOUND_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::ATTACHMENT_ID_NOT_FOUND), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == ATTACHMENT_SET_ID_NOT_FOUND_HASH)
-  {
+  } else if (hashCode == ATTACHMENT_SET_ID_NOT_FOUND_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::ATTACHMENT_SET_ID_NOT_FOUND), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == ATTACHMENT_SET_EXPIRED_HASH)
-  {
+  } else if (hashCode == DRY_RUN_OPERATION_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::DRY_RUN_OPERATION), RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == ATTACHMENT_SET_EXPIRED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::ATTACHMENT_SET_EXPIRED), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == DESCRIBE_ATTACHMENT_LIMIT_EXCEEDED_HASH)
-  {
+  } else if (hashCode == DESCRIBE_ATTACHMENT_LIMIT_EXCEEDED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(SupportErrors::DESCRIBE_ATTACHMENT_LIMIT_EXCEEDED), RetryableType::NOT_RETRYABLE);
   }
   return AWSError<CoreErrors>(CoreErrors::UNKNOWN, false);
 }
 
-} // namespace SupportErrorMapper
-} // namespace Support
-} // namespace Aws
+}  // namespace SupportErrorMapper
+}  // namespace Support
+}  // namespace Aws

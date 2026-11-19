@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/iotwireless/IoTWireless_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotwireless/IoTWireless_EXPORTS.h>
 
-#include <aws/iotwireless/IoTWirelessEndpointRules.h>
-
-
-namespace Aws
-{
-namespace IoTWireless
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace IoTWireless {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IoTWirelessClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IoTWirelessEndpointProviderBase =
     EndpointProviderBase<IoTWirelessClientConfiguration, IoTWirelessBuiltInParameters, IoTWirelessClientContextParameters>;
 
 using IoTWirelessDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTWirelessClientConfiguration, IoTWirelessBuiltInParameters, IoTWirelessClientContextParameters>;
+    BDDEndpointProvider<IoTWirelessClientConfiguration, IoTWirelessBuiltInParameters, IoTWirelessClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IOTWIRELESS_API IoTWirelessEndpointProvider : public IoTWirelessDefaultEpProviderBase
-{
-public:
-    using IoTWirelessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IOTWIRELESS_API IoTWirelessEndpointProvider : public IoTWirelessDefaultEpProviderBase {
+ public:
+  using IoTWirelessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IoTWirelessEndpointProvider()
-      : IoTWirelessDefaultEpProviderBase(Aws::IoTWireless::IoTWirelessEndpointRules::GetRulesBlob(), Aws::IoTWireless::IoTWirelessEndpointRules::RulesBlobSize)
-    {}
+  IoTWirelessEndpointProvider();
 
-    ~IoTWirelessEndpointProvider()
-    {
-    }
+  ~IoTWirelessEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace IoTWireless
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace IoTWireless
+}  // namespace Aws

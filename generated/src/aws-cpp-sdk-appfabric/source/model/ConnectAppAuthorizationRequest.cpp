@@ -12,26 +12,12 @@ using namespace Aws::AppFabric::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ConnectAppAuthorizationRequest::ConnectAppAuthorizationRequest() : 
-    m_appBundleIdentifierHasBeenSet(false),
-    m_appAuthorizationIdentifierHasBeenSet(false),
-    m_authRequestHasBeenSet(false)
-{
-}
-
-Aws::String ConnectAppAuthorizationRequest::SerializePayload() const
-{
+Aws::String ConnectAppAuthorizationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_authRequestHasBeenSet)
-  {
-   payload.WithObject("authRequest", m_authRequest.Jsonize());
-
+  if (m_authRequestHasBeenSet) {
+    payload.WithObject("authRequest", m_authRequest.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

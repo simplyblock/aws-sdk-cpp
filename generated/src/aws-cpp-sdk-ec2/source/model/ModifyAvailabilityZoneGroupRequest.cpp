@@ -3,38 +3,27 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ModifyAvailabilityZoneGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/ModifyAvailabilityZoneGroupRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-ModifyAvailabilityZoneGroupRequest::ModifyAvailabilityZoneGroupRequest() : 
-    m_groupNameHasBeenSet(false),
-    m_optInStatus(ModifyAvailabilityZoneOptInStatus::NOT_SET),
-    m_optInStatusHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String ModifyAvailabilityZoneGroupRequest::SerializePayload() const
-{
+Aws::String ModifyAvailabilityZoneGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ModifyAvailabilityZoneGroup&";
-  if(m_groupNameHasBeenSet)
-  {
+  if (m_groupNameHasBeenSet) {
     ss << "GroupName=" << StringUtils::URLEncode(m_groupName.c_str()) << "&";
   }
 
-  if(m_optInStatusHasBeenSet)
-  {
-    ss << "OptInStatus=" << ModifyAvailabilityZoneOptInStatusMapper::GetNameForModifyAvailabilityZoneOptInStatus(m_optInStatus) << "&";
+  if (m_optInStatusHasBeenSet) {
+    ss << "OptInStatus="
+       << StringUtils::URLEncode(ModifyAvailabilityZoneOptInStatusMapper::GetNameForModifyAvailabilityZoneOptInStatus(m_optInStatus))
+       << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -42,8 +31,4 @@ Aws::String ModifyAvailabilityZoneGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ModifyAvailabilityZoneGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ModifyAvailabilityZoneGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

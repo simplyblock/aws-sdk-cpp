@@ -4,131 +4,146 @@
  */
 
 #pragma once
-#include <aws/codecommit/CodeCommit_EXPORTS.h>
 #include <aws/codecommit/CodeCommitRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/codecommit/CodeCommit_EXPORTS.h>
 #include <aws/codecommit/model/ConflictDetailLevelTypeEnum.h>
 #include <aws/codecommit/model/ConflictResolutionStrategyTypeEnum.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CodeCommit
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeCommit {
+namespace Model {
 
+/**
+ */
+class GetMergeOptionsRequest : public CodeCommitRequest {
+ public:
+  AWS_CODECOMMIT_API GetMergeOptionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetMergeOptions"; }
+
+  AWS_CODECOMMIT_API Aws::String SerializePayload() const override;
+
+  AWS_CODECOMMIT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the repository that contains the commits about which you want to
+   * get merge options.</p>
    */
-  class GetMergeOptionsRequest : public CodeCommitRequest
-  {
-  public:
-    AWS_CODECOMMIT_API GetMergeOptionsRequest();
+  inline const Aws::String& GetRepositoryName() const { return m_repositoryName; }
+  inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
+  template <typename RepositoryNameT = Aws::String>
+  void SetRepositoryName(RepositoryNameT&& value) {
+    m_repositoryNameHasBeenSet = true;
+    m_repositoryName = std::forward<RepositoryNameT>(value);
+  }
+  template <typename RepositoryNameT = Aws::String>
+  GetMergeOptionsRequest& WithRepositoryName(RepositoryNameT&& value) {
+    SetRepositoryName(std::forward<RepositoryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetMergeOptions"; }
+  ///@{
+  /**
+   * <p>The branch, tag, HEAD, or other fully qualified reference used to identify a
+   * commit (for example, a branch name or a full commit ID).</p>
+   */
+  inline const Aws::String& GetSourceCommitSpecifier() const { return m_sourceCommitSpecifier; }
+  inline bool SourceCommitSpecifierHasBeenSet() const { return m_sourceCommitSpecifierHasBeenSet; }
+  template <typename SourceCommitSpecifierT = Aws::String>
+  void SetSourceCommitSpecifier(SourceCommitSpecifierT&& value) {
+    m_sourceCommitSpecifierHasBeenSet = true;
+    m_sourceCommitSpecifier = std::forward<SourceCommitSpecifierT>(value);
+  }
+  template <typename SourceCommitSpecifierT = Aws::String>
+  GetMergeOptionsRequest& WithSourceCommitSpecifier(SourceCommitSpecifierT&& value) {
+    SetSourceCommitSpecifier(std::forward<SourceCommitSpecifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODECOMMIT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The branch, tag, HEAD, or other fully qualified reference used to identify a
+   * commit (for example, a branch name or a full commit ID).</p>
+   */
+  inline const Aws::String& GetDestinationCommitSpecifier() const { return m_destinationCommitSpecifier; }
+  inline bool DestinationCommitSpecifierHasBeenSet() const { return m_destinationCommitSpecifierHasBeenSet; }
+  template <typename DestinationCommitSpecifierT = Aws::String>
+  void SetDestinationCommitSpecifier(DestinationCommitSpecifierT&& value) {
+    m_destinationCommitSpecifierHasBeenSet = true;
+    m_destinationCommitSpecifier = std::forward<DestinationCommitSpecifierT>(value);
+  }
+  template <typename DestinationCommitSpecifierT = Aws::String>
+  GetMergeOptionsRequest& WithDestinationCommitSpecifier(DestinationCommitSpecifierT&& value) {
+    SetDestinationCommitSpecifier(std::forward<DestinationCommitSpecifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODECOMMIT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The level of conflict detail to use. If unspecified, the default FILE_LEVEL
+   * is used, which returns a not-mergeable result if the same file has differences
+   * in both branches. If LINE_LEVEL is specified, a conflict is considered not
+   * mergeable if the same file in both branches has differences on the same
+   * line.</p>
+   */
+  inline ConflictDetailLevelTypeEnum GetConflictDetailLevel() const { return m_conflictDetailLevel; }
+  inline bool ConflictDetailLevelHasBeenSet() const { return m_conflictDetailLevelHasBeenSet; }
+  inline void SetConflictDetailLevel(ConflictDetailLevelTypeEnum value) {
+    m_conflictDetailLevelHasBeenSet = true;
+    m_conflictDetailLevel = value;
+  }
+  inline GetMergeOptionsRequest& WithConflictDetailLevel(ConflictDetailLevelTypeEnum value) {
+    SetConflictDetailLevel(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies which branch to use when resolving conflicts, or whether to attempt
+   * automatically merging two versions of a file. The default is NONE, which
+   * requires any conflicts to be resolved manually before the merge operation is
+   * successful.</p>
+   */
+  inline ConflictResolutionStrategyTypeEnum GetConflictResolutionStrategy() const { return m_conflictResolutionStrategy; }
+  inline bool ConflictResolutionStrategyHasBeenSet() const { return m_conflictResolutionStrategyHasBeenSet; }
+  inline void SetConflictResolutionStrategy(ConflictResolutionStrategyTypeEnum value) {
+    m_conflictResolutionStrategyHasBeenSet = true;
+    m_conflictResolutionStrategy = value;
+  }
+  inline GetMergeOptionsRequest& WithConflictResolutionStrategy(ConflictResolutionStrategyTypeEnum value) {
+    SetConflictResolutionStrategy(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_repositoryName;
 
-    ///@{
-    /**
-     * <p>The name of the repository that contains the commits about which you want to
-     * get merge options.</p>
-     */
-    inline const Aws::String& GetRepositoryName() const{ return m_repositoryName; }
-    inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
-    inline void SetRepositoryName(const Aws::String& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = value; }
-    inline void SetRepositoryName(Aws::String&& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = std::move(value); }
-    inline void SetRepositoryName(const char* value) { m_repositoryNameHasBeenSet = true; m_repositoryName.assign(value); }
-    inline GetMergeOptionsRequest& WithRepositoryName(const Aws::String& value) { SetRepositoryName(value); return *this;}
-    inline GetMergeOptionsRequest& WithRepositoryName(Aws::String&& value) { SetRepositoryName(std::move(value)); return *this;}
-    inline GetMergeOptionsRequest& WithRepositoryName(const char* value) { SetRepositoryName(value); return *this;}
-    ///@}
+  Aws::String m_sourceCommitSpecifier;
 
-    ///@{
-    /**
-     * <p>The branch, tag, HEAD, or other fully qualified reference used to identify a
-     * commit (for example, a branch name or a full commit ID).</p>
-     */
-    inline const Aws::String& GetSourceCommitSpecifier() const{ return m_sourceCommitSpecifier; }
-    inline bool SourceCommitSpecifierHasBeenSet() const { return m_sourceCommitSpecifierHasBeenSet; }
-    inline void SetSourceCommitSpecifier(const Aws::String& value) { m_sourceCommitSpecifierHasBeenSet = true; m_sourceCommitSpecifier = value; }
-    inline void SetSourceCommitSpecifier(Aws::String&& value) { m_sourceCommitSpecifierHasBeenSet = true; m_sourceCommitSpecifier = std::move(value); }
-    inline void SetSourceCommitSpecifier(const char* value) { m_sourceCommitSpecifierHasBeenSet = true; m_sourceCommitSpecifier.assign(value); }
-    inline GetMergeOptionsRequest& WithSourceCommitSpecifier(const Aws::String& value) { SetSourceCommitSpecifier(value); return *this;}
-    inline GetMergeOptionsRequest& WithSourceCommitSpecifier(Aws::String&& value) { SetSourceCommitSpecifier(std::move(value)); return *this;}
-    inline GetMergeOptionsRequest& WithSourceCommitSpecifier(const char* value) { SetSourceCommitSpecifier(value); return *this;}
-    ///@}
+  Aws::String m_destinationCommitSpecifier;
 
-    ///@{
-    /**
-     * <p>The branch, tag, HEAD, or other fully qualified reference used to identify a
-     * commit (for example, a branch name or a full commit ID).</p>
-     */
-    inline const Aws::String& GetDestinationCommitSpecifier() const{ return m_destinationCommitSpecifier; }
-    inline bool DestinationCommitSpecifierHasBeenSet() const { return m_destinationCommitSpecifierHasBeenSet; }
-    inline void SetDestinationCommitSpecifier(const Aws::String& value) { m_destinationCommitSpecifierHasBeenSet = true; m_destinationCommitSpecifier = value; }
-    inline void SetDestinationCommitSpecifier(Aws::String&& value) { m_destinationCommitSpecifierHasBeenSet = true; m_destinationCommitSpecifier = std::move(value); }
-    inline void SetDestinationCommitSpecifier(const char* value) { m_destinationCommitSpecifierHasBeenSet = true; m_destinationCommitSpecifier.assign(value); }
-    inline GetMergeOptionsRequest& WithDestinationCommitSpecifier(const Aws::String& value) { SetDestinationCommitSpecifier(value); return *this;}
-    inline GetMergeOptionsRequest& WithDestinationCommitSpecifier(Aws::String&& value) { SetDestinationCommitSpecifier(std::move(value)); return *this;}
-    inline GetMergeOptionsRequest& WithDestinationCommitSpecifier(const char* value) { SetDestinationCommitSpecifier(value); return *this;}
-    ///@}
+  ConflictDetailLevelTypeEnum m_conflictDetailLevel{ConflictDetailLevelTypeEnum::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The level of conflict detail to use. If unspecified, the default FILE_LEVEL
-     * is used, which returns a not-mergeable result if the same file has differences
-     * in both branches. If LINE_LEVEL is specified, a conflict is considered not
-     * mergeable if the same file in both branches has differences on the same
-     * line.</p>
-     */
-    inline const ConflictDetailLevelTypeEnum& GetConflictDetailLevel() const{ return m_conflictDetailLevel; }
-    inline bool ConflictDetailLevelHasBeenSet() const { return m_conflictDetailLevelHasBeenSet; }
-    inline void SetConflictDetailLevel(const ConflictDetailLevelTypeEnum& value) { m_conflictDetailLevelHasBeenSet = true; m_conflictDetailLevel = value; }
-    inline void SetConflictDetailLevel(ConflictDetailLevelTypeEnum&& value) { m_conflictDetailLevelHasBeenSet = true; m_conflictDetailLevel = std::move(value); }
-    inline GetMergeOptionsRequest& WithConflictDetailLevel(const ConflictDetailLevelTypeEnum& value) { SetConflictDetailLevel(value); return *this;}
-    inline GetMergeOptionsRequest& WithConflictDetailLevel(ConflictDetailLevelTypeEnum&& value) { SetConflictDetailLevel(std::move(value)); return *this;}
-    ///@}
+  ConflictResolutionStrategyTypeEnum m_conflictResolutionStrategy{ConflictResolutionStrategyTypeEnum::NOT_SET};
+  bool m_repositoryNameHasBeenSet = false;
+  bool m_sourceCommitSpecifierHasBeenSet = false;
+  bool m_destinationCommitSpecifierHasBeenSet = false;
+  bool m_conflictDetailLevelHasBeenSet = false;
+  bool m_conflictResolutionStrategyHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Specifies which branch to use when resolving conflicts, or whether to attempt
-     * automatically merging two versions of a file. The default is NONE, which
-     * requires any conflicts to be resolved manually before the merge operation is
-     * successful.</p>
-     */
-    inline const ConflictResolutionStrategyTypeEnum& GetConflictResolutionStrategy() const{ return m_conflictResolutionStrategy; }
-    inline bool ConflictResolutionStrategyHasBeenSet() const { return m_conflictResolutionStrategyHasBeenSet; }
-    inline void SetConflictResolutionStrategy(const ConflictResolutionStrategyTypeEnum& value) { m_conflictResolutionStrategyHasBeenSet = true; m_conflictResolutionStrategy = value; }
-    inline void SetConflictResolutionStrategy(ConflictResolutionStrategyTypeEnum&& value) { m_conflictResolutionStrategyHasBeenSet = true; m_conflictResolutionStrategy = std::move(value); }
-    inline GetMergeOptionsRequest& WithConflictResolutionStrategy(const ConflictResolutionStrategyTypeEnum& value) { SetConflictResolutionStrategy(value); return *this;}
-    inline GetMergeOptionsRequest& WithConflictResolutionStrategy(ConflictResolutionStrategyTypeEnum&& value) { SetConflictResolutionStrategy(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_repositoryName;
-    bool m_repositoryNameHasBeenSet = false;
-
-    Aws::String m_sourceCommitSpecifier;
-    bool m_sourceCommitSpecifierHasBeenSet = false;
-
-    Aws::String m_destinationCommitSpecifier;
-    bool m_destinationCommitSpecifierHasBeenSet = false;
-
-    ConflictDetailLevelTypeEnum m_conflictDetailLevel;
-    bool m_conflictDetailLevelHasBeenSet = false;
-
-    ConflictResolutionStrategyTypeEnum m_conflictResolutionStrategy;
-    bool m_conflictResolutionStrategyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

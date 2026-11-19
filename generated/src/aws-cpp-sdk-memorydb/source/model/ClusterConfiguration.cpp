@@ -3,264 +3,1161 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/memorydb/model/ClusterConfiguration.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MemoryDB
-{
-namespace Model
-{
+namespace Aws {
+namespace MemoryDB {
+namespace Model {
 
-ClusterConfiguration::ClusterConfiguration() : 
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_nodeTypeHasBeenSet(false),
-    m_engineHasBeenSet(false),
-    m_engineVersionHasBeenSet(false),
-    m_maintenanceWindowHasBeenSet(false),
-    m_topicArnHasBeenSet(false),
-    m_port(0),
-    m_portHasBeenSet(false),
-    m_parameterGroupNameHasBeenSet(false),
-    m_subnetGroupNameHasBeenSet(false),
-    m_vpcIdHasBeenSet(false),
-    m_snapshotRetentionLimit(0),
-    m_snapshotRetentionLimitHasBeenSet(false),
-    m_snapshotWindowHasBeenSet(false),
-    m_numShards(0),
-    m_numShardsHasBeenSet(false),
-    m_shardsHasBeenSet(false)
-{
-}
+ClusterConfiguration::ClusterConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-ClusterConfiguration::ClusterConfiguration(JsonView jsonValue)
-  : ClusterConfiguration()
-{
-  *this = jsonValue;
-}
+ClusterConfiguration& ClusterConfiguration::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ClusterConfiguration& ClusterConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Name"))
-  {
-    m_name = jsonValue.GetString("Name");
+              if (initialKeyStr == "Name") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_name = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_name = ss.str();
+                  }
+                }
+                m_nameHasBeenSet = true;
+              }
 
-    m_nameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Description") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_description = ss.str();
+                  }
+                }
+                m_descriptionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Description"))
-  {
-    m_description = jsonValue.GetString("Description");
+              else if (initialKeyStr == "NodeType") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_nodeType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_nodeType = ss.str();
+                  }
+                }
+                m_nodeTypeHasBeenSet = true;
+              }
 
-    m_descriptionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Engine") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_engine = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_engine = ss.str();
+                  }
+                }
+                m_engineHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("NodeType"))
-  {
-    m_nodeType = jsonValue.GetString("NodeType");
+              else if (initialKeyStr == "EngineVersion") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_engineVersion = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_engineVersion = ss.str();
+                  }
+                }
+                m_engineVersionHasBeenSet = true;
+              }
 
-    m_nodeTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "MaintenanceWindow") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_maintenanceWindow = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_maintenanceWindow = ss.str();
+                  }
+                }
+                m_maintenanceWindowHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Engine"))
-  {
-    m_engine = jsonValue.GetString("Engine");
+              else if (initialKeyStr == "TopicArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_topicArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_topicArn = ss.str();
+                  }
+                }
+                m_topicArnHasBeenSet = true;
+              }
 
-    m_engineHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Port") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_port = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_port = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_portHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EngineVersion"))
-  {
-    m_engineVersion = jsonValue.GetString("EngineVersion");
+              else if (initialKeyStr == "ParameterGroupName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_parameterGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_parameterGroupName = ss.str();
+                  }
+                }
+                m_parameterGroupNameHasBeenSet = true;
+              }
 
-    m_engineVersionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SubnetGroupName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_subnetGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_subnetGroupName = ss.str();
+                  }
+                }
+                m_subnetGroupNameHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("MaintenanceWindow"))
-  {
-    m_maintenanceWindow = jsonValue.GetString("MaintenanceWindow");
+              else if (initialKeyStr == "VpcId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_vpcId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_vpcId = ss.str();
+                  }
+                }
+                m_vpcIdHasBeenSet = true;
+              }
 
-    m_maintenanceWindowHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SnapshotRetentionLimit") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_snapshotRetentionLimit = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_snapshotRetentionLimit = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_snapshotRetentionLimitHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TopicArn"))
-  {
-    m_topicArn = jsonValue.GetString("TopicArn");
+              else if (initialKeyStr == "SnapshotWindow") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_snapshotWindow = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_snapshotWindow = ss.str();
+                  }
+                }
+                m_snapshotWindowHasBeenSet = true;
+              }
 
-    m_topicArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "NumShards") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_numShards = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_numShards = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_numShardsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Port"))
-  {
-    m_port = jsonValue.GetInteger("Port");
+              else if (initialKeyStr == "Shards") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_shards.push_back(ShardDetail(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_shards.push_back(ShardDetail(decoder));
+                    }
+                  }
+                }
+                m_shardsHasBeenSet = true;
+              }
 
-    m_portHasBeenSet = true;
-  }
+              else if (initialKeyStr == "MultiRegionParameterGroupName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_multiRegionParameterGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_multiRegionParameterGroupName = ss.str();
+                  }
+                }
+                m_multiRegionParameterGroupNameHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ParameterGroupName"))
-  {
-    m_parameterGroupName = jsonValue.GetString("ParameterGroupName");
+              else if (initialKeyStr == "MultiRegionClusterName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_multiRegionClusterName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_multiRegionClusterName = ss.str();
+                  }
+                }
+                m_multiRegionClusterNameHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ClusterConfiguration", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_parameterGroupNameHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("SubnetGroupName"))
-  {
-    m_subnetGroupName = jsonValue.GetString("SubnetGroupName");
+            if (initialKeyStr == "Name") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_name = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_name = ss.str();
+                }
+              }
+              m_nameHasBeenSet = true;
+            }
 
-    m_subnetGroupNameHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Description") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_description = ss.str();
+                }
+              }
+              m_descriptionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VpcId"))
-  {
-    m_vpcId = jsonValue.GetString("VpcId");
+            else if (initialKeyStr == "NodeType") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_nodeType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_nodeType = ss.str();
+                }
+              }
+              m_nodeTypeHasBeenSet = true;
+            }
 
-    m_vpcIdHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Engine") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_engine = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_engine = ss.str();
+                }
+              }
+              m_engineHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("SnapshotRetentionLimit"))
-  {
-    m_snapshotRetentionLimit = jsonValue.GetInteger("SnapshotRetentionLimit");
+            else if (initialKeyStr == "EngineVersion") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_engineVersion = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_engineVersion = ss.str();
+                }
+              }
+              m_engineVersionHasBeenSet = true;
+            }
 
-    m_snapshotRetentionLimitHasBeenSet = true;
-  }
+            else if (initialKeyStr == "MaintenanceWindow") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_maintenanceWindow = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_maintenanceWindow = ss.str();
+                }
+              }
+              m_maintenanceWindowHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("SnapshotWindow"))
-  {
-    m_snapshotWindow = jsonValue.GetString("SnapshotWindow");
+            else if (initialKeyStr == "TopicArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_topicArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_topicArn = ss.str();
+                }
+              }
+              m_topicArnHasBeenSet = true;
+            }
 
-    m_snapshotWindowHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Port") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_port = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_port = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_portHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("NumShards"))
-  {
-    m_numShards = jsonValue.GetInteger("NumShards");
+            else if (initialKeyStr == "ParameterGroupName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_parameterGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_parameterGroupName = ss.str();
+                }
+              }
+              m_parameterGroupNameHasBeenSet = true;
+            }
 
-    m_numShardsHasBeenSet = true;
-  }
+            else if (initialKeyStr == "SubnetGroupName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_subnetGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_subnetGroupName = ss.str();
+                }
+              }
+              m_subnetGroupNameHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("Shards"))
-  {
-    Aws::Utils::Array<JsonView> shardsJsonList = jsonValue.GetArray("Shards");
-    for(unsigned shardsIndex = 0; shardsIndex < shardsJsonList.GetLength(); ++shardsIndex)
-    {
-      m_shards.push_back(shardsJsonList[shardsIndex].AsObject());
+            else if (initialKeyStr == "VpcId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_vpcId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_vpcId = ss.str();
+                }
+              }
+              m_vpcIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SnapshotRetentionLimit") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_snapshotRetentionLimit = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_snapshotRetentionLimit = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_snapshotRetentionLimitHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SnapshotWindow") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_snapshotWindow = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_snapshotWindow = ss.str();
+                }
+              }
+              m_snapshotWindowHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "NumShards") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_numShards = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_numShards = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_numShardsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Shards") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_shards.push_back(ShardDetail(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_shards.push_back(ShardDetail(decoder));
+                  }
+                }
+              }
+              m_shardsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "MultiRegionParameterGroupName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_multiRegionParameterGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_multiRegionParameterGroupName = ss.str();
+                }
+              }
+              m_multiRegionParameterGroupNameHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "MultiRegionClusterName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_multiRegionClusterName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_multiRegionClusterName = ss.str();
+                }
+              }
+              m_multiRegionClusterNameHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_shardsHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue ClusterConfiguration::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+void ClusterConfiguration::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nodeTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_engineHasBeenSet) {
+    mapSize++;
+  }
+  if (m_engineVersionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maintenanceWindowHasBeenSet) {
+    mapSize++;
+  }
+  if (m_topicArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portHasBeenSet) {
+    mapSize++;
+  }
+  if (m_parameterGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subnetGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_snapshotRetentionLimitHasBeenSet) {
+    mapSize++;
+  }
+  if (m_snapshotWindowHasBeenSet) {
+    mapSize++;
+  }
+  if (m_numShardsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_shardsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_multiRegionParameterGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_multiRegionClusterNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
   }
 
-  if(m_nodeTypeHasBeenSet)
-  {
-   payload.WithString("NodeType", m_nodeType);
-
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
   }
 
-  if(m_engineHasBeenSet)
-  {
-   payload.WithString("Engine", m_engine);
-
+  if (m_nodeTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NodeType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nodeType.c_str()));
   }
 
-  if(m_engineVersionHasBeenSet)
-  {
-   payload.WithString("EngineVersion", m_engineVersion);
-
+  if (m_engineHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Engine"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_engine.c_str()));
   }
 
-  if(m_maintenanceWindowHasBeenSet)
-  {
-   payload.WithString("MaintenanceWindow", m_maintenanceWindow);
-
+  if (m_engineVersionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EngineVersion"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_engineVersion.c_str()));
   }
 
-  if(m_topicArnHasBeenSet)
-  {
-   payload.WithString("TopicArn", m_topicArn);
-
+  if (m_maintenanceWindowHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaintenanceWindow"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_maintenanceWindow.c_str()));
   }
 
-  if(m_portHasBeenSet)
-  {
-   payload.WithInteger("Port", m_port);
-
+  if (m_topicArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TopicArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_topicArn.c_str()));
   }
 
-  if(m_parameterGroupNameHasBeenSet)
-  {
-   payload.WithString("ParameterGroupName", m_parameterGroupName);
-
+  if (m_portHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Port"));
+    (m_port >= 0) ? encoder.WriteUInt(m_port) : encoder.WriteNegInt(m_port);
   }
 
-  if(m_subnetGroupNameHasBeenSet)
-  {
-   payload.WithString("SubnetGroupName", m_subnetGroupName);
-
+  if (m_parameterGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ParameterGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_parameterGroupName.c_str()));
   }
 
-  if(m_vpcIdHasBeenSet)
-  {
-   payload.WithString("VpcId", m_vpcId);
-
+  if (m_subnetGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubnetGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_subnetGroupName.c_str()));
   }
 
-  if(m_snapshotRetentionLimitHasBeenSet)
-  {
-   payload.WithInteger("SnapshotRetentionLimit", m_snapshotRetentionLimit);
-
+  if (m_vpcIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_vpcId.c_str()));
   }
 
-  if(m_snapshotWindowHasBeenSet)
-  {
-   payload.WithString("SnapshotWindow", m_snapshotWindow);
-
+  if (m_snapshotRetentionLimitHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SnapshotRetentionLimit"));
+    (m_snapshotRetentionLimit >= 0) ? encoder.WriteUInt(m_snapshotRetentionLimit) : encoder.WriteNegInt(m_snapshotRetentionLimit);
   }
 
-  if(m_numShardsHasBeenSet)
-  {
-   payload.WithInteger("NumShards", m_numShards);
-
+  if (m_snapshotWindowHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SnapshotWindow"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_snapshotWindow.c_str()));
   }
 
-  if(m_shardsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> shardsJsonList(m_shards.size());
-   for(unsigned shardsIndex = 0; shardsIndex < shardsJsonList.GetLength(); ++shardsIndex)
-   {
-     shardsJsonList[shardsIndex].AsObject(m_shards[shardsIndex].Jsonize());
-   }
-   payload.WithArray("Shards", std::move(shardsJsonList));
-
+  if (m_numShardsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NumShards"));
+    (m_numShards >= 0) ? encoder.WriteUInt(m_numShards) : encoder.WriteNegInt(m_numShards);
   }
 
-  return payload;
+  if (m_shardsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Shards"));
+    encoder.WriteArrayStart(m_shards.size());
+    for (const auto& item_0 : m_shards) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_multiRegionParameterGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MultiRegionParameterGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_multiRegionParameterGroupName.c_str()));
+  }
+
+  if (m_multiRegionClusterNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MultiRegionClusterName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_multiRegionClusterName.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

@@ -4,98 +4,120 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
-#include <aws/mediaconnect/MediaConnectRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediaconnect/MediaConnectRequest.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/UpdateEgressGatewayBridgeRequest.h>
-#include <aws/mediaconnect/model/UpdateIngressGatewayBridgeRequest.h>
 #include <aws/mediaconnect/model/UpdateFailoverConfig.h>
+#include <aws/mediaconnect/model/UpdateIngressGatewayBridgeRequest.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaConnect {
+namespace Model {
 
+/**
+ */
+class UpdateBridgeRequest : public MediaConnectRequest {
+ public:
+  AWS_MEDIACONNECT_API UpdateBridgeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateBridge"; }
+
+  AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * A request to update the bridge.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/UpdateBridgeRequest">AWS
-   * API Reference</a></p>
+   * <p> TheAmazon Resource Name (ARN) of the bridge that you want to update. </p>
    */
-  class UpdateBridgeRequest : public MediaConnectRequest
-  {
-  public:
-    AWS_MEDIACONNECT_API UpdateBridgeRequest();
+  inline const Aws::String& GetBridgeArn() const { return m_bridgeArn; }
+  inline bool BridgeArnHasBeenSet() const { return m_bridgeArnHasBeenSet; }
+  template <typename BridgeArnT = Aws::String>
+  void SetBridgeArn(BridgeArnT&& value) {
+    m_bridgeArnHasBeenSet = true;
+    m_bridgeArn = std::forward<BridgeArnT>(value);
+  }
+  template <typename BridgeArnT = Aws::String>
+  UpdateBridgeRequest& WithBridgeArn(BridgeArnT&& value) {
+    SetBridgeArn(std::forward<BridgeArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateBridge"; }
+  ///@{
+  /**
+   * <p> A cloud-to-ground bridge. The content comes from an existing MediaConnect
+   * flow and is delivered to your premises. </p>
+   */
+  inline const UpdateEgressGatewayBridgeRequest& GetEgressGatewayBridge() const { return m_egressGatewayBridge; }
+  inline bool EgressGatewayBridgeHasBeenSet() const { return m_egressGatewayBridgeHasBeenSet; }
+  template <typename EgressGatewayBridgeT = UpdateEgressGatewayBridgeRequest>
+  void SetEgressGatewayBridge(EgressGatewayBridgeT&& value) {
+    m_egressGatewayBridgeHasBeenSet = true;
+    m_egressGatewayBridge = std::forward<EgressGatewayBridgeT>(value);
+  }
+  template <typename EgressGatewayBridgeT = UpdateEgressGatewayBridgeRequest>
+  UpdateBridgeRequest& WithEgressGatewayBridge(EgressGatewayBridgeT&& value) {
+    SetEgressGatewayBridge(std::forward<EgressGatewayBridgeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> A ground-to-cloud bridge. The content originates at your premises and is
+   * delivered to the cloud. </p>
+   */
+  inline const UpdateIngressGatewayBridgeRequest& GetIngressGatewayBridge() const { return m_ingressGatewayBridge; }
+  inline bool IngressGatewayBridgeHasBeenSet() const { return m_ingressGatewayBridgeHasBeenSet; }
+  template <typename IngressGatewayBridgeT = UpdateIngressGatewayBridgeRequest>
+  void SetIngressGatewayBridge(IngressGatewayBridgeT&& value) {
+    m_ingressGatewayBridgeHasBeenSet = true;
+    m_ingressGatewayBridge = std::forward<IngressGatewayBridgeT>(value);
+  }
+  template <typename IngressGatewayBridgeT = UpdateIngressGatewayBridgeRequest>
+  UpdateBridgeRequest& WithIngressGatewayBridge(IngressGatewayBridgeT&& value) {
+    SetIngressGatewayBridge(std::forward<IngressGatewayBridgeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The settings for source failover. </p>
+   */
+  inline const UpdateFailoverConfig& GetSourceFailoverConfig() const { return m_sourceFailoverConfig; }
+  inline bool SourceFailoverConfigHasBeenSet() const { return m_sourceFailoverConfigHasBeenSet; }
+  template <typename SourceFailoverConfigT = UpdateFailoverConfig>
+  void SetSourceFailoverConfig(SourceFailoverConfigT&& value) {
+    m_sourceFailoverConfigHasBeenSet = true;
+    m_sourceFailoverConfig = std::forward<SourceFailoverConfigT>(value);
+  }
+  template <typename SourceFailoverConfigT = UpdateFailoverConfig>
+  UpdateBridgeRequest& WithSourceFailoverConfig(SourceFailoverConfigT&& value) {
+    SetSourceFailoverConfig(std::forward<SourceFailoverConfigT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_bridgeArn;
 
-    ///@{
-    /**
-     * The Amazon Resource Number (ARN) of the bridge that you want to update.
-     */
-    inline const Aws::String& GetBridgeArn() const{ return m_bridgeArn; }
-    inline bool BridgeArnHasBeenSet() const { return m_bridgeArnHasBeenSet; }
-    inline void SetBridgeArn(const Aws::String& value) { m_bridgeArnHasBeenSet = true; m_bridgeArn = value; }
-    inline void SetBridgeArn(Aws::String&& value) { m_bridgeArnHasBeenSet = true; m_bridgeArn = std::move(value); }
-    inline void SetBridgeArn(const char* value) { m_bridgeArnHasBeenSet = true; m_bridgeArn.assign(value); }
-    inline UpdateBridgeRequest& WithBridgeArn(const Aws::String& value) { SetBridgeArn(value); return *this;}
-    inline UpdateBridgeRequest& WithBridgeArn(Aws::String&& value) { SetBridgeArn(std::move(value)); return *this;}
-    inline UpdateBridgeRequest& WithBridgeArn(const char* value) { SetBridgeArn(value); return *this;}
-    ///@}
+  UpdateEgressGatewayBridgeRequest m_egressGatewayBridge;
 
-    ///@{
-    
-    inline const UpdateEgressGatewayBridgeRequest& GetEgressGatewayBridge() const{ return m_egressGatewayBridge; }
-    inline bool EgressGatewayBridgeHasBeenSet() const { return m_egressGatewayBridgeHasBeenSet; }
-    inline void SetEgressGatewayBridge(const UpdateEgressGatewayBridgeRequest& value) { m_egressGatewayBridgeHasBeenSet = true; m_egressGatewayBridge = value; }
-    inline void SetEgressGatewayBridge(UpdateEgressGatewayBridgeRequest&& value) { m_egressGatewayBridgeHasBeenSet = true; m_egressGatewayBridge = std::move(value); }
-    inline UpdateBridgeRequest& WithEgressGatewayBridge(const UpdateEgressGatewayBridgeRequest& value) { SetEgressGatewayBridge(value); return *this;}
-    inline UpdateBridgeRequest& WithEgressGatewayBridge(UpdateEgressGatewayBridgeRequest&& value) { SetEgressGatewayBridge(std::move(value)); return *this;}
-    ///@}
+  UpdateIngressGatewayBridgeRequest m_ingressGatewayBridge;
 
-    ///@{
-    
-    inline const UpdateIngressGatewayBridgeRequest& GetIngressGatewayBridge() const{ return m_ingressGatewayBridge; }
-    inline bool IngressGatewayBridgeHasBeenSet() const { return m_ingressGatewayBridgeHasBeenSet; }
-    inline void SetIngressGatewayBridge(const UpdateIngressGatewayBridgeRequest& value) { m_ingressGatewayBridgeHasBeenSet = true; m_ingressGatewayBridge = value; }
-    inline void SetIngressGatewayBridge(UpdateIngressGatewayBridgeRequest&& value) { m_ingressGatewayBridgeHasBeenSet = true; m_ingressGatewayBridge = std::move(value); }
-    inline UpdateBridgeRequest& WithIngressGatewayBridge(const UpdateIngressGatewayBridgeRequest& value) { SetIngressGatewayBridge(value); return *this;}
-    inline UpdateBridgeRequest& WithIngressGatewayBridge(UpdateIngressGatewayBridgeRequest&& value) { SetIngressGatewayBridge(std::move(value)); return *this;}
-    ///@}
+  UpdateFailoverConfig m_sourceFailoverConfig;
+  bool m_bridgeArnHasBeenSet = false;
+  bool m_egressGatewayBridgeHasBeenSet = false;
+  bool m_ingressGatewayBridgeHasBeenSet = false;
+  bool m_sourceFailoverConfigHasBeenSet = false;
+};
 
-    ///@{
-    
-    inline const UpdateFailoverConfig& GetSourceFailoverConfig() const{ return m_sourceFailoverConfig; }
-    inline bool SourceFailoverConfigHasBeenSet() const { return m_sourceFailoverConfigHasBeenSet; }
-    inline void SetSourceFailoverConfig(const UpdateFailoverConfig& value) { m_sourceFailoverConfigHasBeenSet = true; m_sourceFailoverConfig = value; }
-    inline void SetSourceFailoverConfig(UpdateFailoverConfig&& value) { m_sourceFailoverConfigHasBeenSet = true; m_sourceFailoverConfig = std::move(value); }
-    inline UpdateBridgeRequest& WithSourceFailoverConfig(const UpdateFailoverConfig& value) { SetSourceFailoverConfig(value); return *this;}
-    inline UpdateBridgeRequest& WithSourceFailoverConfig(UpdateFailoverConfig&& value) { SetSourceFailoverConfig(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_bridgeArn;
-    bool m_bridgeArnHasBeenSet = false;
-
-    UpdateEgressGatewayBridgeRequest m_egressGatewayBridge;
-    bool m_egressGatewayBridgeHasBeenSet = false;
-
-    UpdateIngressGatewayBridgeRequest m_ingressGatewayBridge;
-    bool m_ingressGatewayBridgeHasBeenSet = false;
-
-    UpdateFailoverConfig m_sourceFailoverConfig;
-    bool m_sourceFailoverConfigHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

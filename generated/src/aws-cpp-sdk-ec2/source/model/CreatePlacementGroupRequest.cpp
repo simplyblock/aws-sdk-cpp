@@ -3,72 +3,58 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/CreatePlacementGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/CreatePlacementGroupRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-CreatePlacementGroupRequest::CreatePlacementGroupRequest() : 
-    m_partitionCount(0),
-    m_partitionCountHasBeenSet(false),
-    m_tagSpecificationsHasBeenSet(false),
-    m_spreadLevel(SpreadLevel::NOT_SET),
-    m_spreadLevelHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_groupNameHasBeenSet(false),
-    m_strategy(PlacementStrategy::NOT_SET),
-    m_strategyHasBeenSet(false)
-{
-}
-
-Aws::String CreatePlacementGroupRequest::SerializePayload() const
-{
+Aws::String CreatePlacementGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreatePlacementGroup&";
-  if(m_partitionCountHasBeenSet)
-  {
+  if (m_partitionCountHasBeenSet) {
     ss << "PartitionCount=" << m_partitionCount << "&";
   }
 
-  if(m_tagSpecificationsHasBeenSet)
-  {
+  if (m_tagSpecificationsHasBeenSet) {
     unsigned tagSpecificationsCount = 1;
-    for(auto& item : m_tagSpecifications)
-    {
+    for (auto& item : m_tagSpecifications) {
       item.OutputToStream(ss, "TagSpecification.", tagSpecificationsCount, "");
       tagSpecificationsCount++;
     }
   }
 
-  if(m_spreadLevelHasBeenSet)
-  {
-    ss << "SpreadLevel=" << SpreadLevelMapper::GetNameForSpreadLevel(m_spreadLevel) << "&";
+  if (m_spreadLevelHasBeenSet) {
+    ss << "SpreadLevel=" << StringUtils::URLEncode(SpreadLevelMapper::GetNameForSpreadLevel(m_spreadLevel)) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_linkedGroupIdHasBeenSet) {
+    ss << "LinkedGroupId=" << StringUtils::URLEncode(m_linkedGroupId.c_str()) << "&";
+  }
+
+  if (m_operatorHasBeenSet) {
+    m_operator.OutputToStream(ss, "Operator");
+  }
+
+  if (m_parentGroupIdHasBeenSet) {
+    ss << "ParentGroupId=" << StringUtils::URLEncode(m_parentGroupId.c_str()) << "&";
+  }
+
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_groupNameHasBeenSet)
-  {
+  if (m_groupNameHasBeenSet) {
     ss << "GroupName=" << StringUtils::URLEncode(m_groupName.c_str()) << "&";
   }
 
-  if(m_strategyHasBeenSet)
-  {
-    ss << "Strategy=" << PlacementStrategyMapper::GetNameForPlacementStrategy(m_strategy) << "&";
+  if (m_strategyHasBeenSet) {
+    ss << "Strategy=" << StringUtils::URLEncode(PlacementStrategyMapper::GetNameForPlacementStrategy(m_strategy)) << "&";
   }
 
   ss << "Version=2016-11-15";
   return ss.str();
 }
 
-
-void  CreatePlacementGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreatePlacementGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

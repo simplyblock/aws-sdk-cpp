@@ -4,157 +4,204 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/quicksight/model/ResourceStatus.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/AnalysisDefinition.h>
 #include <aws/quicksight/model/AnalysisError.h>
+#include <aws/quicksight/model/ResourceStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeAnalysisDefinitionResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult();
-    AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeAnalysisDefinitionResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult() = default;
+  AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeAnalysisDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the analysis described.</p>
+   */
+  inline const Aws::String& GetAnalysisId() const { return m_analysisId; }
+  template <typename AnalysisIdT = Aws::String>
+  void SetAnalysisId(AnalysisIdT&& value) {
+    m_analysisIdHasBeenSet = true;
+    m_analysisId = std::forward<AnalysisIdT>(value);
+  }
+  template <typename AnalysisIdT = Aws::String>
+  DescribeAnalysisDefinitionResult& WithAnalysisId(AnalysisIdT&& value) {
+    SetAnalysisId(std::forward<AnalysisIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the analysis described.</p>
-     */
-    inline const Aws::String& GetAnalysisId() const{ return m_analysisId; }
-    inline void SetAnalysisId(const Aws::String& value) { m_analysisId = value; }
-    inline void SetAnalysisId(Aws::String&& value) { m_analysisId = std::move(value); }
-    inline void SetAnalysisId(const char* value) { m_analysisId.assign(value); }
-    inline DescribeAnalysisDefinitionResult& WithAnalysisId(const Aws::String& value) { SetAnalysisId(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithAnalysisId(Aws::String&& value) { SetAnalysisId(std::move(value)); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithAnalysisId(const char* value) { SetAnalysisId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The descriptive name of the analysis.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeAnalysisDefinitionResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The descriptive name of the analysis.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline DescribeAnalysisDefinitionResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Errors associated with the analysis.</p>
+   */
+  inline const Aws::Vector<AnalysisError>& GetErrors() const { return m_errors; }
+  template <typename ErrorsT = Aws::Vector<AnalysisError>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<AnalysisError>>
+  DescribeAnalysisDefinitionResult& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = AnalysisError>
+  DescribeAnalysisDefinitionResult& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Errors associated with the analysis.</p>
-     */
-    inline const Aws::Vector<AnalysisError>& GetErrors() const{ return m_errors; }
-    inline void SetErrors(const Aws::Vector<AnalysisError>& value) { m_errors = value; }
-    inline void SetErrors(Aws::Vector<AnalysisError>&& value) { m_errors = std::move(value); }
-    inline DescribeAnalysisDefinitionResult& WithErrors(const Aws::Vector<AnalysisError>& value) { SetErrors(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithErrors(Aws::Vector<AnalysisError>&& value) { SetErrors(std::move(value)); return *this;}
-    inline DescribeAnalysisDefinitionResult& AddErrors(const AnalysisError& value) { m_errors.push_back(value); return *this; }
-    inline DescribeAnalysisDefinitionResult& AddErrors(AnalysisError&& value) { m_errors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Status associated with the analysis.</p> <ul> <li> <p>
+   * <code>CREATION_IN_PROGRESS</code> </p> </li> <li> <p>
+   * <code>CREATION_SUCCESSFUL</code> </p> </li> <li> <p>
+   * <code>CREATION_FAILED</code> </p> </li> <li> <p> <code>UPDATE_IN_PROGRESS</code>
+   * </p> </li> <li> <p> <code>UPDATE_SUCCESSFUL</code> </p> </li> <li> <p>
+   * <code>UPDATE_FAILED</code> </p> </li> <li> <p> <code>DELETED</code> </p> </li>
+   * </ul>
+   */
+  inline ResourceStatus GetResourceStatus() const { return m_resourceStatus; }
+  inline void SetResourceStatus(ResourceStatus value) {
+    m_resourceStatusHasBeenSet = true;
+    m_resourceStatus = value;
+  }
+  inline DescribeAnalysisDefinitionResult& WithResourceStatus(ResourceStatus value) {
+    SetResourceStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Status associated with the analysis.</p> <ul> <li> <p>
-     * <code>CREATION_IN_PROGRESS</code> </p> </li> <li> <p>
-     * <code>CREATION_SUCCESSFUL</code> </p> </li> <li> <p>
-     * <code>CREATION_FAILED</code> </p> </li> <li> <p> <code>UPDATE_IN_PROGRESS</code>
-     * </p> </li> <li> <p> <code>UPDATE_SUCCESSFUL</code> </p> </li> <li> <p>
-     * <code>UPDATE_FAILED</code> </p> </li> <li> <p> <code>DELETED</code> </p> </li>
-     * </ul>
-     */
-    inline const ResourceStatus& GetResourceStatus() const{ return m_resourceStatus; }
-    inline void SetResourceStatus(const ResourceStatus& value) { m_resourceStatus = value; }
-    inline void SetResourceStatus(ResourceStatus&& value) { m_resourceStatus = std::move(value); }
-    inline DescribeAnalysisDefinitionResult& WithResourceStatus(const ResourceStatus& value) { SetResourceStatus(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithResourceStatus(ResourceStatus&& value) { SetResourceStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the theme of the analysis.</p>
+   */
+  inline const Aws::String& GetThemeArn() const { return m_themeArn; }
+  template <typename ThemeArnT = Aws::String>
+  void SetThemeArn(ThemeArnT&& value) {
+    m_themeArnHasBeenSet = true;
+    m_themeArn = std::forward<ThemeArnT>(value);
+  }
+  template <typename ThemeArnT = Aws::String>
+  DescribeAnalysisDefinitionResult& WithThemeArn(ThemeArnT&& value) {
+    SetThemeArn(std::forward<ThemeArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the theme of the analysis.</p>
-     */
-    inline const Aws::String& GetThemeArn() const{ return m_themeArn; }
-    inline void SetThemeArn(const Aws::String& value) { m_themeArn = value; }
-    inline void SetThemeArn(Aws::String&& value) { m_themeArn = std::move(value); }
-    inline void SetThemeArn(const char* value) { m_themeArn.assign(value); }
-    inline DescribeAnalysisDefinitionResult& WithThemeArn(const Aws::String& value) { SetThemeArn(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithThemeArn(Aws::String&& value) { SetThemeArn(std::move(value)); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithThemeArn(const char* value) { SetThemeArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The definition of an analysis.</p> <p>A definition is the data model of all
+   * features in a Dashboard, Template, or Analysis.</p>
+   */
+  inline const AnalysisDefinition& GetDefinition() const { return m_definition; }
+  template <typename DefinitionT = AnalysisDefinition>
+  void SetDefinition(DefinitionT&& value) {
+    m_definitionHasBeenSet = true;
+    m_definition = std::forward<DefinitionT>(value);
+  }
+  template <typename DefinitionT = AnalysisDefinition>
+  DescribeAnalysisDefinitionResult& WithDefinition(DefinitionT&& value) {
+    SetDefinition(std::forward<DefinitionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The definition of an analysis.</p> <p>A definition is the data model of all
-     * features in a Dashboard, Template, or Analysis.</p>
-     */
-    inline const AnalysisDefinition& GetDefinition() const{ return m_definition; }
-    inline void SetDefinition(const AnalysisDefinition& value) { m_definition = value; }
-    inline void SetDefinition(AnalysisDefinition&& value) { m_definition = std::move(value); }
-    inline DescribeAnalysisDefinitionResult& WithDefinition(const AnalysisDefinition& value) { SetDefinition(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithDefinition(AnalysisDefinition&& value) { SetDefinition(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeAnalysisDefinitionResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeAnalysisDefinitionResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAnalysisDefinitionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAnalysisDefinitionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAnalysisDefinitionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_analysisId;
+ private:
+  Aws::String m_analysisId;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    Aws::Vector<AnalysisError> m_errors;
+  Aws::Vector<AnalysisError> m_errors;
 
-    ResourceStatus m_resourceStatus;
+  ResourceStatus m_resourceStatus{ResourceStatus::NOT_SET};
 
-    Aws::String m_themeArn;
+  Aws::String m_themeArn;
 
-    AnalysisDefinition m_definition;
+  AnalysisDefinition m_definition;
 
-    int m_status;
+  int m_status{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_analysisIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
+  bool m_resourceStatusHasBeenSet = false;
+  bool m_themeArnHasBeenSet = false;
+  bool m_definitionHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

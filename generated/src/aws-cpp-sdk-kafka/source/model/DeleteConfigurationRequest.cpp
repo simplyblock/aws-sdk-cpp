@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/kafka/model/DeleteConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/kafka/model/DeleteConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Kafka::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteConfigurationRequest::DeleteConfigurationRequest() : 
-    m_arnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteConfigurationRequest::SerializePayload() const { return {}; }

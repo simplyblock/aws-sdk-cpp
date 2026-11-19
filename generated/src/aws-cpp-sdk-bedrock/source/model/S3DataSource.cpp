@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Bedrock
-{
-namespace Model
-{
+namespace Aws {
+namespace Bedrock {
+namespace Model {
 
-S3DataSource::S3DataSource() : 
-    m_s3UriHasBeenSet(false)
-{
-}
+S3DataSource::S3DataSource(JsonView jsonValue) { *this = jsonValue; }
 
-S3DataSource::S3DataSource(JsonView jsonValue)
-  : S3DataSource()
-{
-  *this = jsonValue;
-}
-
-S3DataSource& S3DataSource::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("s3Uri"))
-  {
+S3DataSource& S3DataSource::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("s3Uri")) {
     m_s3Uri = jsonValue.GetString("s3Uri");
-
     m_s3UriHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue S3DataSource::Jsonize() const
-{
+JsonValue S3DataSource::Jsonize() const {
   JsonValue payload;
 
-  if(m_s3UriHasBeenSet)
-  {
-   payload.WithString("s3Uri", m_s3Uri);
-
+  if (m_s3UriHasBeenSet) {
+    payload.WithString("s3Uri", m_s3Uri);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

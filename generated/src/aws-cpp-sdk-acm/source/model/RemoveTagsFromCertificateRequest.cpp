@@ -12,44 +12,33 @@ using namespace Aws::ACM::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RemoveTagsFromCertificateRequest::RemoveTagsFromCertificateRequest() : 
-    m_certificateArnHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String RemoveTagsFromCertificateRequest::SerializePayload() const
-{
+Aws::String RemoveTagsFromCertificateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_certificateArnHasBeenSet)
-  {
-   payload.WithString("CertificateArn", m_certificateArn);
-
+  if (m_certificateArnHasBeenSet) {
+    payload.WithString("CertificateArn", m_certificateArn);
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
+  if (m_tagsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
+    for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
+      tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
+    }
+    payload.WithArray("Tags", std::move(tagsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection RemoveTagsFromCertificateRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RemoveTagsFromCertificateRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CertificateManager.RemoveTagsFromCertificate"));
   return headers;
-
 }
 
-
-
-
+RemoveTagsFromCertificateRequest::EndpointParameters RemoveTagsFromCertificateRequest::GetEndpointContextParams() const {
+  EndpointParameters parameters;
+  // Static context parameters
+  parameters.emplace_back(Aws::String("ServiceType"), "ACM", Aws::Endpoint::EndpointParameter::ParameterOrigin::STATIC_CONTEXT);
+  return parameters;
+}

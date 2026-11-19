@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ce "C++ SDK for the AWS ce service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ce "C++ SDK for AWS Cost Explorer Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CE_HEADERS
     "include/aws/ce/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CE_HEADERS
 
 file(GLOB AWS_CE_MODEL_HEADERS
     "include/aws/ce/model/*.h"
+)
+
+file(GLOB AWS_CE_INTERNAL_HEADERS
+    "include/aws/ce/internal/*.h"
 )
 
 file(GLOB AWS_CE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CE_MODEL_SOURCE
 
 file(GLOB CE_UNIFIED_HEADERS
     ${AWS_CE_HEADERS}
+    ${AWS_CE_INTERNAL_HEADERS}
     ${AWS_CE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ce" FILES ${AWS_CE_HEADERS})
+        source_group("Header Files\\aws\\ce\\internal" FILES ${AWS_CE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ce\\model" FILES ${AWS_CE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CE_MODEL_SOURCE})

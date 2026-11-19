@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cloudtrail/CloudTrail_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cloudtrail/CloudTrailEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudTrail
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudTrail {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudTrailClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudTrailEndpointProviderBase =
     EndpointProviderBase<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
 
 using CloudTrailDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
+    BDDEndpointProvider<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDTRAIL_API CloudTrailEndpointProvider : public CloudTrailDefaultEpProviderBase
-{
-public:
-    using CloudTrailResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDTRAIL_API CloudTrailEndpointProvider : public CloudTrailDefaultEpProviderBase {
+ public:
+  using CloudTrailResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudTrailEndpointProvider()
-      : CloudTrailDefaultEpProviderBase(Aws::CloudTrail::CloudTrailEndpointRules::GetRulesBlob(), Aws::CloudTrail::CloudTrailEndpointRules::RulesBlobSize)
-    {}
+  CloudTrailEndpointProvider();
 
-    ~CloudTrailEndpointProvider()
-    {
-    }
+  ~CloudTrailEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudTrail
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudTrail
+}  // namespace Aws

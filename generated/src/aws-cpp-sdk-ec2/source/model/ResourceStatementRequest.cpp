@@ -3,47 +3,31 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ResourceStatementRequest.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/ResourceStatementRequest.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
-ResourceStatementRequest::ResourceStatementRequest() : 
-    m_resourcesHasBeenSet(false),
-    m_resourceTypesHasBeenSet(false)
-{
-}
+ResourceStatementRequest::ResourceStatementRequest(const XmlNode& xmlNode) { *this = xmlNode; }
 
-ResourceStatementRequest::ResourceStatementRequest(const XmlNode& xmlNode)
-  : ResourceStatementRequest()
-{
-  *this = xmlNode;
-}
-
-ResourceStatementRequest& ResourceStatementRequest::operator =(const XmlNode& xmlNode)
-{
+ResourceStatementRequest& ResourceStatementRequest::operator=(const XmlNode& xmlNode) {
   XmlNode resultNode = xmlNode;
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode resourcesNode = resultNode.FirstChild("Resource");
-    if(!resourcesNode.IsNull())
-    {
+    if (!resourcesNode.IsNull()) {
       XmlNode resourcesMember = resourcesNode.FirstChild("item");
-      while(!resourcesMember.IsNull())
-      {
+      m_resourcesHasBeenSet = !resourcesMember.IsNull();
+      while (!resourcesMember.IsNull()) {
         m_resources.push_back(resourcesMember.GetText());
         resourcesMember = resourcesMember.NextNode("item");
       }
@@ -51,11 +35,10 @@ ResourceStatementRequest& ResourceStatementRequest::operator =(const XmlNode& xm
       m_resourcesHasBeenSet = true;
     }
     XmlNode resourceTypesNode = resultNode.FirstChild("ResourceType");
-    if(!resourceTypesNode.IsNull())
-    {
+    if (!resourceTypesNode.IsNull()) {
       XmlNode resourceTypesMember = resourceTypesNode.FirstChild("item");
-      while(!resourceTypesMember.IsNull())
-      {
+      m_resourceTypesHasBeenSet = !resourceTypesMember.IsNull();
+      while (!resourceTypesMember.IsNull()) {
         m_resourceTypes.push_back(resourceTypesMember.GetText());
         resourceTypesMember = resourceTypesMember.NextNode("item");
       }
@@ -67,48 +50,39 @@ ResourceStatementRequest& ResourceStatementRequest::operator =(const XmlNode& xm
   return *this;
 }
 
-void ResourceStatementRequest::OutputToStream(Aws::OStream& oStream, const char* location, unsigned index, const char* locationValue) const
-{
-  if(m_resourcesHasBeenSet)
-  {
-      unsigned resourcesIdx = 1;
-      for(auto& item : m_resources)
-      {
-        oStream << location << index << locationValue << ".Resource." << resourcesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
-      }
+void ResourceStatementRequest::OutputToStream(Aws::OStream& oStream, const char* location, unsigned index,
+                                              const char* locationValue) const {
+  if (m_resourcesHasBeenSet) {
+    unsigned resourcesIdx = 1;
+    for (auto& item : m_resources) {
+      oStream << location << index << locationValue << ".Resource." << resourcesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
+    }
   }
 
-  if(m_resourceTypesHasBeenSet)
-  {
-      unsigned resourceTypesIdx = 1;
-      for(auto& item : m_resourceTypes)
-      {
-        oStream << location << index << locationValue << ".ResourceType." << resourceTypesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
-      }
-  }
-
-}
-
-void ResourceStatementRequest::OutputToStream(Aws::OStream& oStream, const char* location) const
-{
-  if(m_resourcesHasBeenSet)
-  {
-      unsigned resourcesIdx = 1;
-      for(auto& item : m_resources)
-      {
-        oStream << location << ".Resource." << resourcesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
-      }
-  }
-  if(m_resourceTypesHasBeenSet)
-  {
-      unsigned resourceTypesIdx = 1;
-      for(auto& item : m_resourceTypes)
-      {
-        oStream << location << ".ResourceType." << resourceTypesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
-      }
+  if (m_resourceTypesHasBeenSet) {
+    unsigned resourceTypesIdx = 1;
+    for (auto& item : m_resourceTypes) {
+      oStream << location << index << locationValue << ".ResourceType." << resourceTypesIdx++ << "=" << StringUtils::URLEncode(item.c_str())
+              << "&";
+    }
   }
 }
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+void ResourceStatementRequest::OutputToStream(Aws::OStream& oStream, const char* location) const {
+  if (m_resourcesHasBeenSet) {
+    unsigned resourcesIdx = 1;
+    for (auto& item : m_resources) {
+      oStream << location << ".Resource." << resourcesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
+    }
+  }
+  if (m_resourceTypesHasBeenSet) {
+    unsigned resourceTypesIdx = 1;
+    for (auto& item : m_resourceTypes) {
+      oStream << location << ".ResourceType." << resourceTypesIdx++ << "=" << StringUtils::URLEncode(item.c_str()) << "&";
+    }
+  }
+}
+
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

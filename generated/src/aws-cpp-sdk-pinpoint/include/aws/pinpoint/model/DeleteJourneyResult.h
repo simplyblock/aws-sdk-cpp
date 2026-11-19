@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/JourneyResponse.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
-  class DeleteJourneyResult
-  {
-  public:
-    AWS_PINPOINT_API DeleteJourneyResult();
-    AWS_PINPOINT_API DeleteJourneyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINT_API DeleteJourneyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
+class DeleteJourneyResult {
+ public:
+  AWS_PINPOINT_API DeleteJourneyResult() = default;
+  AWS_PINPOINT_API DeleteJourneyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINT_API DeleteJourneyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const JourneyResponse& GetJourneyResponse() const{ return m_journeyResponse; }
-    inline void SetJourneyResponse(const JourneyResponse& value) { m_journeyResponse = value; }
-    inline void SetJourneyResponse(JourneyResponse&& value) { m_journeyResponse = std::move(value); }
-    inline DeleteJourneyResult& WithJourneyResponse(const JourneyResponse& value) { SetJourneyResponse(value); return *this;}
-    inline DeleteJourneyResult& WithJourneyResponse(JourneyResponse&& value) { SetJourneyResponse(std::move(value)); return *this;}
-    ///@}
+  inline const JourneyResponse& GetJourneyResponse() const { return m_journeyResponse; }
+  template <typename JourneyResponseT = JourneyResponse>
+  void SetJourneyResponse(JourneyResponseT&& value) {
+    m_journeyResponseHasBeenSet = true;
+    m_journeyResponse = std::forward<JourneyResponseT>(value);
+  }
+  template <typename JourneyResponseT = JourneyResponse>
+  DeleteJourneyResult& WithJourneyResponse(JourneyResponseT&& value) {
+    SetJourneyResponse(std::forward<JourneyResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteJourneyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteJourneyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteJourneyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    JourneyResponse m_journeyResponse;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteJourneyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  JourneyResponse m_journeyResponse;
 
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_journeyResponseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

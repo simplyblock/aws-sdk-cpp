@@ -3,81 +3,89 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/CreateInterconnectRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateInterconnectRequest::CreateInterconnectRequest() : 
-    m_interconnectNameHasBeenSet(false),
-    m_bandwidthHasBeenSet(false),
-    m_locationHasBeenSet(false),
-    m_lagIdHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_providerNameHasBeenSet(false)
-{
+Aws::String CreateInterconnectRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_interconnectNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_bandwidthHasBeenSet) {
+    mapSize++;
+  }
+  if (m_locationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lagIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_providerNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_requestMACSecHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_interconnectNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("interconnectName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_interconnectName.c_str()));
+  }
+
+  if (m_bandwidthHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("bandwidth"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_bandwidth.c_str()));
+  }
+
+  if (m_locationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("location"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_location.c_str()));
+  }
+
+  if (m_lagIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("lagId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_lagId.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_providerNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("providerName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_providerName.c_str()));
+  }
+
+  if (m_requestMACSecHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("requestMACSec"));
+    encoder.WriteBool(m_requestMACSec);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateInterconnectRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_interconnectNameHasBeenSet)
-  {
-   payload.WithString("interconnectName", m_interconnectName);
-
-  }
-
-  if(m_bandwidthHasBeenSet)
-  {
-   payload.WithString("bandwidth", m_bandwidth);
-
-  }
-
-  if(m_locationHasBeenSet)
-  {
-   payload.WithString("location", m_location);
-
-  }
-
-  if(m_lagIdHasBeenSet)
-  {
-   payload.WithString("lagId", m_lagId);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("tags", std::move(tagsJsonList));
-
-  }
-
-  if(m_providerNameHasBeenSet)
-  {
-   payload.WithString("providerName", m_providerName);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateInterconnectRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateInterconnectRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.CreateInterconnect"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

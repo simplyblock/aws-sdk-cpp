@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ivs-realtime/model/ListIngestConfigurationsRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/ivs-realtime/model/ListIngestConfigurationsRequest.h>
 
 #include <utility>
 
@@ -12,46 +12,24 @@ using namespace Aws::ivsrealtime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListIngestConfigurationsRequest::ListIngestConfigurationsRequest() : 
-    m_filterByStageArnHasBeenSet(false),
-    m_filterByState(IngestConfigurationState::NOT_SET),
-    m_filterByStateHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String ListIngestConfigurationsRequest::SerializePayload() const
-{
+Aws::String ListIngestConfigurationsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_filterByStageArnHasBeenSet)
-  {
-   payload.WithString("filterByStageArn", m_filterByStageArn);
-
+  if (m_filterByStageArnHasBeenSet) {
+    payload.WithString("filterByStageArn", m_filterByStageArn);
   }
 
-  if(m_filterByStateHasBeenSet)
-  {
-   payload.WithString("filterByState", IngestConfigurationStateMapper::GetNameForIngestConfigurationState(m_filterByState));
+  if (m_filterByStateHasBeenSet) {
+    payload.WithString("filterByState", IngestConfigurationStateMapper::GetNameForIngestConfigurationState(m_filterByState));
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("maxResults", m_maxResults);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("maxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

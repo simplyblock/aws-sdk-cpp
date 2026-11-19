@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/chime-sdk-messaging/ChimeSDKMessaging_EXPORTS.h>
 #include <aws/chime-sdk-messaging/model/ChannelMessage.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMessaging
-{
-namespace Model
-{
-  class GetChannelMessageResult
-  {
-  public:
-    AWS_CHIMESDKMESSAGING_API GetChannelMessageResult();
-    AWS_CHIMESDKMESSAGING_API GetChannelMessageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKMESSAGING_API GetChannelMessageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMessaging {
+namespace Model {
+class GetChannelMessageResult {
+ public:
+  AWS_CHIMESDKMESSAGING_API GetChannelMessageResult() = default;
+  AWS_CHIMESDKMESSAGING_API GetChannelMessageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKMESSAGING_API GetChannelMessageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of and content in the message.</p>
+   */
+  inline const ChannelMessage& GetChannelMessage() const { return m_channelMessage; }
+  template <typename ChannelMessageT = ChannelMessage>
+  void SetChannelMessage(ChannelMessageT&& value) {
+    m_channelMessageHasBeenSet = true;
+    m_channelMessage = std::forward<ChannelMessageT>(value);
+  }
+  template <typename ChannelMessageT = ChannelMessage>
+  GetChannelMessageResult& WithChannelMessage(ChannelMessageT&& value) {
+    SetChannelMessage(std::forward<ChannelMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of and content in the message.</p>
-     */
-    inline const ChannelMessage& GetChannelMessage() const{ return m_channelMessage; }
-    inline void SetChannelMessage(const ChannelMessage& value) { m_channelMessage = value; }
-    inline void SetChannelMessage(ChannelMessage&& value) { m_channelMessage = std::move(value); }
-    inline GetChannelMessageResult& WithChannelMessage(const ChannelMessage& value) { SetChannelMessage(value); return *this;}
-    inline GetChannelMessageResult& WithChannelMessage(ChannelMessage&& value) { SetChannelMessage(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetChannelMessageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetChannelMessageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetChannelMessageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetChannelMessageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ChannelMessage m_channelMessage;
+ private:
+  ChannelMessage m_channelMessage;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelMessageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKMessaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMessaging
+}  // namespace Aws

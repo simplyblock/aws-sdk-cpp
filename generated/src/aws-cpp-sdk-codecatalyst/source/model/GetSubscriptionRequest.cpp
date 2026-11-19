@@ -12,16 +12,4 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSubscriptionRequest::GetSubscriptionRequest() : 
-    m_spaceNameHasBeenSet(false)
-{
-}
-
-Aws::String GetSubscriptionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSubscriptionRequest::SerializePayload() const { return {}; }

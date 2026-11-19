@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/kafka/model/RejectClientVpcConnectionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/kafka/model/RejectClientVpcConnectionRequest.h>
 
 #include <utility>
 
@@ -12,25 +12,12 @@ using namespace Aws::Kafka::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RejectClientVpcConnectionRequest::RejectClientVpcConnectionRequest() : 
-    m_clusterArnHasBeenSet(false),
-    m_vpcConnectionArnHasBeenSet(false)
-{
-}
-
-Aws::String RejectClientVpcConnectionRequest::SerializePayload() const
-{
+Aws::String RejectClientVpcConnectionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_vpcConnectionArnHasBeenSet)
-  {
-   payload.WithString("vpcConnectionArn", m_vpcConnectionArn);
-
+  if (m_vpcConnectionArnHasBeenSet) {
+    payload.WithString("vpcConnectionArn", m_vpcConnectionArn);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

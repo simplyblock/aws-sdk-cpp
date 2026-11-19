@@ -3,99 +3,148 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/AdminScope.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace FMS {
+namespace Model {
 
-AdminScope::AdminScope() : 
-    m_accountScopeHasBeenSet(false),
-    m_organizationalUnitScopeHasBeenSet(false),
-    m_regionScopeHasBeenSet(false),
-    m_policyTypeScopeHasBeenSet(false)
-{
-}
+AdminScope::AdminScope(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-AdminScope::AdminScope(JsonView jsonValue)
-  : AdminScope()
-{
-  *this = jsonValue;
-}
+AdminScope& AdminScope::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-AdminScope& AdminScope::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AccountScope"))
-  {
-    m_accountScope = jsonValue.GetObject("AccountScope");
+              if (initialKeyStr == "AccountScope") {
+                m_accountScope = AccountScope(decoder);
+                m_accountScopeHasBeenSet = true;
+              }
 
-    m_accountScopeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "OrganizationalUnitScope") {
+                m_organizationalUnitScope = OrganizationalUnitScope(decoder);
+                m_organizationalUnitScopeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("OrganizationalUnitScope"))
-  {
-    m_organizationalUnitScope = jsonValue.GetObject("OrganizationalUnitScope");
+              else if (initialKeyStr == "RegionScope") {
+                m_regionScope = RegionScope(decoder);
+                m_regionScopeHasBeenSet = true;
+              }
 
-    m_organizationalUnitScopeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "PolicyTypeScope") {
+                m_policyTypeScope = PolicyTypeScope(decoder);
+                m_policyTypeScopeHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("AdminScope", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("RegionScope"))
-  {
-    m_regionScope = jsonValue.GetObject("RegionScope");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_regionScopeHasBeenSet = true;
-  }
+            if (initialKeyStr == "AccountScope") {
+              m_accountScope = AccountScope(decoder);
+              m_accountScopeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("PolicyTypeScope"))
-  {
-    m_policyTypeScope = jsonValue.GetObject("PolicyTypeScope");
+            else if (initialKeyStr == "OrganizationalUnitScope") {
+              m_organizationalUnitScope = OrganizationalUnitScope(decoder);
+              m_organizationalUnitScopeHasBeenSet = true;
+            }
 
-    m_policyTypeScopeHasBeenSet = true;
+            else if (initialKeyStr == "RegionScope") {
+              m_regionScope = RegionScope(decoder);
+              m_regionScopeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "PolicyTypeScope") {
+              m_policyTypeScope = PolicyTypeScope(decoder);
+              m_policyTypeScopeHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue AdminScope::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_accountScopeHasBeenSet)
-  {
-   payload.WithObject("AccountScope", m_accountScope.Jsonize());
-
+void AdminScope::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_accountScopeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_organizationalUnitScopeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_regionScopeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_policyTypeScopeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_organizationalUnitScopeHasBeenSet)
-  {
-   payload.WithObject("OrganizationalUnitScope", m_organizationalUnitScope.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_accountScopeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AccountScope"));
+    m_accountScope.CborEncode(encoder);
   }
 
-  if(m_regionScopeHasBeenSet)
-  {
-   payload.WithObject("RegionScope", m_regionScope.Jsonize());
-
+  if (m_organizationalUnitScopeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OrganizationalUnitScope"));
+    m_organizationalUnitScope.CborEncode(encoder);
   }
 
-  if(m_policyTypeScopeHasBeenSet)
-  {
-   payload.WithObject("PolicyTypeScope", m_policyTypeScope.Jsonize());
-
+  if (m_regionScopeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RegionScope"));
+    m_regionScope.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_policyTypeScopeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PolicyTypeScope"));
+    m_policyTypeScope.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

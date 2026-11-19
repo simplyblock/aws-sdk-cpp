@@ -4,47 +4,45 @@
  */
 
 #include <aws/codepipeline/model/PutJobFailureResultRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutJobFailureResultRequest::PutJobFailureResultRequest() : 
-    m_jobIdHasBeenSet(false),
-    m_failureDetailsHasBeenSet(false)
-{
-}
+Aws::String PutJobFailureResultRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String PutJobFailureResultRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_jobIdHasBeenSet)
-  {
-   payload.WithString("jobId", m_jobId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_jobIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_failureDetailsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_failureDetailsHasBeenSet)
-  {
-   payload.WithObject("failureDetails", m_failureDetails.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_jobIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("jobId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_jobId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_failureDetailsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("failureDetails"));
+    m_failureDetails.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection PutJobFailureResultRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutJobFailureResultRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.PutJobFailureResult"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -4,87 +4,105 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 #include <aws/imagebuilder/model/ComponentVersion.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
-  class ListComponentsResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API ListComponentsResult();
-    AWS_IMAGEBUILDER_API ListComponentsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API ListComponentsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+class ListComponentsResult {
+ public:
+  AWS_IMAGEBUILDER_API ListComponentsResult() = default;
+  AWS_IMAGEBUILDER_API ListComponentsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API ListComponentsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The request ID that uniquely identifies this request.</p>
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListComponentsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The request ID that uniquely identifies this request.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListComponentsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListComponentsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListComponentsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of component semantic versions.</p>  <p>The semantic version
+   * has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can
+   * assign values for the first three, and can filter on all of them.</p>
+   */
+  inline const Aws::Vector<ComponentVersion>& GetComponentVersionList() const { return m_componentVersionList; }
+  template <typename ComponentVersionListT = Aws::Vector<ComponentVersion>>
+  void SetComponentVersionList(ComponentVersionListT&& value) {
+    m_componentVersionListHasBeenSet = true;
+    m_componentVersionList = std::forward<ComponentVersionListT>(value);
+  }
+  template <typename ComponentVersionListT = Aws::Vector<ComponentVersion>>
+  ListComponentsResult& WithComponentVersionList(ComponentVersionListT&& value) {
+    SetComponentVersionList(std::forward<ComponentVersionListT>(value));
+    return *this;
+  }
+  template <typename ComponentVersionListT = ComponentVersion>
+  ListComponentsResult& AddComponentVersionList(ComponentVersionListT&& value) {
+    m_componentVersionListHasBeenSet = true;
+    m_componentVersionList.emplace_back(std::forward<ComponentVersionListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of component semantic versions.</p>  <p>The semantic version
-     * has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can
-     * assign values for the first three, and can filter on all of them.</p> 
-     */
-    inline const Aws::Vector<ComponentVersion>& GetComponentVersionList() const{ return m_componentVersionList; }
-    inline void SetComponentVersionList(const Aws::Vector<ComponentVersion>& value) { m_componentVersionList = value; }
-    inline void SetComponentVersionList(Aws::Vector<ComponentVersion>&& value) { m_componentVersionList = std::move(value); }
-    inline ListComponentsResult& WithComponentVersionList(const Aws::Vector<ComponentVersion>& value) { SetComponentVersionList(value); return *this;}
-    inline ListComponentsResult& WithComponentVersionList(Aws::Vector<ComponentVersion>&& value) { SetComponentVersionList(std::move(value)); return *this;}
-    inline ListComponentsResult& AddComponentVersionList(const ComponentVersion& value) { m_componentVersionList.push_back(value); return *this; }
-    inline ListComponentsResult& AddComponentVersionList(ComponentVersion&& value) { m_componentVersionList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The next token used for paginated responses. When this field isn't empty,
+   * there are additional elements that the service hasn't included in this request.
+   * Use this token with the next request to retrieve additional objects.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListComponentsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The next token used for paginated responses. When this field isn't empty,
-     * there are additional elements that the service hasn't included in this request.
-     * Use this token with the next request to retrieve additional objects.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListComponentsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListComponentsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListComponentsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_requestId;
 
-    Aws::String m_requestId;
+  Aws::Vector<ComponentVersion> m_componentVersionList;
 
-    Aws::Vector<ComponentVersion> m_componentVersionList;
+  Aws::String m_nextToken;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_componentVersionListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    Aws::String m_nextToken;
-  };
-
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

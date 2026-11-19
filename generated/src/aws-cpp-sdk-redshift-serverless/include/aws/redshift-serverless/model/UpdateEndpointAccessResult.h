@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/redshift-serverless/RedshiftServerless_EXPORTS.h>
 #include <aws/redshift-serverless/model/EndpointAccess.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RedshiftServerless
-{
-namespace Model
-{
-  class UpdateEndpointAccessResult
-  {
-  public:
-    AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult();
-    AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RedshiftServerless {
+namespace Model {
+class UpdateEndpointAccessResult {
+ public:
+  AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult() = default;
+  AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REDSHIFTSERVERLESS_API UpdateEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The updated VPC endpoint.</p>
+   */
+  inline const EndpointAccess& GetEndpoint() const { return m_endpoint; }
+  template <typename EndpointT = EndpointAccess>
+  void SetEndpoint(EndpointT&& value) {
+    m_endpointHasBeenSet = true;
+    m_endpoint = std::forward<EndpointT>(value);
+  }
+  template <typename EndpointT = EndpointAccess>
+  UpdateEndpointAccessResult& WithEndpoint(EndpointT&& value) {
+    SetEndpoint(std::forward<EndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The updated VPC endpoint.</p>
-     */
-    inline const EndpointAccess& GetEndpoint() const{ return m_endpoint; }
-    inline void SetEndpoint(const EndpointAccess& value) { m_endpoint = value; }
-    inline void SetEndpoint(EndpointAccess&& value) { m_endpoint = std::move(value); }
-    inline UpdateEndpointAccessResult& WithEndpoint(const EndpointAccess& value) { SetEndpoint(value); return *this;}
-    inline UpdateEndpointAccessResult& WithEndpoint(EndpointAccess&& value) { SetEndpoint(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateEndpointAccessResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateEndpointAccessResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateEndpointAccessResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateEndpointAccessResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    EndpointAccess m_endpoint;
+ private:
+  EndpointAccess m_endpoint;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_endpointHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RedshiftServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace RedshiftServerless
+}  // namespace Aws

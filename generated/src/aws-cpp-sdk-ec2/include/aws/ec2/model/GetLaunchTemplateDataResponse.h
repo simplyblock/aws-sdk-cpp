@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseLaunchTemplateData.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class GetLaunchTemplateDataResponse
-  {
-  public:
-    AWS_EC2_API GetLaunchTemplateDataResponse();
-    AWS_EC2_API GetLaunchTemplateDataResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API GetLaunchTemplateDataResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class GetLaunchTemplateDataResponse {
+ public:
+  AWS_EC2_API GetLaunchTemplateDataResponse() = default;
+  AWS_EC2_API GetLaunchTemplateDataResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API GetLaunchTemplateDataResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The instance data.</p>
+   */
+  inline const ResponseLaunchTemplateData& GetLaunchTemplateData() const { return m_launchTemplateData; }
+  template <typename LaunchTemplateDataT = ResponseLaunchTemplateData>
+  void SetLaunchTemplateData(LaunchTemplateDataT&& value) {
+    m_launchTemplateDataHasBeenSet = true;
+    m_launchTemplateData = std::forward<LaunchTemplateDataT>(value);
+  }
+  template <typename LaunchTemplateDataT = ResponseLaunchTemplateData>
+  GetLaunchTemplateDataResponse& WithLaunchTemplateData(LaunchTemplateDataT&& value) {
+    SetLaunchTemplateData(std::forward<LaunchTemplateDataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The instance data.</p>
-     */
-    inline const ResponseLaunchTemplateData& GetLaunchTemplateData() const{ return m_launchTemplateData; }
-    inline void SetLaunchTemplateData(const ResponseLaunchTemplateData& value) { m_launchTemplateData = value; }
-    inline void SetLaunchTemplateData(ResponseLaunchTemplateData&& value) { m_launchTemplateData = std::move(value); }
-    inline GetLaunchTemplateDataResponse& WithLaunchTemplateData(const ResponseLaunchTemplateData& value) { SetLaunchTemplateData(value); return *this;}
-    inline GetLaunchTemplateDataResponse& WithLaunchTemplateData(ResponseLaunchTemplateData&& value) { SetLaunchTemplateData(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetLaunchTemplateDataResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetLaunchTemplateDataResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetLaunchTemplateDataResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseLaunchTemplateData m_launchTemplateData;
+ private:
+  ResponseLaunchTemplateData m_launchTemplateData;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_launchTemplateDataHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cloudformation/CloudFormation_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cloudformation/CloudFormationEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudFormation
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudFormation {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudFormationClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudFormationEndpointProviderBase =
     EndpointProviderBase<CloudFormationClientConfiguration, CloudFormationBuiltInParameters, CloudFormationClientContextParameters>;
 
 using CloudFormationDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudFormationClientConfiguration, CloudFormationBuiltInParameters, CloudFormationClientContextParameters>;
+    BDDEndpointProvider<CloudFormationClientConfiguration, CloudFormationBuiltInParameters, CloudFormationClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDFORMATION_API CloudFormationEndpointProvider : public CloudFormationDefaultEpProviderBase
-{
-public:
-    using CloudFormationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDFORMATION_API CloudFormationEndpointProvider : public CloudFormationDefaultEpProviderBase {
+ public:
+  using CloudFormationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudFormationEndpointProvider()
-      : CloudFormationDefaultEpProviderBase(Aws::CloudFormation::CloudFormationEndpointRules::GetRulesBlob(), Aws::CloudFormation::CloudFormationEndpointRules::RulesBlobSize)
-    {}
+  CloudFormationEndpointProvider();
 
-    ~CloudFormationEndpointProvider()
-    {
-    }
+  ~CloudFormationEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudFormation
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudFormation
+}  // namespace Aws

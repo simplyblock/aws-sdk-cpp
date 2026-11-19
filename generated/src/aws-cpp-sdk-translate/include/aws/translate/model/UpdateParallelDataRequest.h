@@ -4,107 +4,120 @@
  */
 
 #pragma once
-#include <aws/translate/Translate_EXPORTS.h>
-#include <aws/translate/TranslateRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/translate/model/ParallelDataConfig.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/translate/TranslateRequest.h>
+#include <aws/translate/Translate_EXPORTS.h>
+#include <aws/translate/model/ParallelDataConfig.h>
 
-namespace Aws
-{
-namespace Translate
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Translate {
+namespace Model {
+
+/**
+ */
+class UpdateParallelDataRequest : public TranslateRequest {
+ public:
+  AWS_TRANSLATE_API UpdateParallelDataRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateParallelData"; }
+
+  AWS_TRANSLATE_API Aws::String SerializePayload() const override;
+
+  AWS_TRANSLATE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the parallel data resource being updated.</p>
    */
-  class UpdateParallelDataRequest : public TranslateRequest
-  {
-  public:
-    AWS_TRANSLATE_API UpdateParallelDataRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateParallelDataRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateParallelData"; }
+  ///@{
+  /**
+   * <p>A custom description for the parallel data resource in Amazon Translate.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateParallelDataRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TRANSLATE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies the format and S3 location of the parallel data input file.</p>
+   */
+  inline const ParallelDataConfig& GetParallelDataConfig() const { return m_parallelDataConfig; }
+  inline bool ParallelDataConfigHasBeenSet() const { return m_parallelDataConfigHasBeenSet; }
+  template <typename ParallelDataConfigT = ParallelDataConfig>
+  void SetParallelDataConfig(ParallelDataConfigT&& value) {
+    m_parallelDataConfigHasBeenSet = true;
+    m_parallelDataConfig = std::forward<ParallelDataConfigT>(value);
+  }
+  template <typename ParallelDataConfigT = ParallelDataConfig>
+  UpdateParallelDataRequest& WithParallelDataConfig(ParallelDataConfigT&& value) {
+    SetParallelDataConfig(std::forward<ParallelDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TRANSLATE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A unique identifier for the request. This token is automatically generated
+   * when you use Amazon Translate through an AWS SDK.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  UpdateParallelDataRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The name of the parallel data resource being updated.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateParallelDataRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateParallelDataRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateParallelDataRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ParallelDataConfig m_parallelDataConfig;
 
-    ///@{
-    /**
-     * <p>A custom description for the parallel data resource in Amazon Translate.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateParallelDataRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateParallelDataRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateParallelDataRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_parallelDataConfigHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    ///@{
-    /**
-     * <p>Specifies the format and S3 location of the parallel data input file.</p>
-     */
-    inline const ParallelDataConfig& GetParallelDataConfig() const{ return m_parallelDataConfig; }
-    inline bool ParallelDataConfigHasBeenSet() const { return m_parallelDataConfigHasBeenSet; }
-    inline void SetParallelDataConfig(const ParallelDataConfig& value) { m_parallelDataConfigHasBeenSet = true; m_parallelDataConfig = value; }
-    inline void SetParallelDataConfig(ParallelDataConfig&& value) { m_parallelDataConfigHasBeenSet = true; m_parallelDataConfig = std::move(value); }
-    inline UpdateParallelDataRequest& WithParallelDataConfig(const ParallelDataConfig& value) { SetParallelDataConfig(value); return *this;}
-    inline UpdateParallelDataRequest& WithParallelDataConfig(ParallelDataConfig&& value) { SetParallelDataConfig(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A unique identifier for the request. This token is automatically generated
-     * when you use Amazon Translate through an AWS SDK.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline UpdateParallelDataRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline UpdateParallelDataRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline UpdateParallelDataRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    ParallelDataConfig m_parallelDataConfig;
-    bool m_parallelDataConfigHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Translate
-} // namespace Aws
+}  // namespace Model
+}  // namespace Translate
+}  // namespace Aws

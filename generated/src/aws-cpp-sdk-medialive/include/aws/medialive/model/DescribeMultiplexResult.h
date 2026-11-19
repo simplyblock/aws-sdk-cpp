@@ -4,204 +4,274 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/medialive/model/MultiplexOutputDestination.h>
 #include <aws/medialive/model/MultiplexSettings.h>
 #include <aws/medialive/model/MultiplexState.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/medialive/model/MultiplexOutputDestination.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
+/**
+ * Placeholder documentation for DescribeMultiplexResponse<p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeMultiplexResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeMultiplexResult {
+ public:
+  AWS_MEDIALIVE_API DescribeMultiplexResult() = default;
+  AWS_MEDIALIVE_API DescribeMultiplexResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIALIVE_API DescribeMultiplexResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * Placeholder documentation for DescribeMultiplexResponse<p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeMultiplexResponse">AWS
-   * API Reference</a></p>
+   * The unique arn of the multiplex.
    */
-  class DescribeMultiplexResult
-  {
-  public:
-    AWS_MEDIALIVE_API DescribeMultiplexResult();
-    AWS_MEDIALIVE_API DescribeMultiplexResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIALIVE_API DescribeMultiplexResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  DescribeMultiplexResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * A list of availability zones for the multiplex.
+   */
+  inline const Aws::Vector<Aws::String>& GetAvailabilityZones() const { return m_availabilityZones; }
+  template <typename AvailabilityZonesT = Aws::Vector<Aws::String>>
+  void SetAvailabilityZones(AvailabilityZonesT&& value) {
+    m_availabilityZonesHasBeenSet = true;
+    m_availabilityZones = std::forward<AvailabilityZonesT>(value);
+  }
+  template <typename AvailabilityZonesT = Aws::Vector<Aws::String>>
+  DescribeMultiplexResult& WithAvailabilityZones(AvailabilityZonesT&& value) {
+    SetAvailabilityZones(std::forward<AvailabilityZonesT>(value));
+    return *this;
+  }
+  template <typename AvailabilityZonesT = Aws::String>
+  DescribeMultiplexResult& AddAvailabilityZones(AvailabilityZonesT&& value) {
+    m_availabilityZonesHasBeenSet = true;
+    m_availabilityZones.emplace_back(std::forward<AvailabilityZonesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The unique arn of the multiplex.
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline DescribeMultiplexResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline DescribeMultiplexResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * A list of the multiplex output destinations.
+   */
+  inline const Aws::Vector<MultiplexOutputDestination>& GetDestinations() const { return m_destinations; }
+  template <typename DestinationsT = Aws::Vector<MultiplexOutputDestination>>
+  void SetDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations = std::forward<DestinationsT>(value);
+  }
+  template <typename DestinationsT = Aws::Vector<MultiplexOutputDestination>>
+  DescribeMultiplexResult& WithDestinations(DestinationsT&& value) {
+    SetDestinations(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  template <typename DestinationsT = MultiplexOutputDestination>
+  DescribeMultiplexResult& AddDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations.emplace_back(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A list of availability zones for the multiplex.
-     */
-    inline const Aws::Vector<Aws::String>& GetAvailabilityZones() const{ return m_availabilityZones; }
-    inline void SetAvailabilityZones(const Aws::Vector<Aws::String>& value) { m_availabilityZones = value; }
-    inline void SetAvailabilityZones(Aws::Vector<Aws::String>&& value) { m_availabilityZones = std::move(value); }
-    inline DescribeMultiplexResult& WithAvailabilityZones(const Aws::Vector<Aws::String>& value) { SetAvailabilityZones(value); return *this;}
-    inline DescribeMultiplexResult& WithAvailabilityZones(Aws::Vector<Aws::String>&& value) { SetAvailabilityZones(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& AddAvailabilityZones(const Aws::String& value) { m_availabilityZones.push_back(value); return *this; }
-    inline DescribeMultiplexResult& AddAvailabilityZones(Aws::String&& value) { m_availabilityZones.push_back(std::move(value)); return *this; }
-    inline DescribeMultiplexResult& AddAvailabilityZones(const char* value) { m_availabilityZones.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * The unique id of the multiplex.
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  DescribeMultiplexResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A list of the multiplex output destinations.
-     */
-    inline const Aws::Vector<MultiplexOutputDestination>& GetDestinations() const{ return m_destinations; }
-    inline void SetDestinations(const Aws::Vector<MultiplexOutputDestination>& value) { m_destinations = value; }
-    inline void SetDestinations(Aws::Vector<MultiplexOutputDestination>&& value) { m_destinations = std::move(value); }
-    inline DescribeMultiplexResult& WithDestinations(const Aws::Vector<MultiplexOutputDestination>& value) { SetDestinations(value); return *this;}
-    inline DescribeMultiplexResult& WithDestinations(Aws::Vector<MultiplexOutputDestination>&& value) { SetDestinations(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& AddDestinations(const MultiplexOutputDestination& value) { m_destinations.push_back(value); return *this; }
-    inline DescribeMultiplexResult& AddDestinations(MultiplexOutputDestination&& value) { m_destinations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * Configuration for a multiplex event.
+   */
+  inline const MultiplexSettings& GetMultiplexSettings() const { return m_multiplexSettings; }
+  template <typename MultiplexSettingsT = MultiplexSettings>
+  void SetMultiplexSettings(MultiplexSettingsT&& value) {
+    m_multiplexSettingsHasBeenSet = true;
+    m_multiplexSettings = std::forward<MultiplexSettingsT>(value);
+  }
+  template <typename MultiplexSettingsT = MultiplexSettings>
+  DescribeMultiplexResult& WithMultiplexSettings(MultiplexSettingsT&& value) {
+    SetMultiplexSettings(std::forward<MultiplexSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The unique id of the multiplex.
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline DescribeMultiplexResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline DescribeMultiplexResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The name of the multiplex.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeMultiplexResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Configuration for a multiplex event.
-     */
-    inline const MultiplexSettings& GetMultiplexSettings() const{ return m_multiplexSettings; }
-    inline void SetMultiplexSettings(const MultiplexSettings& value) { m_multiplexSettings = value; }
-    inline void SetMultiplexSettings(MultiplexSettings&& value) { m_multiplexSettings = std::move(value); }
-    inline DescribeMultiplexResult& WithMultiplexSettings(const MultiplexSettings& value) { SetMultiplexSettings(value); return *this;}
-    inline DescribeMultiplexResult& WithMultiplexSettings(MultiplexSettings&& value) { SetMultiplexSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The number of currently healthy pipelines.
+   */
+  inline int GetPipelinesRunningCount() const { return m_pipelinesRunningCount; }
+  inline void SetPipelinesRunningCount(int value) {
+    m_pipelinesRunningCountHasBeenSet = true;
+    m_pipelinesRunningCount = value;
+  }
+  inline DescribeMultiplexResult& WithPipelinesRunningCount(int value) {
+    SetPipelinesRunningCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the multiplex.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline DescribeMultiplexResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeMultiplexResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The number of programs in the multiplex.
+   */
+  inline int GetProgramCount() const { return m_programCount; }
+  inline void SetProgramCount(int value) {
+    m_programCountHasBeenSet = true;
+    m_programCount = value;
+  }
+  inline DescribeMultiplexResult& WithProgramCount(int value) {
+    SetProgramCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The number of currently healthy pipelines.
-     */
-    inline int GetPipelinesRunningCount() const{ return m_pipelinesRunningCount; }
-    inline void SetPipelinesRunningCount(int value) { m_pipelinesRunningCount = value; }
-    inline DescribeMultiplexResult& WithPipelinesRunningCount(int value) { SetPipelinesRunningCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The current state of the multiplex.
+   */
+  inline MultiplexState GetState() const { return m_state; }
+  inline void SetState(MultiplexState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline DescribeMultiplexResult& WithState(MultiplexState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The number of programs in the multiplex.
-     */
-    inline int GetProgramCount() const{ return m_programCount; }
-    inline void SetProgramCount(int value) { m_programCount = value; }
-    inline DescribeMultiplexResult& WithProgramCount(int value) { SetProgramCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * A collection of key-value pairs.
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DescribeMultiplexResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DescribeMultiplexResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The current state of the multiplex.
-     */
-    inline const MultiplexState& GetState() const{ return m_state; }
-    inline void SetState(const MultiplexState& value) { m_state = value; }
-    inline void SetState(MultiplexState&& value) { m_state = std::move(value); }
-    inline DescribeMultiplexResult& WithState(const MultiplexState& value) { SetState(value); return *this;}
-    inline DescribeMultiplexResult& WithState(MultiplexState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * A collection of key-value pairs.
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline DescribeMultiplexResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DescribeMultiplexResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline DescribeMultiplexResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeMultiplexResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeMultiplexResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribeMultiplexResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeMultiplexResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeMultiplexResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeMultiplexResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeMultiplexResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeMultiplexResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeMultiplexResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_arn;
 
-    Aws::String m_arn;
+  Aws::Vector<Aws::String> m_availabilityZones;
 
-    Aws::Vector<Aws::String> m_availabilityZones;
+  Aws::Vector<MultiplexOutputDestination> m_destinations;
 
-    Aws::Vector<MultiplexOutputDestination> m_destinations;
+  Aws::String m_id;
 
-    Aws::String m_id;
+  MultiplexSettings m_multiplexSettings;
 
-    MultiplexSettings m_multiplexSettings;
+  Aws::String m_name;
 
-    Aws::String m_name;
+  int m_pipelinesRunningCount{0};
 
-    int m_pipelinesRunningCount;
+  int m_programCount{0};
 
-    int m_programCount;
+  MultiplexState m_state{MultiplexState::NOT_SET};
 
-    MultiplexState m_state;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_availabilityZonesHasBeenSet = false;
+  bool m_destinationsHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_multiplexSettingsHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_pipelinesRunningCountHasBeenSet = false;
+  bool m_programCountHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

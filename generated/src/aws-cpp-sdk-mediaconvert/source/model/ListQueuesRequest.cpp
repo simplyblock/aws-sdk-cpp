@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediaconvert/model/ListQueuesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/http/URI.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/mediaconvert/model/ListQueuesRequest.h>
 
 #include <utility>
 
@@ -15,54 +15,31 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
 
-ListQueuesRequest::ListQueuesRequest() : 
-    m_listBy(QueueListBy::NOT_SET),
-    m_listByHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_order(Order::NOT_SET),
-    m_orderHasBeenSet(false)
-{
+Aws::String ListQueuesRequest::SerializePayload() const { return {}; }
+
+void ListQueuesRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_listByHasBeenSet) {
+    ss << QueueListByMapper::GetNameForQueueListBy(m_listBy);
+    uri.AddQueryStringParameter("listBy", ss.str());
+    ss.str("");
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    ss << m_maxResults;
+    uri.AddQueryStringParameter("maxResults", ss.str());
+    ss.str("");
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    ss << m_nextToken;
+    uri.AddQueryStringParameter("nextToken", ss.str());
+    ss.str("");
+  }
+
+  if (m_orderHasBeenSet) {
+    ss << OrderMapper::GetNameForOrder(m_order);
+    uri.AddQueryStringParameter("order", ss.str());
+    ss.str("");
+  }
 }
-
-Aws::String ListQueuesRequest::SerializePayload() const
-{
-  return {};
-}
-
-void ListQueuesRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_listByHasBeenSet)
-    {
-      ss << QueueListByMapper::GetNameForQueueListBy(m_listBy);
-      uri.AddQueryStringParameter("listBy", ss.str());
-      ss.str("");
-    }
-
-    if(m_maxResultsHasBeenSet)
-    {
-      ss << m_maxResults;
-      uri.AddQueryStringParameter("maxResults", ss.str());
-      ss.str("");
-    }
-
-    if(m_nextTokenHasBeenSet)
-    {
-      ss << m_nextToken;
-      uri.AddQueryStringParameter("nextToken", ss.str());
-      ss.str("");
-    }
-
-    if(m_orderHasBeenSet)
-    {
-      ss << OrderMapper::GetNameForOrder(m_order);
-      uri.AddQueryStringParameter("order", ss.str());
-      ss.str("");
-    }
-
-}
-
-
-

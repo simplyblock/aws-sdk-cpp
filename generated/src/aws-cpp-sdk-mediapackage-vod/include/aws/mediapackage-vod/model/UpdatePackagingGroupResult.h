@@ -4,163 +4,212 @@
  */
 
 #pragma once
-#include <aws/mediapackage-vod/MediaPackageVod_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediapackage-vod/MediaPackageVod_EXPORTS.h>
 #include <aws/mediapackage-vod/model/Authorization.h>
 #include <aws/mediapackage-vod/model/EgressAccessLogs.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaPackageVod
-{
-namespace Model
-{
-  class UpdatePackagingGroupResult
-  {
-  public:
-    AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult();
-    AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaPackageVod {
+namespace Model {
+class UpdatePackagingGroupResult {
+ public:
+  AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult() = default;
+  AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIAPACKAGEVOD_API UpdatePackagingGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * The approximate asset count of the PackagingGroup.
+   */
+  inline int GetApproximateAssetCount() const { return m_approximateAssetCount; }
+  inline void SetApproximateAssetCount(int value) {
+    m_approximateAssetCountHasBeenSet = true;
+    m_approximateAssetCount = value;
+  }
+  inline UpdatePackagingGroupResult& WithApproximateAssetCount(int value) {
+    SetApproximateAssetCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The approximate asset count of the PackagingGroup.
-     */
-    inline int GetApproximateAssetCount() const{ return m_approximateAssetCount; }
-    inline void SetApproximateAssetCount(int value) { m_approximateAssetCount = value; }
-    inline UpdatePackagingGroupResult& WithApproximateAssetCount(int value) { SetApproximateAssetCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The ARN of the PackagingGroup.
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdatePackagingGroupResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ARN of the PackagingGroup.
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UpdatePackagingGroupResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdatePackagingGroupResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Authorization& GetAuthorization() const{ return m_authorization; }
-    inline void SetAuthorization(const Authorization& value) { m_authorization = value; }
-    inline void SetAuthorization(Authorization&& value) { m_authorization = std::move(value); }
-    inline UpdatePackagingGroupResult& WithAuthorization(const Authorization& value) { SetAuthorization(value); return *this;}
-    inline UpdatePackagingGroupResult& WithAuthorization(Authorization&& value) { SetAuthorization(std::move(value)); return *this;}
-    ///@}
+  inline const Authorization& GetAuthorization() const { return m_authorization; }
+  template <typename AuthorizationT = Authorization>
+  void SetAuthorization(AuthorizationT&& value) {
+    m_authorizationHasBeenSet = true;
+    m_authorization = std::forward<AuthorizationT>(value);
+  }
+  template <typename AuthorizationT = Authorization>
+  UpdatePackagingGroupResult& WithAuthorization(AuthorizationT&& value) {
+    SetAuthorization(std::forward<AuthorizationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The time the PackagingGroup was created.
-     */
-    inline const Aws::String& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::String& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::String&& value) { m_createdAt = std::move(value); }
-    inline void SetCreatedAt(const char* value) { m_createdAt.assign(value); }
-    inline UpdatePackagingGroupResult& WithCreatedAt(const Aws::String& value) { SetCreatedAt(value); return *this;}
-    inline UpdatePackagingGroupResult& WithCreatedAt(Aws::String&& value) { SetCreatedAt(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& WithCreatedAt(const char* value) { SetCreatedAt(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The time the PackagingGroup was created.
+   */
+  inline const Aws::String& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::String>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::String>
+  UpdatePackagingGroupResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The fully qualified domain name for Assets in the PackagingGroup.
-     */
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline void SetDomainName(const Aws::String& value) { m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainName.assign(value); }
-    inline UpdatePackagingGroupResult& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline UpdatePackagingGroupResult& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The fully qualified domain name for Assets in the PackagingGroup.
+   */
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  UpdatePackagingGroupResult& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const EgressAccessLogs& GetEgressAccessLogs() const{ return m_egressAccessLogs; }
-    inline void SetEgressAccessLogs(const EgressAccessLogs& value) { m_egressAccessLogs = value; }
-    inline void SetEgressAccessLogs(EgressAccessLogs&& value) { m_egressAccessLogs = std::move(value); }
-    inline UpdatePackagingGroupResult& WithEgressAccessLogs(const EgressAccessLogs& value) { SetEgressAccessLogs(value); return *this;}
-    inline UpdatePackagingGroupResult& WithEgressAccessLogs(EgressAccessLogs&& value) { SetEgressAccessLogs(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * The ID of the PackagingGroup.
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline UpdatePackagingGroupResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdatePackagingGroupResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  inline const EgressAccessLogs& GetEgressAccessLogs() const { return m_egressAccessLogs; }
+  template <typename EgressAccessLogsT = EgressAccessLogs>
+  void SetEgressAccessLogs(EgressAccessLogsT&& value) {
+    m_egressAccessLogsHasBeenSet = true;
+    m_egressAccessLogs = std::forward<EgressAccessLogsT>(value);
+  }
+  template <typename EgressAccessLogsT = EgressAccessLogs>
+  UpdatePackagingGroupResult& WithEgressAccessLogs(EgressAccessLogsT&& value) {
+    SetEgressAccessLogs(std::forward<EgressAccessLogsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline UpdatePackagingGroupResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline UpdatePackagingGroupResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdatePackagingGroupResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * The ID of the PackagingGroup.
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdatePackagingGroupResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdatePackagingGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdatePackagingGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdatePackagingGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    int m_approximateAssetCount;
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  UpdatePackagingGroupResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  UpdatePackagingGroupResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
+  ///@{
 
-    Authorization m_authorization;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdatePackagingGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_createdAt;
+ private:
+  int m_approximateAssetCount{0};
 
-    Aws::String m_domainName;
+  Aws::String m_arn;
 
-    EgressAccessLogs m_egressAccessLogs;
+  Authorization m_authorization;
 
-    Aws::String m_id;
+  Aws::String m_createdAt;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::String m_domainName;
 
-    Aws::String m_requestId;
-  };
+  EgressAccessLogs m_egressAccessLogs;
 
-} // namespace Model
-} // namespace MediaPackageVod
-} // namespace Aws
+  Aws::String m_id;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_approximateAssetCountHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_authorizationHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_domainNameHasBeenSet = false;
+  bool m_egressAccessLogsHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaPackageVod
+}  // namespace Aws

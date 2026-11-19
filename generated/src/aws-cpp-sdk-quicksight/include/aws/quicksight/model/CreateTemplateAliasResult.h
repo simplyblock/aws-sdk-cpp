@@ -4,74 +4,90 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/TemplateAlias.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class CreateTemplateAliasResult
-  {
-  public:
-    AWS_QUICKSIGHT_API CreateTemplateAliasResult();
-    AWS_QUICKSIGHT_API CreateTemplateAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API CreateTemplateAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class CreateTemplateAliasResult {
+ public:
+  AWS_QUICKSIGHT_API CreateTemplateAliasResult() = default;
+  AWS_QUICKSIGHT_API CreateTemplateAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API CreateTemplateAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the template alias.</p>
+   */
+  inline const TemplateAlias& GetTemplateAlias() const { return m_templateAlias; }
+  template <typename TemplateAliasT = TemplateAlias>
+  void SetTemplateAlias(TemplateAliasT&& value) {
+    m_templateAliasHasBeenSet = true;
+    m_templateAlias = std::forward<TemplateAliasT>(value);
+  }
+  template <typename TemplateAliasT = TemplateAlias>
+  CreateTemplateAliasResult& WithTemplateAlias(TemplateAliasT&& value) {
+    SetTemplateAlias(std::forward<TemplateAliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the template alias.</p>
-     */
-    inline const TemplateAlias& GetTemplateAlias() const{ return m_templateAlias; }
-    inline void SetTemplateAlias(const TemplateAlias& value) { m_templateAlias = value; }
-    inline void SetTemplateAlias(TemplateAlias&& value) { m_templateAlias = std::move(value); }
-    inline CreateTemplateAliasResult& WithTemplateAlias(const TemplateAlias& value) { SetTemplateAlias(value); return *this;}
-    inline CreateTemplateAliasResult& WithTemplateAlias(TemplateAlias&& value) { SetTemplateAlias(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline CreateTemplateAliasResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline CreateTemplateAliasResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTemplateAliasResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTemplateAliasResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTemplateAliasResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTemplateAliasResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TemplateAlias m_templateAlias;
+ private:
+  TemplateAlias m_templateAlias;
 
-    int m_status;
+  int m_status{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_templateAliasHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

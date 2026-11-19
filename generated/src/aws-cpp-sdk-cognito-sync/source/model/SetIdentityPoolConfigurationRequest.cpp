@@ -12,32 +12,16 @@ using namespace Aws::CognitoSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-SetIdentityPoolConfigurationRequest::SetIdentityPoolConfigurationRequest() : 
-    m_identityPoolIdHasBeenSet(false),
-    m_pushSyncHasBeenSet(false),
-    m_cognitoStreamsHasBeenSet(false)
-{
-}
-
-Aws::String SetIdentityPoolConfigurationRequest::SerializePayload() const
-{
+Aws::String SetIdentityPoolConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_pushSyncHasBeenSet)
-  {
-   payload.WithObject("PushSync", m_pushSync.Jsonize());
-
+  if (m_pushSyncHasBeenSet) {
+    payload.WithObject("PushSync", m_pushSync.Jsonize());
   }
 
-  if(m_cognitoStreamsHasBeenSet)
-  {
-   payload.WithObject("CognitoStreams", m_cognitoStreams.Jsonize());
-
+  if (m_cognitoStreamsHasBeenSet) {
+    payload.WithObject("CognitoStreams", m_cognitoStreams.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

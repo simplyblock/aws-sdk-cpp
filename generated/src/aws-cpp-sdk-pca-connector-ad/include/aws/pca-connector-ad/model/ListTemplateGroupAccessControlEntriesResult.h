@@ -4,84 +4,104 @@
  */
 
 #pragma once
-#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
 #include <aws/pca-connector-ad/model/AccessControlEntrySummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorAd
-{
-namespace Model
-{
-  class ListTemplateGroupAccessControlEntriesResult
-  {
-  public:
-    AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult();
-    AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorAd {
+namespace Model {
+class ListTemplateGroupAccessControlEntriesResult {
+ public:
+  AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult() = default;
+  AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORAD_API ListTemplateGroupAccessControlEntriesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An access control entry grants or denies permission to an Active Directory
+   * group to enroll certificates for a template.</p>
+   */
+  inline const Aws::Vector<AccessControlEntrySummary>& GetAccessControlEntries() const { return m_accessControlEntries; }
+  template <typename AccessControlEntriesT = Aws::Vector<AccessControlEntrySummary>>
+  void SetAccessControlEntries(AccessControlEntriesT&& value) {
+    m_accessControlEntriesHasBeenSet = true;
+    m_accessControlEntries = std::forward<AccessControlEntriesT>(value);
+  }
+  template <typename AccessControlEntriesT = Aws::Vector<AccessControlEntrySummary>>
+  ListTemplateGroupAccessControlEntriesResult& WithAccessControlEntries(AccessControlEntriesT&& value) {
+    SetAccessControlEntries(std::forward<AccessControlEntriesT>(value));
+    return *this;
+  }
+  template <typename AccessControlEntriesT = AccessControlEntrySummary>
+  ListTemplateGroupAccessControlEntriesResult& AddAccessControlEntries(AccessControlEntriesT&& value) {
+    m_accessControlEntriesHasBeenSet = true;
+    m_accessControlEntries.emplace_back(std::forward<AccessControlEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An access control entry grants or denies permission to an Active Directory
-     * group to enroll certificates for a template.</p>
-     */
-    inline const Aws::Vector<AccessControlEntrySummary>& GetAccessControlEntries() const{ return m_accessControlEntries; }
-    inline void SetAccessControlEntries(const Aws::Vector<AccessControlEntrySummary>& value) { m_accessControlEntries = value; }
-    inline void SetAccessControlEntries(Aws::Vector<AccessControlEntrySummary>&& value) { m_accessControlEntries = std::move(value); }
-    inline ListTemplateGroupAccessControlEntriesResult& WithAccessControlEntries(const Aws::Vector<AccessControlEntrySummary>& value) { SetAccessControlEntries(value); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& WithAccessControlEntries(Aws::Vector<AccessControlEntrySummary>&& value) { SetAccessControlEntries(std::move(value)); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& AddAccessControlEntries(const AccessControlEntrySummary& value) { m_accessControlEntries.push_back(value); return *this; }
-    inline ListTemplateGroupAccessControlEntriesResult& AddAccessControlEntries(AccessControlEntrySummary&& value) { m_accessControlEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Use this parameter when paginating results in a subsequent request after you
+   * receive a response with truncated results. Set it to the value of the
+   * <code>NextToken</code> parameter from the response you just received.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTemplateGroupAccessControlEntriesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Use this parameter when paginating results in a subsequent request after you
-     * receive a response with truncated results. Set it to the value of the
-     * <code>NextToken</code> parameter from the response you just received.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListTemplateGroupAccessControlEntriesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTemplateGroupAccessControlEntriesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTemplateGroupAccessControlEntriesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTemplateGroupAccessControlEntriesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AccessControlEntrySummary> m_accessControlEntries;
+ private:
+  Aws::Vector<AccessControlEntrySummary> m_accessControlEntries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessControlEntriesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorAd
+}  // namespace Aws

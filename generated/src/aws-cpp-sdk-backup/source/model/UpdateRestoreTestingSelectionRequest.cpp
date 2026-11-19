@@ -12,26 +12,12 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateRestoreTestingSelectionRequest::UpdateRestoreTestingSelectionRequest() : 
-    m_restoreTestingPlanNameHasBeenSet(false),
-    m_restoreTestingSelectionHasBeenSet(false),
-    m_restoreTestingSelectionNameHasBeenSet(false)
-{
-}
-
-Aws::String UpdateRestoreTestingSelectionRequest::SerializePayload() const
-{
+Aws::String UpdateRestoreTestingSelectionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_restoreTestingSelectionHasBeenSet)
-  {
-   payload.WithObject("RestoreTestingSelection", m_restoreTestingSelection.Jsonize());
-
+  if (m_restoreTestingSelectionHasBeenSet) {
+    payload.WithObject("RestoreTestingSelection", m_restoreTestingSelection.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

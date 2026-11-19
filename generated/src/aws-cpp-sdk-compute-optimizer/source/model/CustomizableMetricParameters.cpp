@@ -4,70 +4,129 @@
  */
 
 #include <aws/compute-optimizer/model/CustomizableMetricParameters.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-CustomizableMetricParameters::CustomizableMetricParameters() : 
-    m_threshold(CustomizableMetricThreshold::NOT_SET),
-    m_thresholdHasBeenSet(false),
-    m_headroom(CustomizableMetricHeadroom::NOT_SET),
-    m_headroomHasBeenSet(false)
-{
-}
+CustomizableMetricParameters::CustomizableMetricParameters(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-CustomizableMetricParameters::CustomizableMetricParameters(JsonView jsonValue)
-  : CustomizableMetricParameters()
-{
-  *this = jsonValue;
-}
+CustomizableMetricParameters& CustomizableMetricParameters::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-CustomizableMetricParameters& CustomizableMetricParameters::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("threshold"))
-  {
-    m_threshold = CustomizableMetricThresholdMapper::GetCustomizableMetricThresholdForName(jsonValue.GetString("threshold"));
+              if (initialKeyStr == "threshold") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_threshold = CustomizableMetricThresholdMapper::GetCustomizableMetricThresholdForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_thresholdHasBeenSet = true;
+              }
 
-    m_thresholdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "headroom") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_headroom = CustomizableMetricHeadroomMapper::GetCustomizableMetricHeadroomForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_headroomHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("CustomizableMetricParameters", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("headroom"))
-  {
-    m_headroom = CustomizableMetricHeadroomMapper::GetCustomizableMetricHeadroomForName(jsonValue.GetString("headroom"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_headroomHasBeenSet = true;
+            if (initialKeyStr == "threshold") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_threshold = CustomizableMetricThresholdMapper::GetCustomizableMetricThresholdForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_thresholdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "headroom") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_headroom = CustomizableMetricHeadroomMapper::GetCustomizableMetricHeadroomForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_headroomHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue CustomizableMetricParameters::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_thresholdHasBeenSet)
-  {
-   payload.WithString("threshold", CustomizableMetricThresholdMapper::GetNameForCustomizableMetricThreshold(m_threshold));
+void CustomizableMetricParameters::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_thresholdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_headroomHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_headroomHasBeenSet)
-  {
-   payload.WithString("headroom", CustomizableMetricHeadroomMapper::GetNameForCustomizableMetricHeadroom(m_headroom));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_thresholdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("threshold"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(CustomizableMetricThresholdMapper::GetNameForCustomizableMetricThreshold(m_threshold).c_str()));
   }
 
-  return payload;
+  if (m_headroomHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("headroom"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(CustomizableMetricHeadroomMapper::GetNameForCustomizableMetricHeadroom(m_headroom).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

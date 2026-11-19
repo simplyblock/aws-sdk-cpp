@@ -5,56 +5,78 @@
 
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
+#include <aws/cleanrooms/model/AccessBudgetsPrivacyTemplateParametersOutput.h>
 #include <aws/cleanrooms/model/DifferentialPrivacyTemplateParametersOutput.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
 
+/**
+ * <p>The epsilon and noise parameters that were used in the privacy budget
+ * template.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/PrivacyBudgetTemplateParametersOutput">AWS
+ * API Reference</a></p>
+ */
+class PrivacyBudgetTemplateParametersOutput {
+ public:
+  AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput() = default;
+  AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The epsilon and noise parameters that were used in the privacy budget
-   * template.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/PrivacyBudgetTemplateParametersOutput">AWS
-   * API Reference</a></p>
+   * <p>The epsilon and noise parameters.</p>
    */
-  class PrivacyBudgetTemplateParametersOutput
-  {
-  public:
-    AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput();
-    AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API PrivacyBudgetTemplateParametersOutput& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const DifferentialPrivacyTemplateParametersOutput& GetDifferentialPrivacy() const { return m_differentialPrivacy; }
+  inline bool DifferentialPrivacyHasBeenSet() const { return m_differentialPrivacyHasBeenSet; }
+  template <typename DifferentialPrivacyT = DifferentialPrivacyTemplateParametersOutput>
+  void SetDifferentialPrivacy(DifferentialPrivacyT&& value) {
+    m_differentialPrivacyHasBeenSet = true;
+    m_differentialPrivacy = std::forward<DifferentialPrivacyT>(value);
+  }
+  template <typename DifferentialPrivacyT = DifferentialPrivacyTemplateParametersOutput>
+  PrivacyBudgetTemplateParametersOutput& WithDifferentialPrivacy(DifferentialPrivacyT&& value) {
+    SetDifferentialPrivacy(std::forward<DifferentialPrivacyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Access budget configuration returned from the privacy budget template,
+   * containing the configured access budget settings.</p>
+   */
+  inline const AccessBudgetsPrivacyTemplateParametersOutput& GetAccessBudget() const { return m_accessBudget; }
+  inline bool AccessBudgetHasBeenSet() const { return m_accessBudgetHasBeenSet; }
+  template <typename AccessBudgetT = AccessBudgetsPrivacyTemplateParametersOutput>
+  void SetAccessBudget(AccessBudgetT&& value) {
+    m_accessBudgetHasBeenSet = true;
+    m_accessBudget = std::forward<AccessBudgetT>(value);
+  }
+  template <typename AccessBudgetT = AccessBudgetsPrivacyTemplateParametersOutput>
+  PrivacyBudgetTemplateParametersOutput& WithAccessBudget(AccessBudgetT&& value) {
+    SetAccessBudget(std::forward<AccessBudgetT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  DifferentialPrivacyTemplateParametersOutput m_differentialPrivacy;
 
-    ///@{
-    /**
-     * <p>The epsilon and noise parameters.</p>
-     */
-    inline const DifferentialPrivacyTemplateParametersOutput& GetDifferentialPrivacy() const{ return m_differentialPrivacy; }
-    inline bool DifferentialPrivacyHasBeenSet() const { return m_differentialPrivacyHasBeenSet; }
-    inline void SetDifferentialPrivacy(const DifferentialPrivacyTemplateParametersOutput& value) { m_differentialPrivacyHasBeenSet = true; m_differentialPrivacy = value; }
-    inline void SetDifferentialPrivacy(DifferentialPrivacyTemplateParametersOutput&& value) { m_differentialPrivacyHasBeenSet = true; m_differentialPrivacy = std::move(value); }
-    inline PrivacyBudgetTemplateParametersOutput& WithDifferentialPrivacy(const DifferentialPrivacyTemplateParametersOutput& value) { SetDifferentialPrivacy(value); return *this;}
-    inline PrivacyBudgetTemplateParametersOutput& WithDifferentialPrivacy(DifferentialPrivacyTemplateParametersOutput&& value) { SetDifferentialPrivacy(std::move(value)); return *this;}
-    ///@}
-  private:
+  AccessBudgetsPrivacyTemplateParametersOutput m_accessBudget;
+  bool m_differentialPrivacyHasBeenSet = false;
+  bool m_accessBudgetHasBeenSet = false;
+};
 
-    DifferentialPrivacyTemplateParametersOutput m_differentialPrivacy;
-    bool m_differentialPrivacyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

@@ -4,108 +4,130 @@
  */
 
 #pragma once
-#include <aws/frauddetector/FraudDetector_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/frauddetector/FraudDetector_EXPORTS.h>
 #include <aws/frauddetector/model/ModelTypeEnum.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FraudDetector
-{
-namespace Model
-{
-  class CreateModelVersionResult
-  {
-  public:
-    AWS_FRAUDDETECTOR_API CreateModelVersionResult();
-    AWS_FRAUDDETECTOR_API CreateModelVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FRAUDDETECTOR_API CreateModelVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FraudDetector {
+namespace Model {
+class CreateModelVersionResult {
+ public:
+  AWS_FRAUDDETECTOR_API CreateModelVersionResult() = default;
+  AWS_FRAUDDETECTOR_API CreateModelVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FRAUDDETECTOR_API CreateModelVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The model ID.</p>
+   */
+  inline const Aws::String& GetModelId() const { return m_modelId; }
+  template <typename ModelIdT = Aws::String>
+  void SetModelId(ModelIdT&& value) {
+    m_modelIdHasBeenSet = true;
+    m_modelId = std::forward<ModelIdT>(value);
+  }
+  template <typename ModelIdT = Aws::String>
+  CreateModelVersionResult& WithModelId(ModelIdT&& value) {
+    SetModelId(std::forward<ModelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The model ID.</p>
-     */
-    inline const Aws::String& GetModelId() const{ return m_modelId; }
-    inline void SetModelId(const Aws::String& value) { m_modelId = value; }
-    inline void SetModelId(Aws::String&& value) { m_modelId = std::move(value); }
-    inline void SetModelId(const char* value) { m_modelId.assign(value); }
-    inline CreateModelVersionResult& WithModelId(const Aws::String& value) { SetModelId(value); return *this;}
-    inline CreateModelVersionResult& WithModelId(Aws::String&& value) { SetModelId(std::move(value)); return *this;}
-    inline CreateModelVersionResult& WithModelId(const char* value) { SetModelId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The model type.</p>
+   */
+  inline ModelTypeEnum GetModelType() const { return m_modelType; }
+  inline void SetModelType(ModelTypeEnum value) {
+    m_modelTypeHasBeenSet = true;
+    m_modelType = value;
+  }
+  inline CreateModelVersionResult& WithModelType(ModelTypeEnum value) {
+    SetModelType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The model type.</p>
-     */
-    inline const ModelTypeEnum& GetModelType() const{ return m_modelType; }
-    inline void SetModelType(const ModelTypeEnum& value) { m_modelType = value; }
-    inline void SetModelType(ModelTypeEnum&& value) { m_modelType = std::move(value); }
-    inline CreateModelVersionResult& WithModelType(const ModelTypeEnum& value) { SetModelType(value); return *this;}
-    inline CreateModelVersionResult& WithModelType(ModelTypeEnum&& value) { SetModelType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The model version number of the model version created.</p>
+   */
+  inline const Aws::String& GetModelVersionNumber() const { return m_modelVersionNumber; }
+  template <typename ModelVersionNumberT = Aws::String>
+  void SetModelVersionNumber(ModelVersionNumberT&& value) {
+    m_modelVersionNumberHasBeenSet = true;
+    m_modelVersionNumber = std::forward<ModelVersionNumberT>(value);
+  }
+  template <typename ModelVersionNumberT = Aws::String>
+  CreateModelVersionResult& WithModelVersionNumber(ModelVersionNumberT&& value) {
+    SetModelVersionNumber(std::forward<ModelVersionNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The model version number of the model version created.</p>
-     */
-    inline const Aws::String& GetModelVersionNumber() const{ return m_modelVersionNumber; }
-    inline void SetModelVersionNumber(const Aws::String& value) { m_modelVersionNumber = value; }
-    inline void SetModelVersionNumber(Aws::String&& value) { m_modelVersionNumber = std::move(value); }
-    inline void SetModelVersionNumber(const char* value) { m_modelVersionNumber.assign(value); }
-    inline CreateModelVersionResult& WithModelVersionNumber(const Aws::String& value) { SetModelVersionNumber(value); return *this;}
-    inline CreateModelVersionResult& WithModelVersionNumber(Aws::String&& value) { SetModelVersionNumber(std::move(value)); return *this;}
-    inline CreateModelVersionResult& WithModelVersionNumber(const char* value) { SetModelVersionNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The model version status. </p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  CreateModelVersionResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The model version status. </p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline CreateModelVersionResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline CreateModelVersionResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline CreateModelVersionResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateModelVersionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateModelVersionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateModelVersionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateModelVersionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_modelId;
+ private:
+  Aws::String m_modelId;
 
-    ModelTypeEnum m_modelType;
+  ModelTypeEnum m_modelType{ModelTypeEnum::NOT_SET};
 
-    Aws::String m_modelVersionNumber;
+  Aws::String m_modelVersionNumber;
 
-    Aws::String m_status;
+  Aws::String m_status;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_modelIdHasBeenSet = false;
+  bool m_modelTypeHasBeenSet = false;
+  bool m_modelVersionNumberHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FraudDetector
-} // namespace Aws
+}  // namespace Model
+}  // namespace FraudDetector
+}  // namespace Aws

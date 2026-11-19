@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeAwsNetworkPerformanceMetricSubscriptionsResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DescribeAwsNetworkPerformanceMetricSubscriptionsResponse.h>
 
 #include <utility>
 
@@ -17,52 +17,48 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeAwsNetworkPerformanceMetricSubscriptionsResponse::DescribeAwsNetworkPerformanceMetricSubscriptionsResponse()
-{
-}
-
-DescribeAwsNetworkPerformanceMetricSubscriptionsResponse::DescribeAwsNetworkPerformanceMetricSubscriptionsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeAwsNetworkPerformanceMetricSubscriptionsResponse::DescribeAwsNetworkPerformanceMetricSubscriptionsResponse(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& DescribeAwsNetworkPerformanceMetricSubscriptionsResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& DescribeAwsNetworkPerformanceMetricSubscriptionsResponse::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeAwsNetworkPerformanceMetricSubscriptionsResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeAwsNetworkPerformanceMetricSubscriptionsResponse")) {
     resultNode = rootNode.FirstChild("DescribeAwsNetworkPerformanceMetricSubscriptionsResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode nextTokenNode = resultNode.FirstChild("nextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
     XmlNode subscriptionsNode = resultNode.FirstChild("subscriptionSet");
-    if(!subscriptionsNode.IsNull())
-    {
+    if (!subscriptionsNode.IsNull()) {
       XmlNode subscriptionsMember = subscriptionsNode.FirstChild("item");
-      while(!subscriptionsMember.IsNull())
-      {
+      m_subscriptionsHasBeenSet = !subscriptionsMember.IsNull();
+      while (!subscriptionsMember.IsNull()) {
         m_subscriptions.push_back(subscriptionsMember);
         subscriptionsMember = subscriptionsMember.NextNode("item");
       }
 
+      m_subscriptionsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeAwsNetworkPerformanceMetricSubscriptionsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeAwsNetworkPerformanceMetricSubscriptionsResponse",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

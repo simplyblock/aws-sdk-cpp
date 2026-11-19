@@ -4,146 +4,165 @@
  */
 
 #pragma once
-#include <aws/events/CloudWatchEvents_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/events/CloudWatchEvents_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchEvents
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchEvents {
+namespace Model {
 
+/**
+ * <p>These are custom parameters to be used when the target is a Amazon Redshift
+ * cluster to invoke the Amazon Redshift Data API ExecuteStatement based on
+ * EventBridge events.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/events-2015-10-07/RedshiftDataParameters">AWS
+ * API Reference</a></p>
+ */
+class RedshiftDataParameters {
+ public:
+  AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters() = default;
+  AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLOUDWATCHEVENTS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>These are custom parameters to be used when the target is a Amazon Redshift
-   * cluster to invoke the Amazon Redshift Data API ExecuteStatement based on
-   * EventBridge events.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/events-2015-10-07/RedshiftDataParameters">AWS
-   * API Reference</a></p>
+   * <p>The name or ARN of the secret that enables access to the database. Required
+   * when authenticating using Amazon Web Services Secrets Manager.</p>
    */
-  class RedshiftDataParameters
-  {
-  public:
-    AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters();
-    AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLOUDWATCHEVENTS_API RedshiftDataParameters& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLOUDWATCHEVENTS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetSecretManagerArn() const { return m_secretManagerArn; }
+  inline bool SecretManagerArnHasBeenSet() const { return m_secretManagerArnHasBeenSet; }
+  template <typename SecretManagerArnT = Aws::String>
+  void SetSecretManagerArn(SecretManagerArnT&& value) {
+    m_secretManagerArnHasBeenSet = true;
+    m_secretManagerArn = std::forward<SecretManagerArnT>(value);
+  }
+  template <typename SecretManagerArnT = Aws::String>
+  RedshiftDataParameters& WithSecretManagerArn(SecretManagerArnT&& value) {
+    SetSecretManagerArn(std::forward<SecretManagerArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the database. Required when authenticating using temporary
+   * credentials.</p>
+   */
+  inline const Aws::String& GetDatabase() const { return m_database; }
+  inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
+  template <typename DatabaseT = Aws::String>
+  void SetDatabase(DatabaseT&& value) {
+    m_databaseHasBeenSet = true;
+    m_database = std::forward<DatabaseT>(value);
+  }
+  template <typename DatabaseT = Aws::String>
+  RedshiftDataParameters& WithDatabase(DatabaseT&& value) {
+    SetDatabase(std::forward<DatabaseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name or ARN of the secret that enables access to the database. Required
-     * when authenticating using Amazon Web Services Secrets Manager.</p>
-     */
-    inline const Aws::String& GetSecretManagerArn() const{ return m_secretManagerArn; }
-    inline bool SecretManagerArnHasBeenSet() const { return m_secretManagerArnHasBeenSet; }
-    inline void SetSecretManagerArn(const Aws::String& value) { m_secretManagerArnHasBeenSet = true; m_secretManagerArn = value; }
-    inline void SetSecretManagerArn(Aws::String&& value) { m_secretManagerArnHasBeenSet = true; m_secretManagerArn = std::move(value); }
-    inline void SetSecretManagerArn(const char* value) { m_secretManagerArnHasBeenSet = true; m_secretManagerArn.assign(value); }
-    inline RedshiftDataParameters& WithSecretManagerArn(const Aws::String& value) { SetSecretManagerArn(value); return *this;}
-    inline RedshiftDataParameters& WithSecretManagerArn(Aws::String&& value) { SetSecretManagerArn(std::move(value)); return *this;}
-    inline RedshiftDataParameters& WithSecretManagerArn(const char* value) { SetSecretManagerArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The database user name. Required when authenticating using temporary
+   * credentials.</p>
+   */
+  inline const Aws::String& GetDbUser() const { return m_dbUser; }
+  inline bool DbUserHasBeenSet() const { return m_dbUserHasBeenSet; }
+  template <typename DbUserT = Aws::String>
+  void SetDbUser(DbUserT&& value) {
+    m_dbUserHasBeenSet = true;
+    m_dbUser = std::forward<DbUserT>(value);
+  }
+  template <typename DbUserT = Aws::String>
+  RedshiftDataParameters& WithDbUser(DbUserT&& value) {
+    SetDbUser(std::forward<DbUserT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the database. Required when authenticating using temporary
-     * credentials.</p>
-     */
-    inline const Aws::String& GetDatabase() const{ return m_database; }
-    inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
-    inline void SetDatabase(const Aws::String& value) { m_databaseHasBeenSet = true; m_database = value; }
-    inline void SetDatabase(Aws::String&& value) { m_databaseHasBeenSet = true; m_database = std::move(value); }
-    inline void SetDatabase(const char* value) { m_databaseHasBeenSet = true; m_database.assign(value); }
-    inline RedshiftDataParameters& WithDatabase(const Aws::String& value) { SetDatabase(value); return *this;}
-    inline RedshiftDataParameters& WithDatabase(Aws::String&& value) { SetDatabase(std::move(value)); return *this;}
-    inline RedshiftDataParameters& WithDatabase(const char* value) { SetDatabase(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The SQL statement text to run.</p>
+   */
+  inline const Aws::String& GetSql() const { return m_sql; }
+  inline bool SqlHasBeenSet() const { return m_sqlHasBeenSet; }
+  template <typename SqlT = Aws::String>
+  void SetSql(SqlT&& value) {
+    m_sqlHasBeenSet = true;
+    m_sql = std::forward<SqlT>(value);
+  }
+  template <typename SqlT = Aws::String>
+  RedshiftDataParameters& WithSql(SqlT&& value) {
+    SetSql(std::forward<SqlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The database user name. Required when authenticating using temporary
-     * credentials.</p>
-     */
-    inline const Aws::String& GetDbUser() const{ return m_dbUser; }
-    inline bool DbUserHasBeenSet() const { return m_dbUserHasBeenSet; }
-    inline void SetDbUser(const Aws::String& value) { m_dbUserHasBeenSet = true; m_dbUser = value; }
-    inline void SetDbUser(Aws::String&& value) { m_dbUserHasBeenSet = true; m_dbUser = std::move(value); }
-    inline void SetDbUser(const char* value) { m_dbUserHasBeenSet = true; m_dbUser.assign(value); }
-    inline RedshiftDataParameters& WithDbUser(const Aws::String& value) { SetDbUser(value); return *this;}
-    inline RedshiftDataParameters& WithDbUser(Aws::String&& value) { SetDbUser(std::move(value)); return *this;}
-    inline RedshiftDataParameters& WithDbUser(const char* value) { SetDbUser(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the SQL statement. You can name the SQL statement when you create
+   * it to identify the query.</p>
+   */
+  inline const Aws::String& GetStatementName() const { return m_statementName; }
+  inline bool StatementNameHasBeenSet() const { return m_statementNameHasBeenSet; }
+  template <typename StatementNameT = Aws::String>
+  void SetStatementName(StatementNameT&& value) {
+    m_statementNameHasBeenSet = true;
+    m_statementName = std::forward<StatementNameT>(value);
+  }
+  template <typename StatementNameT = Aws::String>
+  RedshiftDataParameters& WithStatementName(StatementNameT&& value) {
+    SetStatementName(std::forward<StatementNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The SQL statement text to run.</p>
-     */
-    inline const Aws::String& GetSql() const{ return m_sql; }
-    inline bool SqlHasBeenSet() const { return m_sqlHasBeenSet; }
-    inline void SetSql(const Aws::String& value) { m_sqlHasBeenSet = true; m_sql = value; }
-    inline void SetSql(Aws::String&& value) { m_sqlHasBeenSet = true; m_sql = std::move(value); }
-    inline void SetSql(const char* value) { m_sqlHasBeenSet = true; m_sql.assign(value); }
-    inline RedshiftDataParameters& WithSql(const Aws::String& value) { SetSql(value); return *this;}
-    inline RedshiftDataParameters& WithSql(Aws::String&& value) { SetSql(std::move(value)); return *this;}
-    inline RedshiftDataParameters& WithSql(const char* value) { SetSql(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether to send an event back to EventBridge after the SQL
+   * statement runs.</p>
+   */
+  inline bool GetWithEvent() const { return m_withEvent; }
+  inline bool WithEventHasBeenSet() const { return m_withEventHasBeenSet; }
+  inline void SetWithEvent(bool value) {
+    m_withEventHasBeenSet = true;
+    m_withEvent = value;
+  }
+  inline RedshiftDataParameters& WithWithEvent(bool value) {
+    SetWithEvent(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_secretManagerArn;
 
-    ///@{
-    /**
-     * <p>The name of the SQL statement. You can name the SQL statement when you create
-     * it to identify the query.</p>
-     */
-    inline const Aws::String& GetStatementName() const{ return m_statementName; }
-    inline bool StatementNameHasBeenSet() const { return m_statementNameHasBeenSet; }
-    inline void SetStatementName(const Aws::String& value) { m_statementNameHasBeenSet = true; m_statementName = value; }
-    inline void SetStatementName(Aws::String&& value) { m_statementNameHasBeenSet = true; m_statementName = std::move(value); }
-    inline void SetStatementName(const char* value) { m_statementNameHasBeenSet = true; m_statementName.assign(value); }
-    inline RedshiftDataParameters& WithStatementName(const Aws::String& value) { SetStatementName(value); return *this;}
-    inline RedshiftDataParameters& WithStatementName(Aws::String&& value) { SetStatementName(std::move(value)); return *this;}
-    inline RedshiftDataParameters& WithStatementName(const char* value) { SetStatementName(value); return *this;}
-    ///@}
+  Aws::String m_database;
 
-    ///@{
-    /**
-     * <p>Indicates whether to send an event back to EventBridge after the SQL
-     * statement runs.</p>
-     */
-    inline bool GetWithEvent() const{ return m_withEvent; }
-    inline bool WithEventHasBeenSet() const { return m_withEventHasBeenSet; }
-    inline void SetWithEvent(bool value) { m_withEventHasBeenSet = true; m_withEvent = value; }
-    inline RedshiftDataParameters& WithWithEvent(bool value) { SetWithEvent(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_dbUser;
 
-    Aws::String m_secretManagerArn;
-    bool m_secretManagerArnHasBeenSet = false;
+  Aws::String m_sql;
 
-    Aws::String m_database;
-    bool m_databaseHasBeenSet = false;
+  Aws::String m_statementName;
 
-    Aws::String m_dbUser;
-    bool m_dbUserHasBeenSet = false;
+  bool m_withEvent{false};
+  bool m_secretManagerArnHasBeenSet = false;
+  bool m_databaseHasBeenSet = false;
+  bool m_dbUserHasBeenSet = false;
+  bool m_sqlHasBeenSet = false;
+  bool m_statementNameHasBeenSet = false;
+  bool m_withEventHasBeenSet = false;
+};
 
-    Aws::String m_sql;
-    bool m_sqlHasBeenSet = false;
-
-    Aws::String m_statementName;
-    bool m_statementNameHasBeenSet = false;
-
-    bool m_withEvent;
-    bool m_withEventHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudWatchEvents
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchEvents
+}  // namespace Aws

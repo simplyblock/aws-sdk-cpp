@@ -3,41 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/GetArchiveExportRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MailManager::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetArchiveExportRequest::GetArchiveExportRequest() : 
-    m_exportIdHasBeenSet(false)
-{
-}
+Aws::String GetArchiveExportRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String GetArchiveExportRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_exportIdHasBeenSet)
-  {
-   payload.WithString("ExportId", m_exportId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_exportIdHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_exportIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ExportId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_exportId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection GetArchiveExportRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetArchiveExportRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "MailManagerSvc.GetArchiveExport"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

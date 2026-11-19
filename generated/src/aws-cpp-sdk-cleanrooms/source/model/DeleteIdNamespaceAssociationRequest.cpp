@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteIdNamespaceAssociationRequest::DeleteIdNamespaceAssociationRequest() : 
-    m_idNamespaceAssociationIdentifierHasBeenSet(false),
-    m_membershipIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteIdNamespaceAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteIdNamespaceAssociationRequest::SerializePayload() const { return {}; }

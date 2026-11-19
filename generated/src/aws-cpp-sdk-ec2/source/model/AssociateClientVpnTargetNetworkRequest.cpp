@@ -3,53 +3,42 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/AssociateClientVpnTargetNetworkRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/AssociateClientVpnTargetNetworkRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-AssociateClientVpnTargetNetworkRequest::AssociateClientVpnTargetNetworkRequest() : 
-    m_clientVpnEndpointIdHasBeenSet(false),
-    m_subnetIdHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String AssociateClientVpnTargetNetworkRequest::SerializePayload() const
-{
+Aws::String AssociateClientVpnTargetNetworkRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=AssociateClientVpnTargetNetwork&";
-  if(m_clientVpnEndpointIdHasBeenSet)
-  {
+  if (m_clientVpnEndpointIdHasBeenSet) {
     ss << "ClientVpnEndpointId=" << StringUtils::URLEncode(m_clientVpnEndpointId.c_str()) << "&";
   }
 
-  if(m_subnetIdHasBeenSet)
-  {
+  if (m_subnetIdHasBeenSet) {
     ss << "SubnetId=" << StringUtils::URLEncode(m_subnetId.c_str()) << "&";
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
+  if (m_clientTokenHasBeenSet) {
     ss << "ClientToken=" << StringUtils::URLEncode(m_clientToken.c_str()) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
+  }
+
+  if (m_availabilityZoneHasBeenSet) {
+    ss << "AvailabilityZone=" << StringUtils::URLEncode(m_availabilityZone.c_str()) << "&";
+  }
+
+  if (m_availabilityZoneIdHasBeenSet) {
+    ss << "AvailabilityZoneId=" << StringUtils::URLEncode(m_availabilityZoneId.c_str()) << "&";
   }
 
   ss << "Version=2016-11-15";
   return ss.str();
 }
 
-
-void  AssociateClientVpnTargetNetworkRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void AssociateClientVpnTargetNetworkRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

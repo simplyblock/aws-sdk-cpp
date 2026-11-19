@@ -12,24 +12,12 @@ using namespace Aws::Appflow::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopFlowRequest::StopFlowRequest() : 
-    m_flowNameHasBeenSet(false)
-{
-}
-
-Aws::String StopFlowRequest::SerializePayload() const
-{
+Aws::String StopFlowRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_flowNameHasBeenSet)
-  {
-   payload.WithString("flowName", m_flowName);
-
+  if (m_flowNameHasBeenSet) {
+    payload.WithString("flowName", m_flowName);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

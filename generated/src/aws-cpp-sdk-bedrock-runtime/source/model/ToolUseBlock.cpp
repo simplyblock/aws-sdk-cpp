@@ -11,79 +11,56 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockRuntime {
+namespace Model {
 
-ToolUseBlock::ToolUseBlock() : 
-    m_toolUseIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_inputHasBeenSet(false)
-{
-}
+ToolUseBlock::ToolUseBlock(JsonView jsonValue) { *this = jsonValue; }
 
-ToolUseBlock::ToolUseBlock(JsonView jsonValue)
-  : ToolUseBlock()
-{
-  *this = jsonValue;
-}
-
-ToolUseBlock& ToolUseBlock::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("toolUseId"))
-  {
+ToolUseBlock& ToolUseBlock::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("toolUseId")) {
     m_toolUseId = jsonValue.GetString("toolUseId");
-
     m_toolUseIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("input"))
-  {
+  if (jsonValue.ValueExists("input")) {
     m_input = jsonValue.GetObject("input");
-
     m_inputHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("type")) {
+    m_type = ToolUseTypeMapper::GetToolUseTypeForName(jsonValue.GetString("type"));
+    m_typeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ToolUseBlock::Jsonize() const
-{
+JsonValue ToolUseBlock::Jsonize() const {
   JsonValue payload;
 
-  if(m_toolUseIdHasBeenSet)
-  {
-   payload.WithString("toolUseId", m_toolUseId);
-
+  if (m_toolUseIdHasBeenSet) {
+    payload.WithString("toolUseId", m_toolUseId);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_inputHasBeenSet)
-  {
-    if(!m_input.View().IsNull())
-    {
-       payload.WithObject("input", JsonValue(m_input.View()));
+  if (m_inputHasBeenSet) {
+    if (!m_input.View().IsNull()) {
+      payload.WithObject("input", JsonValue(m_input.View()));
     }
+  }
+
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", ToolUseTypeMapper::GetNameForToolUseType(m_type));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockRuntime
+}  // namespace Aws

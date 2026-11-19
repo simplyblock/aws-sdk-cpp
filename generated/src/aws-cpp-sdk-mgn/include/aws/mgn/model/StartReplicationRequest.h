@@ -4,70 +4,73 @@
  */
 
 #pragma once
-#include <aws/mgn/Mgn_EXPORTS.h>
-#include <aws/mgn/MgnRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mgn/MgnRequest.h>
+#include <aws/mgn/Mgn_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace mgn
-{
-namespace Model
-{
+namespace Aws {
+namespace mgn {
+namespace Model {
 
+/**
+ */
+class StartReplicationRequest : public MgnRequest {
+ public:
+  AWS_MGN_API StartReplicationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartReplication"; }
+
+  AWS_MGN_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>ID of source server on which to start replication.</p>
    */
-  class StartReplicationRequest : public MgnRequest
-  {
-  public:
-    AWS_MGN_API StartReplicationRequest();
+  inline const Aws::String& GetSourceServerID() const { return m_sourceServerID; }
+  inline bool SourceServerIDHasBeenSet() const { return m_sourceServerIDHasBeenSet; }
+  template <typename SourceServerIDT = Aws::String>
+  void SetSourceServerID(SourceServerIDT&& value) {
+    m_sourceServerIDHasBeenSet = true;
+    m_sourceServerID = std::forward<SourceServerIDT>(value);
+  }
+  template <typename SourceServerIDT = Aws::String>
+  StartReplicationRequest& WithSourceServerID(SourceServerIDT&& value) {
+    SetSourceServerID(std::forward<SourceServerIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartReplication"; }
+  ///@{
+  /**
+   * <p>Account ID on which to start replication.</p>
+   */
+  inline const Aws::String& GetAccountID() const { return m_accountID; }
+  inline bool AccountIDHasBeenSet() const { return m_accountIDHasBeenSet; }
+  template <typename AccountIDT = Aws::String>
+  void SetAccountID(AccountIDT&& value) {
+    m_accountIDHasBeenSet = true;
+    m_accountID = std::forward<AccountIDT>(value);
+  }
+  template <typename AccountIDT = Aws::String>
+  StartReplicationRequest& WithAccountID(AccountIDT&& value) {
+    SetAccountID(std::forward<AccountIDT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_sourceServerID;
 
-    AWS_MGN_API Aws::String SerializePayload() const override;
+  Aws::String m_accountID;
+  bool m_sourceServerIDHasBeenSet = false;
+  bool m_accountIDHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>Account ID on which to start replication.</p>
-     */
-    inline const Aws::String& GetAccountID() const{ return m_accountID; }
-    inline bool AccountIDHasBeenSet() const { return m_accountIDHasBeenSet; }
-    inline void SetAccountID(const Aws::String& value) { m_accountIDHasBeenSet = true; m_accountID = value; }
-    inline void SetAccountID(Aws::String&& value) { m_accountIDHasBeenSet = true; m_accountID = std::move(value); }
-    inline void SetAccountID(const char* value) { m_accountIDHasBeenSet = true; m_accountID.assign(value); }
-    inline StartReplicationRequest& WithAccountID(const Aws::String& value) { SetAccountID(value); return *this;}
-    inline StartReplicationRequest& WithAccountID(Aws::String&& value) { SetAccountID(std::move(value)); return *this;}
-    inline StartReplicationRequest& WithAccountID(const char* value) { SetAccountID(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>ID of source server on which to start replication.</p>
-     */
-    inline const Aws::String& GetSourceServerID() const{ return m_sourceServerID; }
-    inline bool SourceServerIDHasBeenSet() const { return m_sourceServerIDHasBeenSet; }
-    inline void SetSourceServerID(const Aws::String& value) { m_sourceServerIDHasBeenSet = true; m_sourceServerID = value; }
-    inline void SetSourceServerID(Aws::String&& value) { m_sourceServerIDHasBeenSet = true; m_sourceServerID = std::move(value); }
-    inline void SetSourceServerID(const char* value) { m_sourceServerIDHasBeenSet = true; m_sourceServerID.assign(value); }
-    inline StartReplicationRequest& WithSourceServerID(const Aws::String& value) { SetSourceServerID(value); return *this;}
-    inline StartReplicationRequest& WithSourceServerID(Aws::String&& value) { SetSourceServerID(std::move(value)); return *this;}
-    inline StartReplicationRequest& WithSourceServerID(const char* value) { SetSourceServerID(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_accountID;
-    bool m_accountIDHasBeenSet = false;
-
-    Aws::String m_sourceServerID;
-    bool m_sourceServerIDHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace mgn
-} // namespace Aws
+}  // namespace Model
+}  // namespace mgn
+}  // namespace Aws

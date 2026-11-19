@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/sso-admin/SSOAdmin_EXPORTS.h>
 #include <aws/sso-admin/model/PermissionSetProvisioningStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOAdmin
-{
-namespace Model
-{
-  class ProvisionPermissionSetResult
-  {
-  public:
-    AWS_SSOADMIN_API ProvisionPermissionSetResult();
-    AWS_SSOADMIN_API ProvisionPermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOADMIN_API ProvisionPermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOAdmin {
+namespace Model {
+class ProvisionPermissionSetResult {
+ public:
+  AWS_SSOADMIN_API ProvisionPermissionSetResult() = default;
+  AWS_SSOADMIN_API ProvisionPermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOADMIN_API ProvisionPermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status object for the permission set provisioning operation.</p>
+   */
+  inline const PermissionSetProvisioningStatus& GetPermissionSetProvisioningStatus() const { return m_permissionSetProvisioningStatus; }
+  template <typename PermissionSetProvisioningStatusT = PermissionSetProvisioningStatus>
+  void SetPermissionSetProvisioningStatus(PermissionSetProvisioningStatusT&& value) {
+    m_permissionSetProvisioningStatusHasBeenSet = true;
+    m_permissionSetProvisioningStatus = std::forward<PermissionSetProvisioningStatusT>(value);
+  }
+  template <typename PermissionSetProvisioningStatusT = PermissionSetProvisioningStatus>
+  ProvisionPermissionSetResult& WithPermissionSetProvisioningStatus(PermissionSetProvisioningStatusT&& value) {
+    SetPermissionSetProvisioningStatus(std::forward<PermissionSetProvisioningStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status object for the permission set provisioning operation.</p>
-     */
-    inline const PermissionSetProvisioningStatus& GetPermissionSetProvisioningStatus() const{ return m_permissionSetProvisioningStatus; }
-    inline void SetPermissionSetProvisioningStatus(const PermissionSetProvisioningStatus& value) { m_permissionSetProvisioningStatus = value; }
-    inline void SetPermissionSetProvisioningStatus(PermissionSetProvisioningStatus&& value) { m_permissionSetProvisioningStatus = std::move(value); }
-    inline ProvisionPermissionSetResult& WithPermissionSetProvisioningStatus(const PermissionSetProvisioningStatus& value) { SetPermissionSetProvisioningStatus(value); return *this;}
-    inline ProvisionPermissionSetResult& WithPermissionSetProvisioningStatus(PermissionSetProvisioningStatus&& value) { SetPermissionSetProvisioningStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ProvisionPermissionSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ProvisionPermissionSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ProvisionPermissionSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ProvisionPermissionSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PermissionSetProvisioningStatus m_permissionSetProvisioningStatus;
+ private:
+  PermissionSetProvisioningStatus m_permissionSetProvisioningStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_permissionSetProvisioningStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

@@ -4,98 +4,105 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/ElastiCacheRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticache/ElastiCacheRequest.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace ElastiCache {
+namespace Model {
 
+/**
+ * <p>Represents the input of an AuthorizeCacheSecurityGroupIngress
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/AuthorizeCacheSecurityGroupIngressMessage">AWS
+ * API Reference</a></p>
+ */
+class AuthorizeCacheSecurityGroupIngressRequest : public ElastiCacheRequest {
+ public:
+  AWS_ELASTICACHE_API AuthorizeCacheSecurityGroupIngressRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AuthorizeCacheSecurityGroupIngress"; }
+
+  AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p>Represents the input of an AuthorizeCacheSecurityGroupIngress
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/AuthorizeCacheSecurityGroupIngressMessage">AWS
-   * API Reference</a></p>
+   * <p>The cache security group that allows network ingress.</p>
    */
-  class AuthorizeCacheSecurityGroupIngressRequest : public ElastiCacheRequest
-  {
-  public:
-    AWS_ELASTICACHE_API AuthorizeCacheSecurityGroupIngressRequest();
+  inline const Aws::String& GetCacheSecurityGroupName() const { return m_cacheSecurityGroupName; }
+  inline bool CacheSecurityGroupNameHasBeenSet() const { return m_cacheSecurityGroupNameHasBeenSet; }
+  template <typename CacheSecurityGroupNameT = Aws::String>
+  void SetCacheSecurityGroupName(CacheSecurityGroupNameT&& value) {
+    m_cacheSecurityGroupNameHasBeenSet = true;
+    m_cacheSecurityGroupName = std::forward<CacheSecurityGroupNameT>(value);
+  }
+  template <typename CacheSecurityGroupNameT = Aws::String>
+  AuthorizeCacheSecurityGroupIngressRequest& WithCacheSecurityGroupName(CacheSecurityGroupNameT&& value) {
+    SetCacheSecurityGroupName(std::forward<CacheSecurityGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AuthorizeCacheSecurityGroupIngress"; }
+  ///@{
+  /**
+   * <p>The Amazon EC2 security group to be authorized for ingress to the cache
+   * security group.</p>
+   */
+  inline const Aws::String& GetEC2SecurityGroupName() const { return m_eC2SecurityGroupName; }
+  inline bool EC2SecurityGroupNameHasBeenSet() const { return m_eC2SecurityGroupNameHasBeenSet; }
+  template <typename EC2SecurityGroupNameT = Aws::String>
+  void SetEC2SecurityGroupName(EC2SecurityGroupNameT&& value) {
+    m_eC2SecurityGroupNameHasBeenSet = true;
+    m_eC2SecurityGroupName = std::forward<EC2SecurityGroupNameT>(value);
+  }
+  template <typename EC2SecurityGroupNameT = Aws::String>
+  AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupName(EC2SecurityGroupNameT&& value) {
+    SetEC2SecurityGroupName(std::forward<EC2SecurityGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Amazon account number of the Amazon EC2 security group owner. Note that
+   * this is not the same thing as an Amazon access key ID - you must provide a valid
+   * Amazon account number for this parameter.</p>
+   */
+  inline const Aws::String& GetEC2SecurityGroupOwnerId() const { return m_eC2SecurityGroupOwnerId; }
+  inline bool EC2SecurityGroupOwnerIdHasBeenSet() const { return m_eC2SecurityGroupOwnerIdHasBeenSet; }
+  template <typename EC2SecurityGroupOwnerIdT = Aws::String>
+  void SetEC2SecurityGroupOwnerId(EC2SecurityGroupOwnerIdT&& value) {
+    m_eC2SecurityGroupOwnerIdHasBeenSet = true;
+    m_eC2SecurityGroupOwnerId = std::forward<EC2SecurityGroupOwnerIdT>(value);
+  }
+  template <typename EC2SecurityGroupOwnerIdT = Aws::String>
+  AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupOwnerId(EC2SecurityGroupOwnerIdT&& value) {
+    SetEC2SecurityGroupOwnerId(std::forward<EC2SecurityGroupOwnerIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_cacheSecurityGroupName;
 
-  protected:
-    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  Aws::String m_eC2SecurityGroupName;
 
-  public:
+  Aws::String m_eC2SecurityGroupOwnerId;
+  bool m_cacheSecurityGroupNameHasBeenSet = false;
+  bool m_eC2SecurityGroupNameHasBeenSet = false;
+  bool m_eC2SecurityGroupOwnerIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The cache security group that allows network ingress.</p>
-     */
-    inline const Aws::String& GetCacheSecurityGroupName() const{ return m_cacheSecurityGroupName; }
-    inline bool CacheSecurityGroupNameHasBeenSet() const { return m_cacheSecurityGroupNameHasBeenSet; }
-    inline void SetCacheSecurityGroupName(const Aws::String& value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName = value; }
-    inline void SetCacheSecurityGroupName(Aws::String&& value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName = std::move(value); }
-    inline void SetCacheSecurityGroupName(const char* value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName.assign(value); }
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithCacheSecurityGroupName(const Aws::String& value) { SetCacheSecurityGroupName(value); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithCacheSecurityGroupName(Aws::String&& value) { SetCacheSecurityGroupName(std::move(value)); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithCacheSecurityGroupName(const char* value) { SetCacheSecurityGroupName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon EC2 security group to be authorized for ingress to the cache
-     * security group.</p>
-     */
-    inline const Aws::String& GetEC2SecurityGroupName() const{ return m_eC2SecurityGroupName; }
-    inline bool EC2SecurityGroupNameHasBeenSet() const { return m_eC2SecurityGroupNameHasBeenSet; }
-    inline void SetEC2SecurityGroupName(const Aws::String& value) { m_eC2SecurityGroupNameHasBeenSet = true; m_eC2SecurityGroupName = value; }
-    inline void SetEC2SecurityGroupName(Aws::String&& value) { m_eC2SecurityGroupNameHasBeenSet = true; m_eC2SecurityGroupName = std::move(value); }
-    inline void SetEC2SecurityGroupName(const char* value) { m_eC2SecurityGroupNameHasBeenSet = true; m_eC2SecurityGroupName.assign(value); }
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupName(const Aws::String& value) { SetEC2SecurityGroupName(value); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupName(Aws::String&& value) { SetEC2SecurityGroupName(std::move(value)); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupName(const char* value) { SetEC2SecurityGroupName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon account number of the Amazon EC2 security group owner. Note that
-     * this is not the same thing as an Amazon access key ID - you must provide a valid
-     * Amazon account number for this parameter.</p>
-     */
-    inline const Aws::String& GetEC2SecurityGroupOwnerId() const{ return m_eC2SecurityGroupOwnerId; }
-    inline bool EC2SecurityGroupOwnerIdHasBeenSet() const { return m_eC2SecurityGroupOwnerIdHasBeenSet; }
-    inline void SetEC2SecurityGroupOwnerId(const Aws::String& value) { m_eC2SecurityGroupOwnerIdHasBeenSet = true; m_eC2SecurityGroupOwnerId = value; }
-    inline void SetEC2SecurityGroupOwnerId(Aws::String&& value) { m_eC2SecurityGroupOwnerIdHasBeenSet = true; m_eC2SecurityGroupOwnerId = std::move(value); }
-    inline void SetEC2SecurityGroupOwnerId(const char* value) { m_eC2SecurityGroupOwnerIdHasBeenSet = true; m_eC2SecurityGroupOwnerId.assign(value); }
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupOwnerId(const Aws::String& value) { SetEC2SecurityGroupOwnerId(value); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupOwnerId(Aws::String&& value) { SetEC2SecurityGroupOwnerId(std::move(value)); return *this;}
-    inline AuthorizeCacheSecurityGroupIngressRequest& WithEC2SecurityGroupOwnerId(const char* value) { SetEC2SecurityGroupOwnerId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_cacheSecurityGroupName;
-    bool m_cacheSecurityGroupNameHasBeenSet = false;
-
-    Aws::String m_eC2SecurityGroupName;
-    bool m_eC2SecurityGroupNameHasBeenSet = false;
-
-    Aws::String m_eC2SecurityGroupOwnerId;
-    bool m_eC2SecurityGroupOwnerIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

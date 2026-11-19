@@ -5,81 +5,99 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/clouddirectory/model/Directory.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class ListDirectoriesResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API ListDirectoriesResult();
-    AWS_CLOUDDIRECTORY_API ListDirectoriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API ListDirectoriesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class ListDirectoriesResult {
+ public:
+  AWS_CLOUDDIRECTORY_API ListDirectoriesResult() = default;
+  AWS_CLOUDDIRECTORY_API ListDirectoriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API ListDirectoriesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Lists all directories that are associated with your account in pagination
+   * fashion.</p>
+   */
+  inline const Aws::Vector<Directory>& GetDirectories() const { return m_directories; }
+  template <typename DirectoriesT = Aws::Vector<Directory>>
+  void SetDirectories(DirectoriesT&& value) {
+    m_directoriesHasBeenSet = true;
+    m_directories = std::forward<DirectoriesT>(value);
+  }
+  template <typename DirectoriesT = Aws::Vector<Directory>>
+  ListDirectoriesResult& WithDirectories(DirectoriesT&& value) {
+    SetDirectories(std::forward<DirectoriesT>(value));
+    return *this;
+  }
+  template <typename DirectoriesT = Directory>
+  ListDirectoriesResult& AddDirectories(DirectoriesT&& value) {
+    m_directoriesHasBeenSet = true;
+    m_directories.emplace_back(std::forward<DirectoriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Lists all directories that are associated with your account in pagination
-     * fashion.</p>
-     */
-    inline const Aws::Vector<Directory>& GetDirectories() const{ return m_directories; }
-    inline void SetDirectories(const Aws::Vector<Directory>& value) { m_directories = value; }
-    inline void SetDirectories(Aws::Vector<Directory>&& value) { m_directories = std::move(value); }
-    inline ListDirectoriesResult& WithDirectories(const Aws::Vector<Directory>& value) { SetDirectories(value); return *this;}
-    inline ListDirectoriesResult& WithDirectories(Aws::Vector<Directory>&& value) { SetDirectories(std::move(value)); return *this;}
-    inline ListDirectoriesResult& AddDirectories(const Directory& value) { m_directories.push_back(value); return *this; }
-    inline ListDirectoriesResult& AddDirectories(Directory&& value) { m_directories.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDirectoriesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDirectoriesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDirectoriesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDirectoriesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDirectoriesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDirectoriesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDirectoriesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDirectoriesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Directory> m_directories;
+ private:
+  Aws::Vector<Directory> m_directories;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_directoriesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
 #include <aws/backup/model/RestoreTestingSelectionForGet.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
-  class GetRestoreTestingSelectionResult
-  {
-  public:
-    AWS_BACKUP_API GetRestoreTestingSelectionResult();
-    AWS_BACKUP_API GetRestoreTestingSelectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUP_API GetRestoreTestingSelectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
+class GetRestoreTestingSelectionResult {
+ public:
+  AWS_BACKUP_API GetRestoreTestingSelectionResult() = default;
+  AWS_BACKUP_API GetRestoreTestingSelectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUP_API GetRestoreTestingSelectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Unique name of the restore testing selection.</p>
+   */
+  inline const RestoreTestingSelectionForGet& GetRestoreTestingSelection() const { return m_restoreTestingSelection; }
+  template <typename RestoreTestingSelectionT = RestoreTestingSelectionForGet>
+  void SetRestoreTestingSelection(RestoreTestingSelectionT&& value) {
+    m_restoreTestingSelectionHasBeenSet = true;
+    m_restoreTestingSelection = std::forward<RestoreTestingSelectionT>(value);
+  }
+  template <typename RestoreTestingSelectionT = RestoreTestingSelectionForGet>
+  GetRestoreTestingSelectionResult& WithRestoreTestingSelection(RestoreTestingSelectionT&& value) {
+    SetRestoreTestingSelection(std::forward<RestoreTestingSelectionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Unique name of the restore testing selection.</p>
-     */
-    inline const RestoreTestingSelectionForGet& GetRestoreTestingSelection() const{ return m_restoreTestingSelection; }
-    inline void SetRestoreTestingSelection(const RestoreTestingSelectionForGet& value) { m_restoreTestingSelection = value; }
-    inline void SetRestoreTestingSelection(RestoreTestingSelectionForGet&& value) { m_restoreTestingSelection = std::move(value); }
-    inline GetRestoreTestingSelectionResult& WithRestoreTestingSelection(const RestoreTestingSelectionForGet& value) { SetRestoreTestingSelection(value); return *this;}
-    inline GetRestoreTestingSelectionResult& WithRestoreTestingSelection(RestoreTestingSelectionForGet&& value) { SetRestoreTestingSelection(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRestoreTestingSelectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRestoreTestingSelectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRestoreTestingSelectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRestoreTestingSelectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RestoreTestingSelectionForGet m_restoreTestingSelection;
+ private:
+  RestoreTestingSelectionForGet m_restoreTestingSelection;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_restoreTestingSelectionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

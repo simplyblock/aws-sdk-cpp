@@ -4,56 +4,101 @@
  */
 
 #include <aws/appstream/model/StreamingExperienceSettings.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppStream
-{
-namespace Model
-{
+namespace Aws {
+namespace AppStream {
+namespace Model {
 
-StreamingExperienceSettings::StreamingExperienceSettings() : 
-    m_preferredProtocol(PreferredProtocol::NOT_SET),
-    m_preferredProtocolHasBeenSet(false)
-{
-}
+StreamingExperienceSettings::StreamingExperienceSettings(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-StreamingExperienceSettings::StreamingExperienceSettings(JsonView jsonValue)
-  : StreamingExperienceSettings()
-{
-  *this = jsonValue;
-}
+StreamingExperienceSettings& StreamingExperienceSettings::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-StreamingExperienceSettings& StreamingExperienceSettings::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("PreferredProtocol"))
-  {
-    m_preferredProtocol = PreferredProtocolMapper::GetPreferredProtocolForName(jsonValue.GetString("PreferredProtocol"));
+              if (initialKeyStr == "PreferredProtocol") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_preferredProtocol = PreferredProtocolMapper::GetPreferredProtocolForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_preferredProtocolHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("StreamingExperienceSettings", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_preferredProtocolHasBeenSet = true;
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "PreferredProtocol") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_preferredProtocol = PreferredProtocolMapper::GetPreferredProtocolForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_preferredProtocolHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue StreamingExperienceSettings::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_preferredProtocolHasBeenSet)
-  {
-   payload.WithString("PreferredProtocol", PreferredProtocolMapper::GetNameForPreferredProtocol(m_preferredProtocol));
+void StreamingExperienceSettings::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_preferredProtocolHasBeenSet) {
+    mapSize++;
   }
 
-  return payload;
+  encoder.WriteMapStart(mapSize);
+
+  if (m_preferredProtocolHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PreferredProtocol"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PreferredProtocolMapper::GetNameForPreferredProtocol(m_preferredProtocol).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

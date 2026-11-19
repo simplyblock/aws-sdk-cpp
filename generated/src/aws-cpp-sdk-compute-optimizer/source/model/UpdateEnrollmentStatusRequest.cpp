@@ -4,48 +4,45 @@
  */
 
 #include <aws/compute-optimizer/model/UpdateEnrollmentStatusRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ComputeOptimizer::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateEnrollmentStatusRequest::UpdateEnrollmentStatusRequest() : 
-    m_status(Status::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_includeMemberAccounts(false),
-    m_includeMemberAccountsHasBeenSet(false)
-{
-}
+Aws::String UpdateEnrollmentStatusRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String UpdateEnrollmentStatusRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", StatusMapper::GetNameForStatus(m_status));
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_includeMemberAccountsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_includeMemberAccountsHasBeenSet)
-  {
-   payload.WithBool("includeMemberAccounts", m_includeMemberAccounts);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(StatusMapper::GetNameForStatus(m_status).c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_includeMemberAccountsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("includeMemberAccounts"));
+    encoder.WriteBool(m_includeMemberAccounts);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection UpdateEnrollmentStatusRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateEnrollmentStatusRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ComputeOptimizerService.UpdateEnrollmentStatus"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

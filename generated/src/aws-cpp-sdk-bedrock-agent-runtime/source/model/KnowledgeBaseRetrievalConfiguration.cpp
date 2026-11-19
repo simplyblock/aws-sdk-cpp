@@ -11,49 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-KnowledgeBaseRetrievalConfiguration::KnowledgeBaseRetrievalConfiguration() : 
-    m_vectorSearchConfigurationHasBeenSet(false)
-{
-}
+KnowledgeBaseRetrievalConfiguration::KnowledgeBaseRetrievalConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-KnowledgeBaseRetrievalConfiguration::KnowledgeBaseRetrievalConfiguration(JsonView jsonValue)
-  : KnowledgeBaseRetrievalConfiguration()
-{
-  *this = jsonValue;
-}
-
-KnowledgeBaseRetrievalConfiguration& KnowledgeBaseRetrievalConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("vectorSearchConfiguration"))
-  {
+KnowledgeBaseRetrievalConfiguration& KnowledgeBaseRetrievalConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("managedSearchConfiguration")) {
+    m_managedSearchConfiguration = jsonValue.GetObject("managedSearchConfiguration");
+    m_managedSearchConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("vectorSearchConfiguration")) {
     m_vectorSearchConfiguration = jsonValue.GetObject("vectorSearchConfiguration");
-
     m_vectorSearchConfigurationHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue KnowledgeBaseRetrievalConfiguration::Jsonize() const
-{
+JsonValue KnowledgeBaseRetrievalConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_vectorSearchConfigurationHasBeenSet)
-  {
-   payload.WithObject("vectorSearchConfiguration", m_vectorSearchConfiguration.Jsonize());
+  if (m_managedSearchConfigurationHasBeenSet) {
+    payload.WithObject("managedSearchConfiguration", m_managedSearchConfiguration.Jsonize());
+  }
 
+  if (m_vectorSearchConfigurationHasBeenSet) {
+    payload.WithObject("vectorSearchConfiguration", m_vectorSearchConfiguration.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

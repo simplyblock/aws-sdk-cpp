@@ -4,100 +4,138 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/ElastiCacheRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCacheRequest.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/elasticache/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace ElastiCache {
+namespace Model {
 
+/**
+ */
+class CreateGlobalReplicationGroupRequest : public ElastiCacheRequest {
+ public:
+  AWS_ELASTICACHE_API CreateGlobalReplicationGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateGlobalReplicationGroup"; }
+
+  AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The suffix name of a Global datastore. Amazon ElastiCache automatically
+   * applies a prefix to the Global datastore ID when it is created. Each Amazon
+   * Region has its own prefix. For instance, a Global datastore ID created in the
+   * US-West-1 region will begin with "dsdfu" along with the suffix name you provide.
+   * The suffix, combined with the auto-generated prefix, guarantees uniqueness of
+   * the Global datastore name across multiple regions. </p> <p>For a full list of
+   * Amazon Regions and their respective Global datastore iD prefixes, see <a
+   * href="http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-CLI.html">Using
+   * the Amazon CLI with Global datastores </a>.</p>
    */
-  class CreateGlobalReplicationGroupRequest : public ElastiCacheRequest
-  {
-  public:
-    AWS_ELASTICACHE_API CreateGlobalReplicationGroupRequest();
+  inline const Aws::String& GetGlobalReplicationGroupIdSuffix() const { return m_globalReplicationGroupIdSuffix; }
+  inline bool GlobalReplicationGroupIdSuffixHasBeenSet() const { return m_globalReplicationGroupIdSuffixHasBeenSet; }
+  template <typename GlobalReplicationGroupIdSuffixT = Aws::String>
+  void SetGlobalReplicationGroupIdSuffix(GlobalReplicationGroupIdSuffixT&& value) {
+    m_globalReplicationGroupIdSuffixHasBeenSet = true;
+    m_globalReplicationGroupIdSuffix = std::forward<GlobalReplicationGroupIdSuffixT>(value);
+  }
+  template <typename GlobalReplicationGroupIdSuffixT = Aws::String>
+  CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupIdSuffix(GlobalReplicationGroupIdSuffixT&& value) {
+    SetGlobalReplicationGroupIdSuffix(std::forward<GlobalReplicationGroupIdSuffixT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateGlobalReplicationGroup"; }
+  ///@{
+  /**
+   * <p>Provides details of the Global datastore</p>
+   */
+  inline const Aws::String& GetGlobalReplicationGroupDescription() const { return m_globalReplicationGroupDescription; }
+  inline bool GlobalReplicationGroupDescriptionHasBeenSet() const { return m_globalReplicationGroupDescriptionHasBeenSet; }
+  template <typename GlobalReplicationGroupDescriptionT = Aws::String>
+  void SetGlobalReplicationGroupDescription(GlobalReplicationGroupDescriptionT&& value) {
+    m_globalReplicationGroupDescriptionHasBeenSet = true;
+    m_globalReplicationGroupDescription = std::forward<GlobalReplicationGroupDescriptionT>(value);
+  }
+  template <typename GlobalReplicationGroupDescriptionT = Aws::String>
+  CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupDescription(GlobalReplicationGroupDescriptionT&& value) {
+    SetGlobalReplicationGroupDescription(std::forward<GlobalReplicationGroupDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the primary cluster that accepts writes and will replicate
+   * updates to the secondary cluster. This value is stored as a lowercase
+   * string.</p>
+   */
+  inline const Aws::String& GetPrimaryReplicationGroupId() const { return m_primaryReplicationGroupId; }
+  inline bool PrimaryReplicationGroupIdHasBeenSet() const { return m_primaryReplicationGroupIdHasBeenSet; }
+  template <typename PrimaryReplicationGroupIdT = Aws::String>
+  void SetPrimaryReplicationGroupId(PrimaryReplicationGroupIdT&& value) {
+    m_primaryReplicationGroupIdHasBeenSet = true;
+    m_primaryReplicationGroupId = std::forward<PrimaryReplicationGroupIdT>(value);
+  }
+  template <typename PrimaryReplicationGroupIdT = Aws::String>
+  CreateGlobalReplicationGroupRequest& WithPrimaryReplicationGroupId(PrimaryReplicationGroupIdT&& value) {
+    SetPrimaryReplicationGroupId(std::forward<PrimaryReplicationGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>A list of tags to be added to this resource. A tag is a key-value pair. A tag
+   * key must be accompanied by a tag value, although null is accepted.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateGlobalReplicationGroupRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateGlobalReplicationGroupRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_globalReplicationGroupIdSuffix;
 
-  public:
+  Aws::String m_globalReplicationGroupDescription;
 
-    ///@{
-    /**
-     * <p>The suffix name of a Global datastore. Amazon ElastiCache automatically
-     * applies a prefix to the Global datastore ID when it is created. Each Amazon
-     * Region has its own prefix. For instance, a Global datastore ID created in the
-     * US-West-1 region will begin with "dsdfu" along with the suffix name you provide.
-     * The suffix, combined with the auto-generated prefix, guarantees uniqueness of
-     * the Global datastore name across multiple regions. </p> <p>For a full list of
-     * Amazon Regions and their respective Global datastore iD prefixes, see <a
-     * href="http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Redis-Global-Datastores-CLI.html">Using
-     * the Amazon CLI with Global datastores </a>.</p>
-     */
-    inline const Aws::String& GetGlobalReplicationGroupIdSuffix() const{ return m_globalReplicationGroupIdSuffix; }
-    inline bool GlobalReplicationGroupIdSuffixHasBeenSet() const { return m_globalReplicationGroupIdSuffixHasBeenSet; }
-    inline void SetGlobalReplicationGroupIdSuffix(const Aws::String& value) { m_globalReplicationGroupIdSuffixHasBeenSet = true; m_globalReplicationGroupIdSuffix = value; }
-    inline void SetGlobalReplicationGroupIdSuffix(Aws::String&& value) { m_globalReplicationGroupIdSuffixHasBeenSet = true; m_globalReplicationGroupIdSuffix = std::move(value); }
-    inline void SetGlobalReplicationGroupIdSuffix(const char* value) { m_globalReplicationGroupIdSuffixHasBeenSet = true; m_globalReplicationGroupIdSuffix.assign(value); }
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupIdSuffix(const Aws::String& value) { SetGlobalReplicationGroupIdSuffix(value); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupIdSuffix(Aws::String&& value) { SetGlobalReplicationGroupIdSuffix(std::move(value)); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupIdSuffix(const char* value) { SetGlobalReplicationGroupIdSuffix(value); return *this;}
-    ///@}
+  Aws::String m_primaryReplicationGroupId;
 
-    ///@{
-    /**
-     * <p>Provides details of the Global datastore</p>
-     */
-    inline const Aws::String& GetGlobalReplicationGroupDescription() const{ return m_globalReplicationGroupDescription; }
-    inline bool GlobalReplicationGroupDescriptionHasBeenSet() const { return m_globalReplicationGroupDescriptionHasBeenSet; }
-    inline void SetGlobalReplicationGroupDescription(const Aws::String& value) { m_globalReplicationGroupDescriptionHasBeenSet = true; m_globalReplicationGroupDescription = value; }
-    inline void SetGlobalReplicationGroupDescription(Aws::String&& value) { m_globalReplicationGroupDescriptionHasBeenSet = true; m_globalReplicationGroupDescription = std::move(value); }
-    inline void SetGlobalReplicationGroupDescription(const char* value) { m_globalReplicationGroupDescriptionHasBeenSet = true; m_globalReplicationGroupDescription.assign(value); }
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupDescription(const Aws::String& value) { SetGlobalReplicationGroupDescription(value); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupDescription(Aws::String&& value) { SetGlobalReplicationGroupDescription(std::move(value)); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithGlobalReplicationGroupDescription(const char* value) { SetGlobalReplicationGroupDescription(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_globalReplicationGroupIdSuffixHasBeenSet = false;
+  bool m_globalReplicationGroupDescriptionHasBeenSet = false;
+  bool m_primaryReplicationGroupIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the primary cluster that accepts writes and will replicate
-     * updates to the secondary cluster.</p>
-     */
-    inline const Aws::String& GetPrimaryReplicationGroupId() const{ return m_primaryReplicationGroupId; }
-    inline bool PrimaryReplicationGroupIdHasBeenSet() const { return m_primaryReplicationGroupIdHasBeenSet; }
-    inline void SetPrimaryReplicationGroupId(const Aws::String& value) { m_primaryReplicationGroupIdHasBeenSet = true; m_primaryReplicationGroupId = value; }
-    inline void SetPrimaryReplicationGroupId(Aws::String&& value) { m_primaryReplicationGroupIdHasBeenSet = true; m_primaryReplicationGroupId = std::move(value); }
-    inline void SetPrimaryReplicationGroupId(const char* value) { m_primaryReplicationGroupIdHasBeenSet = true; m_primaryReplicationGroupId.assign(value); }
-    inline CreateGlobalReplicationGroupRequest& WithPrimaryReplicationGroupId(const Aws::String& value) { SetPrimaryReplicationGroupId(value); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithPrimaryReplicationGroupId(Aws::String&& value) { SetPrimaryReplicationGroupId(std::move(value)); return *this;}
-    inline CreateGlobalReplicationGroupRequest& WithPrimaryReplicationGroupId(const char* value) { SetPrimaryReplicationGroupId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_globalReplicationGroupIdSuffix;
-    bool m_globalReplicationGroupIdSuffixHasBeenSet = false;
-
-    Aws::String m_globalReplicationGroupDescription;
-    bool m_globalReplicationGroupDescriptionHasBeenSet = false;
-
-    Aws::String m_primaryReplicationGroupId;
-    bool m_primaryReplicationGroupIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

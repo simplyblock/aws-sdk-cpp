@@ -12,17 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDeploymentRequest::DeleteDeploymentRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_deploymentIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDeploymentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDeploymentRequest::SerializePayload() const { return {}; }

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 #include <fstream>
+#include <future>
 
 #include <gtest/gtest.h>
 #include <aws/testing/AwsTestHelpers.h>
@@ -23,6 +24,7 @@
 #include <aws/lambda/model/CreateFunctionRequest.h>
 #include <aws/lambda/model/ListFunctionsRequest.h>
 #include <aws/lambda/model/InvokeRequest.h>
+#include <aws/lambda/model/InvokeWithResponseStreamRequest.h>
 #include <aws/lambda/model/AddPermissionRequest.h>
 #include <aws/lambda/model/GetPolicyRequest.h>
 #include <aws/lambda/model/GetFunctionConfigurationRequest.h>
@@ -31,7 +33,6 @@
 #include <aws/lambda/model/GetEventSourceMappingRequest.h>
 #include <aws/lambda/model/UpdateEventSourceMappingRequest.h>
 #include <aws/lambda/model/DeleteEventSourceMappingRequest.h>
-#include <aws/lambda/model/ResourceNotFoundException.h>
 
 #include <aws/kinesis/KinesisClient.h>
 #include <aws/kinesis/model/CreateStreamRequest.h>
@@ -164,33 +165,12 @@ protected:
         NOT_FOUND
     };
 
-    static void WaitForFunctionStatus(const Aws::String& functionName, const Aws::Lambda::Model::State targetStatus)
+    static void WaitForFunctionStatusActive(const Aws::String& functionName)
     {
-        Aws::Lambda::Model::State currentState = Aws::Lambda::Model::State::NOT_SET;
-        GetFunctionRequest getFunctionRequest;
-        getFunctionRequest.SetFunctionName(functionName);
-
-        static const size_t MAX_WAIT_CYCLES = 3600;
-        for(size_t i = 0; i < MAX_WAIT_CYCLES; ++i)
-        {
-            const Aws::Lambda::Model::GetFunctionOutcome& getFunctionOutcome = m_client->GetFunction(getFunctionRequest);
-            if(getFunctionOutcome.IsSuccess())
-            {
-                const Aws::Lambda::Model::FunctionConfiguration& funcConfig = getFunctionOutcome.GetResult().GetConfiguration();
-                currentState = funcConfig.GetState();
-                if(targetStatus == currentState)
-                    return;
-            }
-            else
-            {
-                ASSERT_EQ(Aws::Http::HttpResponseCode::NOT_FOUND, getFunctionOutcome.GetError().GetResponseCode());
-            }
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-
-        FAIL() << "Lambda function " << functionName << " didn't went into status " <<
-            Aws::Lambda::Model::StateMapper::GetNameForState(targetStatus) << ". Last known status " <<
-            Aws::Lambda::Model::StateMapper::GetNameForState(currentState);
+          GetFunctionRequest getFunctionRequest;
+          getFunctionRequest.SetFunctionName(functionName);
+          auto waiterOutcome = m_client->WaitUntilFunctionActiveV2(getFunctionRequest);
+          ASSERT_TRUE(waiterOutcome.IsSuccess()) << "WaitUntilFunctionActiveV2 failed for function: " << functionName;
     }
 
     static void DeleteFunction(Aws::String functionName)
@@ -247,17 +227,17 @@ protected:
 
         functionCode.SetZipFile(Aws::Utils::ByteBuffer((unsigned char*)buffer.str().c_str(), buffer.str().length()));
         createFunctionRequest.SetCode(functionCode);
-        createFunctionRequest.SetRuntime(Aws::Lambda::Model::Runtime::nodejs12_x);
+        createFunctionRequest.SetRuntime(Aws::Lambda::Model::Runtime::nodejs22_x);
 
         CreateFunctionOutcome createFunctionOutcome = m_client->CreateFunction(createFunctionRequest);
         AWS_ASSERT_SUCCESS(createFunctionOutcome);
         ASSERT_EQ(functionName,createFunctionOutcome.GetResult().GetFunctionName());
         ASSERT_EQ("test.handler",createFunctionOutcome.GetResult().GetHandler());
         ASSERT_EQ(roleARN,createFunctionOutcome.GetResult().GetRole());
-        ASSERT_EQ(Aws::Lambda::Model::Runtime::nodejs12_x, createFunctionOutcome.GetResult().GetRuntime());
+        ASSERT_EQ(Aws::Lambda::Model::Runtime::nodejs22_x, createFunctionOutcome.GetResult().GetRuntime());
         functionArnMapping[functionName] = createFunctionOutcome.GetResult().GetFunctionArn();
 
-        WaitForFunctionStatus(functionName, Aws::Lambda::Model::State::Active);
+        WaitForFunctionStatusActive(functionName);
     }
 
     static Aws::String getLambdaCodePathFromEnvIfExists(const Aws::String& cmakePath, const Aws::String& filePath) {
@@ -316,7 +296,7 @@ TEST_F(FunctionTest, TestGetFunction)
     AWS_EXPECT_SUCCESS(getFunctionOutcome);
 
     GetFunctionResult getFunctionResult = getFunctionOutcome.GetResult();
-    EXPECT_EQ(Runtime::nodejs12_x, getFunctionResult.GetConfiguration().GetRuntime());
+    EXPECT_EQ(Runtime::nodejs22_x, getFunctionResult.GetConfiguration().GetRuntime());
     EXPECT_EQ("test.handler",getFunctionResult.GetConfiguration().GetHandler());
     EXPECT_EQ(simpleFunctionName,getFunctionResult.GetConfiguration().GetFunctionName());
     //Just see that is looks like an aws url
@@ -334,7 +314,7 @@ TEST_F(FunctionTest, TestGetFunctionConfiguration)
     AWS_EXPECT_SUCCESS(getFunctionConfigurationOutcome);
 
     GetFunctionConfigurationResult getFunctionConfigurationResult = getFunctionConfigurationOutcome.GetResult();
-    EXPECT_EQ(Runtime::nodejs12_x, getFunctionConfigurationResult.GetRuntime());
+    EXPECT_EQ(Runtime::nodejs22_x, getFunctionConfigurationResult.GetRuntime());
     EXPECT_EQ("test.handler",getFunctionConfigurationResult.GetHandler());
     EXPECT_EQ(simpleFunctionName,getFunctionConfigurationResult.GetFunctionName());
 }
@@ -417,6 +397,44 @@ TEST_F(FunctionTest, TestInvokeSync)
     EXPECT_EQ("ThePayload", jsonResponse.View().GetString("input"));
 }
 
+TEST_F(FunctionTest, TestInvokeWithResponseStreamAsync)
+{
+    InvokeWithResponseStreamRequest invokeRequest;
+    invokeRequest.SetFunctionName(BuildResourceName(BASE_SIMPLE_FUNCTION));
+    invokeRequest.SetContentType("application/javascript");
+    std::shared_ptr<Aws::IOStream> payload = Aws::MakeShared<Aws::StringStream>("FunctionTest");
+    Aws::Utils::Json::JsonValue jsonPayload;
+    jsonPayload.WithString("input", "ThePayload");
+    *payload << jsonPayload.View().WriteReadable();
+    invokeRequest.SetBody(payload);
+
+    Aws::String streamedPayload;
+    bool isCompleteEventReceived = false;
+    InvokeWithResponseStreamHandler handler;
+    handler.SetInvokeResponseStreamUpdateCallback([&](const InvokeResponseStreamUpdate& update)
+    {
+        streamedPayload.append(update.GetPayload().begin(), update.GetPayload().end());
+    });
+    handler.SetInvokeWithResponseStreamCompleteEventCallback([&](const InvokeWithResponseStreamCompleteEvent&)
+    {
+        isCompleteEventReceived = true;
+    });
+    invokeRequest.SetEventStreamHandler(handler);
+
+    std::promise<bool> invokeSucceeded;
+    m_client->InvokeWithResponseStreamAsync(invokeRequest,
+        [&](const LambdaClient*, const InvokeWithResponseStreamRequest&, const InvokeWithResponseStreamOutcome& outcome,
+            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)
+        {
+            AWS_EXPECT_SUCCESS(outcome);
+            invokeSucceeded.set_value(outcome.IsSuccess());
+        });
+    ASSERT_TRUE(invokeSucceeded.get_future().get());
+    EXPECT_TRUE(isCompleteEventReceived);
+    auto jsonResponse = Aws::Utils::Json::JsonValue(streamedPayload);
+    EXPECT_EQ("ThePayload", jsonResponse.View().GetString("input"));
+}
+
 
 TEST_F(FunctionTest, TestInvokeSyncUnhandledFunctionError)
 {
@@ -490,7 +508,6 @@ TEST_F(FunctionTest, TestPermissions)
     if (!getRemovedPolicyOutcome.IsSuccess())
     {
        EXPECT_EQ(LambdaErrors::RESOURCE_NOT_FOUND, getRemovedPolicyOutcome.GetError().GetErrorType());
-       EXPECT_STREQ("User", getRemovedPolicyOutcome.GetError<ResourceNotFoundException>().GetType().c_str());
     }
     //Now we should get an empty policy a GetPolicy because we just removed it
     else

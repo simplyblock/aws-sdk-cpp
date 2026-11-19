@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-kinesis-video-signaling "C++ SDK for the AWS kinesis-video-signaling service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-kinesis-video-signaling "C++ SDK for Amazon Kinesis Video Signaling Channels" aws-cpp-sdk-core)
 
 file(GLOB AWS_KINESIS-VIDEO-SIGNALING_HEADERS
     "include/aws/kinesis-video-signaling/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KINESIS-VIDEO-SIGNALING_HEADERS
 
 file(GLOB AWS_KINESIS-VIDEO-SIGNALING_MODEL_HEADERS
     "include/aws/kinesis-video-signaling/model/*.h"
+)
+
+file(GLOB AWS_KINESIS-VIDEO-SIGNALING_INTERNAL_HEADERS
+    "include/aws/kinesis-video-signaling/internal/*.h"
 )
 
 file(GLOB AWS_KINESIS-VIDEO-SIGNALING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KINESIS-VIDEO-SIGNALING_MODEL_SOURCE
 
 file(GLOB KINESIS-VIDEO-SIGNALING_UNIFIED_HEADERS
     ${AWS_KINESIS-VIDEO-SIGNALING_HEADERS}
+    ${AWS_KINESIS-VIDEO-SIGNALING_INTERNAL_HEADERS}
     ${AWS_KINESIS-VIDEO-SIGNALING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\kinesis-video-signaling" FILES ${AWS_KINESIS-VIDEO-SIGNALING_HEADERS})
+        source_group("Header Files\\aws\\kinesis-video-signaling\\internal" FILES ${AWS_KINESIS-VIDEO-SIGNALING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\kinesis-video-signaling\\model" FILES ${AWS_KINESIS-VIDEO-SIGNALING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KINESIS-VIDEO-SIGNALING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KINESIS-VIDEO-SIGNALING_MODEL_SOURCE})

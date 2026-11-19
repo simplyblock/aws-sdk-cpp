@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/UpdateConnectionAliasPermissionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateConnectionAliasPermissionRequest::UpdateConnectionAliasPermissionRequest() : 
-    m_aliasIdHasBeenSet(false),
-    m_connectionAliasPermissionHasBeenSet(false)
-{
-}
+Aws::String UpdateConnectionAliasPermissionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String UpdateConnectionAliasPermissionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_aliasIdHasBeenSet)
-  {
-   payload.WithString("AliasId", m_aliasId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_aliasIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_connectionAliasPermissionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_connectionAliasPermissionHasBeenSet)
-  {
-   payload.WithObject("ConnectionAliasPermission", m_connectionAliasPermission.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_aliasIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AliasId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_aliasId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_connectionAliasPermissionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ConnectionAliasPermission"));
+    m_connectionAliasPermission.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection UpdateConnectionAliasPermissionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateConnectionAliasPermissionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.UpdateConnectionAliasPermission"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

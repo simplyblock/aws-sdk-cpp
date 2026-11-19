@@ -4,67 +4,86 @@
  */
 
 #pragma once
-#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
 #include <aws/trustedadvisor/model/UpdateRecommendationResourceExclusionError.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TrustedAdvisor
-{
-namespace Model
-{
-  class BatchUpdateRecommendationResourceExclusionResult
-  {
-  public:
-    AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult();
-    AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TrustedAdvisor {
+namespace Model {
+class BatchUpdateRecommendationResourceExclusionResult {
+ public:
+  AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult() = default;
+  AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRUSTEDADVISOR_API BatchUpdateRecommendationResourceExclusionResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of recommendation resource ARNs whose exclusion status failed to
+   * update, if any</p>
+   */
+  inline const Aws::Vector<UpdateRecommendationResourceExclusionError>& GetBatchUpdateRecommendationResourceExclusionErrors() const {
+    return m_batchUpdateRecommendationResourceExclusionErrors;
+  }
+  template <typename BatchUpdateRecommendationResourceExclusionErrorsT = Aws::Vector<UpdateRecommendationResourceExclusionError>>
+  void SetBatchUpdateRecommendationResourceExclusionErrors(BatchUpdateRecommendationResourceExclusionErrorsT&& value) {
+    m_batchUpdateRecommendationResourceExclusionErrorsHasBeenSet = true;
+    m_batchUpdateRecommendationResourceExclusionErrors = std::forward<BatchUpdateRecommendationResourceExclusionErrorsT>(value);
+  }
+  template <typename BatchUpdateRecommendationResourceExclusionErrorsT = Aws::Vector<UpdateRecommendationResourceExclusionError>>
+  BatchUpdateRecommendationResourceExclusionResult& WithBatchUpdateRecommendationResourceExclusionErrors(
+      BatchUpdateRecommendationResourceExclusionErrorsT&& value) {
+    SetBatchUpdateRecommendationResourceExclusionErrors(std::forward<BatchUpdateRecommendationResourceExclusionErrorsT>(value));
+    return *this;
+  }
+  template <typename BatchUpdateRecommendationResourceExclusionErrorsT = UpdateRecommendationResourceExclusionError>
+  BatchUpdateRecommendationResourceExclusionResult& AddBatchUpdateRecommendationResourceExclusionErrors(
+      BatchUpdateRecommendationResourceExclusionErrorsT&& value) {
+    m_batchUpdateRecommendationResourceExclusionErrorsHasBeenSet = true;
+    m_batchUpdateRecommendationResourceExclusionErrors.emplace_back(std::forward<BatchUpdateRecommendationResourceExclusionErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of recommendation resource ARNs whose exclusion status failed to
-     * update, if any</p>
-     */
-    inline const Aws::Vector<UpdateRecommendationResourceExclusionError>& GetBatchUpdateRecommendationResourceExclusionErrors() const{ return m_batchUpdateRecommendationResourceExclusionErrors; }
-    inline void SetBatchUpdateRecommendationResourceExclusionErrors(const Aws::Vector<UpdateRecommendationResourceExclusionError>& value) { m_batchUpdateRecommendationResourceExclusionErrors = value; }
-    inline void SetBatchUpdateRecommendationResourceExclusionErrors(Aws::Vector<UpdateRecommendationResourceExclusionError>&& value) { m_batchUpdateRecommendationResourceExclusionErrors = std::move(value); }
-    inline BatchUpdateRecommendationResourceExclusionResult& WithBatchUpdateRecommendationResourceExclusionErrors(const Aws::Vector<UpdateRecommendationResourceExclusionError>& value) { SetBatchUpdateRecommendationResourceExclusionErrors(value); return *this;}
-    inline BatchUpdateRecommendationResourceExclusionResult& WithBatchUpdateRecommendationResourceExclusionErrors(Aws::Vector<UpdateRecommendationResourceExclusionError>&& value) { SetBatchUpdateRecommendationResourceExclusionErrors(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationResourceExclusionResult& AddBatchUpdateRecommendationResourceExclusionErrors(const UpdateRecommendationResourceExclusionError& value) { m_batchUpdateRecommendationResourceExclusionErrors.push_back(value); return *this; }
-    inline BatchUpdateRecommendationResourceExclusionResult& AddBatchUpdateRecommendationResourceExclusionErrors(UpdateRecommendationResourceExclusionError&& value) { m_batchUpdateRecommendationResourceExclusionErrors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchUpdateRecommendationResourceExclusionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchUpdateRecommendationResourceExclusionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationResourceExclusionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchUpdateRecommendationResourceExclusionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UpdateRecommendationResourceExclusionError> m_batchUpdateRecommendationResourceExclusionErrors;
+ private:
+  Aws::Vector<UpdateRecommendationResourceExclusionError> m_batchUpdateRecommendationResourceExclusionErrors;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_batchUpdateRecommendationResourceExclusionErrorsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TrustedAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace TrustedAdvisor
+}  // namespace Aws

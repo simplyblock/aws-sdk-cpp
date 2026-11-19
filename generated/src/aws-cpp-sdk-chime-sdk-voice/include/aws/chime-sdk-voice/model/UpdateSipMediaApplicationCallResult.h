@@ -6,61 +6,71 @@
 #pragma once
 #include <aws/chime-sdk-voice/ChimeSDKVoice_EXPORTS.h>
 #include <aws/chime-sdk-voice/model/SipMediaApplicationCall.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKVoice
-{
-namespace Model
-{
-  class UpdateSipMediaApplicationCallResult
-  {
-  public:
-    AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult();
-    AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKVoice {
+namespace Model {
+class UpdateSipMediaApplicationCallResult {
+ public:
+  AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult() = default;
+  AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKVOICE_API UpdateSipMediaApplicationCallResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A <code>Call</code> instance for a SIP media application.</p>
+   */
+  inline const SipMediaApplicationCall& GetSipMediaApplicationCall() const { return m_sipMediaApplicationCall; }
+  template <typename SipMediaApplicationCallT = SipMediaApplicationCall>
+  void SetSipMediaApplicationCall(SipMediaApplicationCallT&& value) {
+    m_sipMediaApplicationCallHasBeenSet = true;
+    m_sipMediaApplicationCall = std::forward<SipMediaApplicationCallT>(value);
+  }
+  template <typename SipMediaApplicationCallT = SipMediaApplicationCall>
+  UpdateSipMediaApplicationCallResult& WithSipMediaApplicationCall(SipMediaApplicationCallT&& value) {
+    SetSipMediaApplicationCall(std::forward<SipMediaApplicationCallT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A <code>Call</code> instance for a SIP media application.</p>
-     */
-    inline const SipMediaApplicationCall& GetSipMediaApplicationCall() const{ return m_sipMediaApplicationCall; }
-    inline void SetSipMediaApplicationCall(const SipMediaApplicationCall& value) { m_sipMediaApplicationCall = value; }
-    inline void SetSipMediaApplicationCall(SipMediaApplicationCall&& value) { m_sipMediaApplicationCall = std::move(value); }
-    inline UpdateSipMediaApplicationCallResult& WithSipMediaApplicationCall(const SipMediaApplicationCall& value) { SetSipMediaApplicationCall(value); return *this;}
-    inline UpdateSipMediaApplicationCallResult& WithSipMediaApplicationCall(SipMediaApplicationCall&& value) { SetSipMediaApplicationCall(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSipMediaApplicationCallResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSipMediaApplicationCallResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSipMediaApplicationCallResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSipMediaApplicationCallResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SipMediaApplicationCall m_sipMediaApplicationCall;
+ private:
+  SipMediaApplicationCall m_sipMediaApplicationCall;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sipMediaApplicationCallHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKVoice
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKVoice
+}  // namespace Aws

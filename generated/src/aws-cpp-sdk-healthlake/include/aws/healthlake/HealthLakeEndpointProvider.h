@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/healthlake/HealthLake_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/healthlake/HealthLake_EXPORTS.h>
 
-#include <aws/healthlake/HealthLakeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace HealthLake
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace HealthLake {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using HealthLakeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using HealthLakeEndpointProviderBase =
     EndpointProviderBase<HealthLakeClientConfiguration, HealthLakeBuiltInParameters, HealthLakeClientContextParameters>;
 
 using HealthLakeDefaultEpProviderBase =
-    DefaultEndpointProvider<HealthLakeClientConfiguration, HealthLakeBuiltInParameters, HealthLakeClientContextParameters>;
+    BDDEndpointProvider<HealthLakeClientConfiguration, HealthLakeBuiltInParameters, HealthLakeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_HEALTHLAKE_API HealthLakeEndpointProvider : public HealthLakeDefaultEpProviderBase
-{
-public:
-    using HealthLakeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_HEALTHLAKE_API HealthLakeEndpointProvider : public HealthLakeDefaultEpProviderBase {
+ public:
+  using HealthLakeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    HealthLakeEndpointProvider()
-      : HealthLakeDefaultEpProviderBase(Aws::HealthLake::HealthLakeEndpointRules::GetRulesBlob(), Aws::HealthLake::HealthLakeEndpointRules::RulesBlobSize)
-    {}
+  HealthLakeEndpointProvider();
 
-    ~HealthLakeEndpointProvider()
-    {
-    }
+  ~HealthLakeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace HealthLake
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace HealthLake
+}  // namespace Aws

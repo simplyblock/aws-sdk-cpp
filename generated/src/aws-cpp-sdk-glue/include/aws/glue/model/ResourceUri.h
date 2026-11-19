@@ -4,74 +4,101 @@
  */
 
 #pragma once
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/ResourceType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>The URIs for function resources.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ResourceUri">AWS
+ * API Reference</a></p>
+ */
+class ResourceUri {
+ public:
+  AWS_GLUE_API ResourceUri() = default;
+  AWS_GLUE_API ResourceUri(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API ResourceUri& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The URIs for function resources.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ResourceUri">AWS
-   * API Reference</a></p>
+   * <p>The type of the resource.</p>
    */
-  class ResourceUri
-  {
-  public:
-    AWS_GLUE_API ResourceUri();
-    AWS_GLUE_API ResourceUri(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API ResourceUri& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ResourceType GetResourceType() const { return m_resourceType; }
+  inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
+  inline void SetResourceType(ResourceType value) {
+    m_resourceTypeHasBeenSet = true;
+    m_resourceType = value;
+  }
+  inline ResourceUri& WithResourceType(ResourceType value) {
+    SetResourceType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The URI for accessing the resource.</p>
+   */
+  inline const Aws::String& GetUri() const { return m_uri; }
+  inline bool UriHasBeenSet() const { return m_uriHasBeenSet; }
+  template <typename UriT = Aws::String>
+  void SetUri(UriT&& value) {
+    m_uriHasBeenSet = true;
+    m_uri = std::forward<UriT>(value);
+  }
+  template <typename UriT = Aws::String>
+  ResourceUri& WithUri(UriT&& value) {
+    SetUri(std::forward<UriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the resource.</p>
-     */
-    inline const ResourceType& GetResourceType() const{ return m_resourceType; }
-    inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
-    inline void SetResourceType(const ResourceType& value) { m_resourceTypeHasBeenSet = true; m_resourceType = value; }
-    inline void SetResourceType(ResourceType&& value) { m_resourceTypeHasBeenSet = true; m_resourceType = std::move(value); }
-    inline ResourceUri& WithResourceType(const ResourceType& value) { SetResourceType(value); return *this;}
-    inline ResourceUri& WithResourceType(ResourceType&& value) { SetResourceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the resource was last modified in Amazon S3. Glue records
+   * this value when you create or update a function whose
+   * <code>GovernanceMode</code> is <code>LAKE_FORMATION</code>. Analytics engines
+   * use it to verify that the resource hasn't changed. This is an output-only
+   * field.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModified() const { return m_lastModified; }
+  inline bool LastModifiedHasBeenSet() const { return m_lastModifiedHasBeenSet; }
+  template <typename LastModifiedT = Aws::Utils::DateTime>
+  void SetLastModified(LastModifiedT&& value) {
+    m_lastModifiedHasBeenSet = true;
+    m_lastModified = std::forward<LastModifiedT>(value);
+  }
+  template <typename LastModifiedT = Aws::Utils::DateTime>
+  ResourceUri& WithLastModified(LastModifiedT&& value) {
+    SetLastModified(std::forward<LastModifiedT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ResourceType m_resourceType{ResourceType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The URI for accessing the resource.</p>
-     */
-    inline const Aws::String& GetUri() const{ return m_uri; }
-    inline bool UriHasBeenSet() const { return m_uriHasBeenSet; }
-    inline void SetUri(const Aws::String& value) { m_uriHasBeenSet = true; m_uri = value; }
-    inline void SetUri(Aws::String&& value) { m_uriHasBeenSet = true; m_uri = std::move(value); }
-    inline void SetUri(const char* value) { m_uriHasBeenSet = true; m_uri.assign(value); }
-    inline ResourceUri& WithUri(const Aws::String& value) { SetUri(value); return *this;}
-    inline ResourceUri& WithUri(Aws::String&& value) { SetUri(std::move(value)); return *this;}
-    inline ResourceUri& WithUri(const char* value) { SetUri(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_uri;
 
-    ResourceType m_resourceType;
-    bool m_resourceTypeHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModified{};
+  bool m_resourceTypeHasBeenSet = false;
+  bool m_uriHasBeenSet = false;
+  bool m_lastModifiedHasBeenSet = false;
+};
 
-    Aws::String m_uri;
-    bool m_uriHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

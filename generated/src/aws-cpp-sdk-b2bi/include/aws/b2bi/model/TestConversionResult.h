@@ -5,81 +5,102 @@
 
 #pragma once
 #include <aws/b2bi/B2BI_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace B2BI
-{
-namespace Model
-{
-  class TestConversionResult
-  {
-  public:
-    AWS_B2BI_API TestConversionResult();
-    AWS_B2BI_API TestConversionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_B2BI_API TestConversionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace B2BI {
+namespace Model {
+class TestConversionResult {
+ public:
+  AWS_B2BI_API TestConversionResult() = default;
+  AWS_B2BI_API TestConversionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_B2BI_API TestConversionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns the converted file content.</p>
+   */
+  inline const Aws::String& GetConvertedFileContent() const { return m_convertedFileContent; }
+  template <typename ConvertedFileContentT = Aws::String>
+  void SetConvertedFileContent(ConvertedFileContentT&& value) {
+    m_convertedFileContentHasBeenSet = true;
+    m_convertedFileContent = std::forward<ConvertedFileContentT>(value);
+  }
+  template <typename ConvertedFileContentT = Aws::String>
+  TestConversionResult& WithConvertedFileContent(ConvertedFileContentT&& value) {
+    SetConvertedFileContent(std::forward<ConvertedFileContentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns the converted file content.</p>
-     */
-    inline const Aws::String& GetConvertedFileContent() const{ return m_convertedFileContent; }
-    inline void SetConvertedFileContent(const Aws::String& value) { m_convertedFileContent = value; }
-    inline void SetConvertedFileContent(Aws::String&& value) { m_convertedFileContent = std::move(value); }
-    inline void SetConvertedFileContent(const char* value) { m_convertedFileContent.assign(value); }
-    inline TestConversionResult& WithConvertedFileContent(const Aws::String& value) { SetConvertedFileContent(value); return *this;}
-    inline TestConversionResult& WithConvertedFileContent(Aws::String&& value) { SetConvertedFileContent(std::move(value)); return *this;}
-    inline TestConversionResult& WithConvertedFileContent(const char* value) { SetConvertedFileContent(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Returns an array of validation messages that Amazon Web Services B2B Data
+   * Interchange generates during the conversion process. These messages include both
+   * standard EDI validation results and custom validation messages when custom
+   * validation rules are configured. Custom validation messages provide detailed
+   * feedback on element length constraints, code list validations, and element
+   * requirement checks applied during the outbound EDI generation process.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetValidationMessages() const { return m_validationMessages; }
+  template <typename ValidationMessagesT = Aws::Vector<Aws::String>>
+  void SetValidationMessages(ValidationMessagesT&& value) {
+    m_validationMessagesHasBeenSet = true;
+    m_validationMessages = std::forward<ValidationMessagesT>(value);
+  }
+  template <typename ValidationMessagesT = Aws::Vector<Aws::String>>
+  TestConversionResult& WithValidationMessages(ValidationMessagesT&& value) {
+    SetValidationMessages(std::forward<ValidationMessagesT>(value));
+    return *this;
+  }
+  template <typename ValidationMessagesT = Aws::String>
+  TestConversionResult& AddValidationMessages(ValidationMessagesT&& value) {
+    m_validationMessagesHasBeenSet = true;
+    m_validationMessages.emplace_back(std::forward<ValidationMessagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns an array of strings, each containing a message that Amazon Web
-     * Services B2B Data Interchange generates during the conversion.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetValidationMessages() const{ return m_validationMessages; }
-    inline void SetValidationMessages(const Aws::Vector<Aws::String>& value) { m_validationMessages = value; }
-    inline void SetValidationMessages(Aws::Vector<Aws::String>&& value) { m_validationMessages = std::move(value); }
-    inline TestConversionResult& WithValidationMessages(const Aws::Vector<Aws::String>& value) { SetValidationMessages(value); return *this;}
-    inline TestConversionResult& WithValidationMessages(Aws::Vector<Aws::String>&& value) { SetValidationMessages(std::move(value)); return *this;}
-    inline TestConversionResult& AddValidationMessages(const Aws::String& value) { m_validationMessages.push_back(value); return *this; }
-    inline TestConversionResult& AddValidationMessages(Aws::String&& value) { m_validationMessages.push_back(std::move(value)); return *this; }
-    inline TestConversionResult& AddValidationMessages(const char* value) { m_validationMessages.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline TestConversionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline TestConversionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline TestConversionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  TestConversionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_convertedFileContent;
+ private:
+  Aws::String m_convertedFileContent;
 
-    Aws::Vector<Aws::String> m_validationMessages;
+  Aws::Vector<Aws::String> m_validationMessages;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_convertedFileContentHasBeenSet = false;
+  bool m_validationMessagesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace B2BI
-} // namespace Aws
+}  // namespace Model
+}  // namespace B2BI
+}  // namespace Aws

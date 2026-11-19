@@ -4,109 +4,123 @@
  */
 
 #pragma once
-#include <aws/cognito-identity/CognitoIdentity_EXPORTS.h>
 #include <aws/cognito-identity/CognitoIdentityRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/cognito-identity/CognitoIdentity_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CognitoIdentity
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentity {
+namespace Model {
 
+/**
+ */
+class SetPrincipalTagAttributeMapRequest : public CognitoIdentityRequest {
+ public:
+  AWS_COGNITOIDENTITY_API SetPrincipalTagAttributeMapRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "SetPrincipalTagAttributeMap"; }
+
+  AWS_COGNITOIDENTITY_API Aws::String SerializePayload() const override;
+
+  AWS_COGNITOIDENTITY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the Identity Pool you want to set attribute mappings for.</p>
    */
-  class SetPrincipalTagAttributeMapRequest : public CognitoIdentityRequest
-  {
-  public:
-    AWS_COGNITOIDENTITY_API SetPrincipalTagAttributeMapRequest();
+  inline const Aws::String& GetIdentityPoolId() const { return m_identityPoolId; }
+  inline bool IdentityPoolIdHasBeenSet() const { return m_identityPoolIdHasBeenSet; }
+  template <typename IdentityPoolIdT = Aws::String>
+  void SetIdentityPoolId(IdentityPoolIdT&& value) {
+    m_identityPoolIdHasBeenSet = true;
+    m_identityPoolId = std::forward<IdentityPoolIdT>(value);
+  }
+  template <typename IdentityPoolIdT = Aws::String>
+  SetPrincipalTagAttributeMapRequest& WithIdentityPoolId(IdentityPoolIdT&& value) {
+    SetIdentityPoolId(std::forward<IdentityPoolIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "SetPrincipalTagAttributeMap"; }
+  ///@{
+  /**
+   * <p>The provider name you want to use for attribute mappings.</p>
+   */
+  inline const Aws::String& GetIdentityProviderName() const { return m_identityProviderName; }
+  inline bool IdentityProviderNameHasBeenSet() const { return m_identityProviderNameHasBeenSet; }
+  template <typename IdentityProviderNameT = Aws::String>
+  void SetIdentityProviderName(IdentityProviderNameT&& value) {
+    m_identityProviderNameHasBeenSet = true;
+    m_identityProviderName = std::forward<IdentityProviderNameT>(value);
+  }
+  template <typename IdentityProviderNameT = Aws::String>
+  SetPrincipalTagAttributeMapRequest& WithIdentityProviderName(IdentityProviderNameT&& value) {
+    SetIdentityProviderName(std::forward<IdentityProviderNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>You can use this operation to use default (username and clientID) attribute
+   * mappings.</p>
+   */
+  inline bool GetUseDefaults() const { return m_useDefaults; }
+  inline bool UseDefaultsHasBeenSet() const { return m_useDefaultsHasBeenSet; }
+  inline void SetUseDefaults(bool value) {
+    m_useDefaultsHasBeenSet = true;
+    m_useDefaults = value;
+  }
+  inline SetPrincipalTagAttributeMapRequest& WithUseDefaults(bool value) {
+    SetUseDefaults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>You can use this operation to add principal tags.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetPrincipalTags() const { return m_principalTags; }
+  inline bool PrincipalTagsHasBeenSet() const { return m_principalTagsHasBeenSet; }
+  template <typename PrincipalTagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetPrincipalTags(PrincipalTagsT&& value) {
+    m_principalTagsHasBeenSet = true;
+    m_principalTags = std::forward<PrincipalTagsT>(value);
+  }
+  template <typename PrincipalTagsT = Aws::Map<Aws::String, Aws::String>>
+  SetPrincipalTagAttributeMapRequest& WithPrincipalTags(PrincipalTagsT&& value) {
+    SetPrincipalTags(std::forward<PrincipalTagsT>(value));
+    return *this;
+  }
+  template <typename PrincipalTagsKeyT = Aws::String, typename PrincipalTagsValueT = Aws::String>
+  SetPrincipalTagAttributeMapRequest& AddPrincipalTags(PrincipalTagsKeyT&& key, PrincipalTagsValueT&& value) {
+    m_principalTagsHasBeenSet = true;
+    m_principalTags.emplace(std::forward<PrincipalTagsKeyT>(key), std::forward<PrincipalTagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_identityPoolId;
 
+  Aws::String m_identityProviderName;
 
-    ///@{
-    /**
-     * <p>The ID of the Identity Pool you want to set attribute mappings for.</p>
-     */
-    inline const Aws::String& GetIdentityPoolId() const{ return m_identityPoolId; }
-    inline bool IdentityPoolIdHasBeenSet() const { return m_identityPoolIdHasBeenSet; }
-    inline void SetIdentityPoolId(const Aws::String& value) { m_identityPoolIdHasBeenSet = true; m_identityPoolId = value; }
-    inline void SetIdentityPoolId(Aws::String&& value) { m_identityPoolIdHasBeenSet = true; m_identityPoolId = std::move(value); }
-    inline void SetIdentityPoolId(const char* value) { m_identityPoolIdHasBeenSet = true; m_identityPoolId.assign(value); }
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityPoolId(const Aws::String& value) { SetIdentityPoolId(value); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityPoolId(Aws::String&& value) { SetIdentityPoolId(std::move(value)); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityPoolId(const char* value) { SetIdentityPoolId(value); return *this;}
-    ///@}
+  bool m_useDefaults{false};
 
-    ///@{
-    /**
-     * <p>The provider name you want to use for attribute mappings.</p>
-     */
-    inline const Aws::String& GetIdentityProviderName() const{ return m_identityProviderName; }
-    inline bool IdentityProviderNameHasBeenSet() const { return m_identityProviderNameHasBeenSet; }
-    inline void SetIdentityProviderName(const Aws::String& value) { m_identityProviderNameHasBeenSet = true; m_identityProviderName = value; }
-    inline void SetIdentityProviderName(Aws::String&& value) { m_identityProviderNameHasBeenSet = true; m_identityProviderName = std::move(value); }
-    inline void SetIdentityProviderName(const char* value) { m_identityProviderNameHasBeenSet = true; m_identityProviderName.assign(value); }
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityProviderName(const Aws::String& value) { SetIdentityProviderName(value); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityProviderName(Aws::String&& value) { SetIdentityProviderName(std::move(value)); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& WithIdentityProviderName(const char* value) { SetIdentityProviderName(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_principalTags;
+  bool m_identityPoolIdHasBeenSet = false;
+  bool m_identityProviderNameHasBeenSet = false;
+  bool m_useDefaultsHasBeenSet = false;
+  bool m_principalTagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>You can use this operation to use default (username and clientID) attribute
-     * mappings.</p>
-     */
-    inline bool GetUseDefaults() const{ return m_useDefaults; }
-    inline bool UseDefaultsHasBeenSet() const { return m_useDefaultsHasBeenSet; }
-    inline void SetUseDefaults(bool value) { m_useDefaultsHasBeenSet = true; m_useDefaults = value; }
-    inline SetPrincipalTagAttributeMapRequest& WithUseDefaults(bool value) { SetUseDefaults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>You can use this operation to add principal tags.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetPrincipalTags() const{ return m_principalTags; }
-    inline bool PrincipalTagsHasBeenSet() const { return m_principalTagsHasBeenSet; }
-    inline void SetPrincipalTags(const Aws::Map<Aws::String, Aws::String>& value) { m_principalTagsHasBeenSet = true; m_principalTags = value; }
-    inline void SetPrincipalTags(Aws::Map<Aws::String, Aws::String>&& value) { m_principalTagsHasBeenSet = true; m_principalTags = std::move(value); }
-    inline SetPrincipalTagAttributeMapRequest& WithPrincipalTags(const Aws::Map<Aws::String, Aws::String>& value) { SetPrincipalTags(value); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& WithPrincipalTags(Aws::Map<Aws::String, Aws::String>&& value) { SetPrincipalTags(std::move(value)); return *this;}
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(const Aws::String& key, const Aws::String& value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(key, value); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(Aws::String&& key, const Aws::String& value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(std::move(key), value); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(const Aws::String& key, Aws::String&& value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(key, std::move(value)); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(Aws::String&& key, Aws::String&& value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(std::move(key), std::move(value)); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(const char* key, Aws::String&& value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(key, std::move(value)); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(Aws::String&& key, const char* value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(std::move(key), value); return *this; }
-    inline SetPrincipalTagAttributeMapRequest& AddPrincipalTags(const char* key, const char* value) { m_principalTagsHasBeenSet = true; m_principalTags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_identityPoolId;
-    bool m_identityPoolIdHasBeenSet = false;
-
-    Aws::String m_identityProviderName;
-    bool m_identityProviderNameHasBeenSet = false;
-
-    bool m_useDefaults;
-    bool m_useDefaultsHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_principalTags;
-    bool m_principalTagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentity
+}  // namespace Aws

@@ -4,75 +4,91 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
-  class RemoveBridgeSourceResult
-  {
-  public:
-    AWS_MEDIACONNECT_API RemoveBridgeSourceResult();
-    AWS_MEDIACONNECT_API RemoveBridgeSourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONNECT_API RemoveBridgeSourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
+class RemoveBridgeSourceResult {
+ public:
+  AWS_MEDIACONNECT_API RemoveBridgeSourceResult() = default;
+  AWS_MEDIACONNECT_API RemoveBridgeSourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONNECT_API RemoveBridgeSourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The ARN of the bridge from which the source was removed. </p>
+   */
+  inline const Aws::String& GetBridgeArn() const { return m_bridgeArn; }
+  template <typename BridgeArnT = Aws::String>
+  void SetBridgeArn(BridgeArnT&& value) {
+    m_bridgeArnHasBeenSet = true;
+    m_bridgeArn = std::forward<BridgeArnT>(value);
+  }
+  template <typename BridgeArnT = Aws::String>
+  RemoveBridgeSourceResult& WithBridgeArn(BridgeArnT&& value) {
+    SetBridgeArn(std::forward<BridgeArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetBridgeArn() const{ return m_bridgeArn; }
-    inline void SetBridgeArn(const Aws::String& value) { m_bridgeArn = value; }
-    inline void SetBridgeArn(Aws::String&& value) { m_bridgeArn = std::move(value); }
-    inline void SetBridgeArn(const char* value) { m_bridgeArn.assign(value); }
-    inline RemoveBridgeSourceResult& WithBridgeArn(const Aws::String& value) { SetBridgeArn(value); return *this;}
-    inline RemoveBridgeSourceResult& WithBridgeArn(Aws::String&& value) { SetBridgeArn(std::move(value)); return *this;}
-    inline RemoveBridgeSourceResult& WithBridgeArn(const char* value) { SetBridgeArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The name of the bridge source that was removed. </p>
+   */
+  inline const Aws::String& GetSourceName() const { return m_sourceName; }
+  template <typename SourceNameT = Aws::String>
+  void SetSourceName(SourceNameT&& value) {
+    m_sourceNameHasBeenSet = true;
+    m_sourceName = std::forward<SourceNameT>(value);
+  }
+  template <typename SourceNameT = Aws::String>
+  RemoveBridgeSourceResult& WithSourceName(SourceNameT&& value) {
+    SetSourceName(std::forward<SourceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetSourceName() const{ return m_sourceName; }
-    inline void SetSourceName(const Aws::String& value) { m_sourceName = value; }
-    inline void SetSourceName(Aws::String&& value) { m_sourceName = std::move(value); }
-    inline void SetSourceName(const char* value) { m_sourceName.assign(value); }
-    inline RemoveBridgeSourceResult& WithSourceName(const Aws::String& value) { SetSourceName(value); return *this;}
-    inline RemoveBridgeSourceResult& WithSourceName(Aws::String&& value) { SetSourceName(std::move(value)); return *this;}
-    inline RemoveBridgeSourceResult& WithSourceName(const char* value) { SetSourceName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RemoveBridgeSourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RemoveBridgeSourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RemoveBridgeSourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RemoveBridgeSourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_bridgeArn;
+ private:
+  Aws::String m_bridgeArn;
 
-    Aws::String m_sourceName;
+  Aws::String m_sourceName;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bridgeArnHasBeenSet = false;
+  bool m_sourceNameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

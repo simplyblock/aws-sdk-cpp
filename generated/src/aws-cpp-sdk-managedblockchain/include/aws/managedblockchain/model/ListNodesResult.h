@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
 #include <aws/managedblockchain/model/NodeSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ManagedBlockchain
-{
-namespace Model
-{
-  class ListNodesResult
-  {
-  public:
-    AWS_MANAGEDBLOCKCHAIN_API ListNodesResult();
-    AWS_MANAGEDBLOCKCHAIN_API ListNodesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MANAGEDBLOCKCHAIN_API ListNodesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ManagedBlockchain {
+namespace Model {
+class ListNodesResult {
+ public:
+  AWS_MANAGEDBLOCKCHAIN_API ListNodesResult() = default;
+  AWS_MANAGEDBLOCKCHAIN_API ListNodesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MANAGEDBLOCKCHAIN_API ListNodesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of <code>NodeSummary</code> objects that contain configuration
+   * properties for each node.</p>
+   */
+  inline const Aws::Vector<NodeSummary>& GetNodes() const { return m_nodes; }
+  template <typename NodesT = Aws::Vector<NodeSummary>>
+  void SetNodes(NodesT&& value) {
+    m_nodesHasBeenSet = true;
+    m_nodes = std::forward<NodesT>(value);
+  }
+  template <typename NodesT = Aws::Vector<NodeSummary>>
+  ListNodesResult& WithNodes(NodesT&& value) {
+    SetNodes(std::forward<NodesT>(value));
+    return *this;
+  }
+  template <typename NodesT = NodeSummary>
+  ListNodesResult& AddNodes(NodesT&& value) {
+    m_nodesHasBeenSet = true;
+    m_nodes.emplace_back(std::forward<NodesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>NodeSummary</code> objects that contain configuration
-     * properties for each node.</p>
-     */
-    inline const Aws::Vector<NodeSummary>& GetNodes() const{ return m_nodes; }
-    inline void SetNodes(const Aws::Vector<NodeSummary>& value) { m_nodes = value; }
-    inline void SetNodes(Aws::Vector<NodeSummary>&& value) { m_nodes = std::move(value); }
-    inline ListNodesResult& WithNodes(const Aws::Vector<NodeSummary>& value) { SetNodes(value); return *this;}
-    inline ListNodesResult& WithNodes(Aws::Vector<NodeSummary>&& value) { SetNodes(std::move(value)); return *this;}
-    inline ListNodesResult& AddNodes(const NodeSummary& value) { m_nodes.push_back(value); return *this; }
-    inline ListNodesResult& AddNodes(NodeSummary&& value) { m_nodes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that indicates the next set of results to retrieve.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListNodesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that indicates the next set of results to retrieve.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListNodesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListNodesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListNodesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListNodesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListNodesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListNodesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListNodesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<NodeSummary> m_nodes;
+ private:
+  Aws::Vector<NodeSummary> m_nodes;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nodesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ManagedBlockchain
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedBlockchain
+}  // namespace Aws

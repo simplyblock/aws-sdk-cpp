@@ -4,105 +4,116 @@
  */
 
 #pragma once
-#include <aws/codeconnections/CodeConnections_EXPORTS.h>
 #include <aws/codeconnections/CodeConnectionsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/codeconnections/CodeConnections_EXPORTS.h>
 #include <aws/codeconnections/model/SyncConfigurationType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CodeConnections
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeConnections {
+namespace Model {
 
+/**
+ */
+class UpdateSyncBlockerRequest : public CodeConnectionsRequest {
+ public:
+  AWS_CODECONNECTIONS_API UpdateSyncBlockerRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateSyncBlocker"; }
+
+  AWS_CODECONNECTIONS_API Aws::String SerializePayload() const override;
+
+  AWS_CODECONNECTIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the sync blocker to be updated.</p>
    */
-  class UpdateSyncBlockerRequest : public CodeConnectionsRequest
-  {
-  public:
-    AWS_CODECONNECTIONS_API UpdateSyncBlockerRequest();
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateSyncBlockerRequest& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateSyncBlocker"; }
+  ///@{
+  /**
+   * <p>The sync type of the sync blocker to be updated.</p>
+   */
+  inline SyncConfigurationType GetSyncType() const { return m_syncType; }
+  inline bool SyncTypeHasBeenSet() const { return m_syncTypeHasBeenSet; }
+  inline void SetSyncType(SyncConfigurationType value) {
+    m_syncTypeHasBeenSet = true;
+    m_syncType = value;
+  }
+  inline UpdateSyncBlockerRequest& WithSyncType(SyncConfigurationType value) {
+    SetSyncType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_CODECONNECTIONS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the resource for the sync blocker to be updated.</p>
+   */
+  inline const Aws::String& GetResourceName() const { return m_resourceName; }
+  inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
+  template <typename ResourceNameT = Aws::String>
+  void SetResourceName(ResourceNameT&& value) {
+    m_resourceNameHasBeenSet = true;
+    m_resourceName = std::forward<ResourceNameT>(value);
+  }
+  template <typename ResourceNameT = Aws::String>
+  UpdateSyncBlockerRequest& WithResourceName(ResourceNameT&& value) {
+    SetResourceName(std::forward<ResourceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODECONNECTIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The reason for resolving the sync blocker.</p>
+   */
+  inline const Aws::String& GetResolvedReason() const { return m_resolvedReason; }
+  inline bool ResolvedReasonHasBeenSet() const { return m_resolvedReasonHasBeenSet; }
+  template <typename ResolvedReasonT = Aws::String>
+  void SetResolvedReason(ResolvedReasonT&& value) {
+    m_resolvedReasonHasBeenSet = true;
+    m_resolvedReason = std::forward<ResolvedReasonT>(value);
+  }
+  template <typename ResolvedReasonT = Aws::String>
+  UpdateSyncBlockerRequest& WithResolvedReason(ResolvedReasonT&& value) {
+    SetResolvedReason(std::forward<ResolvedReasonT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
+  SyncConfigurationType m_syncType{SyncConfigurationType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The ID of the sync blocker to be updated.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline UpdateSyncBlockerRequest& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateSyncBlockerRequest& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateSyncBlockerRequest& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  Aws::String m_resourceName;
 
-    ///@{
-    /**
-     * <p>The sync type of the sync blocker to be updated.</p>
-     */
-    inline const SyncConfigurationType& GetSyncType() const{ return m_syncType; }
-    inline bool SyncTypeHasBeenSet() const { return m_syncTypeHasBeenSet; }
-    inline void SetSyncType(const SyncConfigurationType& value) { m_syncTypeHasBeenSet = true; m_syncType = value; }
-    inline void SetSyncType(SyncConfigurationType&& value) { m_syncTypeHasBeenSet = true; m_syncType = std::move(value); }
-    inline UpdateSyncBlockerRequest& WithSyncType(const SyncConfigurationType& value) { SetSyncType(value); return *this;}
-    inline UpdateSyncBlockerRequest& WithSyncType(SyncConfigurationType&& value) { SetSyncType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_resolvedReason;
+  bool m_idHasBeenSet = false;
+  bool m_syncTypeHasBeenSet = false;
+  bool m_resourceNameHasBeenSet = false;
+  bool m_resolvedReasonHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the resource for the sync blocker to be updated.</p>
-     */
-    inline const Aws::String& GetResourceName() const{ return m_resourceName; }
-    inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
-    inline void SetResourceName(const Aws::String& value) { m_resourceNameHasBeenSet = true; m_resourceName = value; }
-    inline void SetResourceName(Aws::String&& value) { m_resourceNameHasBeenSet = true; m_resourceName = std::move(value); }
-    inline void SetResourceName(const char* value) { m_resourceNameHasBeenSet = true; m_resourceName.assign(value); }
-    inline UpdateSyncBlockerRequest& WithResourceName(const Aws::String& value) { SetResourceName(value); return *this;}
-    inline UpdateSyncBlockerRequest& WithResourceName(Aws::String&& value) { SetResourceName(std::move(value)); return *this;}
-    inline UpdateSyncBlockerRequest& WithResourceName(const char* value) { SetResourceName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The reason for resolving the sync blocker.</p>
-     */
-    inline const Aws::String& GetResolvedReason() const{ return m_resolvedReason; }
-    inline bool ResolvedReasonHasBeenSet() const { return m_resolvedReasonHasBeenSet; }
-    inline void SetResolvedReason(const Aws::String& value) { m_resolvedReasonHasBeenSet = true; m_resolvedReason = value; }
-    inline void SetResolvedReason(Aws::String&& value) { m_resolvedReasonHasBeenSet = true; m_resolvedReason = std::move(value); }
-    inline void SetResolvedReason(const char* value) { m_resolvedReasonHasBeenSet = true; m_resolvedReason.assign(value); }
-    inline UpdateSyncBlockerRequest& WithResolvedReason(const Aws::String& value) { SetResolvedReason(value); return *this;}
-    inline UpdateSyncBlockerRequest& WithResolvedReason(Aws::String&& value) { SetResolvedReason(std::move(value)); return *this;}
-    inline UpdateSyncBlockerRequest& WithResolvedReason(const char* value) { SetResolvedReason(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    SyncConfigurationType m_syncType;
-    bool m_syncTypeHasBeenSet = false;
-
-    Aws::String m_resourceName;
-    bool m_resourceNameHasBeenSet = false;
-
-    Aws::String m_resolvedReason;
-    bool m_resolvedReasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeConnections
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeConnections
+}  // namespace Aws

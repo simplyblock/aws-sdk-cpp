@@ -3,84 +3,225 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/TaskScheduleDetails.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DataSync
-{
-namespace Model
-{
+namespace Aws {
+namespace DataSync {
+namespace Model {
 
-TaskScheduleDetails::TaskScheduleDetails() : 
-    m_statusUpdateTimeHasBeenSet(false),
-    m_disabledReasonHasBeenSet(false),
-    m_disabledBy(ScheduleDisabledBy::NOT_SET),
-    m_disabledByHasBeenSet(false)
-{
-}
+TaskScheduleDetails::TaskScheduleDetails(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-TaskScheduleDetails::TaskScheduleDetails(JsonView jsonValue)
-  : TaskScheduleDetails()
-{
-  *this = jsonValue;
-}
+TaskScheduleDetails& TaskScheduleDetails::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-TaskScheduleDetails& TaskScheduleDetails::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("StatusUpdateTime"))
-  {
-    m_statusUpdateTime = jsonValue.GetDouble("StatusUpdateTime");
+              if (initialKeyStr == "StatusUpdateTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_statusUpdateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_statusUpdateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_statusUpdateTimeHasBeenSet = true;
+              }
 
-    m_statusUpdateTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DisabledReason") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_disabledReason = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_disabledReason = ss.str();
+                  }
+                }
+                m_disabledReasonHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("DisabledReason"))
-  {
-    m_disabledReason = jsonValue.GetString("DisabledReason");
+              else if (initialKeyStr == "DisabledBy") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_disabledBy = ScheduleDisabledByMapper::GetScheduleDisabledByForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_disabledByHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("TaskScheduleDetails", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_disabledReasonHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("DisabledBy"))
-  {
-    m_disabledBy = ScheduleDisabledByMapper::GetScheduleDisabledByForName(jsonValue.GetString("DisabledBy"));
+            if (initialKeyStr == "StatusUpdateTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_statusUpdateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_statusUpdateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_statusUpdateTimeHasBeenSet = true;
+            }
 
-    m_disabledByHasBeenSet = true;
+            else if (initialKeyStr == "DisabledReason") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_disabledReason = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_disabledReason = ss.str();
+                }
+              }
+              m_disabledReasonHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DisabledBy") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_disabledBy = ScheduleDisabledByMapper::GetScheduleDisabledByForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_disabledByHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue TaskScheduleDetails::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_statusUpdateTimeHasBeenSet)
-  {
-   payload.WithDouble("StatusUpdateTime", m_statusUpdateTime.SecondsWithMSPrecision());
+void TaskScheduleDetails::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_statusUpdateTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_disabledReasonHasBeenSet) {
+    mapSize++;
+  }
+  if (m_disabledByHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_disabledReasonHasBeenSet)
-  {
-   payload.WithString("DisabledReason", m_disabledReason);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_statusUpdateTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("StatusUpdateTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_statusUpdateTime.Seconds());
   }
 
-  if(m_disabledByHasBeenSet)
-  {
-   payload.WithString("DisabledBy", ScheduleDisabledByMapper::GetNameForScheduleDisabledBy(m_disabledBy));
+  if (m_disabledReasonHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisabledReason"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_disabledReason.c_str()));
   }
 
-  return payload;
+  if (m_disabledByHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisabledBy"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ScheduleDisabledByMapper::GetNameForScheduleDisabledBy(m_disabledBy).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

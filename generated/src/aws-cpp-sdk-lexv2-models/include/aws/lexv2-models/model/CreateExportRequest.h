@@ -4,88 +4,97 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lexv2-models/LexModelsV2Request.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
 #include <aws/lexv2-models/model/ExportResourceSpecification.h>
 #include <aws/lexv2-models/model/ImportExportFileFormat.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ */
+class CreateExportRequest : public LexModelsV2Request {
+ public:
+  AWS_LEXMODELSV2_API CreateExportRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateExport"; }
+
+  AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>Specifies the type of resource to export, either a bot or a bot locale. You
+   * can only specify one type of resource to export.</p>
    */
-  class CreateExportRequest : public LexModelsV2Request
-  {
-  public:
-    AWS_LEXMODELSV2_API CreateExportRequest();
+  inline const ExportResourceSpecification& GetResourceSpecification() const { return m_resourceSpecification; }
+  inline bool ResourceSpecificationHasBeenSet() const { return m_resourceSpecificationHasBeenSet; }
+  template <typename ResourceSpecificationT = ExportResourceSpecification>
+  void SetResourceSpecification(ResourceSpecificationT&& value) {
+    m_resourceSpecificationHasBeenSet = true;
+    m_resourceSpecification = std::forward<ResourceSpecificationT>(value);
+  }
+  template <typename ResourceSpecificationT = ExportResourceSpecification>
+  CreateExportRequest& WithResourceSpecification(ResourceSpecificationT&& value) {
+    SetResourceSpecification(std::forward<ResourceSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateExport"; }
+  ///@{
+  /**
+   * <p>The file format of the bot or bot locale definition files.</p>
+   */
+  inline ImportExportFileFormat GetFileFormat() const { return m_fileFormat; }
+  inline bool FileFormatHasBeenSet() const { return m_fileFormatHasBeenSet; }
+  inline void SetFileFormat(ImportExportFileFormat value) {
+    m_fileFormatHasBeenSet = true;
+    m_fileFormat = value;
+  }
+  inline CreateExportRequest& WithFileFormat(ImportExportFileFormat value) {
+    SetFileFormat(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An password to use to encrypt the exported archive. Using a password is
+   * optional, but you should encrypt the archive to protect the data in transit
+   * between Amazon Lex and your local computer.</p>
+   */
+  inline const Aws::String& GetFilePassword() const { return m_filePassword; }
+  inline bool FilePasswordHasBeenSet() const { return m_filePasswordHasBeenSet; }
+  template <typename FilePasswordT = Aws::String>
+  void SetFilePassword(FilePasswordT&& value) {
+    m_filePasswordHasBeenSet = true;
+    m_filePassword = std::forward<FilePasswordT>(value);
+  }
+  template <typename FilePasswordT = Aws::String>
+  CreateExportRequest& WithFilePassword(FilePasswordT&& value) {
+    SetFilePassword(std::forward<FilePasswordT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ExportResourceSpecification m_resourceSpecification;
 
+  ImportExportFileFormat m_fileFormat{ImportExportFileFormat::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies the type of resource to export, either a bot or a bot locale. You
-     * can only specify one type of resource to export.</p>
-     */
-    inline const ExportResourceSpecification& GetResourceSpecification() const{ return m_resourceSpecification; }
-    inline bool ResourceSpecificationHasBeenSet() const { return m_resourceSpecificationHasBeenSet; }
-    inline void SetResourceSpecification(const ExportResourceSpecification& value) { m_resourceSpecificationHasBeenSet = true; m_resourceSpecification = value; }
-    inline void SetResourceSpecification(ExportResourceSpecification&& value) { m_resourceSpecificationHasBeenSet = true; m_resourceSpecification = std::move(value); }
-    inline CreateExportRequest& WithResourceSpecification(const ExportResourceSpecification& value) { SetResourceSpecification(value); return *this;}
-    inline CreateExportRequest& WithResourceSpecification(ExportResourceSpecification&& value) { SetResourceSpecification(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_filePassword;
+  bool m_resourceSpecificationHasBeenSet = false;
+  bool m_fileFormatHasBeenSet = false;
+  bool m_filePasswordHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The file format of the bot or bot locale definition files.</p>
-     */
-    inline const ImportExportFileFormat& GetFileFormat() const{ return m_fileFormat; }
-    inline bool FileFormatHasBeenSet() const { return m_fileFormatHasBeenSet; }
-    inline void SetFileFormat(const ImportExportFileFormat& value) { m_fileFormatHasBeenSet = true; m_fileFormat = value; }
-    inline void SetFileFormat(ImportExportFileFormat&& value) { m_fileFormatHasBeenSet = true; m_fileFormat = std::move(value); }
-    inline CreateExportRequest& WithFileFormat(const ImportExportFileFormat& value) { SetFileFormat(value); return *this;}
-    inline CreateExportRequest& WithFileFormat(ImportExportFileFormat&& value) { SetFileFormat(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>An password to use to encrypt the exported archive. Using a password is
-     * optional, but you should encrypt the archive to protect the data in transit
-     * between Amazon Lex and your local computer.</p>
-     */
-    inline const Aws::String& GetFilePassword() const{ return m_filePassword; }
-    inline bool FilePasswordHasBeenSet() const { return m_filePasswordHasBeenSet; }
-    inline void SetFilePassword(const Aws::String& value) { m_filePasswordHasBeenSet = true; m_filePassword = value; }
-    inline void SetFilePassword(Aws::String&& value) { m_filePasswordHasBeenSet = true; m_filePassword = std::move(value); }
-    inline void SetFilePassword(const char* value) { m_filePasswordHasBeenSet = true; m_filePassword.assign(value); }
-    inline CreateExportRequest& WithFilePassword(const Aws::String& value) { SetFilePassword(value); return *this;}
-    inline CreateExportRequest& WithFilePassword(Aws::String&& value) { SetFilePassword(std::move(value)); return *this;}
-    inline CreateExportRequest& WithFilePassword(const char* value) { SetFilePassword(value); return *this;}
-    ///@}
-  private:
-
-    ExportResourceSpecification m_resourceSpecification;
-    bool m_resourceSpecificationHasBeenSet = false;
-
-    ImportExportFileFormat m_fileFormat;
-    bool m_fileFormatHasBeenSet = false;
-
-    Aws::String m_filePassword;
-    bool m_filePasswordHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-compute-optimizer "C++ SDK for the AWS compute-optimizer service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-compute-optimizer "C++ SDK for AWS Compute Optimizer" aws-cpp-sdk-core)
 
 file(GLOB AWS_COMPUTE-OPTIMIZER_HEADERS
     "include/aws/compute-optimizer/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_COMPUTE-OPTIMIZER_HEADERS
 
 file(GLOB AWS_COMPUTE-OPTIMIZER_MODEL_HEADERS
     "include/aws/compute-optimizer/model/*.h"
+)
+
+file(GLOB AWS_COMPUTE-OPTIMIZER_INTERNAL_HEADERS
+    "include/aws/compute-optimizer/internal/*.h"
 )
 
 file(GLOB AWS_COMPUTE-OPTIMIZER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_COMPUTE-OPTIMIZER_MODEL_SOURCE
 
 file(GLOB COMPUTE-OPTIMIZER_UNIFIED_HEADERS
     ${AWS_COMPUTE-OPTIMIZER_HEADERS}
+    ${AWS_COMPUTE-OPTIMIZER_INTERNAL_HEADERS}
     ${AWS_COMPUTE-OPTIMIZER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\compute-optimizer" FILES ${AWS_COMPUTE-OPTIMIZER_HEADERS})
+        source_group("Header Files\\aws\\compute-optimizer\\internal" FILES ${AWS_COMPUTE-OPTIMIZER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\compute-optimizer\\model" FILES ${AWS_COMPUTE-OPTIMIZER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_COMPUTE-OPTIMIZER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_COMPUTE-OPTIMIZER_MODEL_SOURCE})

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/RemoveAssistantAIAgentRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/http/URI.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/qconnect/model/RemoveAssistantAIAgentRequest.h>
 
 #include <utility>
 
@@ -15,29 +15,19 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
 
-RemoveAssistantAIAgentRequest::RemoveAssistantAIAgentRequest() : 
-    m_aiAgentType(AIAgentType::NOT_SET),
-    m_aiAgentTypeHasBeenSet(false),
-    m_assistantIdHasBeenSet(false)
-{
+Aws::String RemoveAssistantAIAgentRequest::SerializePayload() const { return {}; }
+
+void RemoveAssistantAIAgentRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_aiAgentTypeHasBeenSet) {
+    ss << AIAgentTypeMapper::GetNameForAIAgentType(m_aiAgentType);
+    uri.AddQueryStringParameter("aiAgentType", ss.str());
+    ss.str("");
+  }
+
+  if (m_orchestratorUseCaseHasBeenSet) {
+    ss << m_orchestratorUseCase;
+    uri.AddQueryStringParameter("orchestratorUseCase", ss.str());
+    ss.str("");
+  }
 }
-
-Aws::String RemoveAssistantAIAgentRequest::SerializePayload() const
-{
-  return {};
-}
-
-void RemoveAssistantAIAgentRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_aiAgentTypeHasBeenSet)
-    {
-      ss << AIAgentTypeMapper::GetNameForAIAgentType(m_aiAgentType);
-      uri.AddQueryStringParameter("aiAgentType", ss.str());
-      ss.str("");
-    }
-
-}
-
-
-

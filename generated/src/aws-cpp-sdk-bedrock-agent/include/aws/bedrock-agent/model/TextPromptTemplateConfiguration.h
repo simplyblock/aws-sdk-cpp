@@ -5,78 +5,107 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/bedrock-agent/model/CachePointBlock.h>
 #include <aws/bedrock-agent/model/PromptInputVariable.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
 
+/**
+ * <p>Contains configurations for a text prompt template. To include a variable,
+ * enclose a word in double curly braces as in
+ * <code>{{variable}}</code>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/TextPromptTemplateConfiguration">AWS
+ * API Reference</a></p>
+ */
+class TextPromptTemplateConfiguration {
+ public:
+  AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration() = default;
+  AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains configurations for a text prompt template. To include a variable,
-   * enclose a word in double curly braces as in
-   * <code>{{variable}}</code>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/TextPromptTemplateConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The message for the prompt.</p>
    */
-  class TextPromptTemplateConfiguration
-  {
-  public:
-    AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration();
-    AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API TextPromptTemplateConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetText() const { return m_text; }
+  inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
+  template <typename TextT = Aws::String>
+  void SetText(TextT&& value) {
+    m_textHasBeenSet = true;
+    m_text = std::forward<TextT>(value);
+  }
+  template <typename TextT = Aws::String>
+  TextPromptTemplateConfiguration& WithText(TextT&& value) {
+    SetText(std::forward<TextT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A cache checkpoint within a template configuration.</p>
+   */
+  inline const CachePointBlock& GetCachePoint() const { return m_cachePoint; }
+  inline bool CachePointHasBeenSet() const { return m_cachePointHasBeenSet; }
+  template <typename CachePointT = CachePointBlock>
+  void SetCachePoint(CachePointT&& value) {
+    m_cachePointHasBeenSet = true;
+    m_cachePoint = std::forward<CachePointT>(value);
+  }
+  template <typename CachePointT = CachePointBlock>
+  TextPromptTemplateConfiguration& WithCachePoint(CachePointT&& value) {
+    SetCachePoint(std::forward<CachePointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of the variables in the prompt template.</p>
-     */
-    inline const Aws::Vector<PromptInputVariable>& GetInputVariables() const{ return m_inputVariables; }
-    inline bool InputVariablesHasBeenSet() const { return m_inputVariablesHasBeenSet; }
-    inline void SetInputVariables(const Aws::Vector<PromptInputVariable>& value) { m_inputVariablesHasBeenSet = true; m_inputVariables = value; }
-    inline void SetInputVariables(Aws::Vector<PromptInputVariable>&& value) { m_inputVariablesHasBeenSet = true; m_inputVariables = std::move(value); }
-    inline TextPromptTemplateConfiguration& WithInputVariables(const Aws::Vector<PromptInputVariable>& value) { SetInputVariables(value); return *this;}
-    inline TextPromptTemplateConfiguration& WithInputVariables(Aws::Vector<PromptInputVariable>&& value) { SetInputVariables(std::move(value)); return *this;}
-    inline TextPromptTemplateConfiguration& AddInputVariables(const PromptInputVariable& value) { m_inputVariablesHasBeenSet = true; m_inputVariables.push_back(value); return *this; }
-    inline TextPromptTemplateConfiguration& AddInputVariables(PromptInputVariable&& value) { m_inputVariablesHasBeenSet = true; m_inputVariables.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An array of the variables in the prompt template.</p>
+   */
+  inline const Aws::Vector<PromptInputVariable>& GetInputVariables() const { return m_inputVariables; }
+  inline bool InputVariablesHasBeenSet() const { return m_inputVariablesHasBeenSet; }
+  template <typename InputVariablesT = Aws::Vector<PromptInputVariable>>
+  void SetInputVariables(InputVariablesT&& value) {
+    m_inputVariablesHasBeenSet = true;
+    m_inputVariables = std::forward<InputVariablesT>(value);
+  }
+  template <typename InputVariablesT = Aws::Vector<PromptInputVariable>>
+  TextPromptTemplateConfiguration& WithInputVariables(InputVariablesT&& value) {
+    SetInputVariables(std::forward<InputVariablesT>(value));
+    return *this;
+  }
+  template <typename InputVariablesT = PromptInputVariable>
+  TextPromptTemplateConfiguration& AddInputVariables(InputVariablesT&& value) {
+    m_inputVariablesHasBeenSet = true;
+    m_inputVariables.emplace_back(std::forward<InputVariablesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_text;
 
-    ///@{
-    /**
-     * <p>The message for the prompt.</p>
-     */
-    inline const Aws::String& GetText() const{ return m_text; }
-    inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
-    inline void SetText(const Aws::String& value) { m_textHasBeenSet = true; m_text = value; }
-    inline void SetText(Aws::String&& value) { m_textHasBeenSet = true; m_text = std::move(value); }
-    inline void SetText(const char* value) { m_textHasBeenSet = true; m_text.assign(value); }
-    inline TextPromptTemplateConfiguration& WithText(const Aws::String& value) { SetText(value); return *this;}
-    inline TextPromptTemplateConfiguration& WithText(Aws::String&& value) { SetText(std::move(value)); return *this;}
-    inline TextPromptTemplateConfiguration& WithText(const char* value) { SetText(value); return *this;}
-    ///@}
-  private:
+  CachePointBlock m_cachePoint;
 
-    Aws::Vector<PromptInputVariable> m_inputVariables;
-    bool m_inputVariablesHasBeenSet = false;
+  Aws::Vector<PromptInputVariable> m_inputVariables;
+  bool m_textHasBeenSet = false;
+  bool m_cachePointHasBeenSet = false;
+  bool m_inputVariablesHasBeenSet = false;
+};
 
-    Aws::String m_text;
-    bool m_textHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

@@ -3,142 +3,100 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/eks/model/Update.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/eks/model/Update.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EKS
-{
-namespace Model
-{
+namespace Aws {
+namespace EKS {
+namespace Model {
 
-Update::Update() : 
-    m_idHasBeenSet(false),
-    m_status(UpdateStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_type(UpdateType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_paramsHasBeenSet(false),
-    m_createdAtHasBeenSet(false),
-    m_errorsHasBeenSet(false)
-{
-}
+Update::Update(JsonView jsonValue) { *this = jsonValue; }
 
-Update::Update(JsonView jsonValue)
-  : Update()
-{
-  *this = jsonValue;
-}
-
-Update& Update::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("id"))
-  {
+Update& Update::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
     m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("status"))
-  {
+  if (jsonValue.ValueExists("status")) {
     m_status = UpdateStatusMapper::GetUpdateStatusForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("type"))
-  {
+  if (jsonValue.ValueExists("type")) {
     m_type = UpdateTypeMapper::GetUpdateTypeForName(jsonValue.GetString("type"));
-
     m_typeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("params"))
-  {
+  if (jsonValue.ValueExists("params")) {
     Aws::Utils::Array<JsonView> paramsJsonList = jsonValue.GetArray("params");
-    for(unsigned paramsIndex = 0; paramsIndex < paramsJsonList.GetLength(); ++paramsIndex)
-    {
+    for (unsigned paramsIndex = 0; paramsIndex < paramsJsonList.GetLength(); ++paramsIndex) {
       m_params.push_back(paramsJsonList[paramsIndex].AsObject());
     }
     m_paramsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("createdAt"))
-  {
+  if (jsonValue.ValueExists("createdAt")) {
     m_createdAt = jsonValue.GetDouble("createdAt");
-
     m_createdAtHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("errors"))
-  {
+  if (jsonValue.ValueExists("errors")) {
     Aws::Utils::Array<JsonView> errorsJsonList = jsonValue.GetArray("errors");
-    for(unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex)
-    {
+    for (unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex) {
       m_errors.push_back(errorsJsonList[errorsIndex].AsObject());
     }
     m_errorsHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("cancellation")) {
+    m_cancellation = jsonValue.GetObject("cancellation");
+    m_cancellationHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue Update::Jsonize() const
-{
+JsonValue Update::Jsonize() const {
   JsonValue payload;
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("id", m_id);
-
+  if (m_idHasBeenSet) {
+    payload.WithString("id", m_id);
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", UpdateStatusMapper::GetNameForUpdateStatus(m_status));
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", UpdateStatusMapper::GetNameForUpdateStatus(m_status));
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", UpdateTypeMapper::GetNameForUpdateType(m_type));
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", UpdateTypeMapper::GetNameForUpdateType(m_type));
   }
 
-  if(m_paramsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> paramsJsonList(m_params.size());
-   for(unsigned paramsIndex = 0; paramsIndex < paramsJsonList.GetLength(); ++paramsIndex)
-   {
-     paramsJsonList[paramsIndex].AsObject(m_params[paramsIndex].Jsonize());
-   }
-   payload.WithArray("params", std::move(paramsJsonList));
-
+  if (m_paramsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> paramsJsonList(m_params.size());
+    for (unsigned paramsIndex = 0; paramsIndex < paramsJsonList.GetLength(); ++paramsIndex) {
+      paramsJsonList[paramsIndex].AsObject(m_params[paramsIndex].Jsonize());
+    }
+    payload.WithArray("params", std::move(paramsJsonList));
   }
 
-  if(m_createdAtHasBeenSet)
-  {
-   payload.WithDouble("createdAt", m_createdAt.SecondsWithMSPrecision());
+  if (m_createdAtHasBeenSet) {
+    payload.WithDouble("createdAt", m_createdAt.SecondsWithMSPrecision());
   }
 
-  if(m_errorsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> errorsJsonList(m_errors.size());
-   for(unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex)
-   {
-     errorsJsonList[errorsIndex].AsObject(m_errors[errorsIndex].Jsonize());
-   }
-   payload.WithArray("errors", std::move(errorsJsonList));
+  if (m_errorsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> errorsJsonList(m_errors.size());
+    for (unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex) {
+      errorsJsonList[errorsIndex].AsObject(m_errors[errorsIndex].Jsonize());
+    }
+    payload.WithArray("errors", std::move(errorsJsonList));
+  }
 
+  if (m_cancellationHasBeenSet) {
+    payload.WithObject("cancellation", m_cancellation.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

@@ -4,203 +4,230 @@
  */
 
 #include <aws/appstream/model/CreateFleetRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateFleetRequest::CreateFleetRequest() : 
-    m_nameHasBeenSet(false),
-    m_imageNameHasBeenSet(false),
-    m_imageArnHasBeenSet(false),
-    m_instanceTypeHasBeenSet(false),
-    m_fleetType(FleetType::NOT_SET),
-    m_fleetTypeHasBeenSet(false),
-    m_computeCapacityHasBeenSet(false),
-    m_vpcConfigHasBeenSet(false),
-    m_maxUserDurationInSeconds(0),
-    m_maxUserDurationInSecondsHasBeenSet(false),
-    m_disconnectTimeoutInSeconds(0),
-    m_disconnectTimeoutInSecondsHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_displayNameHasBeenSet(false),
-    m_enableDefaultInternetAccess(false),
-    m_enableDefaultInternetAccessHasBeenSet(false),
-    m_domainJoinInfoHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_idleDisconnectTimeoutInSeconds(0),
-    m_idleDisconnectTimeoutInSecondsHasBeenSet(false),
-    m_iamRoleArnHasBeenSet(false),
-    m_streamView(StreamView::NOT_SET),
-    m_streamViewHasBeenSet(false),
-    m_platform(PlatformType::NOT_SET),
-    m_platformHasBeenSet(false),
-    m_maxConcurrentSessions(0),
-    m_maxConcurrentSessionsHasBeenSet(false),
-    m_usbDeviceFilterStringsHasBeenSet(false),
-    m_sessionScriptS3LocationHasBeenSet(false),
-    m_maxSessionsPerInstance(0),
-    m_maxSessionsPerInstanceHasBeenSet(false)
-{
+Aws::String CreateFleetRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_imageNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_imageArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_instanceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fleetTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_computeCapacityHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxUserDurationInSecondsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_disconnectTimeoutInSecondsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_displayNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_enableDefaultInternetAccessHasBeenSet) {
+    mapSize++;
+  }
+  if (m_domainJoinInfoHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idleDisconnectTimeoutInSecondsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_iamRoleArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_streamViewHasBeenSet) {
+    mapSize++;
+  }
+  if (m_platformHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxConcurrentSessionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_usbDeviceFilterStringsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sessionScriptS3LocationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxSessionsPerInstanceHasBeenSet) {
+    mapSize++;
+  }
+  if (m_rootVolumeConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_disableIMDSV1HasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_imageNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImageName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_imageName.c_str()));
+  }
+
+  if (m_imageArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImageArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_imageArn.c_str()));
+  }
+
+  if (m_instanceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("InstanceType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_instanceType.c_str()));
+  }
+
+  if (m_fleetTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FleetType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(FleetTypeMapper::GetNameForFleetType(m_fleetType).c_str()));
+  }
+
+  if (m_computeCapacityHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ComputeCapacity"));
+    m_computeCapacity.CborEncode(encoder);
+  }
+
+  if (m_vpcConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcConfig"));
+    m_vpcConfig.CborEncode(encoder);
+  }
+
+  if (m_maxUserDurationInSecondsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxUserDurationInSeconds"));
+    (m_maxUserDurationInSeconds >= 0) ? encoder.WriteUInt(m_maxUserDurationInSeconds) : encoder.WriteNegInt(m_maxUserDurationInSeconds);
+  }
+
+  if (m_disconnectTimeoutInSecondsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisconnectTimeoutInSeconds"));
+    (m_disconnectTimeoutInSeconds >= 0) ? encoder.WriteUInt(m_disconnectTimeoutInSeconds)
+                                        : encoder.WriteNegInt(m_disconnectTimeoutInSeconds);
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_displayNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisplayName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_displayName.c_str()));
+  }
+
+  if (m_enableDefaultInternetAccessHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EnableDefaultInternetAccess"));
+    encoder.WriteBool(m_enableDefaultInternetAccess);
+  }
+
+  if (m_domainJoinInfoHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DomainJoinInfo"));
+    m_domainJoinInfo.CborEncode(encoder);
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteMapStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.first.c_str()));
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.second.c_str()));
+    }
+  }
+
+  if (m_idleDisconnectTimeoutInSecondsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IdleDisconnectTimeoutInSeconds"));
+    (m_idleDisconnectTimeoutInSeconds >= 0) ? encoder.WriteUInt(m_idleDisconnectTimeoutInSeconds)
+                                            : encoder.WriteNegInt(m_idleDisconnectTimeoutInSeconds);
+  }
+
+  if (m_iamRoleArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IamRoleArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_iamRoleArn.c_str()));
+  }
+
+  if (m_streamViewHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("StreamView"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(StreamViewMapper::GetNameForStreamView(m_streamView).c_str()));
+  }
+
+  if (m_platformHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Platform"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PlatformTypeMapper::GetNameForPlatformType(m_platform).c_str()));
+  }
+
+  if (m_maxConcurrentSessionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxConcurrentSessions"));
+    (m_maxConcurrentSessions >= 0) ? encoder.WriteUInt(m_maxConcurrentSessions) : encoder.WriteNegInt(m_maxConcurrentSessions);
+  }
+
+  if (m_usbDeviceFilterStringsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UsbDeviceFilterStrings"));
+    encoder.WriteArrayStart(m_usbDeviceFilterStrings.size());
+    for (const auto& item_0 : m_usbDeviceFilterStrings) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_sessionScriptS3LocationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SessionScriptS3Location"));
+    m_sessionScriptS3Location.CborEncode(encoder);
+  }
+
+  if (m_maxSessionsPerInstanceHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxSessionsPerInstance"));
+    (m_maxSessionsPerInstance >= 0) ? encoder.WriteUInt(m_maxSessionsPerInstance) : encoder.WriteNegInt(m_maxSessionsPerInstance);
+  }
+
+  if (m_rootVolumeConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RootVolumeConfig"));
+    m_rootVolumeConfig.CborEncode(encoder);
+  }
+
+  if (m_disableIMDSV1HasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisableIMDSV1"));
+    encoder.WriteBool(m_disableIMDSV1);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateFleetRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_imageNameHasBeenSet)
-  {
-   payload.WithString("ImageName", m_imageName);
-
-  }
-
-  if(m_imageArnHasBeenSet)
-  {
-   payload.WithString("ImageArn", m_imageArn);
-
-  }
-
-  if(m_instanceTypeHasBeenSet)
-  {
-   payload.WithString("InstanceType", m_instanceType);
-
-  }
-
-  if(m_fleetTypeHasBeenSet)
-  {
-   payload.WithString("FleetType", FleetTypeMapper::GetNameForFleetType(m_fleetType));
-  }
-
-  if(m_computeCapacityHasBeenSet)
-  {
-   payload.WithObject("ComputeCapacity", m_computeCapacity.Jsonize());
-
-  }
-
-  if(m_vpcConfigHasBeenSet)
-  {
-   payload.WithObject("VpcConfig", m_vpcConfig.Jsonize());
-
-  }
-
-  if(m_maxUserDurationInSecondsHasBeenSet)
-  {
-   payload.WithInteger("MaxUserDurationInSeconds", m_maxUserDurationInSeconds);
-
-  }
-
-  if(m_disconnectTimeoutInSecondsHasBeenSet)
-  {
-   payload.WithInteger("DisconnectTimeoutInSeconds", m_disconnectTimeoutInSeconds);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
-  }
-
-  if(m_displayNameHasBeenSet)
-  {
-   payload.WithString("DisplayName", m_displayName);
-
-  }
-
-  if(m_enableDefaultInternetAccessHasBeenSet)
-  {
-   payload.WithBool("EnableDefaultInternetAccess", m_enableDefaultInternetAccess);
-
-  }
-
-  if(m_domainJoinInfoHasBeenSet)
-  {
-   payload.WithObject("DomainJoinInfo", m_domainJoinInfo.Jsonize());
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
-
-  }
-
-  if(m_idleDisconnectTimeoutInSecondsHasBeenSet)
-  {
-   payload.WithInteger("IdleDisconnectTimeoutInSeconds", m_idleDisconnectTimeoutInSeconds);
-
-  }
-
-  if(m_iamRoleArnHasBeenSet)
-  {
-   payload.WithString("IamRoleArn", m_iamRoleArn);
-
-  }
-
-  if(m_streamViewHasBeenSet)
-  {
-   payload.WithString("StreamView", StreamViewMapper::GetNameForStreamView(m_streamView));
-  }
-
-  if(m_platformHasBeenSet)
-  {
-   payload.WithString("Platform", PlatformTypeMapper::GetNameForPlatformType(m_platform));
-  }
-
-  if(m_maxConcurrentSessionsHasBeenSet)
-  {
-   payload.WithInteger("MaxConcurrentSessions", m_maxConcurrentSessions);
-
-  }
-
-  if(m_usbDeviceFilterStringsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> usbDeviceFilterStringsJsonList(m_usbDeviceFilterStrings.size());
-   for(unsigned usbDeviceFilterStringsIndex = 0; usbDeviceFilterStringsIndex < usbDeviceFilterStringsJsonList.GetLength(); ++usbDeviceFilterStringsIndex)
-   {
-     usbDeviceFilterStringsJsonList[usbDeviceFilterStringsIndex].AsString(m_usbDeviceFilterStrings[usbDeviceFilterStringsIndex]);
-   }
-   payload.WithArray("UsbDeviceFilterStrings", std::move(usbDeviceFilterStringsJsonList));
-
-  }
-
-  if(m_sessionScriptS3LocationHasBeenSet)
-  {
-   payload.WithObject("SessionScriptS3Location", m_sessionScriptS3Location.Jsonize());
-
-  }
-
-  if(m_maxSessionsPerInstanceHasBeenSet)
-  {
-   payload.WithInteger("MaxSessionsPerInstance", m_maxSessionsPerInstance);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateFleetRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateFleetRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.CreateFleet"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

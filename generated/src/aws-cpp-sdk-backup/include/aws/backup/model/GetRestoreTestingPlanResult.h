@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
 #include <aws/backup/model/RestoreTestingPlanForGet.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
-  class GetRestoreTestingPlanResult
-  {
-  public:
-    AWS_BACKUP_API GetRestoreTestingPlanResult();
-    AWS_BACKUP_API GetRestoreTestingPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUP_API GetRestoreTestingPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
+class GetRestoreTestingPlanResult {
+ public:
+  AWS_BACKUP_API GetRestoreTestingPlanResult() = default;
+  AWS_BACKUP_API GetRestoreTestingPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUP_API GetRestoreTestingPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Specifies the body of a restore testing plan. Includes
+   * <code>RestoreTestingPlanName</code>.</p>
+   */
+  inline const RestoreTestingPlanForGet& GetRestoreTestingPlan() const { return m_restoreTestingPlan; }
+  template <typename RestoreTestingPlanT = RestoreTestingPlanForGet>
+  void SetRestoreTestingPlan(RestoreTestingPlanT&& value) {
+    m_restoreTestingPlanHasBeenSet = true;
+    m_restoreTestingPlan = std::forward<RestoreTestingPlanT>(value);
+  }
+  template <typename RestoreTestingPlanT = RestoreTestingPlanForGet>
+  GetRestoreTestingPlanResult& WithRestoreTestingPlan(RestoreTestingPlanT&& value) {
+    SetRestoreTestingPlan(std::forward<RestoreTestingPlanT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the body of a restore testing plan. Includes
-     * <code>RestoreTestingPlanName</code>.</p>
-     */
-    inline const RestoreTestingPlanForGet& GetRestoreTestingPlan() const{ return m_restoreTestingPlan; }
-    inline void SetRestoreTestingPlan(const RestoreTestingPlanForGet& value) { m_restoreTestingPlan = value; }
-    inline void SetRestoreTestingPlan(RestoreTestingPlanForGet&& value) { m_restoreTestingPlan = std::move(value); }
-    inline GetRestoreTestingPlanResult& WithRestoreTestingPlan(const RestoreTestingPlanForGet& value) { SetRestoreTestingPlan(value); return *this;}
-    inline GetRestoreTestingPlanResult& WithRestoreTestingPlan(RestoreTestingPlanForGet&& value) { SetRestoreTestingPlan(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRestoreTestingPlanResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRestoreTestingPlanResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRestoreTestingPlanResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRestoreTestingPlanResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RestoreTestingPlanForGet m_restoreTestingPlan;
+ private:
+  RestoreTestingPlanForGet m_restoreTestingPlan;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_restoreTestingPlanHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/dlm/model/GetLifecyclePolicyRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/dlm/model/GetLifecyclePolicyRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::DLM::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetLifecyclePolicyRequest::GetLifecyclePolicyRequest() : 
-    m_policyIdHasBeenSet(false)
-{
-}
-
-Aws::String GetLifecyclePolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetLifecyclePolicyRequest::SerializePayload() const { return {}; }

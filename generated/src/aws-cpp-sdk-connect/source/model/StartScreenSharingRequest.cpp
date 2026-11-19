@@ -12,39 +12,20 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartScreenSharingRequest::StartScreenSharingRequest() : 
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_instanceIdHasBeenSet(false),
-    m_contactIdHasBeenSet(false)
-{
-}
-
-Aws::String StartScreenSharingRequest::SerializePayload() const
-{
+Aws::String StartScreenSharingRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("ClientToken", m_clientToken);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("ClientToken", m_clientToken);
   }
 
-  if(m_instanceIdHasBeenSet)
-  {
-   payload.WithString("InstanceId", m_instanceId);
-
+  if (m_instanceIdHasBeenSet) {
+    payload.WithString("InstanceId", m_instanceId);
   }
 
-  if(m_contactIdHasBeenSet)
-  {
-   payload.WithString("ContactId", m_contactId);
-
+  if (m_contactIdHasBeenSet) {
+    payload.WithString("ContactId", m_contactId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

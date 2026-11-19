@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/rds/RDS_EXPORTS.h>
 
-namespace Aws
-{
-namespace RDS
-{
-enum class RDSErrors
-{
-  //From Core//
+namespace Aws {
+namespace RDS {
+enum class RDSErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class RDSErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,7 @@ enum class RDSErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  AUTHORIZATION_ALREADY_EXISTS_FAULT= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  AUTHORIZATION_ALREADY_EXISTS_FAULT = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   AUTHORIZATION_NOT_FOUND_FAULT,
   AUTHORIZATION_QUOTA_EXCEEDED_FAULT,
   BACKUP_POLICY_NOT_FOUND_FAULT,
@@ -60,6 +57,9 @@ enum class RDSErrors
   CUSTOM_D_B_ENGINE_VERSION_NOT_FOUND_FAULT,
   CUSTOM_D_B_ENGINE_VERSION_QUOTA_EXCEEDED_FAULT,
   DOMAIN_NOT_FOUND_FAULT,
+  D_B_CAPACITY_RESERVATION_ALREADY_EXISTS_FAULT,
+  D_B_CAPACITY_RESERVATION_NOT_FOUND_FAULT,
+  D_B_CAPACITY_RESERVATION_UNSUPPORTED_FAULT,
   D_B_CLUSTER_ALREADY_EXISTS_FAULT,
   D_B_CLUSTER_AUTOMATED_BACKUP_NOT_FOUND_FAULT,
   D_B_CLUSTER_AUTOMATED_BACKUP_QUOTA_EXCEEDED_FAULT,
@@ -79,6 +79,7 @@ enum class RDSErrors
   D_B_INSTANCE_AUTOMATED_BACKUP_NOT_FOUND_FAULT,
   D_B_INSTANCE_AUTOMATED_BACKUP_QUOTA_EXCEEDED_FAULT,
   D_B_INSTANCE_NOT_FOUND_FAULT,
+  D_B_INSTANCE_NOT_READY_FAULT,
   D_B_INSTANCE_ROLE_ALREADY_EXISTS_FAULT,
   D_B_INSTANCE_ROLE_NOT_FOUND_FAULT,
   D_B_INSTANCE_ROLE_QUOTA_EXCEEDED_FAULT,
@@ -131,6 +132,7 @@ enum class RDSErrors
   INTEGRATION_QUOTA_EXCEEDED_FAULT,
   INVALID_BLUE_GREEN_DEPLOYMENT_STATE_FAULT,
   INVALID_CUSTOM_D_B_ENGINE_VERSION_STATE_FAULT,
+  INVALID_D_B_CAPACITY_RESERVATION_STATE_FAULT,
   INVALID_D_B_CLUSTER_AUTOMATED_BACKUP_STATE_FAULT,
   INVALID_D_B_CLUSTER_CAPACITY_FAULT,
   INVALID_D_B_CLUSTER_ENDPOINT_STATE_FAULT,
@@ -190,12 +192,12 @@ enum class RDSErrors
   TENANT_DATABASE_ALREADY_EXISTS_FAULT,
   TENANT_DATABASE_NOT_FOUND_FAULT,
   TENANT_DATABASE_QUOTA_EXCEEDED_FAULT,
-  UNSUPPORTED_D_B_ENGINE_VERSION_FAULT
+  UNSUPPORTED_D_B_ENGINE_VERSION_FAULT,
+  VPC_ENCRYPTION_CONTROL_VIOLATION
 };
 
-class AWS_RDS_API RDSError : public Aws::Client::AWSError<RDSErrors>
-{
-public:
+class AWS_RDS_API RDSError : public Aws::Client::AWSError<RDSErrors> {
+ public:
   RDSError() {}
   RDSError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<RDSErrors>(rhs) {}
   RDSError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<RDSErrors>(rhs) {}
@@ -206,10 +208,9 @@ public:
   T GetModeledError();
 };
 
-namespace RDSErrorMapper
-{
-  AWS_RDS_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace RDSErrorMapper {
+AWS_RDS_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace RDS
-} // namespace Aws
+}  // namespace RDS
+}  // namespace Aws

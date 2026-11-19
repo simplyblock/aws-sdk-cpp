@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeCommit
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeCommit {
+namespace Model {
 
-PullRequestStatusChangedEventMetadata::PullRequestStatusChangedEventMetadata() : 
-    m_pullRequestStatus(PullRequestStatusEnum::NOT_SET),
-    m_pullRequestStatusHasBeenSet(false)
-{
-}
+PullRequestStatusChangedEventMetadata::PullRequestStatusChangedEventMetadata(JsonView jsonValue) { *this = jsonValue; }
 
-PullRequestStatusChangedEventMetadata::PullRequestStatusChangedEventMetadata(JsonView jsonValue)
-  : PullRequestStatusChangedEventMetadata()
-{
-  *this = jsonValue;
-}
-
-PullRequestStatusChangedEventMetadata& PullRequestStatusChangedEventMetadata::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("pullRequestStatus"))
-  {
+PullRequestStatusChangedEventMetadata& PullRequestStatusChangedEventMetadata::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("pullRequestStatus")) {
     m_pullRequestStatus = PullRequestStatusEnumMapper::GetPullRequestStatusEnumForName(jsonValue.GetString("pullRequestStatus"));
-
     m_pullRequestStatusHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PullRequestStatusChangedEventMetadata::Jsonize() const
-{
+JsonValue PullRequestStatusChangedEventMetadata::Jsonize() const {
   JsonValue payload;
 
-  if(m_pullRequestStatusHasBeenSet)
-  {
-   payload.WithString("pullRequestStatus", PullRequestStatusEnumMapper::GetNameForPullRequestStatusEnum(m_pullRequestStatus));
+  if (m_pullRequestStatusHasBeenSet) {
+    payload.WithString("pullRequestStatus", PullRequestStatusEnumMapper::GetNameForPullRequestStatusEnum(m_pullRequestStatus));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

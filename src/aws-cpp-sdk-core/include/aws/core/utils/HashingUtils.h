@@ -48,6 +48,16 @@ namespace Aws
             static ByteBuffer CalculateSHA256HMAC(const ByteBuffer& toSign, const ByteBuffer& secret);
 
             /**
+             * Calculates a SHA512 Hash digest (not hex encoded)
+             */
+            static ByteBuffer CalculateSHA512(const Aws::String& str);
+
+            /**
+             * Calculates a SHA512 Hash digest on a stream (the entire stream is read, not hex encoded.)
+             */
+            static ByteBuffer CalculateSHA512(Aws::IOStream& stream);
+
+            /**
             * Calculates a SHA256 Hash digest (not hex encoded)
             */
             static ByteBuffer CalculateSHA256(const Aws::String& str);
@@ -106,6 +116,46 @@ namespace Aws
              * Calculates a CRC32C Hash value
              */
             static ByteBuffer CalculateCRC32C(Aws::IOStream& stream);
+
+            /**
+             * Calculates a CRC64 Hash value
+             */
+            static ByteBuffer CalculateCRC64(const Aws::String& str);
+
+            /**
+             * Calculates a CRC64 Hash value
+             */
+            static ByteBuffer CalculateCRC64(Aws::IOStream& stream);
+
+            /**
+             * Calculates a XXHash64 Hash value
+             */
+            static ByteBuffer CalculateXXHash64(const Aws::String& str);
+
+            /**
+             * Calculates a XXHash64 Hash value
+             */
+            static ByteBuffer CalculateXXHash64(Aws::IOStream& stream);
+
+            /**
+             * Calculates a XXHash3 Hash value
+             */
+            static ByteBuffer CalculateXXHash3(const Aws::String& str);
+
+            /**
+             * Calculates a XXHash3 Hash value
+             */
+            static ByteBuffer CalculateXXHash3(Aws::IOStream& stream);
+
+            /**
+             * Calculates a XXHash128 Hash value
+             */
+            static ByteBuffer CalculateXXHash128(const Aws::String& str);
+
+            /**
+             * Calculates a XXHash128 Hash value
+             */
+            static ByteBuffer CalculateXXHash128(Aws::IOStream& stream);
 
             static int HashString(const char* strToHash);
 

@@ -4,48 +4,45 @@
  */
 
 #include <aws/codepipeline/model/GetPipelineRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetPipelineRequest::GetPipelineRequest() : 
-    m_nameHasBeenSet(false),
-    m_version(0),
-    m_versionHasBeenSet(false)
-{
-}
+Aws::String GetPipelineRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String GetPipelineRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_versionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_versionHasBeenSet)
-  {
-   payload.WithInteger("version", m_version);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_versionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("version"));
+    (m_version >= 0) ? encoder.WriteUInt(m_version) : encoder.WriteNegInt(m_version);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection GetPipelineRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetPipelineRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.GetPipeline"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

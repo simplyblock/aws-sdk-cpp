@@ -4,166 +4,577 @@
  */
 
 #include <aws/comprehend/model/FlywheelSummary.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-FlywheelSummary::FlywheelSummary() : 
-    m_flywheelArnHasBeenSet(false),
-    m_activeModelArnHasBeenSet(false),
-    m_dataLakeS3UriHasBeenSet(false),
-    m_status(FlywheelStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_modelType(ModelType::NOT_SET),
-    m_modelTypeHasBeenSet(false),
-    m_messageHasBeenSet(false),
-    m_creationTimeHasBeenSet(false),
-    m_lastModifiedTimeHasBeenSet(false),
-    m_latestFlywheelIterationHasBeenSet(false)
-{
-}
+FlywheelSummary::FlywheelSummary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-FlywheelSummary::FlywheelSummary(JsonView jsonValue)
-  : FlywheelSummary()
-{
-  *this = jsonValue;
-}
+FlywheelSummary& FlywheelSummary::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-FlywheelSummary& FlywheelSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("FlywheelArn"))
-  {
-    m_flywheelArn = jsonValue.GetString("FlywheelArn");
+              if (initialKeyStr == "FlywheelArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_flywheelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_flywheelArn = ss.str();
+                  }
+                }
+                m_flywheelArnHasBeenSet = true;
+              }
 
-    m_flywheelArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ActiveModelArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_activeModelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_activeModelArn = ss.str();
+                  }
+                }
+                m_activeModelArnHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ActiveModelArn"))
-  {
-    m_activeModelArn = jsonValue.GetString("ActiveModelArn");
+              else if (initialKeyStr == "DataLakeS3Uri") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_dataLakeS3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_dataLakeS3Uri = ss.str();
+                  }
+                }
+                m_dataLakeS3UriHasBeenSet = true;
+              }
 
-    m_activeModelArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = FlywheelStatusMapper::GetFlywheelStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("DataLakeS3Uri"))
-  {
-    m_dataLakeS3Uri = jsonValue.GetString("DataLakeS3Uri");
+              else if (initialKeyStr == "ModelType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_modelType =
+                      ModelTypeMapper::GetModelTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_modelTypeHasBeenSet = true;
+              }
 
-    m_dataLakeS3UriHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Message") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_message = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_message = ss.str();
+                  }
+                }
+                m_messageHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Status"))
-  {
-    m_status = FlywheelStatusMapper::GetFlywheelStatusForName(jsonValue.GetString("Status"));
+              else if (initialKeyStr == "CreationTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_creationTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_creationTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_creationTimeHasBeenSet = true;
+              }
 
-    m_statusHasBeenSet = true;
-  }
+              else if (initialKeyStr == "LastModifiedTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_lastModifiedTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_lastModifiedTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_lastModifiedTimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ModelType"))
-  {
-    m_modelType = ModelTypeMapper::GetModelTypeForName(jsonValue.GetString("ModelType"));
+              else if (initialKeyStr == "LatestFlywheelIteration") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_latestFlywheelIteration = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_latestFlywheelIteration = ss.str();
+                  }
+                }
+                m_latestFlywheelIterationHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("FlywheelSummary", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_modelTypeHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("Message"))
-  {
-    m_message = jsonValue.GetString("Message");
+            if (initialKeyStr == "FlywheelArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_flywheelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_flywheelArn = ss.str();
+                }
+              }
+              m_flywheelArnHasBeenSet = true;
+            }
 
-    m_messageHasBeenSet = true;
-  }
+            else if (initialKeyStr == "ActiveModelArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_activeModelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_activeModelArn = ss.str();
+                }
+              }
+              m_activeModelArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("CreationTime"))
-  {
-    m_creationTime = jsonValue.GetDouble("CreationTime");
+            else if (initialKeyStr == "DataLakeS3Uri") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_dataLakeS3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_dataLakeS3Uri = ss.str();
+                }
+              }
+              m_dataLakeS3UriHasBeenSet = true;
+            }
 
-    m_creationTimeHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status = FlywheelStatusMapper::GetFlywheelStatusForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("LastModifiedTime"))
-  {
-    m_lastModifiedTime = jsonValue.GetDouble("LastModifiedTime");
+            else if (initialKeyStr == "ModelType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_modelType =
+                    ModelTypeMapper::GetModelTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_modelTypeHasBeenSet = true;
+            }
 
-    m_lastModifiedTimeHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Message") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_message = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_message = ss.str();
+                }
+              }
+              m_messageHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("LatestFlywheelIteration"))
-  {
-    m_latestFlywheelIteration = jsonValue.GetString("LatestFlywheelIteration");
+            else if (initialKeyStr == "CreationTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_creationTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_creationTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_creationTimeHasBeenSet = true;
+            }
 
-    m_latestFlywheelIterationHasBeenSet = true;
+            else if (initialKeyStr == "LastModifiedTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_lastModifiedTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_lastModifiedTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_lastModifiedTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "LatestFlywheelIteration") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_latestFlywheelIteration = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_latestFlywheelIteration = ss.str();
+                }
+              }
+              m_latestFlywheelIterationHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue FlywheelSummary::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_flywheelArnHasBeenSet)
-  {
-   payload.WithString("FlywheelArn", m_flywheelArn);
-
+void FlywheelSummary::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_flywheelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_activeModelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dataLakeS3UriHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_modelTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_messageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_creationTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lastModifiedTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_latestFlywheelIterationHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_activeModelArnHasBeenSet)
-  {
-   payload.WithString("ActiveModelArn", m_activeModelArn);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_flywheelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FlywheelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_flywheelArn.c_str()));
   }
 
-  if(m_dataLakeS3UriHasBeenSet)
-  {
-   payload.WithString("DataLakeS3Uri", m_dataLakeS3Uri);
-
+  if (m_activeModelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActiveModelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_activeModelArn.c_str()));
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", FlywheelStatusMapper::GetNameForFlywheelStatus(m_status));
+  if (m_dataLakeS3UriHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataLakeS3Uri"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_dataLakeS3Uri.c_str()));
   }
 
-  if(m_modelTypeHasBeenSet)
-  {
-   payload.WithString("ModelType", ModelTypeMapper::GetNameForModelType(m_modelType));
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(FlywheelStatusMapper::GetNameForFlywheelStatus(m_status).c_str()));
   }
 
-  if(m_messageHasBeenSet)
-  {
-   payload.WithString("Message", m_message);
-
+  if (m_modelTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ModelType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ModelTypeMapper::GetNameForModelType(m_modelType).c_str()));
   }
 
-  if(m_creationTimeHasBeenSet)
-  {
-   payload.WithDouble("CreationTime", m_creationTime.SecondsWithMSPrecision());
+  if (m_messageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Message"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_message.c_str()));
   }
 
-  if(m_lastModifiedTimeHasBeenSet)
-  {
-   payload.WithDouble("LastModifiedTime", m_lastModifiedTime.SecondsWithMSPrecision());
+  if (m_creationTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreationTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_creationTime.Seconds());
   }
 
-  if(m_latestFlywheelIterationHasBeenSet)
-  {
-   payload.WithString("LatestFlywheelIteration", m_latestFlywheelIteration);
-
+  if (m_lastModifiedTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LastModifiedTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_lastModifiedTime.Seconds());
   }
 
-  return payload;
+  if (m_latestFlywheelIterationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LatestFlywheelIteration"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_latestFlywheelIteration.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

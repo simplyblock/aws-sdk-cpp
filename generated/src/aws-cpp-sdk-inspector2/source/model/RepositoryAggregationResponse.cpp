@@ -3,100 +3,102 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/inspector2/model/RepositoryAggregationResponse.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/inspector2/model/RepositoryAggregationResponse.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Inspector2
-{
-namespace Model
-{
+namespace Aws {
+namespace Inspector2 {
+namespace Model {
 
-RepositoryAggregationResponse::RepositoryAggregationResponse() : 
-    m_accountIdHasBeenSet(false),
-    m_affectedImages(0),
-    m_affectedImagesHasBeenSet(false),
-    m_repositoryHasBeenSet(false),
-    m_severityCountsHasBeenSet(false)
-{
-}
+RepositoryAggregationResponse::RepositoryAggregationResponse(JsonView jsonValue) { *this = jsonValue; }
 
-RepositoryAggregationResponse::RepositoryAggregationResponse(JsonView jsonValue)
-  : RepositoryAggregationResponse()
-{
-  *this = jsonValue;
-}
-
-RepositoryAggregationResponse& RepositoryAggregationResponse::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("accountId"))
-  {
-    m_accountId = jsonValue.GetString("accountId");
-
-    m_accountIdHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("affectedImages"))
-  {
-    m_affectedImages = jsonValue.GetInt64("affectedImages");
-
-    m_affectedImagesHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("repository"))
-  {
+RepositoryAggregationResponse& RepositoryAggregationResponse::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("repository")) {
     m_repository = jsonValue.GetString("repository");
-
     m_repositoryHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("severityCounts"))
-  {
+  if (jsonValue.ValueExists("accountId")) {
+    m_accountId = jsonValue.GetString("accountId");
+    m_accountIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cloudProvider")) {
+    m_cloudProvider = ProviderMapper::GetProviderForName(jsonValue.GetString("cloudProvider"));
+    m_cloudProviderHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cloudPartition")) {
+    m_cloudPartition = jsonValue.GetString("cloudPartition");
+    m_cloudPartitionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cloudRegion")) {
+    m_cloudRegion = jsonValue.GetString("cloudRegion");
+    m_cloudRegionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cloudOrgId")) {
+    m_cloudOrgId = jsonValue.GetString("cloudOrgId");
+    m_cloudOrgIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cloudAccountId")) {
+    m_cloudAccountId = jsonValue.GetString("cloudAccountId");
+    m_cloudAccountIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("severityCounts")) {
     m_severityCounts = jsonValue.GetObject("severityCounts");
-
     m_severityCountsHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("affectedImages")) {
+    m_affectedImages = jsonValue.GetInt64("affectedImages");
+    m_affectedImagesHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue RepositoryAggregationResponse::Jsonize() const
-{
+JsonValue RepositoryAggregationResponse::Jsonize() const {
   JsonValue payload;
 
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("accountId", m_accountId);
-
+  if (m_repositoryHasBeenSet) {
+    payload.WithString("repository", m_repository);
   }
 
-  if(m_affectedImagesHasBeenSet)
-  {
-   payload.WithInt64("affectedImages", m_affectedImages);
-
+  if (m_accountIdHasBeenSet) {
+    payload.WithString("accountId", m_accountId);
   }
 
-  if(m_repositoryHasBeenSet)
-  {
-   payload.WithString("repository", m_repository);
-
+  if (m_cloudProviderHasBeenSet) {
+    payload.WithString("cloudProvider", ProviderMapper::GetNameForProvider(m_cloudProvider));
   }
 
-  if(m_severityCountsHasBeenSet)
-  {
-   payload.WithObject("severityCounts", m_severityCounts.Jsonize());
+  if (m_cloudPartitionHasBeenSet) {
+    payload.WithString("cloudPartition", m_cloudPartition);
+  }
 
+  if (m_cloudRegionHasBeenSet) {
+    payload.WithString("cloudRegion", m_cloudRegion);
+  }
+
+  if (m_cloudOrgIdHasBeenSet) {
+    payload.WithString("cloudOrgId", m_cloudOrgId);
+  }
+
+  if (m_cloudAccountIdHasBeenSet) {
+    payload.WithString("cloudAccountId", m_cloudAccountId);
+  }
+
+  if (m_severityCountsHasBeenSet) {
+    payload.WithObject("severityCounts", m_severityCounts.Jsonize());
+  }
+
+  if (m_affectedImagesHasBeenSet) {
+    payload.WithInt64("affectedImages", m_affectedImages);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Inspector2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Inspector2
+}  // namespace Aws

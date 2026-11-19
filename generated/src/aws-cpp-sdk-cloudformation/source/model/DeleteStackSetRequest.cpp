@@ -10,33 +10,19 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DeleteStackSetRequest::DeleteStackSetRequest() : 
-    m_stackSetNameHasBeenSet(false),
-    m_callAs(CallAs::NOT_SET),
-    m_callAsHasBeenSet(false)
-{
-}
-
-Aws::String DeleteStackSetRequest::SerializePayload() const
-{
+Aws::String DeleteStackSetRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteStackSet&";
-  if(m_stackSetNameHasBeenSet)
-  {
+  if (m_stackSetNameHasBeenSet) {
     ss << "StackSetName=" << StringUtils::URLEncode(m_stackSetName.c_str()) << "&";
   }
 
-  if(m_callAsHasBeenSet)
-  {
-    ss << "CallAs=" << CallAsMapper::GetNameForCallAs(m_callAs) << "&";
+  if (m_callAsHasBeenSet) {
+    ss << "CallAs=" << StringUtils::URLEncode(CallAsMapper::GetNameForCallAs(m_callAs)) << "&";
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  DeleteStackSetRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteStackSetRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

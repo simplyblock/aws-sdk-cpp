@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/emr-containers/model/DescribeManagedEndpointRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/emr-containers/model/DescribeManagedEndpointRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::EMRContainers::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeManagedEndpointRequest::DescribeManagedEndpointRequest() : 
-    m_idHasBeenSet(false),
-    m_virtualClusterIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeManagedEndpointRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeManagedEndpointRequest::SerializePayload() const { return {}; }

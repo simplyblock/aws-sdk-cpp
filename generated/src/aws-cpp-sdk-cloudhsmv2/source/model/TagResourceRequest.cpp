@@ -4,52 +4,48 @@
  */
 
 #include <aws/cloudhsmv2/model/TagResourceRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CloudHSMV2::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-TagResourceRequest::TagResourceRequest() : 
-    m_resourceIdHasBeenSet(false),
-    m_tagListHasBeenSet(false)
-{
-}
+Aws::String TagResourceRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String TagResourceRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceIdHasBeenSet)
-  {
-   payload.WithString("ResourceId", m_resourceId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagListHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagListJsonList(m_tagList.size());
-   for(unsigned tagListIndex = 0; tagListIndex < tagListJsonList.GetLength(); ++tagListIndex)
-   {
-     tagListJsonList[tagListIndex].AsObject(m_tagList[tagListIndex].Jsonize());
-   }
-   payload.WithArray("TagList", std::move(tagListJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_resourceIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagListHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TagList"));
+    encoder.WriteArrayStart(m_tagList.size());
+    for (const auto& item_0 : m_tagList) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection TagResourceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TagResourceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BaldrApiService.TagResource"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

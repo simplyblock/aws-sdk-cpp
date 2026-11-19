@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ram/RAM_EXPORTS.h>
 #include <aws/ram/model/ResourceSharePermissionDetail.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RAM
-{
-namespace Model
-{
-  class GetPermissionResult
-  {
-  public:
-    AWS_RAM_API GetPermissionResult();
-    AWS_RAM_API GetPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RAM_API GetPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RAM {
+namespace Model {
+class GetPermissionResult {
+ public:
+  AWS_RAM_API GetPermissionResult() = default;
+  AWS_RAM_API GetPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RAM_API GetPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object with details about the permission.</p>
+   */
+  inline const ResourceSharePermissionDetail& GetPermission() const { return m_permission; }
+  template <typename PermissionT = ResourceSharePermissionDetail>
+  void SetPermission(PermissionT&& value) {
+    m_permissionHasBeenSet = true;
+    m_permission = std::forward<PermissionT>(value);
+  }
+  template <typename PermissionT = ResourceSharePermissionDetail>
+  GetPermissionResult& WithPermission(PermissionT&& value) {
+    SetPermission(std::forward<PermissionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object with details about the permission.</p>
-     */
-    inline const ResourceSharePermissionDetail& GetPermission() const{ return m_permission; }
-    inline void SetPermission(const ResourceSharePermissionDetail& value) { m_permission = value; }
-    inline void SetPermission(ResourceSharePermissionDetail&& value) { m_permission = std::move(value); }
-    inline GetPermissionResult& WithPermission(const ResourceSharePermissionDetail& value) { SetPermission(value); return *this;}
-    inline GetPermissionResult& WithPermission(ResourceSharePermissionDetail&& value) { SetPermission(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetPermissionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetPermissionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetPermissionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetPermissionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResourceSharePermissionDetail m_permission;
+ private:
+  ResourceSharePermissionDetail m_permission;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_permissionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace RAM
+}  // namespace Aws

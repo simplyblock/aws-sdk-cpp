@@ -4,211 +4,271 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/kafka/model/VpcConnectionState.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/kafka/model/VpcConnectionState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
-  class DescribeVpcConnectionResult
-  {
-  public:
-    AWS_KAFKA_API DescribeVpcConnectionResult();
-    AWS_KAFKA_API DescribeVpcConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KAFKA_API DescribeVpcConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
+class DescribeVpcConnectionResult {
+ public:
+  AWS_KAFKA_API DescribeVpcConnectionResult() = default;
+  AWS_KAFKA_API DescribeVpcConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KAFKA_API DescribeVpcConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   *
+          <p>The Amazon Resource Name (ARN) that uniquely identifies a MSK
+   * VPC connection.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) that uniquely identifies a MSK
-     * VPC connection.</p>
-   
-     */
-    inline const Aws::String& GetVpcConnectionArn() const{ return m_vpcConnectionArn; }
-    inline void SetVpcConnectionArn(const Aws::String& value) { m_vpcConnectionArn = value; }
-    inline void SetVpcConnectionArn(Aws::String&& value) { m_vpcConnectionArn = std::move(value); }
-    inline void SetVpcConnectionArn(const char* value) { m_vpcConnectionArn.assign(value); }
-    inline DescribeVpcConnectionResult& WithVpcConnectionArn(const Aws::String& value) { SetVpcConnectionArn(value); return *this;}
-    inline DescribeVpcConnectionResult& WithVpcConnectionArn(Aws::String&& value) { SetVpcConnectionArn(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& WithVpcConnectionArn(const char* value) { SetVpcConnectionArn(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetVpcConnectionArn() const { return m_vpcConnectionArn; }
+  template <typename VpcConnectionArnT = Aws::String>
+  void SetVpcConnectionArn(VpcConnectionArnT&& value) {
+    m_vpcConnectionArnHasBeenSet = true;
+    m_vpcConnectionArn = std::forward<VpcConnectionArnT>(value);
+  }
+  template <typename VpcConnectionArnT = Aws::String>
+  DescribeVpcConnectionResult& WithVpcConnectionArn(VpcConnectionArnT&& value) {
+    SetVpcConnectionArn(std::forward<VpcConnectionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) that uniquely identifies an MSK
-     * cluster.</p>
-   
-     */
-    inline const Aws::String& GetTargetClusterArn() const{ return m_targetClusterArn; }
-    inline void SetTargetClusterArn(const Aws::String& value) { m_targetClusterArn = value; }
-    inline void SetTargetClusterArn(Aws::String&& value) { m_targetClusterArn = std::move(value); }
-    inline void SetTargetClusterArn(const char* value) { m_targetClusterArn.assign(value); }
-    inline DescribeVpcConnectionResult& WithTargetClusterArn(const Aws::String& value) { SetTargetClusterArn(value); return *this;}
-    inline DescribeVpcConnectionResult& WithTargetClusterArn(Aws::String&& value) { SetTargetClusterArn(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& WithTargetClusterArn(const char* value) { SetTargetClusterArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The Amazon Resource Name (ARN) that uniquely identifies an MSK
+   * cluster.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The state of VPC connection.</p>
-   
-     */
-    inline const VpcConnectionState& GetState() const{ return m_state; }
-    inline void SetState(const VpcConnectionState& value) { m_state = value; }
-    inline void SetState(VpcConnectionState&& value) { m_state = std::move(value); }
-    inline DescribeVpcConnectionResult& WithState(const VpcConnectionState& value) { SetState(value); return *this;}
-    inline DescribeVpcConnectionResult& WithState(VpcConnectionState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetTargetClusterArn() const { return m_targetClusterArn; }
+  template <typename TargetClusterArnT = Aws::String>
+  void SetTargetClusterArn(TargetClusterArnT&& value) {
+    m_targetClusterArnHasBeenSet = true;
+    m_targetClusterArn = std::forward<TargetClusterArnT>(value);
+  }
+  template <typename TargetClusterArnT = Aws::String>
+  DescribeVpcConnectionResult& WithTargetClusterArn(TargetClusterArnT&& value) {
+    SetTargetClusterArn(std::forward<TargetClusterArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The authentication type of VPC connection.</p>
-   
-     */
-    inline const Aws::String& GetAuthentication() const{ return m_authentication; }
-    inline void SetAuthentication(const Aws::String& value) { m_authentication = value; }
-    inline void SetAuthentication(Aws::String&& value) { m_authentication = std::move(value); }
-    inline void SetAuthentication(const char* value) { m_authentication.assign(value); }
-    inline DescribeVpcConnectionResult& WithAuthentication(const Aws::String& value) { SetAuthentication(value); return *this;}
-    inline DescribeVpcConnectionResult& WithAuthentication(Aws::String&& value) { SetAuthentication(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& WithAuthentication(const char* value) { SetAuthentication(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The state of VPC connection.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The VPC Id for the VPC connection.</p>
-   
-     */
-    inline const Aws::String& GetVpcId() const{ return m_vpcId; }
-    inline void SetVpcId(const Aws::String& value) { m_vpcId = value; }
-    inline void SetVpcId(Aws::String&& value) { m_vpcId = std::move(value); }
-    inline void SetVpcId(const char* value) { m_vpcId.assign(value); }
-    inline DescribeVpcConnectionResult& WithVpcId(const Aws::String& value) { SetVpcId(value); return *this;}
-    inline DescribeVpcConnectionResult& WithVpcId(Aws::String&& value) { SetVpcId(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& WithVpcId(const char* value) { SetVpcId(value); return *this;}
-    ///@}
+   */
+  inline VpcConnectionState GetState() const { return m_state; }
+  inline void SetState(VpcConnectionState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline DescribeVpcConnectionResult& WithState(VpcConnectionState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The list of subnets for the VPC connection.</p>
-   
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnets() const{ return m_subnets; }
-    inline void SetSubnets(const Aws::Vector<Aws::String>& value) { m_subnets = value; }
-    inline void SetSubnets(Aws::Vector<Aws::String>&& value) { m_subnets = std::move(value); }
-    inline DescribeVpcConnectionResult& WithSubnets(const Aws::Vector<Aws::String>& value) { SetSubnets(value); return *this;}
-    inline DescribeVpcConnectionResult& WithSubnets(Aws::Vector<Aws::String>&& value) { SetSubnets(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& AddSubnets(const Aws::String& value) { m_subnets.push_back(value); return *this; }
-    inline DescribeVpcConnectionResult& AddSubnets(Aws::String&& value) { m_subnets.push_back(std::move(value)); return *this; }
-    inline DescribeVpcConnectionResult& AddSubnets(const char* value) { m_subnets.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The authentication type of VPC connection.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The list of security groups for the VPC connection.</p>
-   
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroups() const{ return m_securityGroups; }
-    inline void SetSecurityGroups(const Aws::Vector<Aws::String>& value) { m_securityGroups = value; }
-    inline void SetSecurityGroups(Aws::Vector<Aws::String>&& value) { m_securityGroups = std::move(value); }
-    inline DescribeVpcConnectionResult& WithSecurityGroups(const Aws::Vector<Aws::String>& value) { SetSecurityGroups(value); return *this;}
-    inline DescribeVpcConnectionResult& WithSecurityGroups(Aws::Vector<Aws::String>&& value) { SetSecurityGroups(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& AddSecurityGroups(const Aws::String& value) { m_securityGroups.push_back(value); return *this; }
-    inline DescribeVpcConnectionResult& AddSecurityGroups(Aws::String&& value) { m_securityGroups.push_back(std::move(value)); return *this; }
-    inline DescribeVpcConnectionResult& AddSecurityGroups(const char* value) { m_securityGroups.push_back(value); return *this; }
-    ///@}
+   */
+  inline const Aws::String& GetAuthentication() const { return m_authentication; }
+  template <typename AuthenticationT = Aws::String>
+  void SetAuthentication(AuthenticationT&& value) {
+    m_authenticationHasBeenSet = true;
+    m_authentication = std::forward<AuthenticationT>(value);
+  }
+  template <typename AuthenticationT = Aws::String>
+  DescribeVpcConnectionResult& WithAuthentication(AuthenticationT&& value) {
+    SetAuthentication(std::forward<AuthenticationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The creation time of the VPC connection.</p>
-   
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeVpcConnectionResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeVpcConnectionResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The VPC Id for the VPC connection.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A map of tags for the VPC connection.</p>
-         
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline DescribeVpcConnectionResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DescribeVpcConnectionResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeVpcConnectionResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+   */
+  inline const Aws::String& GetVpcId() const { return m_vpcId; }
+  template <typename VpcIdT = Aws::String>
+  void SetVpcId(VpcIdT&& value) {
+    m_vpcIdHasBeenSet = true;
+    m_vpcId = std::forward<VpcIdT>(value);
+  }
+  template <typename VpcIdT = Aws::String>
+  DescribeVpcConnectionResult& WithVpcId(VpcIdT&& value) {
+    SetVpcId(std::forward<VpcIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeVpcConnectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeVpcConnectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeVpcConnectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   *
+          <p>The list of subnets for the VPC connection.</p>
 
-    Aws::String m_vpcConnectionArn;
+   */
+  inline const Aws::Vector<Aws::String>& GetSubnets() const { return m_subnets; }
+  template <typename SubnetsT = Aws::Vector<Aws::String>>
+  void SetSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets = std::forward<SubnetsT>(value);
+  }
+  template <typename SubnetsT = Aws::Vector<Aws::String>>
+  DescribeVpcConnectionResult& WithSubnets(SubnetsT&& value) {
+    SetSubnets(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  template <typename SubnetsT = Aws::String>
+  DescribeVpcConnectionResult& AddSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets.emplace_back(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_targetClusterArn;
+  ///@{
+  /**
+   *
+          <p>The list of security groups for the VPC connection.</p>
 
-    VpcConnectionState m_state;
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroups() const { return m_securityGroups; }
+  template <typename SecurityGroupsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroups(SecurityGroupsT&& value) {
+    m_securityGroupsHasBeenSet = true;
+    m_securityGroups = std::forward<SecurityGroupsT>(value);
+  }
+  template <typename SecurityGroupsT = Aws::Vector<Aws::String>>
+  DescribeVpcConnectionResult& WithSecurityGroups(SecurityGroupsT&& value) {
+    SetSecurityGroups(std::forward<SecurityGroupsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupsT = Aws::String>
+  DescribeVpcConnectionResult& AddSecurityGroups(SecurityGroupsT&& value) {
+    m_securityGroupsHasBeenSet = true;
+    m_securityGroups.emplace_back(std::forward<SecurityGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_authentication;
+  ///@{
+  /**
+   *
+          <p>The creation time of the VPC connection.</p>
 
-    Aws::String m_vpcId;
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeVpcConnectionResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Aws::String> m_subnets;
+  ///@{
+  /**
+   *
+          <p>A map of tags for the VPC connection.</p>
 
-    Aws::Vector<Aws::String> m_securityGroups;
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DescribeVpcConnectionResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DescribeVpcConnectionResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Utils::DateTime m_creationTime;
+  ///@{
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeVpcConnectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_vpcConnectionArn;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  Aws::String m_targetClusterArn;
+
+  VpcConnectionState m_state{VpcConnectionState::NOT_SET};
+
+  Aws::String m_authentication;
+
+  Aws::String m_vpcId;
+
+  Aws::Vector<Aws::String> m_subnets;
+
+  Aws::Vector<Aws::String> m_securityGroups;
+
+  Aws::Utils::DateTime m_creationTime{};
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcConnectionArnHasBeenSet = false;
+  bool m_targetClusterArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_authenticationHasBeenSet = false;
+  bool m_vpcIdHasBeenSet = false;
+  bool m_subnetsHasBeenSet = false;
+  bool m_securityGroupsHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

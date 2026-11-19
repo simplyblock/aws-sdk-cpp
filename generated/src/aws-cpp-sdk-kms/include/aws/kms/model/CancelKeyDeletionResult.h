@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/kms/KMS_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kms/KMS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KMS
-{
-namespace Model
-{
-  class CancelKeyDeletionResult
-  {
-  public:
-    AWS_KMS_API CancelKeyDeletionResult();
-    AWS_KMS_API CancelKeyDeletionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KMS_API CancelKeyDeletionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KMS {
+namespace Model {
+class CancelKeyDeletionResult {
+ public:
+  AWS_KMS_API CancelKeyDeletionResult() = default;
+  AWS_KMS_API CancelKeyDeletionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KMS_API CancelKeyDeletionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (<a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN">key
+   * ARN</a>) of the KMS key whose deletion is canceled.</p>
+   */
+  inline const Aws::String& GetKeyId() const { return m_keyId; }
+  template <typename KeyIdT = Aws::String>
+  void SetKeyId(KeyIdT&& value) {
+    m_keyIdHasBeenSet = true;
+    m_keyId = std::forward<KeyIdT>(value);
+  }
+  template <typename KeyIdT = Aws::String>
+  CancelKeyDeletionResult& WithKeyId(KeyIdT&& value) {
+    SetKeyId(std::forward<KeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (<a
-     * href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN">key
-     * ARN</a>) of the KMS key whose deletion is canceled.</p>
-     */
-    inline const Aws::String& GetKeyId() const{ return m_keyId; }
-    inline void SetKeyId(const Aws::String& value) { m_keyId = value; }
-    inline void SetKeyId(Aws::String&& value) { m_keyId = std::move(value); }
-    inline void SetKeyId(const char* value) { m_keyId.assign(value); }
-    inline CancelKeyDeletionResult& WithKeyId(const Aws::String& value) { SetKeyId(value); return *this;}
-    inline CancelKeyDeletionResult& WithKeyId(Aws::String&& value) { SetKeyId(std::move(value)); return *this;}
-    inline CancelKeyDeletionResult& WithKeyId(const char* value) { SetKeyId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CancelKeyDeletionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CancelKeyDeletionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CancelKeyDeletionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CancelKeyDeletionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_keyId;
+ private:
+  Aws::String m_keyId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_keyIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace KMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace KMS
+}  // namespace Aws

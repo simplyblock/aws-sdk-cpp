@@ -4,104 +4,134 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/LensReviewSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  /**
-   * <p>Output of a list lens reviews call.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ListLensReviewsOutput">AWS
-   * API Reference</a></p>
-   */
-  class ListLensReviewsResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API ListLensReviewsResult();
-    AWS_WELLARCHITECTED_API ListLensReviewsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API ListLensReviewsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+/**
+ * <p>Output of a list lens reviews call.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ListLensReviewsOutput">AWS
+ * API Reference</a></p>
+ */
+class ListLensReviewsResult {
+ public:
+  AWS_WELLARCHITECTED_API ListLensReviewsResult() = default;
+  AWS_WELLARCHITECTED_API ListLensReviewsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API ListLensReviewsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetWorkloadId() const{ return m_workloadId; }
-    inline void SetWorkloadId(const Aws::String& value) { m_workloadId = value; }
-    inline void SetWorkloadId(Aws::String&& value) { m_workloadId = std::move(value); }
-    inline void SetWorkloadId(const char* value) { m_workloadId.assign(value); }
-    inline ListLensReviewsResult& WithWorkloadId(const Aws::String& value) { SetWorkloadId(value); return *this;}
-    inline ListLensReviewsResult& WithWorkloadId(Aws::String&& value) { SetWorkloadId(std::move(value)); return *this;}
-    inline ListLensReviewsResult& WithWorkloadId(const char* value) { SetWorkloadId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetWorkloadId() const { return m_workloadId; }
+  template <typename WorkloadIdT = Aws::String>
+  void SetWorkloadId(WorkloadIdT&& value) {
+    m_workloadIdHasBeenSet = true;
+    m_workloadId = std::forward<WorkloadIdT>(value);
+  }
+  template <typename WorkloadIdT = Aws::String>
+  ListLensReviewsResult& WithWorkloadId(WorkloadIdT&& value) {
+    SetWorkloadId(std::forward<WorkloadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline int GetMilestoneNumber() const{ return m_milestoneNumber; }
-    inline void SetMilestoneNumber(int value) { m_milestoneNumber = value; }
-    inline ListLensReviewsResult& WithMilestoneNumber(int value) { SetMilestoneNumber(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Vector<LensReviewSummary>& GetLensReviewSummaries() const{ return m_lensReviewSummaries; }
-    inline void SetLensReviewSummaries(const Aws::Vector<LensReviewSummary>& value) { m_lensReviewSummaries = value; }
-    inline void SetLensReviewSummaries(Aws::Vector<LensReviewSummary>&& value) { m_lensReviewSummaries = std::move(value); }
-    inline ListLensReviewsResult& WithLensReviewSummaries(const Aws::Vector<LensReviewSummary>& value) { SetLensReviewSummaries(value); return *this;}
-    inline ListLensReviewsResult& WithLensReviewSummaries(Aws::Vector<LensReviewSummary>&& value) { SetLensReviewSummaries(std::move(value)); return *this;}
-    inline ListLensReviewsResult& AddLensReviewSummaries(const LensReviewSummary& value) { m_lensReviewSummaries.push_back(value); return *this; }
-    inline ListLensReviewsResult& AddLensReviewSummaries(LensReviewSummary&& value) { m_lensReviewSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  inline int GetMilestoneNumber() const { return m_milestoneNumber; }
+  inline void SetMilestoneNumber(int value) {
+    m_milestoneNumberHasBeenSet = true;
+    m_milestoneNumber = value;
+  }
+  inline ListLensReviewsResult& WithMilestoneNumber(int value) {
+    SetMilestoneNumber(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListLensReviewsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListLensReviewsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListLensReviewsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListLensReviewsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListLensReviewsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListLensReviewsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::Vector<LensReviewSummary>& GetLensReviewSummaries() const { return m_lensReviewSummaries; }
+  template <typename LensReviewSummariesT = Aws::Vector<LensReviewSummary>>
+  void SetLensReviewSummaries(LensReviewSummariesT&& value) {
+    m_lensReviewSummariesHasBeenSet = true;
+    m_lensReviewSummaries = std::forward<LensReviewSummariesT>(value);
+  }
+  template <typename LensReviewSummariesT = Aws::Vector<LensReviewSummary>>
+  ListLensReviewsResult& WithLensReviewSummaries(LensReviewSummariesT&& value) {
+    SetLensReviewSummaries(std::forward<LensReviewSummariesT>(value));
+    return *this;
+  }
+  template <typename LensReviewSummariesT = LensReviewSummary>
+  ListLensReviewsResult& AddLensReviewSummaries(LensReviewSummariesT&& value) {
+    m_lensReviewSummariesHasBeenSet = true;
+    m_lensReviewSummaries.emplace_back(std::forward<LensReviewSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_workloadId;
+  ///@{
 
-    int m_milestoneNumber;
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListLensReviewsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<LensReviewSummary> m_lensReviewSummaries;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListLensReviewsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_workloadId;
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+  int m_milestoneNumber{0};
+
+  Aws::Vector<LensReviewSummary> m_lensReviewSummaries;
+
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workloadIdHasBeenSet = false;
+  bool m_milestoneNumberHasBeenSet = false;
+  bool m_lensReviewSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

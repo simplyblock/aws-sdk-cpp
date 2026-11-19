@@ -4,174 +4,281 @@
  */
 
 #pragma once
-#include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
+#include <aws/core/utils/Array.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/Array.h>
+#include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace RolesAnywhere
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace RolesAnywhere {
+namespace Model {
 
+/**
+ * <p>The state of the certificate revocation list (CRL) after a read or write
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rolesanywhere-2018-05-10/CrlDetail">AWS
+ * API Reference</a></p>
+ */
+class CrlDetail {
+ public:
+  AWS_ROLESANYWHERE_API CrlDetail() = default;
+  AWS_ROLESANYWHERE_API CrlDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ROLESANYWHERE_API CrlDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ROLESANYWHERE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+  /**
+   * <p>The unique identifier of the certificate revocation list (CRL).</p>
+   */
+  inline const Aws::String& GetCrlId() const { return m_crlId; }
+  inline bool CrlIdHasBeenSet() const { return m_crlIdHasBeenSet; }
+  template <typename CrlIdT = Aws::String>
+  void SetCrlId(CrlIdT&& value) {
+    m_crlIdHasBeenSet = true;
+    m_crlId = std::forward<CrlIdT>(value);
+  }
+  template <typename CrlIdT = Aws::String>
+  CrlDetail& WithCrlId(CrlIdT&& value) {
+    SetCrlId(std::forward<CrlIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The ARN of the certificate revocation list (CRL).</p>
+   */
+  inline const Aws::String& GetCrlArn() const { return m_crlArn; }
+  inline bool CrlArnHasBeenSet() const { return m_crlArnHasBeenSet; }
+  template <typename CrlArnT = Aws::String>
+  void SetCrlArn(CrlArnT&& value) {
+    m_crlArnHasBeenSet = true;
+    m_crlArn = std::forward<CrlArnT>(value);
+  }
+  template <typename CrlArnT = Aws::String>
+  CrlDetail& WithCrlArn(CrlArnT&& value) {
+    SetCrlArn(std::forward<CrlArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The name of the certificate revocation list (CRL).</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CrlDetail& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Indicates whether the certificate revocation list (CRL) is enabled.</p>
+   */
+  inline bool GetEnabled() const { return m_enabled; }
+  inline bool EnabledHasBeenSet() const { return m_enabledHasBeenSet; }
+  inline void SetEnabled(bool value) {
+    m_enabledHasBeenSet = true;
+    m_enabled = value;
+  }
+  inline CrlDetail& WithEnabled(bool value) {
+    SetEnabled(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
    * <p>The state of the certificate revocation list (CRL) after a read or write
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rolesanywhere-2018-05-10/CrlDetail">AWS
-   * API Reference</a></p>
+   * operation.</p>
    */
-  class CrlDetail
-  {
-  public:
-    AWS_ROLESANYWHERE_API CrlDetail();
-    AWS_ROLESANYWHERE_API CrlDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ROLESANYWHERE_API CrlDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ROLESANYWHERE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Utils::ByteBuffer& GetCrlData() const { return m_crlData; }
+  inline bool CrlDataHasBeenSet() const { return m_crlDataHasBeenSet; }
+  template <typename CrlDataT = Aws::Utils::ByteBuffer>
+  void SetCrlData(CrlDataT&& value) {
+    m_crlDataHasBeenSet = true;
+    m_crlData = std::forward<CrlDataT>(value);
+  }
+  template <typename CrlDataT = Aws::Utils::ByteBuffer>
+  CrlDetail& WithCrlData(CrlDataT&& value) {
+    SetCrlData(std::forward<CrlDataT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide
+   * revocation for. </p>
+   */
+  inline const Aws::String& GetTrustAnchorArn() const { return m_trustAnchorArn; }
+  inline bool TrustAnchorArnHasBeenSet() const { return m_trustAnchorArnHasBeenSet; }
+  template <typename TrustAnchorArnT = Aws::String>
+  void SetTrustAnchorArn(TrustAnchorArnT&& value) {
+    m_trustAnchorArnHasBeenSet = true;
+    m_trustAnchorArn = std::forward<TrustAnchorArnT>(value);
+  }
+  template <typename TrustAnchorArnT = Aws::String>
+  CrlDetail& WithTrustAnchorArn(TrustAnchorArnT&& value) {
+    SetTrustAnchorArn(std::forward<TrustAnchorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ISO-8601 timestamp when the certificate revocation list (CRL) was
-     * created. </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline CrlDetail& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline CrlDetail& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ISO-8601 timestamp when the certificate revocation list (CRL) was
+   * created. </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  CrlDetail& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the certificate revocation list (CRL).</p>
-     */
-    inline const Aws::String& GetCrlArn() const{ return m_crlArn; }
-    inline bool CrlArnHasBeenSet() const { return m_crlArnHasBeenSet; }
-    inline void SetCrlArn(const Aws::String& value) { m_crlArnHasBeenSet = true; m_crlArn = value; }
-    inline void SetCrlArn(Aws::String&& value) { m_crlArnHasBeenSet = true; m_crlArn = std::move(value); }
-    inline void SetCrlArn(const char* value) { m_crlArnHasBeenSet = true; m_crlArn.assign(value); }
-    inline CrlDetail& WithCrlArn(const Aws::String& value) { SetCrlArn(value); return *this;}
-    inline CrlDetail& WithCrlArn(Aws::String&& value) { SetCrlArn(std::move(value)); return *this;}
-    inline CrlDetail& WithCrlArn(const char* value) { SetCrlArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ISO-8601 timestamp when the certificate revocation list (CRL) was last
+   * updated. </p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  CrlDetail& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the certificate revocation list (CRL) after a read or write
-     * operation.</p>
-     */
-    inline const Aws::Utils::ByteBuffer& GetCrlData() const{ return m_crlData; }
-    inline bool CrlDataHasBeenSet() const { return m_crlDataHasBeenSet; }
-    inline void SetCrlData(const Aws::Utils::ByteBuffer& value) { m_crlDataHasBeenSet = true; m_crlData = value; }
-    inline void SetCrlData(Aws::Utils::ByteBuffer&& value) { m_crlDataHasBeenSet = true; m_crlData = std::move(value); }
-    inline CrlDetail& WithCrlData(const Aws::Utils::ByteBuffer& value) { SetCrlData(value); return *this;}
-    inline CrlDetail& WithCrlData(Aws::Utils::ByteBuffer&& value) { SetCrlData(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The alias of the certificate revocation list (CRL). Present only if the CRL
+   * has an alias.</p>
+   */
+  inline const Aws::String& GetAliasName() const { return m_aliasName; }
+  inline bool AliasNameHasBeenSet() const { return m_aliasNameHasBeenSet; }
+  template <typename AliasNameT = Aws::String>
+  void SetAliasName(AliasNameT&& value) {
+    m_aliasNameHasBeenSet = true;
+    m_aliasName = std::forward<AliasNameT>(value);
+  }
+  template <typename AliasNameT = Aws::String>
+  CrlDetail& WithAliasName(AliasNameT&& value) {
+    SetAliasName(std::forward<AliasNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the certificate revocation list (CRL).</p>
-     */
-    inline const Aws::String& GetCrlId() const{ return m_crlId; }
-    inline bool CrlIdHasBeenSet() const { return m_crlIdHasBeenSet; }
-    inline void SetCrlId(const Aws::String& value) { m_crlIdHasBeenSet = true; m_crlId = value; }
-    inline void SetCrlId(Aws::String&& value) { m_crlIdHasBeenSet = true; m_crlId = std::move(value); }
-    inline void SetCrlId(const char* value) { m_crlIdHasBeenSet = true; m_crlId.assign(value); }
-    inline CrlDetail& WithCrlId(const Aws::String& value) { SetCrlId(value); return *this;}
-    inline CrlDetail& WithCrlId(Aws::String&& value) { SetCrlId(std::move(value)); return *this;}
-    inline CrlDetail& WithCrlId(const char* value) { SetCrlId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The alias ARN of the certificate revocation list (CRL), in the form
+   * <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/crl/<i>alias-name</i>
+   * </code>. Present only if the CRL has an alias.</p> <p>You can use the alias ARN
+   * in place of the resource ID or ARN in the request parameters whose descriptions
+   * say that they accept an alias ARN. Don't use the alias ARN in Identity and
+   * Access Management (IAM) policies. A policy statement that names an alias ARN
+   * doesn't apply to the resource that holds the alias. Write policies with the ARN
+   * that contains the resource ID instead.</p>
+   */
+  inline const Aws::String& GetAliasArn() const { return m_aliasArn; }
+  inline bool AliasArnHasBeenSet() const { return m_aliasArnHasBeenSet; }
+  template <typename AliasArnT = Aws::String>
+  void SetAliasArn(AliasArnT&& value) {
+    m_aliasArnHasBeenSet = true;
+    m_aliasArn = std::forward<AliasArnT>(value);
+  }
+  template <typename AliasArnT = Aws::String>
+  CrlDetail& WithAliasArn(AliasArnT&& value) {
+    SetAliasArn(std::forward<AliasArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the certificate revocation list (CRL) is enabled.</p>
-     */
-    inline bool GetEnabled() const{ return m_enabled; }
-    inline bool EnabledHasBeenSet() const { return m_enabledHasBeenSet; }
-    inline void SetEnabled(bool value) { m_enabledHasBeenSet = true; m_enabled = value; }
-    inline CrlDetail& WithEnabled(bool value) { SetEnabled(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The alias that the resource had before the update request. IAM Roles Anywhere
+   * returns this value only in the response to an update request that changed or
+   * removed an existing alias. It isn't returned when the alias was unchanged, when
+   * the resource had no alias before the request, or by other operations.</p>
+   */
+  inline const Aws::String& GetPreviousAliasName() const { return m_previousAliasName; }
+  inline bool PreviousAliasNameHasBeenSet() const { return m_previousAliasNameHasBeenSet; }
+  template <typename PreviousAliasNameT = Aws::String>
+  void SetPreviousAliasName(PreviousAliasNameT&& value) {
+    m_previousAliasNameHasBeenSet = true;
+    m_previousAliasName = std::forward<PreviousAliasNameT>(value);
+  }
+  template <typename PreviousAliasNameT = Aws::String>
+  CrlDetail& WithPreviousAliasName(PreviousAliasNameT&& value) {
+    SetPreviousAliasName(std::forward<PreviousAliasNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_crlId;
 
-    ///@{
-    /**
-     * <p>The name of the certificate revocation list (CRL).</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CrlDetail& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CrlDetail& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CrlDetail& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_crlArn;
 
-    ///@{
-    /**
-     * <p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide
-     * revocation for. </p>
-     */
-    inline const Aws::String& GetTrustAnchorArn() const{ return m_trustAnchorArn; }
-    inline bool TrustAnchorArnHasBeenSet() const { return m_trustAnchorArnHasBeenSet; }
-    inline void SetTrustAnchorArn(const Aws::String& value) { m_trustAnchorArnHasBeenSet = true; m_trustAnchorArn = value; }
-    inline void SetTrustAnchorArn(Aws::String&& value) { m_trustAnchorArnHasBeenSet = true; m_trustAnchorArn = std::move(value); }
-    inline void SetTrustAnchorArn(const char* value) { m_trustAnchorArnHasBeenSet = true; m_trustAnchorArn.assign(value); }
-    inline CrlDetail& WithTrustAnchorArn(const Aws::String& value) { SetTrustAnchorArn(value); return *this;}
-    inline CrlDetail& WithTrustAnchorArn(Aws::String&& value) { SetTrustAnchorArn(std::move(value)); return *this;}
-    inline CrlDetail& WithTrustAnchorArn(const char* value) { SetTrustAnchorArn(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The ISO-8601 timestamp when the certificate revocation list (CRL) was last
-     * updated. </p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAtHasBeenSet = true; m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAtHasBeenSet = true; m_updatedAt = std::move(value); }
-    inline CrlDetail& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline CrlDetail& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
-  private:
+  bool m_enabled{false};
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  Aws::Utils::ByteBuffer m_crlData{};
 
-    Aws::String m_crlArn;
-    bool m_crlArnHasBeenSet = false;
+  Aws::String m_trustAnchorArn;
 
-    Aws::Utils::ByteBuffer m_crlData;
-    bool m_crlDataHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_crlId;
-    bool m_crlIdHasBeenSet = false;
+  Aws::Utils::DateTime m_updatedAt{};
 
-    bool m_enabled;
-    bool m_enabledHasBeenSet = false;
+  Aws::String m_aliasName;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_aliasArn;
 
-    Aws::String m_trustAnchorArn;
-    bool m_trustAnchorArnHasBeenSet = false;
+  Aws::String m_previousAliasName;
+  bool m_crlIdHasBeenSet = false;
+  bool m_crlArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_enabledHasBeenSet = false;
+  bool m_crlDataHasBeenSet = false;
+  bool m_trustAnchorArnHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_aliasNameHasBeenSet = false;
+  bool m_aliasArnHasBeenSet = false;
+  bool m_previousAliasNameHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_updatedAt;
-    bool m_updatedAtHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace RolesAnywhere
-} // namespace Aws
+}  // namespace Model
+}  // namespace RolesAnywhere
+}  // namespace Aws

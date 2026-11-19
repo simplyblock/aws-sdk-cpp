@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/logs/model/DescribeDeliveriesRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/logs/model/DescribeDeliveriesRequest.h>
 
 #include <utility>
 
@@ -12,40 +12,31 @@ using namespace Aws::CloudWatchLogs::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeDeliveriesRequest::DescribeDeliveriesRequest() : 
-    m_nextTokenHasBeenSet(false),
-    m_limit(0),
-    m_limitHasBeenSet(false)
-{
-}
-
-Aws::String DescribeDeliveriesRequest::SerializePayload() const
-{
+Aws::String DescribeDeliveriesRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_limitHasBeenSet)
-  {
-   payload.WithInteger("limit", m_limit);
+  if (m_limitHasBeenSet) {
+    payload.WithInteger("limit", m_limit);
+  }
 
+  if (m_deliverySourceNamesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> deliverySourceNamesJsonList(m_deliverySourceNames.size());
+    for (unsigned deliverySourceNamesIndex = 0; deliverySourceNamesIndex < deliverySourceNamesJsonList.GetLength();
+         ++deliverySourceNamesIndex) {
+      deliverySourceNamesJsonList[deliverySourceNamesIndex].AsString(m_deliverySourceNames[deliverySourceNamesIndex]);
+    }
+    payload.WithArray("deliverySourceNames", std::move(deliverySourceNamesJsonList));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DescribeDeliveriesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeDeliveriesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Logs_20140328.DescribeDeliveries"));
   return headers;
-
 }
-
-
-
-

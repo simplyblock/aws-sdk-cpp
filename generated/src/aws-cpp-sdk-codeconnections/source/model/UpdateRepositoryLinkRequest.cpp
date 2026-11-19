@@ -4,54 +4,53 @@
  */
 
 #include <aws/codeconnections/model/UpdateRepositoryLinkRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeConnections::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateRepositoryLinkRequest::UpdateRepositoryLinkRequest() : 
-    m_connectionArnHasBeenSet(false),
-    m_encryptionKeyArnHasBeenSet(false),
-    m_repositoryLinkIdHasBeenSet(false)
-{
+Aws::String UpdateRepositoryLinkRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_connectionArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionKeyArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_repositoryLinkIdHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_connectionArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ConnectionArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_connectionArn.c_str()));
+  }
+
+  if (m_encryptionKeyArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EncryptionKeyArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_encryptionKeyArn.c_str()));
+  }
+
+  if (m_repositoryLinkIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RepositoryLinkId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_repositoryLinkId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateRepositoryLinkRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_connectionArnHasBeenSet)
-  {
-   payload.WithString("ConnectionArn", m_connectionArn);
-
-  }
-
-  if(m_encryptionKeyArnHasBeenSet)
-  {
-   payload.WithString("EncryptionKeyArn", m_encryptionKeyArn);
-
-  }
-
-  if(m_repositoryLinkIdHasBeenSet)
-  {
-   payload.WithString("RepositoryLinkId", m_repositoryLinkId);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateRepositoryLinkRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateRepositoryLinkRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "com.amazonaws.codeconnections.CodeConnections_20231201.UpdateRepositoryLink"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

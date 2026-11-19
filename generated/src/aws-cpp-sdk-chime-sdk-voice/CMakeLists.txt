@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-chime-sdk-voice "C++ SDK for the AWS chime-sdk-voice service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-chime-sdk-voice "C++ SDK for Amazon Chime SDK Voice" aws-cpp-sdk-core)
 
 file(GLOB AWS_CHIME-SDK-VOICE_HEADERS
     "include/aws/chime-sdk-voice/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CHIME-SDK-VOICE_HEADERS
 
 file(GLOB AWS_CHIME-SDK-VOICE_MODEL_HEADERS
     "include/aws/chime-sdk-voice/model/*.h"
+)
+
+file(GLOB AWS_CHIME-SDK-VOICE_INTERNAL_HEADERS
+    "include/aws/chime-sdk-voice/internal/*.h"
 )
 
 file(GLOB AWS_CHIME-SDK-VOICE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CHIME-SDK-VOICE_MODEL_SOURCE
 
 file(GLOB CHIME-SDK-VOICE_UNIFIED_HEADERS
     ${AWS_CHIME-SDK-VOICE_HEADERS}
+    ${AWS_CHIME-SDK-VOICE_INTERNAL_HEADERS}
     ${AWS_CHIME-SDK-VOICE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\chime-sdk-voice" FILES ${AWS_CHIME-SDK-VOICE_HEADERS})
+        source_group("Header Files\\aws\\chime-sdk-voice\\internal" FILES ${AWS_CHIME-SDK-VOICE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\chime-sdk-voice\\model" FILES ${AWS_CHIME-SDK-VOICE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CHIME-SDK-VOICE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CHIME-SDK-VOICE_MODEL_SOURCE})

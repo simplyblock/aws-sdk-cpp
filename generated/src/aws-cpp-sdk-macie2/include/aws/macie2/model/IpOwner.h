@@ -4,113 +4,122 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Macie2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Macie2 {
+namespace Model {
 
+/**
+ * <p>Provides information about the registered owner of an IP
+ * address.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/IpOwner">AWS API
+ * Reference</a></p>
+ */
+class IpOwner {
+ public:
+  AWS_MACIE2_API IpOwner() = default;
+  AWS_MACIE2_API IpOwner(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MACIE2_API IpOwner& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MACIE2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides information about the registered owner of an IP
-   * address.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/IpOwner">AWS API
-   * Reference</a></p>
+   * <p>The autonomous system number (ASN) for the autonomous system that included
+   * the IP address.</p>
    */
-  class IpOwner
-  {
-  public:
-    AWS_MACIE2_API IpOwner();
-    AWS_MACIE2_API IpOwner(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MACIE2_API IpOwner& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MACIE2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAsn() const { return m_asn; }
+  inline bool AsnHasBeenSet() const { return m_asnHasBeenSet; }
+  template <typename AsnT = Aws::String>
+  void SetAsn(AsnT&& value) {
+    m_asnHasBeenSet = true;
+    m_asn = std::forward<AsnT>(value);
+  }
+  template <typename AsnT = Aws::String>
+  IpOwner& WithAsn(AsnT&& value) {
+    SetAsn(std::forward<AsnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The organization identifier that's associated with the autonomous system
+   * number (ASN) for the autonomous system that included the IP address.</p>
+   */
+  inline const Aws::String& GetAsnOrg() const { return m_asnOrg; }
+  inline bool AsnOrgHasBeenSet() const { return m_asnOrgHasBeenSet; }
+  template <typename AsnOrgT = Aws::String>
+  void SetAsnOrg(AsnOrgT&& value) {
+    m_asnOrgHasBeenSet = true;
+    m_asnOrg = std::forward<AsnOrgT>(value);
+  }
+  template <typename AsnOrgT = Aws::String>
+  IpOwner& WithAsnOrg(AsnOrgT&& value) {
+    SetAsnOrg(std::forward<AsnOrgT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The autonomous system number (ASN) for the autonomous system that included
-     * the IP address.</p>
-     */
-    inline const Aws::String& GetAsn() const{ return m_asn; }
-    inline bool AsnHasBeenSet() const { return m_asnHasBeenSet; }
-    inline void SetAsn(const Aws::String& value) { m_asnHasBeenSet = true; m_asn = value; }
-    inline void SetAsn(Aws::String&& value) { m_asnHasBeenSet = true; m_asn = std::move(value); }
-    inline void SetAsn(const char* value) { m_asnHasBeenSet = true; m_asn.assign(value); }
-    inline IpOwner& WithAsn(const Aws::String& value) { SetAsn(value); return *this;}
-    inline IpOwner& WithAsn(Aws::String&& value) { SetAsn(std::move(value)); return *this;}
-    inline IpOwner& WithAsn(const char* value) { SetAsn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the internet service provider (ISP) that owned the IP
+   * address.</p>
+   */
+  inline const Aws::String& GetIsp() const { return m_isp; }
+  inline bool IspHasBeenSet() const { return m_ispHasBeenSet; }
+  template <typename IspT = Aws::String>
+  void SetIsp(IspT&& value) {
+    m_ispHasBeenSet = true;
+    m_isp = std::forward<IspT>(value);
+  }
+  template <typename IspT = Aws::String>
+  IpOwner& WithIsp(IspT&& value) {
+    SetIsp(std::forward<IspT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The organization identifier that's associated with the autonomous system
-     * number (ASN) for the autonomous system that included the IP address.</p>
-     */
-    inline const Aws::String& GetAsnOrg() const{ return m_asnOrg; }
-    inline bool AsnOrgHasBeenSet() const { return m_asnOrgHasBeenSet; }
-    inline void SetAsnOrg(const Aws::String& value) { m_asnOrgHasBeenSet = true; m_asnOrg = value; }
-    inline void SetAsnOrg(Aws::String&& value) { m_asnOrgHasBeenSet = true; m_asnOrg = std::move(value); }
-    inline void SetAsnOrg(const char* value) { m_asnOrgHasBeenSet = true; m_asnOrg.assign(value); }
-    inline IpOwner& WithAsnOrg(const Aws::String& value) { SetAsnOrg(value); return *this;}
-    inline IpOwner& WithAsnOrg(Aws::String&& value) { SetAsnOrg(std::move(value)); return *this;}
-    inline IpOwner& WithAsnOrg(const char* value) { SetAsnOrg(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the organization that owned the IP address.</p>
+   */
+  inline const Aws::String& GetOrg() const { return m_org; }
+  inline bool OrgHasBeenSet() const { return m_orgHasBeenSet; }
+  template <typename OrgT = Aws::String>
+  void SetOrg(OrgT&& value) {
+    m_orgHasBeenSet = true;
+    m_org = std::forward<OrgT>(value);
+  }
+  template <typename OrgT = Aws::String>
+  IpOwner& WithOrg(OrgT&& value) {
+    SetOrg(std::forward<OrgT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_asn;
 
-    ///@{
-    /**
-     * <p>The name of the internet service provider (ISP) that owned the IP
-     * address.</p>
-     */
-    inline const Aws::String& GetIsp() const{ return m_isp; }
-    inline bool IspHasBeenSet() const { return m_ispHasBeenSet; }
-    inline void SetIsp(const Aws::String& value) { m_ispHasBeenSet = true; m_isp = value; }
-    inline void SetIsp(Aws::String&& value) { m_ispHasBeenSet = true; m_isp = std::move(value); }
-    inline void SetIsp(const char* value) { m_ispHasBeenSet = true; m_isp.assign(value); }
-    inline IpOwner& WithIsp(const Aws::String& value) { SetIsp(value); return *this;}
-    inline IpOwner& WithIsp(Aws::String&& value) { SetIsp(std::move(value)); return *this;}
-    inline IpOwner& WithIsp(const char* value) { SetIsp(value); return *this;}
-    ///@}
+  Aws::String m_asnOrg;
 
-    ///@{
-    /**
-     * <p>The name of the organization that owned the IP address.</p>
-     */
-    inline const Aws::String& GetOrg() const{ return m_org; }
-    inline bool OrgHasBeenSet() const { return m_orgHasBeenSet; }
-    inline void SetOrg(const Aws::String& value) { m_orgHasBeenSet = true; m_org = value; }
-    inline void SetOrg(Aws::String&& value) { m_orgHasBeenSet = true; m_org = std::move(value); }
-    inline void SetOrg(const char* value) { m_orgHasBeenSet = true; m_org.assign(value); }
-    inline IpOwner& WithOrg(const Aws::String& value) { SetOrg(value); return *this;}
-    inline IpOwner& WithOrg(Aws::String&& value) { SetOrg(std::move(value)); return *this;}
-    inline IpOwner& WithOrg(const char* value) { SetOrg(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_isp;
 
-    Aws::String m_asn;
-    bool m_asnHasBeenSet = false;
+  Aws::String m_org;
+  bool m_asnHasBeenSet = false;
+  bool m_asnOrgHasBeenSet = false;
+  bool m_ispHasBeenSet = false;
+  bool m_orgHasBeenSet = false;
+};
 
-    Aws::String m_asnOrg;
-    bool m_asnOrgHasBeenSet = false;
-
-    Aws::String m_isp;
-    bool m_ispHasBeenSet = false;
-
-    Aws::String m_org;
-    bool m_orgHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

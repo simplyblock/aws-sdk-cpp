@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 
-#include <aws/iotsitewise/IoTSiteWiseEndpointRules.h>
-
-
-namespace Aws
-{
-namespace IoTSiteWise
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace IoTSiteWise {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IoTSiteWiseClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IoTSiteWiseEndpointProviderBase =
     EndpointProviderBase<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
 
 using IoTSiteWiseDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
+    BDDEndpointProvider<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IOTSITEWISE_API IoTSiteWiseEndpointProvider : public IoTSiteWiseDefaultEpProviderBase
-{
-public:
-    using IoTSiteWiseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IOTSITEWISE_API IoTSiteWiseEndpointProvider : public IoTSiteWiseDefaultEpProviderBase {
+ public:
+  using IoTSiteWiseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IoTSiteWiseEndpointProvider()
-      : IoTSiteWiseDefaultEpProviderBase(Aws::IoTSiteWise::IoTSiteWiseEndpointRules::GetRulesBlob(), Aws::IoTSiteWise::IoTSiteWiseEndpointRules::RulesBlobSize)
-    {}
+  IoTSiteWiseEndpointProvider();
 
-    ~IoTSiteWiseEndpointProvider()
-    {
-    }
+  ~IoTSiteWiseEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace IoTSiteWise
+}  // namespace Aws

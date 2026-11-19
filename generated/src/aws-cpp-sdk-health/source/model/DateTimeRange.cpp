@@ -3,69 +3,186 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/model/DateTimeRange.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Health
-{
-namespace Model
-{
+namespace Aws {
+namespace Health {
+namespace Model {
 
-DateTimeRange::DateTimeRange() : 
-    m_fromHasBeenSet(false),
-    m_toHasBeenSet(false)
-{
-}
+DateTimeRange::DateTimeRange(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-DateTimeRange::DateTimeRange(JsonView jsonValue)
-  : DateTimeRange()
-{
-  *this = jsonValue;
-}
+DateTimeRange& DateTimeRange::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-DateTimeRange& DateTimeRange::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("from"))
-  {
-    m_from = jsonValue.GetDouble("from");
+              if (initialKeyStr == "from") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_from = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_from = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_fromHasBeenSet = true;
+              }
 
-    m_fromHasBeenSet = true;
-  }
+              else if (initialKeyStr == "to") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_to = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_to = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_toHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("DateTimeRange", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("to"))
-  {
-    m_to = jsonValue.GetDouble("to");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_toHasBeenSet = true;
+            if (initialKeyStr == "from") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_from = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_from = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_fromHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "to") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_to = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_to = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_toHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue DateTimeRange::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_fromHasBeenSet)
-  {
-   payload.WithDouble("from", m_from.SecondsWithMSPrecision());
+void DateTimeRange::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_fromHasBeenSet) {
+    mapSize++;
+  }
+  if (m_toHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_toHasBeenSet)
-  {
-   payload.WithDouble("to", m_to.SecondsWithMSPrecision());
+  encoder.WriteMapStart(mapSize);
+
+  if (m_fromHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("from"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_from.Seconds());
   }
 
-  return payload;
+  if (m_toHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("to"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_to.Seconds());
+  }
 }
 
-} // namespace Model
-} // namespace Health
-} // namespace Aws
+}  // namespace Model
+}  // namespace Health
+}  // namespace Aws

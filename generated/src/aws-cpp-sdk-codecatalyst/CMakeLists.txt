@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codecatalyst "C++ SDK for the AWS codecatalyst service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codecatalyst "C++ SDK for Amazon CodeCatalyst" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODECATALYST_HEADERS
     "include/aws/codecatalyst/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODECATALYST_HEADERS
 
 file(GLOB AWS_CODECATALYST_MODEL_HEADERS
     "include/aws/codecatalyst/model/*.h"
+)
+
+file(GLOB AWS_CODECATALYST_INTERNAL_HEADERS
+    "include/aws/codecatalyst/internal/*.h"
 )
 
 file(GLOB AWS_CODECATALYST_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODECATALYST_MODEL_SOURCE
 
 file(GLOB CODECATALYST_UNIFIED_HEADERS
     ${AWS_CODECATALYST_HEADERS}
+    ${AWS_CODECATALYST_INTERNAL_HEADERS}
     ${AWS_CODECATALYST_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codecatalyst" FILES ${AWS_CODECATALYST_HEADERS})
+        source_group("Header Files\\aws\\codecatalyst\\internal" FILES ${AWS_CODECATALYST_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codecatalyst\\model" FILES ${AWS_CODECATALYST_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODECATALYST_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODECATALYST_MODEL_SOURCE})

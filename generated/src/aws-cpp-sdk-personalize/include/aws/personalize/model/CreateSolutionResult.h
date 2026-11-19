@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Personalize
-{
-namespace Model
-{
-  class CreateSolutionResult
-  {
-  public:
-    AWS_PERSONALIZE_API CreateSolutionResult();
-    AWS_PERSONALIZE_API CreateSolutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PERSONALIZE_API CreateSolutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Personalize {
+namespace Model {
+class CreateSolutionResult {
+ public:
+  AWS_PERSONALIZE_API CreateSolutionResult() = default;
+  AWS_PERSONALIZE_API CreateSolutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PERSONALIZE_API CreateSolutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the solution.</p>
+   */
+  inline const Aws::String& GetSolutionArn() const { return m_solutionArn; }
+  template <typename SolutionArnT = Aws::String>
+  void SetSolutionArn(SolutionArnT&& value) {
+    m_solutionArnHasBeenSet = true;
+    m_solutionArn = std::forward<SolutionArnT>(value);
+  }
+  template <typename SolutionArnT = Aws::String>
+  CreateSolutionResult& WithSolutionArn(SolutionArnT&& value) {
+    SetSolutionArn(std::forward<SolutionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the solution.</p>
-     */
-    inline const Aws::String& GetSolutionArn() const{ return m_solutionArn; }
-    inline void SetSolutionArn(const Aws::String& value) { m_solutionArn = value; }
-    inline void SetSolutionArn(Aws::String&& value) { m_solutionArn = std::move(value); }
-    inline void SetSolutionArn(const char* value) { m_solutionArn.assign(value); }
-    inline CreateSolutionResult& WithSolutionArn(const Aws::String& value) { SetSolutionArn(value); return *this;}
-    inline CreateSolutionResult& WithSolutionArn(Aws::String&& value) { SetSolutionArn(std::move(value)); return *this;}
-    inline CreateSolutionResult& WithSolutionArn(const char* value) { SetSolutionArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateSolutionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateSolutionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateSolutionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateSolutionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_solutionArn;
+ private:
+  Aws::String m_solutionArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_solutionArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

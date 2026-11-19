@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/route53-recovery-control-config/Route53RecoveryControlConfig_EXPORTS.h>
 #include <aws/route53-recovery-control-config/model/RoutingControl.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Route53RecoveryControlConfig
-{
-namespace Model
-{
-  class CreateRoutingControlResult
-  {
-  public:
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult();
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53RecoveryControlConfig {
+namespace Model {
+class CreateRoutingControlResult {
+ public:
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult() = default;
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateRoutingControlResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The routing control that is created.</p>
+   */
+  inline const RoutingControl& GetRoutingControl() const { return m_routingControl; }
+  template <typename RoutingControlT = RoutingControl>
+  void SetRoutingControl(RoutingControlT&& value) {
+    m_routingControlHasBeenSet = true;
+    m_routingControl = std::forward<RoutingControlT>(value);
+  }
+  template <typename RoutingControlT = RoutingControl>
+  CreateRoutingControlResult& WithRoutingControl(RoutingControlT&& value) {
+    SetRoutingControl(std::forward<RoutingControlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The routing control that is created.</p>
-     */
-    inline const RoutingControl& GetRoutingControl() const{ return m_routingControl; }
-    inline void SetRoutingControl(const RoutingControl& value) { m_routingControl = value; }
-    inline void SetRoutingControl(RoutingControl&& value) { m_routingControl = std::move(value); }
-    inline CreateRoutingControlResult& WithRoutingControl(const RoutingControl& value) { SetRoutingControl(value); return *this;}
-    inline CreateRoutingControlResult& WithRoutingControl(RoutingControl&& value) { SetRoutingControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateRoutingControlResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateRoutingControlResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateRoutingControlResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateRoutingControlResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RoutingControl m_routingControl;
+ private:
+  RoutingControl m_routingControl;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_routingControlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Route53RecoveryControlConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53RecoveryControlConfig
+}  // namespace Aws

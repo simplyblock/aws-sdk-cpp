@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/glue/model/GetTableRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/glue/model/GetTableRequest.h>
 
 #include <utility>
 
@@ -12,67 +12,51 @@ using namespace Aws::Glue::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetTableRequest::GetTableRequest() : 
-    m_catalogIdHasBeenSet(false),
-    m_databaseNameHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_transactionIdHasBeenSet(false),
-    m_queryAsOfTimeHasBeenSet(false),
-    m_includeStatusDetails(false),
-    m_includeStatusDetailsHasBeenSet(false)
-{
-}
-
-Aws::String GetTableRequest::SerializePayload() const
-{
+Aws::String GetTableRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_catalogIdHasBeenSet)
-  {
-   payload.WithString("CatalogId", m_catalogId);
-
+  if (m_catalogIdHasBeenSet) {
+    payload.WithString("CatalogId", m_catalogId);
   }
 
-  if(m_databaseNameHasBeenSet)
-  {
-   payload.WithString("DatabaseName", m_databaseName);
-
+  if (m_databaseNameHasBeenSet) {
+    payload.WithString("DatabaseName", m_databaseName);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_transactionIdHasBeenSet)
-  {
-   payload.WithString("TransactionId", m_transactionId);
-
+  if (m_transactionIdHasBeenSet) {
+    payload.WithString("TransactionId", m_transactionId);
   }
 
-  if(m_queryAsOfTimeHasBeenSet)
-  {
-   payload.WithDouble("QueryAsOfTime", m_queryAsOfTime.SecondsWithMSPrecision());
+  if (m_queryAsOfTimeHasBeenSet) {
+    payload.WithDouble("QueryAsOfTime", m_queryAsOfTime.SecondsWithMSPrecision());
   }
 
-  if(m_includeStatusDetailsHasBeenSet)
-  {
-   payload.WithBool("IncludeStatusDetails", m_includeStatusDetails);
+  if (m_auditContextHasBeenSet) {
+    payload.WithObject("AuditContext", m_auditContext.Jsonize());
+  }
 
+  if (m_includeStatusDetailsHasBeenSet) {
+    payload.WithBool("IncludeStatusDetails", m_includeStatusDetails);
+  }
+
+  if (m_attributesToGetHasBeenSet) {
+    Aws::Utils::Array<JsonValue> attributesToGetJsonList(m_attributesToGet.size());
+    for (unsigned attributesToGetIndex = 0; attributesToGetIndex < attributesToGetJsonList.GetLength(); ++attributesToGetIndex) {
+      attributesToGetJsonList[attributesToGetIndex].AsString(
+          TableAttributesMapper::GetNameForTableAttributes(m_attributesToGet[attributesToGetIndex]));
+    }
+    payload.WithArray("AttributesToGet", std::move(attributesToGetJsonList));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetTableRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetTableRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSGlue.GetTable"));
   return headers;
-
 }
-
-
-
-

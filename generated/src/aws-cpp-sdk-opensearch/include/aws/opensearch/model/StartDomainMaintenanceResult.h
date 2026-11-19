@@ -4,70 +4,77 @@
  */
 
 #pragma once
-#include <aws/opensearch/OpenSearchService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/opensearch/OpenSearchService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
+/**
+ * <p>The result of a <code>StartDomainMaintenance</code> request that information
+ * about the requested action. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/StartDomainMaintenanceResponse">AWS
+ * API Reference</a></p>
+ */
+class StartDomainMaintenanceResult {
+ public:
+  AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult() = default;
+  AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result of a <code>StartDomainMaintenance</code> request that information
-   * about the requested action. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/StartDomainMaintenanceResponse">AWS
-   * API Reference</a></p>
+   * <p>The request ID of requested action.</p>
    */
-  class StartDomainMaintenanceResult
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult();
-    AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OPENSEARCHSERVICE_API StartDomainMaintenanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetMaintenanceId() const { return m_maintenanceId; }
+  template <typename MaintenanceIdT = Aws::String>
+  void SetMaintenanceId(MaintenanceIdT&& value) {
+    m_maintenanceIdHasBeenSet = true;
+    m_maintenanceId = std::forward<MaintenanceIdT>(value);
+  }
+  template <typename MaintenanceIdT = Aws::String>
+  StartDomainMaintenanceResult& WithMaintenanceId(MaintenanceIdT&& value) {
+    SetMaintenanceId(std::forward<MaintenanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The request ID of requested action.</p>
-     */
-    inline const Aws::String& GetMaintenanceId() const{ return m_maintenanceId; }
-    inline void SetMaintenanceId(const Aws::String& value) { m_maintenanceId = value; }
-    inline void SetMaintenanceId(Aws::String&& value) { m_maintenanceId = std::move(value); }
-    inline void SetMaintenanceId(const char* value) { m_maintenanceId.assign(value); }
-    inline StartDomainMaintenanceResult& WithMaintenanceId(const Aws::String& value) { SetMaintenanceId(value); return *this;}
-    inline StartDomainMaintenanceResult& WithMaintenanceId(Aws::String&& value) { SetMaintenanceId(std::move(value)); return *this;}
-    inline StartDomainMaintenanceResult& WithMaintenanceId(const char* value) { SetMaintenanceId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartDomainMaintenanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartDomainMaintenanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartDomainMaintenanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartDomainMaintenanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_maintenanceId;
 
-    Aws::String m_maintenanceId;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_maintenanceIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

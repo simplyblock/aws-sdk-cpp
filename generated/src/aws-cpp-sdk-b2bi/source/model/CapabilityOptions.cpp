@@ -11,49 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace B2BI
-{
-namespace Model
-{
+namespace Aws {
+namespace B2BI {
+namespace Model {
 
-CapabilityOptions::CapabilityOptions() : 
-    m_outboundEdiHasBeenSet(false)
-{
-}
+CapabilityOptions::CapabilityOptions(JsonView jsonValue) { *this = jsonValue; }
 
-CapabilityOptions::CapabilityOptions(JsonView jsonValue)
-  : CapabilityOptions()
-{
-  *this = jsonValue;
-}
-
-CapabilityOptions& CapabilityOptions::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("outboundEdi"))
-  {
+CapabilityOptions& CapabilityOptions::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("outboundEdi")) {
     m_outboundEdi = jsonValue.GetObject("outboundEdi");
-
     m_outboundEdiHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("inboundEdi")) {
+    m_inboundEdi = jsonValue.GetObject("inboundEdi");
+    m_inboundEdiHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue CapabilityOptions::Jsonize() const
-{
+JsonValue CapabilityOptions::Jsonize() const {
   JsonValue payload;
 
-  if(m_outboundEdiHasBeenSet)
-  {
-   payload.WithObject("outboundEdi", m_outboundEdi.Jsonize());
+  if (m_outboundEdiHasBeenSet) {
+    payload.WithObject("outboundEdi", m_outboundEdi.Jsonize());
+  }
 
+  if (m_inboundEdiHasBeenSet) {
+    payload.WithObject("inboundEdi", m_inboundEdi.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace B2BI
-} // namespace Aws
+}  // namespace Model
+}  // namespace B2BI
+}  // namespace Aws

@@ -4,53 +4,52 @@
  */
 
 #pragma once
-#include <aws/ivs/IVS_EXPORTS.h>
-#include <aws/ivs/IVSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ivs/IVSRequest.h>
+#include <aws/ivs/IVS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IVS
-{
-namespace Model
-{
+namespace Aws {
+namespace IVS {
+namespace Model {
 
+/**
+ */
+class GetStreamKeyRequest : public IVSRequest {
+ public:
+  AWS_IVS_API GetStreamKeyRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetStreamKey"; }
+
+  AWS_IVS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>ARN for the stream key to be retrieved.</p>
    */
-  class GetStreamKeyRequest : public IVSRequest
-  {
-  public:
-    AWS_IVS_API GetStreamKeyRequest();
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetStreamKeyRequest& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
+  bool m_arnHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetStreamKey"; }
-
-    AWS_IVS_API Aws::String SerializePayload() const override;
-
-
-    ///@{
-    /**
-     * <p>ARN for the stream key to be retrieved.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline GetStreamKeyRequest& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetStreamKeyRequest& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetStreamKeyRequest& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IVS
-} // namespace Aws
+}  // namespace Model
+}  // namespace IVS
+}  // namespace Aws

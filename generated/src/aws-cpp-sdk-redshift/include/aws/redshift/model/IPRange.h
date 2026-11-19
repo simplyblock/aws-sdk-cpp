@@ -4,96 +4,107 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
 
+/**
+ * <p>Describes an IP range used in a security group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/IPRange">AWS
+ * API Reference</a></p>
+ */
+class IPRange {
+ public:
+  AWS_REDSHIFT_API IPRange() = default;
+  AWS_REDSHIFT_API IPRange(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_REDSHIFT_API IPRange& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes an IP range used in a security group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/IPRange">AWS
-   * API Reference</a></p>
+   * <p>The status of the IP range, for example, "authorized".</p>
    */
-  class IPRange
-  {
-  public:
-    AWS_REDSHIFT_API IPRange();
-    AWS_REDSHIFT_API IPRange(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_REDSHIFT_API IPRange& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  IPRange& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The IP range in Classless Inter-Domain Routing (CIDR) notation.</p>
+   */
+  inline const Aws::String& GetCIDRIP() const { return m_cIDRIP; }
+  inline bool CIDRIPHasBeenSet() const { return m_cIDRIPHasBeenSet; }
+  template <typename CIDRIPT = Aws::String>
+  void SetCIDRIP(CIDRIPT&& value) {
+    m_cIDRIPHasBeenSet = true;
+    m_cIDRIP = std::forward<CIDRIPT>(value);
+  }
+  template <typename CIDRIPT = Aws::String>
+  IPRange& WithCIDRIP(CIDRIPT&& value) {
+    SetCIDRIP(std::forward<CIDRIPT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of tags for the IP range.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  IPRange& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  IPRange& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_status;
 
-    ///@{
-    /**
-     * <p>The status of the IP range, for example, "authorized".</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const Aws::String& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_statusHasBeenSet = true; m_status.assign(value); }
-    inline IPRange& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline IPRange& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline IPRange& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  Aws::String m_cIDRIP;
 
-    ///@{
-    /**
-     * <p>The IP range in Classless Inter-Domain Routing (CIDR) notation.</p>
-     */
-    inline const Aws::String& GetCIDRIP() const{ return m_cIDRIP; }
-    inline bool CIDRIPHasBeenSet() const { return m_cIDRIPHasBeenSet; }
-    inline void SetCIDRIP(const Aws::String& value) { m_cIDRIPHasBeenSet = true; m_cIDRIP = value; }
-    inline void SetCIDRIP(Aws::String&& value) { m_cIDRIPHasBeenSet = true; m_cIDRIP = std::move(value); }
-    inline void SetCIDRIP(const char* value) { m_cIDRIPHasBeenSet = true; m_cIDRIP.assign(value); }
-    inline IPRange& WithCIDRIP(const Aws::String& value) { SetCIDRIP(value); return *this;}
-    inline IPRange& WithCIDRIP(Aws::String&& value) { SetCIDRIP(std::move(value)); return *this;}
-    inline IPRange& WithCIDRIP(const char* value) { SetCIDRIP(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_statusHasBeenSet = false;
+  bool m_cIDRIPHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The list of tags for the IP range.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline IPRange& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline IPRange& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline IPRange& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline IPRange& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_cIDRIP;
-    bool m_cIDRIPHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

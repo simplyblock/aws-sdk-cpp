@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/schemas/Schemas_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/schemas/Schemas_EXPORTS.h>
 
-#include <aws/schemas/SchemasEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Schemas
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Schemas {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SchemasClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SchemasEndpointProviderBase =
     EndpointProviderBase<SchemasClientConfiguration, SchemasBuiltInParameters, SchemasClientContextParameters>;
 
 using SchemasDefaultEpProviderBase =
-    DefaultEndpointProvider<SchemasClientConfiguration, SchemasBuiltInParameters, SchemasClientContextParameters>;
+    BDDEndpointProvider<SchemasClientConfiguration, SchemasBuiltInParameters, SchemasClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SCHEMAS_API SchemasEndpointProvider : public SchemasDefaultEpProviderBase
-{
-public:
-    using SchemasResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SCHEMAS_API SchemasEndpointProvider : public SchemasDefaultEpProviderBase {
+ public:
+  using SchemasResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SchemasEndpointProvider()
-      : SchemasDefaultEpProviderBase(Aws::Schemas::SchemasEndpointRules::GetRulesBlob(), Aws::Schemas::SchemasEndpointRules::RulesBlobSize)
-    {}
+  SchemasEndpointProvider();
 
-    ~SchemasEndpointProvider()
-    {
-    }
+  ~SchemasEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Schemas
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Schemas
+}  // namespace Aws

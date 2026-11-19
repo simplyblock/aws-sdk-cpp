@@ -12,17 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteFunctionRequest::DeleteFunctionRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_functionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteFunctionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteFunctionRequest::SerializePayload() const { return {}; }

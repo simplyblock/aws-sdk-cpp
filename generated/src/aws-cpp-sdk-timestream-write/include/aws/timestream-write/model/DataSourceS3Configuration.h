@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamWrite
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamWrite {
+namespace Model {
 
+/**
+ * <p> </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/timestream-write-2018-11-01/DataSourceS3Configuration">AWS
+ * API Reference</a></p>
+ */
+class DataSourceS3Configuration {
+ public:
+  AWS_TIMESTREAMWRITE_API DataSourceS3Configuration() = default;
+  AWS_TIMESTREAMWRITE_API DataSourceS3Configuration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TIMESTREAMWRITE_API DataSourceS3Configuration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TIMESTREAMWRITE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/timestream-write-2018-11-01/DataSourceS3Configuration">AWS
-   * API Reference</a></p>
+   * <p>The bucket name of the customer S3 bucket.</p>
    */
-  class DataSourceS3Configuration
-  {
-  public:
-    AWS_TIMESTREAMWRITE_API DataSourceS3Configuration();
-    AWS_TIMESTREAMWRITE_API DataSourceS3Configuration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TIMESTREAMWRITE_API DataSourceS3Configuration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TIMESTREAMWRITE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetBucketName() const { return m_bucketName; }
+  inline bool BucketNameHasBeenSet() const { return m_bucketNameHasBeenSet; }
+  template <typename BucketNameT = Aws::String>
+  void SetBucketName(BucketNameT&& value) {
+    m_bucketNameHasBeenSet = true;
+    m_bucketName = std::forward<BucketNameT>(value);
+  }
+  template <typename BucketNameT = Aws::String>
+  DataSourceS3Configuration& WithBucketName(BucketNameT&& value) {
+    SetBucketName(std::forward<BucketNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> </p>
+   */
+  inline const Aws::String& GetObjectKeyPrefix() const { return m_objectKeyPrefix; }
+  inline bool ObjectKeyPrefixHasBeenSet() const { return m_objectKeyPrefixHasBeenSet; }
+  template <typename ObjectKeyPrefixT = Aws::String>
+  void SetObjectKeyPrefix(ObjectKeyPrefixT&& value) {
+    m_objectKeyPrefixHasBeenSet = true;
+    m_objectKeyPrefix = std::forward<ObjectKeyPrefixT>(value);
+  }
+  template <typename ObjectKeyPrefixT = Aws::String>
+  DataSourceS3Configuration& WithObjectKeyPrefix(ObjectKeyPrefixT&& value) {
+    SetObjectKeyPrefix(std::forward<ObjectKeyPrefixT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_bucketName;
 
-    ///@{
-    /**
-     * <p>The bucket name of the customer S3 bucket.</p>
-     */
-    inline const Aws::String& GetBucketName() const{ return m_bucketName; }
-    inline bool BucketNameHasBeenSet() const { return m_bucketNameHasBeenSet; }
-    inline void SetBucketName(const Aws::String& value) { m_bucketNameHasBeenSet = true; m_bucketName = value; }
-    inline void SetBucketName(Aws::String&& value) { m_bucketNameHasBeenSet = true; m_bucketName = std::move(value); }
-    inline void SetBucketName(const char* value) { m_bucketNameHasBeenSet = true; m_bucketName.assign(value); }
-    inline DataSourceS3Configuration& WithBucketName(const Aws::String& value) { SetBucketName(value); return *this;}
-    inline DataSourceS3Configuration& WithBucketName(Aws::String&& value) { SetBucketName(std::move(value)); return *this;}
-    inline DataSourceS3Configuration& WithBucketName(const char* value) { SetBucketName(value); return *this;}
-    ///@}
+  Aws::String m_objectKeyPrefix;
+  bool m_bucketNameHasBeenSet = false;
+  bool m_objectKeyPrefixHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> </p>
-     */
-    inline const Aws::String& GetObjectKeyPrefix() const{ return m_objectKeyPrefix; }
-    inline bool ObjectKeyPrefixHasBeenSet() const { return m_objectKeyPrefixHasBeenSet; }
-    inline void SetObjectKeyPrefix(const Aws::String& value) { m_objectKeyPrefixHasBeenSet = true; m_objectKeyPrefix = value; }
-    inline void SetObjectKeyPrefix(Aws::String&& value) { m_objectKeyPrefixHasBeenSet = true; m_objectKeyPrefix = std::move(value); }
-    inline void SetObjectKeyPrefix(const char* value) { m_objectKeyPrefixHasBeenSet = true; m_objectKeyPrefix.assign(value); }
-    inline DataSourceS3Configuration& WithObjectKeyPrefix(const Aws::String& value) { SetObjectKeyPrefix(value); return *this;}
-    inline DataSourceS3Configuration& WithObjectKeyPrefix(Aws::String&& value) { SetObjectKeyPrefix(std::move(value)); return *this;}
-    inline DataSourceS3Configuration& WithObjectKeyPrefix(const char* value) { SetObjectKeyPrefix(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_bucketName;
-    bool m_bucketNameHasBeenSet = false;
-
-    Aws::String m_objectKeyPrefix;
-    bool m_objectKeyPrefixHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TimestreamWrite
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamWrite
+}  // namespace Aws

@@ -4,177 +4,202 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
 
+/**
+ * <p>Contains information about the member account. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Member">AWS
+ * API Reference</a></p>
+ */
+class Member {
+ public:
+  AWS_GUARDDUTY_API Member() = default;
+  AWS_GUARDDUTY_API Member(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API Member& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains information about the member account. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Member">AWS
-   * API Reference</a></p>
+   * <p>The ID of the member account.</p>
    */
-  class Member
-  {
-  public:
-    AWS_GUARDDUTY_API Member();
-    AWS_GUARDDUTY_API Member(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API Member& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  Member& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The detector ID of the member account.</p>
+   */
+  inline const Aws::String& GetDetectorId() const { return m_detectorId; }
+  inline bool DetectorIdHasBeenSet() const { return m_detectorIdHasBeenSet; }
+  template <typename DetectorIdT = Aws::String>
+  void SetDetectorId(DetectorIdT&& value) {
+    m_detectorIdHasBeenSet = true;
+    m_detectorId = std::forward<DetectorIdT>(value);
+  }
+  template <typename DetectorIdT = Aws::String>
+  Member& WithDetectorId(DetectorIdT&& value) {
+    SetDetectorId(std::forward<DetectorIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the member account.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline Member& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline Member& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline Member& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The administrator account ID.</p>
+   */
+  inline const Aws::String& GetMasterId() const { return m_masterId; }
+  inline bool MasterIdHasBeenSet() const { return m_masterIdHasBeenSet; }
+  template <typename MasterIdT = Aws::String>
+  void SetMasterId(MasterIdT&& value) {
+    m_masterIdHasBeenSet = true;
+    m_masterId = std::forward<MasterIdT>(value);
+  }
+  template <typename MasterIdT = Aws::String>
+  Member& WithMasterId(MasterIdT&& value) {
+    SetMasterId(std::forward<MasterIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The detector ID of the member account.</p>
-     */
-    inline const Aws::String& GetDetectorId() const{ return m_detectorId; }
-    inline bool DetectorIdHasBeenSet() const { return m_detectorIdHasBeenSet; }
-    inline void SetDetectorId(const Aws::String& value) { m_detectorIdHasBeenSet = true; m_detectorId = value; }
-    inline void SetDetectorId(Aws::String&& value) { m_detectorIdHasBeenSet = true; m_detectorId = std::move(value); }
-    inline void SetDetectorId(const char* value) { m_detectorIdHasBeenSet = true; m_detectorId.assign(value); }
-    inline Member& WithDetectorId(const Aws::String& value) { SetDetectorId(value); return *this;}
-    inline Member& WithDetectorId(Aws::String&& value) { SetDetectorId(std::move(value)); return *this;}
-    inline Member& WithDetectorId(const char* value) { SetDetectorId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The email address of the member account.</p>
+   */
+  inline const Aws::String& GetEmail() const { return m_email; }
+  inline bool EmailHasBeenSet() const { return m_emailHasBeenSet; }
+  template <typename EmailT = Aws::String>
+  void SetEmail(EmailT&& value) {
+    m_emailHasBeenSet = true;
+    m_email = std::forward<EmailT>(value);
+  }
+  template <typename EmailT = Aws::String>
+  Member& WithEmail(EmailT&& value) {
+    SetEmail(std::forward<EmailT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The administrator account ID.</p>
-     */
-    inline const Aws::String& GetMasterId() const{ return m_masterId; }
-    inline bool MasterIdHasBeenSet() const { return m_masterIdHasBeenSet; }
-    inline void SetMasterId(const Aws::String& value) { m_masterIdHasBeenSet = true; m_masterId = value; }
-    inline void SetMasterId(Aws::String&& value) { m_masterIdHasBeenSet = true; m_masterId = std::move(value); }
-    inline void SetMasterId(const char* value) { m_masterIdHasBeenSet = true; m_masterId.assign(value); }
-    inline Member& WithMasterId(const Aws::String& value) { SetMasterId(value); return *this;}
-    inline Member& WithMasterId(Aws::String&& value) { SetMasterId(std::move(value)); return *this;}
-    inline Member& WithMasterId(const char* value) { SetMasterId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the relationship between the member and the administrator.</p>
+   */
+  inline const Aws::String& GetRelationshipStatus() const { return m_relationshipStatus; }
+  inline bool RelationshipStatusHasBeenSet() const { return m_relationshipStatusHasBeenSet; }
+  template <typename RelationshipStatusT = Aws::String>
+  void SetRelationshipStatus(RelationshipStatusT&& value) {
+    m_relationshipStatusHasBeenSet = true;
+    m_relationshipStatus = std::forward<RelationshipStatusT>(value);
+  }
+  template <typename RelationshipStatusT = Aws::String>
+  Member& WithRelationshipStatus(RelationshipStatusT&& value) {
+    SetRelationshipStatus(std::forward<RelationshipStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The email address of the member account.</p>
-     */
-    inline const Aws::String& GetEmail() const{ return m_email; }
-    inline bool EmailHasBeenSet() const { return m_emailHasBeenSet; }
-    inline void SetEmail(const Aws::String& value) { m_emailHasBeenSet = true; m_email = value; }
-    inline void SetEmail(Aws::String&& value) { m_emailHasBeenSet = true; m_email = std::move(value); }
-    inline void SetEmail(const char* value) { m_emailHasBeenSet = true; m_email.assign(value); }
-    inline Member& WithEmail(const Aws::String& value) { SetEmail(value); return *this;}
-    inline Member& WithEmail(Aws::String&& value) { SetEmail(std::move(value)); return *this;}
-    inline Member& WithEmail(const char* value) { SetEmail(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp when the invitation was sent.</p>
+   */
+  inline const Aws::String& GetInvitedAt() const { return m_invitedAt; }
+  inline bool InvitedAtHasBeenSet() const { return m_invitedAtHasBeenSet; }
+  template <typename InvitedAtT = Aws::String>
+  void SetInvitedAt(InvitedAtT&& value) {
+    m_invitedAtHasBeenSet = true;
+    m_invitedAt = std::forward<InvitedAtT>(value);
+  }
+  template <typename InvitedAtT = Aws::String>
+  Member& WithInvitedAt(InvitedAtT&& value) {
+    SetInvitedAt(std::forward<InvitedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the relationship between the member and the administrator.</p>
-     */
-    inline const Aws::String& GetRelationshipStatus() const{ return m_relationshipStatus; }
-    inline bool RelationshipStatusHasBeenSet() const { return m_relationshipStatusHasBeenSet; }
-    inline void SetRelationshipStatus(const Aws::String& value) { m_relationshipStatusHasBeenSet = true; m_relationshipStatus = value; }
-    inline void SetRelationshipStatus(Aws::String&& value) { m_relationshipStatusHasBeenSet = true; m_relationshipStatus = std::move(value); }
-    inline void SetRelationshipStatus(const char* value) { m_relationshipStatusHasBeenSet = true; m_relationshipStatus.assign(value); }
-    inline Member& WithRelationshipStatus(const Aws::String& value) { SetRelationshipStatus(value); return *this;}
-    inline Member& WithRelationshipStatus(Aws::String&& value) { SetRelationshipStatus(std::move(value)); return *this;}
-    inline Member& WithRelationshipStatus(const char* value) { SetRelationshipStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The last-updated timestamp of the member.</p>
+   */
+  inline const Aws::String& GetUpdatedAt() const { return m_updatedAt; }
+  inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
+  template <typename UpdatedAtT = Aws::String>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::String>
+  Member& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp when the invitation was sent.</p>
-     */
-    inline const Aws::String& GetInvitedAt() const{ return m_invitedAt; }
-    inline bool InvitedAtHasBeenSet() const { return m_invitedAtHasBeenSet; }
-    inline void SetInvitedAt(const Aws::String& value) { m_invitedAtHasBeenSet = true; m_invitedAt = value; }
-    inline void SetInvitedAt(Aws::String&& value) { m_invitedAtHasBeenSet = true; m_invitedAt = std::move(value); }
-    inline void SetInvitedAt(const char* value) { m_invitedAtHasBeenSet = true; m_invitedAt.assign(value); }
-    inline Member& WithInvitedAt(const Aws::String& value) { SetInvitedAt(value); return *this;}
-    inline Member& WithInvitedAt(Aws::String&& value) { SetInvitedAt(std::move(value)); return *this;}
-    inline Member& WithInvitedAt(const char* value) { SetInvitedAt(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The administrator account ID.</p>
+   */
+  inline const Aws::String& GetAdministratorId() const { return m_administratorId; }
+  inline bool AdministratorIdHasBeenSet() const { return m_administratorIdHasBeenSet; }
+  template <typename AdministratorIdT = Aws::String>
+  void SetAdministratorId(AdministratorIdT&& value) {
+    m_administratorIdHasBeenSet = true;
+    m_administratorId = std::forward<AdministratorIdT>(value);
+  }
+  template <typename AdministratorIdT = Aws::String>
+  Member& WithAdministratorId(AdministratorIdT&& value) {
+    SetAdministratorId(std::forward<AdministratorIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
-    ///@{
-    /**
-     * <p>The last-updated timestamp of the member.</p>
-     */
-    inline const Aws::String& GetUpdatedAt() const{ return m_updatedAt; }
-    inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
-    inline void SetUpdatedAt(const Aws::String& value) { m_updatedAtHasBeenSet = true; m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::String&& value) { m_updatedAtHasBeenSet = true; m_updatedAt = std::move(value); }
-    inline void SetUpdatedAt(const char* value) { m_updatedAtHasBeenSet = true; m_updatedAt.assign(value); }
-    inline Member& WithUpdatedAt(const Aws::String& value) { SetUpdatedAt(value); return *this;}
-    inline Member& WithUpdatedAt(Aws::String&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    inline Member& WithUpdatedAt(const char* value) { SetUpdatedAt(value); return *this;}
-    ///@}
+  Aws::String m_detectorId;
 
-    ///@{
-    /**
-     * <p>The administrator account ID.</p>
-     */
-    inline const Aws::String& GetAdministratorId() const{ return m_administratorId; }
-    inline bool AdministratorIdHasBeenSet() const { return m_administratorIdHasBeenSet; }
-    inline void SetAdministratorId(const Aws::String& value) { m_administratorIdHasBeenSet = true; m_administratorId = value; }
-    inline void SetAdministratorId(Aws::String&& value) { m_administratorIdHasBeenSet = true; m_administratorId = std::move(value); }
-    inline void SetAdministratorId(const char* value) { m_administratorIdHasBeenSet = true; m_administratorId.assign(value); }
-    inline Member& WithAdministratorId(const Aws::String& value) { SetAdministratorId(value); return *this;}
-    inline Member& WithAdministratorId(Aws::String&& value) { SetAdministratorId(std::move(value)); return *this;}
-    inline Member& WithAdministratorId(const char* value) { SetAdministratorId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_masterId;
 
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
+  Aws::String m_email;
 
-    Aws::String m_detectorId;
-    bool m_detectorIdHasBeenSet = false;
+  Aws::String m_relationshipStatus;
 
-    Aws::String m_masterId;
-    bool m_masterIdHasBeenSet = false;
+  Aws::String m_invitedAt;
 
-    Aws::String m_email;
-    bool m_emailHasBeenSet = false;
+  Aws::String m_updatedAt;
 
-    Aws::String m_relationshipStatus;
-    bool m_relationshipStatusHasBeenSet = false;
+  Aws::String m_administratorId;
+  bool m_accountIdHasBeenSet = false;
+  bool m_detectorIdHasBeenSet = false;
+  bool m_masterIdHasBeenSet = false;
+  bool m_emailHasBeenSet = false;
+  bool m_relationshipStatusHasBeenSet = false;
+  bool m_invitedAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_administratorIdHasBeenSet = false;
+};
 
-    Aws::String m_invitedAt;
-    bool m_invitedAtHasBeenSet = false;
-
-    Aws::String m_updatedAt;
-    bool m_updatedAtHasBeenSet = false;
-
-    Aws::String m_administratorId;
-    bool m_administratorIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

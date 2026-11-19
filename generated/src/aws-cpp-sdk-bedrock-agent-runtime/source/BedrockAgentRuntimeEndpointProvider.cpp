@@ -4,13 +4,39 @@
  */
 
 #include <aws/bedrock-agent-runtime/BedrockAgentRuntimeEndpointProvider.h>
+#include <aws/bedrock-agent-runtime/internal/BedrockAgentRuntimeEndpointRules.h>
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+namespace Aws {
+#ifndef AWS_BEDROCKAGENTRUNTIME_EXPORTS  // Except for Windows DLL
+namespace Endpoint {
+/**
+ * Instantiate endpoint providers
+ */
+template class Aws::Endpoint::EndpointProviderBase<BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeClientConfiguration,
+                                                   BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeBuiltInParameters,
+                                                   BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeClientContextParameters>;
+
+template class Aws::Endpoint::BDDEndpointProvider<BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeClientConfiguration,
+                                                  BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeBuiltInParameters,
+                                                  BedrockAgentRuntime::Endpoint::BedrockAgentRuntimeClientContextParameters>;
+}  // namespace Endpoint
+#endif
+
+namespace BedrockAgentRuntime {
+namespace Endpoint {
+BedrockAgentRuntimeEndpointProvider::BedrockAgentRuntimeEndpointProvider()
+    : BedrockAgentRuntimeDefaultEpProviderBase(Aws::BedrockAgentRuntime::BedrockAgentRuntimeEndpointRules::GetRulesBlob(),
+                                               Aws::BedrockAgentRuntime::BedrockAgentRuntimeEndpointRules::RulesBlobSize) {}
+
+void BedrockAgentRuntimeBuiltInParameters::SetFromClientConfiguration(const BedrockAgentRuntimeClientConfiguration& config) {
+  SetFromClientConfiguration(static_cast<const BedrockAgentRuntimeClientConfiguration::BaseClientConfigClass&>(config));
+}
+
+void BedrockAgentRuntimeBuiltInParameters::SetFromClientConfiguration(const BedrockAgentRuntimeClientConfiguration& config,
+                                                                      const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const BedrockAgentRuntimeClientConfiguration::BaseClientConfigClass&>(config), serviceName);
+}
+
+}  // namespace Endpoint
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

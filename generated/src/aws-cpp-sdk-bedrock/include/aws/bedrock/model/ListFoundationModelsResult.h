@@ -5,65 +5,78 @@
 
 #pragma once
 #include <aws/bedrock/Bedrock_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/bedrock/model/FoundationModelSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Bedrock
-{
-namespace Model
-{
-  class ListFoundationModelsResult
-  {
-  public:
-    AWS_BEDROCK_API ListFoundationModelsResult();
-    AWS_BEDROCK_API ListFoundationModelsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCK_API ListFoundationModelsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Bedrock {
+namespace Model {
+class ListFoundationModelsResult {
+ public:
+  AWS_BEDROCK_API ListFoundationModelsResult() = default;
+  AWS_BEDROCK_API ListFoundationModelsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCK_API ListFoundationModelsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of Amazon Bedrock foundation models.</p>
+   */
+  inline const Aws::Vector<FoundationModelSummary>& GetModelSummaries() const { return m_modelSummaries; }
+  template <typename ModelSummariesT = Aws::Vector<FoundationModelSummary>>
+  void SetModelSummaries(ModelSummariesT&& value) {
+    m_modelSummariesHasBeenSet = true;
+    m_modelSummaries = std::forward<ModelSummariesT>(value);
+  }
+  template <typename ModelSummariesT = Aws::Vector<FoundationModelSummary>>
+  ListFoundationModelsResult& WithModelSummaries(ModelSummariesT&& value) {
+    SetModelSummaries(std::forward<ModelSummariesT>(value));
+    return *this;
+  }
+  template <typename ModelSummariesT = FoundationModelSummary>
+  ListFoundationModelsResult& AddModelSummaries(ModelSummariesT&& value) {
+    m_modelSummariesHasBeenSet = true;
+    m_modelSummaries.emplace_back(std::forward<ModelSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of Amazon Bedrock foundation models.</p>
-     */
-    inline const Aws::Vector<FoundationModelSummary>& GetModelSummaries() const{ return m_modelSummaries; }
-    inline void SetModelSummaries(const Aws::Vector<FoundationModelSummary>& value) { m_modelSummaries = value; }
-    inline void SetModelSummaries(Aws::Vector<FoundationModelSummary>&& value) { m_modelSummaries = std::move(value); }
-    inline ListFoundationModelsResult& WithModelSummaries(const Aws::Vector<FoundationModelSummary>& value) { SetModelSummaries(value); return *this;}
-    inline ListFoundationModelsResult& WithModelSummaries(Aws::Vector<FoundationModelSummary>&& value) { SetModelSummaries(std::move(value)); return *this;}
-    inline ListFoundationModelsResult& AddModelSummaries(const FoundationModelSummary& value) { m_modelSummaries.push_back(value); return *this; }
-    inline ListFoundationModelsResult& AddModelSummaries(FoundationModelSummary&& value) { m_modelSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFoundationModelsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFoundationModelsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFoundationModelsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFoundationModelsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FoundationModelSummary> m_modelSummaries;
+ private:
+  Aws::Vector<FoundationModelSummary> m_modelSummaries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_modelSummariesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

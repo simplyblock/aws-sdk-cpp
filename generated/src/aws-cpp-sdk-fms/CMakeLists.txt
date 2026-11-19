@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-fms "C++ SDK for the AWS fms service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-fms "C++ SDK for Firewall Management Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_FMS_HEADERS
     "include/aws/fms/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_FMS_HEADERS
 
 file(GLOB AWS_FMS_MODEL_HEADERS
     "include/aws/fms/model/*.h"
+)
+
+file(GLOB AWS_FMS_INTERNAL_HEADERS
+    "include/aws/fms/internal/*.h"
 )
 
 file(GLOB AWS_FMS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_FMS_MODEL_SOURCE
 
 file(GLOB FMS_UNIFIED_HEADERS
     ${AWS_FMS_HEADERS}
+    ${AWS_FMS_INTERNAL_HEADERS}
     ${AWS_FMS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\fms" FILES ${AWS_FMS_HEADERS})
+        source_group("Header Files\\aws\\fms\\internal" FILES ${AWS_FMS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\fms\\model" FILES ${AWS_FMS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_FMS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_FMS_MODEL_SOURCE})

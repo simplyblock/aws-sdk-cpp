@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/transcribestreaming/TranscribeStreamingService_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/transcribestreaming/TranscribeStreamingService_EXPORTS.h>
 
-#include <aws/transcribestreaming/TranscribeStreamingServiceEndpointRules.h>
-
-
-namespace Aws
-{
-namespace TranscribeStreamingService
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace TranscribeStreamingService {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using TranscribeStreamingServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,25 @@ using TranscribeStreamingServiceBuiltInParameters = Aws::Endpoint::BuiltInParame
  * The SDK must use service-specific type for each service per specification.
  */
 using TranscribeStreamingServiceEndpointProviderBase =
-    EndpointProviderBase<TranscribeStreamingServiceClientConfiguration, TranscribeStreamingServiceBuiltInParameters, TranscribeStreamingServiceClientContextParameters>;
+    EndpointProviderBase<TranscribeStreamingServiceClientConfiguration, TranscribeStreamingServiceBuiltInParameters,
+                         TranscribeStreamingServiceClientContextParameters>;
 
 using TranscribeStreamingServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<TranscribeStreamingServiceClientConfiguration, TranscribeStreamingServiceBuiltInParameters, TranscribeStreamingServiceClientContextParameters>;
+    BDDEndpointProvider<TranscribeStreamingServiceClientConfiguration, TranscribeStreamingServiceBuiltInParameters,
+                        TranscribeStreamingServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_TRANSCRIBESTREAMINGSERVICE_API TranscribeStreamingServiceEndpointProvider : public TranscribeStreamingServiceDefaultEpProviderBase
-{
-public:
-    using TranscribeStreamingServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_TRANSCRIBESTREAMINGSERVICE_API TranscribeStreamingServiceEndpointProvider
+    : public TranscribeStreamingServiceDefaultEpProviderBase {
+ public:
+  using TranscribeStreamingServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    TranscribeStreamingServiceEndpointProvider()
-      : TranscribeStreamingServiceDefaultEpProviderBase(Aws::TranscribeStreamingService::TranscribeStreamingServiceEndpointRules::GetRulesBlob(), Aws::TranscribeStreamingService::TranscribeStreamingServiceEndpointRules::RulesBlobSize)
-    {}
+  TranscribeStreamingServiceEndpointProvider();
 
-    ~TranscribeStreamingServiceEndpointProvider()
-    {
-    }
+  ~TranscribeStreamingServiceEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace TranscribeStreamingService
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace TranscribeStreamingService
+}  // namespace Aws

@@ -3,30 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/DeleteCustomDomainAssociationRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/redshift/model/DeleteCustomDomainAssociationRequest.h>
 
 using namespace Aws::Redshift::Model;
 using namespace Aws::Utils;
 
-DeleteCustomDomainAssociationRequest::DeleteCustomDomainAssociationRequest() : 
-    m_clusterIdentifierHasBeenSet(false),
-    m_customDomainNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteCustomDomainAssociationRequest::SerializePayload() const
-{
+Aws::String DeleteCustomDomainAssociationRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteCustomDomainAssociation&";
-  if(m_clusterIdentifierHasBeenSet)
-  {
+  if (m_clusterIdentifierHasBeenSet) {
     ss << "ClusterIdentifier=" << StringUtils::URLEncode(m_clusterIdentifier.c_str()) << "&";
   }
 
-  if(m_customDomainNameHasBeenSet)
-  {
+  if (m_customDomainNameHasBeenSet) {
     ss << "CustomDomainName=" << StringUtils::URLEncode(m_customDomainName.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String DeleteCustomDomainAssociationRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteCustomDomainAssociationRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteCustomDomainAssociationRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

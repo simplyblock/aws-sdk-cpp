@@ -3,41 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/DescribeInterconnectsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeInterconnectsRequest::DescribeInterconnectsRequest() : 
-    m_interconnectIdHasBeenSet(false)
-{
-}
+Aws::String DescribeInterconnectsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeInterconnectsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_interconnectIdHasBeenSet)
-  {
-   payload.WithString("interconnectId", m_interconnectId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_interconnectIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_interconnectIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("interconnectId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_interconnectId.c_str()));
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("maxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("nextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeInterconnectsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeInterconnectsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.DescribeInterconnects"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

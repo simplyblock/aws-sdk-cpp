@@ -4,81 +4,102 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
 #include <aws/elasticloadbalancingv2/model/ResponseMetadata.h>
 #include <aws/elasticloadbalancingv2/model/SslPolicy.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancingv2
-{
-namespace Model
-{
-  class DescribeSSLPoliciesResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult();
-    AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancingv2 {
+namespace Model {
+class DescribeSSLPoliciesResult {
+ public:
+  AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult() = default;
+  AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCINGV2_API DescribeSSLPoliciesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the security policies.</p>
+   */
+  inline const Aws::Vector<SslPolicy>& GetSslPolicies() const { return m_sslPolicies; }
+  template <typename SslPoliciesT = Aws::Vector<SslPolicy>>
+  void SetSslPolicies(SslPoliciesT&& value) {
+    m_sslPoliciesHasBeenSet = true;
+    m_sslPolicies = std::forward<SslPoliciesT>(value);
+  }
+  template <typename SslPoliciesT = Aws::Vector<SslPolicy>>
+  DescribeSSLPoliciesResult& WithSslPolicies(SslPoliciesT&& value) {
+    SetSslPolicies(std::forward<SslPoliciesT>(value));
+    return *this;
+  }
+  template <typename SslPoliciesT = SslPolicy>
+  DescribeSSLPoliciesResult& AddSslPolicies(SslPoliciesT&& value) {
+    m_sslPoliciesHasBeenSet = true;
+    m_sslPolicies.emplace_back(std::forward<SslPoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the security policies.</p>
-     */
-    inline const Aws::Vector<SslPolicy>& GetSslPolicies() const{ return m_sslPolicies; }
-    inline void SetSslPolicies(const Aws::Vector<SslPolicy>& value) { m_sslPolicies = value; }
-    inline void SetSslPolicies(Aws::Vector<SslPolicy>&& value) { m_sslPolicies = std::move(value); }
-    inline DescribeSSLPoliciesResult& WithSslPolicies(const Aws::Vector<SslPolicy>& value) { SetSslPolicies(value); return *this;}
-    inline DescribeSSLPoliciesResult& WithSslPolicies(Aws::Vector<SslPolicy>&& value) { SetSslPolicies(std::move(value)); return *this;}
-    inline DescribeSSLPoliciesResult& AddSslPolicies(const SslPolicy& value) { m_sslPolicies.push_back(value); return *this; }
-    inline DescribeSSLPoliciesResult& AddSslPolicies(SslPolicy&& value) { m_sslPolicies.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If there are additional results, this is the marker for the next set of
+   * results. Otherwise, this is null.</p>
+   */
+  inline const Aws::String& GetNextMarker() const { return m_nextMarker; }
+  template <typename NextMarkerT = Aws::String>
+  void SetNextMarker(NextMarkerT&& value) {
+    m_nextMarkerHasBeenSet = true;
+    m_nextMarker = std::forward<NextMarkerT>(value);
+  }
+  template <typename NextMarkerT = Aws::String>
+  DescribeSSLPoliciesResult& WithNextMarker(NextMarkerT&& value) {
+    SetNextMarker(std::forward<NextMarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If there are additional results, this is the marker for the next set of
-     * results. Otherwise, this is null.</p>
-     */
-    inline const Aws::String& GetNextMarker() const{ return m_nextMarker; }
-    inline void SetNextMarker(const Aws::String& value) { m_nextMarker = value; }
-    inline void SetNextMarker(Aws::String&& value) { m_nextMarker = std::move(value); }
-    inline void SetNextMarker(const char* value) { m_nextMarker.assign(value); }
-    inline DescribeSSLPoliciesResult& WithNextMarker(const Aws::String& value) { SetNextMarker(value); return *this;}
-    inline DescribeSSLPoliciesResult& WithNextMarker(Aws::String&& value) { SetNextMarker(std::move(value)); return *this;}
-    inline DescribeSSLPoliciesResult& WithNextMarker(const char* value) { SetNextMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeSSLPoliciesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeSSLPoliciesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeSSLPoliciesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SslPolicy> m_sslPolicies;
+ private:
+  Aws::Vector<SslPolicy> m_sslPolicies;
 
-    Aws::String m_nextMarker;
+  Aws::String m_nextMarker;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sslPoliciesHasBeenSet = false;
+  bool m_nextMarkerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElasticLoadBalancingv2
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancingv2
+}  // namespace Aws

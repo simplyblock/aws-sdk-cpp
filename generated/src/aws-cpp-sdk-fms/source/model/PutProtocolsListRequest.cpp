@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/PutProtocolsListRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::FMS::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutProtocolsListRequest::PutProtocolsListRequest() : 
-    m_protocolsListHasBeenSet(false),
-    m_tagListHasBeenSet(false)
-{
-}
+Aws::String PutProtocolsListRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String PutProtocolsListRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_protocolsListHasBeenSet)
-  {
-   payload.WithObject("ProtocolsList", m_protocolsList.Jsonize());
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_protocolsListHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagListHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagListJsonList(m_tagList.size());
-   for(unsigned tagListIndex = 0; tagListIndex < tagListJsonList.GetLength(); ++tagListIndex)
-   {
-     tagListJsonList[tagListIndex].AsObject(m_tagList[tagListIndex].Jsonize());
-   }
-   payload.WithArray("TagList", std::move(tagListJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_protocolsListHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProtocolsList"));
+    m_protocolsList.CborEncode(encoder);
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagListHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TagList"));
+    encoder.WriteArrayStart(m_tagList.size());
+    for (const auto& item_0 : m_tagList) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection PutProtocolsListRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutProtocolsListRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSFMS_20180101.PutProtocolsList"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -1,0 +1,102 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/odb/OdbRequest.h>
+#include <aws/odb/Odb_EXPORTS.h>
+
+#include <utility>
+
+namespace Aws {
+namespace odb {
+namespace Model {
+
+/**
+ */
+class StartDbNodeRequest : public OdbRequest {
+ public:
+  AWS_ODB_API StartDbNodeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartDbNode"; }
+
+  AWS_ODB_API Aws::String SerializePayload() const override;
+
+  AWS_ODB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
+  /**
+   * <p>The unique identifier of the VM cluster that contains the DB node to start.
+   * You must specify either this parameter or <code>exadbVmClusterId</code>.</p>
+   */
+  inline const Aws::String& GetCloudVmClusterId() const { return m_cloudVmClusterId; }
+  inline bool CloudVmClusterIdHasBeenSet() const { return m_cloudVmClusterIdHasBeenSet; }
+  template <typename CloudVmClusterIdT = Aws::String>
+  void SetCloudVmClusterId(CloudVmClusterIdT&& value) {
+    m_cloudVmClusterIdHasBeenSet = true;
+    m_cloudVmClusterId = std::forward<CloudVmClusterIdT>(value);
+  }
+  template <typename CloudVmClusterIdT = Aws::String>
+  StartDbNodeRequest& WithCloudVmClusterId(CloudVmClusterIdT&& value) {
+    SetCloudVmClusterId(std::forward<CloudVmClusterIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The unique identifier of the Exascale VM cluster that contains the DB node to
+   * start. You must specify either this parameter or
+   * <code>cloudVmClusterId</code>.</p>
+   */
+  inline const Aws::String& GetExadbVmClusterId() const { return m_exadbVmClusterId; }
+  inline bool ExadbVmClusterIdHasBeenSet() const { return m_exadbVmClusterIdHasBeenSet; }
+  template <typename ExadbVmClusterIdT = Aws::String>
+  void SetExadbVmClusterId(ExadbVmClusterIdT&& value) {
+    m_exadbVmClusterIdHasBeenSet = true;
+    m_exadbVmClusterId = std::forward<ExadbVmClusterIdT>(value);
+  }
+  template <typename ExadbVmClusterIdT = Aws::String>
+  StartDbNodeRequest& WithExadbVmClusterId(ExadbVmClusterIdT&& value) {
+    SetExadbVmClusterId(std::forward<ExadbVmClusterIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The unique identifier of the DB node to start.</p>
+   */
+  inline const Aws::String& GetDbNodeId() const { return m_dbNodeId; }
+  inline bool DbNodeIdHasBeenSet() const { return m_dbNodeIdHasBeenSet; }
+  template <typename DbNodeIdT = Aws::String>
+  void SetDbNodeId(DbNodeIdT&& value) {
+    m_dbNodeIdHasBeenSet = true;
+    m_dbNodeId = std::forward<DbNodeIdT>(value);
+  }
+  template <typename DbNodeIdT = Aws::String>
+  StartDbNodeRequest& WithDbNodeId(DbNodeIdT&& value) {
+    SetDbNodeId(std::forward<DbNodeIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_cloudVmClusterId;
+
+  Aws::String m_exadbVmClusterId;
+
+  Aws::String m_dbNodeId;
+  bool m_cloudVmClusterIdHasBeenSet = false;
+  bool m_exadbVmClusterIdHasBeenSet = false;
+  bool m_dbNodeIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace odb
+}  // namespace Aws

@@ -4,85 +4,99 @@
  */
 
 #pragma once
-#include <aws/networkmanager/NetworkManager_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/networkmanager/NetworkManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class UpdateNetworkResourceMetadataResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult();
-    AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class UpdateNetworkResourceMetadataResult {
+ public:
+  AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult() = default;
+  AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API UpdateNetworkResourceMetadataResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the resource.</p>
+   */
+  inline const Aws::String& GetResourceArn() const { return m_resourceArn; }
+  template <typename ResourceArnT = Aws::String>
+  void SetResourceArn(ResourceArnT&& value) {
+    m_resourceArnHasBeenSet = true;
+    m_resourceArn = std::forward<ResourceArnT>(value);
+  }
+  template <typename ResourceArnT = Aws::String>
+  UpdateNetworkResourceMetadataResult& WithResourceArn(ResourceArnT&& value) {
+    SetResourceArn(std::forward<ResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the resource.</p>
-     */
-    inline const Aws::String& GetResourceArn() const{ return m_resourceArn; }
-    inline void SetResourceArn(const Aws::String& value) { m_resourceArn = value; }
-    inline void SetResourceArn(Aws::String&& value) { m_resourceArn = std::move(value); }
-    inline void SetResourceArn(const char* value) { m_resourceArn.assign(value); }
-    inline UpdateNetworkResourceMetadataResult& WithResourceArn(const Aws::String& value) { SetResourceArn(value); return *this;}
-    inline UpdateNetworkResourceMetadataResult& WithResourceArn(Aws::String&& value) { SetResourceArn(std::move(value)); return *this;}
-    inline UpdateNetworkResourceMetadataResult& WithResourceArn(const char* value) { SetResourceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The updated resource metadata.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetMetadata() const { return m_metadata; }
+  template <typename MetadataT = Aws::Map<Aws::String, Aws::String>>
+  void SetMetadata(MetadataT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata = std::forward<MetadataT>(value);
+  }
+  template <typename MetadataT = Aws::Map<Aws::String, Aws::String>>
+  UpdateNetworkResourceMetadataResult& WithMetadata(MetadataT&& value) {
+    SetMetadata(std::forward<MetadataT>(value));
+    return *this;
+  }
+  template <typename MetadataKeyT = Aws::String, typename MetadataValueT = Aws::String>
+  UpdateNetworkResourceMetadataResult& AddMetadata(MetadataKeyT&& key, MetadataValueT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata.emplace(std::forward<MetadataKeyT>(key), std::forward<MetadataValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The updated resource metadata.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetMetadata() const{ return m_metadata; }
-    inline void SetMetadata(const Aws::Map<Aws::String, Aws::String>& value) { m_metadata = value; }
-    inline void SetMetadata(Aws::Map<Aws::String, Aws::String>&& value) { m_metadata = std::move(value); }
-    inline UpdateNetworkResourceMetadataResult& WithMetadata(const Aws::Map<Aws::String, Aws::String>& value) { SetMetadata(value); return *this;}
-    inline UpdateNetworkResourceMetadataResult& WithMetadata(Aws::Map<Aws::String, Aws::String>&& value) { SetMetadata(std::move(value)); return *this;}
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(const Aws::String& key, const Aws::String& value) { m_metadata.emplace(key, value); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(Aws::String&& key, const Aws::String& value) { m_metadata.emplace(std::move(key), value); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(const Aws::String& key, Aws::String&& value) { m_metadata.emplace(key, std::move(value)); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(Aws::String&& key, Aws::String&& value) { m_metadata.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(const char* key, Aws::String&& value) { m_metadata.emplace(key, std::move(value)); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(Aws::String&& key, const char* value) { m_metadata.emplace(std::move(key), value); return *this; }
-    inline UpdateNetworkResourceMetadataResult& AddMetadata(const char* key, const char* value) { m_metadata.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateNetworkResourceMetadataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateNetworkResourceMetadataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateNetworkResourceMetadataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateNetworkResourceMetadataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_resourceArn;
+ private:
+  Aws::String m_resourceArn;
 
-    Aws::Map<Aws::String, Aws::String> m_metadata;
+  Aws::Map<Aws::String, Aws::String> m_metadata;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceArnHasBeenSet = false;
+  bool m_metadataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

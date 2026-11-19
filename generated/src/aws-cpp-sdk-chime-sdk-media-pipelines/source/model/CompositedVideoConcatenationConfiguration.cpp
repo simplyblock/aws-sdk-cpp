@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ChimeSDKMediaPipelines
-{
-namespace Model
-{
+namespace Aws {
+namespace ChimeSDKMediaPipelines {
+namespace Model {
 
-CompositedVideoConcatenationConfiguration::CompositedVideoConcatenationConfiguration() : 
-    m_state(ArtifactsConcatenationState::NOT_SET),
-    m_stateHasBeenSet(false)
-{
-}
+CompositedVideoConcatenationConfiguration::CompositedVideoConcatenationConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-CompositedVideoConcatenationConfiguration::CompositedVideoConcatenationConfiguration(JsonView jsonValue)
-  : CompositedVideoConcatenationConfiguration()
-{
-  *this = jsonValue;
-}
-
-CompositedVideoConcatenationConfiguration& CompositedVideoConcatenationConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("State"))
-  {
+CompositedVideoConcatenationConfiguration& CompositedVideoConcatenationConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("State")) {
     m_state = ArtifactsConcatenationStateMapper::GetArtifactsConcatenationStateForName(jsonValue.GetString("State"));
-
     m_stateHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CompositedVideoConcatenationConfiguration::Jsonize() const
-{
+JsonValue CompositedVideoConcatenationConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_stateHasBeenSet)
-  {
-   payload.WithString("State", ArtifactsConcatenationStateMapper::GetNameForArtifactsConcatenationState(m_state));
+  if (m_stateHasBeenSet) {
+    payload.WithString("State", ArtifactsConcatenationStateMapper::GetNameForArtifactsConcatenationState(m_state));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ChimeSDKMediaPipelines
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMediaPipelines
+}  // namespace Aws

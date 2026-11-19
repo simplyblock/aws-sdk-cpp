@@ -4,153 +4,184 @@
  */
 
 #pragma once
-#include <aws/kendra/Kendra_EXPORTS.h>
-#include <aws/kendra/KendraRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kendra/model/Principal.h>
+#include <aws/kendra/KendraRequest.h>
+#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/kendra/model/HierarchicalPrincipal.h>
+#include <aws/kendra/model/Principal.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace kendra
-{
-namespace Model
-{
+namespace Aws {
+namespace kendra {
+namespace Model {
 
+/**
+ */
+class CreateAccessControlConfigurationRequest : public KendraRequest {
+ public:
+  AWS_KENDRA_API CreateAccessControlConfigurationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateAccessControlConfiguration"; }
+
+  AWS_KENDRA_API Aws::String SerializePayload() const override;
+
+  AWS_KENDRA_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the index to create an access control configuration for
+   * your documents.</p>
    */
-  class CreateAccessControlConfigurationRequest : public KendraRequest
-  {
-  public:
-    AWS_KENDRA_API CreateAccessControlConfigurationRequest();
+  inline const Aws::String& GetIndexId() const { return m_indexId; }
+  inline bool IndexIdHasBeenSet() const { return m_indexIdHasBeenSet; }
+  template <typename IndexIdT = Aws::String>
+  void SetIndexId(IndexIdT&& value) {
+    m_indexIdHasBeenSet = true;
+    m_indexId = std::forward<IndexIdT>(value);
+  }
+  template <typename IndexIdT = Aws::String>
+  CreateAccessControlConfigurationRequest& WithIndexId(IndexIdT&& value) {
+    SetIndexId(std::forward<IndexIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateAccessControlConfiguration"; }
+  ///@{
+  /**
+   * <p>A name for the access control configuration.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateAccessControlConfigurationRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KENDRA_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A description for the access control configuration.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateAccessControlConfigurationRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KENDRA_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Information on principals (users and/or groups) and which documents they
+   * should have access to. This is useful for user context filtering, where search
+   * results are filtered based on the user or their group access to documents.</p>
+   */
+  inline const Aws::Vector<Principal>& GetAccessControlList() const { return m_accessControlList; }
+  inline bool AccessControlListHasBeenSet() const { return m_accessControlListHasBeenSet; }
+  template <typename AccessControlListT = Aws::Vector<Principal>>
+  void SetAccessControlList(AccessControlListT&& value) {
+    m_accessControlListHasBeenSet = true;
+    m_accessControlList = std::forward<AccessControlListT>(value);
+  }
+  template <typename AccessControlListT = Aws::Vector<Principal>>
+  CreateAccessControlConfigurationRequest& WithAccessControlList(AccessControlListT&& value) {
+    SetAccessControlList(std::forward<AccessControlListT>(value));
+    return *this;
+  }
+  template <typename AccessControlListT = Principal>
+  CreateAccessControlConfigurationRequest& AddAccessControlList(AccessControlListT&& value) {
+    m_accessControlListHasBeenSet = true;
+    m_accessControlList.emplace_back(std::forward<AccessControlListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of <a
+   * href="https://docs.aws.amazon.com/kendra/latest/dg/API_Principal.html">principal</a>
+   * lists that define the hierarchy for which documents users should have access
+   * to.</p>
+   */
+  inline const Aws::Vector<HierarchicalPrincipal>& GetHierarchicalAccessControlList() const { return m_hierarchicalAccessControlList; }
+  inline bool HierarchicalAccessControlListHasBeenSet() const { return m_hierarchicalAccessControlListHasBeenSet; }
+  template <typename HierarchicalAccessControlListT = Aws::Vector<HierarchicalPrincipal>>
+  void SetHierarchicalAccessControlList(HierarchicalAccessControlListT&& value) {
+    m_hierarchicalAccessControlListHasBeenSet = true;
+    m_hierarchicalAccessControlList = std::forward<HierarchicalAccessControlListT>(value);
+  }
+  template <typename HierarchicalAccessControlListT = Aws::Vector<HierarchicalPrincipal>>
+  CreateAccessControlConfigurationRequest& WithHierarchicalAccessControlList(HierarchicalAccessControlListT&& value) {
+    SetHierarchicalAccessControlList(std::forward<HierarchicalAccessControlListT>(value));
+    return *this;
+  }
+  template <typename HierarchicalAccessControlListT = HierarchicalPrincipal>
+  CreateAccessControlConfigurationRequest& AddHierarchicalAccessControlList(HierarchicalAccessControlListT&& value) {
+    m_hierarchicalAccessControlListHasBeenSet = true;
+    m_hierarchicalAccessControlList.emplace_back(std::forward<HierarchicalAccessControlListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the index to create an access control configuration for
-     * your documents.</p>
-     */
-    inline const Aws::String& GetIndexId() const{ return m_indexId; }
-    inline bool IndexIdHasBeenSet() const { return m_indexIdHasBeenSet; }
-    inline void SetIndexId(const Aws::String& value) { m_indexIdHasBeenSet = true; m_indexId = value; }
-    inline void SetIndexId(Aws::String&& value) { m_indexIdHasBeenSet = true; m_indexId = std::move(value); }
-    inline void SetIndexId(const char* value) { m_indexIdHasBeenSet = true; m_indexId.assign(value); }
-    inline CreateAccessControlConfigurationRequest& WithIndexId(const Aws::String& value) { SetIndexId(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithIndexId(Aws::String&& value) { SetIndexId(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithIndexId(const char* value) { SetIndexId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A token that you provide to identify the request to create an access control
+   * configuration. Multiple calls to the
+   * <code>CreateAccessControlConfiguration</code> API with the same client token
+   * will create only one access control configuration.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateAccessControlConfigurationRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_indexId;
 
-    ///@{
-    /**
-     * <p>A name for the access control configuration.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateAccessControlConfigurationRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A description for the access control configuration.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateAccessControlConfigurationRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>Information on principals (users and/or groups) and which documents they
-     * should have access to. This is useful for user context filtering, where search
-     * results are filtered based on the user or their group access to documents.</p>
-     */
-    inline const Aws::Vector<Principal>& GetAccessControlList() const{ return m_accessControlList; }
-    inline bool AccessControlListHasBeenSet() const { return m_accessControlListHasBeenSet; }
-    inline void SetAccessControlList(const Aws::Vector<Principal>& value) { m_accessControlListHasBeenSet = true; m_accessControlList = value; }
-    inline void SetAccessControlList(Aws::Vector<Principal>&& value) { m_accessControlListHasBeenSet = true; m_accessControlList = std::move(value); }
-    inline CreateAccessControlConfigurationRequest& WithAccessControlList(const Aws::Vector<Principal>& value) { SetAccessControlList(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithAccessControlList(Aws::Vector<Principal>&& value) { SetAccessControlList(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& AddAccessControlList(const Principal& value) { m_accessControlListHasBeenSet = true; m_accessControlList.push_back(value); return *this; }
-    inline CreateAccessControlConfigurationRequest& AddAccessControlList(Principal&& value) { m_accessControlListHasBeenSet = true; m_accessControlList.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Principal> m_accessControlList;
 
-    ///@{
-    /**
-     * <p>The list of <a
-     * href="https://docs.aws.amazon.com/kendra/latest/dg/API_Principal.html">principal</a>
-     * lists that define the hierarchy for which documents users should have access
-     * to.</p>
-     */
-    inline const Aws::Vector<HierarchicalPrincipal>& GetHierarchicalAccessControlList() const{ return m_hierarchicalAccessControlList; }
-    inline bool HierarchicalAccessControlListHasBeenSet() const { return m_hierarchicalAccessControlListHasBeenSet; }
-    inline void SetHierarchicalAccessControlList(const Aws::Vector<HierarchicalPrincipal>& value) { m_hierarchicalAccessControlListHasBeenSet = true; m_hierarchicalAccessControlList = value; }
-    inline void SetHierarchicalAccessControlList(Aws::Vector<HierarchicalPrincipal>&& value) { m_hierarchicalAccessControlListHasBeenSet = true; m_hierarchicalAccessControlList = std::move(value); }
-    inline CreateAccessControlConfigurationRequest& WithHierarchicalAccessControlList(const Aws::Vector<HierarchicalPrincipal>& value) { SetHierarchicalAccessControlList(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithHierarchicalAccessControlList(Aws::Vector<HierarchicalPrincipal>&& value) { SetHierarchicalAccessControlList(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& AddHierarchicalAccessControlList(const HierarchicalPrincipal& value) { m_hierarchicalAccessControlListHasBeenSet = true; m_hierarchicalAccessControlList.push_back(value); return *this; }
-    inline CreateAccessControlConfigurationRequest& AddHierarchicalAccessControlList(HierarchicalPrincipal&& value) { m_hierarchicalAccessControlListHasBeenSet = true; m_hierarchicalAccessControlList.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<HierarchicalPrincipal> m_hierarchicalAccessControlList;
 
-    ///@{
-    /**
-     * <p>A token that you provide to identify the request to create an access control
-     * configuration. Multiple calls to the
-     * <code>CreateAccessControlConfiguration</code> API with the same client token
-     * will create only one access control configuration.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateAccessControlConfigurationRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateAccessControlConfigurationRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_indexIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_accessControlListHasBeenSet = false;
+  bool m_hierarchicalAccessControlListHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_indexId;
-    bool m_indexIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Vector<Principal> m_accessControlList;
-    bool m_accessControlListHasBeenSet = false;
-
-    Aws::Vector<HierarchicalPrincipal> m_hierarchicalAccessControlList;
-    bool m_hierarchicalAccessControlListHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

@@ -4,71 +4,125 @@
  */
 
 #include <aws/comprehend/model/PartOfSpeechTag.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-PartOfSpeechTag::PartOfSpeechTag() : 
-    m_tag(PartOfSpeechTagType::NOT_SET),
-    m_tagHasBeenSet(false),
-    m_score(0.0),
-    m_scoreHasBeenSet(false)
-{
-}
+PartOfSpeechTag::PartOfSpeechTag(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-PartOfSpeechTag::PartOfSpeechTag(JsonView jsonValue)
-  : PartOfSpeechTag()
-{
-  *this = jsonValue;
-}
+PartOfSpeechTag& PartOfSpeechTag::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-PartOfSpeechTag& PartOfSpeechTag::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Tag"))
-  {
-    m_tag = PartOfSpeechTagTypeMapper::GetPartOfSpeechTagTypeForName(jsonValue.GetString("Tag"));
+              if (initialKeyStr == "Tag") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_tag = PartOfSpeechTagTypeMapper::GetPartOfSpeechTagTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_tagHasBeenSet = true;
+              }
 
-    m_tagHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Score") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_score = val.value();
+                }
+                m_scoreHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("PartOfSpeechTag", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Score"))
-  {
-    m_score = jsonValue.GetDouble("Score");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_scoreHasBeenSet = true;
+            if (initialKeyStr == "Tag") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_tag = PartOfSpeechTagTypeMapper::GetPartOfSpeechTagTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_tagHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Score") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_score = val.value();
+              }
+              m_scoreHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue PartOfSpeechTag::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_tagHasBeenSet)
-  {
-   payload.WithString("Tag", PartOfSpeechTagTypeMapper::GetNameForPartOfSpeechTagType(m_tag));
+void PartOfSpeechTag::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_tagHasBeenSet) {
+    mapSize++;
+  }
+  if (m_scoreHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_scoreHasBeenSet)
-  {
-   payload.WithDouble("Score", m_score);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_tagHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tag"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PartOfSpeechTagTypeMapper::GetNameForPartOfSpeechTagType(m_tag).c_str()));
   }
 
-  return payload;
+  if (m_scoreHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Score"));
+    encoder.WriteFloat(m_score);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

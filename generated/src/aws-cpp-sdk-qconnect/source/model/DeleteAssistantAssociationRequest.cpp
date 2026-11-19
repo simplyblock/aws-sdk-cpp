@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/DeleteAssistantAssociationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qconnect/model/DeleteAssistantAssociationRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::QConnect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAssistantAssociationRequest::DeleteAssistantAssociationRequest() : 
-    m_assistantAssociationIdHasBeenSet(false),
-    m_assistantIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAssistantAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAssistantAssociationRequest::SerializePayload() const { return {}; }

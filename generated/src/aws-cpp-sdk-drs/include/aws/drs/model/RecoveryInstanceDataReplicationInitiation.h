@@ -4,77 +4,84 @@
  */
 
 #pragma once
-#include <aws/drs/Drs_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/drs/Drs_EXPORTS.h>
 #include <aws/drs/model/RecoveryInstanceDataReplicationInitiationStep.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace drs
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace drs {
+namespace Model {
 
+/**
+ * <p>Data replication initiation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/drs-2020-02-26/RecoveryInstanceDataReplicationInitiation">AWS
+ * API Reference</a></p>
+ */
+class RecoveryInstanceDataReplicationInitiation {
+ public:
+  AWS_DRS_API RecoveryInstanceDataReplicationInitiation() = default;
+  AWS_DRS_API RecoveryInstanceDataReplicationInitiation(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DRS_API RecoveryInstanceDataReplicationInitiation& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DRS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Data replication initiation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/drs-2020-02-26/RecoveryInstanceDataReplicationInitiation">AWS
-   * API Reference</a></p>
+   * <p>The date and time of the current attempt to initiate data replication.</p>
    */
-  class RecoveryInstanceDataReplicationInitiation
-  {
-  public:
-    AWS_DRS_API RecoveryInstanceDataReplicationInitiation();
-    AWS_DRS_API RecoveryInstanceDataReplicationInitiation(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DRS_API RecoveryInstanceDataReplicationInitiation& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DRS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetStartDateTime() const { return m_startDateTime; }
+  inline bool StartDateTimeHasBeenSet() const { return m_startDateTimeHasBeenSet; }
+  template <typename StartDateTimeT = Aws::String>
+  void SetStartDateTime(StartDateTimeT&& value) {
+    m_startDateTimeHasBeenSet = true;
+    m_startDateTime = std::forward<StartDateTimeT>(value);
+  }
+  template <typename StartDateTimeT = Aws::String>
+  RecoveryInstanceDataReplicationInitiation& WithStartDateTime(StartDateTimeT&& value) {
+    SetStartDateTime(std::forward<StartDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The steps of the current attempt to initiate data replication.</p>
+   */
+  inline const Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>& GetSteps() const { return m_steps; }
+  inline bool StepsHasBeenSet() const { return m_stepsHasBeenSet; }
+  template <typename StepsT = Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>>
+  void SetSteps(StepsT&& value) {
+    m_stepsHasBeenSet = true;
+    m_steps = std::forward<StepsT>(value);
+  }
+  template <typename StepsT = Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>>
+  RecoveryInstanceDataReplicationInitiation& WithSteps(StepsT&& value) {
+    SetSteps(std::forward<StepsT>(value));
+    return *this;
+  }
+  template <typename StepsT = RecoveryInstanceDataReplicationInitiationStep>
+  RecoveryInstanceDataReplicationInitiation& AddSteps(StepsT&& value) {
+    m_stepsHasBeenSet = true;
+    m_steps.emplace_back(std::forward<StepsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_startDateTime;
 
-    ///@{
-    /**
-     * <p>The date and time of the current attempt to initiate data replication.</p>
-     */
-    inline const Aws::String& GetStartDateTime() const{ return m_startDateTime; }
-    inline bool StartDateTimeHasBeenSet() const { return m_startDateTimeHasBeenSet; }
-    inline void SetStartDateTime(const Aws::String& value) { m_startDateTimeHasBeenSet = true; m_startDateTime = value; }
-    inline void SetStartDateTime(Aws::String&& value) { m_startDateTimeHasBeenSet = true; m_startDateTime = std::move(value); }
-    inline void SetStartDateTime(const char* value) { m_startDateTimeHasBeenSet = true; m_startDateTime.assign(value); }
-    inline RecoveryInstanceDataReplicationInitiation& WithStartDateTime(const Aws::String& value) { SetStartDateTime(value); return *this;}
-    inline RecoveryInstanceDataReplicationInitiation& WithStartDateTime(Aws::String&& value) { SetStartDateTime(std::move(value)); return *this;}
-    inline RecoveryInstanceDataReplicationInitiation& WithStartDateTime(const char* value) { SetStartDateTime(value); return *this;}
-    ///@}
+  Aws::Vector<RecoveryInstanceDataReplicationInitiationStep> m_steps;
+  bool m_startDateTimeHasBeenSet = false;
+  bool m_stepsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The steps of the current attempt to initiate data replication.</p>
-     */
-    inline const Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>& GetSteps() const{ return m_steps; }
-    inline bool StepsHasBeenSet() const { return m_stepsHasBeenSet; }
-    inline void SetSteps(const Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>& value) { m_stepsHasBeenSet = true; m_steps = value; }
-    inline void SetSteps(Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>&& value) { m_stepsHasBeenSet = true; m_steps = std::move(value); }
-    inline RecoveryInstanceDataReplicationInitiation& WithSteps(const Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>& value) { SetSteps(value); return *this;}
-    inline RecoveryInstanceDataReplicationInitiation& WithSteps(Aws::Vector<RecoveryInstanceDataReplicationInitiationStep>&& value) { SetSteps(std::move(value)); return *this;}
-    inline RecoveryInstanceDataReplicationInitiation& AddSteps(const RecoveryInstanceDataReplicationInitiationStep& value) { m_stepsHasBeenSet = true; m_steps.push_back(value); return *this; }
-    inline RecoveryInstanceDataReplicationInitiation& AddSteps(RecoveryInstanceDataReplicationInitiationStep&& value) { m_stepsHasBeenSet = true; m_steps.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_startDateTime;
-    bool m_startDateTimeHasBeenSet = false;
-
-    Aws::Vector<RecoveryInstanceDataReplicationInitiationStep> m_steps;
-    bool m_stepsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace drs
-} // namespace Aws
+}  // namespace Model
+}  // namespace drs
+}  // namespace Aws

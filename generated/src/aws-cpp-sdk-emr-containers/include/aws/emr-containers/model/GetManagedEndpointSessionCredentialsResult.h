@@ -4,92 +4,134 @@
  */
 
 #pragma once
-#include <aws/emr-containers/EMRContainers_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/emr-containers/model/Credentials.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/emr-containers/EMRContainers_EXPORTS.h>
+#include <aws/emr-containers/model/Credentials.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EMRContainers
-{
-namespace Model
-{
-  class GetManagedEndpointSessionCredentialsResult
-  {
-  public:
-    AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult();
-    AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EMRContainers {
+namespace Model {
+class GetManagedEndpointSessionCredentialsResult {
+ public:
+  AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult() = default;
+  AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EMRCONTAINERS_API GetManagedEndpointSessionCredentialsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the session token returned.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetManagedEndpointSessionCredentialsResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the session token returned.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline GetManagedEndpointSessionCredentialsResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The structure containing the session credentials.</p>
+   */
+  inline const Credentials& GetCredentials() const { return m_credentials; }
+  template <typename CredentialsT = Credentials>
+  void SetCredentials(CredentialsT&& value) {
+    m_credentialsHasBeenSet = true;
+    m_credentials = std::forward<CredentialsT>(value);
+  }
+  template <typename CredentialsT = Credentials>
+  GetManagedEndpointSessionCredentialsResult& WithCredentials(CredentialsT&& value) {
+    SetCredentials(std::forward<CredentialsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The structure containing the session credentials.</p>
-     */
-    inline const Credentials& GetCredentials() const{ return m_credentials; }
-    inline void SetCredentials(const Credentials& value) { m_credentials = value; }
-    inline void SetCredentials(Credentials&& value) { m_credentials = std::move(value); }
-    inline GetManagedEndpointSessionCredentialsResult& WithCredentials(const Credentials& value) { SetCredentials(value); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithCredentials(Credentials&& value) { SetCredentials(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The session credentials that the operation returns.</p>
+   */
+  inline const Credentials& GetEndpointCredentials() const { return m_endpointCredentials; }
+  template <typename EndpointCredentialsT = Credentials>
+  void SetEndpointCredentials(EndpointCredentialsT&& value) {
+    m_endpointCredentialsHasBeenSet = true;
+    m_endpointCredentials = std::forward<EndpointCredentialsT>(value);
+  }
+  template <typename EndpointCredentialsT = Credentials>
+  GetManagedEndpointSessionCredentialsResult& WithEndpointCredentials(EndpointCredentialsT&& value) {
+    SetEndpointCredentials(std::forward<EndpointCredentialsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time when the session token will expire.</p>
-     */
-    inline const Aws::Utils::DateTime& GetExpiresAt() const{ return m_expiresAt; }
-    inline void SetExpiresAt(const Aws::Utils::DateTime& value) { m_expiresAt = value; }
-    inline void SetExpiresAt(Aws::Utils::DateTime&& value) { m_expiresAt = std::move(value); }
-    inline GetManagedEndpointSessionCredentialsResult& WithExpiresAt(const Aws::Utils::DateTime& value) { SetExpiresAt(value); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithExpiresAt(Aws::Utils::DateTime&& value) { SetExpiresAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time when the session token will expire.</p>
+   */
+  inline const Aws::Utils::DateTime& GetExpiresAt() const { return m_expiresAt; }
+  template <typename ExpiresAtT = Aws::Utils::DateTime>
+  void SetExpiresAt(ExpiresAtT&& value) {
+    m_expiresAtHasBeenSet = true;
+    m_expiresAt = std::forward<ExpiresAtT>(value);
+  }
+  template <typename ExpiresAtT = Aws::Utils::DateTime>
+  GetManagedEndpointSessionCredentialsResult& WithExpiresAt(ExpiresAtT&& value) {
+    SetExpiresAt(std::forward<ExpiresAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetManagedEndpointSessionCredentialsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetManagedEndpointSessionCredentialsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_id;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetManagedEndpointSessionCredentialsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Credentials m_credentials;
+ private:
+  Aws::String m_id;
 
-    Aws::Utils::DateTime m_expiresAt;
+  Credentials m_credentials;
 
-    Aws::String m_requestId;
-  };
+  Credentials m_endpointCredentials;
 
-} // namespace Model
-} // namespace EMRContainers
-} // namespace Aws
+  Aws::Utils::DateTime m_expiresAt{};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_idHasBeenSet = false;
+  bool m_credentialsHasBeenSet = false;
+  bool m_endpointCredentialsHasBeenSet = false;
+  bool m_expiresAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace EMRContainers
+}  // namespace Aws

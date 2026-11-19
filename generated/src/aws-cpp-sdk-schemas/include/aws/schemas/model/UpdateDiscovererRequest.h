@@ -4,84 +4,93 @@
  */
 
 #pragma once
-#include <aws/schemas/Schemas_EXPORTS.h>
-#include <aws/schemas/SchemasRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/schemas/SchemasRequest.h>
+#include <aws/schemas/Schemas_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Schemas
-{
-namespace Model
-{
+namespace Aws {
+namespace Schemas {
+namespace Model {
 
+/**
+ */
+class UpdateDiscovererRequest : public SchemasRequest {
+ public:
+  AWS_SCHEMAS_API UpdateDiscovererRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateDiscoverer"; }
+
+  AWS_SCHEMAS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The description of the discoverer to update.</p>
    */
-  class UpdateDiscovererRequest : public SchemasRequest
-  {
-  public:
-    AWS_SCHEMAS_API UpdateDiscovererRequest();
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateDiscovererRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateDiscoverer"; }
+  ///@{
+  /**
+   * <p>The ID of the discoverer.</p>
+   */
+  inline const Aws::String& GetDiscovererId() const { return m_discovererId; }
+  inline bool DiscovererIdHasBeenSet() const { return m_discovererIdHasBeenSet; }
+  template <typename DiscovererIdT = Aws::String>
+  void SetDiscovererId(DiscovererIdT&& value) {
+    m_discovererIdHasBeenSet = true;
+    m_discovererId = std::forward<DiscovererIdT>(value);
+  }
+  template <typename DiscovererIdT = Aws::String>
+  UpdateDiscovererRequest& WithDiscovererId(DiscovererIdT&& value) {
+    SetDiscovererId(std::forward<DiscovererIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SCHEMAS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Support discovery of schemas in events sent to the bus from another account.
+   * (default: true)</p>
+   */
+  inline bool GetCrossAccount() const { return m_crossAccount; }
+  inline bool CrossAccountHasBeenSet() const { return m_crossAccountHasBeenSet; }
+  inline void SetCrossAccount(bool value) {
+    m_crossAccountHasBeenSet = true;
+    m_crossAccount = value;
+  }
+  inline UpdateDiscovererRequest& WithCrossAccount(bool value) {
+    SetCrossAccount(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_description;
 
+  Aws::String m_discovererId;
 
-    ///@{
-    /**
-     * <p>The description of the discoverer to update.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateDiscovererRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateDiscovererRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateDiscovererRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  bool m_crossAccount{false};
+  bool m_descriptionHasBeenSet = false;
+  bool m_discovererIdHasBeenSet = false;
+  bool m_crossAccountHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ID of the discoverer.</p>
-     */
-    inline const Aws::String& GetDiscovererId() const{ return m_discovererId; }
-    inline bool DiscovererIdHasBeenSet() const { return m_discovererIdHasBeenSet; }
-    inline void SetDiscovererId(const Aws::String& value) { m_discovererIdHasBeenSet = true; m_discovererId = value; }
-    inline void SetDiscovererId(Aws::String&& value) { m_discovererIdHasBeenSet = true; m_discovererId = std::move(value); }
-    inline void SetDiscovererId(const char* value) { m_discovererIdHasBeenSet = true; m_discovererId.assign(value); }
-    inline UpdateDiscovererRequest& WithDiscovererId(const Aws::String& value) { SetDiscovererId(value); return *this;}
-    inline UpdateDiscovererRequest& WithDiscovererId(Aws::String&& value) { SetDiscovererId(std::move(value)); return *this;}
-    inline UpdateDiscovererRequest& WithDiscovererId(const char* value) { SetDiscovererId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Support discovery of schemas in events sent to the bus from another account.
-     * (default: true)</p>
-     */
-    inline bool GetCrossAccount() const{ return m_crossAccount; }
-    inline bool CrossAccountHasBeenSet() const { return m_crossAccountHasBeenSet; }
-    inline void SetCrossAccount(bool value) { m_crossAccountHasBeenSet = true; m_crossAccount = value; }
-    inline UpdateDiscovererRequest& WithCrossAccount(bool value) { SetCrossAccount(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_discovererId;
-    bool m_discovererIdHasBeenSet = false;
-
-    bool m_crossAccount;
-    bool m_crossAccountHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Schemas
-} // namespace Aws
+}  // namespace Model
+}  // namespace Schemas
+}  // namespace Aws

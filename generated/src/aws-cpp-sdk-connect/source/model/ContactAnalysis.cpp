@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-ContactAnalysis::ContactAnalysis() : 
-    m_transcriptHasBeenSet(false)
-{
-}
+ContactAnalysis::ContactAnalysis(JsonView jsonValue) { *this = jsonValue; }
 
-ContactAnalysis::ContactAnalysis(JsonView jsonValue)
-  : ContactAnalysis()
-{
-  *this = jsonValue;
-}
-
-ContactAnalysis& ContactAnalysis::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Transcript"))
-  {
+ContactAnalysis& ContactAnalysis::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Transcript")) {
     m_transcript = jsonValue.GetObject("Transcript");
-
     m_transcriptHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ContactAnalysis::Jsonize() const
-{
+JsonValue ContactAnalysis::Jsonize() const {
   JsonValue payload;
 
-  if(m_transcriptHasBeenSet)
-  {
-   payload.WithObject("Transcript", m_transcript.Jsonize());
-
+  if (m_transcriptHasBeenSet) {
+    payload.WithObject("Transcript", m_transcript.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

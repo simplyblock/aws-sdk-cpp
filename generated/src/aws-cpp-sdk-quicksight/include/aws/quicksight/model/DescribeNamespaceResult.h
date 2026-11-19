@@ -4,79 +4,95 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/NamespaceInfoV2.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeNamespaceResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeNamespaceResult();
-    AWS_QUICKSIGHT_API DescribeNamespaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeNamespaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeNamespaceResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeNamespaceResult() = default;
+  AWS_QUICKSIGHT_API DescribeNamespaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeNamespaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The information about the namespace that you're describing. The response
+   * includes the namespace ARN, name, Amazon Web Services Region, creation status,
+   * and identity store. <code>DescribeNamespace</code> also works for namespaces
+   * that are in the process of being created. For incomplete namespaces, this API
+   * operation lists the namespace error types and messages associated with the
+   * creation process.</p>
+   */
+  inline const NamespaceInfoV2& GetNamespace() const { return m_namespace; }
+  template <typename NamespaceT = NamespaceInfoV2>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = NamespaceInfoV2>
+  DescribeNamespaceResult& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information about the namespace that you're describing. The response
-     * includes the namespace ARN, name, Amazon Web Services Region, creation status,
-     * and identity store. <code>DescribeNamespace</code> also works for namespaces
-     * that are in the process of being created. For incomplete namespaces, this API
-     * operation lists the namespace error types and messages associated with the
-     * creation process.</p>
-     */
-    inline const NamespaceInfoV2& GetNamespace() const{ return m_namespace; }
-    inline void SetNamespace(const NamespaceInfoV2& value) { m_namespace = value; }
-    inline void SetNamespace(NamespaceInfoV2&& value) { m_namespace = std::move(value); }
-    inline DescribeNamespaceResult& WithNamespace(const NamespaceInfoV2& value) { SetNamespace(value); return *this;}
-    inline DescribeNamespaceResult& WithNamespace(NamespaceInfoV2&& value) { SetNamespace(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeNamespaceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeNamespaceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeNamespaceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeNamespaceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeNamespaceResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeNamespaceResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    NamespaceInfoV2 m_namespace;
+ private:
+  NamespaceInfoV2 m_namespace;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_namespaceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

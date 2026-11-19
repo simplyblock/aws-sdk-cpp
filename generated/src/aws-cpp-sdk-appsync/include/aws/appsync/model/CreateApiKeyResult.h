@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/appsync/AppSync_EXPORTS.h>
 #include <aws/appsync/model/ApiKey.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppSync
-{
-namespace Model
-{
-  class CreateApiKeyResult
-  {
-  public:
-    AWS_APPSYNC_API CreateApiKeyResult();
-    AWS_APPSYNC_API CreateApiKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSYNC_API CreateApiKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppSync {
+namespace Model {
+class CreateApiKeyResult {
+ public:
+  AWS_APPSYNC_API CreateApiKeyResult() = default;
+  AWS_APPSYNC_API CreateApiKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSYNC_API CreateApiKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The API key.</p>
+   */
+  inline const ApiKey& GetApiKey() const { return m_apiKey; }
+  template <typename ApiKeyT = ApiKey>
+  void SetApiKey(ApiKeyT&& value) {
+    m_apiKeyHasBeenSet = true;
+    m_apiKey = std::forward<ApiKeyT>(value);
+  }
+  template <typename ApiKeyT = ApiKey>
+  CreateApiKeyResult& WithApiKey(ApiKeyT&& value) {
+    SetApiKey(std::forward<ApiKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The API key.</p>
-     */
-    inline const ApiKey& GetApiKey() const{ return m_apiKey; }
-    inline void SetApiKey(const ApiKey& value) { m_apiKey = value; }
-    inline void SetApiKey(ApiKey&& value) { m_apiKey = std::move(value); }
-    inline CreateApiKeyResult& WithApiKey(const ApiKey& value) { SetApiKey(value); return *this;}
-    inline CreateApiKeyResult& WithApiKey(ApiKey&& value) { SetApiKey(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateApiKeyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateApiKeyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateApiKeyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateApiKeyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ApiKey m_apiKey;
+ private:
+  ApiKey m_apiKey;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_apiKeyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

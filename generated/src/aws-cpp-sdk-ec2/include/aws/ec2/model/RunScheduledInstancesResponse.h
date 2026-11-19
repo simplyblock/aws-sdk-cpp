@@ -4,70 +4,84 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of RunScheduledInstances.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RunScheduledInstancesResult">AWS
+ * API Reference</a></p>
+ */
+class RunScheduledInstancesResponse {
+ public:
+  AWS_EC2_API RunScheduledInstancesResponse() = default;
+  AWS_EC2_API RunScheduledInstancesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API RunScheduledInstancesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of RunScheduledInstances.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RunScheduledInstancesResult">AWS
-   * API Reference</a></p>
+   * <p>The IDs of the newly launched instances.</p>
    */
-  class RunScheduledInstancesResponse
-  {
-  public:
-    AWS_EC2_API RunScheduledInstancesResponse();
-    AWS_EC2_API RunScheduledInstancesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API RunScheduledInstancesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetInstanceIdSet() const { return m_instanceIdSet; }
+  template <typename InstanceIdSetT = Aws::Vector<Aws::String>>
+  void SetInstanceIdSet(InstanceIdSetT&& value) {
+    m_instanceIdSetHasBeenSet = true;
+    m_instanceIdSet = std::forward<InstanceIdSetT>(value);
+  }
+  template <typename InstanceIdSetT = Aws::Vector<Aws::String>>
+  RunScheduledInstancesResponse& WithInstanceIdSet(InstanceIdSetT&& value) {
+    SetInstanceIdSet(std::forward<InstanceIdSetT>(value));
+    return *this;
+  }
+  template <typename InstanceIdSetT = Aws::String>
+  RunScheduledInstancesResponse& AddInstanceIdSet(InstanceIdSetT&& value) {
+    m_instanceIdSetHasBeenSet = true;
+    m_instanceIdSet.emplace_back(std::forward<InstanceIdSetT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The IDs of the newly launched instances.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetInstanceIdSet() const{ return m_instanceIdSet; }
-    inline void SetInstanceIdSet(const Aws::Vector<Aws::String>& value) { m_instanceIdSet = value; }
-    inline void SetInstanceIdSet(Aws::Vector<Aws::String>&& value) { m_instanceIdSet = std::move(value); }
-    inline RunScheduledInstancesResponse& WithInstanceIdSet(const Aws::Vector<Aws::String>& value) { SetInstanceIdSet(value); return *this;}
-    inline RunScheduledInstancesResponse& WithInstanceIdSet(Aws::Vector<Aws::String>&& value) { SetInstanceIdSet(std::move(value)); return *this;}
-    inline RunScheduledInstancesResponse& AddInstanceIdSet(const Aws::String& value) { m_instanceIdSet.push_back(value); return *this; }
-    inline RunScheduledInstancesResponse& AddInstanceIdSet(Aws::String&& value) { m_instanceIdSet.push_back(std::move(value)); return *this; }
-    inline RunScheduledInstancesResponse& AddInstanceIdSet(const char* value) { m_instanceIdSet.push_back(value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  RunScheduledInstancesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline RunScheduledInstancesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline RunScheduledInstancesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_instanceIdSet;
 
-    Aws::Vector<Aws::String> m_instanceIdSet;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceIdSetHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

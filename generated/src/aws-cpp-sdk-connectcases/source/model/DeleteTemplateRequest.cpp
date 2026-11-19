@@ -12,17 +12,4 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteTemplateRequest::DeleteTemplateRequest() : 
-    m_domainIdHasBeenSet(false),
-    m_templateIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteTemplateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteTemplateRequest::SerializePayload() const { return {}; }

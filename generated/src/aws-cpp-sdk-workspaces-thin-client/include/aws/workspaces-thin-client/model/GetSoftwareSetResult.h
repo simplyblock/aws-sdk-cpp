@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces-thin-client/WorkSpacesThinClient_EXPORTS.h>
 #include <aws/workspaces-thin-client/model/SoftwareSet.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesThinClient
-{
-namespace Model
-{
-  class GetSoftwareSetResult
-  {
-  public:
-    AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult();
-    AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesThinClient {
+namespace Model {
+class GetSoftwareSetResult {
+ public:
+  AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult() = default;
+  AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESTHINCLIENT_API GetSoftwareSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes a software set.</p>
+   */
+  inline const SoftwareSet& GetSoftwareSet() const { return m_softwareSet; }
+  template <typename SoftwareSetT = SoftwareSet>
+  void SetSoftwareSet(SoftwareSetT&& value) {
+    m_softwareSetHasBeenSet = true;
+    m_softwareSet = std::forward<SoftwareSetT>(value);
+  }
+  template <typename SoftwareSetT = SoftwareSet>
+  GetSoftwareSetResult& WithSoftwareSet(SoftwareSetT&& value) {
+    SetSoftwareSet(std::forward<SoftwareSetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes a software set.</p>
-     */
-    inline const SoftwareSet& GetSoftwareSet() const{ return m_softwareSet; }
-    inline void SetSoftwareSet(const SoftwareSet& value) { m_softwareSet = value; }
-    inline void SetSoftwareSet(SoftwareSet&& value) { m_softwareSet = std::move(value); }
-    inline GetSoftwareSetResult& WithSoftwareSet(const SoftwareSet& value) { SetSoftwareSet(value); return *this;}
-    inline GetSoftwareSetResult& WithSoftwareSet(SoftwareSet&& value) { SetSoftwareSet(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSoftwareSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSoftwareSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSoftwareSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSoftwareSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SoftwareSet m_softwareSet;
+ private:
+  SoftwareSet m_softwareSet;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_softwareSetHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesThinClient
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesThinClient
+}  // namespace Aws

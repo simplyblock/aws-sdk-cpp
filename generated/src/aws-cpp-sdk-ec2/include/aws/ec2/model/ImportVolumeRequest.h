@@ -4,122 +4,168 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/DiskImageDetail.h>
 #include <aws/ec2/model/VolumeDetail.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
+/**
+ */
+class ImportVolumeRequest : public EC2Request {
+ public:
+  AWS_EC2_API ImportVolumeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ImportVolume"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The ID of the Availability Zone for the resulting EBS volume.</p> <p>Either
+   * <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be
+   * specified, but not both.</p>
    */
-  class ImportVolumeRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API ImportVolumeRequest();
+  inline const Aws::String& GetAvailabilityZoneId() const { return m_availabilityZoneId; }
+  inline bool AvailabilityZoneIdHasBeenSet() const { return m_availabilityZoneIdHasBeenSet; }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  void SetAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    m_availabilityZoneIdHasBeenSet = true;
+    m_availabilityZoneId = std::forward<AvailabilityZoneIdT>(value);
+  }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  ImportVolumeRequest& WithAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    SetAvailabilityZoneId(std::forward<AvailabilityZoneIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ImportVolume"; }
+  ///@{
+  /**
+   * <p>Checks whether you have the required permissions for the action, without
+   * actually making the request, and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline ImportVolumeRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Availability Zone for the resulting EBS volume.</p> <p>Either
+   * <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be
+   * specified, but not both.</p>
+   */
+  inline const Aws::String& GetAvailabilityZone() const { return m_availabilityZone; }
+  inline bool AvailabilityZoneHasBeenSet() const { return m_availabilityZoneHasBeenSet; }
+  template <typename AvailabilityZoneT = Aws::String>
+  void SetAvailabilityZone(AvailabilityZoneT&& value) {
+    m_availabilityZoneHasBeenSet = true;
+    m_availabilityZone = std::forward<AvailabilityZoneT>(value);
+  }
+  template <typename AvailabilityZoneT = Aws::String>
+  ImportVolumeRequest& WithAvailabilityZone(AvailabilityZoneT&& value) {
+    SetAvailabilityZone(std::forward<AvailabilityZoneT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The disk image.</p>
+   */
+  inline const DiskImageDetail& GetImage() const { return m_image; }
+  inline bool ImageHasBeenSet() const { return m_imageHasBeenSet; }
+  template <typename ImageT = DiskImageDetail>
+  void SetImage(ImageT&& value) {
+    m_imageHasBeenSet = true;
+    m_image = std::forward<ImageT>(value);
+  }
+  template <typename ImageT = DiskImageDetail>
+  ImportVolumeRequest& WithImage(ImageT&& value) {
+    SetImage(std::forward<ImageT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>A description of the volume.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  ImportVolumeRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Checks whether you have the required permissions for the action, without
-     * actually making the request, and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline ImportVolumeRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The volume size.</p>
+   */
+  inline const VolumeDetail& GetVolume() const { return m_volume; }
+  inline bool VolumeHasBeenSet() const { return m_volumeHasBeenSet; }
+  template <typename VolumeT = VolumeDetail>
+  void SetVolume(VolumeT&& value) {
+    m_volumeHasBeenSet = true;
+    m_volume = std::forward<VolumeT>(value);
+  }
+  template <typename VolumeT = VolumeDetail>
+  ImportVolumeRequest& WithVolume(VolumeT&& value) {
+    SetVolume(std::forward<VolumeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_availabilityZoneId;
 
-    ///@{
-    /**
-     * <p>The Availability Zone for the resulting EBS volume.</p>
-     */
-    inline const Aws::String& GetAvailabilityZone() const{ return m_availabilityZone; }
-    inline bool AvailabilityZoneHasBeenSet() const { return m_availabilityZoneHasBeenSet; }
-    inline void SetAvailabilityZone(const Aws::String& value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone = value; }
-    inline void SetAvailabilityZone(Aws::String&& value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone = std::move(value); }
-    inline void SetAvailabilityZone(const char* value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone.assign(value); }
-    inline ImportVolumeRequest& WithAvailabilityZone(const Aws::String& value) { SetAvailabilityZone(value); return *this;}
-    inline ImportVolumeRequest& WithAvailabilityZone(Aws::String&& value) { SetAvailabilityZone(std::move(value)); return *this;}
-    inline ImportVolumeRequest& WithAvailabilityZone(const char* value) { SetAvailabilityZone(value); return *this;}
-    ///@}
+  bool m_dryRun{false};
 
-    ///@{
-    /**
-     * <p>The disk image.</p>
-     */
-    inline const DiskImageDetail& GetImage() const{ return m_image; }
-    inline bool ImageHasBeenSet() const { return m_imageHasBeenSet; }
-    inline void SetImage(const DiskImageDetail& value) { m_imageHasBeenSet = true; m_image = value; }
-    inline void SetImage(DiskImageDetail&& value) { m_imageHasBeenSet = true; m_image = std::move(value); }
-    inline ImportVolumeRequest& WithImage(const DiskImageDetail& value) { SetImage(value); return *this;}
-    inline ImportVolumeRequest& WithImage(DiskImageDetail&& value) { SetImage(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_availabilityZone;
 
-    ///@{
-    /**
-     * <p>A description of the volume.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline ImportVolumeRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline ImportVolumeRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline ImportVolumeRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  DiskImageDetail m_image;
 
-    ///@{
-    /**
-     * <p>The volume size.</p>
-     */
-    inline const VolumeDetail& GetVolume() const{ return m_volume; }
-    inline bool VolumeHasBeenSet() const { return m_volumeHasBeenSet; }
-    inline void SetVolume(const VolumeDetail& value) { m_volumeHasBeenSet = true; m_volume = value; }
-    inline void SetVolume(VolumeDetail&& value) { m_volumeHasBeenSet = true; m_volume = std::move(value); }
-    inline ImportVolumeRequest& WithVolume(const VolumeDetail& value) { SetVolume(value); return *this;}
-    inline ImportVolumeRequest& WithVolume(VolumeDetail&& value) { SetVolume(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_description;
 
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
+  VolumeDetail m_volume;
+  bool m_availabilityZoneIdHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+  bool m_availabilityZoneHasBeenSet = false;
+  bool m_imageHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_volumeHasBeenSet = false;
+};
 
-    Aws::String m_availabilityZone;
-    bool m_availabilityZoneHasBeenSet = false;
-
-    DiskImageDetail m_image;
-    bool m_imageHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    VolumeDetail m_volume;
-    bool m_volumeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

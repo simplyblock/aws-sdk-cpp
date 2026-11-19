@@ -4,100 +4,108 @@
  */
 
 #pragma once
-#include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/amplify/AmplifyRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Amplify
-{
-namespace Model
-{
+namespace Aws {
+namespace Amplify {
+namespace Model {
 
+/**
+ * <p> The request structure for the create a new deployment request.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateDeploymentRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateDeploymentRequest : public AmplifyRequest {
+ public:
+  AWS_AMPLIFY_API CreateDeploymentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDeployment"; }
+
+  AWS_AMPLIFY_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p> The request structure for the create a new deployment request.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateDeploymentRequest">AWS
-   * API Reference</a></p>
+   * <p> The unique ID for an Amplify app. </p>
    */
-  class CreateDeploymentRequest : public AmplifyRequest
-  {
-  public:
-    AWS_AMPLIFY_API CreateDeploymentRequest();
+  inline const Aws::String& GetAppId() const { return m_appId; }
+  inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
+  template <typename AppIdT = Aws::String>
+  void SetAppId(AppIdT&& value) {
+    m_appIdHasBeenSet = true;
+    m_appId = std::forward<AppIdT>(value);
+  }
+  template <typename AppIdT = Aws::String>
+  CreateDeploymentRequest& WithAppId(AppIdT&& value) {
+    SetAppId(std::forward<AppIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDeployment"; }
+  ///@{
+  /**
+   * <p> The name of the branch to use for the job. </p>
+   */
+  inline const Aws::String& GetBranchName() const { return m_branchName; }
+  inline bool BranchNameHasBeenSet() const { return m_branchNameHasBeenSet; }
+  template <typename BranchNameT = Aws::String>
+  void SetBranchName(BranchNameT&& value) {
+    m_branchNameHasBeenSet = true;
+    m_branchName = std::forward<BranchNameT>(value);
+  }
+  template <typename BranchNameT = Aws::String>
+  CreateDeploymentRequest& WithBranchName(BranchNameT&& value) {
+    SetBranchName(std::forward<BranchNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_AMPLIFY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> An optional file map that contains the file name as the key and the file
+   * content md5 hash as the value. If this argument is provided, the service will
+   * generate a unique upload URL per file. Otherwise, the service will only generate
+   * a single upload URL for the zipped files. </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetFileMap() const { return m_fileMap; }
+  inline bool FileMapHasBeenSet() const { return m_fileMapHasBeenSet; }
+  template <typename FileMapT = Aws::Map<Aws::String, Aws::String>>
+  void SetFileMap(FileMapT&& value) {
+    m_fileMapHasBeenSet = true;
+    m_fileMap = std::forward<FileMapT>(value);
+  }
+  template <typename FileMapT = Aws::Map<Aws::String, Aws::String>>
+  CreateDeploymentRequest& WithFileMap(FileMapT&& value) {
+    SetFileMap(std::forward<FileMapT>(value));
+    return *this;
+  }
+  template <typename FileMapKeyT = Aws::String, typename FileMapValueT = Aws::String>
+  CreateDeploymentRequest& AddFileMap(FileMapKeyT&& key, FileMapValueT&& value) {
+    m_fileMapHasBeenSet = true;
+    m_fileMap.emplace(std::forward<FileMapKeyT>(key), std::forward<FileMapValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_appId;
 
+  Aws::String m_branchName;
 
-    ///@{
-    /**
-     * <p> The unique ID for an Amplify app. </p>
-     */
-    inline const Aws::String& GetAppId() const{ return m_appId; }
-    inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
-    inline void SetAppId(const Aws::String& value) { m_appIdHasBeenSet = true; m_appId = value; }
-    inline void SetAppId(Aws::String&& value) { m_appIdHasBeenSet = true; m_appId = std::move(value); }
-    inline void SetAppId(const char* value) { m_appIdHasBeenSet = true; m_appId.assign(value); }
-    inline CreateDeploymentRequest& WithAppId(const Aws::String& value) { SetAppId(value); return *this;}
-    inline CreateDeploymentRequest& WithAppId(Aws::String&& value) { SetAppId(std::move(value)); return *this;}
-    inline CreateDeploymentRequest& WithAppId(const char* value) { SetAppId(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_fileMap;
+  bool m_appIdHasBeenSet = false;
+  bool m_branchNameHasBeenSet = false;
+  bool m_fileMapHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The name of the branch to use for the job. </p>
-     */
-    inline const Aws::String& GetBranchName() const{ return m_branchName; }
-    inline bool BranchNameHasBeenSet() const { return m_branchNameHasBeenSet; }
-    inline void SetBranchName(const Aws::String& value) { m_branchNameHasBeenSet = true; m_branchName = value; }
-    inline void SetBranchName(Aws::String&& value) { m_branchNameHasBeenSet = true; m_branchName = std::move(value); }
-    inline void SetBranchName(const char* value) { m_branchNameHasBeenSet = true; m_branchName.assign(value); }
-    inline CreateDeploymentRequest& WithBranchName(const Aws::String& value) { SetBranchName(value); return *this;}
-    inline CreateDeploymentRequest& WithBranchName(Aws::String&& value) { SetBranchName(std::move(value)); return *this;}
-    inline CreateDeploymentRequest& WithBranchName(const char* value) { SetBranchName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p> An optional file map that contains the file name as the key and the file
-     * content md5 hash as the value. If this argument is provided, the service will
-     * generate a unique upload URL per file. Otherwise, the service will only generate
-     * a single upload URL for the zipped files. </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetFileMap() const{ return m_fileMap; }
-    inline bool FileMapHasBeenSet() const { return m_fileMapHasBeenSet; }
-    inline void SetFileMap(const Aws::Map<Aws::String, Aws::String>& value) { m_fileMapHasBeenSet = true; m_fileMap = value; }
-    inline void SetFileMap(Aws::Map<Aws::String, Aws::String>&& value) { m_fileMapHasBeenSet = true; m_fileMap = std::move(value); }
-    inline CreateDeploymentRequest& WithFileMap(const Aws::Map<Aws::String, Aws::String>& value) { SetFileMap(value); return *this;}
-    inline CreateDeploymentRequest& WithFileMap(Aws::Map<Aws::String, Aws::String>&& value) { SetFileMap(std::move(value)); return *this;}
-    inline CreateDeploymentRequest& AddFileMap(const Aws::String& key, const Aws::String& value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(key, value); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(Aws::String&& key, const Aws::String& value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(std::move(key), value); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(const Aws::String& key, Aws::String&& value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(key, std::move(value)); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(Aws::String&& key, Aws::String&& value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(const char* key, Aws::String&& value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(key, std::move(value)); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(Aws::String&& key, const char* value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(std::move(key), value); return *this; }
-    inline CreateDeploymentRequest& AddFileMap(const char* key, const char* value) { m_fileMapHasBeenSet = true; m_fileMap.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_appId;
-    bool m_appIdHasBeenSet = false;
-
-    Aws::String m_branchName;
-    bool m_branchNameHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_fileMap;
-    bool m_fileMapHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Amplify
-} // namespace Aws
+}  // namespace Model
+}  // namespace Amplify
+}  // namespace Aws

@@ -6,61 +6,73 @@
 #pragma once
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
 #include <aws/comprehendmedical/model/ComprehendMedicalAsyncJobProperties.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
+#include <aws/crt/cbor/Cbor.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ComprehendMedical
-{
-namespace Model
-{
-  class DescribeRxNormInferenceJobResult
-  {
-  public:
-    AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult();
-    AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComprehendMedical {
+namespace Model {
+class DescribeRxNormInferenceJobResult {
+ public:
+  AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult() = default;
+  AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_COMPREHENDMEDICAL_API DescribeRxNormInferenceJobResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>An object that contains the properties associated with a detection job.</p>
+   */
+  inline const ComprehendMedicalAsyncJobProperties& GetComprehendMedicalAsyncJobProperties() const {
+    return m_comprehendMedicalAsyncJobProperties;
+  }
+  template <typename ComprehendMedicalAsyncJobPropertiesT = ComprehendMedicalAsyncJobProperties>
+  void SetComprehendMedicalAsyncJobProperties(ComprehendMedicalAsyncJobPropertiesT&& value) {
+    m_comprehendMedicalAsyncJobPropertiesHasBeenSet = true;
+    m_comprehendMedicalAsyncJobProperties = std::forward<ComprehendMedicalAsyncJobPropertiesT>(value);
+  }
+  template <typename ComprehendMedicalAsyncJobPropertiesT = ComprehendMedicalAsyncJobProperties>
+  DescribeRxNormInferenceJobResult& WithComprehendMedicalAsyncJobProperties(ComprehendMedicalAsyncJobPropertiesT&& value) {
+    SetComprehendMedicalAsyncJobProperties(std::forward<ComprehendMedicalAsyncJobPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that contains the properties associated with a detection job.</p>
-     */
-    inline const ComprehendMedicalAsyncJobProperties& GetComprehendMedicalAsyncJobProperties() const{ return m_comprehendMedicalAsyncJobProperties; }
-    inline void SetComprehendMedicalAsyncJobProperties(const ComprehendMedicalAsyncJobProperties& value) { m_comprehendMedicalAsyncJobProperties = value; }
-    inline void SetComprehendMedicalAsyncJobProperties(ComprehendMedicalAsyncJobProperties&& value) { m_comprehendMedicalAsyncJobProperties = std::move(value); }
-    inline DescribeRxNormInferenceJobResult& WithComprehendMedicalAsyncJobProperties(const ComprehendMedicalAsyncJobProperties& value) { SetComprehendMedicalAsyncJobProperties(value); return *this;}
-    inline DescribeRxNormInferenceJobResult& WithComprehendMedicalAsyncJobProperties(ComprehendMedicalAsyncJobProperties&& value) { SetComprehendMedicalAsyncJobProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeRxNormInferenceJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeRxNormInferenceJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeRxNormInferenceJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeRxNormInferenceJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ComprehendMedicalAsyncJobProperties m_comprehendMedicalAsyncJobProperties;
+ private:
+  ComprehendMedicalAsyncJobProperties m_comprehendMedicalAsyncJobProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_comprehendMedicalAsyncJobPropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ComprehendMedical
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComprehendMedical
+}  // namespace Aws

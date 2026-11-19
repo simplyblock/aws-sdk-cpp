@@ -4,72 +4,88 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/GroupMember.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeGroupMembershipResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeGroupMembershipResult();
-    AWS_QUICKSIGHT_API DescribeGroupMembershipResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeGroupMembershipResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeGroupMembershipResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeGroupMembershipResult() = default;
+  AWS_QUICKSIGHT_API DescribeGroupMembershipResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeGroupMembershipResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const GroupMember& GetGroupMember() const{ return m_groupMember; }
-    inline void SetGroupMember(const GroupMember& value) { m_groupMember = value; }
-    inline void SetGroupMember(GroupMember&& value) { m_groupMember = std::move(value); }
-    inline DescribeGroupMembershipResult& WithGroupMember(const GroupMember& value) { SetGroupMember(value); return *this;}
-    inline DescribeGroupMembershipResult& WithGroupMember(GroupMember&& value) { SetGroupMember(std::move(value)); return *this;}
-    ///@}
+  inline const GroupMember& GetGroupMember() const { return m_groupMember; }
+  template <typename GroupMemberT = GroupMember>
+  void SetGroupMember(GroupMemberT&& value) {
+    m_groupMemberHasBeenSet = true;
+    m_groupMember = std::forward<GroupMemberT>(value);
+  }
+  template <typename GroupMemberT = GroupMember>
+  DescribeGroupMembershipResult& WithGroupMember(GroupMemberT&& value) {
+    SetGroupMember(std::forward<GroupMemberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeGroupMembershipResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeGroupMembershipResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeGroupMembershipResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeGroupMembershipResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeGroupMembershipResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    GroupMember m_groupMember;
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeGroupMembershipResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
+ private:
+  GroupMember m_groupMember;
 
-    int m_status;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_groupMemberHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

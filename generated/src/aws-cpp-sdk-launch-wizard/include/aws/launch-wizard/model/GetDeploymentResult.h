@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/launch-wizard/LaunchWizard_EXPORTS.h>
 #include <aws/launch-wizard/model/DeploymentData.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LaunchWizard
-{
-namespace Model
-{
-  class GetDeploymentResult
-  {
-  public:
-    AWS_LAUNCHWIZARD_API GetDeploymentResult();
-    AWS_LAUNCHWIZARD_API GetDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAUNCHWIZARD_API GetDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LaunchWizard {
+namespace Model {
+class GetDeploymentResult {
+ public:
+  AWS_LAUNCHWIZARD_API GetDeploymentResult() = default;
+  AWS_LAUNCHWIZARD_API GetDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAUNCHWIZARD_API GetDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object that details the deployment.</p>
+   */
+  inline const DeploymentData& GetDeployment() const { return m_deployment; }
+  template <typename DeploymentT = DeploymentData>
+  void SetDeployment(DeploymentT&& value) {
+    m_deploymentHasBeenSet = true;
+    m_deployment = std::forward<DeploymentT>(value);
+  }
+  template <typename DeploymentT = DeploymentData>
+  GetDeploymentResult& WithDeployment(DeploymentT&& value) {
+    SetDeployment(std::forward<DeploymentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that details the deployment.</p>
-     */
-    inline const DeploymentData& GetDeployment() const{ return m_deployment; }
-    inline void SetDeployment(const DeploymentData& value) { m_deployment = value; }
-    inline void SetDeployment(DeploymentData&& value) { m_deployment = std::move(value); }
-    inline GetDeploymentResult& WithDeployment(const DeploymentData& value) { SetDeployment(value); return *this;}
-    inline GetDeploymentResult& WithDeployment(DeploymentData&& value) { SetDeployment(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDeploymentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDeploymentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDeploymentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDeploymentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DeploymentData m_deployment;
+ private:
+  DeploymentData m_deployment;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deploymentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LaunchWizard
-} // namespace Aws
+}  // namespace Model
+}  // namespace LaunchWizard
+}  // namespace Aws

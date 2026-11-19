@@ -3,56 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/model/ListPricesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Route53Domains::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListPricesRequest::ListPricesRequest() : 
-    m_tldHasBeenSet(false),
-    m_markerHasBeenSet(false),
-    m_maxItems(0),
-    m_maxItemsHasBeenSet(false)
-{
+Aws::String ListPricesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_tldHasBeenSet) {
+    mapSize++;
+  }
+  if (m_markerHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxItemsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_tldHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tld"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_tld.c_str()));
+  }
+
+  if (m_markerHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Marker"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_marker.c_str()));
+  }
+
+  if (m_maxItemsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxItems"));
+    (m_maxItems >= 0) ? encoder.WriteUInt(m_maxItems) : encoder.WriteNegInt(m_maxItems);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ListPricesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_tldHasBeenSet)
-  {
-   payload.WithString("Tld", m_tld);
-
-  }
-
-  if(m_markerHasBeenSet)
-  {
-   payload.WithString("Marker", m_marker);
-
-  }
-
-  if(m_maxItemsHasBeenSet)
-  {
-   payload.WithInteger("MaxItems", m_maxItems);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ListPricesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListPricesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Route53Domains_v20140515.ListPrices"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

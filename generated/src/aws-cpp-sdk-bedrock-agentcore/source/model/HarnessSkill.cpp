@@ -1,0 +1,64 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/bedrock-agentcore/model/HarnessSkill.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+#include <utility>
+
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace BedrockAgentCore {
+namespace Model {
+
+HarnessSkill::HarnessSkill(JsonView jsonValue) { *this = jsonValue; }
+
+HarnessSkill& HarnessSkill::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("path")) {
+    m_path = jsonValue.GetString("path");
+    m_pathHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("s3")) {
+    m_s3 = jsonValue.GetObject("s3");
+    m_s3HasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("git")) {
+    m_git = jsonValue.GetObject("git");
+    m_gitHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("awsSkills")) {
+    m_awsSkills = jsonValue.GetObject("awsSkills");
+    m_awsSkillsHasBeenSet = true;
+  }
+  return *this;
+}
+
+JsonValue HarnessSkill::Jsonize() const {
+  JsonValue payload;
+
+  if (m_pathHasBeenSet) {
+    payload.WithString("path", m_path);
+  }
+
+  if (m_s3HasBeenSet) {
+    payload.WithObject("s3", m_s3.Jsonize());
+  }
+
+  if (m_gitHasBeenSet) {
+    payload.WithObject("git", m_git.Jsonize());
+  }
+
+  if (m_awsSkillsHasBeenSet) {
+    payload.WithObject("awsSkills", m_awsSkills.Jsonize());
+  }
+
+  return payload;
+}
+
+}  // namespace Model
+}  // namespace BedrockAgentCore
+}  // namespace Aws

@@ -3,55 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/DescribeServiceActionExecutionParametersRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeServiceActionExecutionParametersRequest::DescribeServiceActionExecutionParametersRequest() : 
-    m_provisionedProductIdHasBeenSet(false),
-    m_serviceActionIdHasBeenSet(false),
-    m_acceptLanguageHasBeenSet(false)
-{
+Aws::String DescribeServiceActionExecutionParametersRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_provisionedProductIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_serviceActionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_provisionedProductIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisionedProductId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_provisionedProductId.c_str()));
+  }
+
+  if (m_serviceActionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServiceActionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_serviceActionId.c_str()));
+  }
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DescribeServiceActionExecutionParametersRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_provisionedProductIdHasBeenSet)
-  {
-   payload.WithString("ProvisionedProductId", m_provisionedProductId);
-
-  }
-
-  if(m_serviceActionIdHasBeenSet)
-  {
-   payload.WithString("ServiceActionId", m_serviceActionId);
-
-  }
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DescribeServiceActionExecutionParametersRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeServiceActionExecutionParametersRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.DescribeServiceActionExecutionParameters"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

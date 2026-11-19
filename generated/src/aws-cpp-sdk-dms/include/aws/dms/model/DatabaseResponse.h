@@ -4,158 +4,191 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/dms/model/ServerShortInfoResponse.h>
-#include <aws/dms/model/DatabaseInstanceSoftwareDetailsResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/CollectorShortInfoResponse.h>
+#include <aws/dms/model/DatabaseInstanceSoftwareDetailsResponse.h>
+#include <aws/dms/model/ServerShortInfoResponse.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
 
+/**
+ * <p>Describes a database in a Fleet Advisor collector inventory.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DatabaseResponse">AWS
+ * API Reference</a></p>
+ */
+class DatabaseResponse {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATABASEMIGRATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes a database in a Fleet Advisor collector inventory.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DatabaseResponse">AWS
-   * API Reference</a></p>
+   * <p>The ID of a database in a Fleet Advisor collector inventory.</p>
    */
-  class DatabaseResponse
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse();
-    AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATABASEMIGRATIONSERVICE_API DatabaseResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATABASEMIGRATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDatabaseId() const { return m_databaseId; }
+  inline bool DatabaseIdHasBeenSet() const { return m_databaseIdHasBeenSet; }
+  template <typename DatabaseIdT = Aws::String>
+  void SetDatabaseId(DatabaseIdT&& value) {
+    m_databaseIdHasBeenSet = true;
+    m_databaseId = std::forward<DatabaseIdT>(value);
+  }
+  template <typename DatabaseIdT = Aws::String>
+  DatabaseResponse& WithDatabaseId(DatabaseIdT&& value) {
+    SetDatabaseId(std::forward<DatabaseIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of a database in a Fleet Advisor collector inventory. </p>
+   */
+  inline const Aws::String& GetDatabaseName() const { return m_databaseName; }
+  inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
+  template <typename DatabaseNameT = Aws::String>
+  void SetDatabaseName(DatabaseNameT&& value) {
+    m_databaseNameHasBeenSet = true;
+    m_databaseName = std::forward<DatabaseNameT>(value);
+  }
+  template <typename DatabaseNameT = Aws::String>
+  DatabaseResponse& WithDatabaseName(DatabaseNameT&& value) {
+    SetDatabaseName(std::forward<DatabaseNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of a database in a Fleet Advisor collector inventory.</p>
-     */
-    inline const Aws::String& GetDatabaseId() const{ return m_databaseId; }
-    inline bool DatabaseIdHasBeenSet() const { return m_databaseIdHasBeenSet; }
-    inline void SetDatabaseId(const Aws::String& value) { m_databaseIdHasBeenSet = true; m_databaseId = value; }
-    inline void SetDatabaseId(Aws::String&& value) { m_databaseIdHasBeenSet = true; m_databaseId = std::move(value); }
-    inline void SetDatabaseId(const char* value) { m_databaseIdHasBeenSet = true; m_databaseId.assign(value); }
-    inline DatabaseResponse& WithDatabaseId(const Aws::String& value) { SetDatabaseId(value); return *this;}
-    inline DatabaseResponse& WithDatabaseId(Aws::String&& value) { SetDatabaseId(std::move(value)); return *this;}
-    inline DatabaseResponse& WithDatabaseId(const char* value) { SetDatabaseId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP address of a database in a Fleet Advisor collector inventory. </p>
+   */
+  inline const Aws::String& GetIpAddress() const { return m_ipAddress; }
+  inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
+  template <typename IpAddressT = Aws::String>
+  void SetIpAddress(IpAddressT&& value) {
+    m_ipAddressHasBeenSet = true;
+    m_ipAddress = std::forward<IpAddressT>(value);
+  }
+  template <typename IpAddressT = Aws::String>
+  DatabaseResponse& WithIpAddress(IpAddressT&& value) {
+    SetIpAddress(std::forward<IpAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of a database in a Fleet Advisor collector inventory. </p>
-     */
-    inline const Aws::String& GetDatabaseName() const{ return m_databaseName; }
-    inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
-    inline void SetDatabaseName(const Aws::String& value) { m_databaseNameHasBeenSet = true; m_databaseName = value; }
-    inline void SetDatabaseName(Aws::String&& value) { m_databaseNameHasBeenSet = true; m_databaseName = std::move(value); }
-    inline void SetDatabaseName(const char* value) { m_databaseNameHasBeenSet = true; m_databaseName.assign(value); }
-    inline DatabaseResponse& WithDatabaseName(const Aws::String& value) { SetDatabaseName(value); return *this;}
-    inline DatabaseResponse& WithDatabaseName(Aws::String&& value) { SetDatabaseName(std::move(value)); return *this;}
-    inline DatabaseResponse& WithDatabaseName(const char* value) { SetDatabaseName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of schemas in a Fleet Advisor collector inventory database. </p>
+   */
+  inline long long GetNumberOfSchemas() const { return m_numberOfSchemas; }
+  inline bool NumberOfSchemasHasBeenSet() const { return m_numberOfSchemasHasBeenSet; }
+  inline void SetNumberOfSchemas(long long value) {
+    m_numberOfSchemasHasBeenSet = true;
+    m_numberOfSchemas = value;
+  }
+  inline DatabaseResponse& WithNumberOfSchemas(long long value) {
+    SetNumberOfSchemas(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP address of a database in a Fleet Advisor collector inventory. </p>
-     */
-    inline const Aws::String& GetIpAddress() const{ return m_ipAddress; }
-    inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
-    inline void SetIpAddress(const Aws::String& value) { m_ipAddressHasBeenSet = true; m_ipAddress = value; }
-    inline void SetIpAddress(Aws::String&& value) { m_ipAddressHasBeenSet = true; m_ipAddress = std::move(value); }
-    inline void SetIpAddress(const char* value) { m_ipAddressHasBeenSet = true; m_ipAddress.assign(value); }
-    inline DatabaseResponse& WithIpAddress(const Aws::String& value) { SetIpAddress(value); return *this;}
-    inline DatabaseResponse& WithIpAddress(Aws::String&& value) { SetIpAddress(std::move(value)); return *this;}
-    inline DatabaseResponse& WithIpAddress(const char* value) { SetIpAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The server name of a database in a Fleet Advisor collector inventory. </p>
+   */
+  inline const ServerShortInfoResponse& GetServer() const { return m_server; }
+  inline bool ServerHasBeenSet() const { return m_serverHasBeenSet; }
+  template <typename ServerT = ServerShortInfoResponse>
+  void SetServer(ServerT&& value) {
+    m_serverHasBeenSet = true;
+    m_server = std::forward<ServerT>(value);
+  }
+  template <typename ServerT = ServerShortInfoResponse>
+  DatabaseResponse& WithServer(ServerT&& value) {
+    SetServer(std::forward<ServerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of schemas in a Fleet Advisor collector inventory database. </p>
-     */
-    inline long long GetNumberOfSchemas() const{ return m_numberOfSchemas; }
-    inline bool NumberOfSchemasHasBeenSet() const { return m_numberOfSchemasHasBeenSet; }
-    inline void SetNumberOfSchemas(long long value) { m_numberOfSchemasHasBeenSet = true; m_numberOfSchemas = value; }
-    inline DatabaseResponse& WithNumberOfSchemas(long long value) { SetNumberOfSchemas(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The software details of a database in a Fleet Advisor collector inventory,
+   * such as database engine and version.</p>
+   */
+  inline const DatabaseInstanceSoftwareDetailsResponse& GetSoftwareDetails() const { return m_softwareDetails; }
+  inline bool SoftwareDetailsHasBeenSet() const { return m_softwareDetailsHasBeenSet; }
+  template <typename SoftwareDetailsT = DatabaseInstanceSoftwareDetailsResponse>
+  void SetSoftwareDetails(SoftwareDetailsT&& value) {
+    m_softwareDetailsHasBeenSet = true;
+    m_softwareDetails = std::forward<SoftwareDetailsT>(value);
+  }
+  template <typename SoftwareDetailsT = DatabaseInstanceSoftwareDetailsResponse>
+  DatabaseResponse& WithSoftwareDetails(SoftwareDetailsT&& value) {
+    SetSoftwareDetails(std::forward<SoftwareDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The server name of a database in a Fleet Advisor collector inventory. </p>
-     */
-    inline const ServerShortInfoResponse& GetServer() const{ return m_server; }
-    inline bool ServerHasBeenSet() const { return m_serverHasBeenSet; }
-    inline void SetServer(const ServerShortInfoResponse& value) { m_serverHasBeenSet = true; m_server = value; }
-    inline void SetServer(ServerShortInfoResponse&& value) { m_serverHasBeenSet = true; m_server = std::move(value); }
-    inline DatabaseResponse& WithServer(const ServerShortInfoResponse& value) { SetServer(value); return *this;}
-    inline DatabaseResponse& WithServer(ServerShortInfoResponse&& value) { SetServer(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of collectors associated with the database.</p>
+   */
+  inline const Aws::Vector<CollectorShortInfoResponse>& GetCollectors() const { return m_collectors; }
+  inline bool CollectorsHasBeenSet() const { return m_collectorsHasBeenSet; }
+  template <typename CollectorsT = Aws::Vector<CollectorShortInfoResponse>>
+  void SetCollectors(CollectorsT&& value) {
+    m_collectorsHasBeenSet = true;
+    m_collectors = std::forward<CollectorsT>(value);
+  }
+  template <typename CollectorsT = Aws::Vector<CollectorShortInfoResponse>>
+  DatabaseResponse& WithCollectors(CollectorsT&& value) {
+    SetCollectors(std::forward<CollectorsT>(value));
+    return *this;
+  }
+  template <typename CollectorsT = CollectorShortInfoResponse>
+  DatabaseResponse& AddCollectors(CollectorsT&& value) {
+    m_collectorsHasBeenSet = true;
+    m_collectors.emplace_back(std::forward<CollectorsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_databaseId;
 
-    ///@{
-    /**
-     * <p>The software details of a database in a Fleet Advisor collector inventory,
-     * such as database engine and version.</p>
-     */
-    inline const DatabaseInstanceSoftwareDetailsResponse& GetSoftwareDetails() const{ return m_softwareDetails; }
-    inline bool SoftwareDetailsHasBeenSet() const { return m_softwareDetailsHasBeenSet; }
-    inline void SetSoftwareDetails(const DatabaseInstanceSoftwareDetailsResponse& value) { m_softwareDetailsHasBeenSet = true; m_softwareDetails = value; }
-    inline void SetSoftwareDetails(DatabaseInstanceSoftwareDetailsResponse&& value) { m_softwareDetailsHasBeenSet = true; m_softwareDetails = std::move(value); }
-    inline DatabaseResponse& WithSoftwareDetails(const DatabaseInstanceSoftwareDetailsResponse& value) { SetSoftwareDetails(value); return *this;}
-    inline DatabaseResponse& WithSoftwareDetails(DatabaseInstanceSoftwareDetailsResponse&& value) { SetSoftwareDetails(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_databaseName;
 
-    ///@{
-    /**
-     * <p>A list of collectors associated with the database.</p>
-     */
-    inline const Aws::Vector<CollectorShortInfoResponse>& GetCollectors() const{ return m_collectors; }
-    inline bool CollectorsHasBeenSet() const { return m_collectorsHasBeenSet; }
-    inline void SetCollectors(const Aws::Vector<CollectorShortInfoResponse>& value) { m_collectorsHasBeenSet = true; m_collectors = value; }
-    inline void SetCollectors(Aws::Vector<CollectorShortInfoResponse>&& value) { m_collectorsHasBeenSet = true; m_collectors = std::move(value); }
-    inline DatabaseResponse& WithCollectors(const Aws::Vector<CollectorShortInfoResponse>& value) { SetCollectors(value); return *this;}
-    inline DatabaseResponse& WithCollectors(Aws::Vector<CollectorShortInfoResponse>&& value) { SetCollectors(std::move(value)); return *this;}
-    inline DatabaseResponse& AddCollectors(const CollectorShortInfoResponse& value) { m_collectorsHasBeenSet = true; m_collectors.push_back(value); return *this; }
-    inline DatabaseResponse& AddCollectors(CollectorShortInfoResponse&& value) { m_collectorsHasBeenSet = true; m_collectors.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_ipAddress;
 
-    Aws::String m_databaseId;
-    bool m_databaseIdHasBeenSet = false;
+  long long m_numberOfSchemas{0};
 
-    Aws::String m_databaseName;
-    bool m_databaseNameHasBeenSet = false;
+  ServerShortInfoResponse m_server;
 
-    Aws::String m_ipAddress;
-    bool m_ipAddressHasBeenSet = false;
+  DatabaseInstanceSoftwareDetailsResponse m_softwareDetails;
 
-    long long m_numberOfSchemas;
-    bool m_numberOfSchemasHasBeenSet = false;
+  Aws::Vector<CollectorShortInfoResponse> m_collectors;
+  bool m_databaseIdHasBeenSet = false;
+  bool m_databaseNameHasBeenSet = false;
+  bool m_ipAddressHasBeenSet = false;
+  bool m_numberOfSchemasHasBeenSet = false;
+  bool m_serverHasBeenSet = false;
+  bool m_softwareDetailsHasBeenSet = false;
+  bool m_collectorsHasBeenSet = false;
+};
 
-    ServerShortInfoResponse m_server;
-    bool m_serverHasBeenSet = false;
-
-    DatabaseInstanceSoftwareDetailsResponse m_softwareDetails;
-    bool m_softwareDetailsHasBeenSet = false;
-
-    Aws::Vector<CollectorShortInfoResponse> m_collectors;
-    bool m_collectorsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

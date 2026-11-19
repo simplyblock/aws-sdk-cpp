@@ -4,94 +4,102 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/macie2/Macie2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/macie2/Macie2Request.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace Macie2
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace Macie2 {
+namespace Model {
 
+/**
+ */
+class ListMembersRequest : public Macie2Request {
+ public:
+  AWS_MACIE2_API ListMembersRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListMembers"; }
+
+  AWS_MACIE2_API Aws::String SerializePayload() const override;
+
+  AWS_MACIE2_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The maximum number of items to include in each page of a paginated
+   * response.</p>
    */
-  class ListMembersRequest : public Macie2Request
-  {
-  public:
-    AWS_MACIE2_API ListMembersRequest();
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListMembersRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListMembers"; }
+  ///@{
+  /**
+   * <p>The nextToken string that specifies which page of results to return in a
+   * paginated response.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListMembersRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MACIE2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies which accounts to include in the response, based on the status of
+   * an account's relationship with the administrator account. By default, the
+   * response includes only current member accounts. To include all accounts, set
+   * this value to false.</p>
+   */
+  inline const Aws::String& GetOnlyAssociated() const { return m_onlyAssociated; }
+  inline bool OnlyAssociatedHasBeenSet() const { return m_onlyAssociatedHasBeenSet; }
+  template <typename OnlyAssociatedT = Aws::String>
+  void SetOnlyAssociated(OnlyAssociatedT&& value) {
+    m_onlyAssociatedHasBeenSet = true;
+    m_onlyAssociated = std::forward<OnlyAssociatedT>(value);
+  }
+  template <typename OnlyAssociatedT = Aws::String>
+  ListMembersRequest& WithOnlyAssociated(OnlyAssociatedT&& value) {
+    SetOnlyAssociated(std::forward<OnlyAssociatedT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  int m_maxResults{0};
 
-    AWS_MACIE2_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  Aws::String m_nextToken;
 
+  Aws::String m_onlyAssociated;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_onlyAssociatedHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The maximum number of items to include in each page of a paginated
-     * response.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListMembersRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The nextToken string that specifies which page of results to return in a
-     * paginated response.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListMembersRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListMembersRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListMembersRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Specifies which accounts to include in the response, based on the status of
-     * an account's relationship with the administrator account. By default, the
-     * response includes only current member accounts. To include all accounts, set
-     * this value to false.</p>
-     */
-    inline const Aws::String& GetOnlyAssociated() const{ return m_onlyAssociated; }
-    inline bool OnlyAssociatedHasBeenSet() const { return m_onlyAssociatedHasBeenSet; }
-    inline void SetOnlyAssociated(const Aws::String& value) { m_onlyAssociatedHasBeenSet = true; m_onlyAssociated = value; }
-    inline void SetOnlyAssociated(Aws::String&& value) { m_onlyAssociatedHasBeenSet = true; m_onlyAssociated = std::move(value); }
-    inline void SetOnlyAssociated(const char* value) { m_onlyAssociatedHasBeenSet = true; m_onlyAssociated.assign(value); }
-    inline ListMembersRequest& WithOnlyAssociated(const Aws::String& value) { SetOnlyAssociated(value); return *this;}
-    inline ListMembersRequest& WithOnlyAssociated(Aws::String&& value) { SetOnlyAssociated(std::move(value)); return *this;}
-    inline ListMembersRequest& WithOnlyAssociated(const char* value) { SetOnlyAssociated(value); return *this;}
-    ///@}
-  private:
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    Aws::String m_onlyAssociated;
-    bool m_onlyAssociatedHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

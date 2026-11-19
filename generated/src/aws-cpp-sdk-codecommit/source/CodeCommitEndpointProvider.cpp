@@ -4,13 +4,15 @@
  */
 
 #include <aws/codecommit/CodeCommitEndpointProvider.h>
+#include <aws/codecommit/internal/CodeCommitEndpointRules.h>
 
-namespace Aws
-{
-namespace CodeCommit
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CodeCommit
-} // namespace Aws
+namespace Aws {
+namespace CodeCommit {
+namespace Endpoint {
+CodeCommitEndpointProvider::CodeCommitEndpointProvider()
+    : CodeCommitDefaultEpProviderBase(Aws::CodeCommit::CodeCommitEndpointRules::GetRulesBlob(),
+                                      Aws::CodeCommit::CodeCommitEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CodeCommit
+}  // namespace Aws

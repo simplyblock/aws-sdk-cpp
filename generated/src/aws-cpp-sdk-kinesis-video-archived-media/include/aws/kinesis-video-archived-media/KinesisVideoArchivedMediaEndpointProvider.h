@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/kinesis-video-archived-media/KinesisVideoArchivedMedia_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kinesis-video-archived-media/KinesisVideoArchivedMedia_EXPORTS.h>
 
-#include <aws/kinesis-video-archived-media/KinesisVideoArchivedMediaEndpointRules.h>
-
-
-namespace Aws
-{
-namespace KinesisVideoArchivedMedia
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace KinesisVideoArchivedMedia {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using KinesisVideoArchivedMediaClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using KinesisVideoArchivedMediaBuiltInParameters = Aws::Endpoint::BuiltInParamet
  * The SDK must use service-specific type for each service per specification.
  */
 using KinesisVideoArchivedMediaEndpointProviderBase =
-    EndpointProviderBase<KinesisVideoArchivedMediaClientConfiguration, KinesisVideoArchivedMediaBuiltInParameters, KinesisVideoArchivedMediaClientContextParameters>;
+    EndpointProviderBase<KinesisVideoArchivedMediaClientConfiguration, KinesisVideoArchivedMediaBuiltInParameters,
+                         KinesisVideoArchivedMediaClientContextParameters>;
 
 using KinesisVideoArchivedMediaDefaultEpProviderBase =
-    DefaultEndpointProvider<KinesisVideoArchivedMediaClientConfiguration, KinesisVideoArchivedMediaBuiltInParameters, KinesisVideoArchivedMediaClientContextParameters>;
+    BDDEndpointProvider<KinesisVideoArchivedMediaClientConfiguration, KinesisVideoArchivedMediaBuiltInParameters,
+                        KinesisVideoArchivedMediaClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_KINESISVIDEOARCHIVEDMEDIA_API KinesisVideoArchivedMediaEndpointProvider : public KinesisVideoArchivedMediaDefaultEpProviderBase
-{
-public:
-    using KinesisVideoArchivedMediaResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_KINESISVIDEOARCHIVEDMEDIA_API KinesisVideoArchivedMediaEndpointProvider : public KinesisVideoArchivedMediaDefaultEpProviderBase {
+ public:
+  using KinesisVideoArchivedMediaResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    KinesisVideoArchivedMediaEndpointProvider()
-      : KinesisVideoArchivedMediaDefaultEpProviderBase(Aws::KinesisVideoArchivedMedia::KinesisVideoArchivedMediaEndpointRules::GetRulesBlob(), Aws::KinesisVideoArchivedMedia::KinesisVideoArchivedMediaEndpointRules::RulesBlobSize)
-    {}
+  KinesisVideoArchivedMediaEndpointProvider();
 
-    ~KinesisVideoArchivedMediaEndpointProvider()
-    {
-    }
+  ~KinesisVideoArchivedMediaEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace KinesisVideoArchivedMedia
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace KinesisVideoArchivedMedia
+}  // namespace Aws

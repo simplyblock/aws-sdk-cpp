@@ -12,31 +12,16 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateGlobalSettingsRequest::UpdateGlobalSettingsRequest() : 
-    m_businessCallingHasBeenSet(false),
-    m_voiceConnectorHasBeenSet(false)
-{
-}
-
-Aws::String UpdateGlobalSettingsRequest::SerializePayload() const
-{
+Aws::String UpdateGlobalSettingsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_businessCallingHasBeenSet)
-  {
-   payload.WithObject("BusinessCalling", m_businessCalling.Jsonize());
-
+  if (m_businessCallingHasBeenSet) {
+    payload.WithObject("BusinessCalling", m_businessCalling.Jsonize());
   }
 
-  if(m_voiceConnectorHasBeenSet)
-  {
-   payload.WithObject("VoiceConnector", m_voiceConnector.Jsonize());
-
+  if (m_voiceConnectorHasBeenSet) {
+    payload.WithObject("VoiceConnector", m_voiceConnector.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

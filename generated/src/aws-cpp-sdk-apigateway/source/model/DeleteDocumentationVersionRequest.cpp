@@ -12,17 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDocumentationVersionRequest::DeleteDocumentationVersionRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_documentationVersionHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDocumentationVersionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDocumentationVersionRequest::SerializePayload() const { return {}; }

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sagemaker-geospatial/model/DeleteVectorEnrichmentJobRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/sagemaker-geospatial/model/DeleteVectorEnrichmentJobRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::SageMakerGeospatial::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteVectorEnrichmentJobRequest::DeleteVectorEnrichmentJobRequest() : 
-    m_arnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteVectorEnrichmentJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteVectorEnrichmentJobRequest::SerializePayload() const { return {}; }

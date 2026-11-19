@@ -12,24 +12,12 @@ using namespace Aws::ControlTower::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetEnabledBaselineRequest::GetEnabledBaselineRequest() : 
-    m_enabledBaselineIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetEnabledBaselineRequest::SerializePayload() const
-{
+Aws::String GetEnabledBaselineRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_enabledBaselineIdentifierHasBeenSet)
-  {
-   payload.WithString("enabledBaselineIdentifier", m_enabledBaselineIdentifier);
-
+  if (m_enabledBaselineIdentifierHasBeenSet) {
+    payload.WithString("enabledBaselineIdentifier", m_enabledBaselineIdentifier);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

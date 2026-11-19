@@ -4,87 +4,96 @@
  */
 
 #pragma once
-#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
-#include <aws/managedblockchain/ManagedBlockchainRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/managedblockchain/ManagedBlockchainRequest.h>
+#include <aws/managedblockchain/ManagedBlockchain_EXPORTS.h>
 #include <aws/managedblockchain/model/MemberLogPublishingConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ManagedBlockchain
-{
-namespace Model
-{
+namespace Aws {
+namespace ManagedBlockchain {
+namespace Model {
 
+/**
+ */
+class UpdateMemberRequest : public ManagedBlockchainRequest {
+ public:
+  AWS_MANAGEDBLOCKCHAIN_API UpdateMemberRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateMember"; }
+
+  AWS_MANAGEDBLOCKCHAIN_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the Managed Blockchain network to which the member
+   * belongs.</p>
    */
-  class UpdateMemberRequest : public ManagedBlockchainRequest
-  {
-  public:
-    AWS_MANAGEDBLOCKCHAIN_API UpdateMemberRequest();
+  inline const Aws::String& GetNetworkId() const { return m_networkId; }
+  inline bool NetworkIdHasBeenSet() const { return m_networkIdHasBeenSet; }
+  template <typename NetworkIdT = Aws::String>
+  void SetNetworkId(NetworkIdT&& value) {
+    m_networkIdHasBeenSet = true;
+    m_networkId = std::forward<NetworkIdT>(value);
+  }
+  template <typename NetworkIdT = Aws::String>
+  UpdateMemberRequest& WithNetworkId(NetworkIdT&& value) {
+    SetNetworkId(std::forward<NetworkIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateMember"; }
+  ///@{
+  /**
+   * <p>The unique identifier of the member.</p>
+   */
+  inline const Aws::String& GetMemberId() const { return m_memberId; }
+  inline bool MemberIdHasBeenSet() const { return m_memberIdHasBeenSet; }
+  template <typename MemberIdT = Aws::String>
+  void SetMemberId(MemberIdT&& value) {
+    m_memberIdHasBeenSet = true;
+    m_memberId = std::forward<MemberIdT>(value);
+  }
+  template <typename MemberIdT = Aws::String>
+  UpdateMemberRequest& WithMemberId(MemberIdT&& value) {
+    SetMemberId(std::forward<MemberIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MANAGEDBLOCKCHAIN_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Configuration properties for publishing to Amazon CloudWatch Logs.</p>
+   */
+  inline const MemberLogPublishingConfiguration& GetLogPublishingConfiguration() const { return m_logPublishingConfiguration; }
+  inline bool LogPublishingConfigurationHasBeenSet() const { return m_logPublishingConfigurationHasBeenSet; }
+  template <typename LogPublishingConfigurationT = MemberLogPublishingConfiguration>
+  void SetLogPublishingConfiguration(LogPublishingConfigurationT&& value) {
+    m_logPublishingConfigurationHasBeenSet = true;
+    m_logPublishingConfiguration = std::forward<LogPublishingConfigurationT>(value);
+  }
+  template <typename LogPublishingConfigurationT = MemberLogPublishingConfiguration>
+  UpdateMemberRequest& WithLogPublishingConfiguration(LogPublishingConfigurationT&& value) {
+    SetLogPublishingConfiguration(std::forward<LogPublishingConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_networkId;
 
+  Aws::String m_memberId;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the Managed Blockchain network to which the member
-     * belongs.</p>
-     */
-    inline const Aws::String& GetNetworkId() const{ return m_networkId; }
-    inline bool NetworkIdHasBeenSet() const { return m_networkIdHasBeenSet; }
-    inline void SetNetworkId(const Aws::String& value) { m_networkIdHasBeenSet = true; m_networkId = value; }
-    inline void SetNetworkId(Aws::String&& value) { m_networkIdHasBeenSet = true; m_networkId = std::move(value); }
-    inline void SetNetworkId(const char* value) { m_networkIdHasBeenSet = true; m_networkId.assign(value); }
-    inline UpdateMemberRequest& WithNetworkId(const Aws::String& value) { SetNetworkId(value); return *this;}
-    inline UpdateMemberRequest& WithNetworkId(Aws::String&& value) { SetNetworkId(std::move(value)); return *this;}
-    inline UpdateMemberRequest& WithNetworkId(const char* value) { SetNetworkId(value); return *this;}
-    ///@}
+  MemberLogPublishingConfiguration m_logPublishingConfiguration;
+  bool m_networkIdHasBeenSet = false;
+  bool m_memberIdHasBeenSet = false;
+  bool m_logPublishingConfigurationHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The unique identifier of the member.</p>
-     */
-    inline const Aws::String& GetMemberId() const{ return m_memberId; }
-    inline bool MemberIdHasBeenSet() const { return m_memberIdHasBeenSet; }
-    inline void SetMemberId(const Aws::String& value) { m_memberIdHasBeenSet = true; m_memberId = value; }
-    inline void SetMemberId(Aws::String&& value) { m_memberIdHasBeenSet = true; m_memberId = std::move(value); }
-    inline void SetMemberId(const char* value) { m_memberIdHasBeenSet = true; m_memberId.assign(value); }
-    inline UpdateMemberRequest& WithMemberId(const Aws::String& value) { SetMemberId(value); return *this;}
-    inline UpdateMemberRequest& WithMemberId(Aws::String&& value) { SetMemberId(std::move(value)); return *this;}
-    inline UpdateMemberRequest& WithMemberId(const char* value) { SetMemberId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Configuration properties for publishing to Amazon CloudWatch Logs.</p>
-     */
-    inline const MemberLogPublishingConfiguration& GetLogPublishingConfiguration() const{ return m_logPublishingConfiguration; }
-    inline bool LogPublishingConfigurationHasBeenSet() const { return m_logPublishingConfigurationHasBeenSet; }
-    inline void SetLogPublishingConfiguration(const MemberLogPublishingConfiguration& value) { m_logPublishingConfigurationHasBeenSet = true; m_logPublishingConfiguration = value; }
-    inline void SetLogPublishingConfiguration(MemberLogPublishingConfiguration&& value) { m_logPublishingConfigurationHasBeenSet = true; m_logPublishingConfiguration = std::move(value); }
-    inline UpdateMemberRequest& WithLogPublishingConfiguration(const MemberLogPublishingConfiguration& value) { SetLogPublishingConfiguration(value); return *this;}
-    inline UpdateMemberRequest& WithLogPublishingConfiguration(MemberLogPublishingConfiguration&& value) { SetLogPublishingConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_networkId;
-    bool m_networkIdHasBeenSet = false;
-
-    Aws::String m_memberId;
-    bool m_memberIdHasBeenSet = false;
-
-    MemberLogPublishingConfiguration m_logPublishingConfiguration;
-    bool m_logPublishingConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ManagedBlockchain
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedBlockchain
+}  // namespace Aws

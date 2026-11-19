@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/dataexchange/model/GetDataSetRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/dataexchange/model/GetDataSetRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::DataExchange::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDataSetRequest::GetDataSetRequest() : 
-    m_dataSetIdHasBeenSet(false)
-{
-}
-
-Aws::String GetDataSetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDataSetRequest::SerializePayload() const { return {}; }

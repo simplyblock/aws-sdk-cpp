@@ -4,70 +4,169 @@
  */
 
 #include <aws/appstream/model/StackError.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppStream
-{
-namespace Model
-{
+namespace Aws {
+namespace AppStream {
+namespace Model {
 
-StackError::StackError() : 
-    m_errorCode(StackErrorCode::NOT_SET),
-    m_errorCodeHasBeenSet(false),
-    m_errorMessageHasBeenSet(false)
-{
-}
+StackError::StackError(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-StackError::StackError(JsonView jsonValue)
-  : StackError()
-{
-  *this = jsonValue;
-}
+StackError& StackError::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-StackError& StackError::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ErrorCode"))
-  {
-    m_errorCode = StackErrorCodeMapper::GetStackErrorCodeForName(jsonValue.GetString("ErrorCode"));
+              if (initialKeyStr == "ErrorCode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_errorCode = StackErrorCodeMapper::GetStackErrorCodeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_errorCodeHasBeenSet = true;
+              }
 
-    m_errorCodeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ErrorMessage") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_errorMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_errorMessage = ss.str();
+                  }
+                }
+                m_errorMessageHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("StackError", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("ErrorMessage"))
-  {
-    m_errorMessage = jsonValue.GetString("ErrorMessage");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_errorMessageHasBeenSet = true;
+            if (initialKeyStr == "ErrorCode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_errorCode = StackErrorCodeMapper::GetStackErrorCodeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_errorCodeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ErrorMessage") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_errorMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_errorMessage = ss.str();
+                }
+              }
+              m_errorMessageHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue StackError::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_errorCodeHasBeenSet)
-  {
-   payload.WithString("ErrorCode", StackErrorCodeMapper::GetNameForStackErrorCode(m_errorCode));
+void StackError::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_errorCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_errorMessageHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_errorMessageHasBeenSet)
-  {
-   payload.WithString("ErrorMessage", m_errorMessage);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_errorCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ErrorCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(StackErrorCodeMapper::GetNameForStackErrorCode(m_errorCode).c_str()));
   }
 
-  return payload;
+  if (m_errorMessageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ErrorMessage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_errorMessage.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

@@ -4,104 +4,134 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/BatchUpdateRecommendationStatusFailedEntry.h>
 #include <aws/resiliencehub/model/BatchUpdateRecommendationStatusSuccessfulEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class BatchUpdateRecommendationStatusResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult();
-    AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class BatchUpdateRecommendationStatusResult {
+ public:
+  AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult() = default;
+  AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API BatchUpdateRecommendationStatusResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
+   * this ARN is:
+   * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
+   * For more information about ARNs, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
+   * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
+   * Reference</i> guide.</p>
+   */
+  inline const Aws::String& GetAppArn() const { return m_appArn; }
+  template <typename AppArnT = Aws::String>
+  void SetAppArn(AppArnT&& value) {
+    m_appArnHasBeenSet = true;
+    m_appArn = std::forward<AppArnT>(value);
+  }
+  template <typename AppArnT = Aws::String>
+  BatchUpdateRecommendationStatusResult& WithAppArn(AppArnT&& value) {
+    SetAppArn(std::forward<AppArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
-     * this ARN is:
-     * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
-     * For more information about ARNs, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
-     * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
-     * Reference</i> guide.</p>
-     */
-    inline const Aws::String& GetAppArn() const{ return m_appArn; }
-    inline void SetAppArn(const Aws::String& value) { m_appArn = value; }
-    inline void SetAppArn(Aws::String&& value) { m_appArn = std::move(value); }
-    inline void SetAppArn(const char* value) { m_appArn.assign(value); }
-    inline BatchUpdateRecommendationStatusResult& WithAppArn(const Aws::String& value) { SetAppArn(value); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithAppArn(Aws::String&& value) { SetAppArn(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithAppArn(const char* value) { SetAppArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of items with error details about each item, which could not be
+   * included or excluded.</p>
+   */
+  inline const Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>& GetFailedEntries() const { return m_failedEntries; }
+  template <typename FailedEntriesT = Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>>
+  void SetFailedEntries(FailedEntriesT&& value) {
+    m_failedEntriesHasBeenSet = true;
+    m_failedEntries = std::forward<FailedEntriesT>(value);
+  }
+  template <typename FailedEntriesT = Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>>
+  BatchUpdateRecommendationStatusResult& WithFailedEntries(FailedEntriesT&& value) {
+    SetFailedEntries(std::forward<FailedEntriesT>(value));
+    return *this;
+  }
+  template <typename FailedEntriesT = BatchUpdateRecommendationStatusFailedEntry>
+  BatchUpdateRecommendationStatusResult& AddFailedEntries(FailedEntriesT&& value) {
+    m_failedEntriesHasBeenSet = true;
+    m_failedEntries.emplace_back(std::forward<FailedEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of items with error details about each item, which could not be
-     * included or excluded.</p>
-     */
-    inline const Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>& GetFailedEntries() const{ return m_failedEntries; }
-    inline void SetFailedEntries(const Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>& value) { m_failedEntries = value; }
-    inline void SetFailedEntries(Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>&& value) { m_failedEntries = std::move(value); }
-    inline BatchUpdateRecommendationStatusResult& WithFailedEntries(const Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>& value) { SetFailedEntries(value); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithFailedEntries(Aws::Vector<BatchUpdateRecommendationStatusFailedEntry>&& value) { SetFailedEntries(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationStatusResult& AddFailedEntries(const BatchUpdateRecommendationStatusFailedEntry& value) { m_failedEntries.push_back(value); return *this; }
-    inline BatchUpdateRecommendationStatusResult& AddFailedEntries(BatchUpdateRecommendationStatusFailedEntry&& value) { m_failedEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of items that were included or excluded.</p>
+   */
+  inline const Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>& GetSuccessfulEntries() const { return m_successfulEntries; }
+  template <typename SuccessfulEntriesT = Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>>
+  void SetSuccessfulEntries(SuccessfulEntriesT&& value) {
+    m_successfulEntriesHasBeenSet = true;
+    m_successfulEntries = std::forward<SuccessfulEntriesT>(value);
+  }
+  template <typename SuccessfulEntriesT = Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>>
+  BatchUpdateRecommendationStatusResult& WithSuccessfulEntries(SuccessfulEntriesT&& value) {
+    SetSuccessfulEntries(std::forward<SuccessfulEntriesT>(value));
+    return *this;
+  }
+  template <typename SuccessfulEntriesT = BatchUpdateRecommendationStatusSuccessfulEntry>
+  BatchUpdateRecommendationStatusResult& AddSuccessfulEntries(SuccessfulEntriesT&& value) {
+    m_successfulEntriesHasBeenSet = true;
+    m_successfulEntries.emplace_back(std::forward<SuccessfulEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of items that were included or excluded.</p>
-     */
-    inline const Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>& GetSuccessfulEntries() const{ return m_successfulEntries; }
-    inline void SetSuccessfulEntries(const Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>& value) { m_successfulEntries = value; }
-    inline void SetSuccessfulEntries(Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>&& value) { m_successfulEntries = std::move(value); }
-    inline BatchUpdateRecommendationStatusResult& WithSuccessfulEntries(const Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>& value) { SetSuccessfulEntries(value); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithSuccessfulEntries(Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry>&& value) { SetSuccessfulEntries(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationStatusResult& AddSuccessfulEntries(const BatchUpdateRecommendationStatusSuccessfulEntry& value) { m_successfulEntries.push_back(value); return *this; }
-    inline BatchUpdateRecommendationStatusResult& AddSuccessfulEntries(BatchUpdateRecommendationStatusSuccessfulEntry&& value) { m_successfulEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchUpdateRecommendationStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchUpdateRecommendationStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchUpdateRecommendationStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appArn;
+ private:
+  Aws::String m_appArn;
 
-    Aws::Vector<BatchUpdateRecommendationStatusFailedEntry> m_failedEntries;
+  Aws::Vector<BatchUpdateRecommendationStatusFailedEntry> m_failedEntries;
 
-    Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry> m_successfulEntries;
+  Aws::Vector<BatchUpdateRecommendationStatusSuccessfulEntry> m_successfulEntries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appArnHasBeenSet = false;
+  bool m_failedEntriesHasBeenSet = false;
+  bool m_successfulEntriesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

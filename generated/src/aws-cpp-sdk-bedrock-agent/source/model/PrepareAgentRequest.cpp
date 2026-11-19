@@ -12,16 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PrepareAgentRequest::PrepareAgentRequest() : 
-    m_agentIdHasBeenSet(false)
-{
-}
-
-Aws::String PrepareAgentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String PrepareAgentRequest::SerializePayload() const { return {}; }

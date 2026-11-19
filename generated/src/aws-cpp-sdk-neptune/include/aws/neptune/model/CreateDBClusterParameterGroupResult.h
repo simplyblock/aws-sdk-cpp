@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/neptune/Neptune_EXPORTS.h>
 #include <aws/neptune/model/DBClusterParameterGroup.h>
 #include <aws/neptune/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Neptune
-{
-namespace Model
-{
-  class CreateDBClusterParameterGroupResult
-  {
-  public:
-    AWS_NEPTUNE_API CreateDBClusterParameterGroupResult();
-    AWS_NEPTUNE_API CreateDBClusterParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_NEPTUNE_API CreateDBClusterParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Neptune {
+namespace Model {
+class CreateDBClusterParameterGroupResult {
+ public:
+  AWS_NEPTUNE_API CreateDBClusterParameterGroupResult() = default;
+  AWS_NEPTUNE_API CreateDBClusterParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_NEPTUNE_API CreateDBClusterParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const DBClusterParameterGroup& GetDBClusterParameterGroup() const{ return m_dBClusterParameterGroup; }
-    inline void SetDBClusterParameterGroup(const DBClusterParameterGroup& value) { m_dBClusterParameterGroup = value; }
-    inline void SetDBClusterParameterGroup(DBClusterParameterGroup&& value) { m_dBClusterParameterGroup = std::move(value); }
-    inline CreateDBClusterParameterGroupResult& WithDBClusterParameterGroup(const DBClusterParameterGroup& value) { SetDBClusterParameterGroup(value); return *this;}
-    inline CreateDBClusterParameterGroupResult& WithDBClusterParameterGroup(DBClusterParameterGroup&& value) { SetDBClusterParameterGroup(std::move(value)); return *this;}
-    ///@}
+  inline const DBClusterParameterGroup& GetDBClusterParameterGroup() const { return m_dBClusterParameterGroup; }
+  template <typename DBClusterParameterGroupT = DBClusterParameterGroup>
+  void SetDBClusterParameterGroup(DBClusterParameterGroupT&& value) {
+    m_dBClusterParameterGroupHasBeenSet = true;
+    m_dBClusterParameterGroup = std::forward<DBClusterParameterGroupT>(value);
+  }
+  template <typename DBClusterParameterGroupT = DBClusterParameterGroup>
+  CreateDBClusterParameterGroupResult& WithDBClusterParameterGroup(DBClusterParameterGroupT&& value) {
+    SetDBClusterParameterGroup(std::forward<DBClusterParameterGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateDBClusterParameterGroupResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateDBClusterParameterGroupResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    DBClusterParameterGroup m_dBClusterParameterGroup;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateDBClusterParameterGroupResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  DBClusterParameterGroup m_dBClusterParameterGroup;
 
-} // namespace Model
-} // namespace Neptune
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dBClusterParameterGroupHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Neptune
+}  // namespace Aws

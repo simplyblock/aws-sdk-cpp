@@ -3,70 +3,71 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/ListOrganizationPortfolioAccessRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListOrganizationPortfolioAccessRequest::ListOrganizationPortfolioAccessRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_portfolioIdHasBeenSet(false),
-    m_organizationNodeType(OrganizationNodeType::NOT_SET),
-    m_organizationNodeTypeHasBeenSet(false),
-    m_pageTokenHasBeenSet(false),
-    m_pageSize(0),
-    m_pageSizeHasBeenSet(false)
-{
+Aws::String ListOrganizationPortfolioAccessRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_organizationNodeTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pageTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pageSizeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_portfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_portfolioId.c_str()));
+  }
+
+  if (m_organizationNodeTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OrganizationNodeType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(OrganizationNodeTypeMapper::GetNameForOrganizationNodeType(m_organizationNodeType).c_str()));
+  }
+
+  if (m_pageTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PageToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pageToken.c_str()));
+  }
+
+  if (m_pageSizeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PageSize"));
+    (m_pageSize >= 0) ? encoder.WriteUInt(m_pageSize) : encoder.WriteNegInt(m_pageSize);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ListOrganizationPortfolioAccessRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_portfolioIdHasBeenSet)
-  {
-   payload.WithString("PortfolioId", m_portfolioId);
-
-  }
-
-  if(m_organizationNodeTypeHasBeenSet)
-  {
-   payload.WithString("OrganizationNodeType", OrganizationNodeTypeMapper::GetNameForOrganizationNodeType(m_organizationNodeType));
-  }
-
-  if(m_pageTokenHasBeenSet)
-  {
-   payload.WithString("PageToken", m_pageToken);
-
-  }
-
-  if(m_pageSizeHasBeenSet)
-  {
-   payload.WithInteger("PageSize", m_pageSize);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ListOrganizationPortfolioAccessRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListOrganizationPortfolioAccessRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.ListOrganizationPortfolioAccess"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

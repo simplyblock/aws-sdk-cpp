@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/shield/model/DisassociateHealthCheckRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Shield::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DisassociateHealthCheckRequest::DisassociateHealthCheckRequest() : 
-    m_protectionIdHasBeenSet(false),
-    m_healthCheckArnHasBeenSet(false)
-{
-}
+Aws::String DisassociateHealthCheckRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DisassociateHealthCheckRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_protectionIdHasBeenSet)
-  {
-   payload.WithString("ProtectionId", m_protectionId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_protectionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_healthCheckArnHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_healthCheckArnHasBeenSet)
-  {
-   payload.WithString("HealthCheckArn", m_healthCheckArn);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_protectionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProtectionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_protectionId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_healthCheckArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HealthCheckArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_healthCheckArn.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DisassociateHealthCheckRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DisassociateHealthCheckRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSShield_20160616.DisassociateHealthCheck"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

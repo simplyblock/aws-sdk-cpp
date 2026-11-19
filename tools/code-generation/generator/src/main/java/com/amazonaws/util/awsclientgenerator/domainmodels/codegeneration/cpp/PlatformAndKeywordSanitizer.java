@@ -148,6 +148,7 @@ public class PlatformAndKeywordSanitizer {
         words.add("STATIC");
         words.add("T_CHAR");
         words.add("DOMAIN");
+        words.add("OVERFLOW");
         words.add("*");
         //ok you get the idea... add them as you encounter them.
         FORBIDDEN_WORDS = Collections.unmodifiableSet(words);
@@ -164,6 +165,17 @@ public class PlatformAndKeywordSanitizer {
     // Converts C2J enum strings to a valid character set for c++.
     public static String fixEnumValue (String enumValue) {
         String enumMemberName = enumValue;
+
+        // NOT_SET is a special value in C++ SDK enums used in two scenarios:
+        // 1. When an enum cannot be deserialized from a string value
+        // 2. When accessing an enum created from an invalid string value
+        // Note: Services may still use NOT_SET as a valid key in maps
+        //
+        // TODO: model this as a crt or std optional to represent "absent of value"
+        //       instead of using a common-ish predetermined value.
+        if (enumValue.equals("NOT_SET")) {
+            return "NOT_SET_VALUE";
+        }
 
         for (String invalid : ENUM_CHARS_MAPPING.keySet()) {
             enumMemberName = enumMemberName.replace(invalid, ENUM_CHARS_MAPPING.get(invalid));

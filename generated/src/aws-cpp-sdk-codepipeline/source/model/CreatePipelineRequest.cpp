@@ -4,52 +4,48 @@
  */
 
 #include <aws/codepipeline/model/CreatePipelineRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreatePipelineRequest::CreatePipelineRequest() : 
-    m_pipelineHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
+Aws::String CreatePipelineRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String CreatePipelineRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_pipelineHasBeenSet)
-  {
-   payload.WithObject("pipeline", m_pipeline.Jsonize());
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pipelineHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("tags", std::move(tagsJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_pipelineHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipeline"));
+    m_pipeline.CborEncode(encoder);
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection CreatePipelineRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreatePipelineRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.CreatePipeline"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

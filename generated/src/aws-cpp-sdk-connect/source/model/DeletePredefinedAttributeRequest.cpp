@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeletePredefinedAttributeRequest::DeletePredefinedAttributeRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DeletePredefinedAttributeRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeletePredefinedAttributeRequest::SerializePayload() const { return {}; }

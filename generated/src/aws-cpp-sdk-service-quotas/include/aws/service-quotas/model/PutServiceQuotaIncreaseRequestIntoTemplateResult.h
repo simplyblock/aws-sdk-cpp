@@ -4,63 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/service-quotas/ServiceQuotas_EXPORTS.h>
 #include <aws/service-quotas/model/ServiceQuotaIncreaseRequestInTemplate.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ServiceQuotas
-{
-namespace Model
-{
-  class PutServiceQuotaIncreaseRequestIntoTemplateResult
-  {
-  public:
-    AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult();
-    AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ServiceQuotas {
+namespace Model {
+class PutServiceQuotaIncreaseRequestIntoTemplateResult {
+ public:
+  AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult() = default;
+  AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SERVICEQUOTAS_API PutServiceQuotaIncreaseRequestIntoTemplateResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the quota increase request.</p>
+   */
+  inline const ServiceQuotaIncreaseRequestInTemplate& GetServiceQuotaIncreaseRequestInTemplate() const {
+    return m_serviceQuotaIncreaseRequestInTemplate;
+  }
+  template <typename ServiceQuotaIncreaseRequestInTemplateT = ServiceQuotaIncreaseRequestInTemplate>
+  void SetServiceQuotaIncreaseRequestInTemplate(ServiceQuotaIncreaseRequestInTemplateT&& value) {
+    m_serviceQuotaIncreaseRequestInTemplateHasBeenSet = true;
+    m_serviceQuotaIncreaseRequestInTemplate = std::forward<ServiceQuotaIncreaseRequestInTemplateT>(value);
+  }
+  template <typename ServiceQuotaIncreaseRequestInTemplateT = ServiceQuotaIncreaseRequestInTemplate>
+  PutServiceQuotaIncreaseRequestIntoTemplateResult& WithServiceQuotaIncreaseRequestInTemplate(
+      ServiceQuotaIncreaseRequestInTemplateT&& value) {
+    SetServiceQuotaIncreaseRequestInTemplate(std::forward<ServiceQuotaIncreaseRequestInTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the quota increase request.</p>
-     */
-    inline const ServiceQuotaIncreaseRequestInTemplate& GetServiceQuotaIncreaseRequestInTemplate() const{ return m_serviceQuotaIncreaseRequestInTemplate; }
-    inline void SetServiceQuotaIncreaseRequestInTemplate(const ServiceQuotaIncreaseRequestInTemplate& value) { m_serviceQuotaIncreaseRequestInTemplate = value; }
-    inline void SetServiceQuotaIncreaseRequestInTemplate(ServiceQuotaIncreaseRequestInTemplate&& value) { m_serviceQuotaIncreaseRequestInTemplate = std::move(value); }
-    inline PutServiceQuotaIncreaseRequestIntoTemplateResult& WithServiceQuotaIncreaseRequestInTemplate(const ServiceQuotaIncreaseRequestInTemplate& value) { SetServiceQuotaIncreaseRequestInTemplate(value); return *this;}
-    inline PutServiceQuotaIncreaseRequestIntoTemplateResult& WithServiceQuotaIncreaseRequestInTemplate(ServiceQuotaIncreaseRequestInTemplate&& value) { SetServiceQuotaIncreaseRequestInTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutServiceQuotaIncreaseRequestIntoTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutServiceQuotaIncreaseRequestIntoTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutServiceQuotaIncreaseRequestIntoTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutServiceQuotaIncreaseRequestIntoTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ServiceQuotaIncreaseRequestInTemplate m_serviceQuotaIncreaseRequestInTemplate;
+ private:
+  ServiceQuotaIncreaseRequestInTemplate m_serviceQuotaIncreaseRequestInTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serviceQuotaIncreaseRequestInTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ServiceQuotas
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceQuotas
+}  // namespace Aws

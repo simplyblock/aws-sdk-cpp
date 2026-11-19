@@ -12,17 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDocumentationPartRequest::DeleteDocumentationPartRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_documentationPartIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDocumentationPartRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDocumentationPartRequest::SerializePayload() const { return {}; }

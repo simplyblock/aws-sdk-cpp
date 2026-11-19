@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/InstanceEventWindow.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeInstanceEventWindowsResponse
-  {
-  public:
-    AWS_EC2_API DescribeInstanceEventWindowsResponse();
-    AWS_EC2_API DescribeInstanceEventWindowsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeInstanceEventWindowsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeInstanceEventWindowsResponse {
+ public:
+  AWS_EC2_API DescribeInstanceEventWindowsResponse() = default;
+  AWS_EC2_API DescribeInstanceEventWindowsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeInstanceEventWindowsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the event windows.</p>
+   */
+  inline const Aws::Vector<InstanceEventWindow>& GetInstanceEventWindows() const { return m_instanceEventWindows; }
+  template <typename InstanceEventWindowsT = Aws::Vector<InstanceEventWindow>>
+  void SetInstanceEventWindows(InstanceEventWindowsT&& value) {
+    m_instanceEventWindowsHasBeenSet = true;
+    m_instanceEventWindows = std::forward<InstanceEventWindowsT>(value);
+  }
+  template <typename InstanceEventWindowsT = Aws::Vector<InstanceEventWindow>>
+  DescribeInstanceEventWindowsResponse& WithInstanceEventWindows(InstanceEventWindowsT&& value) {
+    SetInstanceEventWindows(std::forward<InstanceEventWindowsT>(value));
+    return *this;
+  }
+  template <typename InstanceEventWindowsT = InstanceEventWindow>
+  DescribeInstanceEventWindowsResponse& AddInstanceEventWindows(InstanceEventWindowsT&& value) {
+    m_instanceEventWindowsHasBeenSet = true;
+    m_instanceEventWindows.emplace_back(std::forward<InstanceEventWindowsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the event windows.</p>
-     */
-    inline const Aws::Vector<InstanceEventWindow>& GetInstanceEventWindows() const{ return m_instanceEventWindows; }
-    inline void SetInstanceEventWindows(const Aws::Vector<InstanceEventWindow>& value) { m_instanceEventWindows = value; }
-    inline void SetInstanceEventWindows(Aws::Vector<InstanceEventWindow>&& value) { m_instanceEventWindows = std::move(value); }
-    inline DescribeInstanceEventWindowsResponse& WithInstanceEventWindows(const Aws::Vector<InstanceEventWindow>& value) { SetInstanceEventWindows(value); return *this;}
-    inline DescribeInstanceEventWindowsResponse& WithInstanceEventWindows(Aws::Vector<InstanceEventWindow>&& value) { SetInstanceEventWindows(std::move(value)); return *this;}
-    inline DescribeInstanceEventWindowsResponse& AddInstanceEventWindows(const InstanceEventWindow& value) { m_instanceEventWindows.push_back(value); return *this; }
-    inline DescribeInstanceEventWindowsResponse& AddInstanceEventWindows(InstanceEventWindow&& value) { m_instanceEventWindows.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeInstanceEventWindowsResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeInstanceEventWindowsResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeInstanceEventWindowsResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeInstanceEventWindowsResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeInstanceEventWindowsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeInstanceEventWindowsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeInstanceEventWindowsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<InstanceEventWindow> m_instanceEventWindows;
+ private:
+  Aws::Vector<InstanceEventWindow> m_instanceEventWindows;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceEventWindowsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

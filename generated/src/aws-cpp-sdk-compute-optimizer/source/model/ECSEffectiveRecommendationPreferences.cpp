@@ -4,56 +4,123 @@
  */
 
 #include <aws/compute-optimizer/model/ECSEffectiveRecommendationPreferences.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-ECSEffectiveRecommendationPreferences::ECSEffectiveRecommendationPreferences() : 
-    m_savingsEstimationModeHasBeenSet(false)
-{
+ECSEffectiveRecommendationPreferences::ECSEffectiveRecommendationPreferences(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-ECSEffectiveRecommendationPreferences::ECSEffectiveRecommendationPreferences(JsonView jsonValue)
-  : ECSEffectiveRecommendationPreferences()
-{
-  *this = jsonValue;
-}
+ECSEffectiveRecommendationPreferences& ECSEffectiveRecommendationPreferences::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ECSEffectiveRecommendationPreferences& ECSEffectiveRecommendationPreferences::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("savingsEstimationMode"))
-  {
-    m_savingsEstimationMode = jsonValue.GetObject("savingsEstimationMode");
+              if (initialKeyStr == "savingsEstimationMode") {
+                m_savingsEstimationMode = ECSSavingsEstimationMode(decoder);
+                m_savingsEstimationModeHasBeenSet = true;
+              }
 
-    m_savingsEstimationModeHasBeenSet = true;
+              else if (initialKeyStr == "lookBackPeriod") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_lookBackPeriod = LookBackPeriodPreferenceMapper::GetLookBackPeriodPreferenceForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_lookBackPeriodHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ECSEffectiveRecommendationPreferences", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
+
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "savingsEstimationMode") {
+              m_savingsEstimationMode = ECSSavingsEstimationMode(decoder);
+              m_savingsEstimationModeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "lookBackPeriod") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_lookBackPeriod = LookBackPeriodPreferenceMapper::GetLookBackPeriodPreferenceForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_lookBackPeriodHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue ECSEffectiveRecommendationPreferences::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_savingsEstimationModeHasBeenSet)
-  {
-   payload.WithObject("savingsEstimationMode", m_savingsEstimationMode.Jsonize());
-
+void ECSEffectiveRecommendationPreferences::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_savingsEstimationModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lookBackPeriodHasBeenSet) {
+    mapSize++;
   }
 
-  return payload;
+  encoder.WriteMapStart(mapSize);
+
+  if (m_savingsEstimationModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("savingsEstimationMode"));
+    m_savingsEstimationMode.CborEncode(encoder);
+  }
+
+  if (m_lookBackPeriodHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("lookBackPeriod"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(LookBackPeriodPreferenceMapper::GetNameForLookBackPeriodPreference(m_lookBackPeriod).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

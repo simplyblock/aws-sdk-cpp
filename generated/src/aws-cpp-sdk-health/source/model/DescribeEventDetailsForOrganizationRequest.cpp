@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/model/DescribeEventDetailsForOrganizationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Health::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeEventDetailsForOrganizationRequest::DescribeEventDetailsForOrganizationRequest() : 
-    m_organizationEventDetailFiltersHasBeenSet(false),
-    m_localeHasBeenSet(false)
-{
-}
+Aws::String DescribeEventDetailsForOrganizationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeEventDetailsForOrganizationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_organizationEventDetailFiltersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> organizationEventDetailFiltersJsonList(m_organizationEventDetailFilters.size());
-   for(unsigned organizationEventDetailFiltersIndex = 0; organizationEventDetailFiltersIndex < organizationEventDetailFiltersJsonList.GetLength(); ++organizationEventDetailFiltersIndex)
-   {
-     organizationEventDetailFiltersJsonList[organizationEventDetailFiltersIndex].AsObject(m_organizationEventDetailFilters[organizationEventDetailFiltersIndex].Jsonize());
-   }
-   payload.WithArray("organizationEventDetailFilters", std::move(organizationEventDetailFiltersJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_organizationEventDetailFiltersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_localeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_localeHasBeenSet)
-  {
-   payload.WithString("locale", m_locale);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_organizationEventDetailFiltersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("organizationEventDetailFilters"));
+    encoder.WriteArrayStart(m_organizationEventDetailFilters.size());
+    for (const auto& item_0 : m_organizationEventDetailFilters) {
+      item_0.CborEncode(encoder);
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_localeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("locale"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_locale.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeEventDetailsForOrganizationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeEventDetailsForOrganizationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSHealth_20160804.DescribeEventDetailsForOrganization"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

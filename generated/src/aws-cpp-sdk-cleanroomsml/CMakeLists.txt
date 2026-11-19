@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cleanroomsml "C++ SDK for the AWS cleanroomsml service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cleanroomsml "C++ SDK for AWS Clean Rooms ML" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLEANROOMSML_HEADERS
     "include/aws/cleanroomsml/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLEANROOMSML_HEADERS
 
 file(GLOB AWS_CLEANROOMSML_MODEL_HEADERS
     "include/aws/cleanroomsml/model/*.h"
+)
+
+file(GLOB AWS_CLEANROOMSML_INTERNAL_HEADERS
+    "include/aws/cleanroomsml/internal/*.h"
 )
 
 file(GLOB AWS_CLEANROOMSML_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLEANROOMSML_MODEL_SOURCE
 
 file(GLOB CLEANROOMSML_UNIFIED_HEADERS
     ${AWS_CLEANROOMSML_HEADERS}
+    ${AWS_CLEANROOMSML_INTERNAL_HEADERS}
     ${AWS_CLEANROOMSML_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cleanroomsml" FILES ${AWS_CLEANROOMSML_HEADERS})
+        source_group("Header Files\\aws\\cleanroomsml\\internal" FILES ${AWS_CLEANROOMSML_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cleanroomsml\\model" FILES ${AWS_CLEANROOMSML_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLEANROOMSML_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLEANROOMSML_MODEL_SOURCE})

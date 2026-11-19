@@ -4,61 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/model/TransitGatewayPropagation.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/TransitGatewayPropagation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DisableTransitGatewayRouteTablePropagationResponse
-  {
-  public:
-    AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse();
-    AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DisableTransitGatewayRouteTablePropagationResponse {
+ public:
+  AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse() = default;
+  AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DisableTransitGatewayRouteTablePropagationResponse& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about route propagation.</p>
+   */
+  inline const TransitGatewayPropagation& GetPropagation() const { return m_propagation; }
+  template <typename PropagationT = TransitGatewayPropagation>
+  void SetPropagation(PropagationT&& value) {
+    m_propagationHasBeenSet = true;
+    m_propagation = std::forward<PropagationT>(value);
+  }
+  template <typename PropagationT = TransitGatewayPropagation>
+  DisableTransitGatewayRouteTablePropagationResponse& WithPropagation(PropagationT&& value) {
+    SetPropagation(std::forward<PropagationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about route propagation.</p>
-     */
-    inline const TransitGatewayPropagation& GetPropagation() const{ return m_propagation; }
-    inline void SetPropagation(const TransitGatewayPropagation& value) { m_propagation = value; }
-    inline void SetPropagation(TransitGatewayPropagation&& value) { m_propagation = std::move(value); }
-    inline DisableTransitGatewayRouteTablePropagationResponse& WithPropagation(const TransitGatewayPropagation& value) { SetPropagation(value); return *this;}
-    inline DisableTransitGatewayRouteTablePropagationResponse& WithPropagation(TransitGatewayPropagation&& value) { SetPropagation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DisableTransitGatewayRouteTablePropagationResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DisableTransitGatewayRouteTablePropagationResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DisableTransitGatewayRouteTablePropagationResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TransitGatewayPropagation m_propagation;
+ private:
+  TransitGatewayPropagation m_propagation;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_propagationHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

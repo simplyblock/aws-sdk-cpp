@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-apigatewayv2 "C++ SDK for the AWS apigatewayv2 service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-apigatewayv2 "C++ SDK for AmazonApiGatewayV2" aws-cpp-sdk-core)
 
 file(GLOB AWS_APIGATEWAYV2_HEADERS
     "include/aws/apigatewayv2/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_APIGATEWAYV2_HEADERS
 
 file(GLOB AWS_APIGATEWAYV2_MODEL_HEADERS
     "include/aws/apigatewayv2/model/*.h"
+)
+
+file(GLOB AWS_APIGATEWAYV2_INTERNAL_HEADERS
+    "include/aws/apigatewayv2/internal/*.h"
 )
 
 file(GLOB AWS_APIGATEWAYV2_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_APIGATEWAYV2_MODEL_SOURCE
 
 file(GLOB APIGATEWAYV2_UNIFIED_HEADERS
     ${AWS_APIGATEWAYV2_HEADERS}
+    ${AWS_APIGATEWAYV2_INTERNAL_HEADERS}
     ${AWS_APIGATEWAYV2_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\apigatewayv2" FILES ${AWS_APIGATEWAYV2_HEADERS})
+        source_group("Header Files\\aws\\apigatewayv2\\internal" FILES ${AWS_APIGATEWAYV2_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\apigatewayv2\\model" FILES ${AWS_APIGATEWAYV2_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_APIGATEWAYV2_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_APIGATEWAYV2_MODEL_SOURCE})

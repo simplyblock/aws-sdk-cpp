@@ -4,47 +4,46 @@
  */
 
 #include <aws/codedeploy/model/ContinueDeploymentRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ContinueDeploymentRequest::ContinueDeploymentRequest() : 
-    m_deploymentIdHasBeenSet(false),
-    m_deploymentWaitType(DeploymentWaitType::NOT_SET),
-    m_deploymentWaitTypeHasBeenSet(false)
-{
-}
+Aws::String ContinueDeploymentRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String ContinueDeploymentRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_deploymentIdHasBeenSet)
-  {
-   payload.WithString("deploymentId", m_deploymentId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_deploymentIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentWaitTypeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_deploymentWaitTypeHasBeenSet)
-  {
-   payload.WithString("deploymentWaitType", DeploymentWaitTypeMapper::GetNameForDeploymentWaitType(m_deploymentWaitType));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_deploymentIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_deploymentId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_deploymentWaitTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentWaitType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(DeploymentWaitTypeMapper::GetNameForDeploymentWaitType(m_deploymentWaitType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection ContinueDeploymentRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ContinueDeploymentRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.ContinueDeployment"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

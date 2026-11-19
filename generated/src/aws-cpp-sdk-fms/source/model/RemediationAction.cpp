@@ -3,225 +3,360 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/RemediationAction.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace FMS {
+namespace Model {
 
-RemediationAction::RemediationAction() : 
-    m_descriptionHasBeenSet(false),
-    m_eC2CreateRouteActionHasBeenSet(false),
-    m_eC2ReplaceRouteActionHasBeenSet(false),
-    m_eC2DeleteRouteActionHasBeenSet(false),
-    m_eC2CopyRouteTableActionHasBeenSet(false),
-    m_eC2ReplaceRouteTableAssociationActionHasBeenSet(false),
-    m_eC2AssociateRouteTableActionHasBeenSet(false),
-    m_eC2CreateRouteTableActionHasBeenSet(false),
-    m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet(false),
-    m_createNetworkAclActionHasBeenSet(false),
-    m_replaceNetworkAclAssociationActionHasBeenSet(false),
-    m_createNetworkAclEntriesActionHasBeenSet(false),
-    m_deleteNetworkAclEntriesActionHasBeenSet(false)
-{
-}
+RemediationAction::RemediationAction(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RemediationAction::RemediationAction(JsonView jsonValue)
-  : RemediationAction()
-{
-  *this = jsonValue;
-}
+RemediationAction& RemediationAction::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RemediationAction& RemediationAction::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Description"))
-  {
-    m_description = jsonValue.GetString("Description");
+              if (initialKeyStr == "Description") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_description = ss.str();
+                  }
+                }
+                m_descriptionHasBeenSet = true;
+              }
 
-    m_descriptionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EC2CreateRouteAction") {
+                m_eC2CreateRouteAction = EC2CreateRouteAction(decoder);
+                m_eC2CreateRouteActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2CreateRouteAction"))
-  {
-    m_eC2CreateRouteAction = jsonValue.GetObject("EC2CreateRouteAction");
+              else if (initialKeyStr == "EC2ReplaceRouteAction") {
+                m_eC2ReplaceRouteAction = EC2ReplaceRouteAction(decoder);
+                m_eC2ReplaceRouteActionHasBeenSet = true;
+              }
 
-    m_eC2CreateRouteActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EC2DeleteRouteAction") {
+                m_eC2DeleteRouteAction = EC2DeleteRouteAction(decoder);
+                m_eC2DeleteRouteActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2ReplaceRouteAction"))
-  {
-    m_eC2ReplaceRouteAction = jsonValue.GetObject("EC2ReplaceRouteAction");
+              else if (initialKeyStr == "EC2CopyRouteTableAction") {
+                m_eC2CopyRouteTableAction = EC2CopyRouteTableAction(decoder);
+                m_eC2CopyRouteTableActionHasBeenSet = true;
+              }
 
-    m_eC2ReplaceRouteActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EC2ReplaceRouteTableAssociationAction") {
+                m_eC2ReplaceRouteTableAssociationAction = EC2ReplaceRouteTableAssociationAction(decoder);
+                m_eC2ReplaceRouteTableAssociationActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2DeleteRouteAction"))
-  {
-    m_eC2DeleteRouteAction = jsonValue.GetObject("EC2DeleteRouteAction");
+              else if (initialKeyStr == "EC2AssociateRouteTableAction") {
+                m_eC2AssociateRouteTableAction = EC2AssociateRouteTableAction(decoder);
+                m_eC2AssociateRouteTableActionHasBeenSet = true;
+              }
 
-    m_eC2DeleteRouteActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EC2CreateRouteTableAction") {
+                m_eC2CreateRouteTableAction = EC2CreateRouteTableAction(decoder);
+                m_eC2CreateRouteTableActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2CopyRouteTableAction"))
-  {
-    m_eC2CopyRouteTableAction = jsonValue.GetObject("EC2CopyRouteTableAction");
+              else if (initialKeyStr == "FMSPolicyUpdateFirewallCreationConfigAction") {
+                m_fMSPolicyUpdateFirewallCreationConfigAction = FMSPolicyUpdateFirewallCreationConfigAction(decoder);
+                m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet = true;
+              }
 
-    m_eC2CopyRouteTableActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "CreateNetworkAclAction") {
+                m_createNetworkAclAction = CreateNetworkAclAction(decoder);
+                m_createNetworkAclActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2ReplaceRouteTableAssociationAction"))
-  {
-    m_eC2ReplaceRouteTableAssociationAction = jsonValue.GetObject("EC2ReplaceRouteTableAssociationAction");
+              else if (initialKeyStr == "ReplaceNetworkAclAssociationAction") {
+                m_replaceNetworkAclAssociationAction = ReplaceNetworkAclAssociationAction(decoder);
+                m_replaceNetworkAclAssociationActionHasBeenSet = true;
+              }
 
-    m_eC2ReplaceRouteTableAssociationActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "CreateNetworkAclEntriesAction") {
+                m_createNetworkAclEntriesAction = CreateNetworkAclEntriesAction(decoder);
+                m_createNetworkAclEntriesActionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EC2AssociateRouteTableAction"))
-  {
-    m_eC2AssociateRouteTableAction = jsonValue.GetObject("EC2AssociateRouteTableAction");
+              else if (initialKeyStr == "DeleteNetworkAclEntriesAction") {
+                m_deleteNetworkAclEntriesAction = DeleteNetworkAclEntriesAction(decoder);
+                m_deleteNetworkAclEntriesActionHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RemediationAction", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_eC2AssociateRouteTableActionHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("EC2CreateRouteTableAction"))
-  {
-    m_eC2CreateRouteTableAction = jsonValue.GetObject("EC2CreateRouteTableAction");
+            if (initialKeyStr == "Description") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_description = ss.str();
+                }
+              }
+              m_descriptionHasBeenSet = true;
+            }
 
-    m_eC2CreateRouteTableActionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "EC2CreateRouteAction") {
+              m_eC2CreateRouteAction = EC2CreateRouteAction(decoder);
+              m_eC2CreateRouteActionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("FMSPolicyUpdateFirewallCreationConfigAction"))
-  {
-    m_fMSPolicyUpdateFirewallCreationConfigAction = jsonValue.GetObject("FMSPolicyUpdateFirewallCreationConfigAction");
+            else if (initialKeyStr == "EC2ReplaceRouteAction") {
+              m_eC2ReplaceRouteAction = EC2ReplaceRouteAction(decoder);
+              m_eC2ReplaceRouteActionHasBeenSet = true;
+            }
 
-    m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "EC2DeleteRouteAction") {
+              m_eC2DeleteRouteAction = EC2DeleteRouteAction(decoder);
+              m_eC2DeleteRouteActionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("CreateNetworkAclAction"))
-  {
-    m_createNetworkAclAction = jsonValue.GetObject("CreateNetworkAclAction");
+            else if (initialKeyStr == "EC2CopyRouteTableAction") {
+              m_eC2CopyRouteTableAction = EC2CopyRouteTableAction(decoder);
+              m_eC2CopyRouteTableActionHasBeenSet = true;
+            }
 
-    m_createNetworkAclActionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "EC2ReplaceRouteTableAssociationAction") {
+              m_eC2ReplaceRouteTableAssociationAction = EC2ReplaceRouteTableAssociationAction(decoder);
+              m_eC2ReplaceRouteTableAssociationActionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("ReplaceNetworkAclAssociationAction"))
-  {
-    m_replaceNetworkAclAssociationAction = jsonValue.GetObject("ReplaceNetworkAclAssociationAction");
+            else if (initialKeyStr == "EC2AssociateRouteTableAction") {
+              m_eC2AssociateRouteTableAction = EC2AssociateRouteTableAction(decoder);
+              m_eC2AssociateRouteTableActionHasBeenSet = true;
+            }
 
-    m_replaceNetworkAclAssociationActionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "EC2CreateRouteTableAction") {
+              m_eC2CreateRouteTableAction = EC2CreateRouteTableAction(decoder);
+              m_eC2CreateRouteTableActionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("CreateNetworkAclEntriesAction"))
-  {
-    m_createNetworkAclEntriesAction = jsonValue.GetObject("CreateNetworkAclEntriesAction");
+            else if (initialKeyStr == "FMSPolicyUpdateFirewallCreationConfigAction") {
+              m_fMSPolicyUpdateFirewallCreationConfigAction = FMSPolicyUpdateFirewallCreationConfigAction(decoder);
+              m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet = true;
+            }
 
-    m_createNetworkAclEntriesActionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "CreateNetworkAclAction") {
+              m_createNetworkAclAction = CreateNetworkAclAction(decoder);
+              m_createNetworkAclActionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("DeleteNetworkAclEntriesAction"))
-  {
-    m_deleteNetworkAclEntriesAction = jsonValue.GetObject("DeleteNetworkAclEntriesAction");
+            else if (initialKeyStr == "ReplaceNetworkAclAssociationAction") {
+              m_replaceNetworkAclAssociationAction = ReplaceNetworkAclAssociationAction(decoder);
+              m_replaceNetworkAclAssociationActionHasBeenSet = true;
+            }
 
-    m_deleteNetworkAclEntriesActionHasBeenSet = true;
+            else if (initialKeyStr == "CreateNetworkAclEntriesAction") {
+              m_createNetworkAclEntriesAction = CreateNetworkAclEntriesAction(decoder);
+              m_createNetworkAclEntriesActionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DeleteNetworkAclEntriesAction") {
+              m_deleteNetworkAclEntriesAction = DeleteNetworkAclEntriesAction(decoder);
+              m_deleteNetworkAclEntriesActionHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue RemediationAction::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+void RemediationAction::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2CreateRouteActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2ReplaceRouteActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2DeleteRouteActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2CopyRouteTableActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2ReplaceRouteTableAssociationActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2AssociateRouteTableActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eC2CreateRouteTableActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_createNetworkAclActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_replaceNetworkAclAssociationActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_createNetworkAclEntriesActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deleteNetworkAclEntriesActionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_eC2CreateRouteActionHasBeenSet)
-  {
-   payload.WithObject("EC2CreateRouteAction", m_eC2CreateRouteAction.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
   }
 
-  if(m_eC2ReplaceRouteActionHasBeenSet)
-  {
-   payload.WithObject("EC2ReplaceRouteAction", m_eC2ReplaceRouteAction.Jsonize());
-
+  if (m_eC2CreateRouteActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2CreateRouteAction"));
+    m_eC2CreateRouteAction.CborEncode(encoder);
   }
 
-  if(m_eC2DeleteRouteActionHasBeenSet)
-  {
-   payload.WithObject("EC2DeleteRouteAction", m_eC2DeleteRouteAction.Jsonize());
-
+  if (m_eC2ReplaceRouteActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2ReplaceRouteAction"));
+    m_eC2ReplaceRouteAction.CborEncode(encoder);
   }
 
-  if(m_eC2CopyRouteTableActionHasBeenSet)
-  {
-   payload.WithObject("EC2CopyRouteTableAction", m_eC2CopyRouteTableAction.Jsonize());
-
+  if (m_eC2DeleteRouteActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2DeleteRouteAction"));
+    m_eC2DeleteRouteAction.CborEncode(encoder);
   }
 
-  if(m_eC2ReplaceRouteTableAssociationActionHasBeenSet)
-  {
-   payload.WithObject("EC2ReplaceRouteTableAssociationAction", m_eC2ReplaceRouteTableAssociationAction.Jsonize());
-
+  if (m_eC2CopyRouteTableActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2CopyRouteTableAction"));
+    m_eC2CopyRouteTableAction.CborEncode(encoder);
   }
 
-  if(m_eC2AssociateRouteTableActionHasBeenSet)
-  {
-   payload.WithObject("EC2AssociateRouteTableAction", m_eC2AssociateRouteTableAction.Jsonize());
-
+  if (m_eC2ReplaceRouteTableAssociationActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2ReplaceRouteTableAssociationAction"));
+    m_eC2ReplaceRouteTableAssociationAction.CborEncode(encoder);
   }
 
-  if(m_eC2CreateRouteTableActionHasBeenSet)
-  {
-   payload.WithObject("EC2CreateRouteTableAction", m_eC2CreateRouteTableAction.Jsonize());
-
+  if (m_eC2AssociateRouteTableActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2AssociateRouteTableAction"));
+    m_eC2AssociateRouteTableAction.CborEncode(encoder);
   }
 
-  if(m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet)
-  {
-   payload.WithObject("FMSPolicyUpdateFirewallCreationConfigAction", m_fMSPolicyUpdateFirewallCreationConfigAction.Jsonize());
-
+  if (m_eC2CreateRouteTableActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EC2CreateRouteTableAction"));
+    m_eC2CreateRouteTableAction.CborEncode(encoder);
   }
 
-  if(m_createNetworkAclActionHasBeenSet)
-  {
-   payload.WithObject("CreateNetworkAclAction", m_createNetworkAclAction.Jsonize());
-
+  if (m_fMSPolicyUpdateFirewallCreationConfigActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FMSPolicyUpdateFirewallCreationConfigAction"));
+    m_fMSPolicyUpdateFirewallCreationConfigAction.CborEncode(encoder);
   }
 
-  if(m_replaceNetworkAclAssociationActionHasBeenSet)
-  {
-   payload.WithObject("ReplaceNetworkAclAssociationAction", m_replaceNetworkAclAssociationAction.Jsonize());
-
+  if (m_createNetworkAclActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreateNetworkAclAction"));
+    m_createNetworkAclAction.CborEncode(encoder);
   }
 
-  if(m_createNetworkAclEntriesActionHasBeenSet)
-  {
-   payload.WithObject("CreateNetworkAclEntriesAction", m_createNetworkAclEntriesAction.Jsonize());
-
+  if (m_replaceNetworkAclAssociationActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ReplaceNetworkAclAssociationAction"));
+    m_replaceNetworkAclAssociationAction.CborEncode(encoder);
   }
 
-  if(m_deleteNetworkAclEntriesActionHasBeenSet)
-  {
-   payload.WithObject("DeleteNetworkAclEntriesAction", m_deleteNetworkAclEntriesAction.Jsonize());
-
+  if (m_createNetworkAclEntriesActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreateNetworkAclEntriesAction"));
+    m_createNetworkAclEntriesAction.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_deleteNetworkAclEntriesActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeleteNetworkAclEntriesAction"));
+    m_deleteNetworkAclEntriesAction.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

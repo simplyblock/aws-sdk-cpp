@@ -3,49 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/ListAddonSubscriptionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MailManager::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListAddonSubscriptionsRequest::ListAddonSubscriptionsRequest() : 
-    m_nextTokenHasBeenSet(false),
-    m_pageSize(0),
-    m_pageSizeHasBeenSet(false)
-{
-}
+Aws::String ListAddonSubscriptionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String ListAddonSubscriptionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pageSizeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_pageSizeHasBeenSet)
-  {
-   payload.WithInteger("PageSize", m_pageSize);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_pageSizeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PageSize"));
+    (m_pageSize >= 0) ? encoder.WriteUInt(m_pageSize) : encoder.WriteNegInt(m_pageSize);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection ListAddonSubscriptionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListAddonSubscriptionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "MailManagerSvc.ListAddonSubscriptions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

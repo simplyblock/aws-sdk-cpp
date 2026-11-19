@@ -4,13 +4,15 @@
  */
 
 #include <aws/dataexchange/DataExchangeEndpointProvider.h>
+#include <aws/dataexchange/internal/DataExchangeEndpointRules.h>
 
-namespace Aws
-{
-namespace DataExchange
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace DataExchange
-} // namespace Aws
+namespace Aws {
+namespace DataExchange {
+namespace Endpoint {
+DataExchangeEndpointProvider::DataExchangeEndpointProvider()
+    : DataExchangeDefaultEpProviderBase(Aws::DataExchange::DataExchangeEndpointRules::GetRulesBlob(),
+                                        Aws::DataExchange::DataExchangeEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace DataExchange
+}  // namespace Aws

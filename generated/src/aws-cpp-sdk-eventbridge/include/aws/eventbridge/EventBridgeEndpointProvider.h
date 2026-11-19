@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/eventbridge/EventBridge_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/eventbridge/EventBridge_EXPORTS.h>
 
-#include <aws/eventbridge/EventBridgeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace EventBridge
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace EventBridge {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using EventBridgeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using EventBridgeEndpointProviderBase =
     EndpointProviderBase<EventBridgeClientConfiguration, EventBridgeBuiltInParameters, EventBridgeClientContextParameters>;
 
 using EventBridgeDefaultEpProviderBase =
-    DefaultEndpointProvider<EventBridgeClientConfiguration, EventBridgeBuiltInParameters, EventBridgeClientContextParameters>;
+    BDDEndpointProvider<EventBridgeClientConfiguration, EventBridgeBuiltInParameters, EventBridgeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_EVENTBRIDGE_API EventBridgeEndpointProvider : public EventBridgeDefaultEpProviderBase
-{
-public:
-    using EventBridgeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_EVENTBRIDGE_API EventBridgeEndpointProvider : public EventBridgeDefaultEpProviderBase {
+ public:
+  using EventBridgeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    EventBridgeEndpointProvider()
-      : EventBridgeDefaultEpProviderBase(Aws::EventBridge::EventBridgeEndpointRules::GetRulesBlob(), Aws::EventBridge::EventBridgeEndpointRules::RulesBlobSize)
-    {}
+  EventBridgeEndpointProvider();
 
-    ~EventBridgeEndpointProvider()
-    {
-    }
+  ~EventBridgeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace EventBridge
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace EventBridge
+}  // namespace Aws

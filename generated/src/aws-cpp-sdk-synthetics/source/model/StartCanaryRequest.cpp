@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/synthetics/model/StartCanaryRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/synthetics/model/StartCanaryRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Synthetics::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartCanaryRequest::StartCanaryRequest() : 
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String StartCanaryRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StartCanaryRequest::SerializePayload() const { return {}; }

@@ -4,224 +4,259 @@
  */
 
 #pragma once
-#include <aws/codeartifact/CodeArtifact_EXPORTS.h>
 #include <aws/codeartifact/CodeArtifactRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/codeartifact/CodeArtifact_EXPORTS.h>
 #include <aws/codeartifact/model/PackageFormat.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace CodeArtifact
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace CodeArtifact {
+namespace Model {
 
+/**
+ */
+class PublishPackageVersionRequest : public StreamingCodeArtifactRequest {
+ public:
+  AWS_CODEARTIFACT_API PublishPackageVersionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PublishPackageVersion"; }
+
+  AWS_CODEARTIFACT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  AWS_CODEARTIFACT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the domain that contains the repository that contains the package
+   * version to publish.</p>
    */
-  class PublishPackageVersionRequest : public StreamingCodeArtifactRequest
-  {
-  public:
-    AWS_CODEARTIFACT_API PublishPackageVersionRequest();
+  inline const Aws::String& GetDomain() const { return m_domain; }
+  inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
+  template <typename DomainT = Aws::String>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = Aws::String>
+  PublishPackageVersionRequest& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PublishPackageVersion"; }
+  ///@{
+  /**
+   * <p>The 12-digit account number of the AWS account that owns the domain. It does
+   * not include dashes or spaces.</p>
+   */
+  inline const Aws::String& GetDomainOwner() const { return m_domainOwner; }
+  inline bool DomainOwnerHasBeenSet() const { return m_domainOwnerHasBeenSet; }
+  template <typename DomainOwnerT = Aws::String>
+  void SetDomainOwner(DomainOwnerT&& value) {
+    m_domainOwnerHasBeenSet = true;
+    m_domainOwner = std::forward<DomainOwnerT>(value);
+  }
+  template <typename DomainOwnerT = Aws::String>
+  PublishPackageVersionRequest& WithDomainOwner(DomainOwnerT&& value) {
+    SetDomainOwner(std::forward<DomainOwnerT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODEARTIFACT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The name of the repository that the package version will be published to.</p>
+   */
+  inline const Aws::String& GetRepository() const { return m_repository; }
+  inline bool RepositoryHasBeenSet() const { return m_repositoryHasBeenSet; }
+  template <typename RepositoryT = Aws::String>
+  void SetRepository(RepositoryT&& value) {
+    m_repositoryHasBeenSet = true;
+    m_repository = std::forward<RepositoryT>(value);
+  }
+  template <typename RepositoryT = Aws::String>
+  PublishPackageVersionRequest& WithRepository(RepositoryT&& value) {
+    SetRepository(std::forward<RepositoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODEARTIFACT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A format that specifies the type of the package version with the requested
+   * asset file.</p> <p>The only supported value is <code>generic</code>.</p>
+   */
+  inline PackageFormat GetFormat() const { return m_format; }
+  inline bool FormatHasBeenSet() const { return m_formatHasBeenSet; }
+  inline void SetFormat(PackageFormat value) {
+    m_formatHasBeenSet = true;
+    m_format = value;
+  }
+  inline PublishPackageVersionRequest& WithFormat(PackageFormat value) {
+    SetFormat(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The namespace of the package version to publish.</p>
+   */
+  inline const Aws::String& GetNamespace() const { return m_namespace; }
+  inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
+  template <typename NamespaceT = Aws::String>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = Aws::String>
+  PublishPackageVersionRequest& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the domain that contains the repository that contains the package
-     * version to publish.</p>
-     */
-    inline const Aws::String& GetDomain() const{ return m_domain; }
-    inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
-    inline void SetDomain(const Aws::String& value) { m_domainHasBeenSet = true; m_domain = value; }
-    inline void SetDomain(Aws::String&& value) { m_domainHasBeenSet = true; m_domain = std::move(value); }
-    inline void SetDomain(const char* value) { m_domainHasBeenSet = true; m_domain.assign(value); }
-    inline PublishPackageVersionRequest& WithDomain(const Aws::String& value) { SetDomain(value); return *this;}
-    inline PublishPackageVersionRequest& WithDomain(Aws::String&& value) { SetDomain(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithDomain(const char* value) { SetDomain(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the package version to publish.</p>
+   */
+  inline const Aws::String& GetPackage() const { return m_package; }
+  inline bool PackageHasBeenSet() const { return m_packageHasBeenSet; }
+  template <typename PackageT = Aws::String>
+  void SetPackage(PackageT&& value) {
+    m_packageHasBeenSet = true;
+    m_package = std::forward<PackageT>(value);
+  }
+  template <typename PackageT = Aws::String>
+  PublishPackageVersionRequest& WithPackage(PackageT&& value) {
+    SetPackage(std::forward<PackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The 12-digit account number of the AWS account that owns the domain. It does
-     * not include dashes or spaces.</p>
-     */
-    inline const Aws::String& GetDomainOwner() const{ return m_domainOwner; }
-    inline bool DomainOwnerHasBeenSet() const { return m_domainOwnerHasBeenSet; }
-    inline void SetDomainOwner(const Aws::String& value) { m_domainOwnerHasBeenSet = true; m_domainOwner = value; }
-    inline void SetDomainOwner(Aws::String&& value) { m_domainOwnerHasBeenSet = true; m_domainOwner = std::move(value); }
-    inline void SetDomainOwner(const char* value) { m_domainOwnerHasBeenSet = true; m_domainOwner.assign(value); }
-    inline PublishPackageVersionRequest& WithDomainOwner(const Aws::String& value) { SetDomainOwner(value); return *this;}
-    inline PublishPackageVersionRequest& WithDomainOwner(Aws::String&& value) { SetDomainOwner(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithDomainOwner(const char* value) { SetDomainOwner(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The package version to publish (for example, <code>3.5.2</code>).</p>
+   */
+  inline const Aws::String& GetPackageVersion() const { return m_packageVersion; }
+  inline bool PackageVersionHasBeenSet() const { return m_packageVersionHasBeenSet; }
+  template <typename PackageVersionT = Aws::String>
+  void SetPackageVersion(PackageVersionT&& value) {
+    m_packageVersionHasBeenSet = true;
+    m_packageVersion = std::forward<PackageVersionT>(value);
+  }
+  template <typename PackageVersionT = Aws::String>
+  PublishPackageVersionRequest& WithPackageVersion(PackageVersionT&& value) {
+    SetPackageVersion(std::forward<PackageVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the repository that the package version will be published to.</p>
-     */
-    inline const Aws::String& GetRepository() const{ return m_repository; }
-    inline bool RepositoryHasBeenSet() const { return m_repositoryHasBeenSet; }
-    inline void SetRepository(const Aws::String& value) { m_repositoryHasBeenSet = true; m_repository = value; }
-    inline void SetRepository(Aws::String&& value) { m_repositoryHasBeenSet = true; m_repository = std::move(value); }
-    inline void SetRepository(const char* value) { m_repositoryHasBeenSet = true; m_repository.assign(value); }
-    inline PublishPackageVersionRequest& WithRepository(const Aws::String& value) { SetRepository(value); return *this;}
-    inline PublishPackageVersionRequest& WithRepository(Aws::String&& value) { SetRepository(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithRepository(const char* value) { SetRepository(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the asset to publish. Asset names can include Unicode letters and
+   * numbers, and the following special characters: <code>~ ! @ ^ &amp; ( ) - ` _ + [
+   * ] { } ; , . `</code> </p>
+   */
+  inline const Aws::String& GetAssetName() const { return m_assetName; }
+  inline bool AssetNameHasBeenSet() const { return m_assetNameHasBeenSet; }
+  template <typename AssetNameT = Aws::String>
+  void SetAssetName(AssetNameT&& value) {
+    m_assetNameHasBeenSet = true;
+    m_assetName = std::forward<AssetNameT>(value);
+  }
+  template <typename AssetNameT = Aws::String>
+  PublishPackageVersionRequest& WithAssetName(AssetNameT&& value) {
+    SetAssetName(std::forward<AssetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A format that specifies the type of the package version with the requested
-     * asset file.</p> <p>The only supported value is <code>generic</code>.</p>
-     */
-    inline const PackageFormat& GetFormat() const{ return m_format; }
-    inline bool FormatHasBeenSet() const { return m_formatHasBeenSet; }
-    inline void SetFormat(const PackageFormat& value) { m_formatHasBeenSet = true; m_format = value; }
-    inline void SetFormat(PackageFormat&& value) { m_formatHasBeenSet = true; m_format = std::move(value); }
-    inline PublishPackageVersionRequest& WithFormat(const PackageFormat& value) { SetFormat(value); return *this;}
-    inline PublishPackageVersionRequest& WithFormat(PackageFormat&& value) { SetFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The SHA256 hash of the <code>assetContent</code> to publish. This value must
+   * be calculated by the caller and provided with the request (see <a
+   * href="https://docs.aws.amazon.com/codeartifact/latest/ug/using-generic.html#publishing-generic-packages">Publishing
+   * a generic package</a> in the <i>CodeArtifact User Guide</i>).</p> <p>This value
+   * is used as an integrity check to verify that the <code>assetContent</code> has
+   * not changed after it was originally sent.</p>
+   */
+  inline const Aws::String& GetAssetSHA256() const { return m_assetSHA256; }
+  inline bool AssetSHA256HasBeenSet() const { return m_assetSHA256HasBeenSet; }
+  template <typename AssetSHA256T = Aws::String>
+  void SetAssetSHA256(AssetSHA256T&& value) {
+    m_assetSHA256HasBeenSet = true;
+    m_assetSHA256 = std::forward<AssetSHA256T>(value);
+  }
+  template <typename AssetSHA256T = Aws::String>
+  PublishPackageVersionRequest& WithAssetSHA256(AssetSHA256T&& value) {
+    SetAssetSHA256(std::forward<AssetSHA256T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The namespace of the package version to publish.</p>
-     */
-    inline const Aws::String& GetNamespace() const{ return m_namespace; }
-    inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
-    inline void SetNamespace(const Aws::String& value) { m_namespaceHasBeenSet = true; m_namespace = value; }
-    inline void SetNamespace(Aws::String&& value) { m_namespaceHasBeenSet = true; m_namespace = std::move(value); }
-    inline void SetNamespace(const char* value) { m_namespaceHasBeenSet = true; m_namespace.assign(value); }
-    inline PublishPackageVersionRequest& WithNamespace(const Aws::String& value) { SetNamespace(value); return *this;}
-    inline PublishPackageVersionRequest& WithNamespace(Aws::String&& value) { SetNamespace(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithNamespace(const char* value) { SetNamespace(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether the package version should remain in the
+   * <code>unfinished</code> state. If omitted, the package version status will be
+   * set to <code>Published</code> (see <a
+   * href="https://docs.aws.amazon.com/codeartifact/latest/ug/packages-overview.html#package-version-status">Package
+   * version status</a> in the <i>CodeArtifact User Guide</i>).</p> <p>Valid values:
+   * <code>unfinished</code> </p>
+   */
+  inline bool GetUnfinished() const { return m_unfinished; }
+  inline bool UnfinishedHasBeenSet() const { return m_unfinishedHasBeenSet; }
+  inline void SetUnfinished(bool value) {
+    m_unfinishedHasBeenSet = true;
+    m_unfinished = value;
+  }
+  inline PublishPackageVersionRequest& WithUnfinished(bool value) {
+    SetUnfinished(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domain;
 
-    ///@{
-    /**
-     * <p>The name of the package version to publish.</p>
-     */
-    inline const Aws::String& GetPackage() const{ return m_package; }
-    inline bool PackageHasBeenSet() const { return m_packageHasBeenSet; }
-    inline void SetPackage(const Aws::String& value) { m_packageHasBeenSet = true; m_package = value; }
-    inline void SetPackage(Aws::String&& value) { m_packageHasBeenSet = true; m_package = std::move(value); }
-    inline void SetPackage(const char* value) { m_packageHasBeenSet = true; m_package.assign(value); }
-    inline PublishPackageVersionRequest& WithPackage(const Aws::String& value) { SetPackage(value); return *this;}
-    inline PublishPackageVersionRequest& WithPackage(Aws::String&& value) { SetPackage(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithPackage(const char* value) { SetPackage(value); return *this;}
-    ///@}
+  Aws::String m_domainOwner;
 
-    ///@{
-    /**
-     * <p>The package version to publish (for example, <code>3.5.2</code>).</p>
-     */
-    inline const Aws::String& GetPackageVersion() const{ return m_packageVersion; }
-    inline bool PackageVersionHasBeenSet() const { return m_packageVersionHasBeenSet; }
-    inline void SetPackageVersion(const Aws::String& value) { m_packageVersionHasBeenSet = true; m_packageVersion = value; }
-    inline void SetPackageVersion(Aws::String&& value) { m_packageVersionHasBeenSet = true; m_packageVersion = std::move(value); }
-    inline void SetPackageVersion(const char* value) { m_packageVersionHasBeenSet = true; m_packageVersion.assign(value); }
-    inline PublishPackageVersionRequest& WithPackageVersion(const Aws::String& value) { SetPackageVersion(value); return *this;}
-    inline PublishPackageVersionRequest& WithPackageVersion(Aws::String&& value) { SetPackageVersion(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithPackageVersion(const char* value) { SetPackageVersion(value); return *this;}
-    ///@}
+  Aws::String m_repository;
 
-    ///@{
-    /**
-     * <p>The name of the asset to publish. Asset names can include Unicode letters and
-     * numbers, and the following special characters: <code>~ ! @ ^ &amp; ( ) - ` _ + [
-     * ] { } ; , . `</code> </p>
-     */
-    inline const Aws::String& GetAssetName() const{ return m_assetName; }
-    inline bool AssetNameHasBeenSet() const { return m_assetNameHasBeenSet; }
-    inline void SetAssetName(const Aws::String& value) { m_assetNameHasBeenSet = true; m_assetName = value; }
-    inline void SetAssetName(Aws::String&& value) { m_assetNameHasBeenSet = true; m_assetName = std::move(value); }
-    inline void SetAssetName(const char* value) { m_assetNameHasBeenSet = true; m_assetName.assign(value); }
-    inline PublishPackageVersionRequest& WithAssetName(const Aws::String& value) { SetAssetName(value); return *this;}
-    inline PublishPackageVersionRequest& WithAssetName(Aws::String&& value) { SetAssetName(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithAssetName(const char* value) { SetAssetName(value); return *this;}
-    ///@}
+  PackageFormat m_format{PackageFormat::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The SHA256 hash of the <code>assetContent</code> to publish. This value must
-     * be calculated by the caller and provided with the request (see <a
-     * href="https://docs.aws.amazon.com/codeartifact/latest/ug/using-generic.html#publishing-generic-packages">Publishing
-     * a generic package</a> in the <i>CodeArtifact User Guide</i>).</p> <p>This value
-     * is used as an integrity check to verify that the <code>assetContent</code> has
-     * not changed after it was originally sent.</p>
-     */
-    inline const Aws::String& GetAssetSHA256() const{ return m_assetSHA256; }
-    inline bool AssetSHA256HasBeenSet() const { return m_assetSHA256HasBeenSet; }
-    inline void SetAssetSHA256(const Aws::String& value) { m_assetSHA256HasBeenSet = true; m_assetSHA256 = value; }
-    inline void SetAssetSHA256(Aws::String&& value) { m_assetSHA256HasBeenSet = true; m_assetSHA256 = std::move(value); }
-    inline void SetAssetSHA256(const char* value) { m_assetSHA256HasBeenSet = true; m_assetSHA256.assign(value); }
-    inline PublishPackageVersionRequest& WithAssetSHA256(const Aws::String& value) { SetAssetSHA256(value); return *this;}
-    inline PublishPackageVersionRequest& WithAssetSHA256(Aws::String&& value) { SetAssetSHA256(std::move(value)); return *this;}
-    inline PublishPackageVersionRequest& WithAssetSHA256(const char* value) { SetAssetSHA256(value); return *this;}
-    ///@}
+  Aws::String m_namespace;
 
-    ///@{
-    /**
-     * <p>Specifies whether the package version should remain in the
-     * <code>unfinished</code> state. If omitted, the package version status will be
-     * set to <code>Published</code> (see <a
-     * href="https://docs.aws.amazon.com/codeartifact/latest/ug/packages-overview.html#package-version-status">Package
-     * version status</a> in the <i>CodeArtifact User Guide</i>).</p> <p>Valid values:
-     * <code>unfinished</code> </p>
-     */
-    inline bool GetUnfinished() const{ return m_unfinished; }
-    inline bool UnfinishedHasBeenSet() const { return m_unfinishedHasBeenSet; }
-    inline void SetUnfinished(bool value) { m_unfinishedHasBeenSet = true; m_unfinished = value; }
-    inline PublishPackageVersionRequest& WithUnfinished(bool value) { SetUnfinished(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_package;
 
-    Aws::String m_domain;
-    bool m_domainHasBeenSet = false;
+  Aws::String m_packageVersion;
 
-    Aws::String m_domainOwner;
-    bool m_domainOwnerHasBeenSet = false;
+  Aws::String m_assetName;
 
-    Aws::String m_repository;
-    bool m_repositoryHasBeenSet = false;
+  Aws::String m_assetSHA256;
 
-    PackageFormat m_format;
-    bool m_formatHasBeenSet = false;
+  bool m_unfinished{false};
+  bool m_domainHasBeenSet = false;
+  bool m_domainOwnerHasBeenSet = false;
+  bool m_repositoryHasBeenSet = false;
+  bool m_formatHasBeenSet = false;
+  bool m_namespaceHasBeenSet = false;
+  bool m_packageHasBeenSet = false;
+  bool m_packageVersionHasBeenSet = false;
+  bool m_assetNameHasBeenSet = false;
+  bool m_assetSHA256HasBeenSet = false;
+  bool m_unfinishedHasBeenSet = false;
+};
 
-    Aws::String m_namespace;
-    bool m_namespaceHasBeenSet = false;
-
-    Aws::String m_package;
-    bool m_packageHasBeenSet = false;
-
-    Aws::String m_packageVersion;
-    bool m_packageVersionHasBeenSet = false;
-
-
-    Aws::String m_assetName;
-    bool m_assetNameHasBeenSet = false;
-
-    Aws::String m_assetSHA256;
-    bool m_assetSHA256HasBeenSet = false;
-
-    bool m_unfinished;
-    bool m_unfinishedHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeArtifact
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeArtifact
+}  // namespace Aws

@@ -4,74 +4,75 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/drs/Drs_EXPORTS.h>
 #include <aws/drs/model/LaunchActionParameterType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace drs
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace drs {
+namespace Model {
 
+/**
+ * <p>Launch action parameter.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/drs-2020-02-26/LaunchActionParameter">AWS
+ * API Reference</a></p>
+ */
+class LaunchActionParameter {
+ public:
+  AWS_DRS_API LaunchActionParameter() = default;
+  AWS_DRS_API LaunchActionParameter(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DRS_API LaunchActionParameter& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DRS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Launch action parameter.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/drs-2020-02-26/LaunchActionParameter">AWS
-   * API Reference</a></p>
+   * <p>Value.</p>
    */
-  class LaunchActionParameter
-  {
-  public:
-    AWS_DRS_API LaunchActionParameter();
-    AWS_DRS_API LaunchActionParameter(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DRS_API LaunchActionParameter& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DRS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetValue() const { return m_value; }
+  inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
+  template <typename ValueT = Aws::String>
+  void SetValue(ValueT&& value) {
+    m_valueHasBeenSet = true;
+    m_value = std::forward<ValueT>(value);
+  }
+  template <typename ValueT = Aws::String>
+  LaunchActionParameter& WithValue(ValueT&& value) {
+    SetValue(std::forward<ValueT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Type.</p>
+   */
+  inline LaunchActionParameterType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(LaunchActionParameterType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline LaunchActionParameter& WithType(LaunchActionParameterType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_value;
 
-    ///@{
-    /**
-     * <p>Type.</p>
-     */
-    inline const LaunchActionParameterType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const LaunchActionParameterType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(LaunchActionParameterType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline LaunchActionParameter& WithType(const LaunchActionParameterType& value) { SetType(value); return *this;}
-    inline LaunchActionParameter& WithType(LaunchActionParameterType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  LaunchActionParameterType m_type{LaunchActionParameterType::NOT_SET};
+  bool m_valueHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Value.</p>
-     */
-    inline const Aws::String& GetValue() const{ return m_value; }
-    inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
-    inline void SetValue(const Aws::String& value) { m_valueHasBeenSet = true; m_value = value; }
-    inline void SetValue(Aws::String&& value) { m_valueHasBeenSet = true; m_value = std::move(value); }
-    inline void SetValue(const char* value) { m_valueHasBeenSet = true; m_value.assign(value); }
-    inline LaunchActionParameter& WithValue(const Aws::String& value) { SetValue(value); return *this;}
-    inline LaunchActionParameter& WithValue(Aws::String&& value) { SetValue(std::move(value)); return *this;}
-    inline LaunchActionParameter& WithValue(const char* value) { SetValue(value); return *this;}
-    ///@}
-  private:
-
-    LaunchActionParameterType m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::String m_value;
-    bool m_valueHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace drs
-} // namespace Aws
+}  // namespace Model
+}  // namespace drs
+}  // namespace Aws

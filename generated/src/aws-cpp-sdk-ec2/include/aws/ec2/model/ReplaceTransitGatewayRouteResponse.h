@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/model/TransitGatewayRoute.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/TransitGatewayRoute.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class ReplaceTransitGatewayRouteResponse
-  {
-  public:
-    AWS_EC2_API ReplaceTransitGatewayRouteResponse();
-    AWS_EC2_API ReplaceTransitGatewayRouteResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API ReplaceTransitGatewayRouteResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class ReplaceTransitGatewayRouteResponse {
+ public:
+  AWS_EC2_API ReplaceTransitGatewayRouteResponse() = default;
+  AWS_EC2_API ReplaceTransitGatewayRouteResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API ReplaceTransitGatewayRouteResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the modified route.</p>
+   */
+  inline const TransitGatewayRoute& GetRoute() const { return m_route; }
+  template <typename RouteT = TransitGatewayRoute>
+  void SetRoute(RouteT&& value) {
+    m_routeHasBeenSet = true;
+    m_route = std::forward<RouteT>(value);
+  }
+  template <typename RouteT = TransitGatewayRoute>
+  ReplaceTransitGatewayRouteResponse& WithRoute(RouteT&& value) {
+    SetRoute(std::forward<RouteT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the modified route.</p>
-     */
-    inline const TransitGatewayRoute& GetRoute() const{ return m_route; }
-    inline void SetRoute(const TransitGatewayRoute& value) { m_route = value; }
-    inline void SetRoute(TransitGatewayRoute&& value) { m_route = std::move(value); }
-    inline ReplaceTransitGatewayRouteResponse& WithRoute(const TransitGatewayRoute& value) { SetRoute(value); return *this;}
-    inline ReplaceTransitGatewayRouteResponse& WithRoute(TransitGatewayRoute&& value) { SetRoute(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ReplaceTransitGatewayRouteResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ReplaceTransitGatewayRouteResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ReplaceTransitGatewayRouteResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TransitGatewayRoute m_route;
+ private:
+  TransitGatewayRoute m_route;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_routeHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

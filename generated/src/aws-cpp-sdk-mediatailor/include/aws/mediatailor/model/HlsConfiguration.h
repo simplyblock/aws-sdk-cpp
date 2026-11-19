@@ -4,59 +4,79 @@
  */
 
 #pragma once
-#include <aws/mediatailor/MediaTailor_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediatailor/MediaTailor_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaTailor
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaTailor {
+namespace Model {
 
+/**
+ * <p>The configuration for HLS content.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/HlsConfiguration">AWS
+ * API Reference</a></p>
+ */
+class HlsConfiguration {
+ public:
+  AWS_MEDIATAILOR_API HlsConfiguration() = default;
+  AWS_MEDIATAILOR_API HlsConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIATAILOR_API HlsConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIATAILOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration for HLS content.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/HlsConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The URL that MediaTailor generates to initiate a playback session for devices
+   * that support Apple HLS. The session uses server-side reporting.</p>
    */
-  class HlsConfiguration
-  {
-  public:
-    AWS_MEDIATAILOR_API HlsConfiguration();
-    AWS_MEDIATAILOR_API HlsConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIATAILOR_API HlsConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIATAILOR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetManifestEndpointPrefix() const { return m_manifestEndpointPrefix; }
+  inline bool ManifestEndpointPrefixHasBeenSet() const { return m_manifestEndpointPrefixHasBeenSet; }
+  template <typename ManifestEndpointPrefixT = Aws::String>
+  void SetManifestEndpointPrefix(ManifestEndpointPrefixT&& value) {
+    m_manifestEndpointPrefixHasBeenSet = true;
+    m_manifestEndpointPrefix = std::forward<ManifestEndpointPrefixT>(value);
+  }
+  template <typename ManifestEndpointPrefixT = Aws::String>
+  HlsConfiguration& WithManifestEndpointPrefix(ManifestEndpointPrefixT&& value) {
+    SetManifestEndpointPrefix(std::forward<ManifestEndpointPrefixT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The dual-stack (IPv4 and IPv6) URL that MediaTailor generates to initiate a
+   * playback session for devices that support Apple HLS. The session uses
+   * server-side reporting.</p>
+   */
+  inline const Aws::String& GetDualStackManifestEndpointPrefix() const { return m_dualStackManifestEndpointPrefix; }
+  inline bool DualStackManifestEndpointPrefixHasBeenSet() const { return m_dualStackManifestEndpointPrefixHasBeenSet; }
+  template <typename DualStackManifestEndpointPrefixT = Aws::String>
+  void SetDualStackManifestEndpointPrefix(DualStackManifestEndpointPrefixT&& value) {
+    m_dualStackManifestEndpointPrefixHasBeenSet = true;
+    m_dualStackManifestEndpointPrefix = std::forward<DualStackManifestEndpointPrefixT>(value);
+  }
+  template <typename DualStackManifestEndpointPrefixT = Aws::String>
+  HlsConfiguration& WithDualStackManifestEndpointPrefix(DualStackManifestEndpointPrefixT&& value) {
+    SetDualStackManifestEndpointPrefix(std::forward<DualStackManifestEndpointPrefixT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_manifestEndpointPrefix;
 
-    ///@{
-    /**
-     * <p>The URL that is used to initiate a playback session for devices that support
-     * Apple HLS. The session uses server-side reporting.</p>
-     */
-    inline const Aws::String& GetManifestEndpointPrefix() const{ return m_manifestEndpointPrefix; }
-    inline bool ManifestEndpointPrefixHasBeenSet() const { return m_manifestEndpointPrefixHasBeenSet; }
-    inline void SetManifestEndpointPrefix(const Aws::String& value) { m_manifestEndpointPrefixHasBeenSet = true; m_manifestEndpointPrefix = value; }
-    inline void SetManifestEndpointPrefix(Aws::String&& value) { m_manifestEndpointPrefixHasBeenSet = true; m_manifestEndpointPrefix = std::move(value); }
-    inline void SetManifestEndpointPrefix(const char* value) { m_manifestEndpointPrefixHasBeenSet = true; m_manifestEndpointPrefix.assign(value); }
-    inline HlsConfiguration& WithManifestEndpointPrefix(const Aws::String& value) { SetManifestEndpointPrefix(value); return *this;}
-    inline HlsConfiguration& WithManifestEndpointPrefix(Aws::String&& value) { SetManifestEndpointPrefix(std::move(value)); return *this;}
-    inline HlsConfiguration& WithManifestEndpointPrefix(const char* value) { SetManifestEndpointPrefix(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_dualStackManifestEndpointPrefix;
+  bool m_manifestEndpointPrefixHasBeenSet = false;
+  bool m_dualStackManifestEndpointPrefixHasBeenSet = false;
+};
 
-    Aws::String m_manifestEndpointPrefix;
-    bool m_manifestEndpointPrefixHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaTailor
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaTailor
+}  // namespace Aws

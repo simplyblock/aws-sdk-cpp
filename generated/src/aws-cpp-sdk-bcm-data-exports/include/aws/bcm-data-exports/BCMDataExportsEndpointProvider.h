@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/bcm-data-exports/BCMDataExports_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/bcm-data-exports/BCMDataExportsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace BCMDataExports
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace BCMDataExports {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using BCMDataExportsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using BCMDataExportsEndpointProviderBase =
     EndpointProviderBase<BCMDataExportsClientConfiguration, BCMDataExportsBuiltInParameters, BCMDataExportsClientContextParameters>;
 
 using BCMDataExportsDefaultEpProviderBase =
-    DefaultEndpointProvider<BCMDataExportsClientConfiguration, BCMDataExportsBuiltInParameters, BCMDataExportsClientContextParameters>;
+    BDDEndpointProvider<BCMDataExportsClientConfiguration, BCMDataExportsBuiltInParameters, BCMDataExportsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_BCMDATAEXPORTS_API BCMDataExportsEndpointProvider : public BCMDataExportsDefaultEpProviderBase
-{
-public:
-    using BCMDataExportsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_BCMDATAEXPORTS_API BCMDataExportsEndpointProvider : public BCMDataExportsDefaultEpProviderBase {
+ public:
+  using BCMDataExportsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    BCMDataExportsEndpointProvider()
-      : BCMDataExportsDefaultEpProviderBase(Aws::BCMDataExports::BCMDataExportsEndpointRules::GetRulesBlob(), Aws::BCMDataExports::BCMDataExportsEndpointRules::RulesBlobSize)
-    {}
+  BCMDataExportsEndpointProvider();
 
-    ~BCMDataExportsEndpointProvider()
-    {
-    }
+  ~BCMDataExportsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace BCMDataExports
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace BCMDataExports
+}  // namespace Aws

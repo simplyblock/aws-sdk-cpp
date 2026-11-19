@@ -12,16 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetExtensionAssociationRequest::GetExtensionAssociationRequest() : 
-    m_extensionAssociationIdHasBeenSet(false)
-{
-}
-
-Aws::String GetExtensionAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetExtensionAssociationRequest::SerializePayload() const { return {}; }

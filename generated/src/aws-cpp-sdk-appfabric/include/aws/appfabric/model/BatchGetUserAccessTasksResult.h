@@ -5,65 +5,78 @@
 
 #pragma once
 #include <aws/appfabric/AppFabric_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appfabric/model/UserAccessResultItem.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppFabric
-{
-namespace Model
-{
-  class BatchGetUserAccessTasksResult
-  {
-  public:
-    AWS_APPFABRIC_API BatchGetUserAccessTasksResult();
-    AWS_APPFABRIC_API BatchGetUserAccessTasksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPFABRIC_API BatchGetUserAccessTasksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppFabric {
+namespace Model {
+class BatchGetUserAccessTasksResult {
+ public:
+  AWS_APPFABRIC_API BatchGetUserAccessTasksResult() = default;
+  AWS_APPFABRIC_API BatchGetUserAccessTasksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPFABRIC_API BatchGetUserAccessTasksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains a list of user access results.</p>
+   */
+  inline const Aws::Vector<UserAccessResultItem>& GetUserAccessResultsList() const { return m_userAccessResultsList; }
+  template <typename UserAccessResultsListT = Aws::Vector<UserAccessResultItem>>
+  void SetUserAccessResultsList(UserAccessResultsListT&& value) {
+    m_userAccessResultsListHasBeenSet = true;
+    m_userAccessResultsList = std::forward<UserAccessResultsListT>(value);
+  }
+  template <typename UserAccessResultsListT = Aws::Vector<UserAccessResultItem>>
+  BatchGetUserAccessTasksResult& WithUserAccessResultsList(UserAccessResultsListT&& value) {
+    SetUserAccessResultsList(std::forward<UserAccessResultsListT>(value));
+    return *this;
+  }
+  template <typename UserAccessResultsListT = UserAccessResultItem>
+  BatchGetUserAccessTasksResult& AddUserAccessResultsList(UserAccessResultsListT&& value) {
+    m_userAccessResultsListHasBeenSet = true;
+    m_userAccessResultsList.emplace_back(std::forward<UserAccessResultsListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains a list of user access results.</p>
-     */
-    inline const Aws::Vector<UserAccessResultItem>& GetUserAccessResultsList() const{ return m_userAccessResultsList; }
-    inline void SetUserAccessResultsList(const Aws::Vector<UserAccessResultItem>& value) { m_userAccessResultsList = value; }
-    inline void SetUserAccessResultsList(Aws::Vector<UserAccessResultItem>&& value) { m_userAccessResultsList = std::move(value); }
-    inline BatchGetUserAccessTasksResult& WithUserAccessResultsList(const Aws::Vector<UserAccessResultItem>& value) { SetUserAccessResultsList(value); return *this;}
-    inline BatchGetUserAccessTasksResult& WithUserAccessResultsList(Aws::Vector<UserAccessResultItem>&& value) { SetUserAccessResultsList(std::move(value)); return *this;}
-    inline BatchGetUserAccessTasksResult& AddUserAccessResultsList(const UserAccessResultItem& value) { m_userAccessResultsList.push_back(value); return *this; }
-    inline BatchGetUserAccessTasksResult& AddUserAccessResultsList(UserAccessResultItem&& value) { m_userAccessResultsList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetUserAccessTasksResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetUserAccessTasksResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetUserAccessTasksResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetUserAccessTasksResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UserAccessResultItem> m_userAccessResultsList;
+ private:
+  Aws::Vector<UserAccessResultItem> m_userAccessResultsList;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_userAccessResultsListHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppFabric
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppFabric
+}  // namespace Aws

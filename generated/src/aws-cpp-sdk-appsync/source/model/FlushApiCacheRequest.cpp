@@ -12,16 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-FlushApiCacheRequest::FlushApiCacheRequest() : 
-    m_apiIdHasBeenSet(false)
-{
-}
-
-Aws::String FlushApiCacheRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String FlushApiCacheRequest::SerializePayload() const { return {}; }

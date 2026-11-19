@@ -3,71 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/medialive/model/MulticastSourceUpdateRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/medialive/model/MulticastSourceUpdateRequest.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaLive {
+namespace Model {
 
-MulticastSourceUpdateRequest::MulticastSourceUpdateRequest() : 
-    m_sourceIpHasBeenSet(false),
-    m_urlHasBeenSet(false)
-{
-}
+MulticastSourceUpdateRequest::MulticastSourceUpdateRequest(JsonView jsonValue) { *this = jsonValue; }
 
-MulticastSourceUpdateRequest::MulticastSourceUpdateRequest(JsonView jsonValue)
-  : MulticastSourceUpdateRequest()
-{
-  *this = jsonValue;
-}
-
-MulticastSourceUpdateRequest& MulticastSourceUpdateRequest::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("sourceIp"))
-  {
+MulticastSourceUpdateRequest& MulticastSourceUpdateRequest::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("sourceIp")) {
     m_sourceIp = jsonValue.GetString("sourceIp");
-
     m_sourceIpHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("url"))
-  {
+  if (jsonValue.ValueExists("url")) {
     m_url = jsonValue.GetString("url");
-
     m_urlHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("secondarySourceIp")) {
+    m_secondarySourceIp = jsonValue.GetString("secondarySourceIp");
+    m_secondarySourceIpHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("secondaryUrl")) {
+    m_secondaryUrl = jsonValue.GetString("secondaryUrl");
+    m_secondaryUrlHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue MulticastSourceUpdateRequest::Jsonize() const
-{
+JsonValue MulticastSourceUpdateRequest::Jsonize() const {
   JsonValue payload;
 
-  if(m_sourceIpHasBeenSet)
-  {
-   payload.WithString("sourceIp", m_sourceIp);
-
+  if (m_sourceIpHasBeenSet) {
+    payload.WithString("sourceIp", m_sourceIp);
   }
 
-  if(m_urlHasBeenSet)
-  {
-   payload.WithString("url", m_url);
+  if (m_urlHasBeenSet) {
+    payload.WithString("url", m_url);
+  }
 
+  if (m_secondarySourceIpHasBeenSet) {
+    payload.WithString("secondarySourceIp", m_secondarySourceIp);
+  }
+
+  if (m_secondaryUrlHasBeenSet) {
+    payload.WithString("secondaryUrl", m_secondaryUrl);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

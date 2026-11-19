@@ -3,71 +3,170 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/FailedItem.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace FMS {
+namespace Model {
 
-FailedItem::FailedItem() : 
-    m_uRIHasBeenSet(false),
-    m_reason(FailedItemReason::NOT_SET),
-    m_reasonHasBeenSet(false)
-{
-}
+FailedItem::FailedItem(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-FailedItem::FailedItem(JsonView jsonValue)
-  : FailedItem()
-{
-  *this = jsonValue;
-}
+FailedItem& FailedItem::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-FailedItem& FailedItem::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("URI"))
-  {
-    m_uRI = jsonValue.GetString("URI");
+              if (initialKeyStr == "URI") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_uRI = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_uRI = ss.str();
+                  }
+                }
+                m_uRIHasBeenSet = true;
+              }
 
-    m_uRIHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Reason") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_reason = FailedItemReasonMapper::GetFailedItemReasonForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_reasonHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("FailedItem", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Reason"))
-  {
-    m_reason = FailedItemReasonMapper::GetFailedItemReasonForName(jsonValue.GetString("Reason"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_reasonHasBeenSet = true;
+            if (initialKeyStr == "URI") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_uRI = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_uRI = ss.str();
+                }
+              }
+              m_uRIHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Reason") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_reason = FailedItemReasonMapper::GetFailedItemReasonForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_reasonHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue FailedItem::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_uRIHasBeenSet)
-  {
-   payload.WithString("URI", m_uRI);
-
+void FailedItem::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_uRIHasBeenSet) {
+    mapSize++;
+  }
+  if (m_reasonHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_reasonHasBeenSet)
-  {
-   payload.WithString("Reason", FailedItemReasonMapper::GetNameForFailedItemReason(m_reason));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_uRIHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("URI"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_uRI.c_str()));
   }
 
-  return payload;
+  if (m_reasonHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Reason"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(FailedItemReasonMapper::GetNameForFailedItemReason(m_reason).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

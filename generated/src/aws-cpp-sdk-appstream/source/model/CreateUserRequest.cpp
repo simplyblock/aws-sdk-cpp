@@ -4,68 +4,70 @@
  */
 
 #include <aws/appstream/model/CreateUserRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateUserRequest::CreateUserRequest() : 
-    m_userNameHasBeenSet(false),
-    m_messageAction(MessageAction::NOT_SET),
-    m_messageActionHasBeenSet(false),
-    m_firstNameHasBeenSet(false),
-    m_lastNameHasBeenSet(false),
-    m_authenticationType(AuthenticationType::NOT_SET),
-    m_authenticationTypeHasBeenSet(false)
-{
+Aws::String CreateUserRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_userNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_messageActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_firstNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lastNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_authenticationTypeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_userNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_userName.c_str()));
+  }
+
+  if (m_messageActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MessageAction"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(MessageActionMapper::GetNameForMessageAction(m_messageAction).c_str()));
+  }
+
+  if (m_firstNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FirstName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_firstName.c_str()));
+  }
+
+  if (m_lastNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LastName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_lastName.c_str()));
+  }
+
+  if (m_authenticationTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AuthenticationType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(AuthenticationTypeMapper::GetNameForAuthenticationType(m_authenticationType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateUserRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_userNameHasBeenSet)
-  {
-   payload.WithString("UserName", m_userName);
-
-  }
-
-  if(m_messageActionHasBeenSet)
-  {
-   payload.WithString("MessageAction", MessageActionMapper::GetNameForMessageAction(m_messageAction));
-  }
-
-  if(m_firstNameHasBeenSet)
-  {
-   payload.WithString("FirstName", m_firstName);
-
-  }
-
-  if(m_lastNameHasBeenSet)
-  {
-   payload.WithString("LastName", m_lastName);
-
-  }
-
-  if(m_authenticationTypeHasBeenSet)
-  {
-   payload.WithString("AuthenticationType", AuthenticationTypeMapper::GetNameForAuthenticationType(m_authenticationType));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateUserRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateUserRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.CreateUser"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

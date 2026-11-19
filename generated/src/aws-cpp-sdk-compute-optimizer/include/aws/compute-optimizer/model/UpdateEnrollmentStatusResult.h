@@ -6,78 +6,90 @@
 #pragma once
 #include <aws/compute-optimizer/ComputeOptimizer_EXPORTS.h>
 #include <aws/compute-optimizer/model/Status.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
+#include <aws/crt/cbor/Cbor.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ComputeOptimizer
-{
-namespace Model
-{
-  class UpdateEnrollmentStatusResult
-  {
-  public:
-    AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult();
-    AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComputeOptimizer {
+namespace Model {
+class UpdateEnrollmentStatusResult {
+ public:
+  AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult() = default;
+  AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_COMPUTEOPTIMIZER_API UpdateEnrollmentStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The enrollment status of the account.</p>
+   */
+  inline Status GetStatus() const { return m_status; }
+  inline void SetStatus(Status value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateEnrollmentStatusResult& WithStatus(Status value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The enrollment status of the account.</p>
-     */
-    inline const Status& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Status& value) { m_status = value; }
-    inline void SetStatus(Status&& value) { m_status = std::move(value); }
-    inline UpdateEnrollmentStatusResult& WithStatus(const Status& value) { SetStatus(value); return *this;}
-    inline UpdateEnrollmentStatusResult& WithStatus(Status&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for the enrollment status of the account. For example, an account
+   * might show a status of <code>Pending</code> because member accounts of an
+   * organization require more time to be enrolled in the service.</p>
+   */
+  inline const Aws::String& GetStatusReason() const { return m_statusReason; }
+  template <typename StatusReasonT = Aws::String>
+  void SetStatusReason(StatusReasonT&& value) {
+    m_statusReasonHasBeenSet = true;
+    m_statusReason = std::forward<StatusReasonT>(value);
+  }
+  template <typename StatusReasonT = Aws::String>
+  UpdateEnrollmentStatusResult& WithStatusReason(StatusReasonT&& value) {
+    SetStatusReason(std::forward<StatusReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason for the enrollment status of the account. For example, an account
-     * might show a status of <code>Pending</code> because member accounts of an
-     * organization require more time to be enrolled in the service.</p>
-     */
-    inline const Aws::String& GetStatusReason() const{ return m_statusReason; }
-    inline void SetStatusReason(const Aws::String& value) { m_statusReason = value; }
-    inline void SetStatusReason(Aws::String&& value) { m_statusReason = std::move(value); }
-    inline void SetStatusReason(const char* value) { m_statusReason.assign(value); }
-    inline UpdateEnrollmentStatusResult& WithStatusReason(const Aws::String& value) { SetStatusReason(value); return *this;}
-    inline UpdateEnrollmentStatusResult& WithStatusReason(Aws::String&& value) { SetStatusReason(std::move(value)); return *this;}
-    inline UpdateEnrollmentStatusResult& WithStatusReason(const char* value) { SetStatusReason(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateEnrollmentStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateEnrollmentStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateEnrollmentStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateEnrollmentStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Status m_status;
+ private:
+  Status m_status{Status::NOT_SET};
 
-    Aws::String m_statusReason;
+  Aws::String m_statusReason;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_statusReasonHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

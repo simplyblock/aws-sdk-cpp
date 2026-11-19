@@ -6,60 +6,80 @@
 #pragma once
 #include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
 #include <aws/mediapackagev2/model/AdMarkerDash.h>
+#include <aws/mediapackagev2/model/ScteInManifests.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace mediapackagev2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace mediapackagev2 {
+namespace Model {
 
+/**
+ * <p>The SCTE configuration.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ScteDash">AWS
+ * API Reference</a></p>
+ */
+class ScteDash {
+ public:
+  AWS_MEDIAPACKAGEV2_API ScteDash() = default;
+  AWS_MEDIAPACKAGEV2_API ScteDash(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIAPACKAGEV2_API ScteDash& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIAPACKAGEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The SCTE configuration.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/ScteDash">AWS
-   * API Reference</a></p>
+   * <p>Choose how ad markers are included in the packaged content. If you include ad
+   * markers in the content stream in your upstream encoders, then you need to inform
+   * MediaPackage what to do with the ad markers in the output.</p> <p>Value
+   * description:</p> <ul> <li> <p> <code>Binary</code> - The SCTE-35 marker is
+   * expressed as a hex-string (Base64 string) rather than full XML.</p> </li> <li>
+   * <p> <code>XML</code> - The SCTE marker is expressed fully in XML.</p> </li>
+   * </ul>
    */
-  class ScteDash
-  {
-  public:
-    AWS_MEDIAPACKAGEV2_API ScteDash();
-    AWS_MEDIAPACKAGEV2_API ScteDash(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIAPACKAGEV2_API ScteDash& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIAPACKAGEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline AdMarkerDash GetAdMarkerDash() const { return m_adMarkerDash; }
+  inline bool AdMarkerDashHasBeenSet() const { return m_adMarkerDashHasBeenSet; }
+  inline void SetAdMarkerDash(AdMarkerDash value) {
+    m_adMarkerDashHasBeenSet = true;
+    m_adMarkerDash = value;
+  }
+  inline ScteDash& WithAdMarkerDash(AdMarkerDash value) {
+    SetAdMarkerDash(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Controls which SCTE-35 events appear in DASH manifests. <code>ALL</code>
+   * includes all non-implicit SCTE-35 events. <code>MATCHES_FILTER</code> includes
+   * only events whose type matches the configured <code>ScteFilter</code>.</p> <p>If
+   * you don't specify a value, the default is <code>ALL</code>.</p>
+   */
+  inline ScteInManifests GetScteInManifests() const { return m_scteInManifests; }
+  inline bool ScteInManifestsHasBeenSet() const { return m_scteInManifestsHasBeenSet; }
+  inline void SetScteInManifests(ScteInManifests value) {
+    m_scteInManifestsHasBeenSet = true;
+    m_scteInManifests = value;
+  }
+  inline ScteDash& WithScteInManifests(ScteInManifests value) {
+    SetScteInManifests(value);
+    return *this;
+  }
+  ///@}
+ private:
+  AdMarkerDash m_adMarkerDash{AdMarkerDash::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Choose how ad markers are included in the packaged content. If you include ad
-     * markers in the content stream in your upstream encoders, then you need to inform
-     * MediaPackage what to do with the ad markers in the output.</p> <p>Value
-     * description:</p> <ul> <li> <p> <code>Binary</code> - The SCTE-35 marker is
-     * expressed as a hex-string (Base64 string) rather than full XML.</p> </li> <li>
-     * <p> <code>XML</code> - The SCTE marker is expressed fully in XML.</p> </li>
-     * </ul>
-     */
-    inline const AdMarkerDash& GetAdMarkerDash() const{ return m_adMarkerDash; }
-    inline bool AdMarkerDashHasBeenSet() const { return m_adMarkerDashHasBeenSet; }
-    inline void SetAdMarkerDash(const AdMarkerDash& value) { m_adMarkerDashHasBeenSet = true; m_adMarkerDash = value; }
-    inline void SetAdMarkerDash(AdMarkerDash&& value) { m_adMarkerDashHasBeenSet = true; m_adMarkerDash = std::move(value); }
-    inline ScteDash& WithAdMarkerDash(const AdMarkerDash& value) { SetAdMarkerDash(value); return *this;}
-    inline ScteDash& WithAdMarkerDash(AdMarkerDash&& value) { SetAdMarkerDash(std::move(value)); return *this;}
-    ///@}
-  private:
+  ScteInManifests m_scteInManifests{ScteInManifests::NOT_SET};
+  bool m_adMarkerDashHasBeenSet = false;
+  bool m_scteInManifestsHasBeenSet = false;
+};
 
-    AdMarkerDash m_adMarkerDash;
-    bool m_adMarkerDashHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace mediapackagev2
-} // namespace Aws
+}  // namespace Model
+}  // namespace mediapackagev2
+}  // namespace Aws

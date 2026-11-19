@@ -4,13 +4,15 @@
  */
 
 #include <aws/clouddirectory/CloudDirectoryEndpointProvider.h>
+#include <aws/clouddirectory/internal/CloudDirectoryEndpointRules.h>
 
-namespace Aws
-{
-namespace CloudDirectory
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace CloudDirectory
-} // namespace Aws
+namespace Aws {
+namespace CloudDirectory {
+namespace Endpoint {
+CloudDirectoryEndpointProvider::CloudDirectoryEndpointProvider()
+    : CloudDirectoryDefaultEpProviderBase(Aws::CloudDirectory::CloudDirectoryEndpointRules::GetRulesBlob(),
+                                          Aws::CloudDirectory::CloudDirectoryEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace CloudDirectory
+}  // namespace Aws

@@ -6,108 +6,117 @@
 #pragma once
 #include <aws/ce/CostExplorer_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CostExplorer
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CostExplorer {
+namespace Model {
 
+/**
+ * <p>The EBS field that contains a list of EBS metrics that are associated with
+ * the current instance. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/EBSResourceUtilization">AWS
+ * API Reference</a></p>
+ */
+class EBSResourceUtilization {
+ public:
+  AWS_COSTEXPLORER_API EBSResourceUtilization() = default;
+  AWS_COSTEXPLORER_API EBSResourceUtilization(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COSTEXPLORER_API EBSResourceUtilization& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COSTEXPLORER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The EBS field that contains a list of EBS metrics that are associated with
-   * the current instance. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/EBSResourceUtilization">AWS
-   * API Reference</a></p>
+   * <p>The maximum number of read operations per second. </p>
    */
-  class EBSResourceUtilization
-  {
-  public:
-    AWS_COSTEXPLORER_API EBSResourceUtilization();
-    AWS_COSTEXPLORER_API EBSResourceUtilization(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COSTEXPLORER_API EBSResourceUtilization& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COSTEXPLORER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEbsReadOpsPerSecond() const { return m_ebsReadOpsPerSecond; }
+  inline bool EbsReadOpsPerSecondHasBeenSet() const { return m_ebsReadOpsPerSecondHasBeenSet; }
+  template <typename EbsReadOpsPerSecondT = Aws::String>
+  void SetEbsReadOpsPerSecond(EbsReadOpsPerSecondT&& value) {
+    m_ebsReadOpsPerSecondHasBeenSet = true;
+    m_ebsReadOpsPerSecond = std::forward<EbsReadOpsPerSecondT>(value);
+  }
+  template <typename EbsReadOpsPerSecondT = Aws::String>
+  EBSResourceUtilization& WithEbsReadOpsPerSecond(EbsReadOpsPerSecondT&& value) {
+    SetEbsReadOpsPerSecond(std::forward<EbsReadOpsPerSecondT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The maximum number of write operations per second. </p>
+   */
+  inline const Aws::String& GetEbsWriteOpsPerSecond() const { return m_ebsWriteOpsPerSecond; }
+  inline bool EbsWriteOpsPerSecondHasBeenSet() const { return m_ebsWriteOpsPerSecondHasBeenSet; }
+  template <typename EbsWriteOpsPerSecondT = Aws::String>
+  void SetEbsWriteOpsPerSecond(EbsWriteOpsPerSecondT&& value) {
+    m_ebsWriteOpsPerSecondHasBeenSet = true;
+    m_ebsWriteOpsPerSecond = std::forward<EbsWriteOpsPerSecondT>(value);
+  }
+  template <typename EbsWriteOpsPerSecondT = Aws::String>
+  EBSResourceUtilization& WithEbsWriteOpsPerSecond(EbsWriteOpsPerSecondT&& value) {
+    SetEbsWriteOpsPerSecond(std::forward<EbsWriteOpsPerSecondT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of read operations per second. </p>
-     */
-    inline const Aws::String& GetEbsReadOpsPerSecond() const{ return m_ebsReadOpsPerSecond; }
-    inline bool EbsReadOpsPerSecondHasBeenSet() const { return m_ebsReadOpsPerSecondHasBeenSet; }
-    inline void SetEbsReadOpsPerSecond(const Aws::String& value) { m_ebsReadOpsPerSecondHasBeenSet = true; m_ebsReadOpsPerSecond = value; }
-    inline void SetEbsReadOpsPerSecond(Aws::String&& value) { m_ebsReadOpsPerSecondHasBeenSet = true; m_ebsReadOpsPerSecond = std::move(value); }
-    inline void SetEbsReadOpsPerSecond(const char* value) { m_ebsReadOpsPerSecondHasBeenSet = true; m_ebsReadOpsPerSecond.assign(value); }
-    inline EBSResourceUtilization& WithEbsReadOpsPerSecond(const Aws::String& value) { SetEbsReadOpsPerSecond(value); return *this;}
-    inline EBSResourceUtilization& WithEbsReadOpsPerSecond(Aws::String&& value) { SetEbsReadOpsPerSecond(std::move(value)); return *this;}
-    inline EBSResourceUtilization& WithEbsReadOpsPerSecond(const char* value) { SetEbsReadOpsPerSecond(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum size of read operations per second </p>
+   */
+  inline const Aws::String& GetEbsReadBytesPerSecond() const { return m_ebsReadBytesPerSecond; }
+  inline bool EbsReadBytesPerSecondHasBeenSet() const { return m_ebsReadBytesPerSecondHasBeenSet; }
+  template <typename EbsReadBytesPerSecondT = Aws::String>
+  void SetEbsReadBytesPerSecond(EbsReadBytesPerSecondT&& value) {
+    m_ebsReadBytesPerSecondHasBeenSet = true;
+    m_ebsReadBytesPerSecond = std::forward<EbsReadBytesPerSecondT>(value);
+  }
+  template <typename EbsReadBytesPerSecondT = Aws::String>
+  EBSResourceUtilization& WithEbsReadBytesPerSecond(EbsReadBytesPerSecondT&& value) {
+    SetEbsReadBytesPerSecond(std::forward<EbsReadBytesPerSecondT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of write operations per second. </p>
-     */
-    inline const Aws::String& GetEbsWriteOpsPerSecond() const{ return m_ebsWriteOpsPerSecond; }
-    inline bool EbsWriteOpsPerSecondHasBeenSet() const { return m_ebsWriteOpsPerSecondHasBeenSet; }
-    inline void SetEbsWriteOpsPerSecond(const Aws::String& value) { m_ebsWriteOpsPerSecondHasBeenSet = true; m_ebsWriteOpsPerSecond = value; }
-    inline void SetEbsWriteOpsPerSecond(Aws::String&& value) { m_ebsWriteOpsPerSecondHasBeenSet = true; m_ebsWriteOpsPerSecond = std::move(value); }
-    inline void SetEbsWriteOpsPerSecond(const char* value) { m_ebsWriteOpsPerSecondHasBeenSet = true; m_ebsWriteOpsPerSecond.assign(value); }
-    inline EBSResourceUtilization& WithEbsWriteOpsPerSecond(const Aws::String& value) { SetEbsWriteOpsPerSecond(value); return *this;}
-    inline EBSResourceUtilization& WithEbsWriteOpsPerSecond(Aws::String&& value) { SetEbsWriteOpsPerSecond(std::move(value)); return *this;}
-    inline EBSResourceUtilization& WithEbsWriteOpsPerSecond(const char* value) { SetEbsWriteOpsPerSecond(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum size of write operations per second. </p>
+   */
+  inline const Aws::String& GetEbsWriteBytesPerSecond() const { return m_ebsWriteBytesPerSecond; }
+  inline bool EbsWriteBytesPerSecondHasBeenSet() const { return m_ebsWriteBytesPerSecondHasBeenSet; }
+  template <typename EbsWriteBytesPerSecondT = Aws::String>
+  void SetEbsWriteBytesPerSecond(EbsWriteBytesPerSecondT&& value) {
+    m_ebsWriteBytesPerSecondHasBeenSet = true;
+    m_ebsWriteBytesPerSecond = std::forward<EbsWriteBytesPerSecondT>(value);
+  }
+  template <typename EbsWriteBytesPerSecondT = Aws::String>
+  EBSResourceUtilization& WithEbsWriteBytesPerSecond(EbsWriteBytesPerSecondT&& value) {
+    SetEbsWriteBytesPerSecond(std::forward<EbsWriteBytesPerSecondT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_ebsReadOpsPerSecond;
 
-    ///@{
-    /**
-     * <p>The maximum size of read operations per second </p>
-     */
-    inline const Aws::String& GetEbsReadBytesPerSecond() const{ return m_ebsReadBytesPerSecond; }
-    inline bool EbsReadBytesPerSecondHasBeenSet() const { return m_ebsReadBytesPerSecondHasBeenSet; }
-    inline void SetEbsReadBytesPerSecond(const Aws::String& value) { m_ebsReadBytesPerSecondHasBeenSet = true; m_ebsReadBytesPerSecond = value; }
-    inline void SetEbsReadBytesPerSecond(Aws::String&& value) { m_ebsReadBytesPerSecondHasBeenSet = true; m_ebsReadBytesPerSecond = std::move(value); }
-    inline void SetEbsReadBytesPerSecond(const char* value) { m_ebsReadBytesPerSecondHasBeenSet = true; m_ebsReadBytesPerSecond.assign(value); }
-    inline EBSResourceUtilization& WithEbsReadBytesPerSecond(const Aws::String& value) { SetEbsReadBytesPerSecond(value); return *this;}
-    inline EBSResourceUtilization& WithEbsReadBytesPerSecond(Aws::String&& value) { SetEbsReadBytesPerSecond(std::move(value)); return *this;}
-    inline EBSResourceUtilization& WithEbsReadBytesPerSecond(const char* value) { SetEbsReadBytesPerSecond(value); return *this;}
-    ///@}
+  Aws::String m_ebsWriteOpsPerSecond;
 
-    ///@{
-    /**
-     * <p>The maximum size of write operations per second. </p>
-     */
-    inline const Aws::String& GetEbsWriteBytesPerSecond() const{ return m_ebsWriteBytesPerSecond; }
-    inline bool EbsWriteBytesPerSecondHasBeenSet() const { return m_ebsWriteBytesPerSecondHasBeenSet; }
-    inline void SetEbsWriteBytesPerSecond(const Aws::String& value) { m_ebsWriteBytesPerSecondHasBeenSet = true; m_ebsWriteBytesPerSecond = value; }
-    inline void SetEbsWriteBytesPerSecond(Aws::String&& value) { m_ebsWriteBytesPerSecondHasBeenSet = true; m_ebsWriteBytesPerSecond = std::move(value); }
-    inline void SetEbsWriteBytesPerSecond(const char* value) { m_ebsWriteBytesPerSecondHasBeenSet = true; m_ebsWriteBytesPerSecond.assign(value); }
-    inline EBSResourceUtilization& WithEbsWriteBytesPerSecond(const Aws::String& value) { SetEbsWriteBytesPerSecond(value); return *this;}
-    inline EBSResourceUtilization& WithEbsWriteBytesPerSecond(Aws::String&& value) { SetEbsWriteBytesPerSecond(std::move(value)); return *this;}
-    inline EBSResourceUtilization& WithEbsWriteBytesPerSecond(const char* value) { SetEbsWriteBytesPerSecond(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_ebsReadBytesPerSecond;
 
-    Aws::String m_ebsReadOpsPerSecond;
-    bool m_ebsReadOpsPerSecondHasBeenSet = false;
+  Aws::String m_ebsWriteBytesPerSecond;
+  bool m_ebsReadOpsPerSecondHasBeenSet = false;
+  bool m_ebsWriteOpsPerSecondHasBeenSet = false;
+  bool m_ebsReadBytesPerSecondHasBeenSet = false;
+  bool m_ebsWriteBytesPerSecondHasBeenSet = false;
+};
 
-    Aws::String m_ebsWriteOpsPerSecond;
-    bool m_ebsWriteOpsPerSecondHasBeenSet = false;
-
-    Aws::String m_ebsReadBytesPerSecond;
-    bool m_ebsReadBytesPerSecondHasBeenSet = false;
-
-    Aws::String m_ebsWriteBytesPerSecond;
-    bool m_ebsWriteBytesPerSecondHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CostExplorer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostExplorer
+}  // namespace Aws

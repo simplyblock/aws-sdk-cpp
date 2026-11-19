@@ -3,55 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/ConfirmPrivateVirtualInterfaceRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ConfirmPrivateVirtualInterfaceRequest::ConfirmPrivateVirtualInterfaceRequest() : 
-    m_virtualInterfaceIdHasBeenSet(false),
-    m_virtualGatewayIdHasBeenSet(false),
-    m_directConnectGatewayIdHasBeenSet(false)
-{
+Aws::String ConfirmPrivateVirtualInterfaceRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_virtualInterfaceIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_virtualGatewayIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_directConnectGatewayIdHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_virtualInterfaceIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("virtualInterfaceId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_virtualInterfaceId.c_str()));
+  }
+
+  if (m_virtualGatewayIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("virtualGatewayId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_virtualGatewayId.c_str()));
+  }
+
+  if (m_directConnectGatewayIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("directConnectGatewayId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directConnectGatewayId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ConfirmPrivateVirtualInterfaceRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_virtualInterfaceIdHasBeenSet)
-  {
-   payload.WithString("virtualInterfaceId", m_virtualInterfaceId);
-
-  }
-
-  if(m_virtualGatewayIdHasBeenSet)
-  {
-   payload.WithString("virtualGatewayId", m_virtualGatewayId);
-
-  }
-
-  if(m_directConnectGatewayIdHasBeenSet)
-  {
-   payload.WithString("directConnectGatewayId", m_directConnectGatewayId);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ConfirmPrivateVirtualInterfaceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ConfirmPrivateVirtualInterfaceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.ConfirmPrivateVirtualInterface"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

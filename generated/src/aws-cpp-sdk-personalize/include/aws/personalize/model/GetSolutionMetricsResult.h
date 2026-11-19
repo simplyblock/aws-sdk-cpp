@@ -4,83 +4,99 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Personalize
-{
-namespace Model
-{
-  class GetSolutionMetricsResult
-  {
-  public:
-    AWS_PERSONALIZE_API GetSolutionMetricsResult();
-    AWS_PERSONALIZE_API GetSolutionMetricsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PERSONALIZE_API GetSolutionMetricsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Personalize {
+namespace Model {
+class GetSolutionMetricsResult {
+ public:
+  AWS_PERSONALIZE_API GetSolutionMetricsResult() = default;
+  AWS_PERSONALIZE_API GetSolutionMetricsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PERSONALIZE_API GetSolutionMetricsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The same solution version ARN as specified in the request.</p>
+   */
+  inline const Aws::String& GetSolutionVersionArn() const { return m_solutionVersionArn; }
+  template <typename SolutionVersionArnT = Aws::String>
+  void SetSolutionVersionArn(SolutionVersionArnT&& value) {
+    m_solutionVersionArnHasBeenSet = true;
+    m_solutionVersionArn = std::forward<SolutionVersionArnT>(value);
+  }
+  template <typename SolutionVersionArnT = Aws::String>
+  GetSolutionMetricsResult& WithSolutionVersionArn(SolutionVersionArnT&& value) {
+    SetSolutionVersionArn(std::forward<SolutionVersionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The same solution version ARN as specified in the request.</p>
-     */
-    inline const Aws::String& GetSolutionVersionArn() const{ return m_solutionVersionArn; }
-    inline void SetSolutionVersionArn(const Aws::String& value) { m_solutionVersionArn = value; }
-    inline void SetSolutionVersionArn(Aws::String&& value) { m_solutionVersionArn = std::move(value); }
-    inline void SetSolutionVersionArn(const char* value) { m_solutionVersionArn.assign(value); }
-    inline GetSolutionMetricsResult& WithSolutionVersionArn(const Aws::String& value) { SetSolutionVersionArn(value); return *this;}
-    inline GetSolutionMetricsResult& WithSolutionVersionArn(Aws::String&& value) { SetSolutionVersionArn(std::move(value)); return *this;}
-    inline GetSolutionMetricsResult& WithSolutionVersionArn(const char* value) { SetSolutionVersionArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The metrics for the solution version. For more information, see <a
+   * href="https://docs.aws.amazon.com/personalize/latest/dg/working-with-training-metrics.html">
+   * Evaluating a solution version with metrics </a>.</p>
+   */
+  inline const Aws::Map<Aws::String, double>& GetMetrics() const { return m_metrics; }
+  template <typename MetricsT = Aws::Map<Aws::String, double>>
+  void SetMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics = std::forward<MetricsT>(value);
+  }
+  template <typename MetricsT = Aws::Map<Aws::String, double>>
+  GetSolutionMetricsResult& WithMetrics(MetricsT&& value) {
+    SetMetrics(std::forward<MetricsT>(value));
+    return *this;
+  }
+  inline GetSolutionMetricsResult& AddMetrics(Aws::String key, double value) {
+    m_metricsHasBeenSet = true;
+    m_metrics.emplace(key, value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metrics for the solution version. For more information, see <a
-     * href="https://docs.aws.amazon.com/personalize/latest/dg/working-with-training-metrics.html">
-     * Evaluating a solution version with metrics </a>.</p>
-     */
-    inline const Aws::Map<Aws::String, double>& GetMetrics() const{ return m_metrics; }
-    inline void SetMetrics(const Aws::Map<Aws::String, double>& value) { m_metrics = value; }
-    inline void SetMetrics(Aws::Map<Aws::String, double>&& value) { m_metrics = std::move(value); }
-    inline GetSolutionMetricsResult& WithMetrics(const Aws::Map<Aws::String, double>& value) { SetMetrics(value); return *this;}
-    inline GetSolutionMetricsResult& WithMetrics(Aws::Map<Aws::String, double>&& value) { SetMetrics(std::move(value)); return *this;}
-    inline GetSolutionMetricsResult& AddMetrics(const Aws::String& key, double value) { m_metrics.emplace(key, value); return *this; }
-    inline GetSolutionMetricsResult& AddMetrics(Aws::String&& key, double value) { m_metrics.emplace(std::move(key), value); return *this; }
-    inline GetSolutionMetricsResult& AddMetrics(const char* key, double value) { m_metrics.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSolutionMetricsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSolutionMetricsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSolutionMetricsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSolutionMetricsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_solutionVersionArn;
+ private:
+  Aws::String m_solutionVersionArn;
 
-    Aws::Map<Aws::String, double> m_metrics;
+  Aws::Map<Aws::String, double> m_metrics;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_solutionVersionArnHasBeenSet = false;
+  bool m_metricsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-resource-groups "C++ SDK for the AWS resource-groups service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-resource-groups "C++ SDK for AWS Resource Groups" aws-cpp-sdk-core)
 
 file(GLOB AWS_RESOURCE-GROUPS_HEADERS
     "include/aws/resource-groups/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_RESOURCE-GROUPS_HEADERS
 
 file(GLOB AWS_RESOURCE-GROUPS_MODEL_HEADERS
     "include/aws/resource-groups/model/*.h"
+)
+
+file(GLOB AWS_RESOURCE-GROUPS_INTERNAL_HEADERS
+    "include/aws/resource-groups/internal/*.h"
 )
 
 file(GLOB AWS_RESOURCE-GROUPS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_RESOURCE-GROUPS_MODEL_SOURCE
 
 file(GLOB RESOURCE-GROUPS_UNIFIED_HEADERS
     ${AWS_RESOURCE-GROUPS_HEADERS}
+    ${AWS_RESOURCE-GROUPS_INTERNAL_HEADERS}
     ${AWS_RESOURCE-GROUPS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\resource-groups" FILES ${AWS_RESOURCE-GROUPS_HEADERS})
+        source_group("Header Files\\aws\\resource-groups\\internal" FILES ${AWS_RESOURCE-GROUPS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\resource-groups\\model" FILES ${AWS_RESOURCE-GROUPS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_RESOURCE-GROUPS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_RESOURCE-GROUPS_MODEL_SOURCE})

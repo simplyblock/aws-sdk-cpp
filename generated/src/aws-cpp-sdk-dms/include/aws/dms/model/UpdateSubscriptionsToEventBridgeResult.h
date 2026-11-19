@@ -4,70 +4,79 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/UpdateSubscriptionsToEventBridgeResponse">AWS
+ * API Reference</a></p>
+ */
+class UpdateSubscriptionsToEventBridgeResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/UpdateSubscriptionsToEventBridgeResponse">AWS
-   * API Reference</a></p>
+   * <p>A string that indicates how many event subscriptions were migrated and how
+   * many remain to be migrated.</p>
    */
-  class UpdateSubscriptionsToEventBridgeResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult();
-    AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API UpdateSubscriptionsToEventBridgeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetResult() const { return m_result; }
+  template <typename ResultT = Aws::String>
+  void SetResult(ResultT&& value) {
+    m_resultHasBeenSet = true;
+    m_result = std::forward<ResultT>(value);
+  }
+  template <typename ResultT = Aws::String>
+  UpdateSubscriptionsToEventBridgeResult& WithResult(ResultT&& value) {
+    SetResult(std::forward<ResultT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A string that indicates how many event subscriptions were migrated and how
-     * many remain to be migrated.</p>
-     */
-    inline const Aws::String& GetResult() const{ return m_result; }
-    inline void SetResult(const Aws::String& value) { m_result = value; }
-    inline void SetResult(Aws::String&& value) { m_result = std::move(value); }
-    inline void SetResult(const char* value) { m_result.assign(value); }
-    inline UpdateSubscriptionsToEventBridgeResult& WithResult(const Aws::String& value) { SetResult(value); return *this;}
-    inline UpdateSubscriptionsToEventBridgeResult& WithResult(Aws::String&& value) { SetResult(std::move(value)); return *this;}
-    inline UpdateSubscriptionsToEventBridgeResult& WithResult(const char* value) { SetResult(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSubscriptionsToEventBridgeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSubscriptionsToEventBridgeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSubscriptionsToEventBridgeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSubscriptionsToEventBridgeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_result;
 
-    Aws::String m_result;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resultHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

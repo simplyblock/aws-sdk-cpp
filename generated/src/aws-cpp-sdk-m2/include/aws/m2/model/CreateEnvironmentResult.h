@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/m2/MainframeModernization_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/m2/MainframeModernization_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MainframeModernization
-{
-namespace Model
-{
-  class CreateEnvironmentResult
-  {
-  public:
-    AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult();
-    AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MainframeModernization {
+namespace Model {
+class CreateEnvironmentResult {
+ public:
+  AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult() = default;
+  AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAINFRAMEMODERNIZATION_API CreateEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the runtime environment.</p>
+   */
+  inline const Aws::String& GetEnvironmentId() const { return m_environmentId; }
+  template <typename EnvironmentIdT = Aws::String>
+  void SetEnvironmentId(EnvironmentIdT&& value) {
+    m_environmentIdHasBeenSet = true;
+    m_environmentId = std::forward<EnvironmentIdT>(value);
+  }
+  template <typename EnvironmentIdT = Aws::String>
+  CreateEnvironmentResult& WithEnvironmentId(EnvironmentIdT&& value) {
+    SetEnvironmentId(std::forward<EnvironmentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the runtime environment.</p>
-     */
-    inline const Aws::String& GetEnvironmentId() const{ return m_environmentId; }
-    inline void SetEnvironmentId(const Aws::String& value) { m_environmentId = value; }
-    inline void SetEnvironmentId(Aws::String&& value) { m_environmentId = std::move(value); }
-    inline void SetEnvironmentId(const char* value) { m_environmentId.assign(value); }
-    inline CreateEnvironmentResult& WithEnvironmentId(const Aws::String& value) { SetEnvironmentId(value); return *this;}
-    inline CreateEnvironmentResult& WithEnvironmentId(Aws::String&& value) { SetEnvironmentId(std::move(value)); return *this;}
-    inline CreateEnvironmentResult& WithEnvironmentId(const char* value) { SetEnvironmentId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateEnvironmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateEnvironmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateEnvironmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateEnvironmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_environmentId;
+ private:
+  Aws::String m_environmentId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_environmentIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MainframeModernization
-} // namespace Aws
+}  // namespace Model
+}  // namespace MainframeModernization
+}  // namespace Aws

@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/greengrass/Greengrass_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/greengrass/Greengrass_EXPORTS.h>
 
-#include <aws/greengrass/GreengrassEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Greengrass
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Greengrass {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using GreengrassClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using GreengrassEndpointProviderBase =
     EndpointProviderBase<GreengrassClientConfiguration, GreengrassBuiltInParameters, GreengrassClientContextParameters>;
 
 using GreengrassDefaultEpProviderBase =
-    DefaultEndpointProvider<GreengrassClientConfiguration, GreengrassBuiltInParameters, GreengrassClientContextParameters>;
+    BDDEndpointProvider<GreengrassClientConfiguration, GreengrassBuiltInParameters, GreengrassClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_GREENGRASS_API GreengrassEndpointProvider : public GreengrassDefaultEpProviderBase
-{
-public:
-    using GreengrassResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_GREENGRASS_API GreengrassEndpointProvider : public GreengrassDefaultEpProviderBase {
+ public:
+  using GreengrassResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    GreengrassEndpointProvider()
-      : GreengrassDefaultEpProviderBase(Aws::Greengrass::GreengrassEndpointRules::GetRulesBlob(), Aws::Greengrass::GreengrassEndpointRules::RulesBlobSize)
-    {}
+  GreengrassEndpointProvider();
 
-    ~GreengrassEndpointProvider()
-    {
-    }
+  ~GreengrassEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Greengrass
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Greengrass
+}  // namespace Aws

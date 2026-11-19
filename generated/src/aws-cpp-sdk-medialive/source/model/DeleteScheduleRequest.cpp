@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/medialive/model/DeleteScheduleRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/medialive/model/DeleteScheduleRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::MediaLive::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteScheduleRequest::DeleteScheduleRequest() : 
-    m_channelIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteScheduleRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteScheduleRequest::SerializePayload() const { return {}; }

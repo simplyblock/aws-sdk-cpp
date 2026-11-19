@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/RelationalDatabaseSnapshot.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
-  class GetRelationalDatabaseSnapshotResult
-  {
-  public:
-    AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult();
-    AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
+class GetRelationalDatabaseSnapshotResult {
+ public:
+  AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult() = default;
+  AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LIGHTSAIL_API GetRelationalDatabaseSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object describing the specified database snapshot.</p>
+   */
+  inline const RelationalDatabaseSnapshot& GetRelationalDatabaseSnapshot() const { return m_relationalDatabaseSnapshot; }
+  template <typename RelationalDatabaseSnapshotT = RelationalDatabaseSnapshot>
+  void SetRelationalDatabaseSnapshot(RelationalDatabaseSnapshotT&& value) {
+    m_relationalDatabaseSnapshotHasBeenSet = true;
+    m_relationalDatabaseSnapshot = std::forward<RelationalDatabaseSnapshotT>(value);
+  }
+  template <typename RelationalDatabaseSnapshotT = RelationalDatabaseSnapshot>
+  GetRelationalDatabaseSnapshotResult& WithRelationalDatabaseSnapshot(RelationalDatabaseSnapshotT&& value) {
+    SetRelationalDatabaseSnapshot(std::forward<RelationalDatabaseSnapshotT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object describing the specified database snapshot.</p>
-     */
-    inline const RelationalDatabaseSnapshot& GetRelationalDatabaseSnapshot() const{ return m_relationalDatabaseSnapshot; }
-    inline void SetRelationalDatabaseSnapshot(const RelationalDatabaseSnapshot& value) { m_relationalDatabaseSnapshot = value; }
-    inline void SetRelationalDatabaseSnapshot(RelationalDatabaseSnapshot&& value) { m_relationalDatabaseSnapshot = std::move(value); }
-    inline GetRelationalDatabaseSnapshotResult& WithRelationalDatabaseSnapshot(const RelationalDatabaseSnapshot& value) { SetRelationalDatabaseSnapshot(value); return *this;}
-    inline GetRelationalDatabaseSnapshotResult& WithRelationalDatabaseSnapshot(RelationalDatabaseSnapshot&& value) { SetRelationalDatabaseSnapshot(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRelationalDatabaseSnapshotResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRelationalDatabaseSnapshotResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRelationalDatabaseSnapshotResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRelationalDatabaseSnapshotResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RelationalDatabaseSnapshot m_relationalDatabaseSnapshot;
+ private:
+  RelationalDatabaseSnapshot m_relationalDatabaseSnapshot;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_relationalDatabaseSnapshotHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

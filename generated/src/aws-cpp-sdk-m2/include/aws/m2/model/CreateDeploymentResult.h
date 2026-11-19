@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/m2/MainframeModernization_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/m2/MainframeModernization_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MainframeModernization
-{
-namespace Model
-{
-  class CreateDeploymentResult
-  {
-  public:
-    AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult();
-    AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MainframeModernization {
+namespace Model {
+class CreateDeploymentResult {
+ public:
+  AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult() = default;
+  AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAINFRAMEMODERNIZATION_API CreateDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the deployment.</p>
+   */
+  inline const Aws::String& GetDeploymentId() const { return m_deploymentId; }
+  template <typename DeploymentIdT = Aws::String>
+  void SetDeploymentId(DeploymentIdT&& value) {
+    m_deploymentIdHasBeenSet = true;
+    m_deploymentId = std::forward<DeploymentIdT>(value);
+  }
+  template <typename DeploymentIdT = Aws::String>
+  CreateDeploymentResult& WithDeploymentId(DeploymentIdT&& value) {
+    SetDeploymentId(std::forward<DeploymentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the deployment.</p>
-     */
-    inline const Aws::String& GetDeploymentId() const{ return m_deploymentId; }
-    inline void SetDeploymentId(const Aws::String& value) { m_deploymentId = value; }
-    inline void SetDeploymentId(Aws::String&& value) { m_deploymentId = std::move(value); }
-    inline void SetDeploymentId(const char* value) { m_deploymentId.assign(value); }
-    inline CreateDeploymentResult& WithDeploymentId(const Aws::String& value) { SetDeploymentId(value); return *this;}
-    inline CreateDeploymentResult& WithDeploymentId(Aws::String&& value) { SetDeploymentId(std::move(value)); return *this;}
-    inline CreateDeploymentResult& WithDeploymentId(const char* value) { SetDeploymentId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDeploymentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDeploymentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDeploymentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDeploymentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_deploymentId;
+ private:
+  Aws::String m_deploymentId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deploymentIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MainframeModernization
-} // namespace Aws
+}  // namespace Model
+}  // namespace MainframeModernization
+}  // namespace Aws

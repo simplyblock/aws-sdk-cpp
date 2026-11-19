@@ -4,88 +4,117 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
 
+/**
+ * <p>The parameters for Oracle.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/OracleParameters">AWS
+ * API Reference</a></p>
+ */
+class OracleParameters {
+ public:
+  AWS_QUICKSIGHT_API OracleParameters() = default;
+  AWS_QUICKSIGHT_API OracleParameters(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API OracleParameters& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The parameters for Oracle.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/OracleParameters">AWS
-   * API Reference</a></p>
+   * <p>An Oracle host.</p>
    */
-  class OracleParameters
-  {
-  public:
-    AWS_QUICKSIGHT_API OracleParameters();
-    AWS_QUICKSIGHT_API OracleParameters(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API OracleParameters& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetHost() const { return m_host; }
+  inline bool HostHasBeenSet() const { return m_hostHasBeenSet; }
+  template <typename HostT = Aws::String>
+  void SetHost(HostT&& value) {
+    m_hostHasBeenSet = true;
+    m_host = std::forward<HostT>(value);
+  }
+  template <typename HostT = Aws::String>
+  OracleParameters& WithHost(HostT&& value) {
+    SetHost(std::forward<HostT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The port.</p>
+   */
+  inline int GetPort() const { return m_port; }
+  inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
+  inline void SetPort(int value) {
+    m_portHasBeenSet = true;
+    m_port = value;
+  }
+  inline OracleParameters& WithPort(int value) {
+    SetPort(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An Oracle host.</p>
-     */
-    inline const Aws::String& GetHost() const{ return m_host; }
-    inline bool HostHasBeenSet() const { return m_hostHasBeenSet; }
-    inline void SetHost(const Aws::String& value) { m_hostHasBeenSet = true; m_host = value; }
-    inline void SetHost(Aws::String&& value) { m_hostHasBeenSet = true; m_host = std::move(value); }
-    inline void SetHost(const char* value) { m_hostHasBeenSet = true; m_host.assign(value); }
-    inline OracleParameters& WithHost(const Aws::String& value) { SetHost(value); return *this;}
-    inline OracleParameters& WithHost(Aws::String&& value) { SetHost(std::move(value)); return *this;}
-    inline OracleParameters& WithHost(const char* value) { SetHost(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The database.</p>
+   */
+  inline const Aws::String& GetDatabase() const { return m_database; }
+  inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
+  template <typename DatabaseT = Aws::String>
+  void SetDatabase(DatabaseT&& value) {
+    m_databaseHasBeenSet = true;
+    m_database = std::forward<DatabaseT>(value);
+  }
+  template <typename DatabaseT = Aws::String>
+  OracleParameters& WithDatabase(DatabaseT&& value) {
+    SetDatabase(std::forward<DatabaseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The port.</p>
-     */
-    inline int GetPort() const{ return m_port; }
-    inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
-    inline void SetPort(int value) { m_portHasBeenSet = true; m_port = value; }
-    inline OracleParameters& WithPort(int value) { SetPort(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A Boolean value that indicates whether the <code>Database</code> uses a
+   * service name or an SID. If this value is left blank, the default value is
+   * <code>SID</code>. If this value is set to <code>false</code>, the value is
+   * <code>SID</code>.</p>
+   */
+  inline bool GetUseServiceName() const { return m_useServiceName; }
+  inline bool UseServiceNameHasBeenSet() const { return m_useServiceNameHasBeenSet; }
+  inline void SetUseServiceName(bool value) {
+    m_useServiceNameHasBeenSet = true;
+    m_useServiceName = value;
+  }
+  inline OracleParameters& WithUseServiceName(bool value) {
+    SetUseServiceName(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_host;
 
-    ///@{
-    /**
-     * <p>The database.</p>
-     */
-    inline const Aws::String& GetDatabase() const{ return m_database; }
-    inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
-    inline void SetDatabase(const Aws::String& value) { m_databaseHasBeenSet = true; m_database = value; }
-    inline void SetDatabase(Aws::String&& value) { m_databaseHasBeenSet = true; m_database = std::move(value); }
-    inline void SetDatabase(const char* value) { m_databaseHasBeenSet = true; m_database.assign(value); }
-    inline OracleParameters& WithDatabase(const Aws::String& value) { SetDatabase(value); return *this;}
-    inline OracleParameters& WithDatabase(Aws::String&& value) { SetDatabase(std::move(value)); return *this;}
-    inline OracleParameters& WithDatabase(const char* value) { SetDatabase(value); return *this;}
-    ///@}
-  private:
+  int m_port{0};
 
-    Aws::String m_host;
-    bool m_hostHasBeenSet = false;
+  Aws::String m_database;
 
-    int m_port;
-    bool m_portHasBeenSet = false;
+  bool m_useServiceName{false};
+  bool m_hostHasBeenSet = false;
+  bool m_portHasBeenSet = false;
+  bool m_databaseHasBeenSet = false;
+  bool m_useServiceNameHasBeenSet = false;
+};
 
-    Aws::String m_database;
-    bool m_databaseHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

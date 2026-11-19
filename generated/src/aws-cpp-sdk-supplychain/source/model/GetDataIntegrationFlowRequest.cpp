@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/supplychain/model/GetDataIntegrationFlowRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/supplychain/model/GetDataIntegrationFlowRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::SupplyChain::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDataIntegrationFlowRequest::GetDataIntegrationFlowRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String GetDataIntegrationFlowRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDataIntegrationFlowRequest::SerializePayload() const { return {}; }

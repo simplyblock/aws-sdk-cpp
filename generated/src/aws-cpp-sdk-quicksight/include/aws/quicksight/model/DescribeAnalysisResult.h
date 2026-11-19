@@ -4,75 +4,91 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/Analysis.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeAnalysisResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeAnalysisResult();
-    AWS_QUICKSIGHT_API DescribeAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeAnalysisResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeAnalysisResult() = default;
+  AWS_QUICKSIGHT_API DescribeAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A metadata structure that contains summary information for the analysis that
+   * you're describing.</p>
+   */
+  inline const Analysis& GetAnalysis() const { return m_analysis; }
+  template <typename AnalysisT = Analysis>
+  void SetAnalysis(AnalysisT&& value) {
+    m_analysisHasBeenSet = true;
+    m_analysis = std::forward<AnalysisT>(value);
+  }
+  template <typename AnalysisT = Analysis>
+  DescribeAnalysisResult& WithAnalysis(AnalysisT&& value) {
+    SetAnalysis(std::forward<AnalysisT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A metadata structure that contains summary information for the analysis that
-     * you're describing.</p>
-     */
-    inline const Analysis& GetAnalysis() const{ return m_analysis; }
-    inline void SetAnalysis(const Analysis& value) { m_analysis = value; }
-    inline void SetAnalysis(Analysis&& value) { m_analysis = std::move(value); }
-    inline DescribeAnalysisResult& WithAnalysis(const Analysis& value) { SetAnalysis(value); return *this;}
-    inline DescribeAnalysisResult& WithAnalysis(Analysis&& value) { SetAnalysis(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeAnalysisResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeAnalysisResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAnalysisResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAnalysisResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAnalysisResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAnalysisResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Analysis m_analysis;
+ private:
+  Analysis m_analysis;
 
-    int m_status;
+  int m_status{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_analysisHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

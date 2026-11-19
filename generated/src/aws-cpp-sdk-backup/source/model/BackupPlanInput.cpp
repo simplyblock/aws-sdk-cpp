@@ -11,93 +11,77 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Backup
-{
-namespace Model
-{
+namespace Aws {
+namespace Backup {
+namespace Model {
 
-BackupPlanInput::BackupPlanInput() : 
-    m_backupPlanNameHasBeenSet(false),
-    m_rulesHasBeenSet(false),
-    m_advancedBackupSettingsHasBeenSet(false)
-{
-}
+BackupPlanInput::BackupPlanInput(JsonView jsonValue) { *this = jsonValue; }
 
-BackupPlanInput::BackupPlanInput(JsonView jsonValue)
-  : BackupPlanInput()
-{
-  *this = jsonValue;
-}
-
-BackupPlanInput& BackupPlanInput::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("BackupPlanName"))
-  {
+BackupPlanInput& BackupPlanInput::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("BackupPlanName")) {
     m_backupPlanName = jsonValue.GetString("BackupPlanName");
-
     m_backupPlanNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Rules"))
-  {
+  if (jsonValue.ValueExists("Rules")) {
     Aws::Utils::Array<JsonView> rulesJsonList = jsonValue.GetArray("Rules");
-    for(unsigned rulesIndex = 0; rulesIndex < rulesJsonList.GetLength(); ++rulesIndex)
-    {
+    for (unsigned rulesIndex = 0; rulesIndex < rulesJsonList.GetLength(); ++rulesIndex) {
       m_rules.push_back(rulesJsonList[rulesIndex].AsObject());
     }
     m_rulesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("AdvancedBackupSettings"))
-  {
+  if (jsonValue.ValueExists("AdvancedBackupSettings")) {
     Aws::Utils::Array<JsonView> advancedBackupSettingsJsonList = jsonValue.GetArray("AdvancedBackupSettings");
-    for(unsigned advancedBackupSettingsIndex = 0; advancedBackupSettingsIndex < advancedBackupSettingsJsonList.GetLength(); ++advancedBackupSettingsIndex)
-    {
+    for (unsigned advancedBackupSettingsIndex = 0; advancedBackupSettingsIndex < advancedBackupSettingsJsonList.GetLength();
+         ++advancedBackupSettingsIndex) {
       m_advancedBackupSettings.push_back(advancedBackupSettingsJsonList[advancedBackupSettingsIndex].AsObject());
     }
     m_advancedBackupSettingsHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("ScanSettings")) {
+    Aws::Utils::Array<JsonView> scanSettingsJsonList = jsonValue.GetArray("ScanSettings");
+    for (unsigned scanSettingsIndex = 0; scanSettingsIndex < scanSettingsJsonList.GetLength(); ++scanSettingsIndex) {
+      m_scanSettings.push_back(scanSettingsJsonList[scanSettingsIndex].AsObject());
+    }
+    m_scanSettingsHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue BackupPlanInput::Jsonize() const
-{
+JsonValue BackupPlanInput::Jsonize() const {
   JsonValue payload;
 
-  if(m_backupPlanNameHasBeenSet)
-  {
-   payload.WithString("BackupPlanName", m_backupPlanName);
-
+  if (m_backupPlanNameHasBeenSet) {
+    payload.WithString("BackupPlanName", m_backupPlanName);
   }
 
-  if(m_rulesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> rulesJsonList(m_rules.size());
-   for(unsigned rulesIndex = 0; rulesIndex < rulesJsonList.GetLength(); ++rulesIndex)
-   {
-     rulesJsonList[rulesIndex].AsObject(m_rules[rulesIndex].Jsonize());
-   }
-   payload.WithArray("Rules", std::move(rulesJsonList));
-
+  if (m_rulesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> rulesJsonList(m_rules.size());
+    for (unsigned rulesIndex = 0; rulesIndex < rulesJsonList.GetLength(); ++rulesIndex) {
+      rulesJsonList[rulesIndex].AsObject(m_rules[rulesIndex].Jsonize());
+    }
+    payload.WithArray("Rules", std::move(rulesJsonList));
   }
 
-  if(m_advancedBackupSettingsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> advancedBackupSettingsJsonList(m_advancedBackupSettings.size());
-   for(unsigned advancedBackupSettingsIndex = 0; advancedBackupSettingsIndex < advancedBackupSettingsJsonList.GetLength(); ++advancedBackupSettingsIndex)
-   {
-     advancedBackupSettingsJsonList[advancedBackupSettingsIndex].AsObject(m_advancedBackupSettings[advancedBackupSettingsIndex].Jsonize());
-   }
-   payload.WithArray("AdvancedBackupSettings", std::move(advancedBackupSettingsJsonList));
+  if (m_advancedBackupSettingsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> advancedBackupSettingsJsonList(m_advancedBackupSettings.size());
+    for (unsigned advancedBackupSettingsIndex = 0; advancedBackupSettingsIndex < advancedBackupSettingsJsonList.GetLength();
+         ++advancedBackupSettingsIndex) {
+      advancedBackupSettingsJsonList[advancedBackupSettingsIndex].AsObject(m_advancedBackupSettings[advancedBackupSettingsIndex].Jsonize());
+    }
+    payload.WithArray("AdvancedBackupSettings", std::move(advancedBackupSettingsJsonList));
+  }
 
+  if (m_scanSettingsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> scanSettingsJsonList(m_scanSettings.size());
+    for (unsigned scanSettingsIndex = 0; scanSettingsIndex < scanSettingsJsonList.GetLength(); ++scanSettingsIndex) {
+      scanSettingsJsonList[scanSettingsIndex].AsObject(m_scanSettings[scanSettingsIndex].Jsonize());
+    }
+    payload.WithArray("ScanSettings", std::move(scanSettingsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

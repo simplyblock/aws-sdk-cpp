@@ -4,249 +4,356 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kafka/model/ReplicatorState.h>
-#include <aws/kafka/model/ReplicationStateInfo.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/kafka/model/KafkaClusterDescription.h>
+#include <aws/kafka/model/LogDelivery.h>
 #include <aws/kafka/model/ReplicationInfoDescription.h>
+#include <aws/kafka/model/ReplicationStateInfo.h>
+#include <aws/kafka/model/ReplicatorState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
-  class DescribeReplicatorResult
-  {
-  public:
-    AWS_KAFKA_API DescribeReplicatorResult();
-    AWS_KAFKA_API DescribeReplicatorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KAFKA_API DescribeReplicatorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
+class DescribeReplicatorResult {
+ public:
+  AWS_KAFKA_API DescribeReplicatorResult() = default;
+  AWS_KAFKA_API DescribeReplicatorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KAFKA_API DescribeReplicatorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The time when the replicator was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeReplicatorResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the replicator was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeReplicatorResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeReplicatorResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current version number of the replicator.</p>
+   */
+  inline const Aws::String& GetCurrentVersion() const { return m_currentVersion; }
+  template <typename CurrentVersionT = Aws::String>
+  void SetCurrentVersion(CurrentVersionT&& value) {
+    m_currentVersionHasBeenSet = true;
+    m_currentVersion = std::forward<CurrentVersionT>(value);
+  }
+  template <typename CurrentVersionT = Aws::String>
+  DescribeReplicatorResult& WithCurrentVersion(CurrentVersionT&& value) {
+    SetCurrentVersion(std::forward<CurrentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current version number of the replicator.</p>
-     */
-    inline const Aws::String& GetCurrentVersion() const{ return m_currentVersion; }
-    inline void SetCurrentVersion(const Aws::String& value) { m_currentVersion = value; }
-    inline void SetCurrentVersion(Aws::String&& value) { m_currentVersion = std::move(value); }
-    inline void SetCurrentVersion(const char* value) { m_currentVersion.assign(value); }
-    inline DescribeReplicatorResult& WithCurrentVersion(const Aws::String& value) { SetCurrentVersion(value); return *this;}
-    inline DescribeReplicatorResult& WithCurrentVersion(Aws::String&& value) { SetCurrentVersion(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithCurrentVersion(const char* value) { SetCurrentVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether this resource is a replicator reference.</p>
+   */
+  inline bool GetIsReplicatorReference() const { return m_isReplicatorReference; }
+  inline void SetIsReplicatorReference(bool value) {
+    m_isReplicatorReferenceHasBeenSet = true;
+    m_isReplicatorReference = value;
+  }
+  inline DescribeReplicatorResult& WithIsReplicatorReference(bool value) {
+    SetIsReplicatorReference(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether this resource is a replicator reference.</p>
-     */
-    inline bool GetIsReplicatorReference() const{ return m_isReplicatorReference; }
-    inline void SetIsReplicatorReference(bool value) { m_isReplicatorReference = value; }
-    inline DescribeReplicatorResult& WithIsReplicatorReference(bool value) { SetIsReplicatorReference(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Kafka Clusters used in setting up sources / targets for replication.</p>
+   */
+  inline const Aws::Vector<KafkaClusterDescription>& GetKafkaClusters() const { return m_kafkaClusters; }
+  template <typename KafkaClustersT = Aws::Vector<KafkaClusterDescription>>
+  void SetKafkaClusters(KafkaClustersT&& value) {
+    m_kafkaClustersHasBeenSet = true;
+    m_kafkaClusters = std::forward<KafkaClustersT>(value);
+  }
+  template <typename KafkaClustersT = Aws::Vector<KafkaClusterDescription>>
+  DescribeReplicatorResult& WithKafkaClusters(KafkaClustersT&& value) {
+    SetKafkaClusters(std::forward<KafkaClustersT>(value));
+    return *this;
+  }
+  template <typename KafkaClustersT = KafkaClusterDescription>
+  DescribeReplicatorResult& AddKafkaClusters(KafkaClustersT&& value) {
+    m_kafkaClustersHasBeenSet = true;
+    m_kafkaClusters.emplace_back(std::forward<KafkaClustersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Kafka Clusters used in setting up sources / targets for replication.</p>
-     */
-    inline const Aws::Vector<KafkaClusterDescription>& GetKafkaClusters() const{ return m_kafkaClusters; }
-    inline void SetKafkaClusters(const Aws::Vector<KafkaClusterDescription>& value) { m_kafkaClusters = value; }
-    inline void SetKafkaClusters(Aws::Vector<KafkaClusterDescription>&& value) { m_kafkaClusters = std::move(value); }
-    inline DescribeReplicatorResult& WithKafkaClusters(const Aws::Vector<KafkaClusterDescription>& value) { SetKafkaClusters(value); return *this;}
-    inline DescribeReplicatorResult& WithKafkaClusters(Aws::Vector<KafkaClusterDescription>&& value) { SetKafkaClusters(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& AddKafkaClusters(const KafkaClusterDescription& value) { m_kafkaClusters.push_back(value); return *this; }
-    inline DescribeReplicatorResult& AddKafkaClusters(KafkaClusterDescription&& value) { m_kafkaClusters.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of replication configurations, where each configuration targets a
+   * given source cluster to target cluster replication flow.</p>
+   */
+  inline const Aws::Vector<ReplicationInfoDescription>& GetReplicationInfoList() const { return m_replicationInfoList; }
+  template <typename ReplicationInfoListT = Aws::Vector<ReplicationInfoDescription>>
+  void SetReplicationInfoList(ReplicationInfoListT&& value) {
+    m_replicationInfoListHasBeenSet = true;
+    m_replicationInfoList = std::forward<ReplicationInfoListT>(value);
+  }
+  template <typename ReplicationInfoListT = Aws::Vector<ReplicationInfoDescription>>
+  DescribeReplicatorResult& WithReplicationInfoList(ReplicationInfoListT&& value) {
+    SetReplicationInfoList(std::forward<ReplicationInfoListT>(value));
+    return *this;
+  }
+  template <typename ReplicationInfoListT = ReplicationInfoDescription>
+  DescribeReplicatorResult& AddReplicationInfoList(ReplicationInfoListT&& value) {
+    m_replicationInfoListHasBeenSet = true;
+    m_replicationInfoList.emplace_back(std::forward<ReplicationInfoListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of replication configurations, where each configuration targets a
-     * given source cluster to target cluster replication flow.</p>
-     */
-    inline const Aws::Vector<ReplicationInfoDescription>& GetReplicationInfoList() const{ return m_replicationInfoList; }
-    inline void SetReplicationInfoList(const Aws::Vector<ReplicationInfoDescription>& value) { m_replicationInfoList = value; }
-    inline void SetReplicationInfoList(Aws::Vector<ReplicationInfoDescription>&& value) { m_replicationInfoList = std::move(value); }
-    inline DescribeReplicatorResult& WithReplicationInfoList(const Aws::Vector<ReplicationInfoDescription>& value) { SetReplicationInfoList(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicationInfoList(Aws::Vector<ReplicationInfoDescription>&& value) { SetReplicationInfoList(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& AddReplicationInfoList(const ReplicationInfoDescription& value) { m_replicationInfoList.push_back(value); return *this; }
-    inline DescribeReplicatorResult& AddReplicationInfoList(ReplicationInfoDescription&& value) { m_replicationInfoList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the replicator.</p>
+   */
+  inline const Aws::String& GetReplicatorArn() const { return m_replicatorArn; }
+  template <typename ReplicatorArnT = Aws::String>
+  void SetReplicatorArn(ReplicatorArnT&& value) {
+    m_replicatorArnHasBeenSet = true;
+    m_replicatorArn = std::forward<ReplicatorArnT>(value);
+  }
+  template <typename ReplicatorArnT = Aws::String>
+  DescribeReplicatorResult& WithReplicatorArn(ReplicatorArnT&& value) {
+    SetReplicatorArn(std::forward<ReplicatorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the replicator.</p>
-     */
-    inline const Aws::String& GetReplicatorArn() const{ return m_replicatorArn; }
-    inline void SetReplicatorArn(const Aws::String& value) { m_replicatorArn = value; }
-    inline void SetReplicatorArn(Aws::String&& value) { m_replicatorArn = std::move(value); }
-    inline void SetReplicatorArn(const char* value) { m_replicatorArn.assign(value); }
-    inline DescribeReplicatorResult& WithReplicatorArn(const Aws::String& value) { SetReplicatorArn(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorArn(Aws::String&& value) { SetReplicatorArn(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorArn(const char* value) { SetReplicatorArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the replicator.</p>
+   */
+  inline const Aws::String& GetReplicatorDescription() const { return m_replicatorDescription; }
+  template <typename ReplicatorDescriptionT = Aws::String>
+  void SetReplicatorDescription(ReplicatorDescriptionT&& value) {
+    m_replicatorDescriptionHasBeenSet = true;
+    m_replicatorDescription = std::forward<ReplicatorDescriptionT>(value);
+  }
+  template <typename ReplicatorDescriptionT = Aws::String>
+  DescribeReplicatorResult& WithReplicatorDescription(ReplicatorDescriptionT&& value) {
+    SetReplicatorDescription(std::forward<ReplicatorDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the replicator.</p>
-     */
-    inline const Aws::String& GetReplicatorDescription() const{ return m_replicatorDescription; }
-    inline void SetReplicatorDescription(const Aws::String& value) { m_replicatorDescription = value; }
-    inline void SetReplicatorDescription(Aws::String&& value) { m_replicatorDescription = std::move(value); }
-    inline void SetReplicatorDescription(const char* value) { m_replicatorDescription.assign(value); }
-    inline DescribeReplicatorResult& WithReplicatorDescription(const Aws::String& value) { SetReplicatorDescription(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorDescription(Aws::String&& value) { SetReplicatorDescription(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorDescription(const char* value) { SetReplicatorDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the replicator.</p>
+   */
+  inline const Aws::String& GetReplicatorName() const { return m_replicatorName; }
+  template <typename ReplicatorNameT = Aws::String>
+  void SetReplicatorName(ReplicatorNameT&& value) {
+    m_replicatorNameHasBeenSet = true;
+    m_replicatorName = std::forward<ReplicatorNameT>(value);
+  }
+  template <typename ReplicatorNameT = Aws::String>
+  DescribeReplicatorResult& WithReplicatorName(ReplicatorNameT&& value) {
+    SetReplicatorName(std::forward<ReplicatorNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the replicator.</p>
-     */
-    inline const Aws::String& GetReplicatorName() const{ return m_replicatorName; }
-    inline void SetReplicatorName(const Aws::String& value) { m_replicatorName = value; }
-    inline void SetReplicatorName(Aws::String&& value) { m_replicatorName = std::move(value); }
-    inline void SetReplicatorName(const char* value) { m_replicatorName.assign(value); }
-    inline DescribeReplicatorResult& WithReplicatorName(const Aws::String& value) { SetReplicatorName(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorName(Aws::String&& value) { SetReplicatorName(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorName(const char* value) { SetReplicatorName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the replicator resource in the region where
+   * the replicator was created.</p>
+   */
+  inline const Aws::String& GetReplicatorResourceArn() const { return m_replicatorResourceArn; }
+  template <typename ReplicatorResourceArnT = Aws::String>
+  void SetReplicatorResourceArn(ReplicatorResourceArnT&& value) {
+    m_replicatorResourceArnHasBeenSet = true;
+    m_replicatorResourceArn = std::forward<ReplicatorResourceArnT>(value);
+  }
+  template <typename ReplicatorResourceArnT = Aws::String>
+  DescribeReplicatorResult& WithReplicatorResourceArn(ReplicatorResourceArnT&& value) {
+    SetReplicatorResourceArn(std::forward<ReplicatorResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the replicator resource in the region where
-     * the replicator was created.</p>
-     */
-    inline const Aws::String& GetReplicatorResourceArn() const{ return m_replicatorResourceArn; }
-    inline void SetReplicatorResourceArn(const Aws::String& value) { m_replicatorResourceArn = value; }
-    inline void SetReplicatorResourceArn(Aws::String&& value) { m_replicatorResourceArn = std::move(value); }
-    inline void SetReplicatorResourceArn(const char* value) { m_replicatorResourceArn.assign(value); }
-    inline DescribeReplicatorResult& WithReplicatorResourceArn(const Aws::String& value) { SetReplicatorResourceArn(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorResourceArn(Aws::String&& value) { SetReplicatorResourceArn(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorResourceArn(const char* value) { SetReplicatorResourceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>State of the replicator.</p>
+   */
+  inline ReplicatorState GetReplicatorState() const { return m_replicatorState; }
+  inline void SetReplicatorState(ReplicatorState value) {
+    m_replicatorStateHasBeenSet = true;
+    m_replicatorState = value;
+  }
+  inline DescribeReplicatorResult& WithReplicatorState(ReplicatorState value) {
+    SetReplicatorState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>State of the replicator.</p>
-     */
-    inline const ReplicatorState& GetReplicatorState() const{ return m_replicatorState; }
-    inline void SetReplicatorState(const ReplicatorState& value) { m_replicatorState = value; }
-    inline void SetReplicatorState(ReplicatorState&& value) { m_replicatorState = std::move(value); }
-    inline DescribeReplicatorResult& WithReplicatorState(const ReplicatorState& value) { SetReplicatorState(value); return *this;}
-    inline DescribeReplicatorResult& WithReplicatorState(ReplicatorState&& value) { SetReplicatorState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role used by the replicator to
+   * access resources in the customer's account (e.g source and target clusters)</p>
+   */
+  inline const Aws::String& GetServiceExecutionRoleArn() const { return m_serviceExecutionRoleArn; }
+  template <typename ServiceExecutionRoleArnT = Aws::String>
+  void SetServiceExecutionRoleArn(ServiceExecutionRoleArnT&& value) {
+    m_serviceExecutionRoleArnHasBeenSet = true;
+    m_serviceExecutionRoleArn = std::forward<ServiceExecutionRoleArnT>(value);
+  }
+  template <typename ServiceExecutionRoleArnT = Aws::String>
+  DescribeReplicatorResult& WithServiceExecutionRoleArn(ServiceExecutionRoleArnT&& value) {
+    SetServiceExecutionRoleArn(std::forward<ServiceExecutionRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the IAM role used by the replicator to
-     * access resources in the customer's account (e.g source and target clusters)</p>
-     */
-    inline const Aws::String& GetServiceExecutionRoleArn() const{ return m_serviceExecutionRoleArn; }
-    inline void SetServiceExecutionRoleArn(const Aws::String& value) { m_serviceExecutionRoleArn = value; }
-    inline void SetServiceExecutionRoleArn(Aws::String&& value) { m_serviceExecutionRoleArn = std::move(value); }
-    inline void SetServiceExecutionRoleArn(const char* value) { m_serviceExecutionRoleArn.assign(value); }
-    inline DescribeReplicatorResult& WithServiceExecutionRoleArn(const Aws::String& value) { SetServiceExecutionRoleArn(value); return *this;}
-    inline DescribeReplicatorResult& WithServiceExecutionRoleArn(Aws::String&& value) { SetServiceExecutionRoleArn(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithServiceExecutionRoleArn(const char* value) { SetServiceExecutionRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details about the state of the replicator.</p>
+   */
+  inline const ReplicationStateInfo& GetStateInfo() const { return m_stateInfo; }
+  template <typename StateInfoT = ReplicationStateInfo>
+  void SetStateInfo(StateInfoT&& value) {
+    m_stateInfoHasBeenSet = true;
+    m_stateInfo = std::forward<StateInfoT>(value);
+  }
+  template <typename StateInfoT = ReplicationStateInfo>
+  DescribeReplicatorResult& WithStateInfo(StateInfoT&& value) {
+    SetStateInfo(std::forward<StateInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about the state of the replicator.</p>
-     */
-    inline const ReplicationStateInfo& GetStateInfo() const{ return m_stateInfo; }
-    inline void SetStateInfo(const ReplicationStateInfo& value) { m_stateInfo = value; }
-    inline void SetStateInfo(ReplicationStateInfo&& value) { m_stateInfo = std::move(value); }
-    inline DescribeReplicatorResult& WithStateInfo(const ReplicationStateInfo& value) { SetStateInfo(value); return *this;}
-    inline DescribeReplicatorResult& WithStateInfo(ReplicationStateInfo&& value) { SetStateInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>List of tags attached to the Replicator.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DescribeReplicatorResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DescribeReplicatorResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>List of tags attached to the Replicator.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline DescribeReplicatorResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DescribeReplicatorResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline DescribeReplicatorResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeReplicatorResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeReplicatorResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribeReplicatorResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeReplicatorResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeReplicatorResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration for log delivery.</p>
+   */
+  inline const LogDelivery& GetLogDelivery() const { return m_logDelivery; }
+  template <typename LogDeliveryT = LogDelivery>
+  void SetLogDelivery(LogDeliveryT&& value) {
+    m_logDeliveryHasBeenSet = true;
+    m_logDelivery = std::forward<LogDeliveryT>(value);
+  }
+  template <typename LogDeliveryT = LogDelivery>
+  DescribeReplicatorResult& WithLogDelivery(LogDeliveryT&& value) {
+    SetLogDelivery(std::forward<LogDeliveryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReplicatorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReplicatorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReplicatorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Utils::DateTime m_creationTime;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReplicatorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_currentVersion;
+ private:
+  Aws::Utils::DateTime m_creationTime{};
 
-    bool m_isReplicatorReference;
+  Aws::String m_currentVersion;
 
-    Aws::Vector<KafkaClusterDescription> m_kafkaClusters;
+  bool m_isReplicatorReference{false};
 
-    Aws::Vector<ReplicationInfoDescription> m_replicationInfoList;
+  Aws::Vector<KafkaClusterDescription> m_kafkaClusters;
 
-    Aws::String m_replicatorArn;
+  Aws::Vector<ReplicationInfoDescription> m_replicationInfoList;
 
-    Aws::String m_replicatorDescription;
+  Aws::String m_replicatorArn;
 
-    Aws::String m_replicatorName;
+  Aws::String m_replicatorDescription;
 
-    Aws::String m_replicatorResourceArn;
+  Aws::String m_replicatorName;
 
-    ReplicatorState m_replicatorState;
+  Aws::String m_replicatorResourceArn;
 
-    Aws::String m_serviceExecutionRoleArn;
+  ReplicatorState m_replicatorState{ReplicatorState::NOT_SET};
 
-    ReplicationStateInfo m_stateInfo;
+  Aws::String m_serviceExecutionRoleArn;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  ReplicationStateInfo m_stateInfo;
 
-    Aws::String m_requestId;
-  };
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  LogDelivery m_logDelivery;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_currentVersionHasBeenSet = false;
+  bool m_isReplicatorReferenceHasBeenSet = false;
+  bool m_kafkaClustersHasBeenSet = false;
+  bool m_replicationInfoListHasBeenSet = false;
+  bool m_replicatorArnHasBeenSet = false;
+  bool m_replicatorDescriptionHasBeenSet = false;
+  bool m_replicatorNameHasBeenSet = false;
+  bool m_replicatorResourceArnHasBeenSet = false;
+  bool m_replicatorStateHasBeenSet = false;
+  bool m_serviceExecutionRoleArnHasBeenSet = false;
+  bool m_stateInfoHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_logDeliveryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

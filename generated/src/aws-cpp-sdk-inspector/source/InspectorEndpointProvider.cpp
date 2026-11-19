@@ -4,13 +4,15 @@
  */
 
 #include <aws/inspector/InspectorEndpointProvider.h>
+#include <aws/inspector/internal/InspectorEndpointRules.h>
 
-namespace Aws
-{
-namespace Inspector
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Inspector
-} // namespace Aws
+namespace Aws {
+namespace Inspector {
+namespace Endpoint {
+InspectorEndpointProvider::InspectorEndpointProvider()
+    : InspectorDefaultEpProviderBase(Aws::Inspector::InspectorEndpointRules::GetRulesBlob(),
+                                     Aws::Inspector::InspectorEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Inspector
+}  // namespace Aws

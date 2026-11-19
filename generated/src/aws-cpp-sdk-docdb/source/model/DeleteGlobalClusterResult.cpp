@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/docdb/model/DeleteGlobalClusterResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/docdb/model/DeleteGlobalClusterResult.h>
 
 #include <utility>
 
@@ -17,38 +17,30 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteGlobalClusterResult::DeleteGlobalClusterResult()
-{
-}
+DeleteGlobalClusterResult::DeleteGlobalClusterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DeleteGlobalClusterResult::DeleteGlobalClusterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DeleteGlobalClusterResult& DeleteGlobalClusterResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteGlobalClusterResult& DeleteGlobalClusterResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteGlobalClusterResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteGlobalClusterResult")) {
     resultNode = rootNode.FirstChild("DeleteGlobalClusterResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode globalClusterNode = resultNode.FirstChild("GlobalCluster");
-    if(!globalClusterNode.IsNull())
-    {
+    if (!globalClusterNode.IsNull()) {
       m_globalCluster = globalClusterNode;
+      m_globalClusterHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::DocDB::Model::DeleteGlobalClusterResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::DocDB::Model::DeleteGlobalClusterResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

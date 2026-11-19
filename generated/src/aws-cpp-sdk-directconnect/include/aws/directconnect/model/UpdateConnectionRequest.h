@@ -4,92 +4,99 @@
  */
 
 #pragma once
-#include <aws/directconnect/DirectConnect_EXPORTS.h>
-#include <aws/directconnect/DirectConnectRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/directconnect/DirectConnectRequest.h>
+#include <aws/directconnect/DirectConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DirectConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace DirectConnect {
+namespace Model {
 
+/**
+ */
+class UpdateConnectionRequest : public DirectConnectRequest {
+ public:
+  AWS_DIRECTCONNECT_API UpdateConnectionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateConnection"; }
+
+  AWS_DIRECTCONNECT_API Aws::String SerializePayload() const override;
+
+  AWS_DIRECTCONNECT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the connection.</p> <p>You can use <a>DescribeConnections</a> to
+   * retrieve the connection ID.</p>
    */
-  class UpdateConnectionRequest : public DirectConnectRequest
-  {
-  public:
-    AWS_DIRECTCONNECT_API UpdateConnectionRequest();
+  inline const Aws::String& GetConnectionId() const { return m_connectionId; }
+  inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
+  template <typename ConnectionIdT = Aws::String>
+  void SetConnectionId(ConnectionIdT&& value) {
+    m_connectionIdHasBeenSet = true;
+    m_connectionId = std::forward<ConnectionIdT>(value);
+  }
+  template <typename ConnectionIdT = Aws::String>
+  UpdateConnectionRequest& WithConnectionId(ConnectionIdT&& value) {
+    SetConnectionId(std::forward<ConnectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateConnection"; }
+  ///@{
+  /**
+   * <p>The name of the connection.</p>
+   */
+  inline const Aws::String& GetConnectionName() const { return m_connectionName; }
+  inline bool ConnectionNameHasBeenSet() const { return m_connectionNameHasBeenSet; }
+  template <typename ConnectionNameT = Aws::String>
+  void SetConnectionName(ConnectionNameT&& value) {
+    m_connectionNameHasBeenSet = true;
+    m_connectionName = std::forward<ConnectionNameT>(value);
+  }
+  template <typename ConnectionNameT = Aws::String>
+  UpdateConnectionRequest& WithConnectionName(ConnectionNameT&& value) {
+    SetConnectionName(std::forward<ConnectionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DIRECTCONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The connection MAC Security (MACsec) encryption mode.</p> <p>The valid values
+   * are <code>no_encrypt</code>, <code>should_encrypt</code>, and
+   * <code>must_encrypt</code>.</p>
+   */
+  inline const Aws::String& GetEncryptionMode() const { return m_encryptionMode; }
+  inline bool EncryptionModeHasBeenSet() const { return m_encryptionModeHasBeenSet; }
+  template <typename EncryptionModeT = Aws::String>
+  void SetEncryptionMode(EncryptionModeT&& value) {
+    m_encryptionModeHasBeenSet = true;
+    m_encryptionMode = std::forward<EncryptionModeT>(value);
+  }
+  template <typename EncryptionModeT = Aws::String>
+  UpdateConnectionRequest& WithEncryptionMode(EncryptionModeT&& value) {
+    SetEncryptionMode(std::forward<EncryptionModeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_connectionId;
 
-    AWS_DIRECTCONNECT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_connectionName;
 
+  Aws::String m_encryptionMode;
+  bool m_connectionIdHasBeenSet = false;
+  bool m_connectionNameHasBeenSet = false;
+  bool m_encryptionModeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ID of the dedicated connection.</p> <p>You can use
-     * <a>DescribeConnections</a> to retrieve the connection ID.</p>
-     */
-    inline const Aws::String& GetConnectionId() const{ return m_connectionId; }
-    inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
-    inline void SetConnectionId(const Aws::String& value) { m_connectionIdHasBeenSet = true; m_connectionId = value; }
-    inline void SetConnectionId(Aws::String&& value) { m_connectionIdHasBeenSet = true; m_connectionId = std::move(value); }
-    inline void SetConnectionId(const char* value) { m_connectionIdHasBeenSet = true; m_connectionId.assign(value); }
-    inline UpdateConnectionRequest& WithConnectionId(const Aws::String& value) { SetConnectionId(value); return *this;}
-    inline UpdateConnectionRequest& WithConnectionId(Aws::String&& value) { SetConnectionId(std::move(value)); return *this;}
-    inline UpdateConnectionRequest& WithConnectionId(const char* value) { SetConnectionId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name of the connection.</p>
-     */
-    inline const Aws::String& GetConnectionName() const{ return m_connectionName; }
-    inline bool ConnectionNameHasBeenSet() const { return m_connectionNameHasBeenSet; }
-    inline void SetConnectionName(const Aws::String& value) { m_connectionNameHasBeenSet = true; m_connectionName = value; }
-    inline void SetConnectionName(Aws::String&& value) { m_connectionNameHasBeenSet = true; m_connectionName = std::move(value); }
-    inline void SetConnectionName(const char* value) { m_connectionNameHasBeenSet = true; m_connectionName.assign(value); }
-    inline UpdateConnectionRequest& WithConnectionName(const Aws::String& value) { SetConnectionName(value); return *this;}
-    inline UpdateConnectionRequest& WithConnectionName(Aws::String&& value) { SetConnectionName(std::move(value)); return *this;}
-    inline UpdateConnectionRequest& WithConnectionName(const char* value) { SetConnectionName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The connection MAC Security (MACsec) encryption mode.</p> <p>The valid values
-     * are <code>no_encrypt</code>, <code>should_encrypt</code>, and
-     * <code>must_encrypt</code>.</p>
-     */
-    inline const Aws::String& GetEncryptionMode() const{ return m_encryptionMode; }
-    inline bool EncryptionModeHasBeenSet() const { return m_encryptionModeHasBeenSet; }
-    inline void SetEncryptionMode(const Aws::String& value) { m_encryptionModeHasBeenSet = true; m_encryptionMode = value; }
-    inline void SetEncryptionMode(Aws::String&& value) { m_encryptionModeHasBeenSet = true; m_encryptionMode = std::move(value); }
-    inline void SetEncryptionMode(const char* value) { m_encryptionModeHasBeenSet = true; m_encryptionMode.assign(value); }
-    inline UpdateConnectionRequest& WithEncryptionMode(const Aws::String& value) { SetEncryptionMode(value); return *this;}
-    inline UpdateConnectionRequest& WithEncryptionMode(Aws::String&& value) { SetEncryptionMode(std::move(value)); return *this;}
-    inline UpdateConnectionRequest& WithEncryptionMode(const char* value) { SetEncryptionMode(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_connectionId;
-    bool m_connectionIdHasBeenSet = false;
-
-    Aws::String m_connectionName;
-    bool m_connectionNameHasBeenSet = false;
-
-    Aws::String m_encryptionMode;
-    bool m_encryptionModeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

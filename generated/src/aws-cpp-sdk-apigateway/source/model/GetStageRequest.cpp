@@ -12,17 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetStageRequest::GetStageRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_stageNameHasBeenSet(false)
-{
-}
-
-Aws::String GetStageRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetStageRequest::SerializePayload() const { return {}; }

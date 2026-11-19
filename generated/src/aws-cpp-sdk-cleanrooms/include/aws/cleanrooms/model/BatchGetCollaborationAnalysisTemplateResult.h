@@ -5,83 +5,110 @@
 
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/cleanrooms/model/CollaborationAnalysisTemplate.h>
 #include <aws/cleanrooms/model/BatchGetCollaborationAnalysisTemplateError.h>
+#include <aws/cleanrooms/model/CollaborationAnalysisTemplate.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class BatchGetCollaborationAnalysisTemplateResult
-  {
-  public:
-    AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult();
-    AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class BatchGetCollaborationAnalysisTemplateResult {
+ public:
+  AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult() = default;
+  AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API BatchGetCollaborationAnalysisTemplateResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The retrieved list of analysis templates within a collaboration.</p>
+   */
+  inline const Aws::Vector<CollaborationAnalysisTemplate>& GetCollaborationAnalysisTemplates() const {
+    return m_collaborationAnalysisTemplates;
+  }
+  template <typename CollaborationAnalysisTemplatesT = Aws::Vector<CollaborationAnalysisTemplate>>
+  void SetCollaborationAnalysisTemplates(CollaborationAnalysisTemplatesT&& value) {
+    m_collaborationAnalysisTemplatesHasBeenSet = true;
+    m_collaborationAnalysisTemplates = std::forward<CollaborationAnalysisTemplatesT>(value);
+  }
+  template <typename CollaborationAnalysisTemplatesT = Aws::Vector<CollaborationAnalysisTemplate>>
+  BatchGetCollaborationAnalysisTemplateResult& WithCollaborationAnalysisTemplates(CollaborationAnalysisTemplatesT&& value) {
+    SetCollaborationAnalysisTemplates(std::forward<CollaborationAnalysisTemplatesT>(value));
+    return *this;
+  }
+  template <typename CollaborationAnalysisTemplatesT = CollaborationAnalysisTemplate>
+  BatchGetCollaborationAnalysisTemplateResult& AddCollaborationAnalysisTemplates(CollaborationAnalysisTemplatesT&& value) {
+    m_collaborationAnalysisTemplatesHasBeenSet = true;
+    m_collaborationAnalysisTemplates.emplace_back(std::forward<CollaborationAnalysisTemplatesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The retrieved list of analysis templates within a collaboration.</p>
-     */
-    inline const Aws::Vector<CollaborationAnalysisTemplate>& GetCollaborationAnalysisTemplates() const{ return m_collaborationAnalysisTemplates; }
-    inline void SetCollaborationAnalysisTemplates(const Aws::Vector<CollaborationAnalysisTemplate>& value) { m_collaborationAnalysisTemplates = value; }
-    inline void SetCollaborationAnalysisTemplates(Aws::Vector<CollaborationAnalysisTemplate>&& value) { m_collaborationAnalysisTemplates = std::move(value); }
-    inline BatchGetCollaborationAnalysisTemplateResult& WithCollaborationAnalysisTemplates(const Aws::Vector<CollaborationAnalysisTemplate>& value) { SetCollaborationAnalysisTemplates(value); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& WithCollaborationAnalysisTemplates(Aws::Vector<CollaborationAnalysisTemplate>&& value) { SetCollaborationAnalysisTemplates(std::move(value)); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& AddCollaborationAnalysisTemplates(const CollaborationAnalysisTemplate& value) { m_collaborationAnalysisTemplates.push_back(value); return *this; }
-    inline BatchGetCollaborationAnalysisTemplateResult& AddCollaborationAnalysisTemplates(CollaborationAnalysisTemplate&& value) { m_collaborationAnalysisTemplates.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Error reasons for collaboration analysis templates that could not be
+   * retrieved. One error is returned for every collaboration analysis template that
+   * could not be retrieved.</p>
+   */
+  inline const Aws::Vector<BatchGetCollaborationAnalysisTemplateError>& GetErrors() const { return m_errors; }
+  template <typename ErrorsT = Aws::Vector<BatchGetCollaborationAnalysisTemplateError>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<BatchGetCollaborationAnalysisTemplateError>>
+  BatchGetCollaborationAnalysisTemplateResult& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = BatchGetCollaborationAnalysisTemplateError>
+  BatchGetCollaborationAnalysisTemplateResult& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Error reasons for collaboration analysis templates that could not be
-     * retrieved. One error is returned for every collaboration analysis template that
-     * could not be retrieved.</p>
-     */
-    inline const Aws::Vector<BatchGetCollaborationAnalysisTemplateError>& GetErrors() const{ return m_errors; }
-    inline void SetErrors(const Aws::Vector<BatchGetCollaborationAnalysisTemplateError>& value) { m_errors = value; }
-    inline void SetErrors(Aws::Vector<BatchGetCollaborationAnalysisTemplateError>&& value) { m_errors = std::move(value); }
-    inline BatchGetCollaborationAnalysisTemplateResult& WithErrors(const Aws::Vector<BatchGetCollaborationAnalysisTemplateError>& value) { SetErrors(value); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& WithErrors(Aws::Vector<BatchGetCollaborationAnalysisTemplateError>&& value) { SetErrors(std::move(value)); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& AddErrors(const BatchGetCollaborationAnalysisTemplateError& value) { m_errors.push_back(value); return *this; }
-    inline BatchGetCollaborationAnalysisTemplateResult& AddErrors(BatchGetCollaborationAnalysisTemplateError&& value) { m_errors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetCollaborationAnalysisTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetCollaborationAnalysisTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetCollaborationAnalysisTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<CollaborationAnalysisTemplate> m_collaborationAnalysisTemplates;
+ private:
+  Aws::Vector<CollaborationAnalysisTemplate> m_collaborationAnalysisTemplates;
 
-    Aws::Vector<BatchGetCollaborationAnalysisTemplateError> m_errors;
+  Aws::Vector<BatchGetCollaborationAnalysisTemplateError> m_errors;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_collaborationAnalysisTemplatesHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

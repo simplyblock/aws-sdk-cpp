@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/codeartifact/CodeArtifact_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/codeartifact/CodeArtifactEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CodeArtifact
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CodeArtifact {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CodeArtifactClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CodeArtifactEndpointProviderBase =
     EndpointProviderBase<CodeArtifactClientConfiguration, CodeArtifactBuiltInParameters, CodeArtifactClientContextParameters>;
 
 using CodeArtifactDefaultEpProviderBase =
-    DefaultEndpointProvider<CodeArtifactClientConfiguration, CodeArtifactBuiltInParameters, CodeArtifactClientContextParameters>;
+    BDDEndpointProvider<CodeArtifactClientConfiguration, CodeArtifactBuiltInParameters, CodeArtifactClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CODEARTIFACT_API CodeArtifactEndpointProvider : public CodeArtifactDefaultEpProviderBase
-{
-public:
-    using CodeArtifactResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CODEARTIFACT_API CodeArtifactEndpointProvider : public CodeArtifactDefaultEpProviderBase {
+ public:
+  using CodeArtifactResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CodeArtifactEndpointProvider()
-      : CodeArtifactDefaultEpProviderBase(Aws::CodeArtifact::CodeArtifactEndpointRules::GetRulesBlob(), Aws::CodeArtifact::CodeArtifactEndpointRules::RulesBlobSize)
-    {}
+  CodeArtifactEndpointProvider();
 
-    ~CodeArtifactEndpointProvider()
-    {
-    }
+  ~CodeArtifactEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CodeArtifact
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CodeArtifact
+}  // namespace Aws

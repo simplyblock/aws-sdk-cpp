@@ -4,82 +4,99 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListCustomMetricsResult
-  {
-  public:
-    AWS_IOT_API ListCustomMetricsResult();
-    AWS_IOT_API ListCustomMetricsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListCustomMetricsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListCustomMetricsResult {
+ public:
+  AWS_IOT_API ListCustomMetricsResult() = default;
+  AWS_IOT_API ListCustomMetricsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListCustomMetricsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The name of the custom metric. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetMetricNames() const { return m_metricNames; }
+  template <typename MetricNamesT = Aws::Vector<Aws::String>>
+  void SetMetricNames(MetricNamesT&& value) {
+    m_metricNamesHasBeenSet = true;
+    m_metricNames = std::forward<MetricNamesT>(value);
+  }
+  template <typename MetricNamesT = Aws::Vector<Aws::String>>
+  ListCustomMetricsResult& WithMetricNames(MetricNamesT&& value) {
+    SetMetricNames(std::forward<MetricNamesT>(value));
+    return *this;
+  }
+  template <typename MetricNamesT = Aws::String>
+  ListCustomMetricsResult& AddMetricNames(MetricNamesT&& value) {
+    m_metricNamesHasBeenSet = true;
+    m_metricNames.emplace_back(std::forward<MetricNamesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The name of the custom metric. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetMetricNames() const{ return m_metricNames; }
-    inline void SetMetricNames(const Aws::Vector<Aws::String>& value) { m_metricNames = value; }
-    inline void SetMetricNames(Aws::Vector<Aws::String>&& value) { m_metricNames = std::move(value); }
-    inline ListCustomMetricsResult& WithMetricNames(const Aws::Vector<Aws::String>& value) { SetMetricNames(value); return *this;}
-    inline ListCustomMetricsResult& WithMetricNames(Aws::Vector<Aws::String>&& value) { SetMetricNames(std::move(value)); return *this;}
-    inline ListCustomMetricsResult& AddMetricNames(const Aws::String& value) { m_metricNames.push_back(value); return *this; }
-    inline ListCustomMetricsResult& AddMetricNames(Aws::String&& value) { m_metricNames.push_back(std::move(value)); return *this; }
-    inline ListCustomMetricsResult& AddMetricNames(const char* value) { m_metricNames.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> A token that can be used to retrieve the next set of results, or
+   * <code>null</code> if there are no additional results. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListCustomMetricsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A token that can be used to retrieve the next set of results, or
-     * <code>null</code> if there are no additional results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListCustomMetricsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListCustomMetricsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListCustomMetricsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListCustomMetricsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListCustomMetricsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListCustomMetricsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListCustomMetricsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_metricNames;
+ private:
+  Aws::Vector<Aws::String> m_metricNames;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_metricNamesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

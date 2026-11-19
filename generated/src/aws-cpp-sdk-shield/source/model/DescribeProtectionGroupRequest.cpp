@@ -3,41 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/shield/model/DescribeProtectionGroupRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Shield::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeProtectionGroupRequest::DescribeProtectionGroupRequest() : 
-    m_protectionGroupIdHasBeenSet(false)
-{
-}
+Aws::String DescribeProtectionGroupRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeProtectionGroupRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_protectionGroupIdHasBeenSet)
-  {
-   payload.WithString("ProtectionGroupId", m_protectionGroupId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_protectionGroupIdHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_protectionGroupIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProtectionGroupId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_protectionGroupId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeProtectionGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeProtectionGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSShield_20160616.DescribeProtectionGroup"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

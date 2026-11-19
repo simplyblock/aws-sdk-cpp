@@ -4,64 +4,72 @@
  */
 
 #pragma once
-#include <aws/cost-optimization-hub/CostOptimizationHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/cost-optimization-hub/CostOptimizationHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CostOptimizationHub
-{
-namespace Model
-{
-  class UpdateEnrollmentStatusResult
-  {
-  public:
-    AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult();
-    AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CostOptimizationHub {
+namespace Model {
+class UpdateEnrollmentStatusResult {
+ public:
+  AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult() = default;
+  AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COSTOPTIMIZATIONHUB_API UpdateEnrollmentStatusResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The enrollment status of the account.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  UpdateEnrollmentStatusResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The enrollment status of the account.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline UpdateEnrollmentStatusResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline UpdateEnrollmentStatusResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline UpdateEnrollmentStatusResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateEnrollmentStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateEnrollmentStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateEnrollmentStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateEnrollmentStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_status;
+ private:
+  Aws::String m_status;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CostOptimizationHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostOptimizationHub
+}  // namespace Aws

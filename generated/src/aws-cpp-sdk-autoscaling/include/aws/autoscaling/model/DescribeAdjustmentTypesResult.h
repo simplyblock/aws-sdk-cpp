@@ -5,63 +5,78 @@
 
 #pragma once
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/autoscaling/model/ResponseMetadata.h>
 #include <aws/autoscaling/model/AdjustmentType.h>
+#include <aws/autoscaling/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace AutoScaling
-{
-namespace Model
-{
-  class DescribeAdjustmentTypesResult
-  {
-  public:
-    AWS_AUTOSCALING_API DescribeAdjustmentTypesResult();
-    AWS_AUTOSCALING_API DescribeAdjustmentTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_AUTOSCALING_API DescribeAdjustmentTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace AutoScaling {
+namespace Model {
+class DescribeAdjustmentTypesResult {
+ public:
+  AWS_AUTOSCALING_API DescribeAdjustmentTypesResult() = default;
+  AWS_AUTOSCALING_API DescribeAdjustmentTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_AUTOSCALING_API DescribeAdjustmentTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The policy adjustment types.</p>
+   */
+  inline const Aws::Vector<AdjustmentType>& GetAdjustmentTypes() const { return m_adjustmentTypes; }
+  template <typename AdjustmentTypesT = Aws::Vector<AdjustmentType>>
+  void SetAdjustmentTypes(AdjustmentTypesT&& value) {
+    m_adjustmentTypesHasBeenSet = true;
+    m_adjustmentTypes = std::forward<AdjustmentTypesT>(value);
+  }
+  template <typename AdjustmentTypesT = Aws::Vector<AdjustmentType>>
+  DescribeAdjustmentTypesResult& WithAdjustmentTypes(AdjustmentTypesT&& value) {
+    SetAdjustmentTypes(std::forward<AdjustmentTypesT>(value));
+    return *this;
+  }
+  template <typename AdjustmentTypesT = AdjustmentType>
+  DescribeAdjustmentTypesResult& AddAdjustmentTypes(AdjustmentTypesT&& value) {
+    m_adjustmentTypesHasBeenSet = true;
+    m_adjustmentTypes.emplace_back(std::forward<AdjustmentTypesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The policy adjustment types.</p>
-     */
-    inline const Aws::Vector<AdjustmentType>& GetAdjustmentTypes() const{ return m_adjustmentTypes; }
-    inline void SetAdjustmentTypes(const Aws::Vector<AdjustmentType>& value) { m_adjustmentTypes = value; }
-    inline void SetAdjustmentTypes(Aws::Vector<AdjustmentType>&& value) { m_adjustmentTypes = std::move(value); }
-    inline DescribeAdjustmentTypesResult& WithAdjustmentTypes(const Aws::Vector<AdjustmentType>& value) { SetAdjustmentTypes(value); return *this;}
-    inline DescribeAdjustmentTypesResult& WithAdjustmentTypes(Aws::Vector<AdjustmentType>&& value) { SetAdjustmentTypes(std::move(value)); return *this;}
-    inline DescribeAdjustmentTypesResult& AddAdjustmentTypes(const AdjustmentType& value) { m_adjustmentTypes.push_back(value); return *this; }
-    inline DescribeAdjustmentTypesResult& AddAdjustmentTypes(AdjustmentType&& value) { m_adjustmentTypes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeAdjustmentTypesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeAdjustmentTypesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeAdjustmentTypesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AdjustmentType> m_adjustmentTypes;
+ private:
+  Aws::Vector<AdjustmentType> m_adjustmentTypes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_adjustmentTypesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AutoScaling
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScaling
+}  // namespace Aws

@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
 
+/**
+ * <p>The certificate provider summary.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/CertificateProviderSummary">AWS
+ * API Reference</a></p>
+ */
+class CertificateProviderSummary {
+ public:
+  AWS_IOT_API CertificateProviderSummary() = default;
+  AWS_IOT_API CertificateProviderSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API CertificateProviderSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The certificate provider summary.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/CertificateProviderSummary">AWS
-   * API Reference</a></p>
+   * <p>The name of the certificate provider.</p>
    */
-  class CertificateProviderSummary
-  {
-  public:
-    AWS_IOT_API CertificateProviderSummary();
-    AWS_IOT_API CertificateProviderSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API CertificateProviderSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCertificateProviderName() const { return m_certificateProviderName; }
+  inline bool CertificateProviderNameHasBeenSet() const { return m_certificateProviderNameHasBeenSet; }
+  template <typename CertificateProviderNameT = Aws::String>
+  void SetCertificateProviderName(CertificateProviderNameT&& value) {
+    m_certificateProviderNameHasBeenSet = true;
+    m_certificateProviderName = std::forward<CertificateProviderNameT>(value);
+  }
+  template <typename CertificateProviderNameT = Aws::String>
+  CertificateProviderSummary& WithCertificateProviderName(CertificateProviderNameT&& value) {
+    SetCertificateProviderName(std::forward<CertificateProviderNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the certificate provider.</p>
+   */
+  inline const Aws::String& GetCertificateProviderArn() const { return m_certificateProviderArn; }
+  inline bool CertificateProviderArnHasBeenSet() const { return m_certificateProviderArnHasBeenSet; }
+  template <typename CertificateProviderArnT = Aws::String>
+  void SetCertificateProviderArn(CertificateProviderArnT&& value) {
+    m_certificateProviderArnHasBeenSet = true;
+    m_certificateProviderArn = std::forward<CertificateProviderArnT>(value);
+  }
+  template <typename CertificateProviderArnT = Aws::String>
+  CertificateProviderSummary& WithCertificateProviderArn(CertificateProviderArnT&& value) {
+    SetCertificateProviderArn(std::forward<CertificateProviderArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateProviderName;
 
-    ///@{
-    /**
-     * <p>The name of the certificate provider.</p>
-     */
-    inline const Aws::String& GetCertificateProviderName() const{ return m_certificateProviderName; }
-    inline bool CertificateProviderNameHasBeenSet() const { return m_certificateProviderNameHasBeenSet; }
-    inline void SetCertificateProviderName(const Aws::String& value) { m_certificateProviderNameHasBeenSet = true; m_certificateProviderName = value; }
-    inline void SetCertificateProviderName(Aws::String&& value) { m_certificateProviderNameHasBeenSet = true; m_certificateProviderName = std::move(value); }
-    inline void SetCertificateProviderName(const char* value) { m_certificateProviderNameHasBeenSet = true; m_certificateProviderName.assign(value); }
-    inline CertificateProviderSummary& WithCertificateProviderName(const Aws::String& value) { SetCertificateProviderName(value); return *this;}
-    inline CertificateProviderSummary& WithCertificateProviderName(Aws::String&& value) { SetCertificateProviderName(std::move(value)); return *this;}
-    inline CertificateProviderSummary& WithCertificateProviderName(const char* value) { SetCertificateProviderName(value); return *this;}
-    ///@}
+  Aws::String m_certificateProviderArn;
+  bool m_certificateProviderNameHasBeenSet = false;
+  bool m_certificateProviderArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ARN of the certificate provider.</p>
-     */
-    inline const Aws::String& GetCertificateProviderArn() const{ return m_certificateProviderArn; }
-    inline bool CertificateProviderArnHasBeenSet() const { return m_certificateProviderArnHasBeenSet; }
-    inline void SetCertificateProviderArn(const Aws::String& value) { m_certificateProviderArnHasBeenSet = true; m_certificateProviderArn = value; }
-    inline void SetCertificateProviderArn(Aws::String&& value) { m_certificateProviderArnHasBeenSet = true; m_certificateProviderArn = std::move(value); }
-    inline void SetCertificateProviderArn(const char* value) { m_certificateProviderArnHasBeenSet = true; m_certificateProviderArn.assign(value); }
-    inline CertificateProviderSummary& WithCertificateProviderArn(const Aws::String& value) { SetCertificateProviderArn(value); return *this;}
-    inline CertificateProviderSummary& WithCertificateProviderArn(Aws::String&& value) { SetCertificateProviderArn(std::move(value)); return *this;}
-    inline CertificateProviderSummary& WithCertificateProviderArn(const char* value) { SetCertificateProviderArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateProviderName;
-    bool m_certificateProviderNameHasBeenSet = false;
-
-    Aws::String m_certificateProviderArn;
-    bool m_certificateProviderArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

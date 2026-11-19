@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DeleteDBShardGroupResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/rds/model/DeleteDBShardGroupResult.h>
 
 #include <utility>
 
@@ -17,99 +17,90 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteDBShardGroupResult::DeleteDBShardGroupResult() : 
-    m_maxACU(0.0),
-    m_minACU(0.0),
-    m_computeRedundancy(0),
-    m_publiclyAccessible(false)
-{
-}
+DeleteDBShardGroupResult::DeleteDBShardGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DeleteDBShardGroupResult::DeleteDBShardGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-  : DeleteDBShardGroupResult()
-{
-  *this = result;
-}
-
-DeleteDBShardGroupResult& DeleteDBShardGroupResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteDBShardGroupResult& DeleteDBShardGroupResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteDBShardGroupResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteDBShardGroupResult")) {
     resultNode = rootNode.FirstChild("DeleteDBShardGroupResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode dBShardGroupResourceIdNode = resultNode.FirstChild("DBShardGroupResourceId");
-    if(!dBShardGroupResourceIdNode.IsNull())
-    {
+    if (!dBShardGroupResourceIdNode.IsNull()) {
       m_dBShardGroupResourceId = Aws::Utils::Xml::DecodeEscapedXmlText(dBShardGroupResourceIdNode.GetText());
+      m_dBShardGroupResourceIdHasBeenSet = true;
     }
     XmlNode dBShardGroupIdentifierNode = resultNode.FirstChild("DBShardGroupIdentifier");
-    if(!dBShardGroupIdentifierNode.IsNull())
-    {
+    if (!dBShardGroupIdentifierNode.IsNull()) {
       m_dBShardGroupIdentifier = Aws::Utils::Xml::DecodeEscapedXmlText(dBShardGroupIdentifierNode.GetText());
+      m_dBShardGroupIdentifierHasBeenSet = true;
     }
     XmlNode dBClusterIdentifierNode = resultNode.FirstChild("DBClusterIdentifier");
-    if(!dBClusterIdentifierNode.IsNull())
-    {
+    if (!dBClusterIdentifierNode.IsNull()) {
       m_dBClusterIdentifier = Aws::Utils::Xml::DecodeEscapedXmlText(dBClusterIdentifierNode.GetText());
+      m_dBClusterIdentifierHasBeenSet = true;
     }
     XmlNode maxACUNode = resultNode.FirstChild("MaxACU");
-    if(!maxACUNode.IsNull())
-    {
-      m_maxACU = StringUtils::ConvertToDouble(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(maxACUNode.GetText()).c_str()).c_str());
+    if (!maxACUNode.IsNull()) {
+      m_maxACU =
+          StringUtils::ConvertToDouble(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(maxACUNode.GetText()).c_str()).c_str());
+      m_maxACUHasBeenSet = true;
     }
     XmlNode minACUNode = resultNode.FirstChild("MinACU");
-    if(!minACUNode.IsNull())
-    {
-      m_minACU = StringUtils::ConvertToDouble(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(minACUNode.GetText()).c_str()).c_str());
+    if (!minACUNode.IsNull()) {
+      m_minACU =
+          StringUtils::ConvertToDouble(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(minACUNode.GetText()).c_str()).c_str());
+      m_minACUHasBeenSet = true;
     }
     XmlNode computeRedundancyNode = resultNode.FirstChild("ComputeRedundancy");
-    if(!computeRedundancyNode.IsNull())
-    {
-      m_computeRedundancy = StringUtils::ConvertToInt32(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(computeRedundancyNode.GetText()).c_str()).c_str());
+    if (!computeRedundancyNode.IsNull()) {
+      m_computeRedundancy = StringUtils::ConvertToInt32(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(computeRedundancyNode.GetText()).c_str()).c_str());
+      m_computeRedundancyHasBeenSet = true;
     }
     XmlNode statusNode = resultNode.FirstChild("Status");
-    if(!statusNode.IsNull())
-    {
+    if (!statusNode.IsNull()) {
       m_status = Aws::Utils::Xml::DecodeEscapedXmlText(statusNode.GetText());
+      m_statusHasBeenSet = true;
     }
     XmlNode publiclyAccessibleNode = resultNode.FirstChild("PubliclyAccessible");
-    if(!publiclyAccessibleNode.IsNull())
-    {
-      m_publiclyAccessible = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(publiclyAccessibleNode.GetText()).c_str()).c_str());
+    if (!publiclyAccessibleNode.IsNull()) {
+      m_publiclyAccessible = StringUtils::ConvertToBool(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(publiclyAccessibleNode.GetText()).c_str()).c_str());
+      m_publiclyAccessibleHasBeenSet = true;
     }
     XmlNode endpointNode = resultNode.FirstChild("Endpoint");
-    if(!endpointNode.IsNull())
-    {
+    if (!endpointNode.IsNull()) {
       m_endpoint = Aws::Utils::Xml::DecodeEscapedXmlText(endpointNode.GetText());
+      m_endpointHasBeenSet = true;
     }
     XmlNode dBShardGroupArnNode = resultNode.FirstChild("DBShardGroupArn");
-    if(!dBShardGroupArnNode.IsNull())
-    {
+    if (!dBShardGroupArnNode.IsNull()) {
       m_dBShardGroupArn = Aws::Utils::Xml::DecodeEscapedXmlText(dBShardGroupArnNode.GetText());
+      m_dBShardGroupArnHasBeenSet = true;
     }
     XmlNode tagListNode = resultNode.FirstChild("TagList");
-    if(!tagListNode.IsNull())
-    {
+    if (!tagListNode.IsNull()) {
       XmlNode tagListMember = tagListNode.FirstChild("Tag");
-      while(!tagListMember.IsNull())
-      {
+      m_tagListHasBeenSet = !tagListMember.IsNull();
+      while (!tagListMember.IsNull()) {
         m_tagList.push_back(tagListMember);
         tagListMember = tagListMember.NextNode("Tag");
       }
 
+      m_tagListHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DeleteDBShardGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DeleteDBShardGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

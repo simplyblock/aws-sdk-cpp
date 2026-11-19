@@ -4,94 +4,99 @@
  */
 
 #pragma once
-#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoTSiteWise
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTSiteWise {
+namespace Model {
 
+/**
+ * <p>Contains a summary of the components of the composite model.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iotsitewise-2019-12-02/CompositionRelationshipSummary">AWS
+ * API Reference</a></p>
+ */
+class CompositionRelationshipSummary {
+ public:
+  AWS_IOTSITEWISE_API CompositionRelationshipSummary() = default;
+  AWS_IOTSITEWISE_API CompositionRelationshipSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTSITEWISE_API CompositionRelationshipSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTSITEWISE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains a summary of the components of the composite model.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iotsitewise-2019-12-02/CompositionRelationshipSummary">AWS
-   * API Reference</a></p>
+   * <p>The ID of the asset model, in UUID format.</p>
    */
-  class CompositionRelationshipSummary
-  {
-  public:
-    AWS_IOTSITEWISE_API CompositionRelationshipSummary();
-    AWS_IOTSITEWISE_API CompositionRelationshipSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTSITEWISE_API CompositionRelationshipSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTSITEWISE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAssetModelId() const { return m_assetModelId; }
+  inline bool AssetModelIdHasBeenSet() const { return m_assetModelIdHasBeenSet; }
+  template <typename AssetModelIdT = Aws::String>
+  void SetAssetModelId(AssetModelIdT&& value) {
+    m_assetModelIdHasBeenSet = true;
+    m_assetModelId = std::forward<AssetModelIdT>(value);
+  }
+  template <typename AssetModelIdT = Aws::String>
+  CompositionRelationshipSummary& WithAssetModelId(AssetModelIdT&& value) {
+    SetAssetModelId(std::forward<AssetModelIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of a composite model on this asset model.</p>
+   */
+  inline const Aws::String& GetAssetModelCompositeModelId() const { return m_assetModelCompositeModelId; }
+  inline bool AssetModelCompositeModelIdHasBeenSet() const { return m_assetModelCompositeModelIdHasBeenSet; }
+  template <typename AssetModelCompositeModelIdT = Aws::String>
+  void SetAssetModelCompositeModelId(AssetModelCompositeModelIdT&& value) {
+    m_assetModelCompositeModelIdHasBeenSet = true;
+    m_assetModelCompositeModelId = std::forward<AssetModelCompositeModelIdT>(value);
+  }
+  template <typename AssetModelCompositeModelIdT = Aws::String>
+  CompositionRelationshipSummary& WithAssetModelCompositeModelId(AssetModelCompositeModelIdT&& value) {
+    SetAssetModelCompositeModelId(std::forward<AssetModelCompositeModelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the asset model, in UUID format.</p>
-     */
-    inline const Aws::String& GetAssetModelId() const{ return m_assetModelId; }
-    inline bool AssetModelIdHasBeenSet() const { return m_assetModelIdHasBeenSet; }
-    inline void SetAssetModelId(const Aws::String& value) { m_assetModelIdHasBeenSet = true; m_assetModelId = value; }
-    inline void SetAssetModelId(Aws::String&& value) { m_assetModelIdHasBeenSet = true; m_assetModelId = std::move(value); }
-    inline void SetAssetModelId(const char* value) { m_assetModelIdHasBeenSet = true; m_assetModelId.assign(value); }
-    inline CompositionRelationshipSummary& WithAssetModelId(const Aws::String& value) { SetAssetModelId(value); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelId(Aws::String&& value) { SetAssetModelId(std::move(value)); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelId(const char* value) { SetAssetModelId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The composite model type. Valid values are <code>AWS/ALARM</code>,
+   * <code>CUSTOM</code>, or <code> AWS/L4E_ANOMALY</code>.</p>
+   */
+  inline const Aws::String& GetAssetModelCompositeModelType() const { return m_assetModelCompositeModelType; }
+  inline bool AssetModelCompositeModelTypeHasBeenSet() const { return m_assetModelCompositeModelTypeHasBeenSet; }
+  template <typename AssetModelCompositeModelTypeT = Aws::String>
+  void SetAssetModelCompositeModelType(AssetModelCompositeModelTypeT&& value) {
+    m_assetModelCompositeModelTypeHasBeenSet = true;
+    m_assetModelCompositeModelType = std::forward<AssetModelCompositeModelTypeT>(value);
+  }
+  template <typename AssetModelCompositeModelTypeT = Aws::String>
+  CompositionRelationshipSummary& WithAssetModelCompositeModelType(AssetModelCompositeModelTypeT&& value) {
+    SetAssetModelCompositeModelType(std::forward<AssetModelCompositeModelTypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_assetModelId;
 
-    ///@{
-    /**
-     * <p>The ID of a composite model on this asset model.</p>
-     */
-    inline const Aws::String& GetAssetModelCompositeModelId() const{ return m_assetModelCompositeModelId; }
-    inline bool AssetModelCompositeModelIdHasBeenSet() const { return m_assetModelCompositeModelIdHasBeenSet; }
-    inline void SetAssetModelCompositeModelId(const Aws::String& value) { m_assetModelCompositeModelIdHasBeenSet = true; m_assetModelCompositeModelId = value; }
-    inline void SetAssetModelCompositeModelId(Aws::String&& value) { m_assetModelCompositeModelIdHasBeenSet = true; m_assetModelCompositeModelId = std::move(value); }
-    inline void SetAssetModelCompositeModelId(const char* value) { m_assetModelCompositeModelIdHasBeenSet = true; m_assetModelCompositeModelId.assign(value); }
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelId(const Aws::String& value) { SetAssetModelCompositeModelId(value); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelId(Aws::String&& value) { SetAssetModelCompositeModelId(std::move(value)); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelId(const char* value) { SetAssetModelCompositeModelId(value); return *this;}
-    ///@}
+  Aws::String m_assetModelCompositeModelId;
 
-    ///@{
-    /**
-     * <p>The composite model type. Valid values are <code>AWS/ALARM</code>,
-     * <code>CUSTOM</code>, or <code> AWS/L4E_ANOMALY</code>.</p>
-     */
-    inline const Aws::String& GetAssetModelCompositeModelType() const{ return m_assetModelCompositeModelType; }
-    inline bool AssetModelCompositeModelTypeHasBeenSet() const { return m_assetModelCompositeModelTypeHasBeenSet; }
-    inline void SetAssetModelCompositeModelType(const Aws::String& value) { m_assetModelCompositeModelTypeHasBeenSet = true; m_assetModelCompositeModelType = value; }
-    inline void SetAssetModelCompositeModelType(Aws::String&& value) { m_assetModelCompositeModelTypeHasBeenSet = true; m_assetModelCompositeModelType = std::move(value); }
-    inline void SetAssetModelCompositeModelType(const char* value) { m_assetModelCompositeModelTypeHasBeenSet = true; m_assetModelCompositeModelType.assign(value); }
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelType(const Aws::String& value) { SetAssetModelCompositeModelType(value); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelType(Aws::String&& value) { SetAssetModelCompositeModelType(std::move(value)); return *this;}
-    inline CompositionRelationshipSummary& WithAssetModelCompositeModelType(const char* value) { SetAssetModelCompositeModelType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_assetModelCompositeModelType;
+  bool m_assetModelIdHasBeenSet = false;
+  bool m_assetModelCompositeModelIdHasBeenSet = false;
+  bool m_assetModelCompositeModelTypeHasBeenSet = false;
+};
 
-    Aws::String m_assetModelId;
-    bool m_assetModelIdHasBeenSet = false;
-
-    Aws::String m_assetModelCompositeModelId;
-    bool m_assetModelCompositeModelIdHasBeenSet = false;
-
-    Aws::String m_assetModelCompositeModelType;
-    bool m_assetModelCompositeModelTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

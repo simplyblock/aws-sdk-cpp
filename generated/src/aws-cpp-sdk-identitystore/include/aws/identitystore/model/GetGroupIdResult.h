@@ -4,79 +4,113 @@
  */
 
 #pragma once
-#include <aws/identitystore/IdentityStore_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/identitystore/IdentityStore_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IdentityStore
-{
-namespace Model
-{
-  class GetGroupIdResult
-  {
-  public:
-    AWS_IDENTITYSTORE_API GetGroupIdResult();
-    AWS_IDENTITYSTORE_API GetGroupIdResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IDENTITYSTORE_API GetGroupIdResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IdentityStore {
+namespace Model {
+class GetGroupIdResult {
+ public:
+  AWS_IDENTITYSTORE_API GetGroupIdResult() = default;
+  AWS_IDENTITYSTORE_API GetGroupIdResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IDENTITYSTORE_API GetGroupIdResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The globally unique identifier for the identity store.</p>
+   */
+  inline const Aws::String& GetIdentityStoreId() const { return m_identityStoreId; }
+  template <typename IdentityStoreIdT = Aws::String>
+  void SetIdentityStoreId(IdentityStoreIdT&& value) {
+    m_identityStoreIdHasBeenSet = true;
+    m_identityStoreId = std::forward<IdentityStoreIdT>(value);
+  }
+  template <typename IdentityStoreIdT = Aws::String>
+  GetGroupIdResult& WithIdentityStoreId(IdentityStoreIdT&& value) {
+    SetIdentityStoreId(std::forward<IdentityStoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier for a group in the identity store.</p>
-     */
-    inline const Aws::String& GetGroupId() const{ return m_groupId; }
-    inline void SetGroupId(const Aws::String& value) { m_groupId = value; }
-    inline void SetGroupId(Aws::String&& value) { m_groupId = std::move(value); }
-    inline void SetGroupId(const char* value) { m_groupId.assign(value); }
-    inline GetGroupIdResult& WithGroupId(const Aws::String& value) { SetGroupId(value); return *this;}
-    inline GetGroupIdResult& WithGroupId(Aws::String&& value) { SetGroupId(std::move(value)); return *this;}
-    inline GetGroupIdResult& WithGroupId(const char* value) { SetGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier for a group in the identity store.</p>
+   */
+  inline const Aws::String& GetGroupId() const { return m_groupId; }
+  template <typename GroupIdT = Aws::String>
+  void SetGroupId(GroupIdT&& value) {
+    m_groupIdHasBeenSet = true;
+    m_groupId = std::forward<GroupIdT>(value);
+  }
+  template <typename GroupIdT = Aws::String>
+  GetGroupIdResult& WithGroupId(GroupIdT&& value) {
+    SetGroupId(std::forward<GroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The globally unique identifier for the identity store.</p>
-     */
-    inline const Aws::String& GetIdentityStoreId() const{ return m_identityStoreId; }
-    inline void SetIdentityStoreId(const Aws::String& value) { m_identityStoreId = value; }
-    inline void SetIdentityStoreId(Aws::String&& value) { m_identityStoreId = std::move(value); }
-    inline void SetIdentityStoreId(const char* value) { m_identityStoreId.assign(value); }
-    inline GetGroupIdResult& WithIdentityStoreId(const Aws::String& value) { SetIdentityStoreId(value); return *this;}
-    inline GetGroupIdResult& WithIdentityStoreId(Aws::String&& value) { SetIdentityStoreId(std::move(value)); return *this;}
-    inline GetGroupIdResult& WithIdentityStoreId(const char* value) { SetIdentityStoreId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the group in the identity store. For
+   * example,
+   * <code>arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p>
+   */
+  inline const Aws::String& GetGroupArn() const { return m_groupArn; }
+  template <typename GroupArnT = Aws::String>
+  void SetGroupArn(GroupArnT&& value) {
+    m_groupArnHasBeenSet = true;
+    m_groupArn = std::forward<GroupArnT>(value);
+  }
+  template <typename GroupArnT = Aws::String>
+  GetGroupIdResult& WithGroupArn(GroupArnT&& value) {
+    SetGroupArn(std::forward<GroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetGroupIdResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetGroupIdResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetGroupIdResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_groupId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetGroupIdResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_identityStoreId;
+ private:
+  Aws::String m_identityStoreId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_groupId;
 
-} // namespace Model
-} // namespace IdentityStore
-} // namespace Aws
+  Aws::String m_groupArn;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_identityStoreIdHasBeenSet = false;
+  bool m_groupIdHasBeenSet = false;
+  bool m_groupArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace IdentityStore
+}  // namespace Aws

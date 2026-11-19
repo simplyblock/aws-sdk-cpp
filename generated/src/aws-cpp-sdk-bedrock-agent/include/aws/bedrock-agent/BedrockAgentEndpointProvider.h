@@ -4,30 +4,30 @@
  */
 
 #pragma once
+#include <aws/bedrock-agent/BedrockAgentClientConfiguration.h>
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/bedrock-agent/BedrockAgentEndpointRules.h>
-
-
-namespace Aws
-{
-namespace BedrockAgent
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace BedrockAgent {
+namespace Endpoint {
+using BedrockAgentClientConfiguration = Aws::BedrockAgent::BedrockAgentClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using BedrockAgentClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
-using BedrockAgentClientConfiguration = Aws::Client::GenericClientConfiguration;
-using BedrockAgentBuiltInParameters = Aws::Endpoint::BuiltInParameters;
+class AWS_BEDROCKAGENT_API BedrockAgentBuiltInParameters : public Aws::Endpoint::BuiltInParameters {
+ public:
+  virtual ~BedrockAgentBuiltInParameters() {};
+  using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
+  virtual void SetFromClientConfiguration(const BedrockAgentClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const BedrockAgentClientConfiguration& config, const Aws::String& serviceName);
+};
 
 /**
  * The type for the BedrockAgent Client Endpoint Provider.
@@ -38,24 +38,37 @@ using BedrockAgentEndpointProviderBase =
     EndpointProviderBase<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
 
 using BedrockAgentDefaultEpProviderBase =
-    DefaultEndpointProvider<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
+    BDDEndpointProvider<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
 
+}  // namespace Endpoint
+}  // namespace BedrockAgent
+
+namespace Endpoint {
+/**
+ * Export endpoint provider symbols for Windows DLL, otherwise declare as extern
+ */
+AWS_BEDROCKAGENT_EXTERN template class AWS_BEDROCKAGENT_API Aws::Endpoint::EndpointProviderBase<
+    BedrockAgent::Endpoint::BedrockAgentClientConfiguration, BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
+    BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
+
+AWS_BEDROCKAGENT_EXTERN template class AWS_BEDROCKAGENT_API Aws::Endpoint::BDDEndpointProvider<
+    BedrockAgent::Endpoint::BedrockAgentClientConfiguration, BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
+    BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
+}  // namespace Endpoint
+
+namespace BedrockAgent {
+namespace Endpoint {
 /**
  * Default endpoint provider used for this service
  */
-class AWS_BEDROCKAGENT_API BedrockAgentEndpointProvider : public BedrockAgentDefaultEpProviderBase
-{
-public:
-    using BedrockAgentResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_BEDROCKAGENT_API BedrockAgentEndpointProvider : public BedrockAgentDefaultEpProviderBase {
+ public:
+  using BedrockAgentResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    BedrockAgentEndpointProvider()
-      : BedrockAgentDefaultEpProviderBase(Aws::BedrockAgent::BedrockAgentEndpointRules::GetRulesBlob(), Aws::BedrockAgent::BedrockAgentEndpointRules::RulesBlobSize)
-    {}
+  BedrockAgentEndpointProvider();
 
-    ~BedrockAgentEndpointProvider()
-    {
-    }
+  ~BedrockAgentEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace BedrockAgent
+}  // namespace Aws

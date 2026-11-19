@@ -4,156 +4,195 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
-#include <aws/medialive/MediaLiveRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLiveRequest.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaLive {
+namespace Model {
 
+/**
+ * Placeholder documentation for StartUpdateSignalMapRequest<p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartUpdateSignalMapRequest">AWS
+ * API Reference</a></p>
+ */
+class StartUpdateSignalMapRequest : public MediaLiveRequest {
+ public:
+  AWS_MEDIALIVE_API StartUpdateSignalMapRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartUpdateSignalMap"; }
+
+  AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+
+  ///@{
+
+  inline const Aws::Vector<Aws::String>& GetCloudWatchAlarmTemplateGroupIdentifiers() const {
+    return m_cloudWatchAlarmTemplateGroupIdentifiers;
+  }
+  inline bool CloudWatchAlarmTemplateGroupIdentifiersHasBeenSet() const { return m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet; }
+  template <typename CloudWatchAlarmTemplateGroupIdentifiersT = Aws::Vector<Aws::String>>
+  void SetCloudWatchAlarmTemplateGroupIdentifiers(CloudWatchAlarmTemplateGroupIdentifiersT&& value) {
+    m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true;
+    m_cloudWatchAlarmTemplateGroupIdentifiers = std::forward<CloudWatchAlarmTemplateGroupIdentifiersT>(value);
+  }
+  template <typename CloudWatchAlarmTemplateGroupIdentifiersT = Aws::Vector<Aws::String>>
+  StartUpdateSignalMapRequest& WithCloudWatchAlarmTemplateGroupIdentifiers(CloudWatchAlarmTemplateGroupIdentifiersT&& value) {
+    SetCloudWatchAlarmTemplateGroupIdentifiers(std::forward<CloudWatchAlarmTemplateGroupIdentifiersT>(value));
+    return *this;
+  }
+  template <typename CloudWatchAlarmTemplateGroupIdentifiersT = Aws::String>
+  StartUpdateSignalMapRequest& AddCloudWatchAlarmTemplateGroupIdentifiers(CloudWatchAlarmTemplateGroupIdentifiersT&& value) {
+    m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true;
+    m_cloudWatchAlarmTemplateGroupIdentifiers.emplace_back(std::forward<CloudWatchAlarmTemplateGroupIdentifiersT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * Placeholder documentation for StartUpdateSignalMapRequest<p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartUpdateSignalMapRequest">AWS
-   * API Reference</a></p>
+   * A resource's optional description.
    */
-  class StartUpdateSignalMapRequest : public MediaLiveRequest
-  {
-  public:
-    AWS_MEDIALIVE_API StartUpdateSignalMapRequest();
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  StartUpdateSignalMapRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartUpdateSignalMap"; }
+  ///@{
+  /**
+   * A top-level supported AWS resource ARN to discovery a signal map from.
+   */
+  inline const Aws::String& GetDiscoveryEntryPointArn() const { return m_discoveryEntryPointArn; }
+  inline bool DiscoveryEntryPointArnHasBeenSet() const { return m_discoveryEntryPointArnHasBeenSet; }
+  template <typename DiscoveryEntryPointArnT = Aws::String>
+  void SetDiscoveryEntryPointArn(DiscoveryEntryPointArnT&& value) {
+    m_discoveryEntryPointArnHasBeenSet = true;
+    m_discoveryEntryPointArn = std::forward<DiscoveryEntryPointArnT>(value);
+  }
+  template <typename DiscoveryEntryPointArnT = Aws::String>
+  StartUpdateSignalMapRequest& WithDiscoveryEntryPointArn(DiscoveryEntryPointArnT&& value) {
+    SetDiscoveryEntryPointArn(std::forward<DiscoveryEntryPointArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+  ///@{
 
+  inline const Aws::Vector<Aws::String>& GetEventBridgeRuleTemplateGroupIdentifiers() const {
+    return m_eventBridgeRuleTemplateGroupIdentifiers;
+  }
+  inline bool EventBridgeRuleTemplateGroupIdentifiersHasBeenSet() const { return m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet; }
+  template <typename EventBridgeRuleTemplateGroupIdentifiersT = Aws::Vector<Aws::String>>
+  void SetEventBridgeRuleTemplateGroupIdentifiers(EventBridgeRuleTemplateGroupIdentifiersT&& value) {
+    m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true;
+    m_eventBridgeRuleTemplateGroupIdentifiers = std::forward<EventBridgeRuleTemplateGroupIdentifiersT>(value);
+  }
+  template <typename EventBridgeRuleTemplateGroupIdentifiersT = Aws::Vector<Aws::String>>
+  StartUpdateSignalMapRequest& WithEventBridgeRuleTemplateGroupIdentifiers(EventBridgeRuleTemplateGroupIdentifiersT&& value) {
+    SetEventBridgeRuleTemplateGroupIdentifiers(std::forward<EventBridgeRuleTemplateGroupIdentifiersT>(value));
+    return *this;
+  }
+  template <typename EventBridgeRuleTemplateGroupIdentifiersT = Aws::String>
+  StartUpdateSignalMapRequest& AddEventBridgeRuleTemplateGroupIdentifiers(EventBridgeRuleTemplateGroupIdentifiersT&& value) {
+    m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true;
+    m_eventBridgeRuleTemplateGroupIdentifiers.emplace_back(std::forward<EventBridgeRuleTemplateGroupIdentifiersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<Aws::String>& GetCloudWatchAlarmTemplateGroupIdentifiers() const{ return m_cloudWatchAlarmTemplateGroupIdentifiers; }
-    inline bool CloudWatchAlarmTemplateGroupIdentifiersHasBeenSet() const { return m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet; }
-    inline void SetCloudWatchAlarmTemplateGroupIdentifiers(const Aws::Vector<Aws::String>& value) { m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true; m_cloudWatchAlarmTemplateGroupIdentifiers = value; }
-    inline void SetCloudWatchAlarmTemplateGroupIdentifiers(Aws::Vector<Aws::String>&& value) { m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true; m_cloudWatchAlarmTemplateGroupIdentifiers = std::move(value); }
-    inline StartUpdateSignalMapRequest& WithCloudWatchAlarmTemplateGroupIdentifiers(const Aws::Vector<Aws::String>& value) { SetCloudWatchAlarmTemplateGroupIdentifiers(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithCloudWatchAlarmTemplateGroupIdentifiers(Aws::Vector<Aws::String>&& value) { SetCloudWatchAlarmTemplateGroupIdentifiers(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& AddCloudWatchAlarmTemplateGroupIdentifiers(const Aws::String& value) { m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true; m_cloudWatchAlarmTemplateGroupIdentifiers.push_back(value); return *this; }
-    inline StartUpdateSignalMapRequest& AddCloudWatchAlarmTemplateGroupIdentifiers(Aws::String&& value) { m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true; m_cloudWatchAlarmTemplateGroupIdentifiers.push_back(std::move(value)); return *this; }
-    inline StartUpdateSignalMapRequest& AddCloudWatchAlarmTemplateGroupIdentifiers(const char* value) { m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = true; m_cloudWatchAlarmTemplateGroupIdentifiers.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * If true, will force a rediscovery of a signal map if an unchanged
+   * discoveryEntryPointArn is provided.
+   */
+  inline bool GetForceRediscovery() const { return m_forceRediscovery; }
+  inline bool ForceRediscoveryHasBeenSet() const { return m_forceRediscoveryHasBeenSet; }
+  inline void SetForceRediscovery(bool value) {
+    m_forceRediscoveryHasBeenSet = true;
+    m_forceRediscovery = value;
+  }
+  inline StartUpdateSignalMapRequest& WithForceRediscovery(bool value) {
+    SetForceRediscovery(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A resource's optional description.
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline StartUpdateSignalMapRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * A signal map's identifier. Can be either be its id or current name.
+   */
+  inline const Aws::String& GetIdentifier() const { return m_identifier; }
+  inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
+  template <typename IdentifierT = Aws::String>
+  void SetIdentifier(IdentifierT&& value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = std::forward<IdentifierT>(value);
+  }
+  template <typename IdentifierT = Aws::String>
+  StartUpdateSignalMapRequest& WithIdentifier(IdentifierT&& value) {
+    SetIdentifier(std::forward<IdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A top-level supported AWS resource ARN to discovery a signal map from.
-     */
-    inline const Aws::String& GetDiscoveryEntryPointArn() const{ return m_discoveryEntryPointArn; }
-    inline bool DiscoveryEntryPointArnHasBeenSet() const { return m_discoveryEntryPointArnHasBeenSet; }
-    inline void SetDiscoveryEntryPointArn(const Aws::String& value) { m_discoveryEntryPointArnHasBeenSet = true; m_discoveryEntryPointArn = value; }
-    inline void SetDiscoveryEntryPointArn(Aws::String&& value) { m_discoveryEntryPointArnHasBeenSet = true; m_discoveryEntryPointArn = std::move(value); }
-    inline void SetDiscoveryEntryPointArn(const char* value) { m_discoveryEntryPointArnHasBeenSet = true; m_discoveryEntryPointArn.assign(value); }
-    inline StartUpdateSignalMapRequest& WithDiscoveryEntryPointArn(const Aws::String& value) { SetDiscoveryEntryPointArn(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithDiscoveryEntryPointArn(Aws::String&& value) { SetDiscoveryEntryPointArn(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& WithDiscoveryEntryPointArn(const char* value) { SetDiscoveryEntryPointArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * A resource's name. Names must be unique within the scope of a resource type in a
+   * specific region.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  StartUpdateSignalMapRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_cloudWatchAlarmTemplateGroupIdentifiers;
 
-    ///@{
-    
-    inline const Aws::Vector<Aws::String>& GetEventBridgeRuleTemplateGroupIdentifiers() const{ return m_eventBridgeRuleTemplateGroupIdentifiers; }
-    inline bool EventBridgeRuleTemplateGroupIdentifiersHasBeenSet() const { return m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet; }
-    inline void SetEventBridgeRuleTemplateGroupIdentifiers(const Aws::Vector<Aws::String>& value) { m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true; m_eventBridgeRuleTemplateGroupIdentifiers = value; }
-    inline void SetEventBridgeRuleTemplateGroupIdentifiers(Aws::Vector<Aws::String>&& value) { m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true; m_eventBridgeRuleTemplateGroupIdentifiers = std::move(value); }
-    inline StartUpdateSignalMapRequest& WithEventBridgeRuleTemplateGroupIdentifiers(const Aws::Vector<Aws::String>& value) { SetEventBridgeRuleTemplateGroupIdentifiers(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithEventBridgeRuleTemplateGroupIdentifiers(Aws::Vector<Aws::String>&& value) { SetEventBridgeRuleTemplateGroupIdentifiers(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& AddEventBridgeRuleTemplateGroupIdentifiers(const Aws::String& value) { m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true; m_eventBridgeRuleTemplateGroupIdentifiers.push_back(value); return *this; }
-    inline StartUpdateSignalMapRequest& AddEventBridgeRuleTemplateGroupIdentifiers(Aws::String&& value) { m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true; m_eventBridgeRuleTemplateGroupIdentifiers.push_back(std::move(value)); return *this; }
-    inline StartUpdateSignalMapRequest& AddEventBridgeRuleTemplateGroupIdentifiers(const char* value) { m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = true; m_eventBridgeRuleTemplateGroupIdentifiers.push_back(value); return *this; }
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * If true, will force a rediscovery of a signal map if an unchanged
-     * discoveryEntryPointArn is provided.
-     */
-    inline bool GetForceRediscovery() const{ return m_forceRediscovery; }
-    inline bool ForceRediscoveryHasBeenSet() const { return m_forceRediscoveryHasBeenSet; }
-    inline void SetForceRediscovery(bool value) { m_forceRediscoveryHasBeenSet = true; m_forceRediscovery = value; }
-    inline StartUpdateSignalMapRequest& WithForceRediscovery(bool value) { SetForceRediscovery(value); return *this;}
-    ///@}
+  Aws::String m_discoveryEntryPointArn;
 
-    ///@{
-    /**
-     * A signal map's identifier. Can be either be its id or current name.
-     */
-    inline const Aws::String& GetIdentifier() const{ return m_identifier; }
-    inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
-    inline void SetIdentifier(const Aws::String& value) { m_identifierHasBeenSet = true; m_identifier = value; }
-    inline void SetIdentifier(Aws::String&& value) { m_identifierHasBeenSet = true; m_identifier = std::move(value); }
-    inline void SetIdentifier(const char* value) { m_identifierHasBeenSet = true; m_identifier.assign(value); }
-    inline StartUpdateSignalMapRequest& WithIdentifier(const Aws::String& value) { SetIdentifier(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithIdentifier(Aws::String&& value) { SetIdentifier(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& WithIdentifier(const char* value) { SetIdentifier(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_eventBridgeRuleTemplateGroupIdentifiers;
 
-    ///@{
-    /**
-     * A resource's name. Names must be unique within the scope of a resource type in a
-     * specific region.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline StartUpdateSignalMapRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline StartUpdateSignalMapRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline StartUpdateSignalMapRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
+  bool m_forceRediscovery{false};
 
-    Aws::Vector<Aws::String> m_cloudWatchAlarmTemplateGroupIdentifiers;
-    bool m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = false;
+  Aws::String m_identifier;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::String m_name;
+  bool m_cloudWatchAlarmTemplateGroupIdentifiersHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_discoveryEntryPointArnHasBeenSet = false;
+  bool m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = false;
+  bool m_forceRediscoveryHasBeenSet = false;
+  bool m_identifierHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    Aws::String m_discoveryEntryPointArn;
-    bool m_discoveryEntryPointArnHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_eventBridgeRuleTemplateGroupIdentifiers;
-    bool m_eventBridgeRuleTemplateGroupIdentifiersHasBeenSet = false;
-
-    bool m_forceRediscovery;
-    bool m_forceRediscoveryHasBeenSet = false;
-
-    Aws::String m_identifier;
-    bool m_identifierHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

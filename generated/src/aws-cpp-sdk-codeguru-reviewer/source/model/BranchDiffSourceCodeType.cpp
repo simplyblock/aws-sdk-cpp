@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeGuruReviewer
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeGuruReviewer {
+namespace Model {
 
-BranchDiffSourceCodeType::BranchDiffSourceCodeType() : 
-    m_sourceBranchNameHasBeenSet(false),
-    m_destinationBranchNameHasBeenSet(false)
-{
-}
+BranchDiffSourceCodeType::BranchDiffSourceCodeType(JsonView jsonValue) { *this = jsonValue; }
 
-BranchDiffSourceCodeType::BranchDiffSourceCodeType(JsonView jsonValue)
-  : BranchDiffSourceCodeType()
-{
-  *this = jsonValue;
-}
-
-BranchDiffSourceCodeType& BranchDiffSourceCodeType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("SourceBranchName"))
-  {
+BranchDiffSourceCodeType& BranchDiffSourceCodeType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("SourceBranchName")) {
     m_sourceBranchName = jsonValue.GetString("SourceBranchName");
-
     m_sourceBranchNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("DestinationBranchName"))
-  {
+  if (jsonValue.ValueExists("DestinationBranchName")) {
     m_destinationBranchName = jsonValue.GetString("DestinationBranchName");
-
     m_destinationBranchNameHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue BranchDiffSourceCodeType::Jsonize() const
-{
+JsonValue BranchDiffSourceCodeType::Jsonize() const {
   JsonValue payload;
 
-  if(m_sourceBranchNameHasBeenSet)
-  {
-   payload.WithString("SourceBranchName", m_sourceBranchName);
-
+  if (m_sourceBranchNameHasBeenSet) {
+    payload.WithString("SourceBranchName", m_sourceBranchName);
   }
 
-  if(m_destinationBranchNameHasBeenSet)
-  {
-   payload.WithString("DestinationBranchName", m_destinationBranchName);
-
+  if (m_destinationBranchNameHasBeenSet) {
+    payload.WithString("DestinationBranchName", m_destinationBranchName);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CodeGuruReviewer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeGuruReviewer
+}  // namespace Aws

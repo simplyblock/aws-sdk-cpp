@@ -5,138 +5,165 @@
 
 #pragma once
 #include <aws/kendra/Kendra_EXPORTS.h>
-#include <aws/kendra/model/DatabaseEngineType.h>
+#include <aws/kendra/model/AclConfiguration.h>
+#include <aws/kendra/model/ColumnConfiguration.h>
 #include <aws/kendra/model/ConnectionConfiguration.h>
 #include <aws/kendra/model/DataSourceVpcConfiguration.h>
-#include <aws/kendra/model/ColumnConfiguration.h>
-#include <aws/kendra/model/AclConfiguration.h>
+#include <aws/kendra/model/DatabaseEngineType.h>
 #include <aws/kendra/model/SqlConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace kendra
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace kendra {
+namespace Model {
 
+/**
+ * <p>Provides the configuration information to an <a
+ * href="https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html">Amazon
+ * Kendra supported database</a>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/DatabaseConfiguration">AWS
+ * API Reference</a></p>
+ */
+class DatabaseConfiguration {
+ public:
+  AWS_KENDRA_API DatabaseConfiguration() = default;
+  AWS_KENDRA_API DatabaseConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API DatabaseConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides the configuration information to an <a
-   * href="https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html">Amazon
-   * Kendra supported database</a>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/DatabaseConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The type of database engine that runs the database.</p>
    */
-  class DatabaseConfiguration
-  {
-  public:
-    AWS_KENDRA_API DatabaseConfiguration();
-    AWS_KENDRA_API DatabaseConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API DatabaseConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline DatabaseEngineType GetDatabaseEngineType() const { return m_databaseEngineType; }
+  inline bool DatabaseEngineTypeHasBeenSet() const { return m_databaseEngineTypeHasBeenSet; }
+  inline void SetDatabaseEngineType(DatabaseEngineType value) {
+    m_databaseEngineTypeHasBeenSet = true;
+    m_databaseEngineType = value;
+  }
+  inline DatabaseConfiguration& WithDatabaseEngineType(DatabaseEngineType value) {
+    SetDatabaseEngineType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Configuration information that's required to connect to a database.</p>
+   */
+  inline const ConnectionConfiguration& GetConnectionConfiguration() const { return m_connectionConfiguration; }
+  inline bool ConnectionConfigurationHasBeenSet() const { return m_connectionConfigurationHasBeenSet; }
+  template <typename ConnectionConfigurationT = ConnectionConfiguration>
+  void SetConnectionConfiguration(ConnectionConfigurationT&& value) {
+    m_connectionConfigurationHasBeenSet = true;
+    m_connectionConfiguration = std::forward<ConnectionConfigurationT>(value);
+  }
+  template <typename ConnectionConfigurationT = ConnectionConfiguration>
+  DatabaseConfiguration& WithConnectionConfiguration(ConnectionConfigurationT&& value) {
+    SetConnectionConfiguration(std::forward<ConnectionConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of database engine that runs the database.</p>
-     */
-    inline const DatabaseEngineType& GetDatabaseEngineType() const{ return m_databaseEngineType; }
-    inline bool DatabaseEngineTypeHasBeenSet() const { return m_databaseEngineTypeHasBeenSet; }
-    inline void SetDatabaseEngineType(const DatabaseEngineType& value) { m_databaseEngineTypeHasBeenSet = true; m_databaseEngineType = value; }
-    inline void SetDatabaseEngineType(DatabaseEngineType&& value) { m_databaseEngineTypeHasBeenSet = true; m_databaseEngineType = std::move(value); }
-    inline DatabaseConfiguration& WithDatabaseEngineType(const DatabaseEngineType& value) { SetDatabaseEngineType(value); return *this;}
-    inline DatabaseConfiguration& WithDatabaseEngineType(DatabaseEngineType&& value) { SetDatabaseEngineType(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Configuration information that's required to connect to a database.</p>
-     */
-    inline const ConnectionConfiguration& GetConnectionConfiguration() const{ return m_connectionConfiguration; }
-    inline bool ConnectionConfigurationHasBeenSet() const { return m_connectionConfigurationHasBeenSet; }
-    inline void SetConnectionConfiguration(const ConnectionConfiguration& value) { m_connectionConfigurationHasBeenSet = true; m_connectionConfiguration = value; }
-    inline void SetConnectionConfiguration(ConnectionConfiguration&& value) { m_connectionConfigurationHasBeenSet = true; m_connectionConfiguration = std::move(value); }
-    inline DatabaseConfiguration& WithConnectionConfiguration(const ConnectionConfiguration& value) { SetConnectionConfiguration(value); return *this;}
-    inline DatabaseConfiguration& WithConnectionConfiguration(ConnectionConfiguration&& value) { SetConnectionConfiguration(std::move(value)); return *this;}
-    ///@}
+  inline const DataSourceVpcConfiguration& GetVpcConfiguration() const { return m_vpcConfiguration; }
+  inline bool VpcConfigurationHasBeenSet() const { return m_vpcConfigurationHasBeenSet; }
+  template <typename VpcConfigurationT = DataSourceVpcConfiguration>
+  void SetVpcConfiguration(VpcConfigurationT&& value) {
+    m_vpcConfigurationHasBeenSet = true;
+    m_vpcConfiguration = std::forward<VpcConfigurationT>(value);
+  }
+  template <typename VpcConfigurationT = DataSourceVpcConfiguration>
+  DatabaseConfiguration& WithVpcConfiguration(VpcConfigurationT&& value) {
+    SetVpcConfiguration(std::forward<VpcConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const DataSourceVpcConfiguration& GetVpcConfiguration() const{ return m_vpcConfiguration; }
-    inline bool VpcConfigurationHasBeenSet() const { return m_vpcConfigurationHasBeenSet; }
-    inline void SetVpcConfiguration(const DataSourceVpcConfiguration& value) { m_vpcConfigurationHasBeenSet = true; m_vpcConfiguration = value; }
-    inline void SetVpcConfiguration(DataSourceVpcConfiguration&& value) { m_vpcConfigurationHasBeenSet = true; m_vpcConfiguration = std::move(value); }
-    inline DatabaseConfiguration& WithVpcConfiguration(const DataSourceVpcConfiguration& value) { SetVpcConfiguration(value); return *this;}
-    inline DatabaseConfiguration& WithVpcConfiguration(DataSourceVpcConfiguration&& value) { SetVpcConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about where the index should get the document information from
+   * the database.</p>
+   */
+  inline const ColumnConfiguration& GetColumnConfiguration() const { return m_columnConfiguration; }
+  inline bool ColumnConfigurationHasBeenSet() const { return m_columnConfigurationHasBeenSet; }
+  template <typename ColumnConfigurationT = ColumnConfiguration>
+  void SetColumnConfiguration(ColumnConfigurationT&& value) {
+    m_columnConfigurationHasBeenSet = true;
+    m_columnConfiguration = std::forward<ColumnConfigurationT>(value);
+  }
+  template <typename ColumnConfigurationT = ColumnConfiguration>
+  DatabaseConfiguration& WithColumnConfiguration(ColumnConfigurationT&& value) {
+    SetColumnConfiguration(std::forward<ColumnConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about where the index should get the document information from
-     * the database.</p>
-     */
-    inline const ColumnConfiguration& GetColumnConfiguration() const{ return m_columnConfiguration; }
-    inline bool ColumnConfigurationHasBeenSet() const { return m_columnConfigurationHasBeenSet; }
-    inline void SetColumnConfiguration(const ColumnConfiguration& value) { m_columnConfigurationHasBeenSet = true; m_columnConfiguration = value; }
-    inline void SetColumnConfiguration(ColumnConfiguration&& value) { m_columnConfigurationHasBeenSet = true; m_columnConfiguration = std::move(value); }
-    inline DatabaseConfiguration& WithColumnConfiguration(const ColumnConfiguration& value) { SetColumnConfiguration(value); return *this;}
-    inline DatabaseConfiguration& WithColumnConfiguration(ColumnConfiguration&& value) { SetColumnConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the database column that provides information for user
+   * context filtering.</p>
+   */
+  inline const AclConfiguration& GetAclConfiguration() const { return m_aclConfiguration; }
+  inline bool AclConfigurationHasBeenSet() const { return m_aclConfigurationHasBeenSet; }
+  template <typename AclConfigurationT = AclConfiguration>
+  void SetAclConfiguration(AclConfigurationT&& value) {
+    m_aclConfigurationHasBeenSet = true;
+    m_aclConfiguration = std::forward<AclConfigurationT>(value);
+  }
+  template <typename AclConfigurationT = AclConfiguration>
+  DatabaseConfiguration& WithAclConfiguration(AclConfigurationT&& value) {
+    SetAclConfiguration(std::forward<AclConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the database column that provides information for user
-     * context filtering.</p>
-     */
-    inline const AclConfiguration& GetAclConfiguration() const{ return m_aclConfiguration; }
-    inline bool AclConfigurationHasBeenSet() const { return m_aclConfigurationHasBeenSet; }
-    inline void SetAclConfiguration(const AclConfiguration& value) { m_aclConfigurationHasBeenSet = true; m_aclConfiguration = value; }
-    inline void SetAclConfiguration(AclConfiguration&& value) { m_aclConfigurationHasBeenSet = true; m_aclConfiguration = std::move(value); }
-    inline DatabaseConfiguration& WithAclConfiguration(const AclConfiguration& value) { SetAclConfiguration(value); return *this;}
-    inline DatabaseConfiguration& WithAclConfiguration(AclConfiguration&& value) { SetAclConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides information about how Amazon Kendra uses quote marks around SQL
+   * identifiers when querying a database data source.</p>
+   */
+  inline const SqlConfiguration& GetSqlConfiguration() const { return m_sqlConfiguration; }
+  inline bool SqlConfigurationHasBeenSet() const { return m_sqlConfigurationHasBeenSet; }
+  template <typename SqlConfigurationT = SqlConfiguration>
+  void SetSqlConfiguration(SqlConfigurationT&& value) {
+    m_sqlConfigurationHasBeenSet = true;
+    m_sqlConfiguration = std::forward<SqlConfigurationT>(value);
+  }
+  template <typename SqlConfigurationT = SqlConfiguration>
+  DatabaseConfiguration& WithSqlConfiguration(SqlConfigurationT&& value) {
+    SetSqlConfiguration(std::forward<SqlConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  DatabaseEngineType m_databaseEngineType{DatabaseEngineType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Provides information about how Amazon Kendra uses quote marks around SQL
-     * identifiers when querying a database data source.</p>
-     */
-    inline const SqlConfiguration& GetSqlConfiguration() const{ return m_sqlConfiguration; }
-    inline bool SqlConfigurationHasBeenSet() const { return m_sqlConfigurationHasBeenSet; }
-    inline void SetSqlConfiguration(const SqlConfiguration& value) { m_sqlConfigurationHasBeenSet = true; m_sqlConfiguration = value; }
-    inline void SetSqlConfiguration(SqlConfiguration&& value) { m_sqlConfigurationHasBeenSet = true; m_sqlConfiguration = std::move(value); }
-    inline DatabaseConfiguration& WithSqlConfiguration(const SqlConfiguration& value) { SetSqlConfiguration(value); return *this;}
-    inline DatabaseConfiguration& WithSqlConfiguration(SqlConfiguration&& value) { SetSqlConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  ConnectionConfiguration m_connectionConfiguration;
 
-    DatabaseEngineType m_databaseEngineType;
-    bool m_databaseEngineTypeHasBeenSet = false;
+  DataSourceVpcConfiguration m_vpcConfiguration;
 
-    ConnectionConfiguration m_connectionConfiguration;
-    bool m_connectionConfigurationHasBeenSet = false;
+  ColumnConfiguration m_columnConfiguration;
 
-    DataSourceVpcConfiguration m_vpcConfiguration;
-    bool m_vpcConfigurationHasBeenSet = false;
+  AclConfiguration m_aclConfiguration;
 
-    ColumnConfiguration m_columnConfiguration;
-    bool m_columnConfigurationHasBeenSet = false;
+  SqlConfiguration m_sqlConfiguration;
+  bool m_databaseEngineTypeHasBeenSet = false;
+  bool m_connectionConfigurationHasBeenSet = false;
+  bool m_vpcConfigurationHasBeenSet = false;
+  bool m_columnConfigurationHasBeenSet = false;
+  bool m_aclConfigurationHasBeenSet = false;
+  bool m_sqlConfigurationHasBeenSet = false;
+};
 
-    AclConfiguration m_aclConfiguration;
-    bool m_aclConfigurationHasBeenSet = false;
-
-    SqlConfiguration m_sqlConfiguration;
-    bool m_sqlConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

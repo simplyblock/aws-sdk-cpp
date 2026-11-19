@@ -12,16 +12,4 @@ using namespace Aws::CodeGuruProfiler::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeProfilingGroupRequest::DescribeProfilingGroupRequest() : 
-    m_profilingGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String DescribeProfilingGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeProfilingGroupRequest::SerializePayload() const { return {}; }

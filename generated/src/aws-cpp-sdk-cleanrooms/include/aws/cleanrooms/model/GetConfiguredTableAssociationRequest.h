@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/CleanRoomsRequest.h>
+#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
+/**
+ */
+class GetConfiguredTableAssociationRequest : public CleanRoomsRequest {
+ public:
+  AWS_CLEANROOMS_API GetConfiguredTableAssociationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetConfiguredTableAssociation"; }
+
+  AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique ID for the configured table association to retrieve. Currently
+   * accepts the configured table ID.</p>
    */
-  class GetConfiguredTableAssociationRequest : public CleanRoomsRequest
-  {
-  public:
-    AWS_CLEANROOMS_API GetConfiguredTableAssociationRequest();
+  inline const Aws::String& GetConfiguredTableAssociationIdentifier() const { return m_configuredTableAssociationIdentifier; }
+  inline bool ConfiguredTableAssociationIdentifierHasBeenSet() const { return m_configuredTableAssociationIdentifierHasBeenSet; }
+  template <typename ConfiguredTableAssociationIdentifierT = Aws::String>
+  void SetConfiguredTableAssociationIdentifier(ConfiguredTableAssociationIdentifierT&& value) {
+    m_configuredTableAssociationIdentifierHasBeenSet = true;
+    m_configuredTableAssociationIdentifier = std::forward<ConfiguredTableAssociationIdentifierT>(value);
+  }
+  template <typename ConfiguredTableAssociationIdentifierT = Aws::String>
+  GetConfiguredTableAssociationRequest& WithConfiguredTableAssociationIdentifier(ConfiguredTableAssociationIdentifierT&& value) {
+    SetConfiguredTableAssociationIdentifier(std::forward<ConfiguredTableAssociationIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetConfiguredTableAssociation"; }
+  ///@{
+  /**
+   * <p>A unique identifier for the membership that the configured table association
+   * belongs to. Currently accepts the membership ID.</p>
+   */
+  inline const Aws::String& GetMembershipIdentifier() const { return m_membershipIdentifier; }
+  inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
+  template <typename MembershipIdentifierT = Aws::String>
+  void SetMembershipIdentifier(MembershipIdentifierT&& value) {
+    m_membershipIdentifierHasBeenSet = true;
+    m_membershipIdentifier = std::forward<MembershipIdentifierT>(value);
+  }
+  template <typename MembershipIdentifierT = Aws::String>
+  GetConfiguredTableAssociationRequest& WithMembershipIdentifier(MembershipIdentifierT&& value) {
+    SetMembershipIdentifier(std::forward<MembershipIdentifierT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_configuredTableAssociationIdentifier;
 
-    AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+  Aws::String m_membershipIdentifier;
+  bool m_configuredTableAssociationIdentifierHasBeenSet = false;
+  bool m_membershipIdentifierHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The unique ID for the configured table association to retrieve. Currently
-     * accepts the configured table ID.</p>
-     */
-    inline const Aws::String& GetConfiguredTableAssociationIdentifier() const{ return m_configuredTableAssociationIdentifier; }
-    inline bool ConfiguredTableAssociationIdentifierHasBeenSet() const { return m_configuredTableAssociationIdentifierHasBeenSet; }
-    inline void SetConfiguredTableAssociationIdentifier(const Aws::String& value) { m_configuredTableAssociationIdentifierHasBeenSet = true; m_configuredTableAssociationIdentifier = value; }
-    inline void SetConfiguredTableAssociationIdentifier(Aws::String&& value) { m_configuredTableAssociationIdentifierHasBeenSet = true; m_configuredTableAssociationIdentifier = std::move(value); }
-    inline void SetConfiguredTableAssociationIdentifier(const char* value) { m_configuredTableAssociationIdentifierHasBeenSet = true; m_configuredTableAssociationIdentifier.assign(value); }
-    inline GetConfiguredTableAssociationRequest& WithConfiguredTableAssociationIdentifier(const Aws::String& value) { SetConfiguredTableAssociationIdentifier(value); return *this;}
-    inline GetConfiguredTableAssociationRequest& WithConfiguredTableAssociationIdentifier(Aws::String&& value) { SetConfiguredTableAssociationIdentifier(std::move(value)); return *this;}
-    inline GetConfiguredTableAssociationRequest& WithConfiguredTableAssociationIdentifier(const char* value) { SetConfiguredTableAssociationIdentifier(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A unique identifier for the membership that the configured table association
-     * belongs to. Currently accepts the membership ID.</p>
-     */
-    inline const Aws::String& GetMembershipIdentifier() const{ return m_membershipIdentifier; }
-    inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
-    inline void SetMembershipIdentifier(const Aws::String& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = value; }
-    inline void SetMembershipIdentifier(Aws::String&& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = std::move(value); }
-    inline void SetMembershipIdentifier(const char* value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier.assign(value); }
-    inline GetConfiguredTableAssociationRequest& WithMembershipIdentifier(const Aws::String& value) { SetMembershipIdentifier(value); return *this;}
-    inline GetConfiguredTableAssociationRequest& WithMembershipIdentifier(Aws::String&& value) { SetMembershipIdentifier(std::move(value)); return *this;}
-    inline GetConfiguredTableAssociationRequest& WithMembershipIdentifier(const char* value) { SetMembershipIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_configuredTableAssociationIdentifier;
-    bool m_configuredTableAssociationIdentifierHasBeenSet = false;
-
-    Aws::String m_membershipIdentifier;
-    bool m_membershipIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

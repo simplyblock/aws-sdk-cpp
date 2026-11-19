@@ -3,61 +3,57 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/CreateAddonInstanceRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MailManager::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateAddonInstanceRequest::CreateAddonInstanceRequest() : 
-    m_addonSubscriptionIdHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateAddonInstanceRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_clientTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_addonSubscriptionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_clientTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ClientToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_clientToken.c_str()));
+  }
+
+  if (m_addonSubscriptionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AddonSubscriptionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_addonSubscriptionId.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateAddonInstanceRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_addonSubscriptionIdHasBeenSet)
-  {
-   payload.WithString("AddonSubscriptionId", m_addonSubscriptionId);
-
-  }
-
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("ClientToken", m_clientToken);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateAddonInstanceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateAddonInstanceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "MailManagerSvc.CreateAddonInstance"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

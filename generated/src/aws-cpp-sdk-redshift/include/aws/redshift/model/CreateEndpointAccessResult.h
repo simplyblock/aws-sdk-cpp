@@ -4,198 +4,264 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/redshift/model/VpcEndpoint.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/ResponseMetadata.h>
+#include <aws/redshift/model/VpcEndpoint.h>
 #include <aws/redshift/model/VpcSecurityGroupMembership.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+/**
+ * <p>Describes a Redshift-managed VPC endpoint.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/EndpointAccess">AWS
+ * API Reference</a></p>
+ */
+class CreateEndpointAccessResult {
+ public:
+  AWS_REDSHIFT_API CreateEndpointAccessResult() = default;
+  AWS_REDSHIFT_API CreateEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API CreateEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Describes a Redshift-managed VPC endpoint.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/EndpointAccess">AWS
-   * API Reference</a></p>
+   * <p>The cluster identifier of the cluster associated with the endpoint.</p>
    */
-  class CreateEndpointAccessResult
-  {
-  public:
-    AWS_REDSHIFT_API CreateEndpointAccessResult();
-    AWS_REDSHIFT_API CreateEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API CreateEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetClusterIdentifier() const { return m_clusterIdentifier; }
+  template <typename ClusterIdentifierT = Aws::String>
+  void SetClusterIdentifier(ClusterIdentifierT&& value) {
+    m_clusterIdentifierHasBeenSet = true;
+    m_clusterIdentifier = std::forward<ClusterIdentifierT>(value);
+  }
+  template <typename ClusterIdentifierT = Aws::String>
+  CreateEndpointAccessResult& WithClusterIdentifier(ClusterIdentifierT&& value) {
+    SetClusterIdentifier(std::forward<ClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID of the owner of the cluster.</p>
+   */
+  inline const Aws::String& GetResourceOwner() const { return m_resourceOwner; }
+  template <typename ResourceOwnerT = Aws::String>
+  void SetResourceOwner(ResourceOwnerT&& value) {
+    m_resourceOwnerHasBeenSet = true;
+    m_resourceOwner = std::forward<ResourceOwnerT>(value);
+  }
+  template <typename ResourceOwnerT = Aws::String>
+  CreateEndpointAccessResult& WithResourceOwner(ResourceOwnerT&& value) {
+    SetResourceOwner(std::forward<ResourceOwnerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The cluster identifier of the cluster associated with the endpoint.</p>
-     */
-    inline const Aws::String& GetClusterIdentifier() const{ return m_clusterIdentifier; }
-    inline void SetClusterIdentifier(const Aws::String& value) { m_clusterIdentifier = value; }
-    inline void SetClusterIdentifier(Aws::String&& value) { m_clusterIdentifier = std::move(value); }
-    inline void SetClusterIdentifier(const char* value) { m_clusterIdentifier.assign(value); }
-    inline CreateEndpointAccessResult& WithClusterIdentifier(const Aws::String& value) { SetClusterIdentifier(value); return *this;}
-    inline CreateEndpointAccessResult& WithClusterIdentifier(Aws::String&& value) { SetClusterIdentifier(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithClusterIdentifier(const char* value) { SetClusterIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The subnet group name where Amazon Redshift chooses to deploy the
+   * endpoint.</p>
+   */
+  inline const Aws::String& GetSubnetGroupName() const { return m_subnetGroupName; }
+  template <typename SubnetGroupNameT = Aws::String>
+  void SetSubnetGroupName(SubnetGroupNameT&& value) {
+    m_subnetGroupNameHasBeenSet = true;
+    m_subnetGroupName = std::forward<SubnetGroupNameT>(value);
+  }
+  template <typename SubnetGroupNameT = Aws::String>
+  CreateEndpointAccessResult& WithSubnetGroupName(SubnetGroupNameT&& value) {
+    SetSubnetGroupName(std::forward<SubnetGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID of the owner of the cluster.</p>
-     */
-    inline const Aws::String& GetResourceOwner() const{ return m_resourceOwner; }
-    inline void SetResourceOwner(const Aws::String& value) { m_resourceOwner = value; }
-    inline void SetResourceOwner(Aws::String&& value) { m_resourceOwner = std::move(value); }
-    inline void SetResourceOwner(const char* value) { m_resourceOwner.assign(value); }
-    inline CreateEndpointAccessResult& WithResourceOwner(const Aws::String& value) { SetResourceOwner(value); return *this;}
-    inline CreateEndpointAccessResult& WithResourceOwner(Aws::String&& value) { SetResourceOwner(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithResourceOwner(const char* value) { SetResourceOwner(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the endpoint.</p>
+   */
+  inline const Aws::String& GetEndpointStatus() const { return m_endpointStatus; }
+  template <typename EndpointStatusT = Aws::String>
+  void SetEndpointStatus(EndpointStatusT&& value) {
+    m_endpointStatusHasBeenSet = true;
+    m_endpointStatus = std::forward<EndpointStatusT>(value);
+  }
+  template <typename EndpointStatusT = Aws::String>
+  CreateEndpointAccessResult& WithEndpointStatus(EndpointStatusT&& value) {
+    SetEndpointStatus(std::forward<EndpointStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subnet group name where Amazon Redshift chooses to deploy the
-     * endpoint.</p>
-     */
-    inline const Aws::String& GetSubnetGroupName() const{ return m_subnetGroupName; }
-    inline void SetSubnetGroupName(const Aws::String& value) { m_subnetGroupName = value; }
-    inline void SetSubnetGroupName(Aws::String&& value) { m_subnetGroupName = std::move(value); }
-    inline void SetSubnetGroupName(const char* value) { m_subnetGroupName.assign(value); }
-    inline CreateEndpointAccessResult& WithSubnetGroupName(const Aws::String& value) { SetSubnetGroupName(value); return *this;}
-    inline CreateEndpointAccessResult& WithSubnetGroupName(Aws::String&& value) { SetSubnetGroupName(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithSubnetGroupName(const char* value) { SetSubnetGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the endpoint.</p>
+   */
+  inline const Aws::String& GetEndpointName() const { return m_endpointName; }
+  template <typename EndpointNameT = Aws::String>
+  void SetEndpointName(EndpointNameT&& value) {
+    m_endpointNameHasBeenSet = true;
+    m_endpointName = std::forward<EndpointNameT>(value);
+  }
+  template <typename EndpointNameT = Aws::String>
+  CreateEndpointAccessResult& WithEndpointName(EndpointNameT&& value) {
+    SetEndpointName(std::forward<EndpointNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the endpoint.</p>
-     */
-    inline const Aws::String& GetEndpointStatus() const{ return m_endpointStatus; }
-    inline void SetEndpointStatus(const Aws::String& value) { m_endpointStatus = value; }
-    inline void SetEndpointStatus(Aws::String&& value) { m_endpointStatus = std::move(value); }
-    inline void SetEndpointStatus(const char* value) { m_endpointStatus.assign(value); }
-    inline CreateEndpointAccessResult& WithEndpointStatus(const Aws::String& value) { SetEndpointStatus(value); return *this;}
-    inline CreateEndpointAccessResult& WithEndpointStatus(Aws::String&& value) { SetEndpointStatus(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithEndpointStatus(const char* value) { SetEndpointStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time (UTC) that the endpoint was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndpointCreateTime() const { return m_endpointCreateTime; }
+  template <typename EndpointCreateTimeT = Aws::Utils::DateTime>
+  void SetEndpointCreateTime(EndpointCreateTimeT&& value) {
+    m_endpointCreateTimeHasBeenSet = true;
+    m_endpointCreateTime = std::forward<EndpointCreateTimeT>(value);
+  }
+  template <typename EndpointCreateTimeT = Aws::Utils::DateTime>
+  CreateEndpointAccessResult& WithEndpointCreateTime(EndpointCreateTimeT&& value) {
+    SetEndpointCreateTime(std::forward<EndpointCreateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the endpoint.</p>
-     */
-    inline const Aws::String& GetEndpointName() const{ return m_endpointName; }
-    inline void SetEndpointName(const Aws::String& value) { m_endpointName = value; }
-    inline void SetEndpointName(Aws::String&& value) { m_endpointName = std::move(value); }
-    inline void SetEndpointName(const char* value) { m_endpointName.assign(value); }
-    inline CreateEndpointAccessResult& WithEndpointName(const Aws::String& value) { SetEndpointName(value); return *this;}
-    inline CreateEndpointAccessResult& WithEndpointName(Aws::String&& value) { SetEndpointName(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithEndpointName(const char* value) { SetEndpointName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The port number on which the cluster accepts incoming connections.</p>
+   */
+  inline int GetPort() const { return m_port; }
+  inline void SetPort(int value) {
+    m_portHasBeenSet = true;
+    m_port = value;
+  }
+  inline CreateEndpointAccessResult& WithPort(int value) {
+    SetPort(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time (UTC) that the endpoint was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndpointCreateTime() const{ return m_endpointCreateTime; }
-    inline void SetEndpointCreateTime(const Aws::Utils::DateTime& value) { m_endpointCreateTime = value; }
-    inline void SetEndpointCreateTime(Aws::Utils::DateTime&& value) { m_endpointCreateTime = std::move(value); }
-    inline CreateEndpointAccessResult& WithEndpointCreateTime(const Aws::Utils::DateTime& value) { SetEndpointCreateTime(value); return *this;}
-    inline CreateEndpointAccessResult& WithEndpointCreateTime(Aws::Utils::DateTime&& value) { SetEndpointCreateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The DNS address of the endpoint.</p>
+   */
+  inline const Aws::String& GetAddress() const { return m_address; }
+  template <typename AddressT = Aws::String>
+  void SetAddress(AddressT&& value) {
+    m_addressHasBeenSet = true;
+    m_address = std::forward<AddressT>(value);
+  }
+  template <typename AddressT = Aws::String>
+  CreateEndpointAccessResult& WithAddress(AddressT&& value) {
+    SetAddress(std::forward<AddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The port number on which the cluster accepts incoming connections.</p>
-     */
-    inline int GetPort() const{ return m_port; }
-    inline void SetPort(int value) { m_port = value; }
-    inline CreateEndpointAccessResult& WithPort(int value) { SetPort(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The security groups associated with the endpoint.</p>
+   */
+  inline const Aws::Vector<VpcSecurityGroupMembership>& GetVpcSecurityGroups() const { return m_vpcSecurityGroups; }
+  template <typename VpcSecurityGroupsT = Aws::Vector<VpcSecurityGroupMembership>>
+  void SetVpcSecurityGroups(VpcSecurityGroupsT&& value) {
+    m_vpcSecurityGroupsHasBeenSet = true;
+    m_vpcSecurityGroups = std::forward<VpcSecurityGroupsT>(value);
+  }
+  template <typename VpcSecurityGroupsT = Aws::Vector<VpcSecurityGroupMembership>>
+  CreateEndpointAccessResult& WithVpcSecurityGroups(VpcSecurityGroupsT&& value) {
+    SetVpcSecurityGroups(std::forward<VpcSecurityGroupsT>(value));
+    return *this;
+  }
+  template <typename VpcSecurityGroupsT = VpcSecurityGroupMembership>
+  CreateEndpointAccessResult& AddVpcSecurityGroups(VpcSecurityGroupsT&& value) {
+    m_vpcSecurityGroupsHasBeenSet = true;
+    m_vpcSecurityGroups.emplace_back(std::forward<VpcSecurityGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The DNS address of the endpoint.</p>
-     */
-    inline const Aws::String& GetAddress() const{ return m_address; }
-    inline void SetAddress(const Aws::String& value) { m_address = value; }
-    inline void SetAddress(Aws::String&& value) { m_address = std::move(value); }
-    inline void SetAddress(const char* value) { m_address.assign(value); }
-    inline CreateEndpointAccessResult& WithAddress(const Aws::String& value) { SetAddress(value); return *this;}
-    inline CreateEndpointAccessResult& WithAddress(Aws::String&& value) { SetAddress(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& WithAddress(const char* value) { SetAddress(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The security groups associated with the endpoint.</p>
-     */
-    inline const Aws::Vector<VpcSecurityGroupMembership>& GetVpcSecurityGroups() const{ return m_vpcSecurityGroups; }
-    inline void SetVpcSecurityGroups(const Aws::Vector<VpcSecurityGroupMembership>& value) { m_vpcSecurityGroups = value; }
-    inline void SetVpcSecurityGroups(Aws::Vector<VpcSecurityGroupMembership>&& value) { m_vpcSecurityGroups = std::move(value); }
-    inline CreateEndpointAccessResult& WithVpcSecurityGroups(const Aws::Vector<VpcSecurityGroupMembership>& value) { SetVpcSecurityGroups(value); return *this;}
-    inline CreateEndpointAccessResult& WithVpcSecurityGroups(Aws::Vector<VpcSecurityGroupMembership>&& value) { SetVpcSecurityGroups(std::move(value)); return *this;}
-    inline CreateEndpointAccessResult& AddVpcSecurityGroups(const VpcSecurityGroupMembership& value) { m_vpcSecurityGroups.push_back(value); return *this; }
-    inline CreateEndpointAccessResult& AddVpcSecurityGroups(VpcSecurityGroupMembership&& value) { m_vpcSecurityGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const VpcEndpoint& GetVpcEndpoint() const { return m_vpcEndpoint; }
+  template <typename VpcEndpointT = VpcEndpoint>
+  void SetVpcEndpoint(VpcEndpointT&& value) {
+    m_vpcEndpointHasBeenSet = true;
+    m_vpcEndpoint = std::forward<VpcEndpointT>(value);
+  }
+  template <typename VpcEndpointT = VpcEndpoint>
+  CreateEndpointAccessResult& WithVpcEndpoint(VpcEndpointT&& value) {
+    SetVpcEndpoint(std::forward<VpcEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const VpcEndpoint& GetVpcEndpoint() const{ return m_vpcEndpoint; }
-    inline void SetVpcEndpoint(const VpcEndpoint& value) { m_vpcEndpoint = value; }
-    inline void SetVpcEndpoint(VpcEndpoint&& value) { m_vpcEndpoint = std::move(value); }
-    inline CreateEndpointAccessResult& WithVpcEndpoint(const VpcEndpoint& value) { SetVpcEndpoint(value); return *this;}
-    inline CreateEndpointAccessResult& WithVpcEndpoint(VpcEndpoint&& value) { SetVpcEndpoint(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateEndpointAccessResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateEndpointAccessResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateEndpointAccessResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_clusterIdentifier;
+ private:
+  Aws::String m_clusterIdentifier;
 
-    Aws::String m_resourceOwner;
+  Aws::String m_resourceOwner;
 
-    Aws::String m_subnetGroupName;
+  Aws::String m_subnetGroupName;
 
-    Aws::String m_endpointStatus;
+  Aws::String m_endpointStatus;
 
-    Aws::String m_endpointName;
+  Aws::String m_endpointName;
 
-    Aws::Utils::DateTime m_endpointCreateTime;
+  Aws::Utils::DateTime m_endpointCreateTime{};
 
-    int m_port;
+  int m_port{0};
 
-    Aws::String m_address;
+  Aws::String m_address;
 
-    Aws::Vector<VpcSecurityGroupMembership> m_vpcSecurityGroups;
+  Aws::Vector<VpcSecurityGroupMembership> m_vpcSecurityGroups;
 
-    VpcEndpoint m_vpcEndpoint;
+  VpcEndpoint m_vpcEndpoint;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_clusterIdentifierHasBeenSet = false;
+  bool m_resourceOwnerHasBeenSet = false;
+  bool m_subnetGroupNameHasBeenSet = false;
+  bool m_endpointStatusHasBeenSet = false;
+  bool m_endpointNameHasBeenSet = false;
+  bool m_endpointCreateTimeHasBeenSet = false;
+  bool m_portHasBeenSet = false;
+  bool m_addressHasBeenSet = false;
+  bool m_vpcSecurityGroupsHasBeenSet = false;
+  bool m_vpcEndpointHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

@@ -4,69 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/fsx/model/FileSystem.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FSx
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FSx {
+namespace Model {
+/**
+ * <p>The response object returned after the file system is created.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateFileSystemResponse">AWS
+ * API Reference</a></p>
+ */
+class CreateFileSystemResult {
+ public:
+  AWS_FSX_API CreateFileSystemResult() = default;
+  AWS_FSX_API CreateFileSystemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FSX_API CreateFileSystemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response object returned after the file system is created.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateFileSystemResponse">AWS
-   * API Reference</a></p>
+   * <p>The configuration of the file system that was created.</p>
    */
-  class CreateFileSystemResult
-  {
-  public:
-    AWS_FSX_API CreateFileSystemResult();
-    AWS_FSX_API CreateFileSystemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FSX_API CreateFileSystemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const FileSystem& GetFileSystem() const { return m_fileSystem; }
+  template <typename FileSystemT = FileSystem>
+  void SetFileSystem(FileSystemT&& value) {
+    m_fileSystemHasBeenSet = true;
+    m_fileSystem = std::forward<FileSystemT>(value);
+  }
+  template <typename FileSystemT = FileSystem>
+  CreateFileSystemResult& WithFileSystem(FileSystemT&& value) {
+    SetFileSystem(std::forward<FileSystemT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The configuration of the file system that was created.</p>
-     */
-    inline const FileSystem& GetFileSystem() const{ return m_fileSystem; }
-    inline void SetFileSystem(const FileSystem& value) { m_fileSystem = value; }
-    inline void SetFileSystem(FileSystem&& value) { m_fileSystem = std::move(value); }
-    inline CreateFileSystemResult& WithFileSystem(const FileSystem& value) { SetFileSystem(value); return *this;}
-    inline CreateFileSystemResult& WithFileSystem(FileSystem&& value) { SetFileSystem(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateFileSystemResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateFileSystemResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateFileSystemResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  FileSystem m_fileSystem;
 
-    FileSystem m_fileSystem;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fileSystemHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

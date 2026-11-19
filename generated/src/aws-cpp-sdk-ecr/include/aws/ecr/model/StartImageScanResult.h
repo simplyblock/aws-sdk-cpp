@@ -4,105 +4,131 @@
  */
 
 #pragma once
-#include <aws/ecr/ECR_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ecr/ECR_EXPORTS.h>
 #include <aws/ecr/model/ImageIdentifier.h>
 #include <aws/ecr/model/ImageScanStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECR
-{
-namespace Model
-{
-  class StartImageScanResult
-  {
-  public:
-    AWS_ECR_API StartImageScanResult();
-    AWS_ECR_API StartImageScanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECR_API StartImageScanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECR {
+namespace Model {
+class StartImageScanResult {
+ public:
+  AWS_ECR_API StartImageScanResult() = default;
+  AWS_ECR_API StartImageScanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECR_API StartImageScanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The registry ID associated with the request.</p>
+   */
+  inline const Aws::String& GetRegistryId() const { return m_registryId; }
+  template <typename RegistryIdT = Aws::String>
+  void SetRegistryId(RegistryIdT&& value) {
+    m_registryIdHasBeenSet = true;
+    m_registryId = std::forward<RegistryIdT>(value);
+  }
+  template <typename RegistryIdT = Aws::String>
+  StartImageScanResult& WithRegistryId(RegistryIdT&& value) {
+    SetRegistryId(std::forward<RegistryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The registry ID associated with the request.</p>
-     */
-    inline const Aws::String& GetRegistryId() const{ return m_registryId; }
-    inline void SetRegistryId(const Aws::String& value) { m_registryId = value; }
-    inline void SetRegistryId(Aws::String&& value) { m_registryId = std::move(value); }
-    inline void SetRegistryId(const char* value) { m_registryId.assign(value); }
-    inline StartImageScanResult& WithRegistryId(const Aws::String& value) { SetRegistryId(value); return *this;}
-    inline StartImageScanResult& WithRegistryId(Aws::String&& value) { SetRegistryId(std::move(value)); return *this;}
-    inline StartImageScanResult& WithRegistryId(const char* value) { SetRegistryId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The repository name associated with the request.</p>
+   */
+  inline const Aws::String& GetRepositoryName() const { return m_repositoryName; }
+  template <typename RepositoryNameT = Aws::String>
+  void SetRepositoryName(RepositoryNameT&& value) {
+    m_repositoryNameHasBeenSet = true;
+    m_repositoryName = std::forward<RepositoryNameT>(value);
+  }
+  template <typename RepositoryNameT = Aws::String>
+  StartImageScanResult& WithRepositoryName(RepositoryNameT&& value) {
+    SetRepositoryName(std::forward<RepositoryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The repository name associated with the request.</p>
-     */
-    inline const Aws::String& GetRepositoryName() const{ return m_repositoryName; }
-    inline void SetRepositoryName(const Aws::String& value) { m_repositoryName = value; }
-    inline void SetRepositoryName(Aws::String&& value) { m_repositoryName = std::move(value); }
-    inline void SetRepositoryName(const char* value) { m_repositoryName.assign(value); }
-    inline StartImageScanResult& WithRepositoryName(const Aws::String& value) { SetRepositoryName(value); return *this;}
-    inline StartImageScanResult& WithRepositoryName(Aws::String&& value) { SetRepositoryName(std::move(value)); return *this;}
-    inline StartImageScanResult& WithRepositoryName(const char* value) { SetRepositoryName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ImageIdentifier& GetImageId() const{ return m_imageId; }
-    inline void SetImageId(const ImageIdentifier& value) { m_imageId = value; }
-    inline void SetImageId(ImageIdentifier&& value) { m_imageId = std::move(value); }
-    inline StartImageScanResult& WithImageId(const ImageIdentifier& value) { SetImageId(value); return *this;}
-    inline StartImageScanResult& WithImageId(ImageIdentifier&& value) { SetImageId(std::move(value)); return *this;}
-    ///@}
+  inline const ImageIdentifier& GetImageId() const { return m_imageId; }
+  template <typename ImageIdT = ImageIdentifier>
+  void SetImageId(ImageIdT&& value) {
+    m_imageIdHasBeenSet = true;
+    m_imageId = std::forward<ImageIdT>(value);
+  }
+  template <typename ImageIdT = ImageIdentifier>
+  StartImageScanResult& WithImageId(ImageIdT&& value) {
+    SetImageId(std::forward<ImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current state of the scan.</p>
-     */
-    inline const ImageScanStatus& GetImageScanStatus() const{ return m_imageScanStatus; }
-    inline void SetImageScanStatus(const ImageScanStatus& value) { m_imageScanStatus = value; }
-    inline void SetImageScanStatus(ImageScanStatus&& value) { m_imageScanStatus = std::move(value); }
-    inline StartImageScanResult& WithImageScanStatus(const ImageScanStatus& value) { SetImageScanStatus(value); return *this;}
-    inline StartImageScanResult& WithImageScanStatus(ImageScanStatus&& value) { SetImageScanStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current state of the scan.</p>
+   */
+  inline const ImageScanStatus& GetImageScanStatus() const { return m_imageScanStatus; }
+  template <typename ImageScanStatusT = ImageScanStatus>
+  void SetImageScanStatus(ImageScanStatusT&& value) {
+    m_imageScanStatusHasBeenSet = true;
+    m_imageScanStatus = std::forward<ImageScanStatusT>(value);
+  }
+  template <typename ImageScanStatusT = ImageScanStatus>
+  StartImageScanResult& WithImageScanStatus(ImageScanStatusT&& value) {
+    SetImageScanStatus(std::forward<ImageScanStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartImageScanResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartImageScanResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartImageScanResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_registryId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartImageScanResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_repositoryName;
+ private:
+  Aws::String m_registryId;
 
-    ImageIdentifier m_imageId;
+  Aws::String m_repositoryName;
 
-    ImageScanStatus m_imageScanStatus;
+  ImageIdentifier m_imageId;
 
-    Aws::String m_requestId;
-  };
+  ImageScanStatus m_imageScanStatus;
 
-} // namespace Model
-} // namespace ECR
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_registryIdHasBeenSet = false;
+  bool m_repositoryNameHasBeenSet = false;
+  bool m_imageIdHasBeenSet = false;
+  bool m_imageScanStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ECR
+}  // namespace Aws

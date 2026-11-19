@@ -5,140 +5,159 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/connect/model/QueueType.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>Contains summary information about a queue.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/QueueSummary">AWS
+ * API Reference</a></p>
+ */
+class QueueSummary {
+ public:
+  AWS_CONNECT_API QueueSummary() = default;
+  AWS_CONNECT_API QueueSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API QueueSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains summary information about a queue.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/QueueSummary">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the queue.</p>
    */
-  class QueueSummary
-  {
-  public:
-    AWS_CONNECT_API QueueSummary();
-    AWS_CONNECT_API QueueSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API QueueSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  QueueSummary& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the queue.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  QueueSummary& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the queue.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline QueueSummary& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline QueueSummary& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline QueueSummary& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the queue.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  QueueSummary& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the queue.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline QueueSummary& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline QueueSummary& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline QueueSummary& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of queue.</p>
+   */
+  inline QueueType GetQueueType() const { return m_queueType; }
+  inline bool QueueTypeHasBeenSet() const { return m_queueTypeHasBeenSet; }
+  inline void SetQueueType(QueueType value) {
+    m_queueTypeHasBeenSet = true;
+    m_queueType = value;
+  }
+  inline QueueSummary& WithQueueType(QueueType value) {
+    SetQueueType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the queue.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline QueueSummary& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline QueueSummary& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline QueueSummary& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp when this resource was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  QueueSummary& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of queue.</p>
-     */
-    inline const QueueType& GetQueueType() const{ return m_queueType; }
-    inline bool QueueTypeHasBeenSet() const { return m_queueTypeHasBeenSet; }
-    inline void SetQueueType(const QueueType& value) { m_queueTypeHasBeenSet = true; m_queueType = value; }
-    inline void SetQueueType(QueueType&& value) { m_queueTypeHasBeenSet = true; m_queueType = std::move(value); }
-    inline QueueSummary& WithQueueType(const QueueType& value) { SetQueueType(value); return *this;}
-    inline QueueSummary& WithQueueType(QueueType&& value) { SetQueueType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services Region where this resource was last modified.</p>
+   */
+  inline const Aws::String& GetLastModifiedRegion() const { return m_lastModifiedRegion; }
+  inline bool LastModifiedRegionHasBeenSet() const { return m_lastModifiedRegionHasBeenSet; }
+  template <typename LastModifiedRegionT = Aws::String>
+  void SetLastModifiedRegion(LastModifiedRegionT&& value) {
+    m_lastModifiedRegionHasBeenSet = true;
+    m_lastModifiedRegion = std::forward<LastModifiedRegionT>(value);
+  }
+  template <typename LastModifiedRegionT = Aws::String>
+  QueueSummary& WithLastModifiedRegion(LastModifiedRegionT&& value) {
+    SetLastModifiedRegion(std::forward<LastModifiedRegionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>The timestamp when this resource was last modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline QueueSummary& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline QueueSummary& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_arn;
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services Region where this resource was last modified.</p>
-     */
-    inline const Aws::String& GetLastModifiedRegion() const{ return m_lastModifiedRegion; }
-    inline bool LastModifiedRegionHasBeenSet() const { return m_lastModifiedRegionHasBeenSet; }
-    inline void SetLastModifiedRegion(const Aws::String& value) { m_lastModifiedRegionHasBeenSet = true; m_lastModifiedRegion = value; }
-    inline void SetLastModifiedRegion(Aws::String&& value) { m_lastModifiedRegionHasBeenSet = true; m_lastModifiedRegion = std::move(value); }
-    inline void SetLastModifiedRegion(const char* value) { m_lastModifiedRegionHasBeenSet = true; m_lastModifiedRegion.assign(value); }
-    inline QueueSummary& WithLastModifiedRegion(const Aws::String& value) { SetLastModifiedRegion(value); return *this;}
-    inline QueueSummary& WithLastModifiedRegion(Aws::String&& value) { SetLastModifiedRegion(std::move(value)); return *this;}
-    inline QueueSummary& WithLastModifiedRegion(const char* value) { SetLastModifiedRegion(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_name;
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  QueueType m_queueType{QueueType::NOT_SET};
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_lastModifiedRegion;
+  bool m_idHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_queueTypeHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_lastModifiedRegionHasBeenSet = false;
+};
 
-    QueueType m_queueType;
-    bool m_queueTypeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
-
-    Aws::String m_lastModifiedRegion;
-    bool m_lastModifiedRegionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

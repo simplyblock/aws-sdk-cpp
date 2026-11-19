@@ -12,38 +12,20 @@ using namespace Aws::Account::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-AcceptPrimaryEmailUpdateRequest::AcceptPrimaryEmailUpdateRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_otpHasBeenSet(false),
-    m_primaryEmailHasBeenSet(false)
-{
-}
-
-Aws::String AcceptPrimaryEmailUpdateRequest::SerializePayload() const
-{
+Aws::String AcceptPrimaryEmailUpdateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("AccountId", m_accountId);
-
+  if (m_accountIdHasBeenSet) {
+    payload.WithString("AccountId", m_accountId);
   }
 
-  if(m_otpHasBeenSet)
-  {
-   payload.WithString("Otp", m_otp);
-
+  if (m_primaryEmailHasBeenSet) {
+    payload.WithString("PrimaryEmail", m_primaryEmail);
   }
 
-  if(m_primaryEmailHasBeenSet)
-  {
-   payload.WithString("PrimaryEmail", m_primaryEmail);
-
+  if (m_otpHasBeenSet) {
+    payload.WithString("Otp", m_otp);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

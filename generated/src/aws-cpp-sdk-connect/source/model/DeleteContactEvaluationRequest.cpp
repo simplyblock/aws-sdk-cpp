@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteContactEvaluationRequest::DeleteContactEvaluationRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_evaluationIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteContactEvaluationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteContactEvaluationRequest::SerializePayload() const { return {}; }

@@ -3,41 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/DescribeTagOptionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeTagOptionRequest::DescribeTagOptionRequest() : 
-    m_idHasBeenSet(false)
-{
-}
+Aws::String DescribeTagOptionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeTagOptionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("Id", m_id);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_idHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_idHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Id"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_id.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeTagOptionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeTagOptionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.DescribeTagOption"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

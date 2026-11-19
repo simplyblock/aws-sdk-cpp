@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/route53/Route53_EXPORTS.h>
 
-namespace Aws
-{
-namespace Route53
-{
-enum class Route53Errors
-{
-  //From Core//
+namespace Aws {
+namespace Route53 {
+enum class Route53Errors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class Route53Errors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,7 @@ enum class Route53Errors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  CIDR_BLOCK_IN_USE= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  CIDR_BLOCK_IN_USE = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   CIDR_COLLECTION_ALREADY_EXISTS,
   CIDR_COLLECTION_IN_USE,
   CIDR_COLLECTION_VERSION_MISMATCH,
@@ -78,6 +75,7 @@ enum class Route53Errors
   INVALID_KEY_SIGNING_KEY_STATUS,
   INVALID_K_M_S_ARN,
   INVALID_PAGINATION_TOKEN,
+  INVALID_RESOURCE_RECORD_SET_PROTECTION_BATCH,
   INVALID_SIGNING_STATUS,
   INVALID_TRAFFIC_POLICY_DOCUMENT,
   INVALID_V_P_C_ID,
@@ -101,6 +99,7 @@ enum class Route53Errors
   NO_SUCH_TRAFFIC_POLICY,
   NO_SUCH_TRAFFIC_POLICY_INSTANCE,
   PRIOR_REQUEST_NOT_COMPLETE,
+  PROTECTION_ALREADY_EXISTS,
   PUBLIC_ZONE_V_P_C_ASSOCIATION,
   QUERY_LOGGING_CONFIG_ALREADY_EXISTS,
   TOO_MANY_HEALTH_CHECKS,
@@ -117,9 +116,8 @@ enum class Route53Errors
   V_P_C_ASSOCIATION_NOT_FOUND
 };
 
-class AWS_ROUTE53_API Route53Error : public Aws::Client::AWSError<Route53Errors>
-{
-public:
+class AWS_ROUTE53_API Route53Error : public Aws::Client::AWSError<Route53Errors> {
+ public:
   Route53Error() {}
   Route53Error(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<Route53Errors>(rhs) {}
   Route53Error(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<Route53Errors>(rhs) {}
@@ -130,10 +128,9 @@ public:
   T GetModeledError();
 };
 
-namespace Route53ErrorMapper
-{
-  AWS_ROUTE53_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace Route53ErrorMapper {
+AWS_ROUTE53_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace Route53
-} // namespace Aws
+}  // namespace Route53
+}  // namespace Aws

@@ -4,68 +4,69 @@
  */
 
 #include <aws/codepipeline/model/PutApprovalResultRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutApprovalResultRequest::PutApprovalResultRequest() : 
-    m_pipelineNameHasBeenSet(false),
-    m_stageNameHasBeenSet(false),
-    m_actionNameHasBeenSet(false),
-    m_resultHasBeenSet(false),
-    m_tokenHasBeenSet(false)
-{
+Aws::String PutApprovalResultRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pipelineNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stageNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resultHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_pipelineNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pipelineName.c_str()));
+  }
+
+  if (m_stageNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("stageName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_stageName.c_str()));
+  }
+
+  if (m_actionNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("actionName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_actionName.c_str()));
+  }
+
+  if (m_resultHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("result"));
+    m_result.CborEncode(encoder);
+  }
+
+  if (m_tokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("token"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_token.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String PutApprovalResultRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_pipelineNameHasBeenSet)
-  {
-   payload.WithString("pipelineName", m_pipelineName);
-
-  }
-
-  if(m_stageNameHasBeenSet)
-  {
-   payload.WithString("stageName", m_stageName);
-
-  }
-
-  if(m_actionNameHasBeenSet)
-  {
-   payload.WithString("actionName", m_actionName);
-
-  }
-
-  if(m_resultHasBeenSet)
-  {
-   payload.WithObject("result", m_result.Jsonize());
-
-  }
-
-  if(m_tokenHasBeenSet)
-  {
-   payload.WithString("token", m_token);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection PutApprovalResultRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutApprovalResultRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.PutApprovalResult"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

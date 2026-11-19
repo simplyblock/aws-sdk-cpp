@@ -12,25 +12,12 @@ using namespace Aws::ConnectCampaigns::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateCampaignDialerConfigRequest::UpdateCampaignDialerConfigRequest() : 
-    m_idHasBeenSet(false),
-    m_dialerConfigHasBeenSet(false)
-{
-}
-
-Aws::String UpdateCampaignDialerConfigRequest::SerializePayload() const
-{
+Aws::String UpdateCampaignDialerConfigRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_dialerConfigHasBeenSet)
-  {
-   payload.WithObject("dialerConfig", m_dialerConfig.Jsonize());
-
+  if (m_dialerConfigHasBeenSet) {
+    payload.WithObject("dialerConfig", m_dialerConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

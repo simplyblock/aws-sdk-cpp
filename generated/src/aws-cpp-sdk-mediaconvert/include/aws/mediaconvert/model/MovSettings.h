@@ -5,130 +5,174 @@
 
 #pragma once
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
+#include <aws/mediaconvert/model/CmfcAudioDuration.h>
 #include <aws/mediaconvert/model/MovClapAtom.h>
 #include <aws/mediaconvert/model/MovCslgAtom.h>
 #include <aws/mediaconvert/model/MovMpeg2FourCCControl.h>
 #include <aws/mediaconvert/model/MovPaddingControl.h>
 #include <aws/mediaconvert/model/MovReference.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConvert
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
 
+/**
+ * These settings relate to your QuickTime MOV output container.<p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/MovSettings">AWS
+ * API Reference</a></p>
+ */
+class MovSettings {
+ public:
+  AWS_MEDIACONVERT_API MovSettings() = default;
+  AWS_MEDIACONVERT_API MovSettings(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API MovSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * These settings relate to your QuickTime MOV output container.<p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/MovSettings">AWS
-   * API Reference</a></p>
+   * Specify this setting only when your output will be consumed by a downstream
+   * repackaging workflow that is sensitive to very small duration differences
+   * between video and audio. For this situation, choose Match video duration. In all
+   * other cases, keep the default value, Default codec duration. When you choose
+   * Match video duration, MediaConvert pads the output audio streams with silence or
+   * trims them to ensure that the total duration of each audio stream is at least as
+   * long as the total duration of the video stream. After padding or trimming, the
+   * audio stream duration is no more than one frame longer than the video stream.
+   * MediaConvert applies audio padding or trimming only to the end of the last
+   * segment of the output. For unsegmented outputs, MediaConvert adds padding only
+   * to the end of the file. When you keep the default value, any minor discrepancies
+   * between audio and video duration will depend on your output audio codec.
    */
-  class MovSettings
-  {
-  public:
-    AWS_MEDIACONVERT_API MovSettings();
-    AWS_MEDIACONVERT_API MovSettings(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API MovSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline CmfcAudioDuration GetAudioDuration() const { return m_audioDuration; }
+  inline bool AudioDurationHasBeenSet() const { return m_audioDurationHasBeenSet; }
+  inline void SetAudioDuration(CmfcAudioDuration value) {
+    m_audioDurationHasBeenSet = true;
+    m_audioDuration = value;
+  }
+  inline MovSettings& WithAudioDuration(CmfcAudioDuration value) {
+    SetAudioDuration(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * When enabled, include 'clap' atom if appropriate for the video output settings.
+   */
+  inline MovClapAtom GetClapAtom() const { return m_clapAtom; }
+  inline bool ClapAtomHasBeenSet() const { return m_clapAtomHasBeenSet; }
+  inline void SetClapAtom(MovClapAtom value) {
+    m_clapAtomHasBeenSet = true;
+    m_clapAtom = value;
+  }
+  inline MovSettings& WithClapAtom(MovClapAtom value) {
+    SetClapAtom(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * When enabled, include 'clap' atom if appropriate for the video output settings.
-     */
-    inline const MovClapAtom& GetClapAtom() const{ return m_clapAtom; }
-    inline bool ClapAtomHasBeenSet() const { return m_clapAtomHasBeenSet; }
-    inline void SetClapAtom(const MovClapAtom& value) { m_clapAtomHasBeenSet = true; m_clapAtom = value; }
-    inline void SetClapAtom(MovClapAtom&& value) { m_clapAtomHasBeenSet = true; m_clapAtom = std::move(value); }
-    inline MovSettings& WithClapAtom(const MovClapAtom& value) { SetClapAtom(value); return *this;}
-    inline MovSettings& WithClapAtom(MovClapAtom&& value) { SetClapAtom(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * When enabled, file composition times will start at zero, composition times in
+   * the 'ctts' (composition time to sample) box for B-frames will be negative, and a
+   * 'cslg' (composition shift least greatest) box will be included per 14496-1
+   * amendment 1. This improves compatibility with Apple players and tools.
+   */
+  inline MovCslgAtom GetCslgAtom() const { return m_cslgAtom; }
+  inline bool CslgAtomHasBeenSet() const { return m_cslgAtomHasBeenSet; }
+  inline void SetCslgAtom(MovCslgAtom value) {
+    m_cslgAtomHasBeenSet = true;
+    m_cslgAtom = value;
+  }
+  inline MovSettings& WithCslgAtom(MovCslgAtom value) {
+    SetCslgAtom(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * When enabled, file composition times will start at zero, composition times in
-     * the 'ctts' (composition time to sample) box for B-frames will be negative, and a
-     * 'cslg' (composition shift least greatest) box will be included per 14496-1
-     * amendment 1. This improves compatibility with Apple players and tools.
-     */
-    inline const MovCslgAtom& GetCslgAtom() const{ return m_cslgAtom; }
-    inline bool CslgAtomHasBeenSet() const { return m_cslgAtomHasBeenSet; }
-    inline void SetCslgAtom(const MovCslgAtom& value) { m_cslgAtomHasBeenSet = true; m_cslgAtom = value; }
-    inline void SetCslgAtom(MovCslgAtom&& value) { m_cslgAtomHasBeenSet = true; m_cslgAtom = std::move(value); }
-    inline MovSettings& WithCslgAtom(const MovCslgAtom& value) { SetCslgAtom(value); return *this;}
-    inline MovSettings& WithCslgAtom(MovCslgAtom&& value) { SetCslgAtom(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * When set to XDCAM, writes MPEG2 video streams into the QuickTime file using
+   * XDCAM fourcc codes. This increases compatibility with Apple editors and players,
+   * but may decrease compatibility with other players. Only applicable when the
+   * video codec is MPEG2.
+   */
+  inline MovMpeg2FourCCControl GetMpeg2FourCCControl() const { return m_mpeg2FourCCControl; }
+  inline bool Mpeg2FourCCControlHasBeenSet() const { return m_mpeg2FourCCControlHasBeenSet; }
+  inline void SetMpeg2FourCCControl(MovMpeg2FourCCControl value) {
+    m_mpeg2FourCCControlHasBeenSet = true;
+    m_mpeg2FourCCControl = value;
+  }
+  inline MovSettings& WithMpeg2FourCCControl(MovMpeg2FourCCControl value) {
+    SetMpeg2FourCCControl(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * When set to XDCAM, writes MPEG2 video streams into the QuickTime file using
-     * XDCAM fourcc codes. This increases compatibility with Apple editors and players,
-     * but may decrease compatibility with other players. Only applicable when the
-     * video codec is MPEG2.
-     */
-    inline const MovMpeg2FourCCControl& GetMpeg2FourCCControl() const{ return m_mpeg2FourCCControl; }
-    inline bool Mpeg2FourCCControlHasBeenSet() const { return m_mpeg2FourCCControlHasBeenSet; }
-    inline void SetMpeg2FourCCControl(const MovMpeg2FourCCControl& value) { m_mpeg2FourCCControlHasBeenSet = true; m_mpeg2FourCCControl = value; }
-    inline void SetMpeg2FourCCControl(MovMpeg2FourCCControl&& value) { m_mpeg2FourCCControlHasBeenSet = true; m_mpeg2FourCCControl = std::move(value); }
-    inline MovSettings& WithMpeg2FourCCControl(const MovMpeg2FourCCControl& value) { SetMpeg2FourCCControl(value); return *this;}
-    inline MovSettings& WithMpeg2FourCCControl(MovMpeg2FourCCControl&& value) { SetMpeg2FourCCControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Unless you need Omneon compatibility: Keep the default value, None. To make this
+   * output compatible with Omneon: Choose Omneon. When you do, MediaConvert
+   * increases the length of the 'elst' edit list atom. Note that this might cause
+   * file rejections when a recipient of the output file doesn't expect this extra
+   * padding.
+   */
+  inline MovPaddingControl GetPaddingControl() const { return m_paddingControl; }
+  inline bool PaddingControlHasBeenSet() const { return m_paddingControlHasBeenSet; }
+  inline void SetPaddingControl(MovPaddingControl value) {
+    m_paddingControlHasBeenSet = true;
+    m_paddingControl = value;
+  }
+  inline MovSettings& WithPaddingControl(MovPaddingControl value) {
+    SetPaddingControl(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Unless you need Omneon compatibility: Keep the default value, None. To make this
-     * output compatible with Omneon: Choose Omneon. When you do, MediaConvert
-     * increases the length of the 'elst' edit list atom. Note that this might cause
-     * file rejections when a recipient of the output file doesn't expect this extra
-     * padding.
-     */
-    inline const MovPaddingControl& GetPaddingControl() const{ return m_paddingControl; }
-    inline bool PaddingControlHasBeenSet() const { return m_paddingControlHasBeenSet; }
-    inline void SetPaddingControl(const MovPaddingControl& value) { m_paddingControlHasBeenSet = true; m_paddingControl = value; }
-    inline void SetPaddingControl(MovPaddingControl&& value) { m_paddingControlHasBeenSet = true; m_paddingControl = std::move(value); }
-    inline MovSettings& WithPaddingControl(const MovPaddingControl& value) { SetPaddingControl(value); return *this;}
-    inline MovSettings& WithPaddingControl(MovPaddingControl&& value) { SetPaddingControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Always keep the default value (SELF_CONTAINED) for this setting.
+   */
+  inline MovReference GetReference() const { return m_reference; }
+  inline bool ReferenceHasBeenSet() const { return m_referenceHasBeenSet; }
+  inline void SetReference(MovReference value) {
+    m_referenceHasBeenSet = true;
+    m_reference = value;
+  }
+  inline MovSettings& WithReference(MovReference value) {
+    SetReference(value);
+    return *this;
+  }
+  ///@}
+ private:
+  CmfcAudioDuration m_audioDuration{CmfcAudioDuration::NOT_SET};
 
-    ///@{
-    /**
-     * Always keep the default value (SELF_CONTAINED) for this setting.
-     */
-    inline const MovReference& GetReference() const{ return m_reference; }
-    inline bool ReferenceHasBeenSet() const { return m_referenceHasBeenSet; }
-    inline void SetReference(const MovReference& value) { m_referenceHasBeenSet = true; m_reference = value; }
-    inline void SetReference(MovReference&& value) { m_referenceHasBeenSet = true; m_reference = std::move(value); }
-    inline MovSettings& WithReference(const MovReference& value) { SetReference(value); return *this;}
-    inline MovSettings& WithReference(MovReference&& value) { SetReference(std::move(value)); return *this;}
-    ///@}
-  private:
+  MovClapAtom m_clapAtom{MovClapAtom::NOT_SET};
 
-    MovClapAtom m_clapAtom;
-    bool m_clapAtomHasBeenSet = false;
+  MovCslgAtom m_cslgAtom{MovCslgAtom::NOT_SET};
 
-    MovCslgAtom m_cslgAtom;
-    bool m_cslgAtomHasBeenSet = false;
+  MovMpeg2FourCCControl m_mpeg2FourCCControl{MovMpeg2FourCCControl::NOT_SET};
 
-    MovMpeg2FourCCControl m_mpeg2FourCCControl;
-    bool m_mpeg2FourCCControlHasBeenSet = false;
+  MovPaddingControl m_paddingControl{MovPaddingControl::NOT_SET};
 
-    MovPaddingControl m_paddingControl;
-    bool m_paddingControlHasBeenSet = false;
+  MovReference m_reference{MovReference::NOT_SET};
+  bool m_audioDurationHasBeenSet = false;
+  bool m_clapAtomHasBeenSet = false;
+  bool m_cslgAtomHasBeenSet = false;
+  bool m_mpeg2FourCCControlHasBeenSet = false;
+  bool m_paddingControlHasBeenSet = false;
+  bool m_referenceHasBeenSet = false;
+};
 
-    MovReference m_reference;
-    bool m_referenceHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

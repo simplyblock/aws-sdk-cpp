@@ -4,68 +4,79 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/ReplicationTask.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartReplicationTaskAssessmentResponse">AWS
+ * API Reference</a></p>
+ */
+class StartReplicationTaskAssessmentResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartReplicationTaskAssessmentResponse">AWS
-   * API Reference</a></p>
+   * <p> The assessed replication task. </p>
    */
-  class StartReplicationTaskAssessmentResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult();
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationTaskAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const ReplicationTask& GetReplicationTask() const { return m_replicationTask; }
+  template <typename ReplicationTaskT = ReplicationTask>
+  void SetReplicationTask(ReplicationTaskT&& value) {
+    m_replicationTaskHasBeenSet = true;
+    m_replicationTask = std::forward<ReplicationTaskT>(value);
+  }
+  template <typename ReplicationTaskT = ReplicationTask>
+  StartReplicationTaskAssessmentResult& WithReplicationTask(ReplicationTaskT&& value) {
+    SetReplicationTask(std::forward<ReplicationTaskT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p> The assessed replication task. </p>
-     */
-    inline const ReplicationTask& GetReplicationTask() const{ return m_replicationTask; }
-    inline void SetReplicationTask(const ReplicationTask& value) { m_replicationTask = value; }
-    inline void SetReplicationTask(ReplicationTask&& value) { m_replicationTask = std::move(value); }
-    inline StartReplicationTaskAssessmentResult& WithReplicationTask(const ReplicationTask& value) { SetReplicationTask(value); return *this;}
-    inline StartReplicationTaskAssessmentResult& WithReplicationTask(ReplicationTask&& value) { SetReplicationTask(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartReplicationTaskAssessmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartReplicationTaskAssessmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartReplicationTaskAssessmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartReplicationTaskAssessmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  ReplicationTask m_replicationTask;
 
-    ReplicationTask m_replicationTask;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replicationTaskHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

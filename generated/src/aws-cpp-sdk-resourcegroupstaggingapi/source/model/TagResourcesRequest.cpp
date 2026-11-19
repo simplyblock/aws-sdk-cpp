@@ -3,58 +3,53 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/resourcegroupstaggingapi/model/TagResourcesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ResourceGroupsTaggingAPI::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-TagResourcesRequest::TagResourcesRequest() : 
-    m_resourceARNListHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
+Aws::String TagResourcesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String TagResourcesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceARNListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> resourceARNListJsonList(m_resourceARNList.size());
-   for(unsigned resourceARNListIndex = 0; resourceARNListIndex < resourceARNListJsonList.GetLength(); ++resourceARNListIndex)
-   {
-     resourceARNListJsonList[resourceARNListIndex].AsString(m_resourceARNList[resourceARNListIndex]);
-   }
-   payload.WithArray("ResourceARNList", std::move(resourceARNListJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceARNListHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_resourceARNListHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceARNList"));
+    encoder.WriteArrayStart(m_resourceARNList.size());
+    for (const auto& item_0 : m_resourceARNList) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteMapStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.first.c_str()));
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.second.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection TagResourcesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TagResourcesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ResourceGroupsTaggingAPI_20170126.TagResources"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

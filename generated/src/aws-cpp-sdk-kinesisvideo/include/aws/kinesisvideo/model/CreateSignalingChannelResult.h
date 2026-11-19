@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KinesisVideo
-{
-namespace Model
-{
-  class CreateSignalingChannelResult
-  {
-  public:
-    AWS_KINESISVIDEO_API CreateSignalingChannelResult();
-    AWS_KINESISVIDEO_API CreateSignalingChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KINESISVIDEO_API CreateSignalingChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisVideo {
+namespace Model {
+class CreateSignalingChannelResult {
+ public:
+  AWS_KINESISVIDEO_API CreateSignalingChannelResult() = default;
+  AWS_KINESISVIDEO_API CreateSignalingChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KINESISVIDEO_API CreateSignalingChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the created channel.</p>
+   */
+  inline const Aws::String& GetChannelARN() const { return m_channelARN; }
+  template <typename ChannelARNT = Aws::String>
+  void SetChannelARN(ChannelARNT&& value) {
+    m_channelARNHasBeenSet = true;
+    m_channelARN = std::forward<ChannelARNT>(value);
+  }
+  template <typename ChannelARNT = Aws::String>
+  CreateSignalingChannelResult& WithChannelARN(ChannelARNT&& value) {
+    SetChannelARN(std::forward<ChannelARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the created channel.</p>
-     */
-    inline const Aws::String& GetChannelARN() const{ return m_channelARN; }
-    inline void SetChannelARN(const Aws::String& value) { m_channelARN = value; }
-    inline void SetChannelARN(Aws::String&& value) { m_channelARN = std::move(value); }
-    inline void SetChannelARN(const char* value) { m_channelARN.assign(value); }
-    inline CreateSignalingChannelResult& WithChannelARN(const Aws::String& value) { SetChannelARN(value); return *this;}
-    inline CreateSignalingChannelResult& WithChannelARN(Aws::String&& value) { SetChannelARN(std::move(value)); return *this;}
-    inline CreateSignalingChannelResult& WithChannelARN(const char* value) { SetChannelARN(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateSignalingChannelResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateSignalingChannelResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateSignalingChannelResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateSignalingChannelResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_channelARN;
+ private:
+  Aws::String m_channelARN;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelARNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace KinesisVideo
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisVideo
+}  // namespace Aws

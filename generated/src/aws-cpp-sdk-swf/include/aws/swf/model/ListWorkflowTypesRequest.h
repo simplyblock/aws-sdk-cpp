@@ -4,141 +4,164 @@
  */
 
 #pragma once
-#include <aws/swf/SWF_EXPORTS.h>
-#include <aws/swf/SWFRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/swf/SWFRequest.h>
+#include <aws/swf/SWF_EXPORTS.h>
 #include <aws/swf/model/RegistrationStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SWF
-{
-namespace Model
-{
+namespace Aws {
+namespace SWF {
+namespace Model {
 
+/**
+ */
+class ListWorkflowTypesRequest : public SWFRequest {
+ public:
+  AWS_SWF_API ListWorkflowTypesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListWorkflowTypes"; }
+
+  AWS_SWF_API Aws::String SerializePayload() const override;
+
+  AWS_SWF_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the domain in which the workflow types have been registered.</p>
    */
-  class ListWorkflowTypesRequest : public SWFRequest
-  {
-  public:
-    AWS_SWF_API ListWorkflowTypesRequest();
+  inline const Aws::String& GetDomain() const { return m_domain; }
+  inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
+  template <typename DomainT = Aws::String>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = Aws::String>
+  ListWorkflowTypesRequest& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListWorkflowTypes"; }
+  ///@{
+  /**
+   * <p>If specified, lists the workflow type with this name.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ListWorkflowTypesRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SWF_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies the registration status of the workflow types to list.</p>
+   */
+  inline RegistrationStatus GetRegistrationStatus() const { return m_registrationStatus; }
+  inline bool RegistrationStatusHasBeenSet() const { return m_registrationStatusHasBeenSet; }
+  inline void SetRegistrationStatus(RegistrationStatus value) {
+    m_registrationStatusHasBeenSet = true;
+    m_registrationStatus = value;
+  }
+  inline ListWorkflowTypesRequest& WithRegistrationStatus(RegistrationStatus value) {
+    SetRegistrationStatus(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SWF_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>If <code>NextPageToken</code> is returned there are more results available.
+   * The value of <code>NextPageToken</code> is a unique pagination token for each
+   * page. Make the call again using the returned token to retrieve the next page.
+   * Keep all other arguments unchanged. Each pagination token expires after 24
+   * hours. Using an expired pagination token will return a <code>400</code> error:
+   * "<code>Specified token has exceeded its maximum lifetime</code>". </p> <p>The
+   * configured <code>maximumPageSize</code> determines how many results can be
+   * returned in a single call. </p>
+   */
+  inline const Aws::String& GetNextPageToken() const { return m_nextPageToken; }
+  inline bool NextPageTokenHasBeenSet() const { return m_nextPageTokenHasBeenSet; }
+  template <typename NextPageTokenT = Aws::String>
+  void SetNextPageToken(NextPageTokenT&& value) {
+    m_nextPageTokenHasBeenSet = true;
+    m_nextPageToken = std::forward<NextPageTokenT>(value);
+  }
+  template <typename NextPageTokenT = Aws::String>
+  ListWorkflowTypesRequest& WithNextPageToken(NextPageTokenT&& value) {
+    SetNextPageToken(std::forward<NextPageTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The maximum number of results that are returned per call. Use
+   * <code>nextPageToken</code> to obtain further pages of results. </p>
+   */
+  inline int GetMaximumPageSize() const { return m_maximumPageSize; }
+  inline bool MaximumPageSizeHasBeenSet() const { return m_maximumPageSizeHasBeenSet; }
+  inline void SetMaximumPageSize(int value) {
+    m_maximumPageSizeHasBeenSet = true;
+    m_maximumPageSize = value;
+  }
+  inline ListWorkflowTypesRequest& WithMaximumPageSize(int value) {
+    SetMaximumPageSize(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the domain in which the workflow types have been registered.</p>
-     */
-    inline const Aws::String& GetDomain() const{ return m_domain; }
-    inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
-    inline void SetDomain(const Aws::String& value) { m_domainHasBeenSet = true; m_domain = value; }
-    inline void SetDomain(Aws::String&& value) { m_domainHasBeenSet = true; m_domain = std::move(value); }
-    inline void SetDomain(const char* value) { m_domainHasBeenSet = true; m_domain.assign(value); }
-    inline ListWorkflowTypesRequest& WithDomain(const Aws::String& value) { SetDomain(value); return *this;}
-    inline ListWorkflowTypesRequest& WithDomain(Aws::String&& value) { SetDomain(std::move(value)); return *this;}
-    inline ListWorkflowTypesRequest& WithDomain(const char* value) { SetDomain(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When set to <code>true</code>, returns the results in reverse order. By
+   * default the results are returned in ascending alphabetical order of the
+   * <code>name</code> of the workflow types.</p>
+   */
+  inline bool GetReverseOrder() const { return m_reverseOrder; }
+  inline bool ReverseOrderHasBeenSet() const { return m_reverseOrderHasBeenSet; }
+  inline void SetReverseOrder(bool value) {
+    m_reverseOrderHasBeenSet = true;
+    m_reverseOrder = value;
+  }
+  inline ListWorkflowTypesRequest& WithReverseOrder(bool value) {
+    SetReverseOrder(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domain;
 
-    ///@{
-    /**
-     * <p>If specified, lists the workflow type with this name.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ListWorkflowTypesRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ListWorkflowTypesRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ListWorkflowTypesRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>Specifies the registration status of the workflow types to list.</p>
-     */
-    inline const RegistrationStatus& GetRegistrationStatus() const{ return m_registrationStatus; }
-    inline bool RegistrationStatusHasBeenSet() const { return m_registrationStatusHasBeenSet; }
-    inline void SetRegistrationStatus(const RegistrationStatus& value) { m_registrationStatusHasBeenSet = true; m_registrationStatus = value; }
-    inline void SetRegistrationStatus(RegistrationStatus&& value) { m_registrationStatusHasBeenSet = true; m_registrationStatus = std::move(value); }
-    inline ListWorkflowTypesRequest& WithRegistrationStatus(const RegistrationStatus& value) { SetRegistrationStatus(value); return *this;}
-    inline ListWorkflowTypesRequest& WithRegistrationStatus(RegistrationStatus&& value) { SetRegistrationStatus(std::move(value)); return *this;}
-    ///@}
+  RegistrationStatus m_registrationStatus{RegistrationStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>If <code>NextPageToken</code> is returned there are more results available.
-     * The value of <code>NextPageToken</code> is a unique pagination token for each
-     * page. Make the call again using the returned token to retrieve the next page.
-     * Keep all other arguments unchanged. Each pagination token expires after 24
-     * hours. Using an expired pagination token will return a <code>400</code> error:
-     * "<code>Specified token has exceeded its maximum lifetime</code>". </p> <p>The
-     * configured <code>maximumPageSize</code> determines how many results can be
-     * returned in a single call. </p>
-     */
-    inline const Aws::String& GetNextPageToken() const{ return m_nextPageToken; }
-    inline bool NextPageTokenHasBeenSet() const { return m_nextPageTokenHasBeenSet; }
-    inline void SetNextPageToken(const Aws::String& value) { m_nextPageTokenHasBeenSet = true; m_nextPageToken = value; }
-    inline void SetNextPageToken(Aws::String&& value) { m_nextPageTokenHasBeenSet = true; m_nextPageToken = std::move(value); }
-    inline void SetNextPageToken(const char* value) { m_nextPageTokenHasBeenSet = true; m_nextPageToken.assign(value); }
-    inline ListWorkflowTypesRequest& WithNextPageToken(const Aws::String& value) { SetNextPageToken(value); return *this;}
-    inline ListWorkflowTypesRequest& WithNextPageToken(Aws::String&& value) { SetNextPageToken(std::move(value)); return *this;}
-    inline ListWorkflowTypesRequest& WithNextPageToken(const char* value) { SetNextPageToken(value); return *this;}
-    ///@}
+  Aws::String m_nextPageToken;
 
-    ///@{
-    /**
-     * <p>The maximum number of results that are returned per call. Use
-     * <code>nextPageToken</code> to obtain further pages of results. </p>
-     */
-    inline int GetMaximumPageSize() const{ return m_maximumPageSize; }
-    inline bool MaximumPageSizeHasBeenSet() const { return m_maximumPageSizeHasBeenSet; }
-    inline void SetMaximumPageSize(int value) { m_maximumPageSizeHasBeenSet = true; m_maximumPageSize = value; }
-    inline ListWorkflowTypesRequest& WithMaximumPageSize(int value) { SetMaximumPageSize(value); return *this;}
-    ///@}
+  int m_maximumPageSize{0};
 
-    ///@{
-    /**
-     * <p>When set to <code>true</code>, returns the results in reverse order. By
-     * default the results are returned in ascending alphabetical order of the
-     * <code>name</code> of the workflow types.</p>
-     */
-    inline bool GetReverseOrder() const{ return m_reverseOrder; }
-    inline bool ReverseOrderHasBeenSet() const { return m_reverseOrderHasBeenSet; }
-    inline void SetReverseOrder(bool value) { m_reverseOrderHasBeenSet = true; m_reverseOrder = value; }
-    inline ListWorkflowTypesRequest& WithReverseOrder(bool value) { SetReverseOrder(value); return *this;}
-    ///@}
-  private:
+  bool m_reverseOrder{false};
+  bool m_domainHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_registrationStatusHasBeenSet = false;
+  bool m_nextPageTokenHasBeenSet = false;
+  bool m_maximumPageSizeHasBeenSet = false;
+  bool m_reverseOrderHasBeenSet = false;
+};
 
-    Aws::String m_domain;
-    bool m_domainHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    RegistrationStatus m_registrationStatus;
-    bool m_registrationStatusHasBeenSet = false;
-
-    Aws::String m_nextPageToken;
-    bool m_nextPageTokenHasBeenSet = false;
-
-    int m_maximumPageSize;
-    bool m_maximumPageSizeHasBeenSet = false;
-
-    bool m_reverseOrder;
-    bool m_reverseOrderHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SWF
-} // namespace Aws
+}  // namespace Model
+}  // namespace SWF
+}  // namespace Aws

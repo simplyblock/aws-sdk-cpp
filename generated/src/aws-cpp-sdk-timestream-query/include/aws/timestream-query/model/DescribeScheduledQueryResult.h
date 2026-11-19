@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/timestream-query/TimestreamQuery_EXPORTS.h>
 #include <aws/timestream-query/model/ScheduledQueryDescription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamQuery
-{
-namespace Model
-{
-  class DescribeScheduledQueryResult
-  {
-  public:
-    AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult();
-    AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamQuery {
+namespace Model {
+class DescribeScheduledQueryResult {
+ public:
+  AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult() = default;
+  AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TIMESTREAMQUERY_API DescribeScheduledQueryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The scheduled query.</p>
+   */
+  inline const ScheduledQueryDescription& GetScheduledQuery() const { return m_scheduledQuery; }
+  template <typename ScheduledQueryT = ScheduledQueryDescription>
+  void SetScheduledQuery(ScheduledQueryT&& value) {
+    m_scheduledQueryHasBeenSet = true;
+    m_scheduledQuery = std::forward<ScheduledQueryT>(value);
+  }
+  template <typename ScheduledQueryT = ScheduledQueryDescription>
+  DescribeScheduledQueryResult& WithScheduledQuery(ScheduledQueryT&& value) {
+    SetScheduledQuery(std::forward<ScheduledQueryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The scheduled query.</p>
-     */
-    inline const ScheduledQueryDescription& GetScheduledQuery() const{ return m_scheduledQuery; }
-    inline void SetScheduledQuery(const ScheduledQueryDescription& value) { m_scheduledQuery = value; }
-    inline void SetScheduledQuery(ScheduledQueryDescription&& value) { m_scheduledQuery = std::move(value); }
-    inline DescribeScheduledQueryResult& WithScheduledQuery(const ScheduledQueryDescription& value) { SetScheduledQuery(value); return *this;}
-    inline DescribeScheduledQueryResult& WithScheduledQuery(ScheduledQueryDescription&& value) { SetScheduledQuery(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeScheduledQueryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeScheduledQueryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeScheduledQueryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeScheduledQueryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ScheduledQueryDescription m_scheduledQuery;
+ private:
+  ScheduledQueryDescription m_scheduledQuery;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_scheduledQueryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TimestreamQuery
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamQuery
+}  // namespace Aws

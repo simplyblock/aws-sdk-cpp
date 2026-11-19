@@ -4,115 +4,131 @@
  */
 
 #pragma once
-#include <aws/route53-recovery-control-config/Route53RecoveryControlConfig_EXPORTS.h>
-#include <aws/route53-recovery-control-config/Route53RecoveryControlConfigRequest.h>
-#include <aws/route53-recovery-control-config/model/NewAssertionRule.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/route53-recovery-control-config/model/NewGatingRule.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/route53-recovery-control-config/Route53RecoveryControlConfigRequest.h>
+#include <aws/route53-recovery-control-config/Route53RecoveryControlConfig_EXPORTS.h>
+#include <aws/route53-recovery-control-config/model/NewAssertionRule.h>
+#include <aws/route53-recovery-control-config/model/NewGatingRule.h>
 
-namespace Aws
-{
-namespace Route53RecoveryControlConfig
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Route53RecoveryControlConfig {
+namespace Model {
+
+/**
+ * <p>The request body that you include when you create a safety
+ * rule.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateSafetyRuleRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateSafetyRuleRequest : public Route53RecoveryControlConfigRequest {
+ public:
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateSafetyRule"; }
+
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p>The request body that you include when you create a safety
-   * rule.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateSafetyRuleRequest">AWS
-   * API Reference</a></p>
+   * <p>The assertion rule requested.</p>
    */
-  class CreateSafetyRuleRequest : public Route53RecoveryControlConfigRequest
-  {
-  public:
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleRequest();
+  inline const NewAssertionRule& GetAssertionRule() const { return m_assertionRule; }
+  inline bool AssertionRuleHasBeenSet() const { return m_assertionRuleHasBeenSet; }
+  template <typename AssertionRuleT = NewAssertionRule>
+  void SetAssertionRule(AssertionRuleT&& value) {
+    m_assertionRuleHasBeenSet = true;
+    m_assertionRule = std::forward<AssertionRuleT>(value);
+  }
+  template <typename AssertionRuleT = NewAssertionRule>
+  CreateSafetyRuleRequest& WithAssertionRule(AssertionRuleT&& value) {
+    SetAssertionRule(std::forward<AssertionRuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateSafetyRule"; }
+  ///@{
+  /**
+   * <p>A unique, case-sensitive string of up to 64 ASCII characters. To make an
+   * idempotent API request with an action, specify a client token in the
+   * request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateSafetyRuleRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The gating rule requested.</p>
+   */
+  inline const NewGatingRule& GetGatingRule() const { return m_gatingRule; }
+  inline bool GatingRuleHasBeenSet() const { return m_gatingRuleHasBeenSet; }
+  template <typename GatingRuleT = NewGatingRule>
+  void SetGatingRule(GatingRuleT&& value) {
+    m_gatingRuleHasBeenSet = true;
+    m_gatingRule = std::forward<GatingRuleT>(value);
+  }
+  template <typename GatingRuleT = NewGatingRule>
+  CreateSafetyRuleRequest& WithGatingRule(GatingRuleT&& value) {
+    SetGatingRule(std::forward<GatingRuleT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The tags associated with the safety rule.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateSafetyRuleRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateSafetyRuleRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  NewAssertionRule m_assertionRule;
 
-    ///@{
-    /**
-     * <p>The assertion rule requested.</p>
-     */
-    inline const NewAssertionRule& GetAssertionRule() const{ return m_assertionRule; }
-    inline bool AssertionRuleHasBeenSet() const { return m_assertionRuleHasBeenSet; }
-    inline void SetAssertionRule(const NewAssertionRule& value) { m_assertionRuleHasBeenSet = true; m_assertionRule = value; }
-    inline void SetAssertionRule(NewAssertionRule&& value) { m_assertionRuleHasBeenSet = true; m_assertionRule = std::move(value); }
-    inline CreateSafetyRuleRequest& WithAssertionRule(const NewAssertionRule& value) { SetAssertionRule(value); return *this;}
-    inline CreateSafetyRuleRequest& WithAssertionRule(NewAssertionRule&& value) { SetAssertionRule(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive string of up to 64 ASCII characters. To make an
-     * idempotent API request with an action, specify a client token in the
-     * request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateSafetyRuleRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateSafetyRuleRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateSafetyRuleRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  NewGatingRule m_gatingRule;
 
-    ///@{
-    /**
-     * <p>The gating rule requested.</p>
-     */
-    inline const NewGatingRule& GetGatingRule() const{ return m_gatingRule; }
-    inline bool GatingRuleHasBeenSet() const { return m_gatingRuleHasBeenSet; }
-    inline void SetGatingRule(const NewGatingRule& value) { m_gatingRuleHasBeenSet = true; m_gatingRule = value; }
-    inline void SetGatingRule(NewGatingRule&& value) { m_gatingRuleHasBeenSet = true; m_gatingRule = std::move(value); }
-    inline CreateSafetyRuleRequest& WithGatingRule(const NewGatingRule& value) { SetGatingRule(value); return *this;}
-    inline CreateSafetyRuleRequest& WithGatingRule(NewGatingRule&& value) { SetGatingRule(std::move(value)); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_assertionRuleHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_gatingRuleHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The tags associated with the safety rule.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateSafetyRuleRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateSafetyRuleRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateSafetyRuleRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSafetyRuleRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    NewAssertionRule m_assertionRule;
-    bool m_assertionRuleHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    NewGatingRule m_gatingRule;
-    bool m_gatingRuleHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Route53RecoveryControlConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53RecoveryControlConfig
+}  // namespace Aws

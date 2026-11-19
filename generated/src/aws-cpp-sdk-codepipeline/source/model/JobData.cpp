@@ -4,170 +4,371 @@
  */
 
 #include <aws/codepipeline/model/JobData.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodePipeline
-{
-namespace Model
-{
+namespace Aws {
+namespace CodePipeline {
+namespace Model {
 
-JobData::JobData() : 
-    m_actionTypeIdHasBeenSet(false),
-    m_actionConfigurationHasBeenSet(false),
-    m_pipelineContextHasBeenSet(false),
-    m_inputArtifactsHasBeenSet(false),
-    m_outputArtifactsHasBeenSet(false),
-    m_artifactCredentialsHasBeenSet(false),
-    m_continuationTokenHasBeenSet(false),
-    m_encryptionKeyHasBeenSet(false)
-{
-}
+JobData::JobData(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-JobData::JobData(JsonView jsonValue)
-  : JobData()
-{
-  *this = jsonValue;
-}
+JobData& JobData::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-JobData& JobData::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("actionTypeId"))
-  {
-    m_actionTypeId = jsonValue.GetObject("actionTypeId");
+              if (initialKeyStr == "actionTypeId") {
+                m_actionTypeId = ActionTypeId(decoder);
+                m_actionTypeIdHasBeenSet = true;
+              }
 
-    m_actionTypeIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "actionConfiguration") {
+                m_actionConfiguration = ActionConfiguration(decoder);
+                m_actionConfigurationHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("actionConfiguration"))
-  {
-    m_actionConfiguration = jsonValue.GetObject("actionConfiguration");
+              else if (initialKeyStr == "pipelineContext") {
+                m_pipelineContext = PipelineContext(decoder);
+                m_pipelineContextHasBeenSet = true;
+              }
 
-    m_actionConfigurationHasBeenSet = true;
-  }
+              else if (initialKeyStr == "inputArtifacts") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_inputArtifacts.push_back(Artifact(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_inputArtifacts.push_back(Artifact(decoder));
+                    }
+                  }
+                }
+                m_inputArtifactsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("pipelineContext"))
-  {
-    m_pipelineContext = jsonValue.GetObject("pipelineContext");
+              else if (initialKeyStr == "outputArtifacts") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_outputArtifacts.push_back(Artifact(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_outputArtifacts.push_back(Artifact(decoder));
+                    }
+                  }
+                }
+                m_outputArtifactsHasBeenSet = true;
+              }
 
-    m_pipelineContextHasBeenSet = true;
-  }
+              else if (initialKeyStr == "artifactCredentials") {
+                m_artifactCredentials = AWSSessionCredentials(decoder);
+                m_artifactCredentialsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("inputArtifacts"))
-  {
-    Aws::Utils::Array<JsonView> inputArtifactsJsonList = jsonValue.GetArray("inputArtifacts");
-    for(unsigned inputArtifactsIndex = 0; inputArtifactsIndex < inputArtifactsJsonList.GetLength(); ++inputArtifactsIndex)
-    {
-      m_inputArtifacts.push_back(inputArtifactsJsonList[inputArtifactsIndex].AsObject());
+              else if (initialKeyStr == "continuationToken") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_continuationToken = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_continuationToken = ss.str();
+                  }
+                }
+                m_continuationTokenHasBeenSet = true;
+              }
+
+              else if (initialKeyStr == "encryptionKey") {
+                m_encryptionKey = EncryptionKey(decoder);
+                m_encryptionKeyHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("JobData", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
+
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "actionTypeId") {
+              m_actionTypeId = ActionTypeId(decoder);
+              m_actionTypeIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "actionConfiguration") {
+              m_actionConfiguration = ActionConfiguration(decoder);
+              m_actionConfigurationHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "pipelineContext") {
+              m_pipelineContext = PipelineContext(decoder);
+              m_pipelineContextHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "inputArtifacts") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_inputArtifacts.push_back(Artifact(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_inputArtifacts.push_back(Artifact(decoder));
+                  }
+                }
+              }
+              m_inputArtifactsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "outputArtifacts") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_outputArtifacts.push_back(Artifact(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_outputArtifacts.push_back(Artifact(decoder));
+                  }
+                }
+              }
+              m_outputArtifactsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "artifactCredentials") {
+              m_artifactCredentials = AWSSessionCredentials(decoder);
+              m_artifactCredentialsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "continuationToken") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_continuationToken = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_continuationToken = ss.str();
+                }
+              }
+              m_continuationTokenHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "encryptionKey") {
+              m_encryptionKey = EncryptionKey(decoder);
+              m_encryptionKeyHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_inputArtifactsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("outputArtifacts"))
-  {
-    Aws::Utils::Array<JsonView> outputArtifactsJsonList = jsonValue.GetArray("outputArtifacts");
-    for(unsigned outputArtifactsIndex = 0; outputArtifactsIndex < outputArtifactsJsonList.GetLength(); ++outputArtifactsIndex)
-    {
-      m_outputArtifacts.push_back(outputArtifactsJsonList[outputArtifactsIndex].AsObject());
-    }
-    m_outputArtifactsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("artifactCredentials"))
-  {
-    m_artifactCredentials = jsonValue.GetObject("artifactCredentials");
-
-    m_artifactCredentialsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("continuationToken"))
-  {
-    m_continuationToken = jsonValue.GetString("continuationToken");
-
-    m_continuationTokenHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("encryptionKey"))
-  {
-    m_encryptionKey = jsonValue.GetObject("encryptionKey");
-
-    m_encryptionKeyHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue JobData::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_actionTypeIdHasBeenSet)
-  {
-   payload.WithObject("actionTypeId", m_actionTypeId.Jsonize());
-
+void JobData::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_actionTypeIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pipelineContextHasBeenSet) {
+    mapSize++;
+  }
+  if (m_inputArtifactsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_outputArtifactsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_artifactCredentialsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_continuationTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionKeyHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_actionConfigurationHasBeenSet)
-  {
-   payload.WithObject("actionConfiguration", m_actionConfiguration.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_actionTypeIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("actionTypeId"));
+    m_actionTypeId.CborEncode(encoder);
   }
 
-  if(m_pipelineContextHasBeenSet)
-  {
-   payload.WithObject("pipelineContext", m_pipelineContext.Jsonize());
-
+  if (m_actionConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("actionConfiguration"));
+    m_actionConfiguration.CborEncode(encoder);
   }
 
-  if(m_inputArtifactsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> inputArtifactsJsonList(m_inputArtifacts.size());
-   for(unsigned inputArtifactsIndex = 0; inputArtifactsIndex < inputArtifactsJsonList.GetLength(); ++inputArtifactsIndex)
-   {
-     inputArtifactsJsonList[inputArtifactsIndex].AsObject(m_inputArtifacts[inputArtifactsIndex].Jsonize());
-   }
-   payload.WithArray("inputArtifacts", std::move(inputArtifactsJsonList));
-
+  if (m_pipelineContextHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineContext"));
+    m_pipelineContext.CborEncode(encoder);
   }
 
-  if(m_outputArtifactsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> outputArtifactsJsonList(m_outputArtifacts.size());
-   for(unsigned outputArtifactsIndex = 0; outputArtifactsIndex < outputArtifactsJsonList.GetLength(); ++outputArtifactsIndex)
-   {
-     outputArtifactsJsonList[outputArtifactsIndex].AsObject(m_outputArtifacts[outputArtifactsIndex].Jsonize());
-   }
-   payload.WithArray("outputArtifacts", std::move(outputArtifactsJsonList));
-
+  if (m_inputArtifactsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("inputArtifacts"));
+    encoder.WriteArrayStart(m_inputArtifacts.size());
+    for (const auto& item_0 : m_inputArtifacts) {
+      item_0.CborEncode(encoder);
+    }
   }
 
-  if(m_artifactCredentialsHasBeenSet)
-  {
-   payload.WithObject("artifactCredentials", m_artifactCredentials.Jsonize());
-
+  if (m_outputArtifactsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("outputArtifacts"));
+    encoder.WriteArrayStart(m_outputArtifacts.size());
+    for (const auto& item_0 : m_outputArtifacts) {
+      item_0.CborEncode(encoder);
+    }
   }
 
-  if(m_continuationTokenHasBeenSet)
-  {
-   payload.WithString("continuationToken", m_continuationToken);
-
+  if (m_artifactCredentialsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("artifactCredentials"));
+    m_artifactCredentials.CborEncode(encoder);
   }
 
-  if(m_encryptionKeyHasBeenSet)
-  {
-   payload.WithObject("encryptionKey", m_encryptionKey.Jsonize());
-
+  if (m_continuationTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("continuationToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_continuationToken.c_str()));
   }
 
-  return payload;
+  if (m_encryptionKeyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("encryptionKey"));
+    m_encryptionKey.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace CodePipeline
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodePipeline
+}  // namespace Aws

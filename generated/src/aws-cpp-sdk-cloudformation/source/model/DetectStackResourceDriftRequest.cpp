@@ -10,23 +10,14 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DetectStackResourceDriftRequest::DetectStackResourceDriftRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_logicalResourceIdHasBeenSet(false)
-{
-}
-
-Aws::String DetectStackResourceDriftRequest::SerializePayload() const
-{
+Aws::String DetectStackResourceDriftRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DetectStackResourceDrift&";
-  if(m_stackNameHasBeenSet)
-  {
+  if (m_stackNameHasBeenSet) {
     ss << "StackName=" << StringUtils::URLEncode(m_stackName.c_str()) << "&";
   }
 
-  if(m_logicalResourceIdHasBeenSet)
-  {
+  if (m_logicalResourceIdHasBeenSet) {
     ss << "LogicalResourceId=" << StringUtils::URLEncode(m_logicalResourceId.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String DetectStackResourceDriftRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DetectStackResourceDriftRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DetectStackResourceDriftRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

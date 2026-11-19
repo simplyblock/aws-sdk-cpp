@@ -4,93 +4,112 @@
  */
 
 #pragma once
-#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/neptunedata/Neptunedata_EXPORTS.h>
 #include <aws/neptunedata/model/QueryEvalStats.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace neptunedata
-{
-namespace Model
-{
-  class GetOpenCypherQueryStatusResult
-  {
-  public:
-    AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult();
-    AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace neptunedata {
+namespace Model {
+class GetOpenCypherQueryStatusResult {
+ public:
+  AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult() = default;
+  AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NEPTUNEDATA_API GetOpenCypherQueryStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique ID of the query for which status is being returned.</p>
+   */
+  inline const Aws::String& GetQueryId() const { return m_queryId; }
+  template <typename QueryIdT = Aws::String>
+  void SetQueryId(QueryIdT&& value) {
+    m_queryIdHasBeenSet = true;
+    m_queryId = std::forward<QueryIdT>(value);
+  }
+  template <typename QueryIdT = Aws::String>
+  GetOpenCypherQueryStatusResult& WithQueryId(QueryIdT&& value) {
+    SetQueryId(std::forward<QueryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique ID of the query for which status is being returned.</p>
-     */
-    inline const Aws::String& GetQueryId() const{ return m_queryId; }
-    inline void SetQueryId(const Aws::String& value) { m_queryId = value; }
-    inline void SetQueryId(Aws::String&& value) { m_queryId = std::move(value); }
-    inline void SetQueryId(const char* value) { m_queryId.assign(value); }
-    inline GetOpenCypherQueryStatusResult& WithQueryId(const Aws::String& value) { SetQueryId(value); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithQueryId(Aws::String&& value) { SetQueryId(std::move(value)); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithQueryId(const char* value) { SetQueryId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The openCypher query string.</p>
+   */
+  inline const Aws::String& GetQueryString() const { return m_queryString; }
+  template <typename QueryStringT = Aws::String>
+  void SetQueryString(QueryStringT&& value) {
+    m_queryStringHasBeenSet = true;
+    m_queryString = std::forward<QueryStringT>(value);
+  }
+  template <typename QueryStringT = Aws::String>
+  GetOpenCypherQueryStatusResult& WithQueryString(QueryStringT&& value) {
+    SetQueryString(std::forward<QueryStringT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The openCypher query string.</p>
-     */
-    inline const Aws::String& GetQueryString() const{ return m_queryString; }
-    inline void SetQueryString(const Aws::String& value) { m_queryString = value; }
-    inline void SetQueryString(Aws::String&& value) { m_queryString = std::move(value); }
-    inline void SetQueryString(const char* value) { m_queryString.assign(value); }
-    inline GetOpenCypherQueryStatusResult& WithQueryString(const Aws::String& value) { SetQueryString(value); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithQueryString(Aws::String&& value) { SetQueryString(std::move(value)); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithQueryString(const char* value) { SetQueryString(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The openCypher query evaluation status.</p>
+   */
+  inline const QueryEvalStats& GetQueryEvalStats() const { return m_queryEvalStats; }
+  template <typename QueryEvalStatsT = QueryEvalStats>
+  void SetQueryEvalStats(QueryEvalStatsT&& value) {
+    m_queryEvalStatsHasBeenSet = true;
+    m_queryEvalStats = std::forward<QueryEvalStatsT>(value);
+  }
+  template <typename QueryEvalStatsT = QueryEvalStats>
+  GetOpenCypherQueryStatusResult& WithQueryEvalStats(QueryEvalStatsT&& value) {
+    SetQueryEvalStats(std::forward<QueryEvalStatsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The openCypher query evaluation status.</p>
-     */
-    inline const QueryEvalStats& GetQueryEvalStats() const{ return m_queryEvalStats; }
-    inline void SetQueryEvalStats(const QueryEvalStats& value) { m_queryEvalStats = value; }
-    inline void SetQueryEvalStats(QueryEvalStats&& value) { m_queryEvalStats = std::move(value); }
-    inline GetOpenCypherQueryStatusResult& WithQueryEvalStats(const QueryEvalStats& value) { SetQueryEvalStats(value); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithQueryEvalStats(QueryEvalStats&& value) { SetQueryEvalStats(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetOpenCypherQueryStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetOpenCypherQueryStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetOpenCypherQueryStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_queryId;
+ private:
+  Aws::String m_queryId;
 
-    Aws::String m_queryString;
+  Aws::String m_queryString;
 
-    QueryEvalStats m_queryEvalStats;
+  QueryEvalStats m_queryEvalStats;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_queryIdHasBeenSet = false;
+  bool m_queryStringHasBeenSet = false;
+  bool m_queryEvalStatsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace neptunedata
-} // namespace Aws
+}  // namespace Model
+}  // namespace neptunedata
+}  // namespace Aws

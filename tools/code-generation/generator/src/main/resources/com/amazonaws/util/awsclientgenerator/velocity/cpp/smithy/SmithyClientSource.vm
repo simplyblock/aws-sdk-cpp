@@ -18,9 +18,11 @@
 \#include <aws/core/utils/logging/ErrorMacros.h>
 
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientSourceHeaders.vm")
+#if(!$serviceModel.hasOnlyBearerAuth())
 \#include <smithy/identity/resolver/built-in/SimpleAwsCredentialIdentityResolver.h>
 \#include <smithy/identity/resolver/built-in/DefaultAwsCredentialIdentityResolver.h>
 \#include <smithy/identity/resolver/built-in/AwsCredentialsProviderIdentityResolver.h>
+#end
 
 using namespace Aws;
 using namespace Aws::Auth;
@@ -45,9 +47,9 @@ const char* ${className}::GetServiceName() {return SERVICE_NAME;}
 const char* ${className}::GetAllocationTag() {return ALLOCATION_TAG;}
 
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyClientSourceInit.vm")
+#parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyServiceInvokeOperationSource.vm")
 #end
-
-#parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyServiceOperationsSource.vm")
+#parse("/com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyJsonServiceOperationsSource.vm")
 
 #if($metadata.hasEndpointDiscoveryTrait)
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyEndpointDiscoveryDefinition.vm")

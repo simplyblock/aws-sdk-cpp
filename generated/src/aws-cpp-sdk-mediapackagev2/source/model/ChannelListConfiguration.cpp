@@ -3,139 +3,120 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediapackagev2/model/ChannelListConfiguration.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediapackagev2/model/ChannelListConfiguration.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace mediapackagev2
-{
-namespace Model
-{
+namespace Aws {
+namespace mediapackagev2 {
+namespace Model {
 
-ChannelListConfiguration::ChannelListConfiguration() : 
-    m_arnHasBeenSet(false),
-    m_channelNameHasBeenSet(false),
-    m_channelGroupNameHasBeenSet(false),
-    m_createdAtHasBeenSet(false),
-    m_modifiedAtHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_inputType(InputType::NOT_SET),
-    m_inputTypeHasBeenSet(false)
-{
-}
+ChannelListConfiguration::ChannelListConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-ChannelListConfiguration::ChannelListConfiguration(JsonView jsonValue)
-  : ChannelListConfiguration()
-{
-  *this = jsonValue;
-}
-
-ChannelListConfiguration& ChannelListConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Arn"))
-  {
+ChannelListConfiguration& ChannelListConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Arn")) {
     m_arn = jsonValue.GetString("Arn");
-
     m_arnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ChannelName"))
-  {
+  if (jsonValue.ValueExists("ChannelName")) {
     m_channelName = jsonValue.GetString("ChannelName");
-
     m_channelNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ChannelGroupName"))
-  {
+  if (jsonValue.ValueExists("ChannelGroupName")) {
     m_channelGroupName = jsonValue.GetString("ChannelGroupName");
-
     m_channelGroupNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CreatedAt"))
-  {
+  if (jsonValue.ValueExists("CreatedAt")) {
     m_createdAt = jsonValue.GetDouble("CreatedAt");
-
     m_createdAtHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ModifiedAt"))
-  {
+  if (jsonValue.ValueExists("ModifiedAt")) {
     m_modifiedAt = jsonValue.GetDouble("ModifiedAt");
-
     m_modifiedAtHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Description"))
-  {
+  if (jsonValue.ValueExists("Description")) {
     m_description = jsonValue.GetString("Description");
-
     m_descriptionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("InputType"))
-  {
+  if (jsonValue.ValueExists("InputType")) {
     m_inputType = InputTypeMapper::GetInputTypeForName(jsonValue.GetString("InputType"));
-
     m_inputTypeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("OutputLockingMode")) {
+    m_outputLockingMode = OutputLockingModeMapper::GetOutputLockingModeForName(jsonValue.GetString("OutputLockingMode"));
+    m_outputLockingModeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("MultiviewConfiguration")) {
+    m_multiviewConfiguration = jsonValue.GetObject("MultiviewConfiguration");
+    m_multiviewConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AttachedMultiviewChannels")) {
+    Aws::Utils::Array<JsonView> attachedMultiviewChannelsJsonList = jsonValue.GetArray("AttachedMultiviewChannels");
+    for (unsigned attachedMultiviewChannelsIndex = 0; attachedMultiviewChannelsIndex < attachedMultiviewChannelsJsonList.GetLength();
+         ++attachedMultiviewChannelsIndex) {
+      m_attachedMultiviewChannels.push_back(attachedMultiviewChannelsJsonList[attachedMultiviewChannelsIndex].AsString());
+    }
+    m_attachedMultiviewChannelsHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ChannelListConfiguration::Jsonize() const
-{
+JsonValue ChannelListConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("Arn", m_arn);
-
+  if (m_arnHasBeenSet) {
+    payload.WithString("Arn", m_arn);
   }
 
-  if(m_channelNameHasBeenSet)
-  {
-   payload.WithString("ChannelName", m_channelName);
-
+  if (m_channelNameHasBeenSet) {
+    payload.WithString("ChannelName", m_channelName);
   }
 
-  if(m_channelGroupNameHasBeenSet)
-  {
-   payload.WithString("ChannelGroupName", m_channelGroupName);
-
+  if (m_channelGroupNameHasBeenSet) {
+    payload.WithString("ChannelGroupName", m_channelGroupName);
   }
 
-  if(m_createdAtHasBeenSet)
-  {
-   payload.WithDouble("CreatedAt", m_createdAt.SecondsWithMSPrecision());
+  if (m_createdAtHasBeenSet) {
+    payload.WithDouble("CreatedAt", m_createdAt.SecondsWithMSPrecision());
   }
 
-  if(m_modifiedAtHasBeenSet)
-  {
-   payload.WithDouble("ModifiedAt", m_modifiedAt.SecondsWithMSPrecision());
+  if (m_modifiedAtHasBeenSet) {
+    payload.WithDouble("ModifiedAt", m_modifiedAt.SecondsWithMSPrecision());
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_inputTypeHasBeenSet)
-  {
-   payload.WithString("InputType", InputTypeMapper::GetNameForInputType(m_inputType));
+  if (m_inputTypeHasBeenSet) {
+    payload.WithString("InputType", InputTypeMapper::GetNameForInputType(m_inputType));
+  }
+
+  if (m_outputLockingModeHasBeenSet) {
+    payload.WithString("OutputLockingMode", OutputLockingModeMapper::GetNameForOutputLockingMode(m_outputLockingMode));
+  }
+
+  if (m_multiviewConfigurationHasBeenSet) {
+    payload.WithObject("MultiviewConfiguration", m_multiviewConfiguration.Jsonize());
+  }
+
+  if (m_attachedMultiviewChannelsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> attachedMultiviewChannelsJsonList(m_attachedMultiviewChannels.size());
+    for (unsigned attachedMultiviewChannelsIndex = 0; attachedMultiviewChannelsIndex < attachedMultiviewChannelsJsonList.GetLength();
+         ++attachedMultiviewChannelsIndex) {
+      attachedMultiviewChannelsJsonList[attachedMultiviewChannelsIndex].AsString(
+          m_attachedMultiviewChannels[attachedMultiviewChannelsIndex]);
+    }
+    payload.WithArray("AttachedMultiviewChannels", std::move(attachedMultiviewChannelsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace mediapackagev2
-} // namespace Aws
+}  // namespace Model
+}  // namespace mediapackagev2
+}  // namespace Aws

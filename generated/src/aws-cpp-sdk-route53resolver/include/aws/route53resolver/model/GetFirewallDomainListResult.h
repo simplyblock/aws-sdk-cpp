@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/route53resolver/Route53Resolver_EXPORTS.h>
 #include <aws/route53resolver/model/FirewallDomainList.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Route53Resolver
-{
-namespace Model
-{
-  class GetFirewallDomainListResult
-  {
-  public:
-    AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult();
-    AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53Resolver {
+namespace Model {
+class GetFirewallDomainListResult {
+ public:
+  AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult() = default;
+  AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53RESOLVER_API GetFirewallDomainListResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The domain list that you requested. </p>
+   */
+  inline const FirewallDomainList& GetFirewallDomainList() const { return m_firewallDomainList; }
+  template <typename FirewallDomainListT = FirewallDomainList>
+  void SetFirewallDomainList(FirewallDomainListT&& value) {
+    m_firewallDomainListHasBeenSet = true;
+    m_firewallDomainList = std::forward<FirewallDomainListT>(value);
+  }
+  template <typename FirewallDomainListT = FirewallDomainList>
+  GetFirewallDomainListResult& WithFirewallDomainList(FirewallDomainListT&& value) {
+    SetFirewallDomainList(std::forward<FirewallDomainListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The domain list that you requested. </p>
-     */
-    inline const FirewallDomainList& GetFirewallDomainList() const{ return m_firewallDomainList; }
-    inline void SetFirewallDomainList(const FirewallDomainList& value) { m_firewallDomainList = value; }
-    inline void SetFirewallDomainList(FirewallDomainList&& value) { m_firewallDomainList = std::move(value); }
-    inline GetFirewallDomainListResult& WithFirewallDomainList(const FirewallDomainList& value) { SetFirewallDomainList(value); return *this;}
-    inline GetFirewallDomainListResult& WithFirewallDomainList(FirewallDomainList&& value) { SetFirewallDomainList(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetFirewallDomainListResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetFirewallDomainListResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetFirewallDomainListResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetFirewallDomainListResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    FirewallDomainList m_firewallDomainList;
+ private:
+  FirewallDomainList m_firewallDomainList;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_firewallDomainListHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Route53Resolver
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53Resolver
+}  // namespace Aws

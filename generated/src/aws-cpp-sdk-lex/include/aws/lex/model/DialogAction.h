@@ -4,191 +4,213 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lex/LexRuntimeService_EXPORTS.h>
 #include <aws/lex/model/DialogActionType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/lex/model/FulfillmentState.h>
 #include <aws/lex/model/MessageFormatType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LexRuntimeService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LexRuntimeService {
+namespace Model {
 
+/**
+ * <p>Describes the next action that the bot should take in its interaction with
+ * the user and provides information about the context in which the action takes
+ * place. Use the <code>DialogAction</code> data type to set the interaction to a
+ * specific state, or to return the interaction to a previous state.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/runtime.lex-2016-11-28/DialogAction">AWS
+ * API Reference</a></p>
+ */
+class DialogAction {
+ public:
+  AWS_LEXRUNTIMESERVICE_API DialogAction() = default;
+  AWS_LEXRUNTIMESERVICE_API DialogAction(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXRUNTIMESERVICE_API DialogAction& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXRUNTIMESERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes the next action that the bot should take in its interaction with
-   * the user and provides information about the context in which the action takes
-   * place. Use the <code>DialogAction</code> data type to set the interaction to a
-   * specific state, or to return the interaction to a previous state.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/runtime.lex-2016-11-28/DialogAction">AWS
-   * API Reference</a></p>
+   * <p>The next action that the bot should take in its interaction with the user.
+   * The possible values are:</p> <ul> <li> <p> <code>ConfirmIntent</code> - The next
+   * action is asking the user if the intent is complete and ready to be fulfilled.
+   * This is a yes/no question such as "Place the order?"</p> </li> <li> <p>
+   * <code>Close</code> - Indicates that the there will not be a response from the
+   * user. For example, the statement "Your order has been placed" does not require a
+   * response.</p> </li> <li> <p> <code>Delegate</code> - The next action is
+   * determined by Amazon Lex.</p> </li> <li> <p> <code>ElicitIntent</code> - The
+   * next action is to determine the intent that the user wants to fulfill.</p> </li>
+   * <li> <p> <code>ElicitSlot</code> - The next action is to elicit a slot value
+   * from the user.</p> </li> </ul>
    */
-  class DialogAction
-  {
-  public:
-    AWS_LEXRUNTIMESERVICE_API DialogAction();
-    AWS_LEXRUNTIMESERVICE_API DialogAction(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXRUNTIMESERVICE_API DialogAction& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXRUNTIMESERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline DialogActionType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(DialogActionType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline DialogAction& WithType(DialogActionType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the intent.</p>
+   */
+  inline const Aws::String& GetIntentName() const { return m_intentName; }
+  inline bool IntentNameHasBeenSet() const { return m_intentNameHasBeenSet; }
+  template <typename IntentNameT = Aws::String>
+  void SetIntentName(IntentNameT&& value) {
+    m_intentNameHasBeenSet = true;
+    m_intentName = std::forward<IntentNameT>(value);
+  }
+  template <typename IntentNameT = Aws::String>
+  DialogAction& WithIntentName(IntentNameT&& value) {
+    SetIntentName(std::forward<IntentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The next action that the bot should take in its interaction with the user.
-     * The possible values are:</p> <ul> <li> <p> <code>ConfirmIntent</code> - The next
-     * action is asking the user if the intent is complete and ready to be fulfilled.
-     * This is a yes/no question such as "Place the order?"</p> </li> <li> <p>
-     * <code>Close</code> - Indicates that the there will not be a response from the
-     * user. For example, the statement "Your order has been placed" does not require a
-     * response.</p> </li> <li> <p> <code>Delegate</code> - The next action is
-     * determined by Amazon Lex.</p> </li> <li> <p> <code>ElicitIntent</code> - The
-     * next action is to determine the intent that the user wants to fulfill.</p> </li>
-     * <li> <p> <code>ElicitSlot</code> - The next action is to elicit a slot value
-     * from the user.</p> </li> </ul>
-     */
-    inline const DialogActionType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const DialogActionType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(DialogActionType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline DialogAction& WithType(const DialogActionType& value) { SetType(value); return *this;}
-    inline DialogAction& WithType(DialogActionType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Map of the slots that have been gathered and their values. </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetSlots() const { return m_slots; }
+  inline bool SlotsHasBeenSet() const { return m_slotsHasBeenSet; }
+  template <typename SlotsT = Aws::Map<Aws::String, Aws::String>>
+  void SetSlots(SlotsT&& value) {
+    m_slotsHasBeenSet = true;
+    m_slots = std::forward<SlotsT>(value);
+  }
+  template <typename SlotsT = Aws::Map<Aws::String, Aws::String>>
+  DialogAction& WithSlots(SlotsT&& value) {
+    SetSlots(std::forward<SlotsT>(value));
+    return *this;
+  }
+  template <typename SlotsKeyT = Aws::String, typename SlotsValueT = Aws::String>
+  DialogAction& AddSlots(SlotsKeyT&& key, SlotsValueT&& value) {
+    m_slotsHasBeenSet = true;
+    m_slots.emplace(std::forward<SlotsKeyT>(key), std::forward<SlotsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the intent.</p>
-     */
-    inline const Aws::String& GetIntentName() const{ return m_intentName; }
-    inline bool IntentNameHasBeenSet() const { return m_intentNameHasBeenSet; }
-    inline void SetIntentName(const Aws::String& value) { m_intentNameHasBeenSet = true; m_intentName = value; }
-    inline void SetIntentName(Aws::String&& value) { m_intentNameHasBeenSet = true; m_intentName = std::move(value); }
-    inline void SetIntentName(const char* value) { m_intentNameHasBeenSet = true; m_intentName.assign(value); }
-    inline DialogAction& WithIntentName(const Aws::String& value) { SetIntentName(value); return *this;}
-    inline DialogAction& WithIntentName(Aws::String&& value) { SetIntentName(std::move(value)); return *this;}
-    inline DialogAction& WithIntentName(const char* value) { SetIntentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the slot that should be elicited from the user.</p>
+   */
+  inline const Aws::String& GetSlotToElicit() const { return m_slotToElicit; }
+  inline bool SlotToElicitHasBeenSet() const { return m_slotToElicitHasBeenSet; }
+  template <typename SlotToElicitT = Aws::String>
+  void SetSlotToElicit(SlotToElicitT&& value) {
+    m_slotToElicitHasBeenSet = true;
+    m_slotToElicit = std::forward<SlotToElicitT>(value);
+  }
+  template <typename SlotToElicitT = Aws::String>
+  DialogAction& WithSlotToElicit(SlotToElicitT&& value) {
+    SetSlotToElicit(std::forward<SlotToElicitT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Map of the slots that have been gathered and their values. </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetSlots() const{ return m_slots; }
-    inline bool SlotsHasBeenSet() const { return m_slotsHasBeenSet; }
-    inline void SetSlots(const Aws::Map<Aws::String, Aws::String>& value) { m_slotsHasBeenSet = true; m_slots = value; }
-    inline void SetSlots(Aws::Map<Aws::String, Aws::String>&& value) { m_slotsHasBeenSet = true; m_slots = std::move(value); }
-    inline DialogAction& WithSlots(const Aws::Map<Aws::String, Aws::String>& value) { SetSlots(value); return *this;}
-    inline DialogAction& WithSlots(Aws::Map<Aws::String, Aws::String>&& value) { SetSlots(std::move(value)); return *this;}
-    inline DialogAction& AddSlots(const Aws::String& key, const Aws::String& value) { m_slotsHasBeenSet = true; m_slots.emplace(key, value); return *this; }
-    inline DialogAction& AddSlots(Aws::String&& key, const Aws::String& value) { m_slotsHasBeenSet = true; m_slots.emplace(std::move(key), value); return *this; }
-    inline DialogAction& AddSlots(const Aws::String& key, Aws::String&& value) { m_slotsHasBeenSet = true; m_slots.emplace(key, std::move(value)); return *this; }
-    inline DialogAction& AddSlots(Aws::String&& key, Aws::String&& value) { m_slotsHasBeenSet = true; m_slots.emplace(std::move(key), std::move(value)); return *this; }
-    inline DialogAction& AddSlots(const char* key, Aws::String&& value) { m_slotsHasBeenSet = true; m_slots.emplace(key, std::move(value)); return *this; }
-    inline DialogAction& AddSlots(Aws::String&& key, const char* value) { m_slotsHasBeenSet = true; m_slots.emplace(std::move(key), value); return *this; }
-    inline DialogAction& AddSlots(const char* key, const char* value) { m_slotsHasBeenSet = true; m_slots.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The fulfillment state of the intent. The possible values are:</p> <ul> <li>
+   * <p> <code>Failed</code> - The Lambda function associated with the intent failed
+   * to fulfill the intent.</p> </li> <li> <p> <code>Fulfilled</code> - The intent
+   * has fulfilled by the Lambda function associated with the intent. </p> </li> <li>
+   * <p> <code>ReadyForFulfillment</code> - All of the information necessary for the
+   * intent is present and the intent ready to be fulfilled by the client
+   * application.</p> </li> </ul>
+   */
+  inline FulfillmentState GetFulfillmentState() const { return m_fulfillmentState; }
+  inline bool FulfillmentStateHasBeenSet() const { return m_fulfillmentStateHasBeenSet; }
+  inline void SetFulfillmentState(FulfillmentState value) {
+    m_fulfillmentStateHasBeenSet = true;
+    m_fulfillmentState = value;
+  }
+  inline DialogAction& WithFulfillmentState(FulfillmentState value) {
+    SetFulfillmentState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the slot that should be elicited from the user.</p>
-     */
-    inline const Aws::String& GetSlotToElicit() const{ return m_slotToElicit; }
-    inline bool SlotToElicitHasBeenSet() const { return m_slotToElicitHasBeenSet; }
-    inline void SetSlotToElicit(const Aws::String& value) { m_slotToElicitHasBeenSet = true; m_slotToElicit = value; }
-    inline void SetSlotToElicit(Aws::String&& value) { m_slotToElicitHasBeenSet = true; m_slotToElicit = std::move(value); }
-    inline void SetSlotToElicit(const char* value) { m_slotToElicitHasBeenSet = true; m_slotToElicit.assign(value); }
-    inline DialogAction& WithSlotToElicit(const Aws::String& value) { SetSlotToElicit(value); return *this;}
-    inline DialogAction& WithSlotToElicit(Aws::String&& value) { SetSlotToElicit(std::move(value)); return *this;}
-    inline DialogAction& WithSlotToElicit(const char* value) { SetSlotToElicit(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The message that should be shown to the user. If you don't specify a message,
+   * Amazon Lex will use the message configured for the intent.</p>
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  DialogAction& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The fulfillment state of the intent. The possible values are:</p> <ul> <li>
-     * <p> <code>Failed</code> - The Lambda function associated with the intent failed
-     * to fulfill the intent.</p> </li> <li> <p> <code>Fulfilled</code> - The intent
-     * has fulfilled by the Lambda function associated with the intent. </p> </li> <li>
-     * <p> <code>ReadyForFulfillment</code> - All of the information necessary for the
-     * intent is present and the intent ready to be fulfilled by the client
-     * application.</p> </li> </ul>
-     */
-    inline const FulfillmentState& GetFulfillmentState() const{ return m_fulfillmentState; }
-    inline bool FulfillmentStateHasBeenSet() const { return m_fulfillmentStateHasBeenSet; }
-    inline void SetFulfillmentState(const FulfillmentState& value) { m_fulfillmentStateHasBeenSet = true; m_fulfillmentState = value; }
-    inline void SetFulfillmentState(FulfillmentState&& value) { m_fulfillmentStateHasBeenSet = true; m_fulfillmentState = std::move(value); }
-    inline DialogAction& WithFulfillmentState(const FulfillmentState& value) { SetFulfillmentState(value); return *this;}
-    inline DialogAction& WithFulfillmentState(FulfillmentState&& value) { SetFulfillmentState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <ul> <li> <p> <code>PlainText</code> - The message contains plain UTF-8
+   * text.</p> </li> <li> <p> <code>CustomPayload</code> - The message is a custom
+   * format for the client.</p> </li> <li> <p> <code>SSML</code> - The message
+   * contains text formatted for voice output.</p> </li> <li> <p>
+   * <code>Composite</code> - The message contains an escaped JSON object containing
+   * one or more messages. For more information, see <a
+   * href="https://docs.aws.amazon.com/lex/latest/dg/howitworks-manage-prompts.html">Message
+   * Groups</a>. </p> </li> </ul>
+   */
+  inline MessageFormatType GetMessageFormat() const { return m_messageFormat; }
+  inline bool MessageFormatHasBeenSet() const { return m_messageFormatHasBeenSet; }
+  inline void SetMessageFormat(MessageFormatType value) {
+    m_messageFormatHasBeenSet = true;
+    m_messageFormat = value;
+  }
+  inline DialogAction& WithMessageFormat(MessageFormatType value) {
+    SetMessageFormat(value);
+    return *this;
+  }
+  ///@}
+ private:
+  DialogActionType m_type{DialogActionType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The message that should be shown to the user. If you don't specify a message,
-     * Amazon Lex will use the message configured for the intent.</p>
-     */
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline DialogAction& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline DialogAction& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline DialogAction& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  Aws::String m_intentName;
 
-    ///@{
-    /**
-     * <ul> <li> <p> <code>PlainText</code> - The message contains plain UTF-8
-     * text.</p> </li> <li> <p> <code>CustomPayload</code> - The message is a custom
-     * format for the client.</p> </li> <li> <p> <code>SSML</code> - The message
-     * contains text formatted for voice output.</p> </li> <li> <p>
-     * <code>Composite</code> - The message contains an escaped JSON object containing
-     * one or more messages. For more information, see <a
-     * href="https://docs.aws.amazon.com/lex/latest/dg/howitworks-manage-prompts.html">Message
-     * Groups</a>. </p> </li> </ul>
-     */
-    inline const MessageFormatType& GetMessageFormat() const{ return m_messageFormat; }
-    inline bool MessageFormatHasBeenSet() const { return m_messageFormatHasBeenSet; }
-    inline void SetMessageFormat(const MessageFormatType& value) { m_messageFormatHasBeenSet = true; m_messageFormat = value; }
-    inline void SetMessageFormat(MessageFormatType&& value) { m_messageFormatHasBeenSet = true; m_messageFormat = std::move(value); }
-    inline DialogAction& WithMessageFormat(const MessageFormatType& value) { SetMessageFormat(value); return *this;}
-    inline DialogAction& WithMessageFormat(MessageFormatType&& value) { SetMessageFormat(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_slots;
 
-    DialogActionType m_type;
-    bool m_typeHasBeenSet = false;
+  Aws::String m_slotToElicit;
 
-    Aws::String m_intentName;
-    bool m_intentNameHasBeenSet = false;
+  FulfillmentState m_fulfillmentState{FulfillmentState::NOT_SET};
 
-    Aws::Map<Aws::String, Aws::String> m_slots;
-    bool m_slotsHasBeenSet = false;
+  Aws::String m_message;
 
-    Aws::String m_slotToElicit;
-    bool m_slotToElicitHasBeenSet = false;
+  MessageFormatType m_messageFormat{MessageFormatType::NOT_SET};
+  bool m_typeHasBeenSet = false;
+  bool m_intentNameHasBeenSet = false;
+  bool m_slotsHasBeenSet = false;
+  bool m_slotToElicitHasBeenSet = false;
+  bool m_fulfillmentStateHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+  bool m_messageFormatHasBeenSet = false;
+};
 
-    FulfillmentState m_fulfillmentState;
-    bool m_fulfillmentStateHasBeenSet = false;
-
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-
-    MessageFormatType m_messageFormat;
-    bool m_messageFormatHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexRuntimeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexRuntimeService
+}  // namespace Aws

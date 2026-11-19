@@ -3,72 +3,168 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/transcribe/model/JobExecutionSettings.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace TranscribeService
-{
-namespace Model
-{
+namespace Aws {
+namespace TranscribeService {
+namespace Model {
 
-JobExecutionSettings::JobExecutionSettings() : 
-    m_allowDeferredExecution(false),
-    m_allowDeferredExecutionHasBeenSet(false),
-    m_dataAccessRoleArnHasBeenSet(false)
-{
-}
+JobExecutionSettings::JobExecutionSettings(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-JobExecutionSettings::JobExecutionSettings(JsonView jsonValue)
-  : JobExecutionSettings()
-{
-  *this = jsonValue;
-}
+JobExecutionSettings& JobExecutionSettings::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-JobExecutionSettings& JobExecutionSettings::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AllowDeferredExecution"))
-  {
-    m_allowDeferredExecution = jsonValue.GetBool("AllowDeferredExecution");
+              if (initialKeyStr == "AllowDeferredExecution") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_allowDeferredExecution = val.value();
+                }
+                m_allowDeferredExecutionHasBeenSet = true;
+              }
 
-    m_allowDeferredExecutionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DataAccessRoleArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_dataAccessRoleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_dataAccessRoleArn = ss.str();
+                  }
+                }
+                m_dataAccessRoleArnHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("JobExecutionSettings", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("DataAccessRoleArn"))
-  {
-    m_dataAccessRoleArn = jsonValue.GetString("DataAccessRoleArn");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_dataAccessRoleArnHasBeenSet = true;
+            if (initialKeyStr == "AllowDeferredExecution") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_allowDeferredExecution = val.value();
+              }
+              m_allowDeferredExecutionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DataAccessRoleArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_dataAccessRoleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_dataAccessRoleArn = ss.str();
+                }
+              }
+              m_dataAccessRoleArnHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue JobExecutionSettings::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_allowDeferredExecutionHasBeenSet)
-  {
-   payload.WithBool("AllowDeferredExecution", m_allowDeferredExecution);
-
+void JobExecutionSettings::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_allowDeferredExecutionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dataAccessRoleArnHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_dataAccessRoleArnHasBeenSet)
-  {
-   payload.WithString("DataAccessRoleArn", m_dataAccessRoleArn);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_allowDeferredExecutionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AllowDeferredExecution"));
+    encoder.WriteBool(m_allowDeferredExecution);
   }
 
-  return payload;
+  if (m_dataAccessRoleArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataAccessRoleArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_dataAccessRoleArn.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace TranscribeService
+}  // namespace Aws

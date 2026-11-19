@@ -4,140 +4,161 @@
  */
 
 #pragma once
-#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/workspaces-web/model/SessionStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
 
+/**
+ * <p>Summary information about a secure browser session.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/SessionSummary">AWS
+ * API Reference</a></p>
+ */
+class SessionSummary {
+ public:
+  AWS_WORKSPACESWEB_API SessionSummary() = default;
+  AWS_WORKSPACESWEB_API SessionSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API SessionSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Summary information about a secure browser session.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/SessionSummary">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the web portal.</p>
    */
-  class SessionSummary
-  {
-  public:
-    AWS_WORKSPACESWEB_API SessionSummary();
-    AWS_WORKSPACESWEB_API SessionSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API SessionSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPortalArn() const { return m_portalArn; }
+  inline bool PortalArnHasBeenSet() const { return m_portalArnHasBeenSet; }
+  template <typename PortalArnT = Aws::String>
+  void SetPortalArn(PortalArnT&& value) {
+    m_portalArnHasBeenSet = true;
+    m_portalArn = std::forward<PortalArnT>(value);
+  }
+  template <typename PortalArnT = Aws::String>
+  SessionSummary& WithPortalArn(PortalArnT&& value) {
+    SetPortalArn(std::forward<PortalArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the session.</p>
+   */
+  inline const Aws::String& GetSessionId() const { return m_sessionId; }
+  inline bool SessionIdHasBeenSet() const { return m_sessionIdHasBeenSet; }
+  template <typename SessionIdT = Aws::String>
+  void SetSessionId(SessionIdT&& value) {
+    m_sessionIdHasBeenSet = true;
+    m_sessionId = std::forward<SessionIdT>(value);
+  }
+  template <typename SessionIdT = Aws::String>
+  SessionSummary& WithSessionId(SessionIdT&& value) {
+    SetSessionId(std::forward<SessionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The end time of the session.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
-    inline SessionSummary& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline SessionSummary& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The username of the session.</p>
+   */
+  inline const Aws::String& GetUsername() const { return m_username; }
+  inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
+  template <typename UsernameT = Aws::String>
+  void SetUsername(UsernameT&& value) {
+    m_usernameHasBeenSet = true;
+    m_username = std::forward<UsernameT>(value);
+  }
+  template <typename UsernameT = Aws::String>
+  SessionSummary& WithUsername(UsernameT&& value) {
+    SetUsername(std::forward<UsernameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the web portal.</p>
-     */
-    inline const Aws::String& GetPortalArn() const{ return m_portalArn; }
-    inline bool PortalArnHasBeenSet() const { return m_portalArnHasBeenSet; }
-    inline void SetPortalArn(const Aws::String& value) { m_portalArnHasBeenSet = true; m_portalArn = value; }
-    inline void SetPortalArn(Aws::String&& value) { m_portalArnHasBeenSet = true; m_portalArn = std::move(value); }
-    inline void SetPortalArn(const char* value) { m_portalArnHasBeenSet = true; m_portalArn.assign(value); }
-    inline SessionSummary& WithPortalArn(const Aws::String& value) { SetPortalArn(value); return *this;}
-    inline SessionSummary& WithPortalArn(Aws::String&& value) { SetPortalArn(std::move(value)); return *this;}
-    inline SessionSummary& WithPortalArn(const char* value) { SetPortalArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the session.</p>
+   */
+  inline SessionStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(SessionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline SessionSummary& WithStatus(SessionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the session.</p>
-     */
-    inline const Aws::String& GetSessionId() const{ return m_sessionId; }
-    inline bool SessionIdHasBeenSet() const { return m_sessionIdHasBeenSet; }
-    inline void SetSessionId(const Aws::String& value) { m_sessionIdHasBeenSet = true; m_sessionId = value; }
-    inline void SetSessionId(Aws::String&& value) { m_sessionIdHasBeenSet = true; m_sessionId = std::move(value); }
-    inline void SetSessionId(const char* value) { m_sessionIdHasBeenSet = true; m_sessionId.assign(value); }
-    inline SessionSummary& WithSessionId(const Aws::String& value) { SetSessionId(value); return *this;}
-    inline SessionSummary& WithSessionId(Aws::String&& value) { SetSessionId(std::move(value)); return *this;}
-    inline SessionSummary& WithSessionId(const char* value) { SetSessionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The start time of the session.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  SessionSummary& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The start time of the session.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline SessionSummary& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline SessionSummary& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The end time of the session.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  SessionSummary& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_portalArn;
 
-    ///@{
-    /**
-     * <p>The status of the session.</p>
-     */
-    inline const SessionStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const SessionStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(SessionStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline SessionSummary& WithStatus(const SessionStatus& value) { SetStatus(value); return *this;}
-    inline SessionSummary& WithStatus(SessionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_sessionId;
 
-    ///@{
-    /**
-     * <p>The username of the session.</p>
-     */
-    inline const Aws::String& GetUsername() const{ return m_username; }
-    inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
-    inline void SetUsername(const Aws::String& value) { m_usernameHasBeenSet = true; m_username = value; }
-    inline void SetUsername(Aws::String&& value) { m_usernameHasBeenSet = true; m_username = std::move(value); }
-    inline void SetUsername(const char* value) { m_usernameHasBeenSet = true; m_username.assign(value); }
-    inline SessionSummary& WithUsername(const Aws::String& value) { SetUsername(value); return *this;}
-    inline SessionSummary& WithUsername(Aws::String&& value) { SetUsername(std::move(value)); return *this;}
-    inline SessionSummary& WithUsername(const char* value) { SetUsername(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_username;
 
-    Aws::Utils::DateTime m_endTime;
-    bool m_endTimeHasBeenSet = false;
+  SessionStatus m_status{SessionStatus::NOT_SET};
 
-    Aws::String m_portalArn;
-    bool m_portalArnHasBeenSet = false;
+  Aws::Utils::DateTime m_startTime{};
 
-    Aws::String m_sessionId;
-    bool m_sessionIdHasBeenSet = false;
+  Aws::Utils::DateTime m_endTime{};
+  bool m_portalArnHasBeenSet = false;
+  bool m_sessionIdHasBeenSet = false;
+  bool m_usernameHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
-
-    SessionStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_username;
-    bool m_usernameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

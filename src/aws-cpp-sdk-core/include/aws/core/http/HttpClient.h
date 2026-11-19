@@ -6,11 +6,15 @@
 #pragma once
 
 #include <aws/core/Core_EXPORTS.h>
+#include <aws/core/http/HttpConnection.h>
+#include <aws/core/utils/Outcome.h>
+#include <aws/core/client/AWSError.h>
 
-#include <memory>
 #include <atomic>
-#include <mutex>
 #include <condition_variable>
+#include <functional>
+#include <memory>
+#include <mutex>
 
 namespace Aws
 {
@@ -20,6 +24,11 @@ namespace Aws
         {
             class RateLimiterInterface;
         } // namespace RateLimits
+
+        namespace Threading
+        {
+            class Executor;
+        } // namespace Threading
     } // namespace Utils
 
     namespace Http
@@ -49,6 +58,11 @@ namespace Aws
             virtual bool SupportsChunkedTransferEncoding() const { return true; }
 
             /**
+             * Returns true if this is a default AWS SDK HTTP client implementation.
+             */
+            virtual bool IsDefaultAwsHttpClient() const { return false; }
+
+            /**
              * Stops all requests in progress and prevents any others from initiating.
              */
             void DisableRequestProcessing();
@@ -71,6 +85,44 @@ namespace Aws
             {
                return !m_bad;
             }
+
+            virtual Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> AcquireConnection(
+                const std::shared_ptr<HttpRequest>& request,
+                const std::function<void(std::shared_ptr<Aws::Http::Connection>, int)>& onClientConnectionAvailable) {
+              AWS_UNREFERENCED_PARAM(request);
+              AWS_UNREFERENCED_PARAM(onClientConnectionAvailable);
+              return Aws::Client::AWSError<Aws::Client::CoreErrors>{Aws::Client::CoreErrors::NOT_IMPLEMENTED,
+                "NotImplemented",
+                "creating a connection is not supported on this http client",
+                false};
+            }
+
+            struct AttemptOutcome
+            {
+                bool shouldRetry;
+                std::chrono::milliseconds backoff;
+            };
+
+            using PrepareAttempt = std::function<std::shared_ptr<HttpRequest>()>;
+            using EvaluateAttempt = std::function<AttemptOutcome(std::shared_ptr<HttpResponse>)>;
+            using OnRetryableRequestComplete = std::function<void()>;
+
+            virtual Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> MakeRequestAsync(
+                const PrepareAttempt& prepareAttempt,
+                const EvaluateAttempt& evaluateAttempt,
+                const OnRetryableRequestComplete& onComplete,
+                std::shared_ptr<Aws::Utils::Threading::Executor> executor) const {
+              AWS_UNREFERENCED_PARAM(prepareAttempt);
+              AWS_UNREFERENCED_PARAM(evaluateAttempt);
+              AWS_UNREFERENCED_PARAM(onComplete);
+              AWS_UNREFERENCED_PARAM(executor);
+              return Aws::Client::AWSError<Aws::Client::CoreErrors>{Aws::Client::CoreErrors::NOT_IMPLEMENTED,
+                "NotImplemented",
+                "async requests are not supported on this http client",
+                false};
+            }
+
+            virtual bool SupportsAsyncRequests() const { return false; }
 
         protected:
             bool m_bad;

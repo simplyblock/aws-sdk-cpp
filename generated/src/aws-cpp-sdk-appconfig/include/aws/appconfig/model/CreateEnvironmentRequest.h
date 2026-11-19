@@ -4,131 +4,153 @@
  */
 
 #pragma once
-#include <aws/appconfig/AppConfig_EXPORTS.h>
 #include <aws/appconfig/AppConfigRequest.h>
+#include <aws/appconfig/AppConfig_EXPORTS.h>
+#include <aws/appconfig/model/Monitor.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/appconfig/model/Monitor.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace AppConfig
-{
-namespace Model
-{
+namespace Aws {
+namespace AppConfig {
+namespace Model {
 
+/**
+ */
+class CreateEnvironmentRequest : public AppConfigRequest {
+ public:
+  AWS_APPCONFIG_API CreateEnvironmentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateEnvironment"; }
+
+  AWS_APPCONFIG_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The application ID.</p>
    */
-  class CreateEnvironmentRequest : public AppConfigRequest
-  {
-  public:
-    AWS_APPCONFIG_API CreateEnvironmentRequest();
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  CreateEnvironmentRequest& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateEnvironment"; }
+  ///@{
+  /**
+   * <p>A name for the environment.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateEnvironmentRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_APPCONFIG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A description of the environment.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateEnvironmentRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Amazon CloudWatch alarms to monitor during the deployment process.</p>
+   */
+  inline const Aws::Vector<Monitor>& GetMonitors() const { return m_monitors; }
+  inline bool MonitorsHasBeenSet() const { return m_monitorsHasBeenSet; }
+  template <typename MonitorsT = Aws::Vector<Monitor>>
+  void SetMonitors(MonitorsT&& value) {
+    m_monitorsHasBeenSet = true;
+    m_monitors = std::forward<MonitorsT>(value);
+  }
+  template <typename MonitorsT = Aws::Vector<Monitor>>
+  CreateEnvironmentRequest& WithMonitors(MonitorsT&& value) {
+    SetMonitors(std::forward<MonitorsT>(value));
+    return *this;
+  }
+  template <typename MonitorsT = Monitor>
+  CreateEnvironmentRequest& AddMonitors(MonitorsT&& value) {
+    m_monitorsHasBeenSet = true;
+    m_monitors.emplace_back(std::forward<MonitorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The application ID.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationIdHasBeenSet = true; m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationIdHasBeenSet = true; m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationIdHasBeenSet = true; m_applicationId.assign(value); }
-    inline CreateEnvironmentRequest& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline CreateEnvironmentRequest& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline CreateEnvironmentRequest& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Metadata to assign to the environment. Tags help organize and categorize your
+   * AppConfig resources. Each tag consists of a key and an optional value, both of
+   * which you define.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateEnvironmentRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateEnvironmentRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationId;
 
-    ///@{
-    /**
-     * <p>A name for the environment.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateEnvironmentRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateEnvironmentRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateEnvironmentRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A description of the environment.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateEnvironmentRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateEnvironmentRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateEnvironmentRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>Amazon CloudWatch alarms to monitor during the deployment process.</p>
-     */
-    inline const Aws::Vector<Monitor>& GetMonitors() const{ return m_monitors; }
-    inline bool MonitorsHasBeenSet() const { return m_monitorsHasBeenSet; }
-    inline void SetMonitors(const Aws::Vector<Monitor>& value) { m_monitorsHasBeenSet = true; m_monitors = value; }
-    inline void SetMonitors(Aws::Vector<Monitor>&& value) { m_monitorsHasBeenSet = true; m_monitors = std::move(value); }
-    inline CreateEnvironmentRequest& WithMonitors(const Aws::Vector<Monitor>& value) { SetMonitors(value); return *this;}
-    inline CreateEnvironmentRequest& WithMonitors(Aws::Vector<Monitor>&& value) { SetMonitors(std::move(value)); return *this;}
-    inline CreateEnvironmentRequest& AddMonitors(const Monitor& value) { m_monitorsHasBeenSet = true; m_monitors.push_back(value); return *this; }
-    inline CreateEnvironmentRequest& AddMonitors(Monitor&& value) { m_monitorsHasBeenSet = true; m_monitors.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Monitor> m_monitors;
 
-    ///@{
-    /**
-     * <p>Metadata to assign to the environment. Tags help organize and categorize your
-     * AppConfig resources. Each tag consists of a key and an optional value, both of
-     * which you define.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateEnvironmentRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateEnvironmentRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateEnvironmentRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateEnvironmentRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateEnvironmentRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateEnvironmentRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateEnvironmentRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateEnvironmentRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateEnvironmentRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_monitorsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Vector<Monitor> m_monitors;
-    bool m_monitorsHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AppConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppConfig
+}  // namespace Aws

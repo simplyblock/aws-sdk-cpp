@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/securitylake/SecurityLake_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securitylake/SecurityLake_EXPORTS.h>
 
-#include <aws/securitylake/SecurityLakeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SecurityLake
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SecurityLake {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SecurityLakeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SecurityLakeEndpointProviderBase =
     EndpointProviderBase<SecurityLakeClientConfiguration, SecurityLakeBuiltInParameters, SecurityLakeClientContextParameters>;
 
 using SecurityLakeDefaultEpProviderBase =
-    DefaultEndpointProvider<SecurityLakeClientConfiguration, SecurityLakeBuiltInParameters, SecurityLakeClientContextParameters>;
+    BDDEndpointProvider<SecurityLakeClientConfiguration, SecurityLakeBuiltInParameters, SecurityLakeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SECURITYLAKE_API SecurityLakeEndpointProvider : public SecurityLakeDefaultEpProviderBase
-{
-public:
-    using SecurityLakeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SECURITYLAKE_API SecurityLakeEndpointProvider : public SecurityLakeDefaultEpProviderBase {
+ public:
+  using SecurityLakeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SecurityLakeEndpointProvider()
-      : SecurityLakeDefaultEpProviderBase(Aws::SecurityLake::SecurityLakeEndpointRules::GetRulesBlob(), Aws::SecurityLake::SecurityLakeEndpointRules::RulesBlobSize)
-    {}
+  SecurityLakeEndpointProvider();
 
-    ~SecurityLakeEndpointProvider()
-    {
-    }
+  ~SecurityLakeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SecurityLake
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SecurityLake
+}  // namespace Aws

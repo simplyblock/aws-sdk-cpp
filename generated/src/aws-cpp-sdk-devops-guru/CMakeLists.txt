@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-devops-guru "C++ SDK for the AWS devops-guru service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-devops-guru "C++ SDK for Amazon DevOps Guru" aws-cpp-sdk-core)
 
 file(GLOB AWS_DEVOPS-GURU_HEADERS
     "include/aws/devops-guru/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DEVOPS-GURU_HEADERS
 
 file(GLOB AWS_DEVOPS-GURU_MODEL_HEADERS
     "include/aws/devops-guru/model/*.h"
+)
+
+file(GLOB AWS_DEVOPS-GURU_INTERNAL_HEADERS
+    "include/aws/devops-guru/internal/*.h"
 )
 
 file(GLOB AWS_DEVOPS-GURU_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DEVOPS-GURU_MODEL_SOURCE
 
 file(GLOB DEVOPS-GURU_UNIFIED_HEADERS
     ${AWS_DEVOPS-GURU_HEADERS}
+    ${AWS_DEVOPS-GURU_INTERNAL_HEADERS}
     ${AWS_DEVOPS-GURU_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\devops-guru" FILES ${AWS_DEVOPS-GURU_HEADERS})
+        source_group("Header Files\\aws\\devops-guru\\internal" FILES ${AWS_DEVOPS-GURU_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\devops-guru\\model" FILES ${AWS_DEVOPS-GURU_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DEVOPS-GURU_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DEVOPS-GURU_MODEL_SOURCE})

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/launch-wizard/LaunchWizard_EXPORTS.h>
 #include <aws/launch-wizard/model/WorkloadData.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LaunchWizard
-{
-namespace Model
-{
-  class GetWorkloadResult
-  {
-  public:
-    AWS_LAUNCHWIZARD_API GetWorkloadResult();
-    AWS_LAUNCHWIZARD_API GetWorkloadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAUNCHWIZARD_API GetWorkloadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LaunchWizard {
+namespace Model {
+class GetWorkloadResult {
+ public:
+  AWS_LAUNCHWIZARD_API GetWorkloadResult() = default;
+  AWS_LAUNCHWIZARD_API GetWorkloadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAUNCHWIZARD_API GetWorkloadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the workload.</p>
+   */
+  inline const WorkloadData& GetWorkload() const { return m_workload; }
+  template <typename WorkloadT = WorkloadData>
+  void SetWorkload(WorkloadT&& value) {
+    m_workloadHasBeenSet = true;
+    m_workload = std::forward<WorkloadT>(value);
+  }
+  template <typename WorkloadT = WorkloadData>
+  GetWorkloadResult& WithWorkload(WorkloadT&& value) {
+    SetWorkload(std::forward<WorkloadT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the workload.</p>
-     */
-    inline const WorkloadData& GetWorkload() const{ return m_workload; }
-    inline void SetWorkload(const WorkloadData& value) { m_workload = value; }
-    inline void SetWorkload(WorkloadData&& value) { m_workload = std::move(value); }
-    inline GetWorkloadResult& WithWorkload(const WorkloadData& value) { SetWorkload(value); return *this;}
-    inline GetWorkloadResult& WithWorkload(WorkloadData&& value) { SetWorkload(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetWorkloadResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetWorkloadResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetWorkloadResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetWorkloadResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    WorkloadData m_workload;
+ private:
+  WorkloadData m_workload;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workloadHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LaunchWizard
-} // namespace Aws
+}  // namespace Model
+}  // namespace LaunchWizard
+}  // namespace Aws

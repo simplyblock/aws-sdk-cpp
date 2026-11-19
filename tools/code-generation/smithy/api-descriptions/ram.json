@@ -202,6 +202,9 @@
                     "target": "com.amazonaws.ram#ListResourceTypes"
                 },
                 {
+                    "target": "com.amazonaws.ram#ListSourceAssociations"
+                },
+                {
                     "target": "com.amazonaws.ram#PromotePermissionCreatedFromPolicy"
                 },
                 {
@@ -223,6 +226,9 @@
                     "target": "com.amazonaws.ram#UntagResource"
                 },
                 {
+                    "target": "com.amazonaws.ram#UpdatePermission"
+                },
+                {
                     "target": "com.amazonaws.ram#UpdateResourceShare"
                 }
             ],
@@ -240,6 +246,218 @@
                 "aws.protocols#restJson1": {},
                 "smithy.api#documentation": "<p>This is the <i>Resource Access Manager API Reference</i>. This documentation provides\n            descriptions and syntax for each of the actions and data types in RAM. RAM is a\n            service that helps you securely share your Amazon Web Services resources to other Amazon Web Services accounts. If\n            you use Organizations to manage your accounts, then you can share your resources with your\n            entire organization or to organizational units (OUs). For supported resource types, you\n            can also share resources with individual Identity and Access Management (IAM) roles and users. </p>\n         <p>To learn more about RAM, see the following resources:</p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"http://aws.amazon.com/ram\">Resource Access Manager product page</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/\">Resource Access Manager User\n                        Guide</a>\n               </p>\n            </li>\n         </ul>",
                 "smithy.api#title": "AWS Resource Access Manager",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-us-gov"
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://ram-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://ram.{Region}.amazonaws.com",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://ram-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://ram.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://ram.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 14,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAA0AAAADAAAAAQAAAAQF9eEMAAAAAgAAAAUF9eEMAAAAAwAAAAgAAAAGAAAABAAAAAcF9eELAAAABQX14QkF9eEKAAAABAAAAAsAAAAJAAAABgAAAAoF9eEIAAAABwX14QYF9eEHAAAABQAAAAwF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAAOAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -247,27 +465,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -282,7 +500,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -325,7 +542,8 @@
                                     },
                                     "type": "endpoint"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [
@@ -338,7 +556,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -352,7 +569,6 @@
                                             "assign": "PartitionResult"
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
                                         {
                                             "conditions": [
@@ -375,7 +591,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -410,7 +625,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -421,14 +635,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -442,14 +658,12 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
                                                         {
                                                             "fn": "booleanEquals",
                                                             "argv": [
-                                                                true,
                                                                 {
                                                                     "fn": "getAttr",
                                                                     "argv": [
@@ -458,18 +672,17 @@
                                                                         },
                                                                         "supportsFIPS"
                                                                     ]
-                                                                }
+                                                                },
+                                                                true
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [
                                                                 {
                                                                     "fn": "stringEquals",
                                                                     "argv": [
-                                                                        "aws-us-gov",
                                                                         {
                                                                             "fn": "getAttr",
                                                                             "argv": [
@@ -478,7 +691,8 @@
                                                                                 },
                                                                                 "name"
                                                                             ]
-                                                                        }
+                                                                        },
+                                                                        "aws-us-gov"
                                                                     ]
                                                                 }
                                                             ],
@@ -498,14 +712,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS is enabled but this partition does not support FIPS",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -519,7 +735,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -539,7 +754,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -550,14 +764,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "DualStack is enabled but this partition does not support DualStack",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [],
@@ -568,9 +784,11 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [],
@@ -1115,17 +1333,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1136,17 +1343,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1163,17 +1359,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1184,17 +1369,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1303,7 +1477,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Adds the specified list of principals and list of resources to a resource share. Principals that\n            already have access to this resource share immediately receive access to the added resources.\n            Newly added principals immediately receive access to the resources shared in this resource share. </p>",
+                "smithy.api#documentation": "<p>Adds the specified list of principals, resources, and source constraints to a resource share. Principals that\n            already have access to this resource share immediately receive access to the added resources.\n            Newly added principals immediately receive access to the resources shared in this resource share. </p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/associateresourceshare",
@@ -1368,6 +1542,12 @@
                         "smithy.api#required": {}
                     }
                 },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterInputList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the template parameter values for the permission being associated. You must\n            provide values for all parameters declared in the permission template. This parameter is\n            required only if the specified permission has template parameters.</p>"
+                    }
+                },
                 "replace": {
                     "target": "com.amazonaws.ram#Boolean",
                     "traits": {
@@ -1430,7 +1610,7 @@
                 "principals": {
                     "target": "com.amazonaws.ram#PrincipalArnOrIdList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies a list of principals to whom you want to the resource share. This can be\n                <code>null</code> if you want to add only resources.</p>\n         <p>What the principals can do with the resources in the share is determined by the RAM\n            permissions that you associate with the resource share. See <a>AssociateResourceSharePermission</a>.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>Specifies a list of principals to whom you want to the resource share. This can be\n                <code>null</code> if you want to add only resources.</p>\n         <p>What the principals can do with the resources in the share is determined by the RAM\n            permissions that you associate with the resource share. See <a>AssociateResourceSharePermission</a>.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n            <li>\n               <p>A service principal name, for example: <code>service-id.amazonaws.com</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
                     }
                 },
                 "clientToken": {
@@ -1442,7 +1622,7 @@
                 "sources": {
                     "target": "com.amazonaws.ram#SourceArnOrAccountList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies from which source accounts the service principal\n            has access to the resources in this resource share.</p>"
+                        "smithy.api#documentation": "<p>Specifies source constraints (accounts, ARNs, organization IDs, or organization paths) that limit when service principals can access resources in this resource share. When a service principal attempts to access a shared resource, validation is performed to ensure the request originates from one of the specified sources. This helps prevent confused deputy attacks by applying constraints on where service principals can access resources from.</p>"
                     }
                 }
             },
@@ -1500,7 +1680,7 @@
                 "status": {
                     "target": "com.amazonaws.ram#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>The current status of the association between the permission and the resource share.\n            The following are the possible values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ATTACHABLE</code> – This permission or version can be associated \n                with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>UNATTACHABLE</code> – This permission or version can't \n                currently be associated with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETING</code> – This permission or version is in the process of\n                    being deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETED</code> – This permission or version is deleted.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>The current status of the association between the permission and the resource share.\n            The following are the possible values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ATTACHABLE</code> – This permission or version can be associated \n                with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>UNATTACHABLE</code> – This permission or version can't \n                currently be associated with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETING</code> – This permission or version is in the process of\n                    being deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETED</code> – This permission or version is deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DEPRECATED</code> – The permission owner deprecated this permission. It can't be associated with new resource shares, but existing\n                    associations continue to function.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "featureSet": {
@@ -1520,6 +1700,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of a resource share associated with this permission.</p>"
                     }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The template parameter values provided when the permission was associated with this\n            resource share. If the permission has no declared template parameters, this member doesn't appear in the response.</p>"
+                    }
                 }
             },
             "traits": {
@@ -1530,6 +1716,65 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.ram#AssociatedPermission",
+                "traits": {
+                    "smithy.api#xmlName": "item"
+                }
+            }
+        },
+        "com.amazonaws.ram#AssociatedSource": {
+            "type": "structure",
+            "members": {
+                "resourceShareArn": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the resource share that contains the source association.</p>"
+                    }
+                },
+                "sourceId": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier of the source. This can be an account ID, Amazon Resource Name (ARN), organization ID, or organization path.</p>"
+                    }
+                },
+                "sourceType": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of source.</p>"
+                    }
+                },
+                "status": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the source association.</p>"
+                    }
+                },
+                "lastUpdatedTime": {
+                    "target": "com.amazonaws.ram#DateTime",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The date and time when the source association was last updated.</p>"
+                    }
+                },
+                "creationTime": {
+                    "target": "com.amazonaws.ram#DateTime",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The date and time when the source association was created.</p>"
+                    }
+                },
+                "statusMessage": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A message about the status of the source association.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Information about a source association in a resource share. Source associations control which sources can be used with service principals.</p>"
+            }
+        },
+        "com.amazonaws.ram#AssociatedSourceList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#AssociatedSource",
                 "traits": {
                     "smithy.api#xmlName": "item"
                 }
@@ -1600,7 +1845,7 @@
                 "resourceType": {
                     "target": "com.amazonaws.ram#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the name of the resource type that this customer managed permission applies to.</p>\n         <p>The format is\n                    <code>\n               <i><service-code></i>:<i><resource-type></i>\n            </code>\n            and is not case sensitive. For example, to specify an Amazon EC2 Subnet, you can use the\n            string <code>ec2:subnet</code>. To see the list of valid values for this parameter,\n            query the <a>ListResourceTypes</a> operation.</p>",
+                        "smithy.api#documentation": "<p>Specifies the name of the resource type that this customer managed permission applies to.</p>\n         <p>The format is\n                    <code>\n               <i><service-code></i>:<i><resource-type></i>\n            </code>\n            and is case sensitive. For example, to specify an Amazon EC2 Subnet, you can use the\n            string <code>ec2:Subnet</code>. To see the list of valid values for this parameter,\n            query the <a>ListResourceTypes</a> operation. This value must match the display name of the resource \n            (available in <code>ListResourceTypes</code>).</p>",
                         "smithy.api#required": {}
                     }
                 },
@@ -1609,6 +1854,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A string in JSON format string that contains the following elements of a\n            resource-based policy:</p>\n         <ul>\n            <li>\n               <p>\n                  <b>Effect</b>: must be set to\n                    <code>ALLOW</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <b>Action</b>: specifies the actions that are\n                    allowed by this customer managed permission. The list must contain only actions that are supported by\n                    the specified resource type. For a list of all actions supported by each\n                    resource type, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html\">Actions, resources, and condition keys for Amazon Web Services services</a> in the\n                        <i>Identity and Access Management User Guide</i>.</p>\n            </li>\n            <li>\n               <p>\n                  <b>Condition</b>: (optional) specifies conditional \n                    parameters that must evaluate to true when a user attempts an action for that \n                    action to be allowed. For more information about the Condition element, see \n                    <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html\">IAM\n                        policies: Condition element</a> in the <i>Identity and Access Management User\n                    Guide</i>.</p>\n            </li>\n         </ul>\n         <p>This template can't include either the <code>Resource</code> or\n            <code>Principal</code> elements. Those are both filled in by RAM when it instantiates \n            the resource-based policy on each resource shared using this managed permission. The \n            <code>Resource</code> comes from the ARN of the specific resource that you are sharing. \n            The <code>Principal</code> comes from the list of identities added to the resource \n            share.</p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterDeclarationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies a list of template parameter declarations for this permission. Each\n            declaration defines a named placeholder that can be used in the policy template using\n            the syntax <code>@{parameterName}</code>. Template parameters can only appear in\n            Condition Key and Condition Value fields of the policy. When you associate this permission with a resource share, you must provide values for all declared parameters.</p>"
                     }
                 },
                 "clientToken": {
@@ -1676,6 +1927,9 @@
                     "target": "com.amazonaws.ram#MalformedPolicyTemplateException"
                 },
                 {
+                    "target": "com.amazonaws.ram#OperationNotPermittedException"
+                },
+                {
                     "target": "com.amazonaws.ram#PermissionVersionsLimitExceededException"
                 },
                 {
@@ -1714,6 +1968,12 @@
                         "smithy.api#required": {}
                     }
                 },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterDeclarationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies a list of template parameter declarations for this version of the\n            permission. Each declaration defines a named placeholder that can be used in the policy\n            template. Because each version is independent, you can define the same or\n            a different set of template parameters for each version.</p>"
+                    }
+                },
                 "clientToken": {
                     "target": "com.amazonaws.ram#String",
                     "traits": {
@@ -1729,7 +1989,10 @@
             "type": "structure",
             "members": {
                 "permission": {
-                    "target": "com.amazonaws.ram#ResourceSharePermissionDetail"
+                    "target": "com.amazonaws.ram#ResourceSharePermissionDetail",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The details of the new permission version, including its <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a>, version number, status, and policy document.</p>"
+                    }
                 },
                 "clientToken": {
                     "target": "com.amazonaws.ram#String",
@@ -1785,11 +2048,14 @@
                     "target": "com.amazonaws.ram#TagPolicyViolationException"
                 },
                 {
+                    "target": "com.amazonaws.ram#ThrottlingException"
+                },
+                {
                     "target": "com.amazonaws.ram#UnknownResourceException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a resource share. You can provide a list of the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> for the resources that you\n            want to share, a list of principals you want to share the resources with, and the\n            permissions to grant those principals.</p>\n         <note>\n            <p>Sharing a resource makes it available for use by principals outside of the\n                Amazon Web Services account that created the resource. Sharing doesn't change any permissions or\n                quotas that apply to the resource in the account that created it.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Creates a resource share. You can provide a list of the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> for the resources that you\n            want to share, a list of principals you want to share the resources with, the\n            permissions to grant those principals, and optionally source constraints to enhance security for service principal sharing.</p>\n         <note>\n            <p>Sharing a resource makes it available for use by principals outside of the\n                Amazon Web Services account that created the resource. Sharing doesn't change any permissions or\n                quotas that apply to the resource in the account that created it.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/createresourceshare",
@@ -1816,7 +2082,7 @@
                 "principals": {
                     "target": "com.amazonaws.ram#PrincipalArnOrIdList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies a list of one or more principals to associate with the resource share.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>Specifies a list of one or more principals to associate with the resource share.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n            <li>\n               <p>A service principal name, for example: <code>service-id.amazonaws.com</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
                     }
                 },
                 "tags": {
@@ -1846,7 +2112,19 @@
                 "sources": {
                     "target": "com.amazonaws.ram#SourceArnOrAccountList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies from which source accounts the service principal\n            has access to the resources in this resource share.</p>"
+                        "smithy.api#documentation": "<p>Specifies source constraints (accounts, ARNs, organization IDs, or organization paths) that limit when service principals can access resources in this resource share. When a service principal attempts to access a shared resource, validation is performed to ensure the request originates from one of the specified sources. This helps prevent confused deputy attacks by applying constraints on where service principals can access resources from.</p>"
+                    }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionArnAndTemplateParametersList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the template parameter values for each permission being associated that has\n            template parameters. Each entry maps a permission ARN to the parameter values to use\n            when rendering the permission template for this resource share. You must provide values for all\n            parameters declared in each permission template.</p>"
+                    }
+                },
+                "resourceShareConfiguration": {
+                    "target": "com.amazonaws.ram#ResourceShareConfiguration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the configuration of this resource share.</p>"
                     }
                 }
             },
@@ -2102,6 +2380,9 @@
                     "target": "com.amazonaws.ram#ServiceUnavailableException"
                 },
                 {
+                    "target": "com.amazonaws.ram#ThrottlingException"
+                },
+                {
                     "target": "com.amazonaws.ram#UnknownResourceException"
                 }
             ],
@@ -2195,11 +2476,14 @@
                     "target": "com.amazonaws.ram#ServiceUnavailableException"
                 },
                 {
+                    "target": "com.amazonaws.ram#ThrottlingException"
+                },
+                {
                     "target": "com.amazonaws.ram#UnknownResourceException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Removes the specified principals or resources from participating in the specified\n            resource share.</p>",
+                "smithy.api#documentation": "<p>Removes the specified principals, resources, or source constraints from participating in the specified\n            resource share.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/disassociateresourceshare",
@@ -2317,7 +2601,7 @@
                 "principals": {
                     "target": "com.amazonaws.ram#PrincipalArnOrIdList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies a list of one or more principals that no longer are to have access to the\n            resources in this resource share.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>Specifies a list of one or more principals that no longer are to have access to the\n            resources in this resource share.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n            <li>\n               <p>A service principal name, for example: <code>service-id.amazonaws.com</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
                     }
                 },
                 "clientToken": {
@@ -2329,7 +2613,7 @@
                 "sources": {
                     "target": "com.amazonaws.ram#SourceArnOrAccountList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies from which source accounts the\n            service principal no longer has access to the resources in this resource share.</p>"
+                        "smithy.api#documentation": "<p>Specifies source constraints (accounts, ARNs, organization IDs, or organization paths) to remove from the resource share. This enables granular management of source constraints while maintaining service principal associations. At least one source must remain when service principals are present.</p>"
                     }
                 }
             },
@@ -2436,7 +2720,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the contents of a managed permission in JSON format.</p>",
+                "smithy.api#documentation": "<p>Retrieves the contents of a managed permission in JSON format.</p>\n         <p>If the permission has template parameters, you can include the\n            <code>permissionTemplateParameters</code> parameter in your request. The operation then\n            renders the returned policy with the specified values in place of the template parameter\n            placeholders. If you omit <code>permissionTemplateParameters</code>, the operation\n            returns the raw policy template with <code>@{parameterName}</code> placeholders\n            unchanged.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/getpermission",
@@ -2458,6 +2742,12 @@
                     "target": "com.amazonaws.ram#Integer",
                     "traits": {
                         "smithy.api#documentation": "<p>Specifies the version number of the RAM permission to retrieve. If you don't specify\n            this parameter, the operation retrieves the default version.</p>\n         <p>To see the list of available versions, use <a>ListPermissionVersions</a>.</p>"
+                    }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterInputList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the template parameter values to use when rendering the permission's policy\n            template. Each entry supplies a parameter name and its values. When you provide this\n            parameter, the response contains the rendered policy with the specified values\n            in place of the template parameter placeholders.</p>\n         <p>For <code>STRING</code> type parameters, provide a single value. For\n            <code>STRING_LIST</code> type parameters, provide one or more values.</p>\n         <p>You can specify this parameter only for permissions that declare template parameters.\n            You must provide values for all parameters declared in the permission template.</p>"
                     }
                 }
             },
@@ -2508,7 +2798,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the resource policies for the specified resources that you own and have\n            shared.</p>",
+                "smithy.api#documentation": "<p>Retrieves the resource policies for the specified resources that you own and have\n            shared.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/getresourcepolicies",
@@ -2606,7 +2896,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the lists of resources and principals that associated for resource shares that you\n            own.</p>",
+                "smithy.api#documentation": "<p>Retrieves the lists of resources and principals that associated for resource shares that you\n            own.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/getresourceshareassociations",
@@ -2725,7 +3015,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves details about invitations that you have received for resource shares.</p>",
+                "smithy.api#documentation": "<p>Retrieves details about invitations that you have received for resource shares.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/getresourceshareinvitations",
@@ -2819,7 +3109,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves details about the resource shares that you own or that are shared with you.</p>",
+                "smithy.api#documentation": "<p>Retrieves details about the resource shares that you own or that are shared with you.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/getresourceshares",
@@ -3116,7 +3406,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the resources in a resource share that is shared with you but for which the invitation is\n            still <code>PENDING</code>. That means that you haven't accepted or rejected the\n            invitation and the invitation hasn't expired.</p>",
+                "smithy.api#documentation": "<p>Lists the resources in a resource share that is shared with you but for which the invitation is\n            still <code>PENDING</code>. That means that you haven't accepted or rejected the\n            invitation and the invitation hasn't expired.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listpendinginvitationresources",
@@ -3208,7 +3498,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists information about the managed permission and its associations to any resource shares that use\n            this managed permission. This lets you see which resource shares use which versions of the specified\n            managed permission.</p>",
+                "smithy.api#documentation": "<p>Lists information about the managed permission and its associations to any resource shares that use\n            this managed permission. This lets you see which resource shares use which versions of the specified\n            managed permission.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listpermissionassociations",
@@ -3258,6 +3548,18 @@
                     "target": "com.amazonaws.ram#Boolean",
                     "traits": {
                         "smithy.api#documentation": "<p>When <code>true</code>, specifies that you want to list only those associations with\n            resource shares that use the default version of the specified managed permission.</p>\n         <p>When <code>false</code> (the default value), lists associations with resource shares that use\n            any version of the specified managed permission.</p>"
+                    }
+                },
+                "resourceOwner": {
+                    "target": "com.amazonaws.ram#ResourceOwner",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies that you want to list only those associations with resource shares owned by a specific\n            entity:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>SELF</code> – returns only associations with resource shares owned by the\n                    calling account.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OTHER-ACCOUNTS</code> – returns only associations with resource shares\n                    owned by other Amazon Web Services accounts.</p>\n            </li>\n         </ul>\n         <p>If you don't specify this parameter, the default is <code>SELF</code>.</p>"
+                    }
+                },
+                "resourceShareArn": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the resource share for which you want to retrieve permission\n            associations.</p>"
                     }
                 },
                 "nextToken": {
@@ -3329,7 +3631,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the available versions of the specified RAM permission.</p>",
+                "smithy.api#documentation": "<p>Lists the available versions of the specified RAM permission.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listpermissionversions",
@@ -3415,7 +3717,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves a list of available RAM permissions that you can use for the supported\n            resource types. </p>",
+                "smithy.api#documentation": "<p>Retrieves a list of available RAM permissions that you can use for the supported\n            resource types. </p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listpermissions",
@@ -3437,6 +3739,12 @@
                         "smithy.api#documentation": "<p>Specifies that you want to list only those permissions that apply to the specified\n            resource type. This parameter is not case sensitive.</p>\n         <p>For example, to list only permissions that apply to Amazon EC2 subnets, specify\n                <code>ec2:subnet</code>. You can use the <a>ListResourceTypes</a>\n            operation to get the specific string required.</p>"
                     }
                 },
+                "resourceOwner": {
+                    "target": "com.amazonaws.ram#ResourceOwner",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies that you want to list only permissions owned by a specific entity:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>SELF</code> – returns only permissions owned by the calling\n                    account.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OTHER-ACCOUNTS</code> – returns only permissions shared with the\n                    calling account by other accounts.</p>\n            </li>\n         </ul>"
+                    }
+                },
                 "nextToken": {
                     "target": "com.amazonaws.ram#String",
                     "traits": {
@@ -3453,6 +3761,12 @@
                     "target": "com.amazonaws.ram#PermissionTypeFilter",
                     "traits": {
                         "smithy.api#documentation": "<p>Specifies that you want to list only permissions of this type:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>AWS</code> – returns only Amazon Web Services managed permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>LOCAL</code> – returns only customer managed permissions</p>\n            </li>\n            <li>\n               <p>\n                  <code>ALL</code> – returns both Amazon Web Services managed permissions and customer managed permissions.</p>\n            </li>\n         </ul>\n         <p>If you don't specify this parameter, the default is <code>All</code>.</p>"
+                    }
+                },
+                "permissionStatus": {
+                    "target": "com.amazonaws.ram#PermissionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies that you want to filter the results to include only permissions with the\n            specified status. For example, use <code>ATTACHABLE</code> to list only permissions that\n            can be associated with resource shares, or <code>DEPRECATED</code> to list only\n            deprecated permissions.</p>"
                     }
                 }
             },
@@ -3509,7 +3823,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the principals that you are sharing resources with or that are sharing resources\n            with you.</p>",
+                "smithy.api#documentation": "<p>Lists the principals that you are sharing resources with or that are sharing resources\n            with you.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listprincipals",
@@ -3541,7 +3855,7 @@
                 "principals": {
                     "target": "com.amazonaws.ram#PrincipalArnOrIdList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies that you want to list information for only the listed principals.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>Specifies that you want to list information for only the listed principals.</p>\n         <p>You can include the following values:</p>\n         <ul>\n            <li>\n               <p>An Amazon Web Services account ID, for example: <code>123456789012</code>\n               </p>\n            </li>\n            <li>\n               <p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of an organization in Organizations, for example:\n                        <code>organizations::123456789012:organization/o-exampleorgid</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an organizational unit (OU) in Organizations, for example:\n                        <code>organizations::123456789012:ou/o-exampleorgid/ou-examplerootid-exampleouid123</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM role, for example:\n                        <code>iam::123456789012:role/rolename</code>\n               </p>\n            </li>\n            <li>\n               <p>An ARN of an IAM user, for example:\n                        <code>iam::123456789012user/username</code>\n               </p>\n            </li>\n            <li>\n               <p>A service principal name, for example: <code>service-id.amazonaws.com</code>\n               </p>\n            </li>\n         </ul>\n         <note>\n            <p>Not all resource types can be shared with IAM roles and users. \n             For more information, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/permissions.html#permissions-rbp-supported-resource-types\">Sharing with IAM roles and users</a> in the <i>Resource Access Manager User\n                    Guide</i>.</p>\n         </note>"
                     }
                 },
                 "resourceType": {
@@ -3616,7 +3930,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the current status of the asynchronous tasks performed by RAM when you\n            perform the <a>ReplacePermissionAssociationsWork</a> operation.</p>",
+                "smithy.api#documentation": "<p>Retrieves the current status of the asynchronous tasks performed by RAM when you\n            perform the <a>ReplacePermissionAssociationsWork</a> operation.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listreplacepermissionassociationswork",
@@ -3713,7 +4027,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the RAM permissions that are associated with a resource share.</p>",
+                "smithy.api#documentation": "<p>Lists the RAM permissions that are associated with a resource share.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listresourcesharepermissions",
@@ -3887,7 +4201,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the resources that you added to a resource share or the resources that are shared with\n            you.</p>",
+                "smithy.api#documentation": "<p>Lists the resources that you added to a resource share or the resources that are shared with\n            you.</p>\n         <note>\n            <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value\nwhen calling a paginated operation. These operations can occasionally return an empty set of results even when there are more\nresults available. The <code>NextToken</code> response parameter value is <code>null</code>\n               <i>only</i>\nwhen there are no more results to display.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/listresources",
@@ -3970,6 +4284,113 @@
                     "target": "com.amazonaws.ram#String",
                     "traits": {
                         "smithy.api#documentation": "<p>If present, this value indicates that more output is available than \n             is included in the current response. Use this value in the <code>NextToken</code> \n             request parameter in a subsequent call to the operation to get the next part of the \n             output. You should repeat this until the <code>NextToken</code> response element comes \n             back as <code>null</code>. This indicates that this is the last page of results.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.ram#ListSourceAssociations": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.ram#ListSourceAssociationsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.ram#ListSourceAssociationsResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.ram#InvalidNextTokenException"
+                },
+                {
+                    "target": "com.amazonaws.ram#InvalidParameterException"
+                },
+                {
+                    "target": "com.amazonaws.ram#MalformedArnException"
+                },
+                {
+                    "target": "com.amazonaws.ram#ServerInternalException"
+                },
+                {
+                    "target": "com.amazonaws.ram#ServiceUnavailableException"
+                },
+                {
+                    "target": "com.amazonaws.ram#UnknownResourceException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Lists source associations for resource shares. Source associations control which sources can be used with service principals in resource shares. This operation provides visibility into source associations for resource share owners.</p>\n         <p>You can filter the results by resource share Amazon Resource Name (ARN), source ID, source type, or association status. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/listsourceassociations",
+                    "code": 200
+                },
+                "smithy.api#paginated": {
+                    "inputToken": "nextToken",
+                    "outputToken": "nextToken",
+                    "items": "sourceAssociations",
+                    "pageSize": "maxResults"
+                }
+            }
+        },
+        "com.amazonaws.ram#ListSourceAssociationsRequest": {
+            "type": "structure",
+            "members": {
+                "resourceShareArns": {
+                    "target": "com.amazonaws.ram#ResourceShareArnList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Names (ARNs) of the resource shares for which you want to retrieve source associations.</p>"
+                    }
+                },
+                "sourceId": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier of the source for which you want to retrieve associations. This can be an account ID, Amazon Resource Name (ARN), organization ID, or organization path.</p>"
+                    }
+                },
+                "sourceType": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of source for which you want to retrieve associations.</p>"
+                    }
+                },
+                "associationStatus": {
+                    "target": "com.amazonaws.ram#ResourceShareAssociationStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The status of the source associations that you want to retrieve.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The pagination token that indicates the next set of results to retrieve.</p>"
+                    }
+                },
+                "maxResults": {
+                    "target": "com.amazonaws.ram#MaxResults",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.ram#ListSourceAssociationsResponse": {
+            "type": "structure",
+            "members": {
+                "sourceAssociations": {
+                    "target": "com.amazonaws.ram#AssociatedSourceList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Information about the source associations.</p>"
+                    }
+                },
+                "nextToken": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The pagination token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
                     }
                 }
             },
@@ -4086,6 +4507,35 @@
                 "smithy.api#httpError": 409
             }
         },
+        "com.amazonaws.ram#PermissionArnAndTemplateParameters": {
+            "type": "structure",
+            "members": {
+                "permissionArn": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the permission to associate with the resource share.</p>"
+                    }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterInputList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of template parameter values to assign for this permission. You must provide\n            values for all parameters declared in the permission template.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Contains a permission ARN and its associated template parameter values. The <a>CreateResourceShare</a> operation uses this structure when associating permissions that have template parameters.</p>"
+            }
+        },
+        "com.amazonaws.ram#PermissionArnAndTemplateParametersList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#PermissionArnAndTemplateParameters",
+                "traits": {
+                    "smithy.api#xmlName": "item"
+                }
+            }
+        },
         "com.amazonaws.ram#PermissionArnList": {
             "type": "list",
             "member": {
@@ -4174,6 +4624,149 @@
                     "traits": {
                         "smithy.api#enumValue": "DELETED"
                     }
+                },
+                "DEPRECATED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DEPRECATED"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameter": {
+            "type": "structure",
+            "members": {
+                "name": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the template parameter.</p>"
+                    }
+                },
+                "type": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of the template parameter. This can be one of the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>STRING</code> – A single string value.</p>\n            </li>\n            <li>\n               <p>\n                  <code>STRING_LIST</code> – One or more string values.</p>\n            </li>\n         </ul>"
+                    }
+                },
+                "description": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A description of the template parameter.</p>"
+                    }
+                },
+                "values": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterValueList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The values assigned to this template parameter in the context of a permission\n            association. This field is present only when the parameter has been assigned values\n            (for example, in the response from <a>ListPermissionAssociations</a> or\n            <a>ListResourceSharePermissions</a>).</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Contains the declaration of a template parameter for a customer managed permission. When returned in the context of a permission association, it also includes the values assigned to that parameter.</p>"
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterDeclaration": {
+            "type": "structure",
+            "members": {
+                "name": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the template parameter. This name is used as the placeholder in the\n            policy template using the syntax <code>@{parameterName}</code>.</p>"
+                    }
+                },
+                "type": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of the template parameter. This can be one of the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>STRING</code> – A single string value that is substituted\n                    directly into the template.</p>\n            </li>\n            <li>\n               <p>\n                  <code>STRING_LIST</code> – One or more string values that expand to\n                    an array in the rendered policy.</p>\n            </li>\n         </ul>"
+                    }
+                },
+                "description": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A description of the template parameter that helps consumers understand what value to\n            provide.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Describes a template parameter declaration for a customer managed permission. Each declaration defines a\n            named placeholder that can be used in the permission's policy template.</p>"
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterDeclarationList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#PermissionTemplateParameterDeclaration",
+                "traits": {
+                    "smithy.api#xmlName": "item"
+                }
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 100
+                }
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterInput": {
+            "type": "structure",
+            "members": {
+                "name": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the template parameter to assign a value to. This must match a parameter\n            name declared in the permission template.</p>"
+                    }
+                },
+                "values": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterValueList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The values to assign to the template parameter. For <code>STRING</code> type\n            parameters, provide a single value. For <code>STRING_LIST</code> type parameters,\n            provide one or more values.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Contains the name and values to assign to a template parameter when associating a permission template with a resource share.</p>"
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterInputList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#PermissionTemplateParameterInput",
+                "traits": {
+                    "smithy.api#xmlName": "item"
+                }
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#PermissionTemplateParameter",
+                "traits": {
+                    "smithy.api#xmlName": "item"
+                }
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterType": {
+            "type": "enum",
+            "members": {
+                "STRING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "STRING"
+                    }
+                },
+                "STRING_LIST": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "STRING_LIST"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.ram#PermissionTemplateParameterValueList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.ram#String",
+                "traits": {
+                    "smithy.api#xmlName": "item"
                 }
             }
         },
@@ -4318,6 +4911,9 @@
                     "target": "com.amazonaws.ram#InvalidParameterException"
                 },
                 {
+                    "target": "com.amazonaws.ram#InvalidPolicyException"
+                },
+                {
                     "target": "com.amazonaws.ram#MalformedArnException"
                 },
                 {
@@ -4377,7 +4973,10 @@
             "type": "structure",
             "members": {
                 "permission": {
-                    "target": "com.amazonaws.ram#ResourceSharePermissionSummary"
+                    "target": "com.amazonaws.ram#ResourceSharePermissionSummary",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The details of the promoted customer managed permission, including its <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a>, version, and status.</p>"
+                    }
                 },
                 "clientToken": {
                     "target": "com.amazonaws.ram#String",
@@ -4626,6 +5225,12 @@
                         "smithy.api#required": {}
                     }
                 },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterInputList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the template parameter values to apply when replacing the permission. You\n            must provide values for all parameters declared in the target permission template. This\n            parameter is required only if the target permission (<code>toPermissionArn</code>) has\n            template parameters.</p>"
+                    }
+                },
                 "clientToken": {
                     "target": "com.amazonaws.ram#String",
                     "traits": {
@@ -4688,6 +5293,12 @@
                     "target": "com.amazonaws.ram#String",
                     "traits": {
                         "smithy.api#documentation": "<p>The version of the managed permission that this background task is associating with the resource shares. This\n            is always the version that is currently the default for this managed permission.</p>"
+                    }
+                },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The template parameter values to apply when replacing the permission. This field is\n            present only if the target permission is a template with declared parameters.</p>"
                     }
                 },
                 "status": {
@@ -4979,6 +5590,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Indicates what features are available for this resource share. This parameter can have one of\n            the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <b>STANDARD</b> – A resource share that supports all\n                    functionality. These resource shares are visible to all principals you share the resource share with. \n                    You can modify these resource shares in RAM using the console or APIs. This resource share might \n                    have been created by RAM, or it might have been <b>CREATED_FROM_POLICY</b> and then promoted.</p>\n            </li>\n            <li>\n               <p>\n                  <b>CREATED_FROM_POLICY</b> – The customer\n                    manually shared a resource by attaching a resource-based policy. That policy did\n                    not match any existing managed permissions, so RAM created this customer managed permission automatically on the\n                    customer's behalf based on the attached policy document. This type of resource share \n                    is visible only to the Amazon Web Services account that created it. You can't modify it in \n                    RAM unless you promote it. For more information, \n                    see <a>PromoteResourceShareCreatedFromPolicy</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <b>PROMOTING_TO_STANDARD</b> – This\n                    resource share was originally <code>CREATED_FROM_POLICY</code>, but the customer ran\n                    the <a>PromoteResourceShareCreatedFromPolicy</a> and that operation\n                    is still in progress. This value changes to <code>STANDARD</code> when\n                    complete.</p>\n            </li>\n         </ul>"
                     }
+                },
+                "resourceShareConfiguration": {
+                    "target": "com.amazonaws.ram#ResourceShareConfiguration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The configuration of the resource share</p>"
+                    }
                 }
             },
             "traits": {
@@ -5097,6 +5714,24 @@
                     "traits": {
                         "smithy.api#enumValue": "DISASSOCIATED"
                     }
+                },
+                "SUSPENDED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SUSPENDED"
+                    }
+                },
+                "SUSPENDING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SUSPENDING"
+                    }
+                },
+                "RESTORING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "RESTORING"
+                    }
                 }
             }
         },
@@ -5114,7 +5749,27 @@
                     "traits": {
                         "smithy.api#enumValue": "RESOURCE"
                     }
+                },
+                "SOURCE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SOURCE"
+                    }
                 }
+            }
+        },
+        "com.amazonaws.ram#ResourceShareConfiguration": {
+            "type": "structure",
+            "members": {
+                "retainSharingOnAccountLeaveOrganization": {
+                    "target": "com.amazonaws.ram#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies whether the consumer account retains access to the resource share after leaving the organization.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The configuration of the resource share</p>"
             }
         },
         "com.amazonaws.ram#ResourceShareFeatureSet": {
@@ -5347,7 +6002,7 @@
                     "code": "ResourceShareLimitExceeded",
                     "httpResponseCode": 400
                 },
-                "smithy.api#documentation": "<p>The operation failed because it would exceed the limit for resource shares for your account. To\n            view the limits for your Amazon Web Services account, see the <a href=\"https://console.aws.amazon.com/servicequotas/home/services/ram/quotas\">RAM page in the Service Quotas\n                console</a>.</p>",
+                "smithy.api#documentation": "<p>The operation failed because it would exceed the limit for resource shares for your account. You\n            can associate up to 100 resources per call. To view the limits for your Amazon Web Services account,\n            see the <a href=\"https://console.aws.amazon.com/servicequotas/home/services/ram/quotas\">RAM page in\n                the Service Quotas console</a>.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 400
             }
@@ -5400,6 +6055,12 @@
                         "smithy.api#documentation": "<p>The permission's effect and actions in JSON format. The <code>effect</code> indicates\n            whether the specified actions are allowed or denied. The <code>actions</code> list the\n            operations to which the principal is granted or denied access.</p>"
                     }
                 },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterDeclarationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of template parameter declarations defined for this permission. Each\n            declaration includes the parameter name, type, and description. This field is present\n            only if the permission is a template with declared parameters.</p>"
+                    }
+                },
                 "creationTime": {
                     "target": "com.amazonaws.ram#DateTime",
                     "traits": {
@@ -5433,13 +6094,19 @@
                 "status": {
                     "target": "com.amazonaws.ram#PermissionStatus",
                     "traits": {
-                        "smithy.api#documentation": "<p>The current status of the association between the permission and the resource share.\n            The following are the possible values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ATTACHABLE</code> – This permission or version can be associated \n                with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>UNATTACHABLE</code> – This permission or version can't \n                currently be associated with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETING</code> – This permission or version is in the process of\n                    being deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETED</code> – This permission or version is deleted.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>The current status of the association between the permission and the resource share.\n            The following are the possible values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ATTACHABLE</code> – This permission or version can be associated \n                with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>UNATTACHABLE</code> – This permission or version can't \n                currently be associated with resource shares.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETING</code> – This permission or version is in the process of\n                    being deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETED</code> – This permission or version is deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DEPRECATED</code> – The permission owner deprecated this permission. It can't be associated with new resource shares, but existing\n                    associations continue to function.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "tags": {
                     "target": "com.amazonaws.ram#TagList",
                     "traits": {
                         "smithy.api#documentation": "<p>The tag key and value pairs attached to the resource share.</p>"
+                    }
+                },
+                "resourceOwner": {
+                    "target": "com.amazonaws.ram#ResourceOwner",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The owner of the permission. This can be one of the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>SELF</code> – The permission is owned by the current\n                    account.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OTHER-ACCOUNTS</code> – The permission is owned by another\n                    account and shared with the current account.</p>\n            </li>\n         </ul>"
                     }
                 }
             },
@@ -5525,10 +6192,22 @@
                         "smithy.api#documentation": "<p>Indicates what features are available for this resource share. This parameter can have one of\n            the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <b>STANDARD</b> – A resource share that supports all\n                    functionality. These resource shares are visible to all principals you share the resource share with. \n                    You can modify these resource shares in RAM using the console or APIs. This resource share might \n                    have been created by RAM, or it might have been <b>CREATED_FROM_POLICY</b> and then promoted.</p>\n            </li>\n            <li>\n               <p>\n                  <b>CREATED_FROM_POLICY</b> – The customer\n                    manually shared a resource by attaching a resource-based policy. That policy did\n                    not match any existing managed permissions, so RAM created this customer managed permission automatically on the\n                    customer's behalf based on the attached policy document. This type of resource share \n                    is visible only to the Amazon Web Services account that created it. You can't modify it in \n                    RAM unless you promote it. For more information, \n                    see <a>PromoteResourceShareCreatedFromPolicy</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <b>PROMOTING_TO_STANDARD</b> – This\n                    resource share was originally <code>CREATED_FROM_POLICY</code>, but the customer ran\n                    the <a>PromoteResourceShareCreatedFromPolicy</a> and that operation\n                    is still in progress. This value changes to <code>STANDARD</code> when\n                    complete.</p>\n            </li>\n         </ul>"
                     }
                 },
+                "permissionTemplateParameters": {
+                    "target": "com.amazonaws.ram#PermissionTemplateParameterList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of template parameters defined for this permission, including their names,\n            types, descriptions, and values. This field is present only if the permission is a\n            template with declared parameters. When returned in the context of a permission\n            association, the values are also included.</p>"
+                    }
+                },
                 "tags": {
                     "target": "com.amazonaws.ram#TagList",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of the tag key value pairs currently attached to the permission.</p>"
+                    }
+                },
+                "resourceOwner": {
+                    "target": "com.amazonaws.ram#ResourceOwner",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The owner of the permission. This can be one of the following values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>SELF</code> – The permission is owned by the current\n                    account.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OTHER-ACCOUNTS</code> – The permission is owned by another\n                    account and shared with the current account.</p>\n            </li>\n         </ul>"
                     }
                 }
             },
@@ -5819,7 +6498,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>A tag key and optional list of possible values that you can use to filter results for\n            tagged resources.</p>"
+                "smithy.api#documentation": "<p>A tag key and optional list of possible values that you can use to filter results for\n            tagged resources.</p>\n         <note>\n            <p>Multiple tag filters are evaluated as an OR condition.</p>\n         </note>"
             }
         },
         "com.amazonaws.ram#TagFilters": {
@@ -6095,6 +6774,130 @@
             "members": {},
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.ram#UpdatePermission": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.ram#UpdatePermissionRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.ram#UpdatePermissionResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.ram#IdempotentParameterMismatchException"
+                },
+                {
+                    "target": "com.amazonaws.ram#InvalidClientTokenException"
+                },
+                {
+                    "target": "com.amazonaws.ram#InvalidParameterException"
+                },
+                {
+                    "target": "com.amazonaws.ram#MalformedArnException"
+                },
+                {
+                    "target": "com.amazonaws.ram#OperationNotPermittedException"
+                },
+                {
+                    "target": "com.amazonaws.ram#PermissionLimitExceededException"
+                },
+                {
+                    "target": "com.amazonaws.ram#ServerInternalException"
+                },
+                {
+                    "target": "com.amazonaws.ram#ServiceUnavailableException"
+                },
+                {
+                    "target": "com.amazonaws.ram#UnknownResourceException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Updates the status of the specified customer managed permission.</p>\n         <p>Setting the status to <code>DEPRECATED</code> prevents new resource share associations. Setting it to <code>ATTACHABLE</code> restores a previously deprecated permission. Existing resource shares that use the permission continue to function.</p>",
+                "smithy.api#examples": [
+                    {
+                        "title": "Deprecate a managed permission",
+                        "documentation": "Deprecates a customer managed permission so it can no longer be associated with new resource shares.",
+                        "input": {
+                            "permissionArn": "arn:aws:ram:us-east-1:123456789012:permission/AnyCompanyImageBuilderPermission",
+                            "status": "DEPRECATED"
+                        },
+                        "output": {
+                            "permissionStatus": "DEPRECATED"
+                        }
+                    }
+                ],
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/updatepermission",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.ram#UpdatePermissionRequest": {
+            "type": "structure",
+            "members": {
+                "permissionArn": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the customer managed permission that you want to update.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "status": {
+                    "target": "com.amazonaws.ram#UpdatePermissionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the new status for the permission. This can be one of the following\n            values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ATTACHABLE</code> – Restores a previously deprecated permission\n                    so it can be associated with resource shares again.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DEPRECATED</code> – Deprecates the permission so it can no\n                    longer be associated with new resource shares.</p>\n            </li>\n         </ul>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "clientToken": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies a unique, case-sensitive identifier that you provide to\n             ensure the idempotency of the request. This lets you safely retry the request without\n             accidentally performing the same operation a second time. Passing the same value to a\n             later call to an operation requires that you also pass the same value for all other \n             parameters. We recommend that you use a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID type of \n             value.</a>.</p>\n         <p>If you don't provide this value, then Amazon Web Services generates a random one for\n             you.</p>\n         <p>If you retry the operation with the same <code>ClientToken</code>, but with \n             different parameters, the retry fails with an <code>IdempotentParameterMismatch</code>\n             error.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.ram#UpdatePermissionResponse": {
+            "type": "structure",
+            "members": {
+                "clientToken": {
+                    "target": "com.amazonaws.ram#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The idempotency identifier associated with this request. If you\n             want to repeat the same operation in an idempotent manner then you must include this\n             value in the <code>clientToken</code> request parameter of that later call. All other \n             parameters must also have the same values that you used in the first call.</p>"
+                    }
+                },
+                "permissionStatus": {
+                    "target": "com.amazonaws.ram#UpdatePermissionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The updated status of the permission.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.ram#UpdatePermissionStatus": {
+            "type": "enum",
+            "members": {
+                "ATTACHABLE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ATTACHABLE"
+                    }
+                },
+                "DEPRECATED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DEPRECATED"
+                    }
+                }
             }
         },
         "com.amazonaws.ram#UpdateResourceShare": {

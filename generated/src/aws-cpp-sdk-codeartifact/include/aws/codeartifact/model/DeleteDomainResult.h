@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/codeartifact/CodeArtifact_EXPORTS.h>
 #include <aws/codeartifact/model/DomainDescription.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeArtifact
-{
-namespace Model
-{
-  class DeleteDomainResult
-  {
-  public:
-    AWS_CODEARTIFACT_API DeleteDomainResult();
-    AWS_CODEARTIFACT_API DeleteDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEARTIFACT_API DeleteDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeArtifact {
+namespace Model {
+class DeleteDomainResult {
+ public:
+  AWS_CODEARTIFACT_API DeleteDomainResult() = default;
+  AWS_CODEARTIFACT_API DeleteDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEARTIFACT_API DeleteDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> Contains information about the deleted domain after processing the request.
+   * </p>
+   */
+  inline const DomainDescription& GetDomain() const { return m_domain; }
+  template <typename DomainT = DomainDescription>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = DomainDescription>
+  DeleteDomainResult& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Contains information about the deleted domain after processing the request.
-     * </p>
-     */
-    inline const DomainDescription& GetDomain() const{ return m_domain; }
-    inline void SetDomain(const DomainDescription& value) { m_domain = value; }
-    inline void SetDomain(DomainDescription&& value) { m_domain = std::move(value); }
-    inline DeleteDomainResult& WithDomain(const DomainDescription& value) { SetDomain(value); return *this;}
-    inline DeleteDomainResult& WithDomain(DomainDescription&& value) { SetDomain(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDomainResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDomainResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDomainResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDomainResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DomainDescription m_domain;
+ private:
+  DomainDescription m_domain;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_domainHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeArtifact
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeArtifact
+}  // namespace Aws

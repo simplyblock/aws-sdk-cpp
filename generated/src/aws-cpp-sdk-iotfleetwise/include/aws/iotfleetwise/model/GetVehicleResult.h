@@ -4,162 +4,232 @@
  */
 
 #pragma once
-#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
+#include <aws/iotfleetwise/model/StateTemplateAssociation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTFleetWise
-{
-namespace Model
-{
-  class GetVehicleResult
-  {
-  public:
-    AWS_IOTFLEETWISE_API GetVehicleResult();
-    AWS_IOTFLEETWISE_API GetVehicleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTFLEETWISE_API GetVehicleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTFleetWise {
+namespace Model {
+class GetVehicleResult {
+ public:
+  AWS_IOTFLEETWISE_API GetVehicleResult() = default;
+  AWS_IOTFLEETWISE_API GetVehicleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTFLEETWISE_API GetVehicleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the vehicle.</p>
+   */
+  inline const Aws::String& GetVehicleName() const { return m_vehicleName; }
+  template <typename VehicleNameT = Aws::String>
+  void SetVehicleName(VehicleNameT&& value) {
+    m_vehicleNameHasBeenSet = true;
+    m_vehicleName = std::forward<VehicleNameT>(value);
+  }
+  template <typename VehicleNameT = Aws::String>
+  GetVehicleResult& WithVehicleName(VehicleNameT&& value) {
+    SetVehicleName(std::forward<VehicleNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the vehicle.</p>
-     */
-    inline const Aws::String& GetVehicleName() const{ return m_vehicleName; }
-    inline void SetVehicleName(const Aws::String& value) { m_vehicleName = value; }
-    inline void SetVehicleName(Aws::String&& value) { m_vehicleName = std::move(value); }
-    inline void SetVehicleName(const char* value) { m_vehicleName.assign(value); }
-    inline GetVehicleResult& WithVehicleName(const Aws::String& value) { SetVehicleName(value); return *this;}
-    inline GetVehicleResult& WithVehicleName(Aws::String&& value) { SetVehicleName(std::move(value)); return *this;}
-    inline GetVehicleResult& WithVehicleName(const char* value) { SetVehicleName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The Amazon Resource Name (ARN) of the vehicle to retrieve information about.
+   * </p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetVehicleResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The Amazon Resource Name (ARN) of the vehicle to retrieve information about.
-     * </p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline GetVehicleResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetVehicleResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetVehicleResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The ARN of a vehicle model (model manifest) associated with the vehicle.
+   * </p>
+   */
+  inline const Aws::String& GetModelManifestArn() const { return m_modelManifestArn; }
+  template <typename ModelManifestArnT = Aws::String>
+  void SetModelManifestArn(ModelManifestArnT&& value) {
+    m_modelManifestArnHasBeenSet = true;
+    m_modelManifestArn = std::forward<ModelManifestArnT>(value);
+  }
+  template <typename ModelManifestArnT = Aws::String>
+  GetVehicleResult& WithModelManifestArn(ModelManifestArnT&& value) {
+    SetModelManifestArn(std::forward<ModelManifestArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The ARN of a vehicle model (model manifest) associated with the vehicle.
-     * </p>
-     */
-    inline const Aws::String& GetModelManifestArn() const{ return m_modelManifestArn; }
-    inline void SetModelManifestArn(const Aws::String& value) { m_modelManifestArn = value; }
-    inline void SetModelManifestArn(Aws::String&& value) { m_modelManifestArn = std::move(value); }
-    inline void SetModelManifestArn(const char* value) { m_modelManifestArn.assign(value); }
-    inline GetVehicleResult& WithModelManifestArn(const Aws::String& value) { SetModelManifestArn(value); return *this;}
-    inline GetVehicleResult& WithModelManifestArn(Aws::String&& value) { SetModelManifestArn(std::move(value)); return *this;}
-    inline GetVehicleResult& WithModelManifestArn(const char* value) { SetModelManifestArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The ARN of a decoder manifest associated with the vehicle. </p>
+   */
+  inline const Aws::String& GetDecoderManifestArn() const { return m_decoderManifestArn; }
+  template <typename DecoderManifestArnT = Aws::String>
+  void SetDecoderManifestArn(DecoderManifestArnT&& value) {
+    m_decoderManifestArnHasBeenSet = true;
+    m_decoderManifestArn = std::forward<DecoderManifestArnT>(value);
+  }
+  template <typename DecoderManifestArnT = Aws::String>
+  GetVehicleResult& WithDecoderManifestArn(DecoderManifestArnT&& value) {
+    SetDecoderManifestArn(std::forward<DecoderManifestArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The ARN of a decoder manifest associated with the vehicle. </p>
-     */
-    inline const Aws::String& GetDecoderManifestArn() const{ return m_decoderManifestArn; }
-    inline void SetDecoderManifestArn(const Aws::String& value) { m_decoderManifestArn = value; }
-    inline void SetDecoderManifestArn(Aws::String&& value) { m_decoderManifestArn = std::move(value); }
-    inline void SetDecoderManifestArn(const char* value) { m_decoderManifestArn.assign(value); }
-    inline GetVehicleResult& WithDecoderManifestArn(const Aws::String& value) { SetDecoderManifestArn(value); return *this;}
-    inline GetVehicleResult& WithDecoderManifestArn(Aws::String&& value) { SetDecoderManifestArn(std::move(value)); return *this;}
-    inline GetVehicleResult& WithDecoderManifestArn(const char* value) { SetDecoderManifestArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Static information about a vehicle in a key-value pair. For example:</p> <p>
+   * <code>"engineType"</code> : <code>"1.3 L R2"</code> </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetAttributes() const { return m_attributes; }
+  template <typename AttributesT = Aws::Map<Aws::String, Aws::String>>
+  void SetAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes = std::forward<AttributesT>(value);
+  }
+  template <typename AttributesT = Aws::Map<Aws::String, Aws::String>>
+  GetVehicleResult& WithAttributes(AttributesT&& value) {
+    SetAttributes(std::forward<AttributesT>(value));
+    return *this;
+  }
+  template <typename AttributesKeyT = Aws::String, typename AttributesValueT = Aws::String>
+  GetVehicleResult& AddAttributes(AttributesKeyT&& key, AttributesValueT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes.emplace(std::forward<AttributesKeyT>(key), std::forward<AttributesValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Static information about a vehicle in a key-value pair. For example:</p> <p>
-     * <code>"engineType"</code> : <code>"1.3 L R2"</code> </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetAttributes() const{ return m_attributes; }
-    inline void SetAttributes(const Aws::Map<Aws::String, Aws::String>& value) { m_attributes = value; }
-    inline void SetAttributes(Aws::Map<Aws::String, Aws::String>&& value) { m_attributes = std::move(value); }
-    inline GetVehicleResult& WithAttributes(const Aws::Map<Aws::String, Aws::String>& value) { SetAttributes(value); return *this;}
-    inline GetVehicleResult& WithAttributes(Aws::Map<Aws::String, Aws::String>&& value) { SetAttributes(std::move(value)); return *this;}
-    inline GetVehicleResult& AddAttributes(const Aws::String& key, const Aws::String& value) { m_attributes.emplace(key, value); return *this; }
-    inline GetVehicleResult& AddAttributes(Aws::String&& key, const Aws::String& value) { m_attributes.emplace(std::move(key), value); return *this; }
-    inline GetVehicleResult& AddAttributes(const Aws::String& key, Aws::String&& value) { m_attributes.emplace(key, std::move(value)); return *this; }
-    inline GetVehicleResult& AddAttributes(Aws::String&& key, Aws::String&& value) { m_attributes.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetVehicleResult& AddAttributes(const char* key, Aws::String&& value) { m_attributes.emplace(key, std::move(value)); return *this; }
-    inline GetVehicleResult& AddAttributes(Aws::String&& key, const char* value) { m_attributes.emplace(std::move(key), value); return *this; }
-    inline GetVehicleResult& AddAttributes(const char* key, const char* value) { m_attributes.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>State templates associated with the vehicle.</p>
+   */
+  inline const Aws::Vector<StateTemplateAssociation>& GetStateTemplates() const { return m_stateTemplates; }
+  template <typename StateTemplatesT = Aws::Vector<StateTemplateAssociation>>
+  void SetStateTemplates(StateTemplatesT&& value) {
+    m_stateTemplatesHasBeenSet = true;
+    m_stateTemplates = std::forward<StateTemplatesT>(value);
+  }
+  template <typename StateTemplatesT = Aws::Vector<StateTemplateAssociation>>
+  GetVehicleResult& WithStateTemplates(StateTemplatesT&& value) {
+    SetStateTemplates(std::forward<StateTemplatesT>(value));
+    return *this;
+  }
+  template <typename StateTemplatesT = StateTemplateAssociation>
+  GetVehicleResult& AddStateTemplates(StateTemplatesT&& value) {
+    m_stateTemplatesHasBeenSet = true;
+    m_stateTemplates.emplace_back(std::forward<StateTemplatesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The time the vehicle was created in seconds since epoch (January 1, 1970 at
-     * midnight UTC time). </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline GetVehicleResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline GetVehicleResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The time the vehicle was created in seconds since epoch (January 1, 1970 at
+   * midnight UTC time). </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  GetVehicleResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The time the vehicle was last updated in seconds since epoch (January 1,
-     * 1970 at midnight UTC time). </p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModificationTime() const{ return m_lastModificationTime; }
-    inline void SetLastModificationTime(const Aws::Utils::DateTime& value) { m_lastModificationTime = value; }
-    inline void SetLastModificationTime(Aws::Utils::DateTime&& value) { m_lastModificationTime = std::move(value); }
-    inline GetVehicleResult& WithLastModificationTime(const Aws::Utils::DateTime& value) { SetLastModificationTime(value); return *this;}
-    inline GetVehicleResult& WithLastModificationTime(Aws::Utils::DateTime&& value) { SetLastModificationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The time the vehicle was last updated in seconds since epoch (January 1,
+   * 1970 at midnight UTC time). </p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModificationTime() const { return m_lastModificationTime; }
+  template <typename LastModificationTimeT = Aws::Utils::DateTime>
+  void SetLastModificationTime(LastModificationTimeT&& value) {
+    m_lastModificationTimeHasBeenSet = true;
+    m_lastModificationTime = std::forward<LastModificationTimeT>(value);
+  }
+  template <typename LastModificationTimeT = Aws::Utils::DateTime>
+  GetVehicleResult& WithLastModificationTime(LastModificationTimeT&& value) {
+    SetLastModificationTime(std::forward<LastModificationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetVehicleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetVehicleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetVehicleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_vehicleName;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetVehicleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Aws::String m_vehicleName;
 
-    Aws::String m_modelManifestArn;
+  Aws::String m_arn;
 
-    Aws::String m_decoderManifestArn;
+  Aws::String m_modelManifestArn;
 
-    Aws::Map<Aws::String, Aws::String> m_attributes;
+  Aws::String m_decoderManifestArn;
 
-    Aws::Utils::DateTime m_creationTime;
+  Aws::Map<Aws::String, Aws::String> m_attributes;
 
-    Aws::Utils::DateTime m_lastModificationTime;
+  Aws::Vector<StateTemplateAssociation> m_stateTemplates;
 
-    Aws::String m_requestId;
-  };
+  Aws::Utils::DateTime m_creationTime{};
 
-} // namespace Model
-} // namespace IoTFleetWise
-} // namespace Aws
+  Aws::Utils::DateTime m_lastModificationTime{};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vehicleNameHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_modelManifestArnHasBeenSet = false;
+  bool m_decoderManifestArnHasBeenSet = false;
+  bool m_attributesHasBeenSet = false;
+  bool m_stateTemplatesHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_lastModificationTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace IoTFleetWise
+}  // namespace Aws

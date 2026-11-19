@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-payment-cryptography "C++ SDK for the AWS payment-cryptography service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-payment-cryptography "C++ SDK for Payment Cryptography Control Plane" aws-cpp-sdk-core)
 
 file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_HEADERS
     "include/aws/payment-cryptography/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_HEADERS
 
 file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_MODEL_HEADERS
     "include/aws/payment-cryptography/model/*.h"
+)
+
+file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_INTERNAL_HEADERS
+    "include/aws/payment-cryptography/internal/*.h"
 )
 
 file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PAYMENT-CRYPTOGRAPHY_MODEL_SOURCE
 
 file(GLOB PAYMENT-CRYPTOGRAPHY_UNIFIED_HEADERS
     ${AWS_PAYMENT-CRYPTOGRAPHY_HEADERS}
+    ${AWS_PAYMENT-CRYPTOGRAPHY_INTERNAL_HEADERS}
     ${AWS_PAYMENT-CRYPTOGRAPHY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\payment-cryptography" FILES ${AWS_PAYMENT-CRYPTOGRAPHY_HEADERS})
+        source_group("Header Files\\aws\\payment-cryptography\\internal" FILES ${AWS_PAYMENT-CRYPTOGRAPHY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\payment-cryptography\\model" FILES ${AWS_PAYMENT-CRYPTOGRAPHY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PAYMENT-CRYPTOGRAPHY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PAYMENT-CRYPTOGRAPHY_MODEL_SOURCE})

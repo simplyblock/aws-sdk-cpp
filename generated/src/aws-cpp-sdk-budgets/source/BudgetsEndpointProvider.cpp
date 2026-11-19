@@ -4,13 +4,14 @@
  */
 
 #include <aws/budgets/BudgetsEndpointProvider.h>
+#include <aws/budgets/internal/BudgetsEndpointRules.h>
 
-namespace Aws
-{
-namespace Budgets
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Budgets
-} // namespace Aws
+namespace Aws {
+namespace Budgets {
+namespace Endpoint {
+BudgetsEndpointProvider::BudgetsEndpointProvider()
+    : BudgetsDefaultEpProviderBase(Aws::Budgets::BudgetsEndpointRules::GetRulesBlob(), Aws::Budgets::BudgetsEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Budgets
+}  // namespace Aws

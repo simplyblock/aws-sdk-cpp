@@ -4,85 +4,213 @@
  */
 
 #include <aws/comprehend/model/WarningsListItem.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-WarningsListItem::WarningsListItem() : 
-    m_page(0),
-    m_pageHasBeenSet(false),
-    m_warnCode(PageBasedWarningCode::NOT_SET),
-    m_warnCodeHasBeenSet(false),
-    m_warnMessageHasBeenSet(false)
-{
-}
+WarningsListItem::WarningsListItem(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-WarningsListItem::WarningsListItem(JsonView jsonValue)
-  : WarningsListItem()
-{
-  *this = jsonValue;
-}
+WarningsListItem& WarningsListItem::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-WarningsListItem& WarningsListItem::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Page"))
-  {
-    m_page = jsonValue.GetInteger("Page");
+              if (initialKeyStr == "Page") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_page = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_page = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_pageHasBeenSet = true;
+              }
 
-    m_pageHasBeenSet = true;
-  }
+              else if (initialKeyStr == "WarnCode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_warnCode = PageBasedWarningCodeMapper::GetPageBasedWarningCodeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_warnCodeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("WarnCode"))
-  {
-    m_warnCode = PageBasedWarningCodeMapper::GetPageBasedWarningCodeForName(jsonValue.GetString("WarnCode"));
+              else if (initialKeyStr == "WarnMessage") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_warnMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_warnMessage = ss.str();
+                  }
+                }
+                m_warnMessageHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("WarningsListItem", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_warnCodeHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("WarnMessage"))
-  {
-    m_warnMessage = jsonValue.GetString("WarnMessage");
+            if (initialKeyStr == "Page") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_page = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_page = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_pageHasBeenSet = true;
+            }
 
-    m_warnMessageHasBeenSet = true;
+            else if (initialKeyStr == "WarnCode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_warnCode = PageBasedWarningCodeMapper::GetPageBasedWarningCodeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_warnCodeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "WarnMessage") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_warnMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_warnMessage = ss.str();
+                }
+              }
+              m_warnMessageHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue WarningsListItem::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_pageHasBeenSet)
-  {
-   payload.WithInteger("Page", m_page);
-
+void WarningsListItem::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_warnCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_warnMessageHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_warnCodeHasBeenSet)
-  {
-   payload.WithString("WarnCode", PageBasedWarningCodeMapper::GetNameForPageBasedWarningCode(m_warnCode));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_pageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Page"));
+    (m_page >= 0) ? encoder.WriteUInt(m_page) : encoder.WriteNegInt(m_page);
   }
 
-  if(m_warnMessageHasBeenSet)
-  {
-   payload.WithString("WarnMessage", m_warnMessage);
-
+  if (m_warnCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WarnCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PageBasedWarningCodeMapper::GetNameForPageBasedWarningCode(m_warnCode).c_str()));
   }
 
-  return payload;
+  if (m_warnMessageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WarnMessage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_warnMessage.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

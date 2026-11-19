@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/greengrass/model/ListSubscriptionDefinitionVersionsResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/greengrass/model/ListSubscriptionDefinitionVersionsResult.h>
 
 #include <utility>
 
@@ -17,41 +17,32 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ListSubscriptionDefinitionVersionsResult::ListSubscriptionDefinitionVersionsResult()
-{
-}
-
-ListSubscriptionDefinitionVersionsResult::ListSubscriptionDefinitionVersionsResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+ListSubscriptionDefinitionVersionsResult::ListSubscriptionDefinitionVersionsResult(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   *this = result;
 }
 
-ListSubscriptionDefinitionVersionsResult& ListSubscriptionDefinitionVersionsResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+ListSubscriptionDefinitionVersionsResult& ListSubscriptionDefinitionVersionsResult::operator=(
+    const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("NextToken"))
-  {
+  if (jsonValue.ValueExists("NextToken")) {
     m_nextToken = jsonValue.GetString("NextToken");
-
+    m_nextTokenHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Versions"))
-  {
+  if (jsonValue.ValueExists("Versions")) {
     Aws::Utils::Array<JsonView> versionsJsonList = jsonValue.GetArray("Versions");
-    for(unsigned versionsIndex = 0; versionsIndex < versionsJsonList.GetLength(); ++versionsIndex)
-    {
+    for (unsigned versionsIndex = 0; versionsIndex < versionsJsonList.GetLength(); ++versionsIndex) {
       m_versions.push_back(versionsJsonList[versionsIndex].AsObject());
     }
+    m_versionsHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-globalaccelerator "C++ SDK for the AWS globalaccelerator service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-globalaccelerator "C++ SDK for AWS Global Accelerator" aws-cpp-sdk-core)
 
 file(GLOB AWS_GLOBALACCELERATOR_HEADERS
     "include/aws/globalaccelerator/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_GLOBALACCELERATOR_HEADERS
 
 file(GLOB AWS_GLOBALACCELERATOR_MODEL_HEADERS
     "include/aws/globalaccelerator/model/*.h"
+)
+
+file(GLOB AWS_GLOBALACCELERATOR_INTERNAL_HEADERS
+    "include/aws/globalaccelerator/internal/*.h"
 )
 
 file(GLOB AWS_GLOBALACCELERATOR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_GLOBALACCELERATOR_MODEL_SOURCE
 
 file(GLOB GLOBALACCELERATOR_UNIFIED_HEADERS
     ${AWS_GLOBALACCELERATOR_HEADERS}
+    ${AWS_GLOBALACCELERATOR_INTERNAL_HEADERS}
     ${AWS_GLOBALACCELERATOR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\globalaccelerator" FILES ${AWS_GLOBALACCELERATOR_HEADERS})
+        source_group("Header Files\\aws\\globalaccelerator\\internal" FILES ${AWS_GLOBALACCELERATOR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\globalaccelerator\\model" FILES ${AWS_GLOBALACCELERATOR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_GLOBALACCELERATOR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_GLOBALACCELERATOR_MODEL_SOURCE})

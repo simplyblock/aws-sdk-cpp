@@ -1,0 +1,48 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/bedrock-agentcore/model/DataSourceConfig.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+#include <utility>
+
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace BedrockAgentCore {
+namespace Model {
+
+DataSourceConfig::DataSourceConfig(JsonView jsonValue) { *this = jsonValue; }
+
+DataSourceConfig& DataSourceConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("cloudWatchLogs")) {
+    m_cloudWatchLogs = jsonValue.GetObject("cloudWatchLogs");
+    m_cloudWatchLogsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("onlineEvaluationConfigSource")) {
+    m_onlineEvaluationConfigSource = jsonValue.GetObject("onlineEvaluationConfigSource");
+    m_onlineEvaluationConfigSourceHasBeenSet = true;
+  }
+  return *this;
+}
+
+JsonValue DataSourceConfig::Jsonize() const {
+  JsonValue payload;
+
+  if (m_cloudWatchLogsHasBeenSet) {
+    payload.WithObject("cloudWatchLogs", m_cloudWatchLogs.Jsonize());
+  }
+
+  if (m_onlineEvaluationConfigSourceHasBeenSet) {
+    payload.WithObject("onlineEvaluationConfigSource", m_onlineEvaluationConfigSource.Jsonize());
+  }
+
+  return payload;
+}
+
+}  // namespace Model
+}  // namespace BedrockAgentCore
+}  // namespace Aws

@@ -12,29 +12,16 @@ using namespace Aws::Batch::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeJobsRequest::DescribeJobsRequest() : 
-    m_jobsHasBeenSet(false)
-{
-}
-
-Aws::String DescribeJobsRequest::SerializePayload() const
-{
+Aws::String DescribeJobsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_jobsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> jobsJsonList(m_jobs.size());
-   for(unsigned jobsIndex = 0; jobsIndex < jobsJsonList.GetLength(); ++jobsIndex)
-   {
-     jobsJsonList[jobsIndex].AsString(m_jobs[jobsIndex]);
-   }
-   payload.WithArray("jobs", std::move(jobsJsonList));
-
+  if (m_jobsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> jobsJsonList(m_jobs.size());
+    for (unsigned jobsIndex = 0; jobsIndex < jobsJsonList.GetLength(); ++jobsIndex) {
+      jobsJsonList[jobsIndex].AsString(m_jobs[jobsIndex]);
+    }
+    payload.WithArray("jobs", std::move(jobsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

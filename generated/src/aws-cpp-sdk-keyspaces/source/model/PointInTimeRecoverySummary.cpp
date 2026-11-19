@@ -3,70 +3,158 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/keyspaces/model/PointInTimeRecoverySummary.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Keyspaces
-{
-namespace Model
-{
+namespace Aws {
+namespace Keyspaces {
+namespace Model {
 
-PointInTimeRecoverySummary::PointInTimeRecoverySummary() : 
-    m_status(PointInTimeRecoveryStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_earliestRestorableTimestampHasBeenSet(false)
-{
-}
+PointInTimeRecoverySummary::PointInTimeRecoverySummary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-PointInTimeRecoverySummary::PointInTimeRecoverySummary(JsonView jsonValue)
-  : PointInTimeRecoverySummary()
-{
-  *this = jsonValue;
-}
+PointInTimeRecoverySummary& PointInTimeRecoverySummary::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-PointInTimeRecoverySummary& PointInTimeRecoverySummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("status"))
-  {
-    m_status = PointInTimeRecoveryStatusMapper::GetPointInTimeRecoveryStatusForName(jsonValue.GetString("status"));
+              if (initialKeyStr == "status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = PointInTimeRecoveryStatusMapper::GetPointInTimeRecoveryStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-    m_statusHasBeenSet = true;
-  }
+              else if (initialKeyStr == "earliestRestorableTimestamp") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_earliestRestorableTimestamp = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_earliestRestorableTimestamp = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_earliestRestorableTimestampHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("PointInTimeRecoverySummary", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("earliestRestorableTimestamp"))
-  {
-    m_earliestRestorableTimestamp = jsonValue.GetDouble("earliestRestorableTimestamp");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_earliestRestorableTimestampHasBeenSet = true;
+            if (initialKeyStr == "status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status = PointInTimeRecoveryStatusMapper::GetPointInTimeRecoveryStatusForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "earliestRestorableTimestamp") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_earliestRestorableTimestamp = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_earliestRestorableTimestamp = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_earliestRestorableTimestampHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue PointInTimeRecoverySummary::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", PointInTimeRecoveryStatusMapper::GetNameForPointInTimeRecoveryStatus(m_status));
+void PointInTimeRecoverySummary::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_earliestRestorableTimestampHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_earliestRestorableTimestampHasBeenSet)
-  {
-   payload.WithDouble("earliestRestorableTimestamp", m_earliestRestorableTimestamp.SecondsWithMSPrecision());
+  encoder.WriteMapStart(mapSize);
+
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("status"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(PointInTimeRecoveryStatusMapper::GetNameForPointInTimeRecoveryStatus(m_status).c_str()));
   }
 
-  return payload;
+  if (m_earliestRestorableTimestampHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("earliestRestorableTimestamp"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_earliestRestorableTimestamp.Seconds());
+  }
 }
 
-} // namespace Model
-} // namespace Keyspaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace Keyspaces
+}  // namespace Aws

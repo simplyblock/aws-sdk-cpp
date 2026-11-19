@@ -4,78 +4,92 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ssm-sap/SsmSap_EXPORTS.h>
 #include <aws/ssm-sap/model/Application.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SsmSap
-{
-namespace Model
-{
-  class RegisterApplicationResult
-  {
-  public:
-    AWS_SSMSAP_API RegisterApplicationResult();
-    AWS_SSMSAP_API RegisterApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMSAP_API RegisterApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SsmSap {
+namespace Model {
+class RegisterApplicationResult {
+ public:
+  AWS_SSMSAP_API RegisterApplicationResult() = default;
+  AWS_SSMSAP_API RegisterApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMSAP_API RegisterApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The application registered with AWS Systems Manager for SAP.</p>
+   */
+  inline const Application& GetApplication() const { return m_application; }
+  template <typename ApplicationT = Application>
+  void SetApplication(ApplicationT&& value) {
+    m_applicationHasBeenSet = true;
+    m_application = std::forward<ApplicationT>(value);
+  }
+  template <typename ApplicationT = Application>
+  RegisterApplicationResult& WithApplication(ApplicationT&& value) {
+    SetApplication(std::forward<ApplicationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The application registered with AWS Systems Manager for SAP.</p>
-     */
-    inline const Application& GetApplication() const{ return m_application; }
-    inline void SetApplication(const Application& value) { m_application = value; }
-    inline void SetApplication(Application&& value) { m_application = std::move(value); }
-    inline RegisterApplicationResult& WithApplication(const Application& value) { SetApplication(value); return *this;}
-    inline RegisterApplicationResult& WithApplication(Application&& value) { SetApplication(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the operation.</p>
+   */
+  inline const Aws::String& GetOperationId() const { return m_operationId; }
+  template <typename OperationIdT = Aws::String>
+  void SetOperationId(OperationIdT&& value) {
+    m_operationIdHasBeenSet = true;
+    m_operationId = std::forward<OperationIdT>(value);
+  }
+  template <typename OperationIdT = Aws::String>
+  RegisterApplicationResult& WithOperationId(OperationIdT&& value) {
+    SetOperationId(std::forward<OperationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the operation.</p>
-     */
-    inline const Aws::String& GetOperationId() const{ return m_operationId; }
-    inline void SetOperationId(const Aws::String& value) { m_operationId = value; }
-    inline void SetOperationId(Aws::String&& value) { m_operationId = std::move(value); }
-    inline void SetOperationId(const char* value) { m_operationId.assign(value); }
-    inline RegisterApplicationResult& WithOperationId(const Aws::String& value) { SetOperationId(value); return *this;}
-    inline RegisterApplicationResult& WithOperationId(Aws::String&& value) { SetOperationId(std::move(value)); return *this;}
-    inline RegisterApplicationResult& WithOperationId(const char* value) { SetOperationId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RegisterApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RegisterApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RegisterApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RegisterApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Application m_application;
+ private:
+  Application m_application;
 
-    Aws::String m_operationId;
+  Aws::String m_operationId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationHasBeenSet = false;
+  bool m_operationIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SsmSap
-} // namespace Aws
+}  // namespace Model
+}  // namespace SsmSap
+}  // namespace Aws

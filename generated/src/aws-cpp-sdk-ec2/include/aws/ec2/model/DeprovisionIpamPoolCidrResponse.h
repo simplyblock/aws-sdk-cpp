@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IpamPoolCidr.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DeprovisionIpamPoolCidrResponse
-  {
-  public:
-    AWS_EC2_API DeprovisionIpamPoolCidrResponse();
-    AWS_EC2_API DeprovisionIpamPoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DeprovisionIpamPoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DeprovisionIpamPoolCidrResponse {
+ public:
+  AWS_EC2_API DeprovisionIpamPoolCidrResponse() = default;
+  AWS_EC2_API DeprovisionIpamPoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DeprovisionIpamPoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The deprovisioned pool CIDR.</p>
+   */
+  inline const IpamPoolCidr& GetIpamPoolCidr() const { return m_ipamPoolCidr; }
+  template <typename IpamPoolCidrT = IpamPoolCidr>
+  void SetIpamPoolCidr(IpamPoolCidrT&& value) {
+    m_ipamPoolCidrHasBeenSet = true;
+    m_ipamPoolCidr = std::forward<IpamPoolCidrT>(value);
+  }
+  template <typename IpamPoolCidrT = IpamPoolCidr>
+  DeprovisionIpamPoolCidrResponse& WithIpamPoolCidr(IpamPoolCidrT&& value) {
+    SetIpamPoolCidr(std::forward<IpamPoolCidrT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The deprovisioned pool CIDR.</p>
-     */
-    inline const IpamPoolCidr& GetIpamPoolCidr() const{ return m_ipamPoolCidr; }
-    inline void SetIpamPoolCidr(const IpamPoolCidr& value) { m_ipamPoolCidr = value; }
-    inline void SetIpamPoolCidr(IpamPoolCidr&& value) { m_ipamPoolCidr = std::move(value); }
-    inline DeprovisionIpamPoolCidrResponse& WithIpamPoolCidr(const IpamPoolCidr& value) { SetIpamPoolCidr(value); return *this;}
-    inline DeprovisionIpamPoolCidrResponse& WithIpamPoolCidr(IpamPoolCidr&& value) { SetIpamPoolCidr(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DeprovisionIpamPoolCidrResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DeprovisionIpamPoolCidrResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DeprovisionIpamPoolCidrResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    IpamPoolCidr m_ipamPoolCidr;
+ private:
+  IpamPoolCidr m_ipamPoolCidr;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ipamPoolCidrHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

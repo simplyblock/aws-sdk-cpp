@@ -4,136 +4,191 @@
  */
 
 #pragma once
-#include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/awstransfer/TransferRequest.h>
+#include <aws/awstransfer/Transfer_EXPORTS.h>
+#include <aws/awstransfer/model/CustomHttpHeader.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Transfer
-{
-namespace Model
-{
+namespace Aws {
+namespace Transfer {
+namespace Model {
 
+/**
+ */
+class StartFileTransferRequest : public TransferRequest {
+ public:
+  AWS_TRANSFER_API StartFileTransferRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartFileTransfer"; }
+
+  AWS_TRANSFER_API Aws::String SerializePayload() const override;
+
+  AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier for the connector.</p>
    */
-  class StartFileTransferRequest : public TransferRequest
-  {
-  public:
-    AWS_TRANSFER_API StartFileTransferRequest();
+  inline const Aws::String& GetConnectorId() const { return m_connectorId; }
+  inline bool ConnectorIdHasBeenSet() const { return m_connectorIdHasBeenSet; }
+  template <typename ConnectorIdT = Aws::String>
+  void SetConnectorId(ConnectorIdT&& value) {
+    m_connectorIdHasBeenSet = true;
+    m_connectorId = std::forward<ConnectorIdT>(value);
+  }
+  template <typename ConnectorIdT = Aws::String>
+  StartFileTransferRequest& WithConnectorId(ConnectorIdT&& value) {
+    SetConnectorId(std::forward<ConnectorIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartFileTransfer"; }
+  ///@{
+  /**
+   * <p>One or more source paths for the Amazon S3 storage. Each string represents a
+   * source file path for one outbound file transfer. For example, <code>
+   * <i>amzn-s3-demo-bucket</i>/<i>myfile.txt</i> </code>.</p>  <p>Replace
+   * <code> <i>amzn-s3-demo-bucket</i> </code> with one of your actual buckets.</p>
+   *
+   */
+  inline const Aws::Vector<Aws::String>& GetSendFilePaths() const { return m_sendFilePaths; }
+  inline bool SendFilePathsHasBeenSet() const { return m_sendFilePathsHasBeenSet; }
+  template <typename SendFilePathsT = Aws::Vector<Aws::String>>
+  void SetSendFilePaths(SendFilePathsT&& value) {
+    m_sendFilePathsHasBeenSet = true;
+    m_sendFilePaths = std::forward<SendFilePathsT>(value);
+  }
+  template <typename SendFilePathsT = Aws::Vector<Aws::String>>
+  StartFileTransferRequest& WithSendFilePaths(SendFilePathsT&& value) {
+    SetSendFilePaths(std::forward<SendFilePathsT>(value));
+    return *this;
+  }
+  template <typename SendFilePathsT = Aws::String>
+  StartFileTransferRequest& AddSendFilePaths(SendFilePathsT&& value) {
+    m_sendFilePathsHasBeenSet = true;
+    m_sendFilePaths.emplace_back(std::forward<SendFilePathsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TRANSFER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>One or more source paths for the partner's SFTP server. Each string
+   * represents a source file path for one inbound file transfer.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetRetrieveFilePaths() const { return m_retrieveFilePaths; }
+  inline bool RetrieveFilePathsHasBeenSet() const { return m_retrieveFilePathsHasBeenSet; }
+  template <typename RetrieveFilePathsT = Aws::Vector<Aws::String>>
+  void SetRetrieveFilePaths(RetrieveFilePathsT&& value) {
+    m_retrieveFilePathsHasBeenSet = true;
+    m_retrieveFilePaths = std::forward<RetrieveFilePathsT>(value);
+  }
+  template <typename RetrieveFilePathsT = Aws::Vector<Aws::String>>
+  StartFileTransferRequest& WithRetrieveFilePaths(RetrieveFilePathsT&& value) {
+    SetRetrieveFilePaths(std::forward<RetrieveFilePathsT>(value));
+    return *this;
+  }
+  template <typename RetrieveFilePathsT = Aws::String>
+  StartFileTransferRequest& AddRetrieveFilePaths(RetrieveFilePathsT&& value) {
+    m_retrieveFilePathsHasBeenSet = true;
+    m_retrieveFilePaths.emplace_back(std::forward<RetrieveFilePathsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>For an inbound transfer, the <code>LocaDirectoryPath</code> specifies the
+   * destination for one or more files that are transferred from the partner's SFTP
+   * server.</p>
+   */
+  inline const Aws::String& GetLocalDirectoryPath() const { return m_localDirectoryPath; }
+  inline bool LocalDirectoryPathHasBeenSet() const { return m_localDirectoryPathHasBeenSet; }
+  template <typename LocalDirectoryPathT = Aws::String>
+  void SetLocalDirectoryPath(LocalDirectoryPathT&& value) {
+    m_localDirectoryPathHasBeenSet = true;
+    m_localDirectoryPath = std::forward<LocalDirectoryPathT>(value);
+  }
+  template <typename LocalDirectoryPathT = Aws::String>
+  StartFileTransferRequest& WithLocalDirectoryPath(LocalDirectoryPathT&& value) {
+    SetLocalDirectoryPath(std::forward<LocalDirectoryPathT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>For an outbound transfer, the <code>RemoteDirectoryPath</code> specifies the
+   * destination for one or more files that are transferred to the partner's SFTP
+   * server. If you don't specify a <code>RemoteDirectoryPath</code>, the destination
+   * for transferred files is the SFTP user's home directory.</p>
+   */
+  inline const Aws::String& GetRemoteDirectoryPath() const { return m_remoteDirectoryPath; }
+  inline bool RemoteDirectoryPathHasBeenSet() const { return m_remoteDirectoryPathHasBeenSet; }
+  template <typename RemoteDirectoryPathT = Aws::String>
+  void SetRemoteDirectoryPath(RemoteDirectoryPathT&& value) {
+    m_remoteDirectoryPathHasBeenSet = true;
+    m_remoteDirectoryPath = std::forward<RemoteDirectoryPathT>(value);
+  }
+  template <typename RemoteDirectoryPathT = Aws::String>
+  StartFileTransferRequest& WithRemoteDirectoryPath(RemoteDirectoryPathT&& value) {
+    SetRemoteDirectoryPath(std::forward<RemoteDirectoryPathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the connector.</p>
-     */
-    inline const Aws::String& GetConnectorId() const{ return m_connectorId; }
-    inline bool ConnectorIdHasBeenSet() const { return m_connectorIdHasBeenSet; }
-    inline void SetConnectorId(const Aws::String& value) { m_connectorIdHasBeenSet = true; m_connectorId = value; }
-    inline void SetConnectorId(Aws::String&& value) { m_connectorIdHasBeenSet = true; m_connectorId = std::move(value); }
-    inline void SetConnectorId(const char* value) { m_connectorIdHasBeenSet = true; m_connectorId.assign(value); }
-    inline StartFileTransferRequest& WithConnectorId(const Aws::String& value) { SetConnectorId(value); return *this;}
-    inline StartFileTransferRequest& WithConnectorId(Aws::String&& value) { SetConnectorId(std::move(value)); return *this;}
-    inline StartFileTransferRequest& WithConnectorId(const char* value) { SetConnectorId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of key-value pairs that represent custom HTTP headers to include in
+   * AS2 messages. These headers are added to the AS2 message when sending files to
+   * your trading partner.</p>
+   */
+  inline const Aws::Vector<CustomHttpHeader>& GetCustomHttpHeaders() const { return m_customHttpHeaders; }
+  inline bool CustomHttpHeadersHasBeenSet() const { return m_customHttpHeadersHasBeenSet; }
+  template <typename CustomHttpHeadersT = Aws::Vector<CustomHttpHeader>>
+  void SetCustomHttpHeaders(CustomHttpHeadersT&& value) {
+    m_customHttpHeadersHasBeenSet = true;
+    m_customHttpHeaders = std::forward<CustomHttpHeadersT>(value);
+  }
+  template <typename CustomHttpHeadersT = Aws::Vector<CustomHttpHeader>>
+  StartFileTransferRequest& WithCustomHttpHeaders(CustomHttpHeadersT&& value) {
+    SetCustomHttpHeaders(std::forward<CustomHttpHeadersT>(value));
+    return *this;
+  }
+  template <typename CustomHttpHeadersT = CustomHttpHeader>
+  StartFileTransferRequest& AddCustomHttpHeaders(CustomHttpHeadersT&& value) {
+    m_customHttpHeadersHasBeenSet = true;
+    m_customHttpHeaders.emplace_back(std::forward<CustomHttpHeadersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_connectorId;
 
-    ///@{
-    /**
-     * <p>One or more source paths for the Amazon S3 storage. Each string represents a
-     * source file path for one outbound file transfer. For example, <code>
-     * <i>amzn-s3-demo-bucket</i>/<i>myfile.txt</i> </code>.</p>  <p>Replace
-     * <code> <i>amzn-s3-demo-bucket</i> </code> with one of your actual buckets.</p>
-     * 
-     */
-    inline const Aws::Vector<Aws::String>& GetSendFilePaths() const{ return m_sendFilePaths; }
-    inline bool SendFilePathsHasBeenSet() const { return m_sendFilePathsHasBeenSet; }
-    inline void SetSendFilePaths(const Aws::Vector<Aws::String>& value) { m_sendFilePathsHasBeenSet = true; m_sendFilePaths = value; }
-    inline void SetSendFilePaths(Aws::Vector<Aws::String>&& value) { m_sendFilePathsHasBeenSet = true; m_sendFilePaths = std::move(value); }
-    inline StartFileTransferRequest& WithSendFilePaths(const Aws::Vector<Aws::String>& value) { SetSendFilePaths(value); return *this;}
-    inline StartFileTransferRequest& WithSendFilePaths(Aws::Vector<Aws::String>&& value) { SetSendFilePaths(std::move(value)); return *this;}
-    inline StartFileTransferRequest& AddSendFilePaths(const Aws::String& value) { m_sendFilePathsHasBeenSet = true; m_sendFilePaths.push_back(value); return *this; }
-    inline StartFileTransferRequest& AddSendFilePaths(Aws::String&& value) { m_sendFilePathsHasBeenSet = true; m_sendFilePaths.push_back(std::move(value)); return *this; }
-    inline StartFileTransferRequest& AddSendFilePaths(const char* value) { m_sendFilePathsHasBeenSet = true; m_sendFilePaths.push_back(value); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_sendFilePaths;
 
-    ///@{
-    /**
-     * <p>One or more source paths for the partner's SFTP server. Each string
-     * represents a source file path for one inbound file transfer.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetRetrieveFilePaths() const{ return m_retrieveFilePaths; }
-    inline bool RetrieveFilePathsHasBeenSet() const { return m_retrieveFilePathsHasBeenSet; }
-    inline void SetRetrieveFilePaths(const Aws::Vector<Aws::String>& value) { m_retrieveFilePathsHasBeenSet = true; m_retrieveFilePaths = value; }
-    inline void SetRetrieveFilePaths(Aws::Vector<Aws::String>&& value) { m_retrieveFilePathsHasBeenSet = true; m_retrieveFilePaths = std::move(value); }
-    inline StartFileTransferRequest& WithRetrieveFilePaths(const Aws::Vector<Aws::String>& value) { SetRetrieveFilePaths(value); return *this;}
-    inline StartFileTransferRequest& WithRetrieveFilePaths(Aws::Vector<Aws::String>&& value) { SetRetrieveFilePaths(std::move(value)); return *this;}
-    inline StartFileTransferRequest& AddRetrieveFilePaths(const Aws::String& value) { m_retrieveFilePathsHasBeenSet = true; m_retrieveFilePaths.push_back(value); return *this; }
-    inline StartFileTransferRequest& AddRetrieveFilePaths(Aws::String&& value) { m_retrieveFilePathsHasBeenSet = true; m_retrieveFilePaths.push_back(std::move(value)); return *this; }
-    inline StartFileTransferRequest& AddRetrieveFilePaths(const char* value) { m_retrieveFilePathsHasBeenSet = true; m_retrieveFilePaths.push_back(value); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_retrieveFilePaths;
 
-    ///@{
-    /**
-     * <p>For an inbound transfer, the <code>LocaDirectoryPath</code> specifies the
-     * destination for one or more files that are transferred from the partner's SFTP
-     * server.</p>
-     */
-    inline const Aws::String& GetLocalDirectoryPath() const{ return m_localDirectoryPath; }
-    inline bool LocalDirectoryPathHasBeenSet() const { return m_localDirectoryPathHasBeenSet; }
-    inline void SetLocalDirectoryPath(const Aws::String& value) { m_localDirectoryPathHasBeenSet = true; m_localDirectoryPath = value; }
-    inline void SetLocalDirectoryPath(Aws::String&& value) { m_localDirectoryPathHasBeenSet = true; m_localDirectoryPath = std::move(value); }
-    inline void SetLocalDirectoryPath(const char* value) { m_localDirectoryPathHasBeenSet = true; m_localDirectoryPath.assign(value); }
-    inline StartFileTransferRequest& WithLocalDirectoryPath(const Aws::String& value) { SetLocalDirectoryPath(value); return *this;}
-    inline StartFileTransferRequest& WithLocalDirectoryPath(Aws::String&& value) { SetLocalDirectoryPath(std::move(value)); return *this;}
-    inline StartFileTransferRequest& WithLocalDirectoryPath(const char* value) { SetLocalDirectoryPath(value); return *this;}
-    ///@}
+  Aws::String m_localDirectoryPath;
 
-    ///@{
-    /**
-     * <p>For an outbound transfer, the <code>RemoteDirectoryPath</code> specifies the
-     * destination for one or more files that are transferred to the partner's SFTP
-     * server. If you don't specify a <code>RemoteDirectoryPath</code>, the destination
-     * for transferred files is the SFTP user's home directory.</p>
-     */
-    inline const Aws::String& GetRemoteDirectoryPath() const{ return m_remoteDirectoryPath; }
-    inline bool RemoteDirectoryPathHasBeenSet() const { return m_remoteDirectoryPathHasBeenSet; }
-    inline void SetRemoteDirectoryPath(const Aws::String& value) { m_remoteDirectoryPathHasBeenSet = true; m_remoteDirectoryPath = value; }
-    inline void SetRemoteDirectoryPath(Aws::String&& value) { m_remoteDirectoryPathHasBeenSet = true; m_remoteDirectoryPath = std::move(value); }
-    inline void SetRemoteDirectoryPath(const char* value) { m_remoteDirectoryPathHasBeenSet = true; m_remoteDirectoryPath.assign(value); }
-    inline StartFileTransferRequest& WithRemoteDirectoryPath(const Aws::String& value) { SetRemoteDirectoryPath(value); return *this;}
-    inline StartFileTransferRequest& WithRemoteDirectoryPath(Aws::String&& value) { SetRemoteDirectoryPath(std::move(value)); return *this;}
-    inline StartFileTransferRequest& WithRemoteDirectoryPath(const char* value) { SetRemoteDirectoryPath(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_remoteDirectoryPath;
 
-    Aws::String m_connectorId;
-    bool m_connectorIdHasBeenSet = false;
+  Aws::Vector<CustomHttpHeader> m_customHttpHeaders;
+  bool m_connectorIdHasBeenSet = false;
+  bool m_sendFilePathsHasBeenSet = false;
+  bool m_retrieveFilePathsHasBeenSet = false;
+  bool m_localDirectoryPathHasBeenSet = false;
+  bool m_remoteDirectoryPathHasBeenSet = false;
+  bool m_customHttpHeadersHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_sendFilePaths;
-    bool m_sendFilePathsHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_retrieveFilePaths;
-    bool m_retrieveFilePathsHasBeenSet = false;
-
-    Aws::String m_localDirectoryPath;
-    bool m_localDirectoryPathHasBeenSet = false;
-
-    Aws::String m_remoteDirectoryPath;
-    bool m_remoteDirectoryPathHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

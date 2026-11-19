@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces-thin-client/WorkSpacesThinClient_EXPORTS.h>
 #include <aws/workspaces-thin-client/model/DeviceSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesThinClient
-{
-namespace Model
-{
-  class UpdateDeviceResult
-  {
-  public:
-    AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult();
-    AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesThinClient {
+namespace Model {
+class UpdateDeviceResult {
+ public:
+  AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult() = default;
+  AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESTHINCLIENT_API UpdateDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes a device.</p>
+   */
+  inline const DeviceSummary& GetDevice() const { return m_device; }
+  template <typename DeviceT = DeviceSummary>
+  void SetDevice(DeviceT&& value) {
+    m_deviceHasBeenSet = true;
+    m_device = std::forward<DeviceT>(value);
+  }
+  template <typename DeviceT = DeviceSummary>
+  UpdateDeviceResult& WithDevice(DeviceT&& value) {
+    SetDevice(std::forward<DeviceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes a device.</p>
-     */
-    inline const DeviceSummary& GetDevice() const{ return m_device; }
-    inline void SetDevice(const DeviceSummary& value) { m_device = value; }
-    inline void SetDevice(DeviceSummary&& value) { m_device = std::move(value); }
-    inline UpdateDeviceResult& WithDevice(const DeviceSummary& value) { SetDevice(value); return *this;}
-    inline UpdateDeviceResult& WithDevice(DeviceSummary&& value) { SetDevice(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateDeviceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateDeviceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateDeviceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateDeviceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DeviceSummary m_device;
+ private:
+  DeviceSummary m_device;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deviceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesThinClient
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesThinClient
+}  // namespace Aws

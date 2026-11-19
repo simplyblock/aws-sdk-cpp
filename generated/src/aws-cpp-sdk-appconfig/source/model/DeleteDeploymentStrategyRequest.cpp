@@ -12,16 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDeploymentStrategyRequest::DeleteDeploymentStrategyRequest() : 
-    m_deploymentStrategyIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDeploymentStrategyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDeploymentStrategyRequest::SerializePayload() const { return {}; }

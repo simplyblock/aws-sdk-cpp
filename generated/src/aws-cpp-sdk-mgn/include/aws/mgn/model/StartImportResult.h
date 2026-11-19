@@ -4,68 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mgn/Mgn_EXPORTS.h>
 #include <aws/mgn/model/ImportTask.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mgn
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mgn {
+namespace Model {
+/**
+ * <p>Start import response.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mgn-2020-02-26/StartImportResponse">AWS
+ * API Reference</a></p>
+ */
+class StartImportResult {
+ public:
+  AWS_MGN_API StartImportResult() = default;
+  AWS_MGN_API StartImportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MGN_API StartImportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Start import response.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mgn-2020-02-26/StartImportResponse">AWS
-   * API Reference</a></p>
+   * <p>Start import response import task.</p>
    */
-  class StartImportResult
-  {
-  public:
-    AWS_MGN_API StartImportResult();
-    AWS_MGN_API StartImportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MGN_API StartImportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const ImportTask& GetImportTask() const { return m_importTask; }
+  template <typename ImportTaskT = ImportTask>
+  void SetImportTask(ImportTaskT&& value) {
+    m_importTaskHasBeenSet = true;
+    m_importTask = std::forward<ImportTaskT>(value);
+  }
+  template <typename ImportTaskT = ImportTask>
+  StartImportResult& WithImportTask(ImportTaskT&& value) {
+    SetImportTask(std::forward<ImportTaskT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Start import response import task.</p>
-     */
-    inline const ImportTask& GetImportTask() const{ return m_importTask; }
-    inline void SetImportTask(const ImportTask& value) { m_importTask = value; }
-    inline void SetImportTask(ImportTask&& value) { m_importTask = std::move(value); }
-    inline StartImportResult& WithImportTask(const ImportTask& value) { SetImportTask(value); return *this;}
-    inline StartImportResult& WithImportTask(ImportTask&& value) { SetImportTask(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartImportResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartImportResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartImportResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartImportResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  ImportTask m_importTask;
 
-    ImportTask m_importTask;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_importTaskHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace mgn
-} // namespace Aws
+}  // namespace Model
+}  // namespace mgn
+}  // namespace Aws

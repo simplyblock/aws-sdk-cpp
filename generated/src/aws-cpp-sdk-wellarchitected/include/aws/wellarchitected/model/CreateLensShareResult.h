@@ -4,62 +4,69 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  class CreateLensShareResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API CreateLensShareResult();
-    AWS_WELLARCHITECTED_API CreateLensShareResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API CreateLensShareResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+class CreateLensShareResult {
+ public:
+  AWS_WELLARCHITECTED_API CreateLensShareResult() = default;
+  AWS_WELLARCHITECTED_API CreateLensShareResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API CreateLensShareResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetShareId() const{ return m_shareId; }
-    inline void SetShareId(const Aws::String& value) { m_shareId = value; }
-    inline void SetShareId(Aws::String&& value) { m_shareId = std::move(value); }
-    inline void SetShareId(const char* value) { m_shareId.assign(value); }
-    inline CreateLensShareResult& WithShareId(const Aws::String& value) { SetShareId(value); return *this;}
-    inline CreateLensShareResult& WithShareId(Aws::String&& value) { SetShareId(std::move(value)); return *this;}
-    inline CreateLensShareResult& WithShareId(const char* value) { SetShareId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetShareId() const { return m_shareId; }
+  template <typename ShareIdT = Aws::String>
+  void SetShareId(ShareIdT&& value) {
+    m_shareIdHasBeenSet = true;
+    m_shareId = std::forward<ShareIdT>(value);
+  }
+  template <typename ShareIdT = Aws::String>
+  CreateLensShareResult& WithShareId(ShareIdT&& value) {
+    SetShareId(std::forward<ShareIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateLensShareResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateLensShareResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateLensShareResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_shareId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateLensShareResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_shareId;
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_shareIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

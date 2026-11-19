@@ -4,13 +4,15 @@
  */
 
 #include <aws/wellarchitected/WellArchitectedEndpointProvider.h>
+#include <aws/wellarchitected/internal/WellArchitectedEndpointRules.h>
 
-namespace Aws
-{
-namespace WellArchitected
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace WellArchitected
-} // namespace Aws
+namespace Aws {
+namespace WellArchitected {
+namespace Endpoint {
+WellArchitectedEndpointProvider::WellArchitectedEndpointProvider()
+    : WellArchitectedDefaultEpProviderBase(Aws::WellArchitected::WellArchitectedEndpointRules::GetRulesBlob(),
+                                           Aws::WellArchitected::WellArchitectedEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace WellArchitected
+}  // namespace Aws

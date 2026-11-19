@@ -4,122 +4,152 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/AccountCustomization.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class CreateAccountCustomizationResult
-  {
-  public:
-    AWS_QUICKSIGHT_API CreateAccountCustomizationResult();
-    AWS_QUICKSIGHT_API CreateAccountCustomizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API CreateAccountCustomizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class CreateAccountCustomizationResult {
+ public:
+  AWS_QUICKSIGHT_API CreateAccountCustomizationResult() = default;
+  AWS_QUICKSIGHT_API CreateAccountCustomizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API CreateAccountCustomizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the customization that you created for
+   * this Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  CreateAccountCustomizationResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the customization that you created for
-     * this Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline CreateAccountCustomizationResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline CreateAccountCustomizationResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline CreateAccountCustomizationResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID for the Amazon Web Services account that you want to customize Quick
+   * Sight for.</p>
+   */
+  inline const Aws::String& GetAwsAccountId() const { return m_awsAccountId; }
+  template <typename AwsAccountIdT = Aws::String>
+  void SetAwsAccountId(AwsAccountIdT&& value) {
+    m_awsAccountIdHasBeenSet = true;
+    m_awsAccountId = std::forward<AwsAccountIdT>(value);
+  }
+  template <typename AwsAccountIdT = Aws::String>
+  CreateAccountCustomizationResult& WithAwsAccountId(AwsAccountIdT&& value) {
+    SetAwsAccountId(std::forward<AwsAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID for the Amazon Web Services account that you want to customize Amazon
-     * QuickSight for.</p>
-     */
-    inline const Aws::String& GetAwsAccountId() const{ return m_awsAccountId; }
-    inline void SetAwsAccountId(const Aws::String& value) { m_awsAccountId = value; }
-    inline void SetAwsAccountId(Aws::String&& value) { m_awsAccountId = std::move(value); }
-    inline void SetAwsAccountId(const char* value) { m_awsAccountId.assign(value); }
-    inline CreateAccountCustomizationResult& WithAwsAccountId(const Aws::String& value) { SetAwsAccountId(value); return *this;}
-    inline CreateAccountCustomizationResult& WithAwsAccountId(Aws::String&& value) { SetAwsAccountId(std::move(value)); return *this;}
-    inline CreateAccountCustomizationResult& WithAwsAccountId(const char* value) { SetAwsAccountId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The namespace associated with the customization you're creating. </p>
+   */
+  inline const Aws::String& GetNamespace() const { return m_namespace; }
+  template <typename NamespaceT = Aws::String>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = Aws::String>
+  CreateAccountCustomizationResult& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The namespace associated with the customization you're creating. </p>
-     */
-    inline const Aws::String& GetNamespace() const{ return m_namespace; }
-    inline void SetNamespace(const Aws::String& value) { m_namespace = value; }
-    inline void SetNamespace(Aws::String&& value) { m_namespace = std::move(value); }
-    inline void SetNamespace(const char* value) { m_namespace.assign(value); }
-    inline CreateAccountCustomizationResult& WithNamespace(const Aws::String& value) { SetNamespace(value); return *this;}
-    inline CreateAccountCustomizationResult& WithNamespace(Aws::String&& value) { SetNamespace(std::move(value)); return *this;}
-    inline CreateAccountCustomizationResult& WithNamespace(const char* value) { SetNamespace(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Quick Sight customizations you're adding. </p>
+   */
+  inline const AccountCustomization& GetAccountCustomization() const { return m_accountCustomization; }
+  template <typename AccountCustomizationT = AccountCustomization>
+  void SetAccountCustomization(AccountCustomizationT&& value) {
+    m_accountCustomizationHasBeenSet = true;
+    m_accountCustomization = std::forward<AccountCustomizationT>(value);
+  }
+  template <typename AccountCustomizationT = AccountCustomization>
+  CreateAccountCustomizationResult& WithAccountCustomization(AccountCustomizationT&& value) {
+    SetAccountCustomization(std::forward<AccountCustomizationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon QuickSight customizations you're adding in the current Amazon Web
-     * Services Region. </p>
-     */
-    inline const AccountCustomization& GetAccountCustomization() const{ return m_accountCustomization; }
-    inline void SetAccountCustomization(const AccountCustomization& value) { m_accountCustomization = value; }
-    inline void SetAccountCustomization(AccountCustomization&& value) { m_accountCustomization = std::move(value); }
-    inline CreateAccountCustomizationResult& WithAccountCustomization(const AccountCustomization& value) { SetAccountCustomization(value); return *this;}
-    inline CreateAccountCustomizationResult& WithAccountCustomization(AccountCustomization&& value) { SetAccountCustomization(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAccountCustomizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAccountCustomizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAccountCustomizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAccountCustomizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline CreateAccountCustomizationResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline CreateAccountCustomizationResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Aws::String m_arn;
 
-    Aws::String m_awsAccountId;
+  Aws::String m_awsAccountId;
 
-    Aws::String m_namespace;
+  Aws::String m_namespace;
 
-    AccountCustomization m_accountCustomization;
+  AccountCustomization m_accountCustomization;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_awsAccountIdHasBeenSet = false;
+  bool m_namespaceHasBeenSet = false;
+  bool m_accountCustomizationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

@@ -12,25 +12,12 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateMediaPipelineKinesisVideoStreamPoolRequest::UpdateMediaPipelineKinesisVideoStreamPoolRequest() : 
-    m_identifierHasBeenSet(false),
-    m_streamConfigurationHasBeenSet(false)
-{
-}
-
-Aws::String UpdateMediaPipelineKinesisVideoStreamPoolRequest::SerializePayload() const
-{
+Aws::String UpdateMediaPipelineKinesisVideoStreamPoolRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_streamConfigurationHasBeenSet)
-  {
-   payload.WithObject("StreamConfiguration", m_streamConfiguration.Jsonize());
-
+  if (m_streamConfigurationHasBeenSet) {
+    payload.WithObject("StreamConfiguration", m_streamConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

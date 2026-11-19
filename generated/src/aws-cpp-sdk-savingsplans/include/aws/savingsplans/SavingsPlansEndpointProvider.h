@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/savingsplans/SavingsPlans_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/savingsplans/SavingsPlans_EXPORTS.h>
 
-#include <aws/savingsplans/SavingsPlansEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SavingsPlans
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SavingsPlans {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SavingsPlansClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SavingsPlansEndpointProviderBase =
     EndpointProviderBase<SavingsPlansClientConfiguration, SavingsPlansBuiltInParameters, SavingsPlansClientContextParameters>;
 
 using SavingsPlansDefaultEpProviderBase =
-    DefaultEndpointProvider<SavingsPlansClientConfiguration, SavingsPlansBuiltInParameters, SavingsPlansClientContextParameters>;
+    BDDEndpointProvider<SavingsPlansClientConfiguration, SavingsPlansBuiltInParameters, SavingsPlansClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SAVINGSPLANS_API SavingsPlansEndpointProvider : public SavingsPlansDefaultEpProviderBase
-{
-public:
-    using SavingsPlansResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SAVINGSPLANS_API SavingsPlansEndpointProvider : public SavingsPlansDefaultEpProviderBase {
+ public:
+  using SavingsPlansResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SavingsPlansEndpointProvider()
-      : SavingsPlansDefaultEpProviderBase(Aws::SavingsPlans::SavingsPlansEndpointRules::GetRulesBlob(), Aws::SavingsPlans::SavingsPlansEndpointRules::RulesBlobSize)
-    {}
+  SavingsPlansEndpointProvider();
 
-    ~SavingsPlansEndpointProvider()
-    {
-    }
+  ~SavingsPlansEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SavingsPlans
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SavingsPlans
+}  // namespace Aws

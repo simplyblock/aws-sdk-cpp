@@ -14,6 +14,16 @@
                 "smithy.api#httpError": 403
             }
         },
+        "com.amazonaws.rolesanywhere#AliasName": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 256
+                },
+                "smithy.api#pattern": "^(?!.*//)([A-Za-z]([A-Za-z0-9_/-]*[A-Za-z0-9_-])?)?$"
+            }
+        },
         "com.amazonaws.rolesanywhere#AmazonResourceName": {
             "type": "string",
             "traits": {
@@ -81,11 +91,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a <i>profile</i>, a list of the roles that Roles Anywhere service is trusted to assume. You use profiles to intersect permissions with IAM managed policies.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:CreateProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Creates a <i>profile</i>, a list of the roles that Roles Anywhere service is trusted to assume. You use profiles to intersect permissions with IAM managed policies.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:CreateProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profiles",
                     "method": "POST",
@@ -106,7 +119,7 @@
                 "requireInstanceProperties": {
                     "target": "smithy.api#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies whether instance properties are required in temporary credential requests with this profile. </p>"
+                        "smithy.api#documentation": "<p>Unused, saved for future use. Will likely specify whether instance properties are required in temporary credential requests with this profile. </p>"
                     }
                 },
                 "sessionPolicy": {
@@ -131,7 +144,7 @@
                 "durationSeconds": {
                     "target": "smithy.api#Integer",
                     "traits": {
-                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the \n<a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a>\npage for more details. In requests, if this value is not provided, the default value will be 3600. </p>",
+                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>",
                         "smithy.api#range": {
                             "min": 900,
                             "max": 43200
@@ -155,6 +168,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Used to determine if a custom role session name will be accepted in a temporary credential request.</p>"
                     }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An alias for the profile. When you set an alias, the response includes the alias ARN of the profile in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>"
+                    }
                 }
             }
         },
@@ -171,11 +190,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a trust anchor to establish trust between IAM Roles Anywhere and\n         your certificate authority (CA). You can define a trust anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor using certificates issued by\n         the CA in exchange for temporary Amazon Web Services credentials.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:CreateTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Creates a trust anchor to establish trust between IAM Roles Anywhere and your certificate authority (CA). You can define a trust anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor using certificates issued by the CA in exchange for temporary Amazon Web Services credentials.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:CreateTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchors",
                     "method": "POST",
@@ -206,6 +228,12 @@
                         "smithy.api#documentation": "<p>Specifies whether the trust anchor is enabled.</p>"
                     }
                 },
+                "crlDpRevocationEnabled": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies whether the trust anchor checks certificate revocation status against CRL distribution points.</p>"
+                    }
+                },
                 "tags": {
                     "target": "com.amazonaws.rolesanywhere#TagList",
                     "traits": {
@@ -216,6 +244,12 @@
                     "target": "com.amazonaws.rolesanywhere#NotificationSettings",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of notification settings to be associated to the trust anchor.</p>"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An alias for the trust anchor. When you set an alias, the response includes the alias ARN of the trust anchor in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>"
                     }
                 }
             }
@@ -275,7 +309,7 @@
             "type": "resource",
             "identifiers": {
                 "crlId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid"
+                    "target": "com.amazonaws.rolesanywhere#CrlIdentifier"
                 }
             },
             "create": {
@@ -302,6 +336,16 @@
                 }
             ]
         },
+        "com.amazonaws.rolesanywhere#CrlAliasArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:alias/crl/.*)$"
+            }
+        },
         "com.amazonaws.rolesanywhere#CrlDetail": {
             "type": "structure",
             "members": {
@@ -312,7 +356,7 @@
                     }
                 },
                 "crlArn": {
-                    "target": "smithy.api#String",
+                    "target": "com.amazonaws.rolesanywhere#CrlResourceArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The ARN of the certificate revocation list (CRL).</p>"
                     }
@@ -336,7 +380,7 @@
                     }
                 },
                 "trustAnchorArn": {
-                    "target": "smithy.api#String",
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorResourceArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide revocation for. </p>"
                     }
@@ -353,6 +397,24 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The ISO-8601 timestamp when the certificate revocation list (CRL) was last updated. </p>",
                         "smithy.api#timestampFormat": "date-time"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias of the certificate revocation list (CRL). Present only if the CRL has an alias.</p>"
+                    }
+                },
+                "aliasArn": {
+                    "target": "com.amazonaws.rolesanywhere#CrlAliasArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias ARN of the certificate revocation list (CRL), in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/crl/<i>alias-name</i> </code>. Present only if the CRL has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
+                    }
+                },
+                "previousAliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>"
                     }
                 }
             },
@@ -378,6 +440,26 @@
                 "target": "com.amazonaws.rolesanywhere#CrlDetail"
             }
         },
+        "com.amazonaws.rolesanywhere#CrlIdentifier": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^([a-f0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}|arn:aws(-[^:]+)?:rolesanywhere(:.*){2}:(crl|alias/crl)/.*)$"
+            }
+        },
+        "com.amazonaws.rolesanywhere#CrlResourceArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:crl/.*)$"
+            }
+        },
         "com.amazonaws.rolesanywhere#DeleteAttributeMapping": {
             "type": "operation",
             "input": {
@@ -392,6 +474,9 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
@@ -451,9 +536,9 @@
             "type": "structure",
             "members": {
                 "profileId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#ProfileIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the profile.</p>",
+                        "smithy.api#documentation": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -507,10 +592,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Deletes a certificate revocation list (CRL).</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DeleteCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Deletes a certificate revocation list (CRL).</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crl/{crlId}",
                     "method": "DELETE"
@@ -532,10 +620,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Deletes a profile.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DeleteProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Deletes a profile.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profile/{profileId}",
                     "method": "DELETE"
@@ -557,10 +648,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Deletes a trust anchor.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DeleteTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Deletes a trust anchor.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DeleteTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchor/{trustAnchorId}",
                     "method": "DELETE"
@@ -582,10 +676,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Disables a certificate revocation list (CRL).</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DisableCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Disables a certificate revocation list (CRL).</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DisableCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crl/{crlId}/disable",
                     "method": "POST"
@@ -606,10 +703,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Disables a profile. When disabled, temporary credential requests with this profile fail.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DisableProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Disables a profile. When disabled, temporary credential requests with this profile fail.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DisableProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profile/{profileId}/disable",
                     "method": "POST"
@@ -630,10 +730,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Disables a trust anchor. When disabled, temporary credential requests specifying this trust anchor are unauthorized.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:DisableTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Disables a trust anchor. When disabled, temporary credential requests specifying this trust anchor are unauthorized.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:DisableTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchor/{trustAnchorId}/disable",
                     "method": "POST"
@@ -654,10 +757,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Enables a certificate revocation list (CRL). When enabled, certificates stored in the CRL are unauthorized to receive session credentials.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:EnableCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Enables a certificate revocation list (CRL). When enabled, certificates stored in the CRL are unauthorized to receive session credentials.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:EnableCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crl/{crlId}/enable",
                     "method": "POST"
@@ -678,10 +784,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Enables temporary credential requests for a profile. </p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:EnableProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Enables temporary credential requests for a profile. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:EnableProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profile/{profileId}/enable",
                     "method": "POST"
@@ -702,10 +811,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Enables a trust anchor. When enabled, certificates in the trust anchor chain are authorized for trust validation. </p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:EnableTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Enables a trust anchor. When enabled, certificates in the trust anchor chain are authorized for trust validation. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:EnableTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchor/{trustAnchorId}/enable",
                     "method": "POST"
@@ -723,10 +835,13 @@
             "errors": [
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Gets a certificate revocation list (CRL).</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:GetCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Gets a certificate revocation list (CRL).</p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crl/{crlId}",
                     "method": "GET"
@@ -748,10 +863,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Gets a profile.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:GetProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Gets a profile.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profile/{profileId}",
                     "method": "GET"
@@ -773,10 +891,13 @@
                 },
                 {
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Gets a <i>subject</i>, which associates a certificate identity with\n         authentication attempts. The subject stores auditing information such as the status\n         of the last authentication attempt, the certificate data used in the attempt, and the\n         last time the associated identity attempted authentication. </p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:GetSubject</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Gets a <i>subject</i>, which associates a certificate identity with authentication attempts. The subject stores auditing information such as the status of the last authentication attempt, the certificate data used in the attempt, and the last time the associated identity attempted authentication. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetSubject</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/subject/{subjectId}",
                     "method": "GET"
@@ -800,11 +921,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Gets a trust anchor.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:GetTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Gets a trust anchor.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:GetTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchor/{trustAnchorId}",
                     "method": "GET"
@@ -825,11 +949,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Imports the certificate revocation list (CRL). A CRL is a list of certificates that have\n         been revoked by the issuing certificate Authority (CA).In order to be properly imported, a CRL must be in PEM \n         format. IAM Roles Anywhere\n         validates against the CRL before issuing credentials. </p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ImportCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Imports the certificate revocation list (CRL). A CRL is a list of certificates that have been revoked by the issuing certificate Authority (CA).In order to be properly imported, a CRL must be in PEM format. IAM Roles Anywhere validates against the CRL before issuing credentials. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:ImportCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crls",
                     "method": "POST",
@@ -871,10 +998,16 @@
                     }
                 },
                 "trustAnchorArn": {
-                    "target": "com.amazonaws.rolesanywhere#TrustAnchorArn",
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorIdentifierArn",
                     "traits": {
-                        "smithy.api#documentation": "<p>The ARN of the TrustAnchor the certificate revocation list (CRL) will provide revocation for.</p>",
+                        "smithy.api#documentation": "<p>The ARN of the trust anchor that the certificate revocation list (CRL) provides revocation for. Specify the trust anchor ARN that contains the trust anchor ID. This parameter doesn't support alias ARNs. If you specify an alias ARN, the request fails with <code>ResourceNotFoundException</code>.</p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An alias for the certificate revocation list (CRL). When you set an alias, the response includes the alias ARN of the CRL in <code>aliasArn</code>.</p> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p> <p>If you omit this parameter or specify an empty string, the resource is created without an alias.</p>"
                     }
                 }
             }
@@ -952,11 +1085,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists all certificate revocation lists (CRL) in the authenticated account and Amazon Web Services Region.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ListCrls</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Lists all certificate revocation lists (CRL) in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListCrls</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crls",
                     "method": "GET"
@@ -999,11 +1135,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists all profiles in the authenticated account and Amazon Web Services Region.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ListProfiles</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Lists all profiles in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListProfiles</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profiles",
                     "method": "GET"
@@ -1069,11 +1208,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the subjects in the authenticated account and Amazon Web Services Region.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ListSubjects</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Lists the subjects in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListSubjects</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/subjects",
                     "method": "GET"
@@ -1119,11 +1261,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the tags attached to the resource.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ListTagsForResource</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Lists the tags attached to the resource.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListTagsForResource</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/ListTagsForResource",
                     "method": "GET"
@@ -1168,11 +1313,14 @@
                     "target": "com.amazonaws.rolesanywhere#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists the trust anchors in the authenticated account and Amazon Web Services Region.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ListTrustAnchors</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Lists the trust anchors in the authenticated account and Amazon Web Services Region.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:ListTrustAnchors</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchors",
                     "method": "GET"
@@ -1300,12 +1448,12 @@
                 "channel": {
                     "target": "com.amazonaws.rolesanywhere#NotificationChannel",
                     "traits": {
-                        "smithy.api#documentation": "<p>The specified channel of notification.\n      IAM Roles Anywhere uses CloudWatch metrics, EventBridge, and Health Dashboard to notify for an event.</p>\n         <note>\n            <p>In the absence of a specific channel, IAM Roles Anywhere applies this setting to 'ALL' channels.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>The specified channel of notification. IAM Roles Anywhere uses CloudWatch metrics, EventBridge, and Health Dashboard to notify for an event.</p> <note> <p>In the absence of a specific channel, IAM Roles Anywhere applies this setting to 'ALL' channels.</p> </note>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>\n         Customizable notification settings that will be applied to notification events.\n         IAM Roles Anywhere consumes these settings while notifying across multiple channels - CloudWatch metrics, EventBridge, and Health Dashboard.\n      </p>"
+                "smithy.api#documentation": "<p> Customizable notification settings that will be applied to notification events. IAM Roles Anywhere consumes these settings while notifying across multiple channels - CloudWatch metrics, EventBridge, and Health Dashboard. </p>"
             }
         },
         "com.amazonaws.rolesanywhere#NotificationSettingDetail": {
@@ -1338,13 +1486,13 @@
                 "channel": {
                     "target": "com.amazonaws.rolesanywhere#NotificationChannel",
                     "traits": {
-                        "smithy.api#documentation": "<p>The specified channel of notification.\n      IAM Roles Anywhere uses CloudWatch metrics, EventBridge, and Health Dashboard to notify for an event.</p>\n         <note>\n            <p>In the absence of a specific channel, IAM Roles Anywhere applies this setting to 'ALL' channels.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>The specified channel of notification. IAM Roles Anywhere uses CloudWatch metrics, EventBridge, and Health Dashboard to notify for an event.</p> <note> <p>In the absence of a specific channel, IAM Roles Anywhere applies this setting to 'ALL' channels.</p> </note>"
                     }
                 },
                 "configuredBy": {
                     "target": "smithy.api#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>The principal that configured the notification setting.\n      For default settings configured by IAM Roles Anywhere,\n      the value is <code>rolesanywhere.amazonaws.com</code>, and\n      for customized notifications settings, it is the respective account ID.\n      </p>",
+                        "smithy.api#documentation": "<p>The principal that configured the notification setting. For default settings configured by IAM Roles Anywhere, the value is <code>rolesanywhere.amazonaws.com</code>, and for customized notifications settings, it is the respective account ID. </p>",
                         "smithy.api#length": {
                             "min": 1,
                             "max": 200
@@ -1353,7 +1501,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The state of a notification setting.</p>\n         <p>A notification setting includes information such as event name, threshold, status of\n         the notification setting, and the channel to notify.</p>"
+                "smithy.api#documentation": "<p>The state of a notification setting.</p> <p>A notification setting includes information such as event name, threshold, status of the notification setting, and the channel to notify.</p>"
             }
         },
         "com.amazonaws.rolesanywhere#NotificationSettingDetails": {
@@ -1386,7 +1534,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>A notification setting key to reset.\n         A notification setting key includes the event and the channel.\n      </p>"
+                "smithy.api#documentation": "<p>A notification setting key to reset. A notification setting key includes the event and the channel. </p>"
             }
         },
         "com.amazonaws.rolesanywhere#NotificationSettingKeys": {
@@ -1417,7 +1565,7 @@
             "type": "resource",
             "identifiers": {
                 "profileId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid"
+                    "target": "com.amazonaws.rolesanywhere#ProfileIdentifier"
                 }
             },
             "create": {
@@ -1453,14 +1601,14 @@
                 "aws.cloudformation#cfnResource": {}
             }
         },
-        "com.amazonaws.rolesanywhere#ProfileArn": {
+        "com.amazonaws.rolesanywhere#ProfileAliasArn": {
             "type": "string",
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
                     "max": 1011
                 },
-                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:profile.*)$"
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:alias/profile/.*)$"
             }
         },
         "com.amazonaws.rolesanywhere#ProfileDetail": {
@@ -1473,7 +1621,7 @@
                     }
                 },
                 "profileArn": {
-                    "target": "com.amazonaws.rolesanywhere#ProfileArn",
+                    "target": "com.amazonaws.rolesanywhere#ProfileResourceArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The ARN of the profile.</p>"
                     }
@@ -1487,7 +1635,7 @@
                 "requireInstanceProperties": {
                     "target": "smithy.api#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies whether instance properties are required in temporary credential requests with this profile. </p>"
+                        "smithy.api#documentation": "<p>Unused, saved for future use. Will likely specify whether instance properties are required in temporary credential requests with this profile. </p>"
                     }
                 },
                 "enabled": {
@@ -1537,7 +1685,7 @@
                 "durationSeconds": {
                     "target": "smithy.api#Integer",
                     "traits": {
-                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the \n<a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a>\npage for more details. In requests, if this value is not provided, the default value will be 3600. </p>"
+                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>"
                     }
                 },
                 "acceptRoleSessionName": {
@@ -1550,6 +1698,24 @@
                     "target": "com.amazonaws.rolesanywhere#AttributeMappings",
                     "traits": {
                         "smithy.api#documentation": "<p>A mapping applied to the authenticating end-entity certificate.</p>"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias of the profile. Present only if the profile has an alias.</p>"
+                    }
+                },
+                "aliasArn": {
+                    "target": "com.amazonaws.rolesanywhere#ProfileAliasArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias ARN of the profile, in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/profile/<i>alias-name</i> </code>. Present only if the profile has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
+                    }
+                },
+                "previousAliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>"
                     }
                 }
             },
@@ -1574,6 +1740,26 @@
                 "target": "com.amazonaws.rolesanywhere#ProfileDetail"
             }
         },
+        "com.amazonaws.rolesanywhere#ProfileIdentifier": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^([a-f0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}|arn:aws(-[^:]+)?:rolesanywhere(:.*){2}:(profile|alias/profile)/.*)$"
+            }
+        },
+        "com.amazonaws.rolesanywhere#ProfileResourceArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:profile/.*)$"
+            }
+        },
         "com.amazonaws.rolesanywhere#PutAttributeMapping": {
             "type": "operation",
             "input": {
@@ -1590,11 +1776,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Put an entry in the attribute mapping rules that will be enforced by a given profile. \n      A mapping specifies a certificate field and one or more specifiers that have contextual meanings.</p>",
+                "smithy.api#documentation": "<p>Put an entry in the attribute mapping rules that will be enforced by a given profile. A mapping specifies a certificate field and one or more specifiers that have contextual meanings.</p>",
                 "smithy.api#examples": [
                     {
                         "title": "PutAttributeMapping - Adds a custom attribute mapping rule",
@@ -1649,9 +1838,9 @@
             "type": "structure",
             "members": {
                 "profileId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#ProfileIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the profile.</p>",
+                        "smithy.api#documentation": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -1706,11 +1895,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Attaches a list of <i>notification settings</i> to a trust anchor.</p>\n         <p>A notification setting includes information such as event name, threshold, status of\n         the notification setting, and the channel to notify.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:PutNotificationSettings</code>.\n         </p>",
+                "smithy.api#documentation": "<p>Attaches a list of <i>notification settings</i> to a trust anchor.</p> <p>A notification setting includes information such as event name, threshold, status of the notification setting, and the channel to notify.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:PutNotificationSettings</code>. </p>",
                 "smithy.api#examples": [
                     {
                         "title": "PutNotificationSettings - Adds custom notification settings",
@@ -1816,11 +2008,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Resets the <i>custom notification setting</i> to IAM Roles Anywhere default setting.\n      </p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:ResetNotificationSettings</code>.\n         </p>",
+                "smithy.api#documentation": "<p>Resets the <i>custom notification setting</i> to IAM Roles Anywhere default setting. </p> <p> <b>Required permissions: </b> <code>rolesanywhere:ResetNotificationSettings</code>. </p>",
                 "smithy.api#examples": [
                     {
                         "title": "ResetNotificationSettings - Resets to IAM Roles Anywhere defined default notification settings",
@@ -1885,7 +2080,7 @@
                 "notificationSettingKeys": {
                     "target": "com.amazonaws.rolesanywhere#NotificationSettingKeys",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of notification setting keys to reset.\n         A notification setting key includes the event and the channel.\n      </p>",
+                        "smithy.api#documentation": "<p>A list of notification setting keys to reset. A notification setting key includes the event and the channel. </p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -1997,8 +2192,196 @@
                     "name": "rolesanywhere"
                 },
                 "aws.protocols#restJson1": {},
-                "smithy.api#documentation": "<p>Identity and Access Management Roles Anywhere provides a secure way for your workloads such as\n         servers, containers, and applications that run outside of Amazon Web Services to obtain\n         temporary Amazon Web Services credentials. Your workloads can use the same IAM policies and roles you have for native Amazon Web Services applications to access Amazon Web Services resources. Using IAM Roles Anywhere eliminates the need to\n         manage long-term credentials for workloads running outside of Amazon Web Services.</p>\n         <p>\n         To use IAM Roles Anywhere, your workloads must use X.509 certificates\n         issued by their certificate authority (CA). You register the CA with IAM\n         Roles Anywhere as a trust anchor to establish trust between your public key infrastructure\n         (PKI) and IAM Roles Anywhere. If you don't manage your own PKI system, you\n         can use Private Certificate Authority to create a CA and then use that to establish trust with\n         IAM Roles Anywhere.\n      </p>\n         <p>This guide describes the IAM Roles Anywhere operations that you can call\n         programmatically. For more information about IAM Roles Anywhere, see the\n            <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html\">IAM Roles Anywhere User Guide</a>.</p>",
+                "smithy.api#documentation": "<p>Identity and Access Management Roles Anywhere provides a secure way for your workloads such as servers, containers, and applications that run outside of Amazon Web Services to obtain temporary Amazon Web Services credentials. Your workloads can use the same IAM policies and roles you have for native Amazon Web Services applications to access Amazon Web Services resources. Using IAM Roles Anywhere eliminates the need to manage long-term credentials for workloads running outside of Amazon Web Services.</p> <p> To use IAM Roles Anywhere, your workloads must use X.509 certificates issued by their certificate authority (CA). You register the CA with IAM Roles Anywhere as a trust anchor to establish trust between your public key infrastructure (PKI) and IAM Roles Anywhere. If you don't manage your own PKI system, you can use Private Certificate Authority to create a CA and then use that to establish trust with IAM Roles Anywhere. </p> <p>This guide describes the IAM Roles Anywhere operations that you can call programmatically. For more information about IAM Roles Anywhere, see the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html\">IAM Roles Anywhere User Guide</a>.</p>",
                 "smithy.api#title": "IAM Roles Anywhere",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rolesanywhere-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rolesanywhere-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rolesanywhere.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rolesanywhere.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -2006,27 +2389,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -2706,17 +3089,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -2727,17 +3099,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -2754,17 +3115,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -2775,17 +3125,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -2867,9 +3206,9 @@
             "type": "structure",
             "members": {
                 "crlId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#CrlIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
+                        "smithy.api#documentation": "<p>The certificate revocation list (CRL) to act on. You can specify one of the following:</p> <ul> <li> <p>The CRL ID.</p> </li> <li> <p>The CRL ARN.</p> </li> <li> <p>The alias ARN of the CRL.</p> </li> </ul> <p>An ARN must be for a CRL in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -2880,9 +3219,9 @@
             "type": "structure",
             "members": {
                 "profileId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#ProfileIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the profile.</p>",
+                        "smithy.api#documentation": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -2906,13 +3245,37 @@
             "type": "structure",
             "members": {
                 "trustAnchorId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the trust anchor.</p>",
+                        "smithy.api#documentation": "<p>The trust anchor to act on. You can specify one of the following:</p> <ul> <li> <p>The trust anchor ID.</p> </li> <li> <p>The trust anchor ARN.</p> </li> <li> <p>The alias ARN of the trust anchor.</p> </li> </ul> <p>An ARN must be for a trust anchor in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
                 }
+            }
+        },
+        "com.amazonaws.rolesanywhere#ServiceUnavailableException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The exception message.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "retryAfterSeconds": {
+                    "target": "smithy.api#Integer",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The recommended number of seconds after which the client should retry the request.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The request has failed due to a temporary failure of the service.</p>",
+                "smithy.api#error": "server",
+                "smithy.api#httpError": 503,
+                "smithy.api#retryable": {}
             }
         },
         "com.amazonaws.rolesanywhere#Source": {
@@ -2944,14 +3307,14 @@
                         "smithy.api#documentation": "<p>The PEM-encoded data for the certificate anchor. Included for trust anchors of type <code>CERTIFICATE_BUNDLE</code>. </p>",
                         "smithy.api#length": {
                             "min": 1,
-                            "max": 8000
+                            "max": 204800
                         }
                     }
                 },
                 "acmPcaArn": {
                     "target": "smithy.api#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>\n         The root certificate of the Private Certificate Authority specified by this ARN is used in trust\n         validation for temporary credential requests. Included for trust anchors of type <code>AWS_ACM_PCA</code>.\n      </p>"
+                        "smithy.api#documentation": "<p> The root certificate of the Private Certificate Authority specified by this ARN is used in trust validation for temporary credential requests. Included for trust anchors of type <code>AWS_ACM_PCA</code>. </p>"
                     }
                 }
             },
@@ -3190,6 +3553,9 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#TooManyTagsException"
                 },
                 {
@@ -3197,7 +3563,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Attaches tags to a resource.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:TagResource</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Attaches tags to a resource.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:TagResource</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/TagResource",
                     "method": "POST",
@@ -3256,7 +3622,7 @@
             "type": "resource",
             "identifiers": {
                 "trustAnchorId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid"
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorIdentifier"
                 }
             },
             "create": {
@@ -3286,14 +3652,14 @@
                 "aws.cloudformation#cfnResource": {}
             }
         },
-        "com.amazonaws.rolesanywhere#TrustAnchorArn": {
+        "com.amazonaws.rolesanywhere#TrustAnchorAliasArn": {
             "type": "string",
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
                     "max": 1011
                 },
-                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:trust-anchor.*)$"
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:alias/trust-anchor/.*)$"
             }
         },
         "com.amazonaws.rolesanywhere#TrustAnchorDetail": {
@@ -3306,7 +3672,7 @@
                     }
                 },
                 "trustAnchorArn": {
-                    "target": "smithy.api#String",
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorResourceArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The ARN of the trust anchor.</p>"
                     }
@@ -3329,6 +3695,12 @@
                         "smithy.api#documentation": "<p>Indicates whether the trust anchor is enabled.</p>"
                     }
                 },
+                "crlDpRevocationEnabled": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies whether the trust anchor checks certificate revocation status against CRL distribution points.</p>"
+                    }
+                },
                 "createdAt": {
                     "target": "smithy.api#Timestamp",
                     "traits": {
@@ -3347,6 +3719,24 @@
                     "target": "com.amazonaws.rolesanywhere#NotificationSettingDetails",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of notification settings to be associated to the trust anchor.</p>"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias of the trust anchor. Present only if the trust anchor has an alias.</p>"
+                    }
+                },
+                "aliasArn": {
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorAliasArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias ARN of the trust anchor, in the form <code>arn:<i>partition</i>:rolesanywhere:<i>region</i>:<i>account</i>:alias/trust-anchor/<i>alias-name</i> </code>. Present only if the trust anchor has an alias.</p> <p>You can use the alias ARN in place of the resource ID or ARN in the request parameters whose descriptions say that they accept an alias ARN. Don't use the alias ARN in Identity and Access Management (IAM) policies. A policy statement that names an alias ARN doesn't apply to the resource that holds the alias. Write policies with the ARN that contains the resource ID instead.</p>"
+                    }
+                },
+                "previousAliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias that the resource had before the update request. IAM Roles Anywhere returns this value only in the response to an update request that changed or removed an existing alias. It isn't returned when the alias was unchanged, when the resource had no alias before the request, or by other operations.</p>"
                     }
                 }
             },
@@ -3370,6 +3760,36 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.rolesanywhere#TrustAnchorDetail"
+            }
+        },
+        "com.amazonaws.rolesanywhere#TrustAnchorIdentifier": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^([a-f0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}|arn:aws(-[^:]+)?:rolesanywhere(:.*){2}:(trust-anchor|alias/trust-anchor)/.*)$"
+            }
+        },
+        "com.amazonaws.rolesanywhere#TrustAnchorIdentifierArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:trust-anchor.*|:alias/trust-anchor/.*)$"
+            }
+        },
+        "com.amazonaws.rolesanywhere#TrustAnchorResourceArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1011
+                },
+                "smithy.api#pattern": "^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:trust-anchor/.*)$"
             }
         },
         "com.amazonaws.rolesanywhere#TrustAnchorType": {
@@ -3407,11 +3827,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Removes tags from the resource.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:UntagResource</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Removes tags from the resource.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:UntagResource</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/UntagResource",
                     "method": "POST",
@@ -3458,11 +3881,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Updates the certificate revocation list (CRL). A CRL is a list of certificates that have\n         been revoked by the issuing certificate authority (CA). IAM Roles Anywhere\n         validates against the CRL before issuing credentials.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:UpdateCrl</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Updates the certificate revocation list (CRL). A CRL is a list of certificates that have been revoked by the issuing certificate authority (CA). IAM Roles Anywhere validates against the CRL before issuing credentials.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:UpdateCrl</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/crl/{crlId}",
                     "method": "PATCH"
@@ -3473,9 +3899,9 @@
             "type": "structure",
             "members": {
                 "crlId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#CrlIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the certificate revocation list (CRL).</p>",
+                        "smithy.api#documentation": "<p>The certificate revocation list (CRL) to act on. You can specify one of the following:</p> <ul> <li> <p>The CRL ID.</p> </li> <li> <p>The CRL ARN.</p> </li> <li> <p>The alias ARN of the CRL.</p> </li> </ul> <p>An ARN must be for a CRL in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -3494,6 +3920,12 @@
                             "min": 1,
                             "max": 300000
                         }
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias for the certificate revocation list (CRL).</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>"
                     }
                 }
             }
@@ -3514,11 +3946,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Updates a <i>profile</i>, a list of the roles that IAM\n         Roles Anywhere service is trusted to assume. You use profiles to intersect permissions with\n            IAM managed policies.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:UpdateProfile</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Updates a <i>profile</i>, a list of the roles that IAM Roles Anywhere service is trusted to assume. You use profiles to intersect permissions with IAM managed policies.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:UpdateProfile</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/profile/{profileId}",
                     "method": "PATCH"
@@ -3530,9 +3965,9 @@
             "type": "structure",
             "members": {
                 "profileId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#ProfileIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the profile.</p>",
+                        "smithy.api#documentation": "<p>The profile to act on. You can specify one of the following:</p> <ul> <li> <p>The profile ID.</p> </li> <li> <p>The profile ARN.</p> </li> <li> <p>The alias ARN of the profile.</p> </li> </ul> <p>An ARN must be for a profile in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -3568,7 +4003,7 @@
                 "durationSeconds": {
                     "target": "smithy.api#Integer",
                     "traits": {
-                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the \n<a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a>\npage for more details. In requests, if this value is not provided, the default value will be 3600. </p>",
+                        "smithy.api#documentation": "<p> Used to determine how long sessions vended using this profile are valid for. See the <code>Expiration</code> section of the <a href=\"https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object\">CreateSession API documentation</a> page for more details. In requests, if this value is not provided, the default value will be 3600. </p>",
                         "smithy.api#range": {
                             "min": 900,
                             "max": 43200
@@ -3579,6 +4014,12 @@
                     "target": "smithy.api#Boolean",
                     "traits": {
                         "smithy.api#documentation": "<p>Used to determine if a custom role session name will be accepted in a temporary credential request.</p>"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias for the profile.</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>"
                     }
                 }
             }
@@ -3599,11 +4040,14 @@
                     "target": "com.amazonaws.rolesanywhere#ResourceNotFoundException"
                 },
                 {
+                    "target": "com.amazonaws.rolesanywhere#ServiceUnavailableException"
+                },
+                {
                     "target": "com.amazonaws.rolesanywhere#ValidationException"
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Updates a trust anchor. You establish trust between IAM Roles Anywhere\n         and your certificate authority (CA) by configuring a trust anchor. You can define a trust\n         anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a\n         CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor\n         using certificates issued by the CA in exchange for temporary Amazon Web Services\n         credentials.</p>\n         <p>\n            <b>Required permissions: </b>\n            <code>rolesanywhere:UpdateTrustAnchor</code>. \n         </p>",
+                "smithy.api#documentation": "<p>Updates a trust anchor. You establish trust between IAM Roles Anywhere and your certificate authority (CA) by configuring a trust anchor. You can define a trust anchor as a reference to an Private Certificate Authority (Private CA) or by uploading a CA certificate. Your Amazon Web Services workloads can authenticate with the trust anchor using certificates issued by the CA in exchange for temporary Amazon Web Services credentials.</p> <p> <b>Required permissions: </b> <code>rolesanywhere:UpdateTrustAnchor</code>. </p>",
                 "smithy.api#http": {
                     "uri": "/trustanchor/{trustAnchorId}",
                     "method": "PATCH"
@@ -3615,9 +4059,9 @@
             "type": "structure",
             "members": {
                 "trustAnchorId": {
-                    "target": "com.amazonaws.rolesanywhere#Uuid",
+                    "target": "com.amazonaws.rolesanywhere#TrustAnchorIdentifier",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unique identifier of the trust anchor.</p>",
+                        "smithy.api#documentation": "<p>The trust anchor to act on. You can specify one of the following:</p> <ul> <li> <p>The trust anchor ID.</p> </li> <li> <p>The trust anchor ARN.</p> </li> <li> <p>The alias ARN of the trust anchor.</p> </li> </ul> <p>An ARN must be for a trust anchor in your account and Region.</p>",
                         "smithy.api#httpLabel": {},
                         "smithy.api#required": {}
                     }
@@ -3632,6 +4076,18 @@
                     "target": "com.amazonaws.rolesanywhere#Source",
                     "traits": {
                         "smithy.api#documentation": "<p>The trust anchor type and its related certificate data.</p>"
+                    }
+                },
+                "crlDpRevocationEnabled": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies whether the trust anchor checks certificate revocation status against CRL distribution points.</p>"
+                    }
+                },
+                "aliasName": {
+                    "target": "com.amazonaws.rolesanywhere#AliasName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The alias for the trust anchor.</p> <p>You can use this parameter in the following ways:</p> <ul> <li> <p>To set or change the alias, specify the new alias name. After the change, the previous alias ARN no longer identifies the resource. You can then assign the previous alias to another resource of the same type. A change can take a short time to take effect for requests that use an alias ARN.</p> </li> <li> <p>To remove the alias, specify an empty string.</p> </li> <li> <p>To keep the current alias, omit this parameter.</p> </li> </ul> <p>An alias name contains 1 to 256 characters. It must begin with a letter (A-Z or a-z). It can contain only letters (A-Z and a-z), numbers (0-9), underscores (_), hyphens (-), and forward slashes (/). A forward slash can appear only between two other characters, so an alias name can't end with a forward slash or contain two in a row. Alias names that begin with <code>aws/</code>, in any combination of uppercase and lowercase letters, are reserved. Alias names are case sensitive.</p> <p>The alias name must be unique among resources of the same type in your account and Region. If another resource of the same type already has the alias, the request fails with a <code>ValidationException</code>. An invalid or reserved alias name also causes a <code>ValidationException</code>.</p>"
                     }
                 }
             }

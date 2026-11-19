@@ -3,57 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediaconvert/model/XavcHdIntraCbgProfileSettings.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediaconvert/model/XavcHdIntraCbgProfileSettings.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MediaConvert
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaConvert {
+namespace Model {
 
-XavcHdIntraCbgProfileSettings::XavcHdIntraCbgProfileSettings() : 
-    m_xavcClass(XavcHdIntraCbgProfileClass::NOT_SET),
-    m_xavcClassHasBeenSet(false)
-{
-}
+XavcHdIntraCbgProfileSettings::XavcHdIntraCbgProfileSettings(JsonView jsonValue) { *this = jsonValue; }
 
-XavcHdIntraCbgProfileSettings::XavcHdIntraCbgProfileSettings(JsonView jsonValue)
-  : XavcHdIntraCbgProfileSettings()
-{
-  *this = jsonValue;
-}
-
-XavcHdIntraCbgProfileSettings& XavcHdIntraCbgProfileSettings::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("xavcClass"))
-  {
+XavcHdIntraCbgProfileSettings& XavcHdIntraCbgProfileSettings::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("interlaceMode")) {
+    m_interlaceMode = XavcInterlaceModeMapper::GetXavcInterlaceModeForName(jsonValue.GetString("interlaceMode"));
+    m_interlaceModeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("xavcClass")) {
     m_xavcClass = XavcHdIntraCbgProfileClassMapper::GetXavcHdIntraCbgProfileClassForName(jsonValue.GetString("xavcClass"));
-
     m_xavcClassHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue XavcHdIntraCbgProfileSettings::Jsonize() const
-{
+JsonValue XavcHdIntraCbgProfileSettings::Jsonize() const {
   JsonValue payload;
 
-  if(m_xavcClassHasBeenSet)
-  {
-   payload.WithString("xavcClass", XavcHdIntraCbgProfileClassMapper::GetNameForXavcHdIntraCbgProfileClass(m_xavcClass));
+  if (m_interlaceModeHasBeenSet) {
+    payload.WithString("interlaceMode", XavcInterlaceModeMapper::GetNameForXavcInterlaceMode(m_interlaceMode));
+  }
+
+  if (m_xavcClassHasBeenSet) {
+    payload.WithString("xavcClass", XavcHdIntraCbgProfileClassMapper::GetNameForXavcHdIntraCbgProfileClass(m_xavcClass));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

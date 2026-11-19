@@ -3,13 +3,56 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/core/client/RetryStrategy.h>
-
 #include <aws/core/client/AWSError.h>
 #include <aws/core/client/CoreErrors.h>
+#include <aws/core/client/RetryStrategy.h>
+#include <aws/core/internal/RetryStrategyImpl.h>
 #include <aws/core/utils/Outcome.h>
+#include <aws/core/utils/StringUtils.h>
+#include <aws/core/utils/local/Random.h>
+#include <aws/core/utils/logging/LogMacros.h>
 
 using namespace Aws::Utils::Threading;
+using namespace Aws::Client;
+
+namespace {
+    const char RETRY_STRATEGY_TAG[] = "StandardRetryStrategy";
+
+    std::shared_ptr<RetryQuotaContainer> QuotaContainerOrDefault(std::shared_ptr<RetryQuotaContainer> retryQuotaContainer)
+    {
+        return retryQuotaContainer ? retryQuotaContainer : Aws::MakeShared<ThrottleBasedRetryQuotaContainer>(RETRY_STRATEGY_TAG);
+    }
+
+    StandardRetryStrategyOptions MakeOptions(long maxAttempts, std::shared_ptr<RetryQuotaContainer> retryQuotaContainer)
+    {
+        StandardRetryStrategyOptions options;
+        options.maxAttempts = maxAttempts;
+        options.retryQuotaContainer = std::move(retryQuotaContainer);
+        return options;
+    }
+
+    StandardRetryStrategyOptions MakeOptions(long maxAttempts, double transientBackoffBaseSec)
+    {
+        StandardRetryStrategyOptions options;
+        options.maxAttempts = maxAttempts;
+        options.transientBackoffBaseSec = transientBackoffBaseSec;
+        return options;
+    }
+} // anonymous namespace
+
+namespace Aws
+{
+    namespace Client
+    {
+        namespace Internal
+        {
+            bool IsLegacyRetryStrategy(const RetryStrategy* retryStrategy)
+            {
+                return retryStrategy && Aws::String("default") == retryStrategy->GetStrategyName();
+            }
+        } // namespace Internal
+    } // namespace Client
+} // namespace Aws
 
 namespace Aws
 {
@@ -19,19 +62,20 @@ namespace Aws
         static const int RETRY_COST = 5;
         static const int TIMEOUT_RETRY_COST = 10;
 
-        StandardRetryStrategy::StandardRetryStrategy(long maxAttempts) :
-            m_retryQuotaContainer(Aws::MakeShared<DefaultRetryQuotaContainer>("StandardRetryStrategy")),
-            m_maxAttempts(maxAttempts)
-        {
-          srand((unsigned int)time(NULL));
-        }
+        StandardRetryStrategy::StandardRetryStrategy(const StandardRetryStrategyOptions& options)
+            : m_retryQuotaContainer(QuotaContainerOrDefault(options.retryQuotaContainer)), m_maxAttempts(options.maxAttempts),
+              m_transientBackoffBaseSec(options.transientBackoffBaseSec) {}
 
-        StandardRetryStrategy::StandardRetryStrategy(std::shared_ptr<RetryQuotaContainer> retryQuotaContainer, long maxAttempts) :
-            m_retryQuotaContainer(retryQuotaContainer),
-            m_maxAttempts(maxAttempts)
-        {
-          srand((unsigned int)time(NULL));
-        }
+        StandardRetryStrategy::StandardRetryStrategy(long maxAttempts)
+            : StandardRetryStrategy(MakeOptions(maxAttempts, nullptr)) {}
+
+        StandardRetryStrategy::StandardRetryStrategy(std::shared_ptr<RetryQuotaContainer> retryQuotaContainer, long maxAttempts)
+            : StandardRetryStrategy(MakeOptions(maxAttempts, std::move(retryQuotaContainer))) {}
+
+        StandardRetryStrategy::StandardRetryStrategy(long maxAttempts, double transientBackoffBaseSec)
+            : StandardRetryStrategy(MakeOptions(maxAttempts, transientBackoffBaseSec)) {}
+
+        StandardRetryStrategy::~StandardRetryStrategy() = default;
 
         void StandardRetryStrategy::RequestBookkeeping(const HttpResponseOutcome& httpResponseOutcome)
         {
@@ -62,9 +106,28 @@ namespace Aws
 
         long StandardRetryStrategy::CalculateDelayBeforeNextRetry(const AWSError<CoreErrors>& error, long attemptedRetries) const
         {
-            AWS_UNREFERENCED_PARAM(error);
-            // Maximum left shift factor is capped by ceil(log2(max_delay)), to avoid wrap-around and overflow into negative values:
-            return (std::min)(rand() % 1000 * (1 << (std::min)(attemptedRetries, 15L)), 20000);
+            double x = error.ShouldThrottle() ? 1.0 : m_transientBackoffBaseSec;
+            double exponentialPart = x * static_cast<double>(1L << (std::min)(attemptedRetries, 30L));
+            double cappedPart = (std::min)(exponentialPart, 20.0);
+
+            double b = static_cast<double>(Aws::Utils::GetRandomValue() % 10000) / 10000.0;
+            double t_i = b * cappedPart;
+
+            const auto& headers = error.GetResponseHeaders();
+            auto it = headers.find("x-amz-retry-after");
+            if (it != headers.end())
+            {
+                long long headerMs = Aws::Utils::StringUtils::ConvertToInt64(it->second.c_str());
+                if (headerMs >= 0)
+                {
+                    double headerSec = static_cast<double>(headerMs) / 1000.0;
+                    double clamped = (std::max)(t_i, (std::min)(headerSec, 5.0 + t_i));
+                    return static_cast<long>(clamped * 1000.0);
+                }
+                AWS_LOGSTREAM_DEBUG(RETRY_STRATEGY_TAG, "Ignoring invalid x-amz-retry-after value: " << it->second);
+            }
+
+            return static_cast<long>(t_i * 1000.0);
         }
 
         DefaultRetryQuotaContainer::DefaultRetryQuotaContainer() : m_retryQuota(INITIAL_RETRY_TOKENS)

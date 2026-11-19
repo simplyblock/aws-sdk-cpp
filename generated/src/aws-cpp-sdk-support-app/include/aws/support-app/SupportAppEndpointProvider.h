@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/support-app/SupportApp_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/support-app/SupportApp_EXPORTS.h>
 
-#include <aws/support-app/SupportAppEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SupportApp
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SupportApp {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SupportAppClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SupportAppEndpointProviderBase =
     EndpointProviderBase<SupportAppClientConfiguration, SupportAppBuiltInParameters, SupportAppClientContextParameters>;
 
 using SupportAppDefaultEpProviderBase =
-    DefaultEndpointProvider<SupportAppClientConfiguration, SupportAppBuiltInParameters, SupportAppClientContextParameters>;
+    BDDEndpointProvider<SupportAppClientConfiguration, SupportAppBuiltInParameters, SupportAppClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SUPPORTAPP_API SupportAppEndpointProvider : public SupportAppDefaultEpProviderBase
-{
-public:
-    using SupportAppResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SUPPORTAPP_API SupportAppEndpointProvider : public SupportAppDefaultEpProviderBase {
+ public:
+  using SupportAppResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SupportAppEndpointProvider()
-      : SupportAppDefaultEpProviderBase(Aws::SupportApp::SupportAppEndpointRules::GetRulesBlob(), Aws::SupportApp::SupportAppEndpointRules::RulesBlobSize)
-    {}
+  SupportAppEndpointProvider();
 
-    ~SupportAppEndpointProvider()
-    {
-    }
+  ~SupportAppEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SupportApp
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SupportApp
+}  // namespace Aws

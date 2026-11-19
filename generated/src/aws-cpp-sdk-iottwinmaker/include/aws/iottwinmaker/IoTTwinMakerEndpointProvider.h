@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
 
-#include <aws/iottwinmaker/IoTTwinMakerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace IoTTwinMaker
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace IoTTwinMaker {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IoTTwinMakerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IoTTwinMakerEndpointProviderBase =
     EndpointProviderBase<IoTTwinMakerClientConfiguration, IoTTwinMakerBuiltInParameters, IoTTwinMakerClientContextParameters>;
 
 using IoTTwinMakerDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTTwinMakerClientConfiguration, IoTTwinMakerBuiltInParameters, IoTTwinMakerClientContextParameters>;
+    BDDEndpointProvider<IoTTwinMakerClientConfiguration, IoTTwinMakerBuiltInParameters, IoTTwinMakerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IOTTWINMAKER_API IoTTwinMakerEndpointProvider : public IoTTwinMakerDefaultEpProviderBase
-{
-public:
-    using IoTTwinMakerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IOTTWINMAKER_API IoTTwinMakerEndpointProvider : public IoTTwinMakerDefaultEpProviderBase {
+ public:
+  using IoTTwinMakerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IoTTwinMakerEndpointProvider()
-      : IoTTwinMakerDefaultEpProviderBase(Aws::IoTTwinMaker::IoTTwinMakerEndpointRules::GetRulesBlob(), Aws::IoTTwinMaker::IoTTwinMakerEndpointRules::RulesBlobSize)
-    {}
+  IoTTwinMakerEndpointProvider();
 
-    ~IoTTwinMakerEndpointProvider()
-    {
-    }
+  ~IoTTwinMakerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace IoTTwinMaker
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace IoTTwinMaker
+}  // namespace Aws

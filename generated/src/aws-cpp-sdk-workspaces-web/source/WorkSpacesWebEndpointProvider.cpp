@@ -4,13 +4,15 @@
  */
 
 #include <aws/workspaces-web/WorkSpacesWebEndpointProvider.h>
+#include <aws/workspaces-web/internal/WorkSpacesWebEndpointRules.h>
 
-namespace Aws
-{
-namespace WorkSpacesWeb
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace WorkSpacesWeb
-} // namespace Aws
+namespace Aws {
+namespace WorkSpacesWeb {
+namespace Endpoint {
+WorkSpacesWebEndpointProvider::WorkSpacesWebEndpointProvider()
+    : WorkSpacesWebDefaultEpProviderBase(Aws::WorkSpacesWeb::WorkSpacesWebEndpointRules::GetRulesBlob(),
+                                         Aws::WorkSpacesWeb::WorkSpacesWebEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

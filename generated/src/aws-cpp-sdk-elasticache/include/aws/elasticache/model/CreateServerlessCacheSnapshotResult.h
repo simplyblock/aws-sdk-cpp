@@ -4,62 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/model/ServerlessCacheSnapshot.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
+#include <aws/elasticache/model/ServerlessCacheSnapshot.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class CreateServerlessCacheSnapshotResult
-  {
-  public:
-    AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult();
-    AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class CreateServerlessCacheSnapshotResult {
+ public:
+  AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult() = default;
+  AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API CreateServerlessCacheSnapshotResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The state of a serverless cache snapshot at a specific point in time, to the
+   * millisecond. Available for Valkey, Redis OSS and Serverless Memcached only.</p>
+   */
+  inline const ServerlessCacheSnapshot& GetServerlessCacheSnapshot() const { return m_serverlessCacheSnapshot; }
+  template <typename ServerlessCacheSnapshotT = ServerlessCacheSnapshot>
+  void SetServerlessCacheSnapshot(ServerlessCacheSnapshotT&& value) {
+    m_serverlessCacheSnapshotHasBeenSet = true;
+    m_serverlessCacheSnapshot = std::forward<ServerlessCacheSnapshotT>(value);
+  }
+  template <typename ServerlessCacheSnapshotT = ServerlessCacheSnapshot>
+  CreateServerlessCacheSnapshotResult& WithServerlessCacheSnapshot(ServerlessCacheSnapshotT&& value) {
+    SetServerlessCacheSnapshot(std::forward<ServerlessCacheSnapshotT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of a serverless cache snapshot at a specific point in time, to the
-     * millisecond. Available for Valkey, Redis OSS and Serverless Memcached only.</p>
-     */
-    inline const ServerlessCacheSnapshot& GetServerlessCacheSnapshot() const{ return m_serverlessCacheSnapshot; }
-    inline void SetServerlessCacheSnapshot(const ServerlessCacheSnapshot& value) { m_serverlessCacheSnapshot = value; }
-    inline void SetServerlessCacheSnapshot(ServerlessCacheSnapshot&& value) { m_serverlessCacheSnapshot = std::move(value); }
-    inline CreateServerlessCacheSnapshotResult& WithServerlessCacheSnapshot(const ServerlessCacheSnapshot& value) { SetServerlessCacheSnapshot(value); return *this;}
-    inline CreateServerlessCacheSnapshotResult& WithServerlessCacheSnapshot(ServerlessCacheSnapshot&& value) { SetServerlessCacheSnapshot(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateServerlessCacheSnapshotResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateServerlessCacheSnapshotResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateServerlessCacheSnapshotResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ServerlessCacheSnapshot m_serverlessCacheSnapshot;
+ private:
+  ServerlessCacheSnapshot m_serverlessCacheSnapshot;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serverlessCacheSnapshotHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

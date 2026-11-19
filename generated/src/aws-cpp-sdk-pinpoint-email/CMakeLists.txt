@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-pinpoint-email "C++ SDK for the AWS pinpoint-email service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-pinpoint-email "C++ SDK for Amazon Pinpoint Email Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_PINPOINT-EMAIL_HEADERS
     "include/aws/pinpoint-email/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PINPOINT-EMAIL_HEADERS
 
 file(GLOB AWS_PINPOINT-EMAIL_MODEL_HEADERS
     "include/aws/pinpoint-email/model/*.h"
+)
+
+file(GLOB AWS_PINPOINT-EMAIL_INTERNAL_HEADERS
+    "include/aws/pinpoint-email/internal/*.h"
 )
 
 file(GLOB AWS_PINPOINT-EMAIL_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PINPOINT-EMAIL_MODEL_SOURCE
 
 file(GLOB PINPOINT-EMAIL_UNIFIED_HEADERS
     ${AWS_PINPOINT-EMAIL_HEADERS}
+    ${AWS_PINPOINT-EMAIL_INTERNAL_HEADERS}
     ${AWS_PINPOINT-EMAIL_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\pinpoint-email" FILES ${AWS_PINPOINT-EMAIL_HEADERS})
+        source_group("Header Files\\aws\\pinpoint-email\\internal" FILES ${AWS_PINPOINT-EMAIL_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\pinpoint-email\\model" FILES ${AWS_PINPOINT-EMAIL_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PINPOINT-EMAIL_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PINPOINT-EMAIL_MODEL_SOURCE})

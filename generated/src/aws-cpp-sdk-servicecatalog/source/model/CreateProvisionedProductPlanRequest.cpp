@@ -3,127 +3,128 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/CreateProvisionedProductPlanRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateProvisionedProductPlanRequest::CreateProvisionedProductPlanRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_planNameHasBeenSet(false),
-    m_planType(ProvisionedProductPlanType::NOT_SET),
-    m_planTypeHasBeenSet(false),
-    m_notificationArnsHasBeenSet(false),
-    m_pathIdHasBeenSet(false),
-    m_productIdHasBeenSet(false),
-    m_provisionedProductNameHasBeenSet(false),
-    m_provisioningArtifactIdHasBeenSet(false),
-    m_provisioningParametersHasBeenSet(false),
-    m_idempotencyToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_idempotencyTokenHasBeenSet(true),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateProvisionedProductPlanRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_planNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_planTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_notificationArnsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_pathIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_productIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_provisionedProductNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_provisioningArtifactIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_provisioningParametersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idempotencyTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_planNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PlanName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_planName.c_str()));
+  }
+
+  if (m_planTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PlanType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ProvisionedProductPlanTypeMapper::GetNameForProvisionedProductPlanType(m_planType).c_str()));
+  }
+
+  if (m_notificationArnsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NotificationArns"));
+    encoder.WriteArrayStart(m_notificationArns.size());
+    for (const auto& item_0 : m_notificationArns) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_pathIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PathId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pathId.c_str()));
+  }
+
+  if (m_productIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProductId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_productId.c_str()));
+  }
+
+  if (m_provisionedProductNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisionedProductName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_provisionedProductName.c_str()));
+  }
+
+  if (m_provisioningArtifactIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisioningArtifactId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_provisioningArtifactId.c_str()));
+  }
+
+  if (m_provisioningParametersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProvisioningParameters"));
+    encoder.WriteArrayStart(m_provisioningParameters.size());
+    for (const auto& item_0 : m_provisioningParameters) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_idempotencyTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IdempotencyToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_idempotencyToken.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateProvisionedProductPlanRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_planNameHasBeenSet)
-  {
-   payload.WithString("PlanName", m_planName);
-
-  }
-
-  if(m_planTypeHasBeenSet)
-  {
-   payload.WithString("PlanType", ProvisionedProductPlanTypeMapper::GetNameForProvisionedProductPlanType(m_planType));
-  }
-
-  if(m_notificationArnsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> notificationArnsJsonList(m_notificationArns.size());
-   for(unsigned notificationArnsIndex = 0; notificationArnsIndex < notificationArnsJsonList.GetLength(); ++notificationArnsIndex)
-   {
-     notificationArnsJsonList[notificationArnsIndex].AsString(m_notificationArns[notificationArnsIndex]);
-   }
-   payload.WithArray("NotificationArns", std::move(notificationArnsJsonList));
-
-  }
-
-  if(m_pathIdHasBeenSet)
-  {
-   payload.WithString("PathId", m_pathId);
-
-  }
-
-  if(m_productIdHasBeenSet)
-  {
-   payload.WithString("ProductId", m_productId);
-
-  }
-
-  if(m_provisionedProductNameHasBeenSet)
-  {
-   payload.WithString("ProvisionedProductName", m_provisionedProductName);
-
-  }
-
-  if(m_provisioningArtifactIdHasBeenSet)
-  {
-   payload.WithString("ProvisioningArtifactId", m_provisioningArtifactId);
-
-  }
-
-  if(m_provisioningParametersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> provisioningParametersJsonList(m_provisioningParameters.size());
-   for(unsigned provisioningParametersIndex = 0; provisioningParametersIndex < provisioningParametersJsonList.GetLength(); ++provisioningParametersIndex)
-   {
-     provisioningParametersJsonList[provisioningParametersIndex].AsObject(m_provisioningParameters[provisioningParametersIndex].Jsonize());
-   }
-   payload.WithArray("ProvisioningParameters", std::move(provisioningParametersJsonList));
-
-  }
-
-  if(m_idempotencyTokenHasBeenSet)
-  {
-   payload.WithString("IdempotencyToken", m_idempotencyToken);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateProvisionedProductPlanRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateProvisionedProductPlanRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.CreateProvisionedProductPlan"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

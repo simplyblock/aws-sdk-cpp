@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/schemas/model/GetCodeBindingSourceResult.h>
 #include <aws/core/AmazonWebServiceResult.h>
-#include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/schemas/model/GetCodeBindingSourceResult.h>
 
 #include <utility>
 
@@ -16,44 +16,19 @@ using namespace Aws::Utils::Stream;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetCodeBindingSourceResult::GetCodeBindingSourceResult()
-{
-}
+GetCodeBindingSourceResult::GetCodeBindingSourceResult(Aws::AmazonWebServiceResult<ResponseStream>&& result) { *this = std::move(result); }
 
-GetCodeBindingSourceResult::GetCodeBindingSourceResult(GetCodeBindingSourceResult&& toMove) : 
-    m_body(std::move(toMove.m_body)),
-    m_requestId(std::move(toMove.m_requestId))
-{
-}
-
-GetCodeBindingSourceResult& GetCodeBindingSourceResult::operator=(GetCodeBindingSourceResult&& toMove)
-{
-   if(this == &toMove)
-   {
-      return *this;
-   }
-
-   m_body = std::move(toMove.m_body);
-   m_requestId = std::move(toMove.m_requestId);
-
-   return *this;
-}
-
-GetCodeBindingSourceResult::GetCodeBindingSourceResult(Aws::AmazonWebServiceResult<ResponseStream>&& result)
-{
-  *this = std::move(result);
-}
-
-GetCodeBindingSourceResult& GetCodeBindingSourceResult::operator =(Aws::AmazonWebServiceResult<ResponseStream>&& result)
-{
+GetCodeBindingSourceResult& GetCodeBindingSourceResult::operator=(Aws::AmazonWebServiceResult<ResponseStream>&& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   m_body = result.TakeOwnershipOfPayload();
+  m_bodyHasBeenSet = true;
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
 
-   return *this;
+  return *this;
 }

@@ -9,6 +9,8 @@
 #include <aws/core/http/HttpClientFactory.h>
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/ARN.h>
+#include <aws/core/utils/DNS.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/HashingUtils.h>
 #include <aws/core/platform/Environment.h>
@@ -117,7 +119,6 @@ namespace Aws
             }
             std::shared_ptr<HttpRequest> request(CreateHttpRequest(ss.str(), HttpMethod::HTTP_GET,
                                                                    Aws::Utils::Stream::DefaultResponseStreamFactoryMethod));
-
             request->SetUserAgent(m_userAgent);
 
             if (authToken)
@@ -131,6 +132,11 @@ namespace Aws
         AmazonWebServiceResult<Aws::String> AWSHttpResourceClient::GetResourceWithAWSWebServiceResult(const std::shared_ptr<HttpRequest> &httpRequest) const
         {
             AWS_LOGSTREAM_TRACE(m_logtag.c_str(), "Retrieving credentials from " << httpRequest->GetURIString());
+            if (!Aws::Utils::IsValidHost(httpRequest->GetUri().GetHost())) {
+              AWS_LOGSTREAM_FATAL(m_logtag.c_str(), "Invalid endpoint host constructed: " << httpRequest->GetURIString());
+              return {{}, {}, HttpResponseCode::REQUEST_NOT_MADE};
+            }
+
             if (!m_httpClient)
             {
                 AWS_LOGSTREAM_FATAL(m_logtag.c_str(), "Unable to get a response: missing http client!");
@@ -204,6 +210,28 @@ namespace Aws
             AWS_UNREFERENCED_PARAM(m_disableIMDSV1);
             m_disableIMDSV1 = true;
             AWS_LOGSTREAM_TRACE(m_logtag.c_str(), "IMDSv1 had been disabled at the SDK build time");
+#endif
+        }
+
+        EC2MetadataClient::EC2MetadataClient(const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& credentialConfig,
+                                             const char* endpoint)
+            : AWSHttpResourceClient(
+                  [&credentialConfig]() -> ClientConfiguration{
+                    Aws::Client::ClientConfiguration clientConfig{credentialConfig.profile.c_str()};
+                    clientConfig.region = credentialConfig.region;
+                    clientConfig.credentialProviderConfig = credentialConfig;
+                    clientConfig.requestTimeoutMs = credentialConfig.imdsConfig.metadataServiceTimeout * 1000;
+                    clientConfig.retryStrategy = credentialConfig.imdsConfig.imdsRetryStrategy;
+                    return clientConfig;
+                  }(),
+                  EC2_METADATA_CLIENT_LOG_TAG),
+              m_endpoint(endpoint),
+              m_disableIMDS(credentialConfig.imdsConfig.disableImds),
+              m_tokenRequired(true),
+              m_disableIMDSV1(credentialConfig.imdsConfig.disableImdsV1) {
+#if defined(DISABLE_IMDSV1)
+          m_disableIMDSV1 = true;
+          AWS_LOGSTREAM_TRACE(m_logtag.c_str(), "IMDSv1 had been disabled at the SDK build time");
 #endif
         }
 
@@ -409,21 +437,8 @@ namespace Aws
             return Aws::String(m_endpoint);
         }
 
-        #ifdef _MSC_VER
-            // VS2015 compiler's bug, warning s_ec2metadataClient: symbol will be dynamically initialized (implementation limitation)
-            AWS_SUPPRESS_WARNING(4592,
-                static std::shared_ptr<EC2MetadataClient> s_ec2metadataClient(nullptr);
-            )
-        #else
-            static std::shared_ptr<EC2MetadataClient> s_ec2metadataClient(nullptr);
-        #endif
-
-        void InitEC2MetadataClient()
+        static Aws::String CalculateEC2MetadataServiceEndpoint()
         {
-            if (s_ec2metadataClient)
-            {
-                return;
-            }
             Aws::String ec2MetadataServiceEndpoint = Aws::Environment::GetEnv("AWS_EC2_METADATA_SERVICE_ENDPOINT");
             if (ec2MetadataServiceEndpoint.empty())
             {
@@ -455,6 +470,36 @@ namespace Aws
                     }
                 }
             }
+            return ec2MetadataServiceEndpoint;
+        }
+
+        #ifdef _MSC_VER
+            // VS2015 compiler's bug, warning s_ec2metadataClient: symbol will be dynamically initialized (implementation limitation)
+            AWS_SUPPRESS_WARNING(4592,
+                static std::shared_ptr<EC2MetadataClient> s_ec2metadataClient(nullptr);
+            )
+        #else
+            static std::shared_ptr<EC2MetadataClient> s_ec2metadataClient(nullptr);
+        #endif
+
+        void InitEC2MetadataClient(const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& credentialConfig)
+        {
+            if (s_ec2metadataClient)
+            {
+                return;
+            }
+            Aws::String ec2MetadataServiceEndpoint = CalculateEC2MetadataServiceEndpoint();
+            AWS_LOGSTREAM_INFO(EC2_METADATA_CLIENT_LOG_TAG, "Using IMDS endpoint: " << ec2MetadataServiceEndpoint);
+            s_ec2metadataClient = Aws::MakeShared<EC2MetadataClient>(EC2_METADATA_CLIENT_LOG_TAG, credentialConfig, ec2MetadataServiceEndpoint.c_str());
+        }
+
+        void InitEC2MetadataClient()
+        {
+            if (s_ec2metadataClient)
+            {
+                return;
+            }
+            Aws::String ec2MetadataServiceEndpoint = CalculateEC2MetadataServiceEndpoint();
             AWS_LOGSTREAM_INFO(EC2_METADATA_CLIENT_LOG_TAG, "Using IMDS endpoint: " << ec2MetadataServiceEndpoint);
             s_ec2metadataClient = Aws::MakeShared<EC2MetadataClient>(EC2_METADATA_CLIENT_LOG_TAG, ec2MetadataServiceEndpoint.c_str());
         }
@@ -510,6 +555,7 @@ namespace Aws
             {
                 ss << ".cn";
             }
+
             m_endpoint =  ss.str();
 
             AWS_LOGSTREAM_INFO(STS_RESOURCE_CLIENT_LOG_TAG, "Creating STS ResourceClient with endpoint: " << m_endpoint);
@@ -588,6 +634,15 @@ namespace Aws
                     {
                         result.creds.SetExpiration(DateTime(StringUtils::Trim(expirationNode.GetText().c_str()).c_str(), DateFormat::ISO_8601));
                     }
+                    XmlNode assumeRoleUser = credentialsNode.FirstChild("AssumedRoleUser");
+                    if (!assumeRoleUser.IsNull())
+                    {
+                      XmlNode roleArn = assumeRoleUser.FirstChild("Arn");
+                      if (!roleArn.IsNull())
+                      {
+                        result.creds.SetAccountId(ARN{roleArn.GetText()}.GetAccountId());
+                      }
+                    }
                 }
             }
             return result;
@@ -636,6 +691,7 @@ namespace Aws
             {
                 ss << ".cn";
             }
+
             return ss.str();
         }
 
@@ -651,8 +707,8 @@ namespace Aws
 
             httpRequest->SetUserAgent(m_userAgent);
 
-            httpRequest->AddQueryStringParameter("account_id", Aws::Utils::StringUtils::URLEncode(request.m_ssoAccountId.c_str()));
-            httpRequest->AddQueryStringParameter("role_name", Aws::Utils::StringUtils::URLEncode(request.m_ssoRoleName.c_str()));
+            httpRequest->AddQueryStringParameter("account_id", request.m_ssoAccountId);
+            httpRequest->AddQueryStringParameter("role_name", request.m_ssoRoleName);
 
             Aws::String credentialsStr = GetResourceWithAWSWebServiceResult(httpRequest).GetPayload();
 
@@ -670,6 +726,7 @@ namespace Aws
             creds.SetAWSSecretKey(roleCredentials.GetString("secretAccessKey"));
             creds.SetSessionToken(roleCredentials.GetString("sessionToken"));
             creds.SetExpiration(roleCredentials.GetInt64("expiration"));
+            creds.SetAccountId(roleCredentials.GetString("accountId"));
             SSOCredentialsClient::SSOGetRoleCredentialsResult result;
             result.creds = creds;
             return result;

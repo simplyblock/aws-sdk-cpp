@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/inspector2/Inspector2_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/inspector2/Inspector2_EXPORTS.h>
 
-#include <aws/inspector2/Inspector2EndpointRules.h>
-
-
-namespace Aws
-{
-namespace Inspector2
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Inspector2 {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using Inspector2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using Inspector2EndpointProviderBase =
     EndpointProviderBase<Inspector2ClientConfiguration, Inspector2BuiltInParameters, Inspector2ClientContextParameters>;
 
 using Inspector2DefaultEpProviderBase =
-    DefaultEndpointProvider<Inspector2ClientConfiguration, Inspector2BuiltInParameters, Inspector2ClientContextParameters>;
+    BDDEndpointProvider<Inspector2ClientConfiguration, Inspector2BuiltInParameters, Inspector2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_INSPECTOR2_API Inspector2EndpointProvider : public Inspector2DefaultEpProviderBase
-{
-public:
-    using Inspector2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_INSPECTOR2_API Inspector2EndpointProvider : public Inspector2DefaultEpProviderBase {
+ public:
+  using Inspector2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    Inspector2EndpointProvider()
-      : Inspector2DefaultEpProviderBase(Aws::Inspector2::Inspector2EndpointRules::GetRulesBlob(), Aws::Inspector2::Inspector2EndpointRules::RulesBlobSize)
-    {}
+  Inspector2EndpointProvider();
 
-    ~Inspector2EndpointProvider()
-    {
-    }
+  ~Inspector2EndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Inspector2
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Inspector2
+}  // namespace Aws

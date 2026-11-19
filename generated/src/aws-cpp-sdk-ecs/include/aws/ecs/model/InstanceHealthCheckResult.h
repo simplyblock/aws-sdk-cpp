@@ -4,106 +4,141 @@
  */
 
 #pragma once
-#include <aws/ecs/ECS_EXPORTS.h>
-#include <aws/ecs/model/InstanceHealthCheckType.h>
-#include <aws/ecs/model/InstanceHealthCheckState.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ecs/ECS_EXPORTS.h>
+#include <aws/ecs/model/InstanceHealthCheckState.h>
+#include <aws/ecs/model/InstanceHealthCheckType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
 
+/**
+ * <p>An object representing the result of a container instance health status
+ * check.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/InstanceHealthCheckResult">AWS
+ * API Reference</a></p>
+ */
+class InstanceHealthCheckResult {
+ public:
+  AWS_ECS_API InstanceHealthCheckResult() = default;
+  AWS_ECS_API InstanceHealthCheckResult(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ECS_API InstanceHealthCheckResult& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ECS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object representing the result of a container instance health status
-   * check.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/InstanceHealthCheckResult">AWS
-   * API Reference</a></p>
+   * <p>The type of container instance health status that was verified.</p>
    */
-  class InstanceHealthCheckResult
-  {
-  public:
-    AWS_ECS_API InstanceHealthCheckResult();
-    AWS_ECS_API InstanceHealthCheckResult(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ECS_API InstanceHealthCheckResult& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ECS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline InstanceHealthCheckType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(InstanceHealthCheckType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline InstanceHealthCheckResult& WithType(InstanceHealthCheckType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The container instance health status.</p>
+   */
+  inline InstanceHealthCheckState GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(InstanceHealthCheckState value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline InstanceHealthCheckResult& WithStatus(InstanceHealthCheckState value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of container instance health status that was verified.</p>
-     */
-    inline const InstanceHealthCheckType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const InstanceHealthCheckType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(InstanceHealthCheckType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline InstanceHealthCheckResult& WithType(const InstanceHealthCheckType& value) { SetType(value); return *this;}
-    inline InstanceHealthCheckResult& WithType(InstanceHealthCheckType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for the container instance health status.</p>
+   */
+  inline const Aws::String& GetStatusReason() const { return m_statusReason; }
+  inline bool StatusReasonHasBeenSet() const { return m_statusReasonHasBeenSet; }
+  template <typename StatusReasonT = Aws::String>
+  void SetStatusReason(StatusReasonT&& value) {
+    m_statusReasonHasBeenSet = true;
+    m_statusReason = std::forward<StatusReasonT>(value);
+  }
+  template <typename StatusReasonT = Aws::String>
+  InstanceHealthCheckResult& WithStatusReason(StatusReasonT&& value) {
+    SetStatusReason(std::forward<StatusReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The container instance health status.</p>
-     */
-    inline const InstanceHealthCheckState& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const InstanceHealthCheckState& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(InstanceHealthCheckState&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline InstanceHealthCheckResult& WithStatus(const InstanceHealthCheckState& value) { SetStatus(value); return *this;}
-    inline InstanceHealthCheckResult& WithStatus(InstanceHealthCheckState&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Unix timestamp for when the container instance health status was last
+   * updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdated() const { return m_lastUpdated; }
+  inline bool LastUpdatedHasBeenSet() const { return m_lastUpdatedHasBeenSet; }
+  template <typename LastUpdatedT = Aws::Utils::DateTime>
+  void SetLastUpdated(LastUpdatedT&& value) {
+    m_lastUpdatedHasBeenSet = true;
+    m_lastUpdated = std::forward<LastUpdatedT>(value);
+  }
+  template <typename LastUpdatedT = Aws::Utils::DateTime>
+  InstanceHealthCheckResult& WithLastUpdated(LastUpdatedT&& value) {
+    SetLastUpdated(std::forward<LastUpdatedT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Unix timestamp for when the container instance health status was last
-     * updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdated() const{ return m_lastUpdated; }
-    inline bool LastUpdatedHasBeenSet() const { return m_lastUpdatedHasBeenSet; }
-    inline void SetLastUpdated(const Aws::Utils::DateTime& value) { m_lastUpdatedHasBeenSet = true; m_lastUpdated = value; }
-    inline void SetLastUpdated(Aws::Utils::DateTime&& value) { m_lastUpdatedHasBeenSet = true; m_lastUpdated = std::move(value); }
-    inline InstanceHealthCheckResult& WithLastUpdated(const Aws::Utils::DateTime& value) { SetLastUpdated(value); return *this;}
-    inline InstanceHealthCheckResult& WithLastUpdated(Aws::Utils::DateTime&& value) { SetLastUpdated(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Unix timestamp for when the container instance health status last
+   * changed.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastStatusChange() const { return m_lastStatusChange; }
+  inline bool LastStatusChangeHasBeenSet() const { return m_lastStatusChangeHasBeenSet; }
+  template <typename LastStatusChangeT = Aws::Utils::DateTime>
+  void SetLastStatusChange(LastStatusChangeT&& value) {
+    m_lastStatusChangeHasBeenSet = true;
+    m_lastStatusChange = std::forward<LastStatusChangeT>(value);
+  }
+  template <typename LastStatusChangeT = Aws::Utils::DateTime>
+  InstanceHealthCheckResult& WithLastStatusChange(LastStatusChangeT&& value) {
+    SetLastStatusChange(std::forward<LastStatusChangeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  InstanceHealthCheckType m_type{InstanceHealthCheckType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The Unix timestamp for when the container instance health status last
-     * changed.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastStatusChange() const{ return m_lastStatusChange; }
-    inline bool LastStatusChangeHasBeenSet() const { return m_lastStatusChangeHasBeenSet; }
-    inline void SetLastStatusChange(const Aws::Utils::DateTime& value) { m_lastStatusChangeHasBeenSet = true; m_lastStatusChange = value; }
-    inline void SetLastStatusChange(Aws::Utils::DateTime&& value) { m_lastStatusChangeHasBeenSet = true; m_lastStatusChange = std::move(value); }
-    inline InstanceHealthCheckResult& WithLastStatusChange(const Aws::Utils::DateTime& value) { SetLastStatusChange(value); return *this;}
-    inline InstanceHealthCheckResult& WithLastStatusChange(Aws::Utils::DateTime&& value) { SetLastStatusChange(std::move(value)); return *this;}
-    ///@}
-  private:
+  InstanceHealthCheckState m_status{InstanceHealthCheckState::NOT_SET};
 
-    InstanceHealthCheckType m_type;
-    bool m_typeHasBeenSet = false;
+  Aws::String m_statusReason;
 
-    InstanceHealthCheckState m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdated{};
 
-    Aws::Utils::DateTime m_lastUpdated;
-    bool m_lastUpdatedHasBeenSet = false;
+  Aws::Utils::DateTime m_lastStatusChange{};
+  bool m_typeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_statusReasonHasBeenSet = false;
+  bool m_lastUpdatedHasBeenSet = false;
+  bool m_lastStatusChangeHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_lastStatusChange;
-    bool m_lastStatusChangeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

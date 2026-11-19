@@ -5,100 +5,117 @@
 
 #pragma once
 #include <aws/apigateway/APIGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace APIGateway
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace APIGateway {
+namespace Model {
+/**
+ * <p>Represents the base path that callers of the API must provide as part of the
+ * URL after the domain name.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/BasePathMapping">AWS
+ * API Reference</a></p>
+ */
+class GetBasePathMappingResult {
+ public:
+  AWS_APIGATEWAY_API GetBasePathMappingResult() = default;
+  AWS_APIGATEWAY_API GetBasePathMappingResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APIGATEWAY_API GetBasePathMappingResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the base path that callers of the API must provide as part of the
-   * URL after the domain name.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/BasePathMapping">AWS
-   * API Reference</a></p>
+   * <p>The base path name that callers of the API must provide as part of the URL
+   * after the domain name.</p>
    */
-  class GetBasePathMappingResult
-  {
-  public:
-    AWS_APIGATEWAY_API GetBasePathMappingResult();
-    AWS_APIGATEWAY_API GetBasePathMappingResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APIGATEWAY_API GetBasePathMappingResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetBasePath() const { return m_basePath; }
+  template <typename BasePathT = Aws::String>
+  void SetBasePath(BasePathT&& value) {
+    m_basePathHasBeenSet = true;
+    m_basePath = std::forward<BasePathT>(value);
+  }
+  template <typename BasePathT = Aws::String>
+  GetBasePathMappingResult& WithBasePath(BasePathT&& value) {
+    SetBasePath(std::forward<BasePathT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The string identifier of the associated RestApi.</p>
+   */
+  inline const Aws::String& GetRestApiId() const { return m_restApiId; }
+  template <typename RestApiIdT = Aws::String>
+  void SetRestApiId(RestApiIdT&& value) {
+    m_restApiIdHasBeenSet = true;
+    m_restApiId = std::forward<RestApiIdT>(value);
+  }
+  template <typename RestApiIdT = Aws::String>
+  GetBasePathMappingResult& WithRestApiId(RestApiIdT&& value) {
+    SetRestApiId(std::forward<RestApiIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base path name that callers of the API must provide as part of the URL
-     * after the domain name.</p>
-     */
-    inline const Aws::String& GetBasePath() const{ return m_basePath; }
-    inline void SetBasePath(const Aws::String& value) { m_basePath = value; }
-    inline void SetBasePath(Aws::String&& value) { m_basePath = std::move(value); }
-    inline void SetBasePath(const char* value) { m_basePath.assign(value); }
-    inline GetBasePathMappingResult& WithBasePath(const Aws::String& value) { SetBasePath(value); return *this;}
-    inline GetBasePathMappingResult& WithBasePath(Aws::String&& value) { SetBasePath(std::move(value)); return *this;}
-    inline GetBasePathMappingResult& WithBasePath(const char* value) { SetBasePath(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the associated stage.</p>
+   */
+  inline const Aws::String& GetStage() const { return m_stage; }
+  template <typename StageT = Aws::String>
+  void SetStage(StageT&& value) {
+    m_stageHasBeenSet = true;
+    m_stage = std::forward<StageT>(value);
+  }
+  template <typename StageT = Aws::String>
+  GetBasePathMappingResult& WithStage(StageT&& value) {
+    SetStage(std::forward<StageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The string identifier of the associated RestApi.</p>
-     */
-    inline const Aws::String& GetRestApiId() const{ return m_restApiId; }
-    inline void SetRestApiId(const Aws::String& value) { m_restApiId = value; }
-    inline void SetRestApiId(Aws::String&& value) { m_restApiId = std::move(value); }
-    inline void SetRestApiId(const char* value) { m_restApiId.assign(value); }
-    inline GetBasePathMappingResult& WithRestApiId(const Aws::String& value) { SetRestApiId(value); return *this;}
-    inline GetBasePathMappingResult& WithRestApiId(Aws::String&& value) { SetRestApiId(std::move(value)); return *this;}
-    inline GetBasePathMappingResult& WithRestApiId(const char* value) { SetRestApiId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The name of the associated stage.</p>
-     */
-    inline const Aws::String& GetStage() const{ return m_stage; }
-    inline void SetStage(const Aws::String& value) { m_stage = value; }
-    inline void SetStage(Aws::String&& value) { m_stage = std::move(value); }
-    inline void SetStage(const char* value) { m_stage.assign(value); }
-    inline GetBasePathMappingResult& WithStage(const Aws::String& value) { SetStage(value); return *this;}
-    inline GetBasePathMappingResult& WithStage(Aws::String&& value) { SetStage(std::move(value)); return *this;}
-    inline GetBasePathMappingResult& WithStage(const char* value) { SetStage(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBasePathMappingResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBasePathMappingResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBasePathMappingResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBasePathMappingResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_basePath;
 
-    Aws::String m_basePath;
+  Aws::String m_restApiId;
 
-    Aws::String m_restApiId;
+  Aws::String m_stage;
 
-    Aws::String m_stage;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_basePathHasBeenSet = false;
+  bool m_restApiIdHasBeenSet = false;
+  bool m_stageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace APIGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace APIGateway
+}  // namespace Aws

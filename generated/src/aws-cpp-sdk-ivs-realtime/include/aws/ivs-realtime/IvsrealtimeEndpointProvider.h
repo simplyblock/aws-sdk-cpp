@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/ivs-realtime/Ivsrealtime_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ivs-realtime/Ivsrealtime_EXPORTS.h>
 
-#include <aws/ivs-realtime/IvsrealtimeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ivsrealtime
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ivsrealtime {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IvsrealtimeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IvsrealtimeEndpointProviderBase =
     EndpointProviderBase<IvsrealtimeClientConfiguration, IvsrealtimeBuiltInParameters, IvsrealtimeClientContextParameters>;
 
 using IvsrealtimeDefaultEpProviderBase =
-    DefaultEndpointProvider<IvsrealtimeClientConfiguration, IvsrealtimeBuiltInParameters, IvsrealtimeClientContextParameters>;
+    BDDEndpointProvider<IvsrealtimeClientConfiguration, IvsrealtimeBuiltInParameters, IvsrealtimeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IVSREALTIME_API IvsrealtimeEndpointProvider : public IvsrealtimeDefaultEpProviderBase
-{
-public:
-    using IvsrealtimeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IVSREALTIME_API IvsrealtimeEndpointProvider : public IvsrealtimeDefaultEpProviderBase {
+ public:
+  using IvsrealtimeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IvsrealtimeEndpointProvider()
-      : IvsrealtimeDefaultEpProviderBase(Aws::ivsrealtime::IvsrealtimeEndpointRules::GetRulesBlob(), Aws::ivsrealtime::IvsrealtimeEndpointRules::RulesBlobSize)
-    {}
+  IvsrealtimeEndpointProvider();
 
-    ~IvsrealtimeEndpointProvider()
-    {
-    }
+  ~IvsrealtimeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ivsrealtime
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ivsrealtime
+}  // namespace Aws

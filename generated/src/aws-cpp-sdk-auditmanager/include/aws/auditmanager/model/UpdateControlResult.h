@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
 #include <aws/auditmanager/model/Control.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AuditManager
-{
-namespace Model
-{
-  class UpdateControlResult
-  {
-  public:
-    AWS_AUDITMANAGER_API UpdateControlResult();
-    AWS_AUDITMANAGER_API UpdateControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUDITMANAGER_API UpdateControlResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AuditManager {
+namespace Model {
+class UpdateControlResult {
+ public:
+  AWS_AUDITMANAGER_API UpdateControlResult() = default;
+  AWS_AUDITMANAGER_API UpdateControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUDITMANAGER_API UpdateControlResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The name of the updated control set that the <code>UpdateControl</code> API
+   * returned. </p>
+   */
+  inline const Control& GetControl() const { return m_control; }
+  template <typename ControlT = Control>
+  void SetControl(ControlT&& value) {
+    m_controlHasBeenSet = true;
+    m_control = std::forward<ControlT>(value);
+  }
+  template <typename ControlT = Control>
+  UpdateControlResult& WithControl(ControlT&& value) {
+    SetControl(std::forward<ControlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The name of the updated control set that the <code>UpdateControl</code> API
-     * returned. </p>
-     */
-    inline const Control& GetControl() const{ return m_control; }
-    inline void SetControl(const Control& value) { m_control = value; }
-    inline void SetControl(Control&& value) { m_control = std::move(value); }
-    inline UpdateControlResult& WithControl(const Control& value) { SetControl(value); return *this;}
-    inline UpdateControlResult& WithControl(Control&& value) { SetControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateControlResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateControlResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateControlResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateControlResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Control m_control;
+ private:
+  Control m_control;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_controlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace AuditManager
+}  // namespace Aws

@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/shield/model/EnableApplicationLayerAutomaticResponseRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Shield::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-EnableApplicationLayerAutomaticResponseRequest::EnableApplicationLayerAutomaticResponseRequest() : 
-    m_resourceArnHasBeenSet(false),
-    m_actionHasBeenSet(false)
-{
-}
+Aws::String EnableApplicationLayerAutomaticResponseRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String EnableApplicationLayerAutomaticResponseRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceArnHasBeenSet)
-  {
-   payload.WithString("ResourceArn", m_resourceArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_actionHasBeenSet)
-  {
-   payload.WithObject("Action", m_action.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_resourceArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_actionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Action"));
+    m_action.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection EnableApplicationLayerAutomaticResponseRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection EnableApplicationLayerAutomaticResponseRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSShield_20160616.EnableApplicationLayerAutomaticResponse"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

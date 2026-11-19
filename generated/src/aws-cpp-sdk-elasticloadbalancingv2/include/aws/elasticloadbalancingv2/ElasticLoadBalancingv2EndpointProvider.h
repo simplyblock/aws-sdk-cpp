@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
 
-#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2EndpointRules.h>
-
-
-namespace Aws
-{
-namespace ElasticLoadBalancingv2
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ElasticLoadBalancingv2 {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ElasticLoadBalancingv2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using ElasticLoadBalancingv2BuiltInParameters = Aws::Endpoint::BuiltInParameters
  * The SDK must use service-specific type for each service per specification.
  */
 using ElasticLoadBalancingv2EndpointProviderBase =
-    EndpointProviderBase<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters, ElasticLoadBalancingv2ClientContextParameters>;
+    EndpointProviderBase<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters,
+                         ElasticLoadBalancingv2ClientContextParameters>;
 
 using ElasticLoadBalancingv2DefaultEpProviderBase =
-    DefaultEndpointProvider<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters, ElasticLoadBalancingv2ClientContextParameters>;
+    BDDEndpointProvider<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters,
+                        ElasticLoadBalancingv2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_ELASTICLOADBALANCINGV2_API ElasticLoadBalancingv2EndpointProvider : public ElasticLoadBalancingv2DefaultEpProviderBase
-{
-public:
-    using ElasticLoadBalancingv2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_ELASTICLOADBALANCINGV2_API ElasticLoadBalancingv2EndpointProvider : public ElasticLoadBalancingv2DefaultEpProviderBase {
+ public:
+  using ElasticLoadBalancingv2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ElasticLoadBalancingv2EndpointProvider()
-      : ElasticLoadBalancingv2DefaultEpProviderBase(Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2EndpointRules::GetRulesBlob(), Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2EndpointRules::RulesBlobSize)
-    {}
+  ElasticLoadBalancingv2EndpointProvider();
 
-    ~ElasticLoadBalancingv2EndpointProvider()
-    {
-    }
+  ~ElasticLoadBalancingv2EndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ElasticLoadBalancingv2
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ElasticLoadBalancingv2
+}  // namespace Aws

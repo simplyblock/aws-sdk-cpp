@@ -10,39 +10,23 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-StopStackSetOperationRequest::StopStackSetOperationRequest() : 
-    m_stackSetNameHasBeenSet(false),
-    m_operationIdHasBeenSet(false),
-    m_callAs(CallAs::NOT_SET),
-    m_callAsHasBeenSet(false)
-{
-}
-
-Aws::String StopStackSetOperationRequest::SerializePayload() const
-{
+Aws::String StopStackSetOperationRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=StopStackSetOperation&";
-  if(m_stackSetNameHasBeenSet)
-  {
+  if (m_stackSetNameHasBeenSet) {
     ss << "StackSetName=" << StringUtils::URLEncode(m_stackSetName.c_str()) << "&";
   }
 
-  if(m_operationIdHasBeenSet)
-  {
+  if (m_operationIdHasBeenSet) {
     ss << "OperationId=" << StringUtils::URLEncode(m_operationId.c_str()) << "&";
   }
 
-  if(m_callAsHasBeenSet)
-  {
-    ss << "CallAs=" << CallAsMapper::GetNameForCallAs(m_callAs) << "&";
+  if (m_callAsHasBeenSet) {
+    ss << "CallAs=" << StringUtils::URLEncode(CallAsMapper::GetNameForCallAs(m_callAs)) << "&";
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  StopStackSetOperationRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void StopStackSetOperationRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

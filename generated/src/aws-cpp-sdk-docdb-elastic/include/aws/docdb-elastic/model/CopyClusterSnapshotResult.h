@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/docdb-elastic/DocDBElastic_EXPORTS.h>
 #include <aws/docdb-elastic/model/ClusterSnapshot.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DocDBElastic
-{
-namespace Model
-{
-  class CopyClusterSnapshotResult
-  {
-  public:
-    AWS_DOCDBELASTIC_API CopyClusterSnapshotResult();
-    AWS_DOCDBELASTIC_API CopyClusterSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DOCDBELASTIC_API CopyClusterSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DocDBElastic {
+namespace Model {
+class CopyClusterSnapshotResult {
+ public:
+  AWS_DOCDBELASTIC_API CopyClusterSnapshotResult() = default;
+  AWS_DOCDBELASTIC_API CopyClusterSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DOCDBELASTIC_API CopyClusterSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ClusterSnapshot& GetSnapshot() const{ return m_snapshot; }
-    inline void SetSnapshot(const ClusterSnapshot& value) { m_snapshot = value; }
-    inline void SetSnapshot(ClusterSnapshot&& value) { m_snapshot = std::move(value); }
-    inline CopyClusterSnapshotResult& WithSnapshot(const ClusterSnapshot& value) { SetSnapshot(value); return *this;}
-    inline CopyClusterSnapshotResult& WithSnapshot(ClusterSnapshot&& value) { SetSnapshot(std::move(value)); return *this;}
-    ///@}
+  inline const ClusterSnapshot& GetSnapshot() const { return m_snapshot; }
+  template <typename SnapshotT = ClusterSnapshot>
+  void SetSnapshot(SnapshotT&& value) {
+    m_snapshotHasBeenSet = true;
+    m_snapshot = std::forward<SnapshotT>(value);
+  }
+  template <typename SnapshotT = ClusterSnapshot>
+  CopyClusterSnapshotResult& WithSnapshot(SnapshotT&& value) {
+    SetSnapshot(std::forward<SnapshotT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CopyClusterSnapshotResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CopyClusterSnapshotResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CopyClusterSnapshotResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ClusterSnapshot m_snapshot;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CopyClusterSnapshotResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  ClusterSnapshot m_snapshot;
 
-} // namespace Model
-} // namespace DocDBElastic
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_snapshotHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DocDBElastic
+}  // namespace Aws

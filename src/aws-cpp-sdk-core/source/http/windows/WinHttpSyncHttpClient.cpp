@@ -17,7 +17,7 @@
 #include <aws/core/utils/ratelimiter/RateLimiterInterface.h>
 #include <aws/core/utils/UnreferencedParam.h>
 
-#include <Windows.h>
+#include <winsock2.h>
 #include <winhttp.h>
 #include <mstcpip.h> // for tcp_keepalive
 #include <sstream>
@@ -40,61 +40,55 @@ using namespace Aws::Utils::Logging;
 #ifndef WINHTTP_OPTION_HTTP_PROTOCOL_USED
     static const DWORD WINHTTP_OPTION_HTTP_PROTOCOL_USED = 134;
 #endif
+#ifndef WINHTTP_PROTOCOL_FLAG_HTTP2
+    static const DWORD WINHTTP_PROTOCOL_FLAG_HTTP2 = 0x1;
+#endif
+#ifndef WINHTTP_PROTOCOL_FLAG_HTTP3
+    static const DWORD WINHTTP_PROTOCOL_FLAG_HTTP3 = 0x2;
+#endif
 
-DWORD ConvertHttpVersionToWinHttpVersion(const Aws::Http::Version version)
+const std::initializer_list<DWORD>& GetWinHttpVersionsToTry(const Aws::Http::Version version)
 {
+    // Using statically declared initializer_lists because we cannot return them by value.
+    // All options include HTTP 1.1, which is always enabled in WinHTTP.
+    static std::initializer_list<DWORD> noPreference = {};
+    static std::initializer_list<DWORD> http2 = { WINHTTP_PROTOCOL_FLAG_HTTP2 };
+    static std::initializer_list<DWORD> http3 = { WINHTTP_PROTOCOL_FLAG_HTTP3 };
+    static std::initializer_list<DWORD> http2Or3 = { WINHTTP_PROTOCOL_FLAG_HTTP3 | WINHTTP_PROTOCOL_FLAG_HTTP2, WINHTTP_PROTOCOL_FLAG_HTTP2 };
     if (version == Version::HTTP_VERSION_NONE)
     {
         /* WinHTTP http version None maps to HTTP1.1, however, libCurl None maps to "let http client decide", sticking to libCurl behavior here (use highest) */
-#if defined(WINHTTP_HAS_H3)
-        return WINHTTP_PROTOCOL_FLAG_HTTP3;
-#elif defined(WINHTTP_HAS_H2)
-        return WINHTTP_PROTOCOL_FLAG_HTTP2;
-#else
-        return 0x0;
-#endif
+        return http2Or3;
     }
     else if (version == Version::HTTP_VERSION_1_0)
     {
-        return 0x0; // HTTP 1.1 can be still used, WinHTTP does not allow disabling 1,1
+        return noPreference; // HTTP 1.1 can be still used, WinHTTP does not allow disabling 1,1
     }
     else if (version == Version::HTTP_VERSION_1_1)
     {
-        return 0x0;
+        return noPreference;
     }
-#ifdef WINHTTP_HAS_H2
-        else if (version == Version::HTTP_VERSION_2_0 ||
-             version == Version::HTTP_VERSION_2TLS)
+    else if (version == Version::HTTP_VERSION_2_0 || version == Version::HTTP_VERSION_2TLS)
     {
-        return WINHTTP_PROTOCOL_FLAG_HTTP2;
+        return http2;
     }
     else if (version == Version::HTTP_VERSION_2_PRIOR_KNOWLEDGE)
     {
         AWS_LOGSTREAM_WARN("WinHttpHttp2", "Unable to set HTTP/2 with Prior Knowledge on WinHTTP, enabling regular HTTP2");
-        return WINHTTP_PROTOCOL_FLAG_HTTP2;
+        return http2;
     }
-#endif
-#ifdef WINHTTP_HAS_H3
-        else if (version == Version::HTTP_VERSION_3)
+    else if (version == Version::HTTP_VERSION_3)
     {
-        return WINHTTP_PROTOCOL_FLAG_HTTP3;
+      return http2Or3;
     }
     else if (version == Version::HTTP_VERSION_3ONLY)
     {
-        AWS_LOGSTREAM_WARN("WinHttpHttp2", "Unable to set HTTP3 only on WinHTTP");
-        return WINHTTP_PROTOCOL_FLAG_HTTP3;
+      AWS_LOGSTREAM_WARN("WinHttpHttp2", "Unable to set HTTP3 only on WinHTTP");
+      return http3;
     }
-#endif
-
-#ifdef WINHTTP_HAS_H2
-        AWS_LOGSTREAM_WARN("WinHttpHttp2", "Unable to map requested HTTP Version: (raw enum value) "
-                        << static_cast<std::underlying_type<Aws::Http::Version>::type>(version) << " defaulting to WINHTTP_PROTOCOL_FLAG_HTTP2");
-    return WINHTTP_PROTOCOL_FLAG_HTTP2;
-#else
     AWS_LOGSTREAM_WARN("WinHttpHttp2", "Unable to map requested HTTP Version: (raw enum value) "
-        << static_cast<std::underlying_type<Aws::Http::Version>::type>(version) << " defaulting to None (aka 1.1 and below)");
-    return 0x0;
-#endif
+                        << static_cast<std::underlying_type<Aws::Http::Version>::type>(version) << " defaulting to WINHTTP_PROTOCOL_FLAG_HTTP2");
+    return http2;
 }
 
 void AzWinHttpLogLastError(const char* FuncName)
@@ -197,14 +191,15 @@ bool AzCallWinHttp(const char* FuncName, WinHttpFunc func, Args &&... args)
 
 static void WinHttpSetHttpVersion(void* handle, const Aws::Http::Version version)
 {
-    DWORD winHttpVersion = ConvertHttpVersionToWinHttpVersion(version);
-    if (winHttpVersion == 0x0)
+    for (DWORD winHttpVersion : GetWinHttpVersionsToTry(version))
     {
-        return;
-    }
-    if (!AzCallWinHttp("WinHttpSetOption", WinHttpSetOption, handle, WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL, &winHttpVersion, (DWORD) sizeof(winHttpVersion)))
-    {
-        AWS_LOGSTREAM_ERROR("WinHttpHttp2", "Failed to set WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL to " << winHttpVersion << " on WinHttp handle: " << handle);
+        if (AzCallWinHttp("WinHttpSetOption", WinHttpSetOption, handle, WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL, &winHttpVersion, (DWORD)sizeof(winHttpVersion)))
+        {
+            break;
+        }
+        {
+            AWS_LOGSTREAM_ERROR("WinHttpHttp2", "Failed to set WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL to " << winHttpVersion << " on WinHttp handle: " << handle);
+        }
     }
 }
 
@@ -340,7 +335,7 @@ static void CALLBACK WinHttpSyncLogCallback(HINTERNET hInternet,
     };
 
     bool found = false;
-    int i;
+    size_t i;
     for (i = 0; i < sizeof(KNOWN_STATUSES) / sizeof(KNOWN_STATUSES[0]) && !found; i++)
     {
         if (dwInternetStatus == KNOWN_STATUSES[i].status)
@@ -407,6 +402,7 @@ WinHttpSyncHttpClient::WinHttpSyncHttpClient(const ClientConfiguration& config) 
     Base(),
     m_usingProxy(!config.proxyHost.empty()),
     m_verifySSL(config.verifySSL),
+    m_useAnonymousAuth(config.winHTTPOptions.useAnonymousAuth),
     m_version(config.version)
 {
     m_enableHttpClientTrace = config.enableHttpClientTrace;
@@ -538,7 +534,10 @@ void* WinHttpSyncHttpClient::OpenRequest(const std::shared_ptr<HttpRequest>& req
 {
     LPCWSTR accept[2] = { nullptr, nullptr };
 
-    DWORD requestFlags = request->GetUri().GetScheme() == Scheme::HTTPS && m_verifySSL ? WINHTTP_FLAG_SECURE : 0;
+    DWORD requestFlags{0};
+    if (request->GetUri().GetScheme() == Scheme::HTTPS) {
+        requestFlags |= WINHTTP_FLAG_SECURE;
+    }
     if (m_usingProxy) {
         // Avoid force adding "Cache-Control: no-cache" header.
         requestFlags |= WINHTTP_FLAG_REFRESH;
@@ -574,10 +573,21 @@ void* WinHttpSyncHttpClient::OpenRequest(const std::shared_ptr<HttpRequest>& req
 
     if (!m_verifySSL) // Turning ssl unknown ca verification off
     {
-        DWORD flags = SECURITY_FLAG_IGNORE_UNKNOWN_CA | SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
+        DWORD flags = SECURITY_FLAG_IGNORE_UNKNOWN_CA |
+            SECURITY_FLAG_IGNORE_CERT_CN_INVALID |
+            SECURITY_FLAG_IGNORE_CERT_DATE_INVALID |
+            SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE;
         if (!AzCallWinHttp("WinHttpSetOption", WinHttpSetOption, hHttpRequest, WINHTTP_OPTION_SECURITY_FLAGS, &flags, (DWORD) sizeof(flags)))
         {
             AWS_LOGSTREAM_FATAL(GetLogTag(), "Failed to turn ssl cert ca verification off.");
+        }
+
+        if (m_useAnonymousAuth)
+        {
+            if (!WinHttpSetOption(hHttpRequest, WINHTTP_OPTION_CLIENT_CERT_CONTEXT, WINHTTP_NO_CLIENT_CERT_CONTEXT, 0))
+            {
+                AWS_LOGSTREAM_FATAL(GetLogTag(), "Failed to set anonymous auth on.");
+            }
         }
     }
 
@@ -686,7 +696,7 @@ bool WinHttpSyncHttpClient::DoQueryHeaders(void* hHttpRequest, std::shared_ptr<H
     wmemset(contentTypeStr, 0, static_cast<size_t>(dwSize / sizeof(wchar_t)));
 
     WinHttpQueryHeaders(hHttpRequest, WINHTTP_QUERY_CONTENT_TYPE, nullptr, &contentTypeStr, &dwSize, 0);
-    if (contentTypeStr[0] != NULL)
+    if (contentTypeStr[0])
     {
         Aws::String contentStr = StringUtils::FromWString(contentTypeStr);
         response->SetContentType(contentStr);
@@ -717,7 +727,7 @@ bool WinHttpSyncHttpClient::DoQueryHeaders(void* hHttpRequest, std::shared_ptr<H
 
 bool WinHttpSyncHttpClient::DoSendRequest(void* hHttpRequest) const
 {
-    bool success = WinHttpSendRequest(hHttpRequest, NULL, NULL, 0, 0, 0, NULL) != 0;
+    bool success = WinHttpSendRequest(hHttpRequest, NULL, 0, NULL, 0, 0, 0) != 0;
     if (!success)
     {
         AzWinHttpLogLastError("WinHttpSendRequest");

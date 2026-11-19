@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/email/model/CreateReceiptFilterRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/email/model/CreateReceiptFilterRequest.h>
 
 using namespace Aws::SES::Model;
 using namespace Aws::Utils;
 
-CreateReceiptFilterRequest::CreateReceiptFilterRequest() : 
-    m_filterHasBeenSet(false)
-{
-}
-
-Aws::String CreateReceiptFilterRequest::SerializePayload() const
-{
+Aws::String CreateReceiptFilterRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateReceiptFilter&";
-  if(m_filterHasBeenSet)
-  {
+  if (m_filterHasBeenSet) {
     m_filter.OutputToStream(ss, "Filter");
   }
 
@@ -28,8 +21,4 @@ Aws::String CreateReceiptFilterRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CreateReceiptFilterRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateReceiptFilterRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

@@ -4,75 +4,81 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
-#include <aws/mediaconnect/MediaConnectRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconnect/MediaConnectRequest.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/VpcInterfaceRequest.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaConnect {
+namespace Model {
 
+/**
+ */
+class AddFlowVpcInterfacesRequest : public MediaConnectRequest {
+ public:
+  AWS_MEDIACONNECT_API AddFlowVpcInterfacesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AddFlowVpcInterfaces"; }
+
+  AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * A request to add VPC interfaces to the flow.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/AddFlowVpcInterfacesRequest">AWS
-   * API Reference</a></p>
+   * <p> The Amazon Resource Name (ARN) of the flow that you want to update.</p>
    */
-  class AddFlowVpcInterfacesRequest : public MediaConnectRequest
-  {
-  public:
-    AWS_MEDIACONNECT_API AddFlowVpcInterfacesRequest();
+  inline const Aws::String& GetFlowArn() const { return m_flowArn; }
+  inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
+  template <typename FlowArnT = Aws::String>
+  void SetFlowArn(FlowArnT&& value) {
+    m_flowArnHasBeenSet = true;
+    m_flowArn = std::forward<FlowArnT>(value);
+  }
+  template <typename FlowArnT = Aws::String>
+  AddFlowVpcInterfacesRequest& WithFlowArn(FlowArnT&& value) {
+    SetFlowArn(std::forward<FlowArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AddFlowVpcInterfaces"; }
+  ///@{
+  /**
+   * <p> A list of VPC interfaces that you want to add to the flow.</p>
+   */
+  inline const Aws::Vector<VpcInterfaceRequest>& GetVpcInterfaces() const { return m_vpcInterfaces; }
+  inline bool VpcInterfacesHasBeenSet() const { return m_vpcInterfacesHasBeenSet; }
+  template <typename VpcInterfacesT = Aws::Vector<VpcInterfaceRequest>>
+  void SetVpcInterfaces(VpcInterfacesT&& value) {
+    m_vpcInterfacesHasBeenSet = true;
+    m_vpcInterfaces = std::forward<VpcInterfacesT>(value);
+  }
+  template <typename VpcInterfacesT = Aws::Vector<VpcInterfaceRequest>>
+  AddFlowVpcInterfacesRequest& WithVpcInterfaces(VpcInterfacesT&& value) {
+    SetVpcInterfaces(std::forward<VpcInterfacesT>(value));
+    return *this;
+  }
+  template <typename VpcInterfacesT = VpcInterfaceRequest>
+  AddFlowVpcInterfacesRequest& AddVpcInterfaces(VpcInterfacesT&& value) {
+    m_vpcInterfacesHasBeenSet = true;
+    m_vpcInterfaces.emplace_back(std::forward<VpcInterfacesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_flowArn;
 
-    AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+  Aws::Vector<VpcInterfaceRequest> m_vpcInterfaces;
+  bool m_flowArnHasBeenSet = false;
+  bool m_vpcInterfacesHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * The flow that you want to mutate.
-     */
-    inline const Aws::String& GetFlowArn() const{ return m_flowArn; }
-    inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
-    inline void SetFlowArn(const Aws::String& value) { m_flowArnHasBeenSet = true; m_flowArn = value; }
-    inline void SetFlowArn(Aws::String&& value) { m_flowArnHasBeenSet = true; m_flowArn = std::move(value); }
-    inline void SetFlowArn(const char* value) { m_flowArnHasBeenSet = true; m_flowArn.assign(value); }
-    inline AddFlowVpcInterfacesRequest& WithFlowArn(const Aws::String& value) { SetFlowArn(value); return *this;}
-    inline AddFlowVpcInterfacesRequest& WithFlowArn(Aws::String&& value) { SetFlowArn(std::move(value)); return *this;}
-    inline AddFlowVpcInterfacesRequest& WithFlowArn(const char* value) { SetFlowArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * A list of VPC interfaces that you want to add.
-     */
-    inline const Aws::Vector<VpcInterfaceRequest>& GetVpcInterfaces() const{ return m_vpcInterfaces; }
-    inline bool VpcInterfacesHasBeenSet() const { return m_vpcInterfacesHasBeenSet; }
-    inline void SetVpcInterfaces(const Aws::Vector<VpcInterfaceRequest>& value) { m_vpcInterfacesHasBeenSet = true; m_vpcInterfaces = value; }
-    inline void SetVpcInterfaces(Aws::Vector<VpcInterfaceRequest>&& value) { m_vpcInterfacesHasBeenSet = true; m_vpcInterfaces = std::move(value); }
-    inline AddFlowVpcInterfacesRequest& WithVpcInterfaces(const Aws::Vector<VpcInterfaceRequest>& value) { SetVpcInterfaces(value); return *this;}
-    inline AddFlowVpcInterfacesRequest& WithVpcInterfaces(Aws::Vector<VpcInterfaceRequest>&& value) { SetVpcInterfaces(std::move(value)); return *this;}
-    inline AddFlowVpcInterfacesRequest& AddVpcInterfaces(const VpcInterfaceRequest& value) { m_vpcInterfacesHasBeenSet = true; m_vpcInterfaces.push_back(value); return *this; }
-    inline AddFlowVpcInterfacesRequest& AddVpcInterfaces(VpcInterfaceRequest&& value) { m_vpcInterfacesHasBeenSet = true; m_vpcInterfaces.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_flowArn;
-    bool m_flowArnHasBeenSet = false;
-
-    Aws::Vector<VpcInterfaceRequest> m_vpcInterfaces;
-    bool m_vpcInterfacesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

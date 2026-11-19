@@ -5,65 +5,72 @@
 
 #pragma once
 #include <aws/codecommit/CodeCommit_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeCommit
-{
-namespace Model
-{
-  class DeletePullRequestApprovalRuleResult
-  {
-  public:
-    AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult();
-    AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeCommit {
+namespace Model {
+class DeletePullRequestApprovalRuleResult {
+ public:
+  AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult() = default;
+  AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECOMMIT_API DeletePullRequestApprovalRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the deleted approval rule. </p>  <p>If the approval rule was
+   * deleted in an earlier API call, the response is 200 OK without content.</p>
+   *
+   */
+  inline const Aws::String& GetApprovalRuleId() const { return m_approvalRuleId; }
+  template <typename ApprovalRuleIdT = Aws::String>
+  void SetApprovalRuleId(ApprovalRuleIdT&& value) {
+    m_approvalRuleIdHasBeenSet = true;
+    m_approvalRuleId = std::forward<ApprovalRuleIdT>(value);
+  }
+  template <typename ApprovalRuleIdT = Aws::String>
+  DeletePullRequestApprovalRuleResult& WithApprovalRuleId(ApprovalRuleIdT&& value) {
+    SetApprovalRuleId(std::forward<ApprovalRuleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the deleted approval rule. </p>  <p>If the approval rule was
-     * deleted in an earlier API call, the response is 200 OK without content.</p>
-     * 
-     */
-    inline const Aws::String& GetApprovalRuleId() const{ return m_approvalRuleId; }
-    inline void SetApprovalRuleId(const Aws::String& value) { m_approvalRuleId = value; }
-    inline void SetApprovalRuleId(Aws::String&& value) { m_approvalRuleId = std::move(value); }
-    inline void SetApprovalRuleId(const char* value) { m_approvalRuleId.assign(value); }
-    inline DeletePullRequestApprovalRuleResult& WithApprovalRuleId(const Aws::String& value) { SetApprovalRuleId(value); return *this;}
-    inline DeletePullRequestApprovalRuleResult& WithApprovalRuleId(Aws::String&& value) { SetApprovalRuleId(std::move(value)); return *this;}
-    inline DeletePullRequestApprovalRuleResult& WithApprovalRuleId(const char* value) { SetApprovalRuleId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeletePullRequestApprovalRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeletePullRequestApprovalRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeletePullRequestApprovalRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeletePullRequestApprovalRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_approvalRuleId;
+ private:
+  Aws::String m_approvalRuleId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_approvalRuleIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

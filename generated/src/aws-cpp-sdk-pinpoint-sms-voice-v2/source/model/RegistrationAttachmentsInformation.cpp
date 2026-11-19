@@ -3,112 +3,80 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pinpoint-sms-voice-v2/model/RegistrationAttachmentsInformation.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pinpoint-sms-voice-v2/model/RegistrationAttachmentsInformation.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
+namespace Aws {
+namespace PinpointSMSVoiceV2 {
+namespace Model {
 
-RegistrationAttachmentsInformation::RegistrationAttachmentsInformation() : 
-    m_registrationAttachmentArnHasBeenSet(false),
-    m_registrationAttachmentIdHasBeenSet(false),
-    m_attachmentStatus(AttachmentStatus::NOT_SET),
-    m_attachmentStatusHasBeenSet(false),
-    m_attachmentUploadErrorReason(AttachmentUploadErrorReason::NOT_SET),
-    m_attachmentUploadErrorReasonHasBeenSet(false),
-    m_createdTimestampHasBeenSet(false)
-{
-}
+RegistrationAttachmentsInformation::RegistrationAttachmentsInformation(JsonView jsonValue) { *this = jsonValue; }
 
-RegistrationAttachmentsInformation::RegistrationAttachmentsInformation(JsonView jsonValue)
-  : RegistrationAttachmentsInformation()
-{
-  *this = jsonValue;
-}
-
-RegistrationAttachmentsInformation& RegistrationAttachmentsInformation::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RegistrationAttachmentArn"))
-  {
+RegistrationAttachmentsInformation& RegistrationAttachmentsInformation::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("RegistrationAttachmentArn")) {
     m_registrationAttachmentArn = jsonValue.GetString("RegistrationAttachmentArn");
-
     m_registrationAttachmentArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RegistrationAttachmentId"))
-  {
+  if (jsonValue.ValueExists("RegistrationAttachmentId")) {
     m_registrationAttachmentId = jsonValue.GetString("RegistrationAttachmentId");
-
     m_registrationAttachmentIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("AttachmentStatus"))
-  {
+  if (jsonValue.ValueExists("AttachmentStatus")) {
     m_attachmentStatus = AttachmentStatusMapper::GetAttachmentStatusForName(jsonValue.GetString("AttachmentStatus"));
-
     m_attachmentStatusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("AttachmentUploadErrorReason"))
-  {
-    m_attachmentUploadErrorReason = AttachmentUploadErrorReasonMapper::GetAttachmentUploadErrorReasonForName(jsonValue.GetString("AttachmentUploadErrorReason"));
-
+  if (jsonValue.ValueExists("AttachmentUploadErrorReason")) {
+    m_attachmentUploadErrorReason =
+        AttachmentUploadErrorReasonMapper::GetAttachmentUploadErrorReasonForName(jsonValue.GetString("AttachmentUploadErrorReason"));
     m_attachmentUploadErrorReasonHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CreatedTimestamp"))
-  {
+  if (jsonValue.ValueExists("CreatedTimestamp")) {
     m_createdTimestamp = jsonValue.GetDouble("CreatedTimestamp");
-
     m_createdTimestampHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("AttachmentUrl")) {
+    m_attachmentUrl = jsonValue.GetString("AttachmentUrl");
+    m_attachmentUrlHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue RegistrationAttachmentsInformation::Jsonize() const
-{
+JsonValue RegistrationAttachmentsInformation::Jsonize() const {
   JsonValue payload;
 
-  if(m_registrationAttachmentArnHasBeenSet)
-  {
-   payload.WithString("RegistrationAttachmentArn", m_registrationAttachmentArn);
-
+  if (m_registrationAttachmentArnHasBeenSet) {
+    payload.WithString("RegistrationAttachmentArn", m_registrationAttachmentArn);
   }
 
-  if(m_registrationAttachmentIdHasBeenSet)
-  {
-   payload.WithString("RegistrationAttachmentId", m_registrationAttachmentId);
-
+  if (m_registrationAttachmentIdHasBeenSet) {
+    payload.WithString("RegistrationAttachmentId", m_registrationAttachmentId);
   }
 
-  if(m_attachmentStatusHasBeenSet)
-  {
-   payload.WithString("AttachmentStatus", AttachmentStatusMapper::GetNameForAttachmentStatus(m_attachmentStatus));
+  if (m_attachmentStatusHasBeenSet) {
+    payload.WithString("AttachmentStatus", AttachmentStatusMapper::GetNameForAttachmentStatus(m_attachmentStatus));
   }
 
-  if(m_attachmentUploadErrorReasonHasBeenSet)
-  {
-   payload.WithString("AttachmentUploadErrorReason", AttachmentUploadErrorReasonMapper::GetNameForAttachmentUploadErrorReason(m_attachmentUploadErrorReason));
+  if (m_attachmentUploadErrorReasonHasBeenSet) {
+    payload.WithString("AttachmentUploadErrorReason",
+                       AttachmentUploadErrorReasonMapper::GetNameForAttachmentUploadErrorReason(m_attachmentUploadErrorReason));
   }
 
-  if(m_createdTimestampHasBeenSet)
-  {
-   payload.WithDouble("CreatedTimestamp", m_createdTimestamp.SecondsWithMSPrecision());
+  if (m_createdTimestampHasBeenSet) {
+    payload.WithDouble("CreatedTimestamp", m_createdTimestamp.SecondsWithMSPrecision());
+  }
+
+  if (m_attachmentUrlHasBeenSet) {
+    payload.WithString("AttachmentUrl", m_attachmentUrl);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

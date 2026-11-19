@@ -4,167 +4,198 @@
  */
 
 #pragma once
-#include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/comprehend/ComprehendRequest.h>
+#include <aws/comprehend/Comprehend_EXPORTS.h>
+#include <aws/comprehend/model/Tag.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/comprehend/model/Tag.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
+/**
+ */
+class CreateEndpointRequest : public ComprehendRequest {
+ public:
+  AWS_COMPREHEND_API CreateEndpointRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateEndpoint"; }
+
+  AWS_COMPREHEND_API Aws::String SerializePayload() const override;
+
+  AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>This is the descriptive suffix that becomes part of the
+   * <code>EndpointArn</code> used for all subsequent requests to this resource. </p>
    */
-  class CreateEndpointRequest : public ComprehendRequest
-  {
-  public:
-    AWS_COMPREHEND_API CreateEndpointRequest();
+  inline const Aws::String& GetEndpointName() const { return m_endpointName; }
+  inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
+  template <typename EndpointNameT = Aws::String>
+  void SetEndpointName(EndpointNameT&& value) {
+    m_endpointNameHasBeenSet = true;
+    m_endpointName = std::forward<EndpointNameT>(value);
+  }
+  template <typename EndpointNameT = Aws::String>
+  CreateEndpointRequest& WithEndpointName(EndpointNameT&& value) {
+    SetEndpointName(std::forward<EndpointNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateEndpoint"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Number (ARN) of the model to which the endpoint will be
+   * attached.</p>
+   */
+  inline const Aws::String& GetModelArn() const { return m_modelArn; }
+  inline bool ModelArnHasBeenSet() const { return m_modelArnHasBeenSet; }
+  template <typename ModelArnT = Aws::String>
+  void SetModelArn(ModelArnT&& value) {
+    m_modelArnHasBeenSet = true;
+    m_modelArn = std::forward<ModelArnT>(value);
+  }
+  template <typename ModelArnT = Aws::String>
+  CreateEndpointRequest& WithModelArn(ModelArnT&& value) {
+    SetModelArn(std::forward<ModelArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COMPREHEND_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The desired number of inference units to be used by the model using this
+   * endpoint. Each inference unit represents of a throughput of 100 characters per
+   * second.</p>
+   */
+  inline int GetDesiredInferenceUnits() const { return m_desiredInferenceUnits; }
+  inline bool DesiredInferenceUnitsHasBeenSet() const { return m_desiredInferenceUnitsHasBeenSet; }
+  inline void SetDesiredInferenceUnits(int value) {
+    m_desiredInferenceUnitsHasBeenSet = true;
+    m_desiredInferenceUnits = value;
+  }
+  inline CreateEndpointRequest& WithDesiredInferenceUnits(int value) {
+    SetDesiredInferenceUnits(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>An idempotency token provided by the customer. If this token matches a
+   * previous endpoint creation request, Amazon Comprehend will not return a
+   * <code>ResourceInUseException</code>. </p>
+   */
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  CreateEndpointRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Tags to associate with the endpoint. A tag is a key-value pair that adds
+   * metadata to the endpoint. For example, a tag with "Sales" as the key might be
+   * added to an endpoint to indicate its use by the sales department. </p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateEndpointRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateEndpointRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This is the descriptive suffix that becomes part of the
-     * <code>EndpointArn</code> used for all subsequent requests to this resource. </p>
-     */
-    inline const Aws::String& GetEndpointName() const{ return m_endpointName; }
-    inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
-    inline void SetEndpointName(const Aws::String& value) { m_endpointNameHasBeenSet = true; m_endpointName = value; }
-    inline void SetEndpointName(Aws::String&& value) { m_endpointNameHasBeenSet = true; m_endpointName = std::move(value); }
-    inline void SetEndpointName(const char* value) { m_endpointNameHasBeenSet = true; m_endpointName.assign(value); }
-    inline CreateEndpointRequest& WithEndpointName(const Aws::String& value) { SetEndpointName(value); return *this;}
-    inline CreateEndpointRequest& WithEndpointName(Aws::String&& value) { SetEndpointName(std::move(value)); return *this;}
-    inline CreateEndpointRequest& WithEndpointName(const char* value) { SetEndpointName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon Comprehend
+   * read access to trained custom models encrypted with a customer managed key
+   * (ModelKmsKeyId).</p>
+   */
+  inline const Aws::String& GetDataAccessRoleArn() const { return m_dataAccessRoleArn; }
+  inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
+  template <typename DataAccessRoleArnT = Aws::String>
+  void SetDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    m_dataAccessRoleArnHasBeenSet = true;
+    m_dataAccessRoleArn = std::forward<DataAccessRoleArnT>(value);
+  }
+  template <typename DataAccessRoleArnT = Aws::String>
+  CreateEndpointRequest& WithDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    SetDataAccessRoleArn(std::forward<DataAccessRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Number (ARN) of the model to which the endpoint will be
-     * attached.</p>
-     */
-    inline const Aws::String& GetModelArn() const{ return m_modelArn; }
-    inline bool ModelArnHasBeenSet() const { return m_modelArnHasBeenSet; }
-    inline void SetModelArn(const Aws::String& value) { m_modelArnHasBeenSet = true; m_modelArn = value; }
-    inline void SetModelArn(Aws::String&& value) { m_modelArnHasBeenSet = true; m_modelArn = std::move(value); }
-    inline void SetModelArn(const char* value) { m_modelArnHasBeenSet = true; m_modelArn.assign(value); }
-    inline CreateEndpointRequest& WithModelArn(const Aws::String& value) { SetModelArn(value); return *this;}
-    inline CreateEndpointRequest& WithModelArn(Aws::String&& value) { SetModelArn(std::move(value)); return *this;}
-    inline CreateEndpointRequest& WithModelArn(const char* value) { SetModelArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Number (ARN) of the flywheel to which the endpoint will
+   * be attached.</p>
+   */
+  inline const Aws::String& GetFlywheelArn() const { return m_flywheelArn; }
+  inline bool FlywheelArnHasBeenSet() const { return m_flywheelArnHasBeenSet; }
+  template <typename FlywheelArnT = Aws::String>
+  void SetFlywheelArn(FlywheelArnT&& value) {
+    m_flywheelArnHasBeenSet = true;
+    m_flywheelArn = std::forward<FlywheelArnT>(value);
+  }
+  template <typename FlywheelArnT = Aws::String>
+  CreateEndpointRequest& WithFlywheelArn(FlywheelArnT&& value) {
+    SetFlywheelArn(std::forward<FlywheelArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endpointName;
 
-    ///@{
-    /**
-     * <p> The desired number of inference units to be used by the model using this
-     * endpoint. Each inference unit represents of a throughput of 100 characters per
-     * second.</p>
-     */
-    inline int GetDesiredInferenceUnits() const{ return m_desiredInferenceUnits; }
-    inline bool DesiredInferenceUnitsHasBeenSet() const { return m_desiredInferenceUnitsHasBeenSet; }
-    inline void SetDesiredInferenceUnits(int value) { m_desiredInferenceUnitsHasBeenSet = true; m_desiredInferenceUnits = value; }
-    inline CreateEndpointRequest& WithDesiredInferenceUnits(int value) { SetDesiredInferenceUnits(value); return *this;}
-    ///@}
+  Aws::String m_modelArn;
 
-    ///@{
-    /**
-     * <p>An idempotency token provided by the customer. If this token matches a
-     * previous endpoint creation request, Amazon Comprehend will not return a
-     * <code>ResourceInUseException</code>. </p>
-     */
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline CreateEndpointRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline CreateEndpointRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline CreateEndpointRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
+  int m_desiredInferenceUnits{0};
 
-    ///@{
-    /**
-     * <p>Tags to associate with the endpoint. A tag is a key-value pair that adds
-     * metadata to the endpoint. For example, a tag with "Sales" as the key might be
-     * added to an endpoint to indicate its use by the sales department. </p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateEndpointRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateEndpointRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateEndpointRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateEndpointRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon Comprehend
-     * read access to trained custom models encrypted with a customer managed key
-     * (ModelKmsKeyId).</p>
-     */
-    inline const Aws::String& GetDataAccessRoleArn() const{ return m_dataAccessRoleArn; }
-    inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
-    inline void SetDataAccessRoleArn(const Aws::String& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = value; }
-    inline void SetDataAccessRoleArn(Aws::String&& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = std::move(value); }
-    inline void SetDataAccessRoleArn(const char* value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn.assign(value); }
-    inline CreateEndpointRequest& WithDataAccessRoleArn(const Aws::String& value) { SetDataAccessRoleArn(value); return *this;}
-    inline CreateEndpointRequest& WithDataAccessRoleArn(Aws::String&& value) { SetDataAccessRoleArn(std::move(value)); return *this;}
-    inline CreateEndpointRequest& WithDataAccessRoleArn(const char* value) { SetDataAccessRoleArn(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Number (ARN) of the flywheel to which the endpoint will
-     * be attached.</p>
-     */
-    inline const Aws::String& GetFlywheelArn() const{ return m_flywheelArn; }
-    inline bool FlywheelArnHasBeenSet() const { return m_flywheelArnHasBeenSet; }
-    inline void SetFlywheelArn(const Aws::String& value) { m_flywheelArnHasBeenSet = true; m_flywheelArn = value; }
-    inline void SetFlywheelArn(Aws::String&& value) { m_flywheelArnHasBeenSet = true; m_flywheelArn = std::move(value); }
-    inline void SetFlywheelArn(const char* value) { m_flywheelArnHasBeenSet = true; m_flywheelArn.assign(value); }
-    inline CreateEndpointRequest& WithFlywheelArn(const Aws::String& value) { SetFlywheelArn(value); return *this;}
-    inline CreateEndpointRequest& WithFlywheelArn(Aws::String&& value) { SetFlywheelArn(std::move(value)); return *this;}
-    inline CreateEndpointRequest& WithFlywheelArn(const char* value) { SetFlywheelArn(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_dataAccessRoleArn;
 
-    Aws::String m_endpointName;
-    bool m_endpointNameHasBeenSet = false;
+  Aws::String m_flywheelArn;
+  bool m_endpointNameHasBeenSet = false;
+  bool m_modelArnHasBeenSet = false;
+  bool m_desiredInferenceUnitsHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+  bool m_dataAccessRoleArnHasBeenSet = false;
+  bool m_flywheelArnHasBeenSet = false;
+};
 
-    Aws::String m_modelArn;
-    bool m_modelArnHasBeenSet = false;
-
-    int m_desiredInferenceUnits;
-    bool m_desiredInferenceUnitsHasBeenSet = false;
-
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_dataAccessRoleArn;
-    bool m_dataAccessRoleArnHasBeenSet = false;
-
-    Aws::String m_flywheelArn;
-    bool m_flywheelArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

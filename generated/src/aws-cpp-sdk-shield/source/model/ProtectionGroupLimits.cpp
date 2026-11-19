@@ -3,72 +3,138 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/shield/model/ProtectionGroupLimits.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Shield
-{
-namespace Model
-{
+namespace Aws {
+namespace Shield {
+namespace Model {
 
-ProtectionGroupLimits::ProtectionGroupLimits() : 
-    m_maxProtectionGroups(0),
-    m_maxProtectionGroupsHasBeenSet(false),
-    m_patternTypeLimitsHasBeenSet(false)
-{
-}
+ProtectionGroupLimits::ProtectionGroupLimits(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-ProtectionGroupLimits::ProtectionGroupLimits(JsonView jsonValue)
-  : ProtectionGroupLimits()
-{
-  *this = jsonValue;
-}
+ProtectionGroupLimits& ProtectionGroupLimits::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ProtectionGroupLimits& ProtectionGroupLimits::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("MaxProtectionGroups"))
-  {
-    m_maxProtectionGroups = jsonValue.GetInt64("MaxProtectionGroups");
+              if (initialKeyStr == "MaxProtectionGroups") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_maxProtectionGroups = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_maxProtectionGroups = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_maxProtectionGroupsHasBeenSet = true;
+              }
 
-    m_maxProtectionGroupsHasBeenSet = true;
-  }
+              else if (initialKeyStr == "PatternTypeLimits") {
+                m_patternTypeLimits = ProtectionGroupPatternTypeLimits(decoder);
+                m_patternTypeLimitsHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ProtectionGroupLimits", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("PatternTypeLimits"))
-  {
-    m_patternTypeLimits = jsonValue.GetObject("PatternTypeLimits");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_patternTypeLimitsHasBeenSet = true;
+            if (initialKeyStr == "MaxProtectionGroups") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_maxProtectionGroups = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_maxProtectionGroups = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_maxProtectionGroupsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "PatternTypeLimits") {
+              m_patternTypeLimits = ProtectionGroupPatternTypeLimits(decoder);
+              m_patternTypeLimitsHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue ProtectionGroupLimits::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_maxProtectionGroupsHasBeenSet)
-  {
-   payload.WithInt64("MaxProtectionGroups", m_maxProtectionGroups);
-
+void ProtectionGroupLimits::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_maxProtectionGroupsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_patternTypeLimitsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_patternTypeLimitsHasBeenSet)
-  {
-   payload.WithObject("PatternTypeLimits", m_patternTypeLimits.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_maxProtectionGroupsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxProtectionGroups"));
+    (m_maxProtectionGroups >= 0) ? encoder.WriteUInt(m_maxProtectionGroups) : encoder.WriteNegInt(m_maxProtectionGroups);
   }
 
-  return payload;
+  if (m_patternTypeLimitsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PatternTypeLimits"));
+    m_patternTypeLimits.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Shield
-} // namespace Aws
+}  // namespace Model
+}  // namespace Shield
+}  // namespace Aws

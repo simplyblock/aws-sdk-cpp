@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/chime-sdk-voice/ChimeSDKVoice_EXPORTS.h>
 #include <aws/chime-sdk-voice/model/PhoneNumber.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKVoice
-{
-namespace Model
-{
-  class RestorePhoneNumberResult
-  {
-  public:
-    AWS_CHIMESDKVOICE_API RestorePhoneNumberResult();
-    AWS_CHIMESDKVOICE_API RestorePhoneNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKVOICE_API RestorePhoneNumberResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKVoice {
+namespace Model {
+class RestorePhoneNumberResult {
+ public:
+  AWS_CHIMESDKVOICE_API RestorePhoneNumberResult() = default;
+  AWS_CHIMESDKVOICE_API RestorePhoneNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKVOICE_API RestorePhoneNumberResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The restored phone number.</p>
+   */
+  inline const PhoneNumber& GetPhoneNumber() const { return m_phoneNumber; }
+  template <typename PhoneNumberT = PhoneNumber>
+  void SetPhoneNumber(PhoneNumberT&& value) {
+    m_phoneNumberHasBeenSet = true;
+    m_phoneNumber = std::forward<PhoneNumberT>(value);
+  }
+  template <typename PhoneNumberT = PhoneNumber>
+  RestorePhoneNumberResult& WithPhoneNumber(PhoneNumberT&& value) {
+    SetPhoneNumber(std::forward<PhoneNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The restored phone number.</p>
-     */
-    inline const PhoneNumber& GetPhoneNumber() const{ return m_phoneNumber; }
-    inline void SetPhoneNumber(const PhoneNumber& value) { m_phoneNumber = value; }
-    inline void SetPhoneNumber(PhoneNumber&& value) { m_phoneNumber = std::move(value); }
-    inline RestorePhoneNumberResult& WithPhoneNumber(const PhoneNumber& value) { SetPhoneNumber(value); return *this;}
-    inline RestorePhoneNumberResult& WithPhoneNumber(PhoneNumber&& value) { SetPhoneNumber(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RestorePhoneNumberResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RestorePhoneNumberResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RestorePhoneNumberResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RestorePhoneNumberResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PhoneNumber m_phoneNumber;
+ private:
+  PhoneNumber m_phoneNumber;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_phoneNumberHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKVoice
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKVoice
+}  // namespace Aws

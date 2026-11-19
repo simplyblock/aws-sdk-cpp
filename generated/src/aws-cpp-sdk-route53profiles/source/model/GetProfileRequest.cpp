@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/route53profiles/model/GetProfileRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/route53profiles/model/GetProfileRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Route53Profiles::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetProfileRequest::GetProfileRequest() : 
-    m_profileIdHasBeenSet(false)
-{
-}
-
-Aws::String GetProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetProfileRequest::SerializePayload() const { return {}; }

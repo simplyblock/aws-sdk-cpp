@@ -12,24 +12,12 @@ using namespace Aws::ARCZonalShift::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAutoshiftObserverNotificationStatusRequest::UpdateAutoshiftObserverNotificationStatusRequest() : 
-    m_status(AutoshiftObserverNotificationStatus::NOT_SET),
-    m_statusHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAutoshiftObserverNotificationStatusRequest::SerializePayload() const
-{
+Aws::String UpdateAutoshiftObserverNotificationStatusRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", AutoshiftObserverNotificationStatusMapper::GetNameForAutoshiftObserverNotificationStatus(m_status));
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", AutoshiftObserverNotificationStatusMapper::GetNameForAutoshiftObserverNotificationStatus(m_status));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

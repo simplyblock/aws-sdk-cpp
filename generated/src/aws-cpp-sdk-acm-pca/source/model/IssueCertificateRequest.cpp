@@ -4,89 +4,94 @@
  */
 
 #include <aws/acm-pca/model/IssueCertificateRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ACMPCA::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-IssueCertificateRequest::IssueCertificateRequest() : 
-    m_apiPassthroughHasBeenSet(false),
-    m_certificateAuthorityArnHasBeenSet(false),
-    m_csrHasBeenSet(false),
-    m_signingAlgorithm(SigningAlgorithm::NOT_SET),
-    m_signingAlgorithmHasBeenSet(false),
-    m_templateArnHasBeenSet(false),
-    m_validityHasBeenSet(false),
-    m_validityNotBeforeHasBeenSet(false),
-    m_idempotencyTokenHasBeenSet(false)
-{
+Aws::String IssueCertificateRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_apiPassthroughHasBeenSet) {
+    mapSize++;
+  }
+  if (m_certificateAuthorityArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_csrHasBeenSet) {
+    mapSize++;
+  }
+  if (m_signingAlgorithmHasBeenSet) {
+    mapSize++;
+  }
+  if (m_templateArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_validityHasBeenSet) {
+    mapSize++;
+  }
+  if (m_validityNotBeforeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idempotencyTokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_apiPassthroughHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ApiPassthrough"));
+    m_apiPassthrough.CborEncode(encoder);
+  }
+
+  if (m_certificateAuthorityArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CertificateAuthorityArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_certificateAuthorityArn.c_str()));
+  }
+
+  if (m_csrHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Csr"));
+    encoder.WriteBytes(Aws::Crt::ByteCursorFromArray(m_csr.GetUnderlyingData(), m_csr.GetLength()));
+  }
+
+  if (m_signingAlgorithmHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SigningAlgorithm"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(SigningAlgorithmMapper::GetNameForSigningAlgorithm(m_signingAlgorithm).c_str()));
+  }
+
+  if (m_templateArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TemplateArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_templateArn.c_str()));
+  }
+
+  if (m_validityHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Validity"));
+    m_validity.CborEncode(encoder);
+  }
+
+  if (m_validityNotBeforeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ValidityNotBefore"));
+    m_validityNotBefore.CborEncode(encoder);
+  }
+
+  if (m_idempotencyTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IdempotencyToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_idempotencyToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String IssueCertificateRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_apiPassthroughHasBeenSet)
-  {
-   payload.WithObject("ApiPassthrough", m_apiPassthrough.Jsonize());
-
-  }
-
-  if(m_certificateAuthorityArnHasBeenSet)
-  {
-   payload.WithString("CertificateAuthorityArn", m_certificateAuthorityArn);
-
-  }
-
-  if(m_csrHasBeenSet)
-  {
-   payload.WithString("Csr", HashingUtils::Base64Encode(m_csr));
-  }
-
-  if(m_signingAlgorithmHasBeenSet)
-  {
-   payload.WithString("SigningAlgorithm", SigningAlgorithmMapper::GetNameForSigningAlgorithm(m_signingAlgorithm));
-  }
-
-  if(m_templateArnHasBeenSet)
-  {
-   payload.WithString("TemplateArn", m_templateArn);
-
-  }
-
-  if(m_validityHasBeenSet)
-  {
-   payload.WithObject("Validity", m_validity.Jsonize());
-
-  }
-
-  if(m_validityNotBeforeHasBeenSet)
-  {
-   payload.WithObject("ValidityNotBefore", m_validityNotBefore.Jsonize());
-
-  }
-
-  if(m_idempotencyTokenHasBeenSet)
-  {
-   payload.WithString("IdempotencyToken", m_idempotencyToken);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection IssueCertificateRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection IssueCertificateRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ACMPrivateCA.IssueCertificate"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

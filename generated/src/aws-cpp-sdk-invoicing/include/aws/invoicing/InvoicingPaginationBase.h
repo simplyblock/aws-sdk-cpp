@@ -1,0 +1,85 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+
+#include <aws/core/client/UserAgent.h>
+#include <aws/core/utils/pagination/Paginator.h>
+#include <aws/invoicing/model/ListInvoiceSummariesPaginationTraits.h>
+#include <aws/invoicing/model/ListInvoiceUnitsPaginationTraits.h>
+#include <aws/invoicing/model/ListProcurementPortalPreferencesPaginationTraits.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersPaginationTraits.h>
+#include <aws/invoicing/model/ListProcurementPortalsPaginationTraits.h>
+
+#include <memory>
+
+namespace Aws {
+namespace Invoicing {
+
+template <typename DerivedClient>
+class InvoicingPaginationBase {
+ public:
+  /**
+   * Create a paginator for ListInvoiceSummaries operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInvoiceSummariesRequest,
+                                    Pagination::ListInvoiceSummariesPaginationTraits<DerivedClient>>
+  ListInvoiceSummariesPaginator(const Model::ListInvoiceSummariesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInvoiceSummariesRequest,
+                                             Pagination::ListInvoiceSummariesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListInvoiceUnits operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInvoiceUnitsRequest,
+                                    Pagination::ListInvoiceUnitsPaginationTraits<DerivedClient>>
+  ListInvoiceUnitsPaginator(const Model::ListInvoiceUnitsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInvoiceUnitsRequest,
+                                             Pagination::ListInvoiceUnitsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                          request};
+  }
+
+  /**
+   * Create a paginator for ListProcurementPortalPreferences operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalPreferencesRequest,
+                                    Pagination::ListProcurementPortalPreferencesPaginationTraits<DerivedClient>>
+  ListProcurementPortalPreferencesPaginator(const Model::ListProcurementPortalPreferencesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalPreferencesRequest,
+                                             Pagination::ListProcurementPortalPreferencesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListProcurementPortals operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalsRequest,
+                                    Pagination::ListProcurementPortalsPaginationTraits<DerivedClient>>
+  ListProcurementPortalsPaginator(const Model::ListProcurementPortalsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalsRequest,
+                                             Pagination::ListProcurementPortalsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListProcurementPortalSuppliers operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalSuppliersRequest,
+                                    Pagination::ListProcurementPortalSuppliersPaginationTraits<DerivedClient>>
+  ListProcurementPortalSuppliersPaginator(const Model::ListProcurementPortalSuppliersRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProcurementPortalSuppliersRequest,
+                                             Pagination::ListProcurementPortalSuppliersPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+};
+}  // namespace Invoicing
+}  // namespace Aws

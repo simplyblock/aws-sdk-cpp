@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetBackupVaultAccessPolicyRequest::GetBackupVaultAccessPolicyRequest() : 
-    m_backupVaultNameHasBeenSet(false)
-{
-}
-
-Aws::String GetBackupVaultAccessPolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetBackupVaultAccessPolicyRequest::SerializePayload() const { return {}; }

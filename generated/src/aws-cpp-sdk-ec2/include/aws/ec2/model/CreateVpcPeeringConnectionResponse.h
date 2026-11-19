@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/model/VpcPeeringConnection.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/VpcPeeringConnection.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CreateVpcPeeringConnectionResponse
-  {
-  public:
-    AWS_EC2_API CreateVpcPeeringConnectionResponse();
-    AWS_EC2_API CreateVpcPeeringConnectionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateVpcPeeringConnectionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CreateVpcPeeringConnectionResponse {
+ public:
+  AWS_EC2_API CreateVpcPeeringConnectionResponse() = default;
+  AWS_EC2_API CreateVpcPeeringConnectionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateVpcPeeringConnectionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the VPC peering connection.</p>
+   */
+  inline const VpcPeeringConnection& GetVpcPeeringConnection() const { return m_vpcPeeringConnection; }
+  template <typename VpcPeeringConnectionT = VpcPeeringConnection>
+  void SetVpcPeeringConnection(VpcPeeringConnectionT&& value) {
+    m_vpcPeeringConnectionHasBeenSet = true;
+    m_vpcPeeringConnection = std::forward<VpcPeeringConnectionT>(value);
+  }
+  template <typename VpcPeeringConnectionT = VpcPeeringConnection>
+  CreateVpcPeeringConnectionResponse& WithVpcPeeringConnection(VpcPeeringConnectionT&& value) {
+    SetVpcPeeringConnection(std::forward<VpcPeeringConnectionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the VPC peering connection.</p>
-     */
-    inline const VpcPeeringConnection& GetVpcPeeringConnection() const{ return m_vpcPeeringConnection; }
-    inline void SetVpcPeeringConnection(const VpcPeeringConnection& value) { m_vpcPeeringConnection = value; }
-    inline void SetVpcPeeringConnection(VpcPeeringConnection&& value) { m_vpcPeeringConnection = std::move(value); }
-    inline CreateVpcPeeringConnectionResponse& WithVpcPeeringConnection(const VpcPeeringConnection& value) { SetVpcPeeringConnection(value); return *this;}
-    inline CreateVpcPeeringConnectionResponse& WithVpcPeeringConnection(VpcPeeringConnection&& value) { SetVpcPeeringConnection(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateVpcPeeringConnectionResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateVpcPeeringConnectionResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateVpcPeeringConnectionResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    VpcPeeringConnection m_vpcPeeringConnection;
+ private:
+  VpcPeeringConnection m_vpcPeeringConnection;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcPeeringConnectionHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -12,26 +12,13 @@ using namespace Aws::CloudFrontKeyValueStore::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeKeyValueStoreRequest::DescribeKeyValueStoreRequest() : 
-    m_kvsARNHasBeenSet(false)
-{
+Aws::String DescribeKeyValueStoreRequest::SerializePayload() const { return {}; }
+
+DescribeKeyValueStoreRequest::EndpointParameters DescribeKeyValueStoreRequest::GetEndpointContextParams() const {
+  EndpointParameters parameters;
+  // Operation context parameters
+  if (KvsARNHasBeenSet()) {
+    parameters.emplace_back(Aws::String("KvsARN"), this->GetKvsARN(), Aws::Endpoint::EndpointParameter::ParameterOrigin::OPERATION_CONTEXT);
+  }
+  return parameters;
 }
-
-Aws::String DescribeKeyValueStoreRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-DescribeKeyValueStoreRequest::EndpointParameters DescribeKeyValueStoreRequest::GetEndpointContextParams() const
-{
-    EndpointParameters parameters;
-    // Operation context parameters
-    if (KvsARNHasBeenSet()) {
-        parameters.emplace_back(Aws::String("KvsARN"), this->GetKvsARN(), Aws::Endpoint::EndpointParameter::ParameterOrigin::OPERATION_CONTEXT);
-    }
-    return parameters;
-}
-
-

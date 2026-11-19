@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/kafka/model/DescribeVpcConnectionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/kafka/model/DescribeVpcConnectionRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Kafka::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeVpcConnectionRequest::DescribeVpcConnectionRequest() : 
-    m_arnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeVpcConnectionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeVpcConnectionRequest::SerializePayload() const { return {}; }

@@ -4,92 +4,99 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/Attachment.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
 
+/**
+ * <p>Describes a transit gateway route table attachment.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/TransitGatewayRouteTableAttachment">AWS
+ * API Reference</a></p>
+ */
+class TransitGatewayRouteTableAttachment {
+ public:
+  AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment() = default;
+  AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment(Aws::Utils::Json::JsonView jsonValue);
+  AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_NETWORKMANAGER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Attachment& GetAttachment() const { return m_attachment; }
+  inline bool AttachmentHasBeenSet() const { return m_attachmentHasBeenSet; }
+  template <typename AttachmentT = Attachment>
+  void SetAttachment(AttachmentT&& value) {
+    m_attachmentHasBeenSet = true;
+    m_attachment = std::forward<AttachmentT>(value);
+  }
+  template <typename AttachmentT = Attachment>
+  TransitGatewayRouteTableAttachment& WithAttachment(AttachmentT&& value) {
+    SetAttachment(std::forward<AttachmentT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>Describes a transit gateway route table attachment.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/TransitGatewayRouteTableAttachment">AWS
-   * API Reference</a></p>
+   * <p>The ID of the peering attachment.</p>
    */
-  class TransitGatewayRouteTableAttachment
-  {
-  public:
-    AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment();
-    AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment(Aws::Utils::Json::JsonView jsonValue);
-    AWS_NETWORKMANAGER_API TransitGatewayRouteTableAttachment& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_NETWORKMANAGER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPeeringId() const { return m_peeringId; }
+  inline bool PeeringIdHasBeenSet() const { return m_peeringIdHasBeenSet; }
+  template <typename PeeringIdT = Aws::String>
+  void SetPeeringId(PeeringIdT&& value) {
+    m_peeringIdHasBeenSet = true;
+    m_peeringId = std::forward<PeeringIdT>(value);
+  }
+  template <typename PeeringIdT = Aws::String>
+  TransitGatewayRouteTableAttachment& WithPeeringId(PeeringIdT&& value) {
+    SetPeeringId(std::forward<PeeringIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the transit gateway attachment route table. For example,
+   * <code>"TransitGatewayRouteTableArn":
+   * "arn:aws:ec2:us-west-2:123456789012:transit-gateway-route-table/tgw-rtb-9876543210123456"</code>.</p>
+   */
+  inline const Aws::String& GetTransitGatewayRouteTableArn() const { return m_transitGatewayRouteTableArn; }
+  inline bool TransitGatewayRouteTableArnHasBeenSet() const { return m_transitGatewayRouteTableArnHasBeenSet; }
+  template <typename TransitGatewayRouteTableArnT = Aws::String>
+  void SetTransitGatewayRouteTableArn(TransitGatewayRouteTableArnT&& value) {
+    m_transitGatewayRouteTableArnHasBeenSet = true;
+    m_transitGatewayRouteTableArn = std::forward<TransitGatewayRouteTableArnT>(value);
+  }
+  template <typename TransitGatewayRouteTableArnT = Aws::String>
+  TransitGatewayRouteTableAttachment& WithTransitGatewayRouteTableArn(TransitGatewayRouteTableArnT&& value) {
+    SetTransitGatewayRouteTableArn(std::forward<TransitGatewayRouteTableArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Attachment m_attachment;
 
-    ///@{
-    
-    inline const Attachment& GetAttachment() const{ return m_attachment; }
-    inline bool AttachmentHasBeenSet() const { return m_attachmentHasBeenSet; }
-    inline void SetAttachment(const Attachment& value) { m_attachmentHasBeenSet = true; m_attachment = value; }
-    inline void SetAttachment(Attachment&& value) { m_attachmentHasBeenSet = true; m_attachment = std::move(value); }
-    inline TransitGatewayRouteTableAttachment& WithAttachment(const Attachment& value) { SetAttachment(value); return *this;}
-    inline TransitGatewayRouteTableAttachment& WithAttachment(Attachment&& value) { SetAttachment(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_peeringId;
 
-    ///@{
-    /**
-     * <p>The ID of the peering attachment.</p>
-     */
-    inline const Aws::String& GetPeeringId() const{ return m_peeringId; }
-    inline bool PeeringIdHasBeenSet() const { return m_peeringIdHasBeenSet; }
-    inline void SetPeeringId(const Aws::String& value) { m_peeringIdHasBeenSet = true; m_peeringId = value; }
-    inline void SetPeeringId(Aws::String&& value) { m_peeringIdHasBeenSet = true; m_peeringId = std::move(value); }
-    inline void SetPeeringId(const char* value) { m_peeringIdHasBeenSet = true; m_peeringId.assign(value); }
-    inline TransitGatewayRouteTableAttachment& WithPeeringId(const Aws::String& value) { SetPeeringId(value); return *this;}
-    inline TransitGatewayRouteTableAttachment& WithPeeringId(Aws::String&& value) { SetPeeringId(std::move(value)); return *this;}
-    inline TransitGatewayRouteTableAttachment& WithPeeringId(const char* value) { SetPeeringId(value); return *this;}
-    ///@}
+  Aws::String m_transitGatewayRouteTableArn;
+  bool m_attachmentHasBeenSet = false;
+  bool m_peeringIdHasBeenSet = false;
+  bool m_transitGatewayRouteTableArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ARN of the transit gateway attachment route table. For example,
-     * <code>"TransitGatewayRouteTableArn":
-     * "arn:aws:ec2:us-west-2:123456789012:transit-gateway-route-table/tgw-rtb-9876543210123456"</code>.</p>
-     */
-    inline const Aws::String& GetTransitGatewayRouteTableArn() const{ return m_transitGatewayRouteTableArn; }
-    inline bool TransitGatewayRouteTableArnHasBeenSet() const { return m_transitGatewayRouteTableArnHasBeenSet; }
-    inline void SetTransitGatewayRouteTableArn(const Aws::String& value) { m_transitGatewayRouteTableArnHasBeenSet = true; m_transitGatewayRouteTableArn = value; }
-    inline void SetTransitGatewayRouteTableArn(Aws::String&& value) { m_transitGatewayRouteTableArnHasBeenSet = true; m_transitGatewayRouteTableArn = std::move(value); }
-    inline void SetTransitGatewayRouteTableArn(const char* value) { m_transitGatewayRouteTableArnHasBeenSet = true; m_transitGatewayRouteTableArn.assign(value); }
-    inline TransitGatewayRouteTableAttachment& WithTransitGatewayRouteTableArn(const Aws::String& value) { SetTransitGatewayRouteTableArn(value); return *this;}
-    inline TransitGatewayRouteTableAttachment& WithTransitGatewayRouteTableArn(Aws::String&& value) { SetTransitGatewayRouteTableArn(std::move(value)); return *this;}
-    inline TransitGatewayRouteTableAttachment& WithTransitGatewayRouteTableArn(const char* value) { SetTransitGatewayRouteTableArn(value); return *this;}
-    ///@}
-  private:
-
-    Attachment m_attachment;
-    bool m_attachmentHasBeenSet = false;
-
-    Aws::String m_peeringId;
-    bool m_peeringIdHasBeenSet = false;
-
-    Aws::String m_transitGatewayRouteTableArn;
-    bool m_transitGatewayRouteTableArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

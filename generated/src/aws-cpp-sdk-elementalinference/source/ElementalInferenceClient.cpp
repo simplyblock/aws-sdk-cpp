@@ -1,0 +1,830 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/core/auth/AWSAuthSigner.h>
+#include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <aws/core/client/CoreErrors.h>
+#include <aws/core/client/RetryStrategy.h>
+#include <aws/core/http/HttpClient.h>
+#include <aws/core/http/HttpClientFactory.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DNS.h>
+#include <aws/core/utils/Outcome.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/logging/ErrorMacros.h>
+#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/threading/Executor.h>
+#include <aws/elementalinference/ElementalInferenceClient.h>
+#include <aws/elementalinference/ElementalInferenceEndpointProvider.h>
+#include <aws/elementalinference/ElementalInferenceErrorMarshaller.h>
+#include <aws/elementalinference/model/AssociateFeedRequest.h>
+#include <aws/elementalinference/model/CreateDictionaryRequest.h>
+#include <aws/elementalinference/model/CreateFeedRequest.h>
+#include <aws/elementalinference/model/CreateFunctionRequest.h>
+#include <aws/elementalinference/model/CreateQuestionSetRequest.h>
+#include <aws/elementalinference/model/CreateQuestionSetVersionRequest.h>
+#include <aws/elementalinference/model/CreateScheduleActionRequest.h>
+#include <aws/elementalinference/model/DeleteDictionaryRequest.h>
+#include <aws/elementalinference/model/DeleteFeedPolicyRequest.h>
+#include <aws/elementalinference/model/DeleteFeedRequest.h>
+#include <aws/elementalinference/model/DeleteFunctionRequest.h>
+#include <aws/elementalinference/model/DeleteQuestionSetRequest.h>
+#include <aws/elementalinference/model/DeleteQuestionSetVersionRequest.h>
+#include <aws/elementalinference/model/DeleteScheduleActionRequest.h>
+#include <aws/elementalinference/model/DisassociateFeedRequest.h>
+#include <aws/elementalinference/model/ExportDictionaryEntriesRequest.h>
+#include <aws/elementalinference/model/GetDictionaryRequest.h>
+#include <aws/elementalinference/model/GetFeedPolicyRequest.h>
+#include <aws/elementalinference/model/GetFeedRequest.h>
+#include <aws/elementalinference/model/GetFixtureRequest.h>
+#include <aws/elementalinference/model/GetFunctionRequest.h>
+#include <aws/elementalinference/model/GetQuestionSetRequest.h>
+#include <aws/elementalinference/model/ListDictionariesRequest.h>
+#include <aws/elementalinference/model/ListFeedsRequest.h>
+#include <aws/elementalinference/model/ListFunctionsRequest.h>
+#include <aws/elementalinference/model/ListQuestionSetVersionsRequest.h>
+#include <aws/elementalinference/model/ListQuestionSetsRequest.h>
+#include <aws/elementalinference/model/ListScheduleActionsRequest.h>
+#include <aws/elementalinference/model/ListTagsForResourceRequest.h>
+#include <aws/elementalinference/model/PutFeedPolicyRequest.h>
+#include <aws/elementalinference/model/SearchFixturesRequest.h>
+#include <aws/elementalinference/model/TagResourceRequest.h>
+#include <aws/elementalinference/model/UntagResourceRequest.h>
+#include <aws/elementalinference/model/UpdateDictionaryRequest.h>
+#include <aws/elementalinference/model/UpdateFeedRequest.h>
+#include <aws/elementalinference/model/UpdateFunctionRequest.h>
+#include <aws/elementalinference/model/UpdateQuestionSetRequest.h>
+#include <smithy/tracing/TracingUtils.h>
+
+using namespace Aws;
+using namespace Aws::Auth;
+using namespace Aws::Client;
+using namespace Aws::ElementalInference;
+using namespace Aws::ElementalInference::Model;
+using namespace Aws::Http;
+using namespace Aws::Utils::Json;
+using namespace smithy::components::tracing;
+using ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+
+namespace Aws {
+namespace ElementalInference {
+const char SERVICE_NAME[] = "elemental-inference";
+const char ALLOCATION_TAG[] = "ElementalInferenceClient";
+}  // namespace ElementalInference
+}  // namespace Aws
+const char* ElementalInferenceClient::GetServiceName() { return SERVICE_NAME; }
+const char* ElementalInferenceClient::GetAllocationTag() { return ALLOCATION_TAG; }
+
+ElementalInferenceClient::ElementalInferenceClient(const ElementalInference::ElementalInferenceClientConfiguration& clientConfiguration,
+                                                   std::shared_ptr<ElementalInferenceEndpointProviderBase> endpointProvider)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
+                                                 Aws::MakeShared<DefaultAWSCredentialsProviderChain>(
+                                                     ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
+                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(endpointProvider ? std::move(endpointProvider)
+                                          : Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+ElementalInferenceClient::ElementalInferenceClient(const AWSCredentials& credentials,
+                                                   std::shared_ptr<ElementalInferenceEndpointProviderBase> endpointProvider,
+                                                   const ElementalInference::ElementalInferenceClientConfiguration& clientConfiguration)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
+                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(endpointProvider ? std::move(endpointProvider)
+                                          : Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+ElementalInferenceClient::ElementalInferenceClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
+                                                   std::shared_ptr<ElementalInferenceEndpointProviderBase> endpointProvider,
+                                                   const ElementalInference::ElementalInferenceClientConfiguration& clientConfiguration)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
+                                                 Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(endpointProvider ? std::move(endpointProvider)
+                                          : Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+/* Legacy constructors due deprecation */
+ElementalInferenceClient::ElementalInferenceClient(const Aws::Client::ClientConfiguration& clientConfiguration)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
+                                                 Aws::MakeShared<DefaultAWSCredentialsProviderChain>(
+                                                     ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
+                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+ElementalInferenceClient::ElementalInferenceClient(const AWSCredentials& credentials,
+                                                   const Aws::Client::ClientConfiguration& clientConfiguration)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
+                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+ElementalInferenceClient::ElementalInferenceClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
+                                                   const Aws::Client::ClientConfiguration& clientConfiguration)
+    : BASECLASS(clientConfiguration,
+                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
+                                                 Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<ElementalInferenceErrorMarshaller>(ALLOCATION_TAG)),
+      m_clientConfiguration(clientConfiguration),
+      m_endpointProvider(Aws::MakeShared<ElementalInferenceEndpointProvider>(ALLOCATION_TAG)) {
+  init(m_clientConfiguration);
+}
+
+/* End of legacy constructors due deprecation */
+ElementalInferenceClient::~ElementalInferenceClient() { ShutdownSdkClient(this, -1); }
+
+std::shared_ptr<ElementalInferenceEndpointProviderBase>& ElementalInferenceClient::accessEndpointProvider() { return m_endpointProvider; }
+
+void ElementalInferenceClient::init(const ElementalInference::ElementalInferenceClientConfiguration& config) {
+  AWSClient::SetServiceClientName("ElementalInference");
+  if (!m_clientConfiguration.executor) {
+    if (!m_clientConfiguration.configFactories.executorCreateFn()) {
+      AWS_LOGSTREAM_FATAL(ALLOCATION_TAG, "Failed to initialize client: config is missing Executor or executorCreateFn");
+      m_isInitialized = false;
+      return;
+    }
+    m_clientConfiguration.executor = m_clientConfiguration.configFactories.executorCreateFn();
+  }
+  AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
+  m_endpointProvider->InitBuiltInParameters(config, "elemental-inference");
+}
+
+void ElementalInferenceClient::OverrideEndpoint(const Aws::String& endpoint) {
+  AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
+  m_clientConfiguration.endpointOverride = endpoint;
+  m_endpointProvider->OverrideEndpoint(endpoint);
+}
+ElementalInferenceClient::InvokeOperationOutcome ElementalInferenceClient::InvokeServiceOperation(
+    const AmazonWebServiceRequest& request, const std::function<void(Aws::Endpoint::ResolveEndpointOutcome&)>& resolveUri,
+    Aws::Http::HttpMethod httpMethod) const {
+  auto operationName = request.GetServiceRequestName();
+  auto serviceName = GetServiceClientName();
+
+  AWS_OPERATION_GUARD_DYNAMIC(operationName);
+
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(m_endpointProvider, operationName, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(m_telemetryProvider, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto tracer = m_telemetryProvider->getTracer(serviceName, {});
+  auto meter = m_telemetryProvider->getMeter(serviceName, {});
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(meter, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto span = tracer->CreateSpan(Aws::String(serviceName) + "." + operationName,
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
+
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
+      [&]() -> InvokeOperationOutcome {
+        auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
+            [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
+            TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC, *meter,
+            {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+
+        AWS_OPERATION_CHECK_SUCCESS_DYNAMIC(endpointResolutionOutcome, operationName, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
+                                            endpointResolutionOutcome.GetError().GetMessage());
+
+        resolveUri(endpointResolutionOutcome);
+
+        return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+
+AssociateFeedOutcome ElementalInferenceClient::AssociateFeed(const AssociateFeedRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("AssociateFeed", "Required field: Id, is not set");
+    return AssociateFeedOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                                "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/associate");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateFeedOutcome(result.GetResultWithOwnership()) : AssociateFeedOutcome(std::move(result.GetError()));
+}
+
+CreateDictionaryOutcome ElementalInferenceClient::CreateDictionary(const CreateDictionaryRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionary");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateDictionaryOutcome(result.GetResultWithOwnership())
+                            : CreateDictionaryOutcome(std::move(result.GetError()));
+}
+
+CreateFeedOutcome ElementalInferenceClient::CreateFeed(const CreateFeedRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateFeedOutcome(result.GetResultWithOwnership()) : CreateFeedOutcome(std::move(result.GetError()));
+}
+
+CreateFunctionOutcome ElementalInferenceClient::CreateFunction(const CreateFunctionRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/function");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateFunctionOutcome(result.GetResultWithOwnership()) : CreateFunctionOutcome(std::move(result.GetError()));
+}
+
+CreateQuestionSetOutcome ElementalInferenceClient::CreateQuestionSet(const CreateQuestionSetRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateQuestionSetOutcome(result.GetResultWithOwnership())
+                            : CreateQuestionSetOutcome(std::move(result.GetError()));
+}
+
+CreateQuestionSetVersionOutcome ElementalInferenceClient::CreateQuestionSetVersion(const CreateQuestionSetVersionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CreateQuestionSetVersion", "Required field: Id, is not set");
+    return CreateQuestionSetVersionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/versions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateQuestionSetVersionOutcome(result.GetResultWithOwnership())
+                            : CreateQuestionSetVersionOutcome(std::move(result.GetError()));
+}
+
+CreateScheduleActionOutcome ElementalInferenceClient::CreateScheduleAction(const CreateScheduleActionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CreateScheduleAction", "Required field: Id, is not set");
+    return CreateScheduleActionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/schedule-actions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateScheduleActionOutcome(result.GetResultWithOwnership())
+                            : CreateScheduleActionOutcome(std::move(result.GetError()));
+}
+
+DeleteDictionaryOutcome ElementalInferenceClient::DeleteDictionary(const DeleteDictionaryRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteDictionary", "Required field: Id, is not set");
+    return DeleteDictionaryOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionary/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteDictionaryOutcome(result.GetResultWithOwnership())
+                            : DeleteDictionaryOutcome(std::move(result.GetError()));
+}
+
+DeleteFeedOutcome ElementalInferenceClient::DeleteFeed(const DeleteFeedRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteFeed", "Required field: Id, is not set");
+    return DeleteFeedOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                             "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteFeedOutcome(result.GetResultWithOwnership()) : DeleteFeedOutcome(std::move(result.GetError()));
+}
+
+DeleteFeedPolicyOutcome ElementalInferenceClient::DeleteFeedPolicy(const DeleteFeedPolicyRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteFeedPolicy", "Required field: Id, is not set");
+    return DeleteFeedPolicyOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/policy");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteFeedPolicyOutcome(result.GetResultWithOwnership())
+                            : DeleteFeedPolicyOutcome(std::move(result.GetError()));
+}
+
+DeleteFunctionOutcome ElementalInferenceClient::DeleteFunction(const DeleteFunctionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteFunction", "Required field: Id, is not set");
+    return DeleteFunctionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/function/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteFunctionOutcome(result.GetResultWithOwnership()) : DeleteFunctionOutcome(std::move(result.GetError()));
+}
+
+DeleteQuestionSetOutcome ElementalInferenceClient::DeleteQuestionSet(const DeleteQuestionSetRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteQuestionSet", "Required field: Id, is not set");
+    return DeleteQuestionSetOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteQuestionSetOutcome(result.GetResultWithOwnership())
+                            : DeleteQuestionSetOutcome(std::move(result.GetError()));
+}
+
+DeleteQuestionSetVersionOutcome ElementalInferenceClient::DeleteQuestionSetVersion(const DeleteQuestionSetVersionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteQuestionSetVersion", "Required field: Id, is not set");
+    return DeleteQuestionSetVersionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+  if (!request.QuestionSetVersionHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteQuestionSetVersion", "Required field: QuestionSetVersion, is not set");
+    return DeleteQuestionSetVersionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [QuestionSetVersion]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/versions/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetQuestionSetVersion());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteQuestionSetVersionOutcome(result.GetResultWithOwnership())
+                            : DeleteQuestionSetVersionOutcome(std::move(result.GetError()));
+}
+
+DeleteScheduleActionOutcome ElementalInferenceClient::DeleteScheduleAction(const DeleteScheduleActionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteScheduleAction", "Required field: Id, is not set");
+    return DeleteScheduleActionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+  if (!request.ActionNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteScheduleAction", "Required field: ActionName, is not set");
+    return DeleteScheduleActionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ActionName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/schedule-actions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteScheduleActionOutcome(result.GetResultWithOwnership())
+                            : DeleteScheduleActionOutcome(std::move(result.GetError()));
+}
+
+DisassociateFeedOutcome ElementalInferenceClient::DisassociateFeed(const DisassociateFeedRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DisassociateFeed", "Required field: Id, is not set");
+    return DisassociateFeedOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/disassociate");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateFeedOutcome(result.GetResultWithOwnership())
+                            : DisassociateFeedOutcome(std::move(result.GetError()));
+}
+
+ExportDictionaryEntriesOutcome ElementalInferenceClient::ExportDictionaryEntries(const ExportDictionaryEntriesRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ExportDictionaryEntries", "Required field: Id, is not set");
+    return ExportDictionaryEntriesOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionary/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/entries/export");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ExportDictionaryEntriesOutcome(result.GetResultWithOwnership())
+                            : ExportDictionaryEntriesOutcome(std::move(result.GetError()));
+}
+
+GetDictionaryOutcome ElementalInferenceClient::GetDictionary(const GetDictionaryRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetDictionary", "Required field: Id, is not set");
+    return GetDictionaryOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                                "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionary/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetDictionaryOutcome(result.GetResultWithOwnership()) : GetDictionaryOutcome(std::move(result.GetError()));
+}
+
+GetFeedOutcome ElementalInferenceClient::GetFeed(const GetFeedRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetFeed", "Required field: Id, is not set");
+    return GetFeedOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFeedOutcome(result.GetResultWithOwnership()) : GetFeedOutcome(std::move(result.GetError()));
+}
+
+GetFeedPolicyOutcome ElementalInferenceClient::GetFeedPolicy(const GetFeedPolicyRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetFeedPolicy", "Required field: Id, is not set");
+    return GetFeedPolicyOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                                "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/policy");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFeedPolicyOutcome(result.GetResultWithOwnership()) : GetFeedPolicyOutcome(std::move(result.GetError()));
+}
+
+GetFixtureOutcome ElementalInferenceClient::GetFixture(const GetFixtureRequest& request) const {
+  if (!request.FixtureIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetFixture", "Required field: FixtureId, is not set");
+    return GetFixtureOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [FixtureId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/fixtures/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetFixtureId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFixtureOutcome(result.GetResultWithOwnership()) : GetFixtureOutcome(std::move(result.GetError()));
+}
+
+GetFunctionOutcome ElementalInferenceClient::GetFunction(const GetFunctionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetFunction", "Required field: Id, is not set");
+    return GetFunctionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                              "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/function/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFunctionOutcome(result.GetResultWithOwnership()) : GetFunctionOutcome(std::move(result.GetError()));
+}
+
+GetQuestionSetOutcome ElementalInferenceClient::GetQuestionSet(const GetQuestionSetRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetQuestionSet", "Required field: Id, is not set");
+    return GetQuestionSetOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetQuestionSetOutcome(result.GetResultWithOwnership()) : GetQuestionSetOutcome(std::move(result.GetError()));
+}
+
+ListDictionariesOutcome ElementalInferenceClient::ListDictionaries(const ListDictionariesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionaries");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListDictionariesOutcome(result.GetResultWithOwnership())
+                            : ListDictionariesOutcome(std::move(result.GetError()));
+}
+
+ListFeedsOutcome ElementalInferenceClient::ListFeeds(const ListFeedsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feeds");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListFeedsOutcome(result.GetResultWithOwnership()) : ListFeedsOutcome(std::move(result.GetError()));
+}
+
+ListFunctionsOutcome ElementalInferenceClient::ListFunctions(const ListFunctionsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/functions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListFunctionsOutcome(result.GetResultWithOwnership()) : ListFunctionsOutcome(std::move(result.GetError()));
+}
+
+ListQuestionSetVersionsOutcome ElementalInferenceClient::ListQuestionSetVersions(const ListQuestionSetVersionsRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListQuestionSetVersions", "Required field: Id, is not set");
+    return ListQuestionSetVersionsOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/versions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListQuestionSetVersionsOutcome(result.GetResultWithOwnership())
+                            : ListQuestionSetVersionsOutcome(std::move(result.GetError()));
+}
+
+ListQuestionSetsOutcome ElementalInferenceClient::ListQuestionSets(const ListQuestionSetsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-sets");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListQuestionSetsOutcome(result.GetResultWithOwnership())
+                            : ListQuestionSetsOutcome(std::move(result.GetError()));
+}
+
+ListScheduleActionsOutcome ElementalInferenceClient::ListScheduleActions(const ListScheduleActionsRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListScheduleActions", "Required field: Id, is not set");
+    return ListScheduleActionsOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/schedule-actions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListScheduleActionsOutcome(result.GetResultWithOwnership())
+                            : ListScheduleActionsOutcome(std::move(result.GetError()));
+}
+
+ListTagsForResourceOutcome ElementalInferenceClient::ListTagsForResource(const ListTagsForResourceRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListTagsForResource", "Required field: ResourceArn, is not set");
+    return ListTagsForResourceOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ResourceArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/tags/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListTagsForResourceOutcome(result.GetResultWithOwnership())
+                            : ListTagsForResourceOutcome(std::move(result.GetError()));
+}
+
+PutFeedPolicyOutcome ElementalInferenceClient::PutFeedPolicy(const PutFeedPolicyRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("PutFeedPolicy", "Required field: Id, is not set");
+    return PutFeedPolicyOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                                "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/policy");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutFeedPolicyOutcome(result.GetResultWithOwnership()) : PutFeedPolicyOutcome(std::move(result.GetError()));
+}
+
+SearchFixturesOutcome ElementalInferenceClient::SearchFixtures(const SearchFixturesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/fixtures");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SearchFixturesOutcome(result.GetResultWithOwnership()) : SearchFixturesOutcome(std::move(result.GetError()));
+}
+
+TagResourceOutcome ElementalInferenceClient::TagResource(const TagResourceRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("TagResource", "Required field: ResourceArn, is not set");
+    return TagResourceOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ResourceArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/tags/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? TagResourceOutcome(result.GetResultWithOwnership()) : TagResourceOutcome(std::move(result.GetError()));
+}
+
+UntagResourceOutcome ElementalInferenceClient::UntagResource(const UntagResourceRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UntagResource", "Required field: ResourceArn, is not set");
+    return UntagResourceOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ResourceArn]", false));
+  }
+  if (!request.TagKeysHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UntagResource", "Required field: TagKeys, is not set");
+    return UntagResourceOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [TagKeys]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/tags/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateDictionaryOutcome ElementalInferenceClient::UpdateDictionary(const UpdateDictionaryRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateDictionary", "Required field: Id, is not set");
+    return UpdateDictionaryOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/dictionary/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateDictionaryOutcome(result.GetResultWithOwnership())
+                            : UpdateDictionaryOutcome(std::move(result.GetError()));
+}
+
+UpdateFeedOutcome ElementalInferenceClient::UpdateFeed(const UpdateFeedRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateFeed", "Required field: Id, is not set");
+    return UpdateFeedOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(ElementalInferenceErrors::MISSING_PARAMETER,
+                                                                             "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/feed/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateFeedOutcome(result.GetResultWithOwnership()) : UpdateFeedOutcome(std::move(result.GetError()));
+}
+
+UpdateFunctionOutcome ElementalInferenceClient::UpdateFunction(const UpdateFunctionRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateFunction", "Required field: Id, is not set");
+    return UpdateFunctionOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/function/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateFunctionOutcome(result.GetResultWithOwnership()) : UpdateFunctionOutcome(std::move(result.GetError()));
+}
+
+UpdateQuestionSetOutcome ElementalInferenceClient::UpdateQuestionSet(const UpdateQuestionSetRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateQuestionSet", "Required field: Id, is not set");
+    return UpdateQuestionSetOutcome(Aws::Client::AWSError<ElementalInferenceErrors>(
+        ElementalInferenceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/question-set/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateQuestionSetOutcome(result.GetResultWithOwnership())
+                            : UpdateQuestionSetOutcome(std::move(result.GetError()));
+}

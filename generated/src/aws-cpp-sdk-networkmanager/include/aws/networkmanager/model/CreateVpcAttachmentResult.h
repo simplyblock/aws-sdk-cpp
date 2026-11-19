@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/VpcAttachment.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class CreateVpcAttachmentResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API CreateVpcAttachmentResult();
-    AWS_NETWORKMANAGER_API CreateVpcAttachmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API CreateVpcAttachmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class CreateVpcAttachmentResult {
+ public:
+  AWS_NETWORKMANAGER_API CreateVpcAttachmentResult() = default;
+  AWS_NETWORKMANAGER_API CreateVpcAttachmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API CreateVpcAttachmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Provides details about the VPC attachment.</p>
+   */
+  inline const VpcAttachment& GetVpcAttachment() const { return m_vpcAttachment; }
+  template <typename VpcAttachmentT = VpcAttachment>
+  void SetVpcAttachment(VpcAttachmentT&& value) {
+    m_vpcAttachmentHasBeenSet = true;
+    m_vpcAttachment = std::forward<VpcAttachmentT>(value);
+  }
+  template <typename VpcAttachmentT = VpcAttachment>
+  CreateVpcAttachmentResult& WithVpcAttachment(VpcAttachmentT&& value) {
+    SetVpcAttachment(std::forward<VpcAttachmentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides details about the VPC attachment.</p>
-     */
-    inline const VpcAttachment& GetVpcAttachment() const{ return m_vpcAttachment; }
-    inline void SetVpcAttachment(const VpcAttachment& value) { m_vpcAttachment = value; }
-    inline void SetVpcAttachment(VpcAttachment&& value) { m_vpcAttachment = std::move(value); }
-    inline CreateVpcAttachmentResult& WithVpcAttachment(const VpcAttachment& value) { SetVpcAttachment(value); return *this;}
-    inline CreateVpcAttachmentResult& WithVpcAttachment(VpcAttachment&& value) { SetVpcAttachment(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateVpcAttachmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateVpcAttachmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateVpcAttachmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateVpcAttachmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    VpcAttachment m_vpcAttachment;
+ private:
+  VpcAttachment m_vpcAttachment;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcAttachmentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

@@ -5,264 +5,305 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/connect/model/PhoneNumberCountryCode.h>
+#include <aws/connect/model/PhoneNumberStatus.h>
 #include <aws/connect/model/PhoneNumberType.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/connect/model/PhoneNumberStatus.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>Information about a phone number that has been claimed to your Connect
+ * Customer instance or traffic distribution group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ClaimedPhoneNumberSummary">AWS
+ * API Reference</a></p>
+ */
+class ClaimedPhoneNumberSummary {
+ public:
+  AWS_CONNECT_API ClaimedPhoneNumberSummary() = default;
+  AWS_CONNECT_API ClaimedPhoneNumberSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API ClaimedPhoneNumberSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about a phone number that has been claimed to your Amazon Connect
-   * instance or traffic distribution group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ClaimedPhoneNumberSummary">AWS
-   * API Reference</a></p>
+   * <p>A unique identifier for the phone number.</p>
    */
-  class ClaimedPhoneNumberSummary
-  {
-  public:
-    AWS_CONNECT_API ClaimedPhoneNumberSummary();
-    AWS_CONNECT_API ClaimedPhoneNumberSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API ClaimedPhoneNumberSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPhoneNumberId() const { return m_phoneNumberId; }
+  inline bool PhoneNumberIdHasBeenSet() const { return m_phoneNumberIdHasBeenSet; }
+  template <typename PhoneNumberIdT = Aws::String>
+  void SetPhoneNumberId(PhoneNumberIdT&& value) {
+    m_phoneNumberIdHasBeenSet = true;
+    m_phoneNumberId = std::forward<PhoneNumberIdT>(value);
+  }
+  template <typename PhoneNumberIdT = Aws::String>
+  ClaimedPhoneNumberSummary& WithPhoneNumberId(PhoneNumberIdT&& value) {
+    SetPhoneNumberId(std::forward<PhoneNumberIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the phone number.</p>
+   */
+  inline const Aws::String& GetPhoneNumberArn() const { return m_phoneNumberArn; }
+  inline bool PhoneNumberArnHasBeenSet() const { return m_phoneNumberArnHasBeenSet; }
+  template <typename PhoneNumberArnT = Aws::String>
+  void SetPhoneNumberArn(PhoneNumberArnT&& value) {
+    m_phoneNumberArnHasBeenSet = true;
+    m_phoneNumberArn = std::forward<PhoneNumberArnT>(value);
+  }
+  template <typename PhoneNumberArnT = Aws::String>
+  ClaimedPhoneNumberSummary& WithPhoneNumberArn(PhoneNumberArnT&& value) {
+    SetPhoneNumberArn(std::forward<PhoneNumberArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the phone number.</p>
-     */
-    inline const Aws::String& GetPhoneNumberId() const{ return m_phoneNumberId; }
-    inline bool PhoneNumberIdHasBeenSet() const { return m_phoneNumberIdHasBeenSet; }
-    inline void SetPhoneNumberId(const Aws::String& value) { m_phoneNumberIdHasBeenSet = true; m_phoneNumberId = value; }
-    inline void SetPhoneNumberId(Aws::String&& value) { m_phoneNumberIdHasBeenSet = true; m_phoneNumberId = std::move(value); }
-    inline void SetPhoneNumberId(const char* value) { m_phoneNumberIdHasBeenSet = true; m_phoneNumberId.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberId(const Aws::String& value) { SetPhoneNumberId(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberId(Aws::String&& value) { SetPhoneNumberId(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberId(const char* value) { SetPhoneNumberId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The phone number. Phone numbers are formatted <code>[+] [country code]
+   * [subscriber number including area code]</code>.</p>
+   */
+  inline const Aws::String& GetPhoneNumber() const { return m_phoneNumber; }
+  inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
+  template <typename PhoneNumberT = Aws::String>
+  void SetPhoneNumber(PhoneNumberT&& value) {
+    m_phoneNumberHasBeenSet = true;
+    m_phoneNumber = std::forward<PhoneNumberT>(value);
+  }
+  template <typename PhoneNumberT = Aws::String>
+  ClaimedPhoneNumberSummary& WithPhoneNumber(PhoneNumberT&& value) {
+    SetPhoneNumber(std::forward<PhoneNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the phone number.</p>
-     */
-    inline const Aws::String& GetPhoneNumberArn() const{ return m_phoneNumberArn; }
-    inline bool PhoneNumberArnHasBeenSet() const { return m_phoneNumberArnHasBeenSet; }
-    inline void SetPhoneNumberArn(const Aws::String& value) { m_phoneNumberArnHasBeenSet = true; m_phoneNumberArn = value; }
-    inline void SetPhoneNumberArn(Aws::String&& value) { m_phoneNumberArnHasBeenSet = true; m_phoneNumberArn = std::move(value); }
-    inline void SetPhoneNumberArn(const char* value) { m_phoneNumberArnHasBeenSet = true; m_phoneNumberArn.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberArn(const Aws::String& value) { SetPhoneNumberArn(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberArn(Aws::String&& value) { SetPhoneNumberArn(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberArn(const char* value) { SetPhoneNumberArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ISO country code.</p>
+   */
+  inline PhoneNumberCountryCode GetPhoneNumberCountryCode() const { return m_phoneNumberCountryCode; }
+  inline bool PhoneNumberCountryCodeHasBeenSet() const { return m_phoneNumberCountryCodeHasBeenSet; }
+  inline void SetPhoneNumberCountryCode(PhoneNumberCountryCode value) {
+    m_phoneNumberCountryCodeHasBeenSet = true;
+    m_phoneNumberCountryCode = value;
+  }
+  inline ClaimedPhoneNumberSummary& WithPhoneNumberCountryCode(PhoneNumberCountryCode value) {
+    SetPhoneNumberCountryCode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The phone number. Phone numbers are formatted <code>[+] [country code]
-     * [subscriber number including area code]</code>.</p>
-     */
-    inline const Aws::String& GetPhoneNumber() const{ return m_phoneNumber; }
-    inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
-    inline void SetPhoneNumber(const Aws::String& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = value; }
-    inline void SetPhoneNumber(Aws::String&& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = std::move(value); }
-    inline void SetPhoneNumber(const char* value) { m_phoneNumberHasBeenSet = true; m_phoneNumber.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumber(const Aws::String& value) { SetPhoneNumber(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumber(Aws::String&& value) { SetPhoneNumber(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumber(const char* value) { SetPhoneNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of phone number.</p>
+   */
+  inline PhoneNumberType GetPhoneNumberType() const { return m_phoneNumberType; }
+  inline bool PhoneNumberTypeHasBeenSet() const { return m_phoneNumberTypeHasBeenSet; }
+  inline void SetPhoneNumberType(PhoneNumberType value) {
+    m_phoneNumberTypeHasBeenSet = true;
+    m_phoneNumberType = value;
+  }
+  inline ClaimedPhoneNumberSummary& WithPhoneNumberType(PhoneNumberType value) {
+    SetPhoneNumberType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ISO country code.</p>
-     */
-    inline const PhoneNumberCountryCode& GetPhoneNumberCountryCode() const{ return m_phoneNumberCountryCode; }
-    inline bool PhoneNumberCountryCodeHasBeenSet() const { return m_phoneNumberCountryCodeHasBeenSet; }
-    inline void SetPhoneNumberCountryCode(const PhoneNumberCountryCode& value) { m_phoneNumberCountryCodeHasBeenSet = true; m_phoneNumberCountryCode = value; }
-    inline void SetPhoneNumberCountryCode(PhoneNumberCountryCode&& value) { m_phoneNumberCountryCodeHasBeenSet = true; m_phoneNumberCountryCode = std::move(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberCountryCode(const PhoneNumberCountryCode& value) { SetPhoneNumberCountryCode(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberCountryCode(PhoneNumberCountryCode&& value) { SetPhoneNumberCountryCode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the phone number.</p>
+   */
+  inline const Aws::String& GetPhoneNumberDescription() const { return m_phoneNumberDescription; }
+  inline bool PhoneNumberDescriptionHasBeenSet() const { return m_phoneNumberDescriptionHasBeenSet; }
+  template <typename PhoneNumberDescriptionT = Aws::String>
+  void SetPhoneNumberDescription(PhoneNumberDescriptionT&& value) {
+    m_phoneNumberDescriptionHasBeenSet = true;
+    m_phoneNumberDescription = std::forward<PhoneNumberDescriptionT>(value);
+  }
+  template <typename PhoneNumberDescriptionT = Aws::String>
+  ClaimedPhoneNumberSummary& WithPhoneNumberDescription(PhoneNumberDescriptionT&& value) {
+    SetPhoneNumberDescription(std::forward<PhoneNumberDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of phone number.</p>
-     */
-    inline const PhoneNumberType& GetPhoneNumberType() const{ return m_phoneNumberType; }
-    inline bool PhoneNumberTypeHasBeenSet() const { return m_phoneNumberTypeHasBeenSet; }
-    inline void SetPhoneNumberType(const PhoneNumberType& value) { m_phoneNumberTypeHasBeenSet = true; m_phoneNumberType = value; }
-    inline void SetPhoneNumberType(PhoneNumberType&& value) { m_phoneNumberTypeHasBeenSet = true; m_phoneNumberType = std::move(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberType(const PhoneNumberType& value) { SetPhoneNumberType(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberType(PhoneNumberType&& value) { SetPhoneNumberType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for Connect Customer instances or traffic
+   * distribution groups that phone number inbound traffic is routed through.</p>
+   */
+  inline const Aws::String& GetTargetArn() const { return m_targetArn; }
+  inline bool TargetArnHasBeenSet() const { return m_targetArnHasBeenSet; }
+  template <typename TargetArnT = Aws::String>
+  void SetTargetArn(TargetArnT&& value) {
+    m_targetArnHasBeenSet = true;
+    m_targetArn = std::forward<TargetArnT>(value);
+  }
+  template <typename TargetArnT = Aws::String>
+  ClaimedPhoneNumberSummary& WithTargetArn(TargetArnT&& value) {
+    SetTargetArn(std::forward<TargetArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the phone number.</p>
-     */
-    inline const Aws::String& GetPhoneNumberDescription() const{ return m_phoneNumberDescription; }
-    inline bool PhoneNumberDescriptionHasBeenSet() const { return m_phoneNumberDescriptionHasBeenSet; }
-    inline void SetPhoneNumberDescription(const Aws::String& value) { m_phoneNumberDescriptionHasBeenSet = true; m_phoneNumberDescription = value; }
-    inline void SetPhoneNumberDescription(Aws::String&& value) { m_phoneNumberDescriptionHasBeenSet = true; m_phoneNumberDescription = std::move(value); }
-    inline void SetPhoneNumberDescription(const char* value) { m_phoneNumberDescriptionHasBeenSet = true; m_phoneNumberDescription.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberDescription(const Aws::String& value) { SetPhoneNumberDescription(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberDescription(Aws::String&& value) { SetPhoneNumberDescription(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberDescription(const char* value) { SetPhoneNumberDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the Connect Customer instance that phone numbers are
+   * claimed to. You can <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
+   * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  ClaimedPhoneNumberSummary& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for Amazon Connect instances or traffic
-     * distribution groups that phone number inbound traffic is routed through.</p>
-     */
-    inline const Aws::String& GetTargetArn() const{ return m_targetArn; }
-    inline bool TargetArnHasBeenSet() const { return m_targetArnHasBeenSet; }
-    inline void SetTargetArn(const Aws::String& value) { m_targetArnHasBeenSet = true; m_targetArn = value; }
-    inline void SetTargetArn(Aws::String&& value) { m_targetArnHasBeenSet = true; m_targetArn = std::move(value); }
-    inline void SetTargetArn(const char* value) { m_targetArnHasBeenSet = true; m_targetArn.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithTargetArn(const Aws::String& value) { SetTargetArn(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithTargetArn(Aws::String&& value) { SetTargetArn(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithTargetArn(const char* value) { SetTargetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource. For
+   * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  ClaimedPhoneNumberSummary& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  ClaimedPhoneNumberSummary& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Connect instance that phone numbers are claimed
-     * to. You can <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
-     * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the phone number.</p> <ul> <li> <p> <code>CLAIMED</code> means
+   * the previous <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>
+   * or <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>
+   * operation succeeded.</p> </li> <li> <p> <code>IN_PROGRESS</code> means a <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>,
+   * <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>,
+   * or <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumberMetadata.html">UpdatePhoneNumberMetadata</a>
+   * operation is still in progress and has not yet completed. You can call <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html">DescribePhoneNumber</a>
+   * at a later time to verify if the previous operation has completed.</p> </li>
+   * <li> <p> <code>FAILED</code> indicates that the previous <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>
+   * or <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>
+   * operation has failed. It will include a message indicating the failure reason. A
+   * common reason for a failure may be that the <code>TargetArn</code> value you are
+   * claiming or updating a phone number to has reached its limit of total claimed
+   * numbers. If you received a <code>FAILED</code> status from a
+   * <code>ClaimPhoneNumber</code> API call, you have one day to retry claiming the
+   * phone number before the number is released back to the inventory for other
+   * customers to claim.</p> </li> </ul>  <p>You will not be billed for the
+   * phone number during the 1-day period if number claiming fails. </p>
+   */
+  inline const PhoneNumberStatus& GetPhoneNumberStatus() const { return m_phoneNumberStatus; }
+  inline bool PhoneNumberStatusHasBeenSet() const { return m_phoneNumberStatusHasBeenSet; }
+  template <typename PhoneNumberStatusT = PhoneNumberStatus>
+  void SetPhoneNumberStatus(PhoneNumberStatusT&& value) {
+    m_phoneNumberStatusHasBeenSet = true;
+    m_phoneNumberStatus = std::forward<PhoneNumberStatusT>(value);
+  }
+  template <typename PhoneNumberStatusT = PhoneNumberStatus>
+  ClaimedPhoneNumberSummary& WithPhoneNumberStatus(PhoneNumberStatusT&& value) {
+    SetPhoneNumberStatus(std::forward<PhoneNumberStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource. For
-     * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ClaimedPhoneNumberSummary& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ClaimedPhoneNumberSummary& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The claimed phone number ARN that was previously imported from the external
+   * service, such as Amazon Web Services End User Messaging. If it is from Amazon
+   * Web Services End User Messaging, it looks like the ARN of the phone number that
+   * was imported from Amazon Web Services End User Messaging.</p>
+   */
+  inline const Aws::String& GetSourcePhoneNumberArn() const { return m_sourcePhoneNumberArn; }
+  inline bool SourcePhoneNumberArnHasBeenSet() const { return m_sourcePhoneNumberArnHasBeenSet; }
+  template <typename SourcePhoneNumberArnT = Aws::String>
+  void SetSourcePhoneNumberArn(SourcePhoneNumberArnT&& value) {
+    m_sourcePhoneNumberArnHasBeenSet = true;
+    m_sourcePhoneNumberArn = std::forward<SourcePhoneNumberArnT>(value);
+  }
+  template <typename SourcePhoneNumberArnT = Aws::String>
+  ClaimedPhoneNumberSummary& WithSourcePhoneNumberArn(SourcePhoneNumberArnT&& value) {
+    SetSourcePhoneNumberArn(std::forward<SourcePhoneNumberArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_phoneNumberId;
 
-    ///@{
-    /**
-     * <p>The status of the phone number.</p> <ul> <li> <p> <code>CLAIMED</code> means
-     * the previous <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>
-     * or <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>
-     * operation succeeded.</p> </li> <li> <p> <code>IN_PROGRESS</code> means a <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>,
-     * <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>,
-     * or <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumberMetadata.html">UpdatePhoneNumberMetadata</a>
-     * operation is still in progress and has not yet completed. You can call <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html">DescribePhoneNumber</a>
-     * at a later time to verify if the previous operation has completed.</p> </li>
-     * <li> <p> <code>FAILED</code> indicates that the previous <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html">ClaimPhoneNumber</a>
-     * or <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html">UpdatePhoneNumber</a>
-     * operation has failed. It will include a message indicating the failure reason. A
-     * common reason for a failure may be that the <code>TargetArn</code> value you are
-     * claiming or updating a phone number to has reached its limit of total claimed
-     * numbers. If you received a <code>FAILED</code> status from a
-     * <code>ClaimPhoneNumber</code> API call, you have one day to retry claiming the
-     * phone number before the number is released back to the inventory for other
-     * customers to claim.</p> </li> </ul>  <p>You will not be billed for the
-     * phone number during the 1-day period if number claiming fails. </p> 
-     */
-    inline const PhoneNumberStatus& GetPhoneNumberStatus() const{ return m_phoneNumberStatus; }
-    inline bool PhoneNumberStatusHasBeenSet() const { return m_phoneNumberStatusHasBeenSet; }
-    inline void SetPhoneNumberStatus(const PhoneNumberStatus& value) { m_phoneNumberStatusHasBeenSet = true; m_phoneNumberStatus = value; }
-    inline void SetPhoneNumberStatus(PhoneNumberStatus&& value) { m_phoneNumberStatusHasBeenSet = true; m_phoneNumberStatus = std::move(value); }
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberStatus(const PhoneNumberStatus& value) { SetPhoneNumberStatus(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithPhoneNumberStatus(PhoneNumberStatus&& value) { SetPhoneNumberStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_phoneNumberArn;
 
-    ///@{
-    /**
-     * <p>The claimed phone number ARN that was previously imported from the external
-     * service, such as Amazon Pinpoint. If it is from Amazon Pinpoint, it looks like
-     * the ARN of the phone number that was imported from Amazon Pinpoint.</p>
-     */
-    inline const Aws::String& GetSourcePhoneNumberArn() const{ return m_sourcePhoneNumberArn; }
-    inline bool SourcePhoneNumberArnHasBeenSet() const { return m_sourcePhoneNumberArnHasBeenSet; }
-    inline void SetSourcePhoneNumberArn(const Aws::String& value) { m_sourcePhoneNumberArnHasBeenSet = true; m_sourcePhoneNumberArn = value; }
-    inline void SetSourcePhoneNumberArn(Aws::String&& value) { m_sourcePhoneNumberArnHasBeenSet = true; m_sourcePhoneNumberArn = std::move(value); }
-    inline void SetSourcePhoneNumberArn(const char* value) { m_sourcePhoneNumberArnHasBeenSet = true; m_sourcePhoneNumberArn.assign(value); }
-    inline ClaimedPhoneNumberSummary& WithSourcePhoneNumberArn(const Aws::String& value) { SetSourcePhoneNumberArn(value); return *this;}
-    inline ClaimedPhoneNumberSummary& WithSourcePhoneNumberArn(Aws::String&& value) { SetSourcePhoneNumberArn(std::move(value)); return *this;}
-    inline ClaimedPhoneNumberSummary& WithSourcePhoneNumberArn(const char* value) { SetSourcePhoneNumberArn(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_phoneNumber;
 
-    Aws::String m_phoneNumberId;
-    bool m_phoneNumberIdHasBeenSet = false;
+  PhoneNumberCountryCode m_phoneNumberCountryCode{PhoneNumberCountryCode::NOT_SET};
 
-    Aws::String m_phoneNumberArn;
-    bool m_phoneNumberArnHasBeenSet = false;
+  PhoneNumberType m_phoneNumberType{PhoneNumberType::NOT_SET};
 
-    Aws::String m_phoneNumber;
-    bool m_phoneNumberHasBeenSet = false;
+  Aws::String m_phoneNumberDescription;
 
-    PhoneNumberCountryCode m_phoneNumberCountryCode;
-    bool m_phoneNumberCountryCodeHasBeenSet = false;
+  Aws::String m_targetArn;
 
-    PhoneNumberType m_phoneNumberType;
-    bool m_phoneNumberTypeHasBeenSet = false;
+  Aws::String m_instanceId;
 
-    Aws::String m_phoneNumberDescription;
-    bool m_phoneNumberDescriptionHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_targetArn;
-    bool m_targetArnHasBeenSet = false;
+  PhoneNumberStatus m_phoneNumberStatus;
 
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
+  Aws::String m_sourcePhoneNumberArn;
+  bool m_phoneNumberIdHasBeenSet = false;
+  bool m_phoneNumberArnHasBeenSet = false;
+  bool m_phoneNumberHasBeenSet = false;
+  bool m_phoneNumberCountryCodeHasBeenSet = false;
+  bool m_phoneNumberTypeHasBeenSet = false;
+  bool m_phoneNumberDescriptionHasBeenSet = false;
+  bool m_targetArnHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_phoneNumberStatusHasBeenSet = false;
+  bool m_sourcePhoneNumberArnHasBeenSet = false;
+};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    PhoneNumberStatus m_phoneNumberStatus;
-    bool m_phoneNumberStatusHasBeenSet = false;
-
-    Aws::String m_sourcePhoneNumberArn;
-    bool m_sourcePhoneNumberArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cloudsearch/CloudSearch_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cloudsearch/CloudSearchEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudSearch
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudSearch {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudSearchClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudSearchEndpointProviderBase =
     EndpointProviderBase<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
 
 using CloudSearchDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
+    BDDEndpointProvider<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDSEARCH_API CloudSearchEndpointProvider : public CloudSearchDefaultEpProviderBase
-{
-public:
-    using CloudSearchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDSEARCH_API CloudSearchEndpointProvider : public CloudSearchDefaultEpProviderBase {
+ public:
+  using CloudSearchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudSearchEndpointProvider()
-      : CloudSearchDefaultEpProviderBase(Aws::CloudSearch::CloudSearchEndpointRules::GetRulesBlob(), Aws::CloudSearch::CloudSearchEndpointRules::RulesBlobSize)
-    {}
+  CloudSearchEndpointProvider();
 
-    ~CloudSearchEndpointProvider()
-    {
-    }
+  ~CloudSearchEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudSearch
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudSearch
+}  // namespace Aws

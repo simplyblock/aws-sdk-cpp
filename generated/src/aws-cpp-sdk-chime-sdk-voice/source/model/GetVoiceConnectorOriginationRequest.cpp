@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetVoiceConnectorOriginationRequest::GetVoiceConnectorOriginationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false)
-{
-}
-
-Aws::String GetVoiceConnectorOriginationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetVoiceConnectorOriginationRequest::SerializePayload() const { return {}; }

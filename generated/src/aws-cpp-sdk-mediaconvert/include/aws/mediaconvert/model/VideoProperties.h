@@ -1,0 +1,343 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/mediaconvert/MediaConvert_EXPORTS.h>
+#include <aws/mediaconvert/model/AspectRatio.h>
+#include <aws/mediaconvert/model/CodecMetadata.h>
+#include <aws/mediaconvert/model/ColorPrimaries.h>
+#include <aws/mediaconvert/model/FrameRate.h>
+#include <aws/mediaconvert/model/HdrMetadata.h>
+#include <aws/mediaconvert/model/MatrixCoefficients.h>
+#include <aws/mediaconvert/model/TransferCharacteristics.h>
+
+#include <utility>
+
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
+
+/**
+ * Details about the media file's video track.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/VideoProperties">AWS
+ * API Reference</a></p>
+ */
+class VideoProperties {
+ public:
+  AWS_MEDIACONVERT_API VideoProperties() = default;
+  AWS_MEDIACONVERT_API VideoProperties(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API VideoProperties& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+  /**
+   * The number of bits used per color component such as 8, 10, or 12 bits. Standard
+   * range (SDR) video typically uses 8-bit, while 10-bit is common for high dynamic
+   * range (HDR).
+   */
+  inline int GetBitDepth() const { return m_bitDepth; }
+  inline bool BitDepthHasBeenSet() const { return m_bitDepthHasBeenSet; }
+  inline void SetBitDepth(int value) {
+    m_bitDepthHasBeenSet = true;
+    m_bitDepth = value;
+  }
+  inline VideoProperties& WithBitDepth(int value) {
+    SetBitDepth(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The bit rate of the video track, in bits per second.
+   */
+  inline long long GetBitRate() const { return m_bitRate; }
+  inline bool BitRateHasBeenSet() const { return m_bitRateHasBeenSet; }
+  inline void SetBitRate(long long value) {
+    m_bitRateHasBeenSet = true;
+    m_bitRate = value;
+  }
+  inline VideoProperties& WithBitRate(long long value) {
+    SetBitRate(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * Codec-specific parameters parsed from the video essence headers. This
+   * information provides detailed technical specifications about how the video was
+   * encoded, including profile settings, resolution details, and color space
+   * information that can help you understand the source video characteristics and
+   * make informed encoding decisions. These fields are returned for H.264 (AVC),
+   * H.265 (HEVC), and MPEG-2 video, and might not be returned for other codecs. For
+   * MPEG-TS and MPEG-PS inputs, color information (color primaries, transfer
+   * characteristics, and matrix coefficients) appears in these fields rather than in
+   * the top-level videoProperties.
+   */
+  inline const CodecMetadata& GetCodecMetadata() const { return m_codecMetadata; }
+  inline bool CodecMetadataHasBeenSet() const { return m_codecMetadataHasBeenSet; }
+  template <typename CodecMetadataT = CodecMetadata>
+  void SetCodecMetadata(CodecMetadataT&& value) {
+    m_codecMetadataHasBeenSet = true;
+    m_codecMetadata = std::forward<CodecMetadataT>(value);
+  }
+  template <typename CodecMetadataT = CodecMetadata>
+  VideoProperties& WithCodecMetadata(CodecMetadataT&& value) {
+    SetCodecMetadata(std::forward<CodecMetadataT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The color space primaries of the video track, defining the red, green, and blue
+   * color coordinates used for the video. This information helps ensure accurate
+   * color reproduction during playback and transcoding.
+   */
+  inline ColorPrimaries GetColorPrimaries() const { return m_colorPrimaries; }
+  inline bool ColorPrimariesHasBeenSet() const { return m_colorPrimariesHasBeenSet; }
+  inline void SetColorPrimaries(ColorPrimaries value) {
+    m_colorPrimariesHasBeenSet = true;
+    m_colorPrimaries = value;
+  }
+  inline VideoProperties& WithColorPrimaries(ColorPrimaries value) {
+    SetColorPrimaries(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * An aspect ratio expressed as a fraction with numerator and denominator values,
+   * reduced to lowest terms. Used for the sample (pixel) aspect ratio and the
+   * display aspect ratio of a video track. For example, a 720x576 anamorphic track
+   * has a sample aspect ratio of 64 / 45 and a display aspect ratio of 16 / 9. A
+   * video track can declare an aspect ratio in two independent places, and
+   * MediaConvert reports each one where it was found rather than choosing between
+   * them. The ratio declared by the container appears on the video track itself, and
+   * the ratio declared by the video essence appears under codecMetadata. When a file
+   * declares an aspect ratio in only one of the two places, the other is null; when
+   * it declares both and they disagree, you can compare them and decide which to
+   * use.
+   */
+  inline const AspectRatio& GetDisplayAspectRatio() const { return m_displayAspectRatio; }
+  inline bool DisplayAspectRatioHasBeenSet() const { return m_displayAspectRatioHasBeenSet; }
+  template <typename DisplayAspectRatioT = AspectRatio>
+  void SetDisplayAspectRatio(DisplayAspectRatioT&& value) {
+    m_displayAspectRatioHasBeenSet = true;
+    m_displayAspectRatio = std::forward<DisplayAspectRatioT>(value);
+  }
+  template <typename DisplayAspectRatioT = AspectRatio>
+  VideoProperties& WithDisplayAspectRatio(DisplayAspectRatioT&& value) {
+    SetDisplayAspectRatio(std::forward<DisplayAspectRatioT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The frame rate of the video or audio track, expressed as a fraction with
+   * numerator and denominator values.
+   */
+  inline const FrameRate& GetFrameRate() const { return m_frameRate; }
+  inline bool FrameRateHasBeenSet() const { return m_frameRateHasBeenSet; }
+  template <typename FrameRateT = FrameRate>
+  void SetFrameRate(FrameRateT&& value) {
+    m_frameRateHasBeenSet = true;
+    m_frameRate = std::forward<FrameRateT>(value);
+  }
+  template <typename FrameRateT = FrameRate>
+  VideoProperties& WithFrameRate(FrameRateT&& value) {
+    SetFrameRate(std::forward<FrameRateT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * HDR (High Dynamic Range) metadata extracted from the container, including
+   * mastering display color volume and content light level information. This
+   * metadata is present in HDR10 and similar HDR content.
+   */
+  inline const HdrMetadata& GetHdrMetadata() const { return m_hdrMetadata; }
+  inline bool HdrMetadataHasBeenSet() const { return m_hdrMetadataHasBeenSet; }
+  template <typename HdrMetadataT = HdrMetadata>
+  void SetHdrMetadata(HdrMetadataT&& value) {
+    m_hdrMetadataHasBeenSet = true;
+    m_hdrMetadata = std::forward<HdrMetadataT>(value);
+  }
+  template <typename HdrMetadataT = HdrMetadata>
+  VideoProperties& WithHdrMetadata(HdrMetadataT&& value) {
+    SetHdrMetadata(std::forward<HdrMetadataT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The height of the video track, in pixels.
+   */
+  inline int GetHeight() const { return m_height; }
+  inline bool HeightHasBeenSet() const { return m_heightHasBeenSet; }
+  inline void SetHeight(int value) {
+    m_heightHasBeenSet = true;
+    m_height = value;
+  }
+  inline VideoProperties& WithHeight(int value) {
+    SetHeight(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The color space matrix coefficients of the video track, defining how RGB color
+   * values are converted to and from YUV color space. This affects color accuracy
+   * during encoding and decoding processes.
+   */
+  inline MatrixCoefficients GetMatrixCoefficients() const { return m_matrixCoefficients; }
+  inline bool MatrixCoefficientsHasBeenSet() const { return m_matrixCoefficientsHasBeenSet; }
+  inline void SetMatrixCoefficients(MatrixCoefficients value) {
+    m_matrixCoefficientsHasBeenSet = true;
+    m_matrixCoefficients = value;
+  }
+  inline VideoProperties& WithMatrixCoefficients(MatrixCoefficients value) {
+    SetMatrixCoefficients(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The clockwise rotation angle of the video track, in degrees, as derived from
+   * container-level metadata (e.g. the MP4 tkhd transformation matrix or the
+   * Matroska ProjectionPoseRoll element). Common values are 90, 180, and 270. This
+   * field is null when no rotation metadata is present or when the rotation is 0
+   * degrees. For MP4, non-standard transformation matrices also yield null.
+   */
+  inline int GetRotation() const { return m_rotation; }
+  inline bool RotationHasBeenSet() const { return m_rotationHasBeenSet; }
+  inline void SetRotation(int value) {
+    m_rotationHasBeenSet = true;
+    m_rotation = value;
+  }
+  inline VideoProperties& WithRotation(int value) {
+    SetRotation(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * An aspect ratio expressed as a fraction with numerator and denominator values,
+   * reduced to lowest terms. Used for the sample (pixel) aspect ratio and the
+   * display aspect ratio of a video track. For example, a 720x576 anamorphic track
+   * has a sample aspect ratio of 64 / 45 and a display aspect ratio of 16 / 9. A
+   * video track can declare an aspect ratio in two independent places, and
+   * MediaConvert reports each one where it was found rather than choosing between
+   * them. The ratio declared by the container appears on the video track itself, and
+   * the ratio declared by the video essence appears under codecMetadata. When a file
+   * declares an aspect ratio in only one of the two places, the other is null; when
+   * it declares both and they disagree, you can compare them and decide which to
+   * use.
+   */
+  inline const AspectRatio& GetSampleAspectRatio() const { return m_sampleAspectRatio; }
+  inline bool SampleAspectRatioHasBeenSet() const { return m_sampleAspectRatioHasBeenSet; }
+  template <typename SampleAspectRatioT = AspectRatio>
+  void SetSampleAspectRatio(SampleAspectRatioT&& value) {
+    m_sampleAspectRatioHasBeenSet = true;
+    m_sampleAspectRatio = std::forward<SampleAspectRatioT>(value);
+  }
+  template <typename SampleAspectRatioT = AspectRatio>
+  VideoProperties& WithSampleAspectRatio(SampleAspectRatioT&& value) {
+    SetSampleAspectRatio(std::forward<SampleAspectRatioT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The color space transfer characteristics of the video track, defining the
+   * relationship between linear light values and the encoded signal values. This
+   * affects brightness and contrast reproduction.
+   */
+  inline TransferCharacteristics GetTransferCharacteristics() const { return m_transferCharacteristics; }
+  inline bool TransferCharacteristicsHasBeenSet() const { return m_transferCharacteristicsHasBeenSet; }
+  inline void SetTransferCharacteristics(TransferCharacteristics value) {
+    m_transferCharacteristicsHasBeenSet = true;
+    m_transferCharacteristics = value;
+  }
+  inline VideoProperties& WithTransferCharacteristics(TransferCharacteristics value) {
+    SetTransferCharacteristics(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The width of the video track, in pixels.
+   */
+  inline int GetWidth() const { return m_width; }
+  inline bool WidthHasBeenSet() const { return m_widthHasBeenSet; }
+  inline void SetWidth(int value) {
+    m_widthHasBeenSet = true;
+    m_width = value;
+  }
+  inline VideoProperties& WithWidth(int value) {
+    SetWidth(value);
+    return *this;
+  }
+  ///@}
+ private:
+  int m_bitDepth{0};
+
+  long long m_bitRate{0};
+
+  CodecMetadata m_codecMetadata;
+
+  ColorPrimaries m_colorPrimaries{ColorPrimaries::NOT_SET};
+
+  AspectRatio m_displayAspectRatio;
+
+  FrameRate m_frameRate;
+
+  HdrMetadata m_hdrMetadata;
+
+  int m_height{0};
+
+  MatrixCoefficients m_matrixCoefficients{MatrixCoefficients::NOT_SET};
+
+  int m_rotation{0};
+
+  AspectRatio m_sampleAspectRatio;
+
+  TransferCharacteristics m_transferCharacteristics{TransferCharacteristics::NOT_SET};
+
+  int m_width{0};
+  bool m_bitDepthHasBeenSet = false;
+  bool m_bitRateHasBeenSet = false;
+  bool m_codecMetadataHasBeenSet = false;
+  bool m_colorPrimariesHasBeenSet = false;
+  bool m_displayAspectRatioHasBeenSet = false;
+  bool m_frameRateHasBeenSet = false;
+  bool m_hdrMetadataHasBeenSet = false;
+  bool m_heightHasBeenSet = false;
+  bool m_matrixCoefficientsHasBeenSet = false;
+  bool m_rotationHasBeenSet = false;
+  bool m_sampleAspectRatioHasBeenSet = false;
+  bool m_transferCharacteristicsHasBeenSet = false;
+  bool m_widthHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

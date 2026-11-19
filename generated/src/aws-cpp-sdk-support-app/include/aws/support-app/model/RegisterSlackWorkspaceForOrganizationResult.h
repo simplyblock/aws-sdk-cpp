@@ -4,95 +4,113 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/support-app/SupportApp_EXPORTS.h>
 #include <aws/support-app/model/AccountType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SupportApp
-{
-namespace Model
-{
-  class RegisterSlackWorkspaceForOrganizationResult
-  {
-  public:
-    AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult();
-    AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SupportApp {
+namespace Model {
+class RegisterSlackWorkspaceForOrganizationResult {
+ public:
+  AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult() = default;
+  AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SUPPORTAPP_API RegisterSlackWorkspaceForOrganizationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Whether the Amazon Web Services account is a management or member account
+   * that's part of an organization in Organizations.</p>
+   */
+  inline AccountType GetAccountType() const { return m_accountType; }
+  inline void SetAccountType(AccountType value) {
+    m_accountTypeHasBeenSet = true;
+    m_accountType = value;
+  }
+  inline RegisterSlackWorkspaceForOrganizationResult& WithAccountType(AccountType value) {
+    SetAccountType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether the Amazon Web Services account is a management or member account
-     * that's part of an organization in Organizations.</p>
-     */
-    inline const AccountType& GetAccountType() const{ return m_accountType; }
-    inline void SetAccountType(const AccountType& value) { m_accountType = value; }
-    inline void SetAccountType(AccountType&& value) { m_accountType = std::move(value); }
-    inline RegisterSlackWorkspaceForOrganizationResult& WithAccountType(const AccountType& value) { SetAccountType(value); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithAccountType(AccountType&& value) { SetAccountType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The team ID in Slack. This ID uniquely identifies a Slack workspace, such as
+   * <code>T012ABCDEFG</code>.</p>
+   */
+  inline const Aws::String& GetTeamId() const { return m_teamId; }
+  template <typename TeamIdT = Aws::String>
+  void SetTeamId(TeamIdT&& value) {
+    m_teamIdHasBeenSet = true;
+    m_teamId = std::forward<TeamIdT>(value);
+  }
+  template <typename TeamIdT = Aws::String>
+  RegisterSlackWorkspaceForOrganizationResult& WithTeamId(TeamIdT&& value) {
+    SetTeamId(std::forward<TeamIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The team ID in Slack. This ID uniquely identifies a Slack workspace, such as
-     * <code>T012ABCDEFG</code>.</p>
-     */
-    inline const Aws::String& GetTeamId() const{ return m_teamId; }
-    inline void SetTeamId(const Aws::String& value) { m_teamId = value; }
-    inline void SetTeamId(Aws::String&& value) { m_teamId = std::move(value); }
-    inline void SetTeamId(const char* value) { m_teamId.assign(value); }
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamId(const Aws::String& value) { SetTeamId(value); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamId(Aws::String&& value) { SetTeamId(std::move(value)); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamId(const char* value) { SetTeamId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the Slack workspace.</p>
+   */
+  inline const Aws::String& GetTeamName() const { return m_teamName; }
+  template <typename TeamNameT = Aws::String>
+  void SetTeamName(TeamNameT&& value) {
+    m_teamNameHasBeenSet = true;
+    m_teamName = std::forward<TeamNameT>(value);
+  }
+  template <typename TeamNameT = Aws::String>
+  RegisterSlackWorkspaceForOrganizationResult& WithTeamName(TeamNameT&& value) {
+    SetTeamName(std::forward<TeamNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the Slack workspace.</p>
-     */
-    inline const Aws::String& GetTeamName() const{ return m_teamName; }
-    inline void SetTeamName(const Aws::String& value) { m_teamName = value; }
-    inline void SetTeamName(Aws::String&& value) { m_teamName = std::move(value); }
-    inline void SetTeamName(const char* value) { m_teamName.assign(value); }
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamName(const Aws::String& value) { SetTeamName(value); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamName(Aws::String&& value) { SetTeamName(std::move(value)); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithTeamName(const char* value) { SetTeamName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RegisterSlackWorkspaceForOrganizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RegisterSlackWorkspaceForOrganizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RegisterSlackWorkspaceForOrganizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AccountType m_accountType;
+ private:
+  AccountType m_accountType{AccountType::NOT_SET};
 
-    Aws::String m_teamId;
+  Aws::String m_teamId;
 
-    Aws::String m_teamName;
+  Aws::String m_teamName;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountTypeHasBeenSet = false;
+  bool m_teamIdHasBeenSet = false;
+  bool m_teamNameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SupportApp
-} // namespace Aws
+}  // namespace Model
+}  // namespace SupportApp
+}  // namespace Aws

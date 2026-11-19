@@ -12,32 +12,18 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCalculationExecutionRequest::GetCalculationExecutionRequest() : 
-    m_calculationExecutionIdHasBeenSet(false)
-{
-}
-
-Aws::String GetCalculationExecutionRequest::SerializePayload() const
-{
+Aws::String GetCalculationExecutionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_calculationExecutionIdHasBeenSet)
-  {
-   payload.WithString("CalculationExecutionId", m_calculationExecutionId);
-
+  if (m_calculationExecutionIdHasBeenSet) {
+    payload.WithString("CalculationExecutionId", m_calculationExecutionId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetCalculationExecutionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetCalculationExecutionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.GetCalculationExecution"));
   return headers;
-
 }
-
-
-
-

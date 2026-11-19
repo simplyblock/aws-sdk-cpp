@@ -4,79 +4,86 @@
  */
 
 #pragma once
-#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/kendra/model/DataSourceToIndexFieldMapping.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace kendra
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace kendra {
+namespace Model {
 
+/**
+ * <p>Provides the configuration information for processing attachments to
+ * Salesforce standard objects.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/SalesforceStandardObjectAttachmentConfiguration">AWS
+ * API Reference</a></p>
+ */
+class SalesforceStandardObjectAttachmentConfiguration {
+ public:
+  AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration() = default;
+  AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides the configuration information for processing attachments to
-   * Salesforce standard objects.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/SalesforceStandardObjectAttachmentConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The name of the field used for the document title.</p>
    */
-  class SalesforceStandardObjectAttachmentConfiguration
-  {
-  public:
-    AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration();
-    AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API SalesforceStandardObjectAttachmentConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDocumentTitleFieldName() const { return m_documentTitleFieldName; }
+  inline bool DocumentTitleFieldNameHasBeenSet() const { return m_documentTitleFieldNameHasBeenSet; }
+  template <typename DocumentTitleFieldNameT = Aws::String>
+  void SetDocumentTitleFieldName(DocumentTitleFieldNameT&& value) {
+    m_documentTitleFieldNameHasBeenSet = true;
+    m_documentTitleFieldName = std::forward<DocumentTitleFieldNameT>(value);
+  }
+  template <typename DocumentTitleFieldNameT = Aws::String>
+  SalesforceStandardObjectAttachmentConfiguration& WithDocumentTitleFieldName(DocumentTitleFieldNameT&& value) {
+    SetDocumentTitleFieldName(std::forward<DocumentTitleFieldNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>One or more objects that map fields in attachments to Amazon Kendra index
+   * fields.</p>
+   */
+  inline const Aws::Vector<DataSourceToIndexFieldMapping>& GetFieldMappings() const { return m_fieldMappings; }
+  inline bool FieldMappingsHasBeenSet() const { return m_fieldMappingsHasBeenSet; }
+  template <typename FieldMappingsT = Aws::Vector<DataSourceToIndexFieldMapping>>
+  void SetFieldMappings(FieldMappingsT&& value) {
+    m_fieldMappingsHasBeenSet = true;
+    m_fieldMappings = std::forward<FieldMappingsT>(value);
+  }
+  template <typename FieldMappingsT = Aws::Vector<DataSourceToIndexFieldMapping>>
+  SalesforceStandardObjectAttachmentConfiguration& WithFieldMappings(FieldMappingsT&& value) {
+    SetFieldMappings(std::forward<FieldMappingsT>(value));
+    return *this;
+  }
+  template <typename FieldMappingsT = DataSourceToIndexFieldMapping>
+  SalesforceStandardObjectAttachmentConfiguration& AddFieldMappings(FieldMappingsT&& value) {
+    m_fieldMappingsHasBeenSet = true;
+    m_fieldMappings.emplace_back(std::forward<FieldMappingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_documentTitleFieldName;
 
-    ///@{
-    /**
-     * <p>The name of the field used for the document title.</p>
-     */
-    inline const Aws::String& GetDocumentTitleFieldName() const{ return m_documentTitleFieldName; }
-    inline bool DocumentTitleFieldNameHasBeenSet() const { return m_documentTitleFieldNameHasBeenSet; }
-    inline void SetDocumentTitleFieldName(const Aws::String& value) { m_documentTitleFieldNameHasBeenSet = true; m_documentTitleFieldName = value; }
-    inline void SetDocumentTitleFieldName(Aws::String&& value) { m_documentTitleFieldNameHasBeenSet = true; m_documentTitleFieldName = std::move(value); }
-    inline void SetDocumentTitleFieldName(const char* value) { m_documentTitleFieldNameHasBeenSet = true; m_documentTitleFieldName.assign(value); }
-    inline SalesforceStandardObjectAttachmentConfiguration& WithDocumentTitleFieldName(const Aws::String& value) { SetDocumentTitleFieldName(value); return *this;}
-    inline SalesforceStandardObjectAttachmentConfiguration& WithDocumentTitleFieldName(Aws::String&& value) { SetDocumentTitleFieldName(std::move(value)); return *this;}
-    inline SalesforceStandardObjectAttachmentConfiguration& WithDocumentTitleFieldName(const char* value) { SetDocumentTitleFieldName(value); return *this;}
-    ///@}
+  Aws::Vector<DataSourceToIndexFieldMapping> m_fieldMappings;
+  bool m_documentTitleFieldNameHasBeenSet = false;
+  bool m_fieldMappingsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>One or more objects that map fields in attachments to Amazon Kendra index
-     * fields.</p>
-     */
-    inline const Aws::Vector<DataSourceToIndexFieldMapping>& GetFieldMappings() const{ return m_fieldMappings; }
-    inline bool FieldMappingsHasBeenSet() const { return m_fieldMappingsHasBeenSet; }
-    inline void SetFieldMappings(const Aws::Vector<DataSourceToIndexFieldMapping>& value) { m_fieldMappingsHasBeenSet = true; m_fieldMappings = value; }
-    inline void SetFieldMappings(Aws::Vector<DataSourceToIndexFieldMapping>&& value) { m_fieldMappingsHasBeenSet = true; m_fieldMappings = std::move(value); }
-    inline SalesforceStandardObjectAttachmentConfiguration& WithFieldMappings(const Aws::Vector<DataSourceToIndexFieldMapping>& value) { SetFieldMappings(value); return *this;}
-    inline SalesforceStandardObjectAttachmentConfiguration& WithFieldMappings(Aws::Vector<DataSourceToIndexFieldMapping>&& value) { SetFieldMappings(std::move(value)); return *this;}
-    inline SalesforceStandardObjectAttachmentConfiguration& AddFieldMappings(const DataSourceToIndexFieldMapping& value) { m_fieldMappingsHasBeenSet = true; m_fieldMappings.push_back(value); return *this; }
-    inline SalesforceStandardObjectAttachmentConfiguration& AddFieldMappings(DataSourceToIndexFieldMapping&& value) { m_fieldMappingsHasBeenSet = true; m_fieldMappings.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_documentTitleFieldName;
-    bool m_documentTitleFieldNameHasBeenSet = false;
-
-    Aws::Vector<DataSourceToIndexFieldMapping> m_fieldMappings;
-    bool m_fieldMappingsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

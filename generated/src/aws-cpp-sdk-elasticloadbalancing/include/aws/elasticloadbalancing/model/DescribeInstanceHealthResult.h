@@ -4,69 +4,85 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/elasticloadbalancing/model/InstanceState.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the output for DescribeInstanceHealth.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeEndPointStateOutput">AWS
+ * API Reference</a></p>
+ */
+class DescribeInstanceHealthResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult() = default;
+  AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output for DescribeInstanceHealth.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeEndPointStateOutput">AWS
-   * API Reference</a></p>
+   * <p>Information about the health of the instances.</p>
    */
-  class DescribeInstanceHealthResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult();
-    AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API DescribeInstanceHealthResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<InstanceState>& GetInstanceStates() const { return m_instanceStates; }
+  template <typename InstanceStatesT = Aws::Vector<InstanceState>>
+  void SetInstanceStates(InstanceStatesT&& value) {
+    m_instanceStatesHasBeenSet = true;
+    m_instanceStates = std::forward<InstanceStatesT>(value);
+  }
+  template <typename InstanceStatesT = Aws::Vector<InstanceState>>
+  DescribeInstanceHealthResult& WithInstanceStates(InstanceStatesT&& value) {
+    SetInstanceStates(std::forward<InstanceStatesT>(value));
+    return *this;
+  }
+  template <typename InstanceStatesT = InstanceState>
+  DescribeInstanceHealthResult& AddInstanceStates(InstanceStatesT&& value) {
+    m_instanceStatesHasBeenSet = true;
+    m_instanceStates.emplace_back(std::forward<InstanceStatesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the health of the instances.</p>
-     */
-    inline const Aws::Vector<InstanceState>& GetInstanceStates() const{ return m_instanceStates; }
-    inline void SetInstanceStates(const Aws::Vector<InstanceState>& value) { m_instanceStates = value; }
-    inline void SetInstanceStates(Aws::Vector<InstanceState>&& value) { m_instanceStates = std::move(value); }
-    inline DescribeInstanceHealthResult& WithInstanceStates(const Aws::Vector<InstanceState>& value) { SetInstanceStates(value); return *this;}
-    inline DescribeInstanceHealthResult& WithInstanceStates(Aws::Vector<InstanceState>&& value) { SetInstanceStates(std::move(value)); return *this;}
-    inline DescribeInstanceHealthResult& AddInstanceStates(const InstanceState& value) { m_instanceStates.push_back(value); return *this; }
-    inline DescribeInstanceHealthResult& AddInstanceStates(InstanceState&& value) { m_instanceStates.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeInstanceHealthResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeInstanceHealthResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeInstanceHealthResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<InstanceState> m_instanceStates;
 
-    Aws::Vector<InstanceState> m_instanceStates;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceStatesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

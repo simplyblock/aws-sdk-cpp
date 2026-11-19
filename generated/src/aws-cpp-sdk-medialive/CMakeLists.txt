@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-medialive "C++ SDK for the AWS medialive service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-medialive "C++ SDK for AWS Elemental MediaLive" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEDIALIVE_HEADERS
     "include/aws/medialive/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEDIALIVE_HEADERS
 
 file(GLOB AWS_MEDIALIVE_MODEL_HEADERS
     "include/aws/medialive/model/*.h"
+)
+
+file(GLOB AWS_MEDIALIVE_INTERNAL_HEADERS
+    "include/aws/medialive/internal/*.h"
 )
 
 file(GLOB AWS_MEDIALIVE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEDIALIVE_MODEL_SOURCE
 
 file(GLOB MEDIALIVE_UNIFIED_HEADERS
     ${AWS_MEDIALIVE_HEADERS}
+    ${AWS_MEDIALIVE_INTERNAL_HEADERS}
     ${AWS_MEDIALIVE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\medialive" FILES ${AWS_MEDIALIVE_HEADERS})
+        source_group("Header Files\\aws\\medialive\\internal" FILES ${AWS_MEDIALIVE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\medialive\\model" FILES ${AWS_MEDIALIVE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEDIALIVE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEDIALIVE_MODEL_SOURCE})

@@ -4,141 +4,243 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/guardduty/model/FilterAction.h>
 #include <aws/guardduty/model/FindingCriteria.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
-  class GetFilterResult
-  {
-  public:
-    AWS_GUARDDUTY_API GetFilterResult();
-    AWS_GUARDDUTY_API GetFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GUARDDUTY_API GetFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
+class GetFilterResult {
+ public:
+  AWS_GUARDDUTY_API GetFilterResult() = default;
+  AWS_GUARDDUTY_API GetFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GUARDDUTY_API GetFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name of the filter.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetFilterResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the filter.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline GetFilterResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetFilterResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetFilterResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the filter.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  GetFilterResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the filter.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline GetFilterResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline GetFilterResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline GetFilterResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the action that is to be applied to the findings that match the
+   * filter.</p>
+   */
+  inline FilterAction GetAction() const { return m_action; }
+  inline void SetAction(FilterAction value) {
+    m_actionHasBeenSet = true;
+    m_action = value;
+  }
+  inline GetFilterResult& WithAction(FilterAction value) {
+    SetAction(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the action that is to be applied to the findings that match the
-     * filter.</p>
-     */
-    inline const FilterAction& GetAction() const{ return m_action; }
-    inline void SetAction(const FilterAction& value) { m_action = value; }
-    inline void SetAction(FilterAction&& value) { m_action = std::move(value); }
-    inline GetFilterResult& WithAction(const FilterAction& value) { SetAction(value); return *this;}
-    inline GetFilterResult& WithAction(FilterAction&& value) { SetAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the position of the filter in the list of current filters. Also
+   * specifies the order in which this filter is applied to the findings.</p>
+   */
+  inline int GetRank() const { return m_rank; }
+  inline void SetRank(int value) {
+    m_rankHasBeenSet = true;
+    m_rank = value;
+  }
+  inline GetFilterResult& WithRank(int value) {
+    SetRank(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the position of the filter in the list of current filters. Also
-     * specifies the order in which this filter is applied to the findings.</p>
-     */
-    inline int GetRank() const{ return m_rank; }
-    inline void SetRank(int value) { m_rank = value; }
-    inline GetFilterResult& WithRank(int value) { SetRank(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Represents the criteria to be used in the filter for querying findings.</p>
+   */
+  inline const FindingCriteria& GetFindingCriteria() const { return m_findingCriteria; }
+  template <typename FindingCriteriaT = FindingCriteria>
+  void SetFindingCriteria(FindingCriteriaT&& value) {
+    m_findingCriteriaHasBeenSet = true;
+    m_findingCriteria = std::forward<FindingCriteriaT>(value);
+  }
+  template <typename FindingCriteriaT = FindingCriteria>
+  GetFilterResult& WithFindingCriteria(FindingCriteriaT&& value) {
+    SetFindingCriteria(std::forward<FindingCriteriaT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Represents the criteria to be used in the filter for querying findings.</p>
-     */
-    inline const FindingCriteria& GetFindingCriteria() const{ return m_findingCriteria; }
-    inline void SetFindingCriteria(const FindingCriteria& value) { m_findingCriteria = value; }
-    inline void SetFindingCriteria(FindingCriteria&& value) { m_findingCriteria = std::move(value); }
-    inline GetFilterResult& WithFindingCriteria(const FindingCriteria& value) { SetFindingCriteria(value); return *this;}
-    inline GetFilterResult& WithFindingCriteria(FindingCriteria&& value) { SetFindingCriteria(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags of the filter resource.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  GetFilterResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  GetFilterResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags of the filter resource.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline GetFilterResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline GetFilterResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline GetFilterResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline GetFilterResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetFilterResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetFilterResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetFilterResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetFilterResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetFilterResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp when the filter was created. This field is not available for
+   * filters that were created before the lifecycle metadata feature was enabled
+   * (legacy filters).</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetFilterResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetFilterResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetFilterResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetFilterResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The timestamp when the filter was last updated. For legacy filters, this
+   * field is present only after the filter has been updated at least once since the
+   * lifecycle metadata feature was enabled.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetFilterResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_name;
+  ///@{
+  /**
+   * <p>The version of the filter. Every time the filter is updated, the version
+   * increments by 1. This field is not available for legacy filters that were
+   * created before the lifecycle metadata feature was enabled.</p>
+   */
+  inline long long GetVersion() const { return m_version; }
+  inline void SetVersion(long long value) {
+    m_versionHasBeenSet = true;
+    m_version = value;
+  }
+  inline GetFilterResult& WithVersion(long long value) {
+    SetVersion(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_description;
+  ///@{
 
-    FilterAction m_action;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetFilterResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    int m_rank;
+ private:
+  Aws::String m_name;
 
-    FindingCriteria m_findingCriteria;
+  Aws::String m_description;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  FilterAction m_action{FilterAction::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  int m_rank{0};
 
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+  FindingCriteria m_findingCriteria;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+
+  Aws::Utils::DateTime m_createdAt{};
+
+  Aws::Utils::DateTime m_updatedAt{};
+
+  long long m_version{0};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_actionHasBeenSet = false;
+  bool m_rankHasBeenSet = false;
+  bool m_findingCriteriaHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_versionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

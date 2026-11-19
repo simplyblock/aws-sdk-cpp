@@ -4,13 +4,15 @@
  */
 
 #include <aws/neptune-graph/NeptuneGraphEndpointProvider.h>
+#include <aws/neptune-graph/internal/NeptuneGraphEndpointRules.h>
 
-namespace Aws
-{
-namespace NeptuneGraph
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace NeptuneGraph
-} // namespace Aws
+namespace Aws {
+namespace NeptuneGraph {
+namespace Endpoint {
+NeptuneGraphEndpointProvider::NeptuneGraphEndpointProvider()
+    : NeptuneGraphDefaultEpProviderBase(Aws::NeptuneGraph::NeptuneGraphEndpointRules::GetRulesBlob(),
+                                        Aws::NeptuneGraph::NeptuneGraphEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace NeptuneGraph
+}  // namespace Aws

@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/CacheParameterGroup.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class CreateCacheParameterGroupResult
-  {
-  public:
-    AWS_ELASTICACHE_API CreateCacheParameterGroupResult();
-    AWS_ELASTICACHE_API CreateCacheParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API CreateCacheParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class CreateCacheParameterGroupResult {
+ public:
+  AWS_ELASTICACHE_API CreateCacheParameterGroupResult() = default;
+  AWS_ELASTICACHE_API CreateCacheParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API CreateCacheParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const CacheParameterGroup& GetCacheParameterGroup() const{ return m_cacheParameterGroup; }
-    inline void SetCacheParameterGroup(const CacheParameterGroup& value) { m_cacheParameterGroup = value; }
-    inline void SetCacheParameterGroup(CacheParameterGroup&& value) { m_cacheParameterGroup = std::move(value); }
-    inline CreateCacheParameterGroupResult& WithCacheParameterGroup(const CacheParameterGroup& value) { SetCacheParameterGroup(value); return *this;}
-    inline CreateCacheParameterGroupResult& WithCacheParameterGroup(CacheParameterGroup&& value) { SetCacheParameterGroup(std::move(value)); return *this;}
-    ///@}
+  inline const CacheParameterGroup& GetCacheParameterGroup() const { return m_cacheParameterGroup; }
+  template <typename CacheParameterGroupT = CacheParameterGroup>
+  void SetCacheParameterGroup(CacheParameterGroupT&& value) {
+    m_cacheParameterGroupHasBeenSet = true;
+    m_cacheParameterGroup = std::forward<CacheParameterGroupT>(value);
+  }
+  template <typename CacheParameterGroupT = CacheParameterGroup>
+  CreateCacheParameterGroupResult& WithCacheParameterGroup(CacheParameterGroupT&& value) {
+    SetCacheParameterGroup(std::forward<CacheParameterGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateCacheParameterGroupResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateCacheParameterGroupResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    CacheParameterGroup m_cacheParameterGroup;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateCacheParameterGroupResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  CacheParameterGroup m_cacheParameterGroup;
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_cacheParameterGroupHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

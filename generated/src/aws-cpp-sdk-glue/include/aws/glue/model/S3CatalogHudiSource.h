@@ -4,135 +4,155 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/GlueSchema.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Specifies a Hudi data source that is registered in the Glue Data Catalog. The
+ * Hudi data source must be stored in Amazon S3.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/S3CatalogHudiSource">AWS
+ * API Reference</a></p>
+ */
+class S3CatalogHudiSource {
+ public:
+  AWS_GLUE_API S3CatalogHudiSource() = default;
+  AWS_GLUE_API S3CatalogHudiSource(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API S3CatalogHudiSource& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies a Hudi data source that is registered in the Glue Data Catalog. The
-   * Hudi data source must be stored in Amazon S3.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/S3CatalogHudiSource">AWS
-   * API Reference</a></p>
+   * <p>The name of the Hudi data source.</p>
    */
-  class S3CatalogHudiSource
-  {
-  public:
-    AWS_GLUE_API S3CatalogHudiSource();
-    AWS_GLUE_API S3CatalogHudiSource(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API S3CatalogHudiSource& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  S3CatalogHudiSource& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the database to read from.</p>
+   */
+  inline const Aws::String& GetDatabase() const { return m_database; }
+  inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
+  template <typename DatabaseT = Aws::String>
+  void SetDatabase(DatabaseT&& value) {
+    m_databaseHasBeenSet = true;
+    m_database = std::forward<DatabaseT>(value);
+  }
+  template <typename DatabaseT = Aws::String>
+  S3CatalogHudiSource& WithDatabase(DatabaseT&& value) {
+    SetDatabase(std::forward<DatabaseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the Hudi data source.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline S3CatalogHudiSource& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline S3CatalogHudiSource& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline S3CatalogHudiSource& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the table in the database to read from.</p>
+   */
+  inline const Aws::String& GetTable() const { return m_table; }
+  inline bool TableHasBeenSet() const { return m_tableHasBeenSet; }
+  template <typename TableT = Aws::String>
+  void SetTable(TableT&& value) {
+    m_tableHasBeenSet = true;
+    m_table = std::forward<TableT>(value);
+  }
+  template <typename TableT = Aws::String>
+  S3CatalogHudiSource& WithTable(TableT&& value) {
+    SetTable(std::forward<TableT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the database to read from.</p>
-     */
-    inline const Aws::String& GetDatabase() const{ return m_database; }
-    inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
-    inline void SetDatabase(const Aws::String& value) { m_databaseHasBeenSet = true; m_database = value; }
-    inline void SetDatabase(Aws::String&& value) { m_databaseHasBeenSet = true; m_database = std::move(value); }
-    inline void SetDatabase(const char* value) { m_databaseHasBeenSet = true; m_database.assign(value); }
-    inline S3CatalogHudiSource& WithDatabase(const Aws::String& value) { SetDatabase(value); return *this;}
-    inline S3CatalogHudiSource& WithDatabase(Aws::String&& value) { SetDatabase(std::move(value)); return *this;}
-    inline S3CatalogHudiSource& WithDatabase(const char* value) { SetDatabase(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies additional connection options.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetAdditionalHudiOptions() const { return m_additionalHudiOptions; }
+  inline bool AdditionalHudiOptionsHasBeenSet() const { return m_additionalHudiOptionsHasBeenSet; }
+  template <typename AdditionalHudiOptionsT = Aws::Map<Aws::String, Aws::String>>
+  void SetAdditionalHudiOptions(AdditionalHudiOptionsT&& value) {
+    m_additionalHudiOptionsHasBeenSet = true;
+    m_additionalHudiOptions = std::forward<AdditionalHudiOptionsT>(value);
+  }
+  template <typename AdditionalHudiOptionsT = Aws::Map<Aws::String, Aws::String>>
+  S3CatalogHudiSource& WithAdditionalHudiOptions(AdditionalHudiOptionsT&& value) {
+    SetAdditionalHudiOptions(std::forward<AdditionalHudiOptionsT>(value));
+    return *this;
+  }
+  template <typename AdditionalHudiOptionsKeyT = Aws::String, typename AdditionalHudiOptionsValueT = Aws::String>
+  S3CatalogHudiSource& AddAdditionalHudiOptions(AdditionalHudiOptionsKeyT&& key, AdditionalHudiOptionsValueT&& value) {
+    m_additionalHudiOptionsHasBeenSet = true;
+    m_additionalHudiOptions.emplace(std::forward<AdditionalHudiOptionsKeyT>(key), std::forward<AdditionalHudiOptionsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the table in the database to read from.</p>
-     */
-    inline const Aws::String& GetTable() const{ return m_table; }
-    inline bool TableHasBeenSet() const { return m_tableHasBeenSet; }
-    inline void SetTable(const Aws::String& value) { m_tableHasBeenSet = true; m_table = value; }
-    inline void SetTable(Aws::String&& value) { m_tableHasBeenSet = true; m_table = std::move(value); }
-    inline void SetTable(const char* value) { m_tableHasBeenSet = true; m_table.assign(value); }
-    inline S3CatalogHudiSource& WithTable(const Aws::String& value) { SetTable(value); return *this;}
-    inline S3CatalogHudiSource& WithTable(Aws::String&& value) { SetTable(std::move(value)); return *this;}
-    inline S3CatalogHudiSource& WithTable(const char* value) { SetTable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the data schema for the Hudi source.</p>
+   */
+  inline const Aws::Vector<GlueSchema>& GetOutputSchemas() const { return m_outputSchemas; }
+  inline bool OutputSchemasHasBeenSet() const { return m_outputSchemasHasBeenSet; }
+  template <typename OutputSchemasT = Aws::Vector<GlueSchema>>
+  void SetOutputSchemas(OutputSchemasT&& value) {
+    m_outputSchemasHasBeenSet = true;
+    m_outputSchemas = std::forward<OutputSchemasT>(value);
+  }
+  template <typename OutputSchemasT = Aws::Vector<GlueSchema>>
+  S3CatalogHudiSource& WithOutputSchemas(OutputSchemasT&& value) {
+    SetOutputSchemas(std::forward<OutputSchemasT>(value));
+    return *this;
+  }
+  template <typename OutputSchemasT = GlueSchema>
+  S3CatalogHudiSource& AddOutputSchemas(OutputSchemasT&& value) {
+    m_outputSchemasHasBeenSet = true;
+    m_outputSchemas.emplace_back(std::forward<OutputSchemasT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>Specifies additional connection options.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetAdditionalHudiOptions() const{ return m_additionalHudiOptions; }
-    inline bool AdditionalHudiOptionsHasBeenSet() const { return m_additionalHudiOptionsHasBeenSet; }
-    inline void SetAdditionalHudiOptions(const Aws::Map<Aws::String, Aws::String>& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions = value; }
-    inline void SetAdditionalHudiOptions(Aws::Map<Aws::String, Aws::String>&& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions = std::move(value); }
-    inline S3CatalogHudiSource& WithAdditionalHudiOptions(const Aws::Map<Aws::String, Aws::String>& value) { SetAdditionalHudiOptions(value); return *this;}
-    inline S3CatalogHudiSource& WithAdditionalHudiOptions(Aws::Map<Aws::String, Aws::String>&& value) { SetAdditionalHudiOptions(std::move(value)); return *this;}
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(const Aws::String& key, const Aws::String& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(key, value); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(Aws::String&& key, const Aws::String& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(std::move(key), value); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(const Aws::String& key, Aws::String&& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(key, std::move(value)); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(Aws::String&& key, Aws::String&& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(std::move(key), std::move(value)); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(const char* key, Aws::String&& value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(key, std::move(value)); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(Aws::String&& key, const char* value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(std::move(key), value); return *this; }
-    inline S3CatalogHudiSource& AddAdditionalHudiOptions(const char* key, const char* value) { m_additionalHudiOptionsHasBeenSet = true; m_additionalHudiOptions.emplace(key, value); return *this; }
-    ///@}
+  Aws::String m_database;
 
-    ///@{
-    /**
-     * <p>Specifies the data schema for the Hudi source.</p>
-     */
-    inline const Aws::Vector<GlueSchema>& GetOutputSchemas() const{ return m_outputSchemas; }
-    inline bool OutputSchemasHasBeenSet() const { return m_outputSchemasHasBeenSet; }
-    inline void SetOutputSchemas(const Aws::Vector<GlueSchema>& value) { m_outputSchemasHasBeenSet = true; m_outputSchemas = value; }
-    inline void SetOutputSchemas(Aws::Vector<GlueSchema>&& value) { m_outputSchemasHasBeenSet = true; m_outputSchemas = std::move(value); }
-    inline S3CatalogHudiSource& WithOutputSchemas(const Aws::Vector<GlueSchema>& value) { SetOutputSchemas(value); return *this;}
-    inline S3CatalogHudiSource& WithOutputSchemas(Aws::Vector<GlueSchema>&& value) { SetOutputSchemas(std::move(value)); return *this;}
-    inline S3CatalogHudiSource& AddOutputSchemas(const GlueSchema& value) { m_outputSchemasHasBeenSet = true; m_outputSchemas.push_back(value); return *this; }
-    inline S3CatalogHudiSource& AddOutputSchemas(GlueSchema&& value) { m_outputSchemasHasBeenSet = true; m_outputSchemas.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_table;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_additionalHudiOptions;
 
-    Aws::String m_database;
-    bool m_databaseHasBeenSet = false;
+  Aws::Vector<GlueSchema> m_outputSchemas;
+  bool m_nameHasBeenSet = false;
+  bool m_databaseHasBeenSet = false;
+  bool m_tableHasBeenSet = false;
+  bool m_additionalHudiOptionsHasBeenSet = false;
+  bool m_outputSchemasHasBeenSet = false;
+};
 
-    Aws::String m_table;
-    bool m_tableHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_additionalHudiOptions;
-    bool m_additionalHudiOptionsHasBeenSet = false;
-
-    Aws::Vector<GlueSchema> m_outputSchemas;
-    bool m_outputSchemasHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

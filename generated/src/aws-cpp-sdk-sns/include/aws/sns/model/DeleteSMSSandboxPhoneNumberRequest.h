@@ -4,57 +4,56 @@
  */
 
 #pragma once
-#include <aws/sns/SNS_EXPORTS.h>
-#include <aws/sns/SNSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sns/SNSRequest.h>
+#include <aws/sns/SNS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SNS
-{
-namespace Model
-{
+namespace Aws {
+namespace SNS {
+namespace Model {
 
+/**
+ */
+class DeleteSMSSandboxPhoneNumberRequest : public SNSRequest {
+ public:
+  AWS_SNS_API DeleteSMSSandboxPhoneNumberRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteSMSSandboxPhoneNumber"; }
+
+  AWS_SNS_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_SNS_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The destination phone number to delete.</p>
    */
-  class DeleteSMSSandboxPhoneNumberRequest : public SNSRequest
-  {
-  public:
-    AWS_SNS_API DeleteSMSSandboxPhoneNumberRequest();
+  inline const Aws::String& GetPhoneNumber() const { return m_phoneNumber; }
+  inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
+  template <typename PhoneNumberT = Aws::String>
+  void SetPhoneNumber(PhoneNumberT&& value) {
+    m_phoneNumberHasBeenSet = true;
+    m_phoneNumber = std::forward<PhoneNumberT>(value);
+  }
+  template <typename PhoneNumberT = Aws::String>
+  DeleteSMSSandboxPhoneNumberRequest& WithPhoneNumber(PhoneNumberT&& value) {
+    SetPhoneNumber(std::forward<PhoneNumberT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_phoneNumber;
+  bool m_phoneNumberHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteSMSSandboxPhoneNumber"; }
-
-    AWS_SNS_API Aws::String SerializePayload() const override;
-
-  protected:
-    AWS_SNS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
-
-  public:
-
-    ///@{
-    /**
-     * <p>The destination phone number to delete.</p>
-     */
-    inline const Aws::String& GetPhoneNumber() const{ return m_phoneNumber; }
-    inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
-    inline void SetPhoneNumber(const Aws::String& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = value; }
-    inline void SetPhoneNumber(Aws::String&& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = std::move(value); }
-    inline void SetPhoneNumber(const char* value) { m_phoneNumberHasBeenSet = true; m_phoneNumber.assign(value); }
-    inline DeleteSMSSandboxPhoneNumberRequest& WithPhoneNumber(const Aws::String& value) { SetPhoneNumber(value); return *this;}
-    inline DeleteSMSSandboxPhoneNumberRequest& WithPhoneNumber(Aws::String&& value) { SetPhoneNumber(std::move(value)); return *this;}
-    inline DeleteSMSSandboxPhoneNumberRequest& WithPhoneNumber(const char* value) { SetPhoneNumber(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_phoneNumber;
-    bool m_phoneNumberHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SNS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SNS
+}  // namespace Aws

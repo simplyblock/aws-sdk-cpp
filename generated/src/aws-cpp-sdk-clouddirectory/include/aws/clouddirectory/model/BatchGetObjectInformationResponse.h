@@ -5,77 +5,84 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/clouddirectory/model/SchemaFacet.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
 
+/**
+ * <p>Represents the output of a <a>GetObjectInformation</a> response
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/BatchGetObjectInformationResponse">AWS
+ * API Reference</a></p>
+ */
+class BatchGetObjectInformationResponse {
+ public:
+  AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse() = default;
+  AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLOUDDIRECTORY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Represents the output of a <a>GetObjectInformation</a> response
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/BatchGetObjectInformationResponse">AWS
-   * API Reference</a></p>
+   * <p>The facets attached to the specified object.</p>
    */
-  class BatchGetObjectInformationResponse
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse();
-    AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLOUDDIRECTORY_API BatchGetObjectInformationResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLOUDDIRECTORY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<SchemaFacet>& GetSchemaFacets() const { return m_schemaFacets; }
+  inline bool SchemaFacetsHasBeenSet() const { return m_schemaFacetsHasBeenSet; }
+  template <typename SchemaFacetsT = Aws::Vector<SchemaFacet>>
+  void SetSchemaFacets(SchemaFacetsT&& value) {
+    m_schemaFacetsHasBeenSet = true;
+    m_schemaFacets = std::forward<SchemaFacetsT>(value);
+  }
+  template <typename SchemaFacetsT = Aws::Vector<SchemaFacet>>
+  BatchGetObjectInformationResponse& WithSchemaFacets(SchemaFacetsT&& value) {
+    SetSchemaFacets(std::forward<SchemaFacetsT>(value));
+    return *this;
+  }
+  template <typename SchemaFacetsT = SchemaFacet>
+  BatchGetObjectInformationResponse& AddSchemaFacets(SchemaFacetsT&& value) {
+    m_schemaFacetsHasBeenSet = true;
+    m_schemaFacets.emplace_back(std::forward<SchemaFacetsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The <code>ObjectIdentifier</code> of the specified object.</p>
+   */
+  inline const Aws::String& GetObjectIdentifier() const { return m_objectIdentifier; }
+  inline bool ObjectIdentifierHasBeenSet() const { return m_objectIdentifierHasBeenSet; }
+  template <typename ObjectIdentifierT = Aws::String>
+  void SetObjectIdentifier(ObjectIdentifierT&& value) {
+    m_objectIdentifierHasBeenSet = true;
+    m_objectIdentifier = std::forward<ObjectIdentifierT>(value);
+  }
+  template <typename ObjectIdentifierT = Aws::String>
+  BatchGetObjectInformationResponse& WithObjectIdentifier(ObjectIdentifierT&& value) {
+    SetObjectIdentifier(std::forward<ObjectIdentifierT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<SchemaFacet> m_schemaFacets;
 
-    ///@{
-    /**
-     * <p>The facets attached to the specified object.</p>
-     */
-    inline const Aws::Vector<SchemaFacet>& GetSchemaFacets() const{ return m_schemaFacets; }
-    inline bool SchemaFacetsHasBeenSet() const { return m_schemaFacetsHasBeenSet; }
-    inline void SetSchemaFacets(const Aws::Vector<SchemaFacet>& value) { m_schemaFacetsHasBeenSet = true; m_schemaFacets = value; }
-    inline void SetSchemaFacets(Aws::Vector<SchemaFacet>&& value) { m_schemaFacetsHasBeenSet = true; m_schemaFacets = std::move(value); }
-    inline BatchGetObjectInformationResponse& WithSchemaFacets(const Aws::Vector<SchemaFacet>& value) { SetSchemaFacets(value); return *this;}
-    inline BatchGetObjectInformationResponse& WithSchemaFacets(Aws::Vector<SchemaFacet>&& value) { SetSchemaFacets(std::move(value)); return *this;}
-    inline BatchGetObjectInformationResponse& AddSchemaFacets(const SchemaFacet& value) { m_schemaFacetsHasBeenSet = true; m_schemaFacets.push_back(value); return *this; }
-    inline BatchGetObjectInformationResponse& AddSchemaFacets(SchemaFacet&& value) { m_schemaFacetsHasBeenSet = true; m_schemaFacets.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_objectIdentifier;
+  bool m_schemaFacetsHasBeenSet = false;
+  bool m_objectIdentifierHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The <code>ObjectIdentifier</code> of the specified object.</p>
-     */
-    inline const Aws::String& GetObjectIdentifier() const{ return m_objectIdentifier; }
-    inline bool ObjectIdentifierHasBeenSet() const { return m_objectIdentifierHasBeenSet; }
-    inline void SetObjectIdentifier(const Aws::String& value) { m_objectIdentifierHasBeenSet = true; m_objectIdentifier = value; }
-    inline void SetObjectIdentifier(Aws::String&& value) { m_objectIdentifierHasBeenSet = true; m_objectIdentifier = std::move(value); }
-    inline void SetObjectIdentifier(const char* value) { m_objectIdentifierHasBeenSet = true; m_objectIdentifier.assign(value); }
-    inline BatchGetObjectInformationResponse& WithObjectIdentifier(const Aws::String& value) { SetObjectIdentifier(value); return *this;}
-    inline BatchGetObjectInformationResponse& WithObjectIdentifier(Aws::String&& value) { SetObjectIdentifier(std::move(value)); return *this;}
-    inline BatchGetObjectInformationResponse& WithObjectIdentifier(const char* value) { SetObjectIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<SchemaFacet> m_schemaFacets;
-    bool m_schemaFacetsHasBeenSet = false;
-
-    Aws::String m_objectIdentifier;
-    bool m_objectIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

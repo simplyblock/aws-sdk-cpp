@@ -4,67 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/sns/SNS_EXPORTS.h>
 #include <aws/sns/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SNS
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SNS {
+namespace Model {
+/**
+ * <p>The response from the <code>CheckIfPhoneNumberIsOptedOut</code>
+ * action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/CheckIfPhoneNumberIsOptedOutResponse">AWS
+ * API Reference</a></p>
+ */
+class CheckIfPhoneNumberIsOptedOutResult {
+ public:
+  AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult() = default;
+  AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>The response from the <code>CheckIfPhoneNumberIsOptedOut</code>
-   * action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/CheckIfPhoneNumberIsOptedOutResponse">AWS
-   * API Reference</a></p>
+   * <p>Indicates whether the phone number is opted out:</p> <ul> <li> <p>
+   * <code>true</code> – The phone number is opted out, meaning you cannot publish
+   * SMS messages to it.</p> </li> <li> <p> <code>false</code> – The phone number is
+   * opted in, meaning you can publish SMS messages to it.</p> </li> </ul>
    */
-  class CheckIfPhoneNumberIsOptedOutResult
-  {
-  public:
-    AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult();
-    AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SNS_API CheckIfPhoneNumberIsOptedOutResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline bool GetIsOptedOut() const { return m_isOptedOut; }
+  inline void SetIsOptedOut(bool value) {
+    m_isOptedOutHasBeenSet = true;
+    m_isOptedOut = value;
+  }
+  inline CheckIfPhoneNumberIsOptedOutResult& WithIsOptedOut(bool value) {
+    SetIsOptedOut(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Indicates whether the phone number is opted out:</p> <ul> <li> <p>
-     * <code>true</code> – The phone number is opted out, meaning you cannot publish
-     * SMS messages to it.</p> </li> <li> <p> <code>false</code> – The phone number is
-     * opted in, meaning you can publish SMS messages to it.</p> </li> </ul>
-     */
-    inline bool GetIsOptedOut() const{ return m_isOptedOut; }
-    inline void SetIsOptedOut(bool value) { m_isOptedOut = value; }
-    inline CheckIfPhoneNumberIsOptedOutResult& WithIsOptedOut(bool value) { SetIsOptedOut(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CheckIfPhoneNumberIsOptedOutResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CheckIfPhoneNumberIsOptedOutResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CheckIfPhoneNumberIsOptedOutResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  bool m_isOptedOut{false};
 
-    bool m_isOptedOut;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_isOptedOutHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace SNS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SNS
+}  // namespace Aws

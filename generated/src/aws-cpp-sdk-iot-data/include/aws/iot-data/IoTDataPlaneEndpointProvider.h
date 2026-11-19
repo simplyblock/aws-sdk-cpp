@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/iot-data/IoTDataPlane_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot-data/IoTDataPlane_EXPORTS.h>
 
-#include <aws/iot-data/IoTDataPlaneEndpointRules.h>
-
-
-namespace Aws
-{
-namespace IoTDataPlane
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace IoTDataPlane {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IoTDataPlaneClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IoTDataPlaneEndpointProviderBase =
     EndpointProviderBase<IoTDataPlaneClientConfiguration, IoTDataPlaneBuiltInParameters, IoTDataPlaneClientContextParameters>;
 
 using IoTDataPlaneDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTDataPlaneClientConfiguration, IoTDataPlaneBuiltInParameters, IoTDataPlaneClientContextParameters>;
+    BDDEndpointProvider<IoTDataPlaneClientConfiguration, IoTDataPlaneBuiltInParameters, IoTDataPlaneClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IOTDATAPLANE_API IoTDataPlaneEndpointProvider : public IoTDataPlaneDefaultEpProviderBase
-{
-public:
-    using IoTDataPlaneResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IOTDATAPLANE_API IoTDataPlaneEndpointProvider : public IoTDataPlaneDefaultEpProviderBase {
+ public:
+  using IoTDataPlaneResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IoTDataPlaneEndpointProvider()
-      : IoTDataPlaneDefaultEpProviderBase(Aws::IoTDataPlane::IoTDataPlaneEndpointRules::GetRulesBlob(), Aws::IoTDataPlane::IoTDataPlaneEndpointRules::RulesBlobSize)
-    {}
+  IoTDataPlaneEndpointProvider();
 
-    ~IoTDataPlaneEndpointProvider()
-    {
-    }
+  ~IoTDataPlaneEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace IoTDataPlane
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace IoTDataPlane
+}  // namespace Aws

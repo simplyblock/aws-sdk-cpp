@@ -4,61 +4,58 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>A previously completed or stopped hyperparameter tuning job to be used as a
+ * starting point for a new hyperparameter tuning job.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ParentHyperParameterTuningJob">AWS
+ * API Reference</a></p>
+ */
+class ParentHyperParameterTuningJob {
+ public:
+  AWS_SAGEMAKER_API ParentHyperParameterTuningJob() = default;
+  AWS_SAGEMAKER_API ParentHyperParameterTuningJob(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API ParentHyperParameterTuningJob& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A previously completed or stopped hyperparameter tuning job to be used as a
-   * starting point for a new hyperparameter tuning job.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ParentHyperParameterTuningJob">AWS
-   * API Reference</a></p>
+   * <p>The name of the hyperparameter tuning job to be used as a starting point for
+   * a new hyperparameter tuning job.</p>
    */
-  class ParentHyperParameterTuningJob
-  {
-  public:
-    AWS_SAGEMAKER_API ParentHyperParameterTuningJob();
-    AWS_SAGEMAKER_API ParentHyperParameterTuningJob(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API ParentHyperParameterTuningJob& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetHyperParameterTuningJobName() const { return m_hyperParameterTuningJobName; }
+  inline bool HyperParameterTuningJobNameHasBeenSet() const { return m_hyperParameterTuningJobNameHasBeenSet; }
+  template <typename HyperParameterTuningJobNameT = Aws::String>
+  void SetHyperParameterTuningJobName(HyperParameterTuningJobNameT&& value) {
+    m_hyperParameterTuningJobNameHasBeenSet = true;
+    m_hyperParameterTuningJobName = std::forward<HyperParameterTuningJobNameT>(value);
+  }
+  template <typename HyperParameterTuningJobNameT = Aws::String>
+  ParentHyperParameterTuningJob& WithHyperParameterTuningJobName(HyperParameterTuningJobNameT&& value) {
+    SetHyperParameterTuningJobName(std::forward<HyperParameterTuningJobNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_hyperParameterTuningJobName;
+  bool m_hyperParameterTuningJobNameHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The name of the hyperparameter tuning job to be used as a starting point for
-     * a new hyperparameter tuning job.</p>
-     */
-    inline const Aws::String& GetHyperParameterTuningJobName() const{ return m_hyperParameterTuningJobName; }
-    inline bool HyperParameterTuningJobNameHasBeenSet() const { return m_hyperParameterTuningJobNameHasBeenSet; }
-    inline void SetHyperParameterTuningJobName(const Aws::String& value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName = value; }
-    inline void SetHyperParameterTuningJobName(Aws::String&& value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName = std::move(value); }
-    inline void SetHyperParameterTuningJobName(const char* value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName.assign(value); }
-    inline ParentHyperParameterTuningJob& WithHyperParameterTuningJobName(const Aws::String& value) { SetHyperParameterTuningJobName(value); return *this;}
-    inline ParentHyperParameterTuningJob& WithHyperParameterTuningJobName(Aws::String&& value) { SetHyperParameterTuningJobName(std::move(value)); return *this;}
-    inline ParentHyperParameterTuningJob& WithHyperParameterTuningJobName(const char* value) { SetHyperParameterTuningJobName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_hyperParameterTuningJobName;
-    bool m_hyperParameterTuningJobNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

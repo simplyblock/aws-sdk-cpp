@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/pricing/Pricing_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pricing/Pricing_EXPORTS.h>
 #include <aws/pricing/model/PriceList.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pricing
-{
-namespace Model
-{
-  class ListPriceListsResult
-  {
-  public:
-    AWS_PRICING_API ListPriceListsResult();
-    AWS_PRICING_API ListPriceListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PRICING_API ListPriceListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pricing {
+namespace Model {
+class ListPriceListsResult {
+ public:
+  AWS_PRICING_API ListPriceListsResult() = default;
+  AWS_PRICING_API ListPriceListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PRICING_API ListPriceListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The type of price list references that match your request. </p>
+   */
+  inline const Aws::Vector<PriceList>& GetPriceLists() const { return m_priceLists; }
+  template <typename PriceListsT = Aws::Vector<PriceList>>
+  void SetPriceLists(PriceListsT&& value) {
+    m_priceListsHasBeenSet = true;
+    m_priceLists = std::forward<PriceListsT>(value);
+  }
+  template <typename PriceListsT = Aws::Vector<PriceList>>
+  ListPriceListsResult& WithPriceLists(PriceListsT&& value) {
+    SetPriceLists(std::forward<PriceListsT>(value));
+    return *this;
+  }
+  template <typename PriceListsT = PriceList>
+  ListPriceListsResult& AddPriceLists(PriceListsT&& value) {
+    m_priceListsHasBeenSet = true;
+    m_priceLists.emplace_back(std::forward<PriceListsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of price list references that match your request. </p>
-     */
-    inline const Aws::Vector<PriceList>& GetPriceLists() const{ return m_priceLists; }
-    inline void SetPriceLists(const Aws::Vector<PriceList>& value) { m_priceLists = value; }
-    inline void SetPriceLists(Aws::Vector<PriceList>&& value) { m_priceLists = std::move(value); }
-    inline ListPriceListsResult& WithPriceLists(const Aws::Vector<PriceList>& value) { SetPriceLists(value); return *this;}
-    inline ListPriceListsResult& WithPriceLists(Aws::Vector<PriceList>&& value) { SetPriceLists(std::move(value)); return *this;}
-    inline ListPriceListsResult& AddPriceLists(const PriceList& value) { m_priceLists.push_back(value); return *this; }
-    inline ListPriceListsResult& AddPriceLists(PriceList&& value) { m_priceLists.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that indicates the next set of results to retrieve. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListPriceListsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that indicates the next set of results to retrieve. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListPriceListsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListPriceListsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListPriceListsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListPriceListsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListPriceListsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListPriceListsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListPriceListsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PriceList> m_priceLists;
+ private:
+  Aws::Vector<PriceList> m_priceLists;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_priceListsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Pricing
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pricing
+}  // namespace Aws

@@ -6,59 +6,68 @@
 #pragma once
 #include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/amplify/model/DomainAssociation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Amplify
-{
-namespace Model
-{
-  class DeleteDomainAssociationResult
-  {
-  public:
-    AWS_AMPLIFY_API DeleteDomainAssociationResult();
-    AWS_AMPLIFY_API DeleteDomainAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFY_API DeleteDomainAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Amplify {
+namespace Model {
+class DeleteDomainAssociationResult {
+ public:
+  AWS_AMPLIFY_API DeleteDomainAssociationResult() = default;
+  AWS_AMPLIFY_API DeleteDomainAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFY_API DeleteDomainAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const DomainAssociation& GetDomainAssociation() const{ return m_domainAssociation; }
-    inline void SetDomainAssociation(const DomainAssociation& value) { m_domainAssociation = value; }
-    inline void SetDomainAssociation(DomainAssociation&& value) { m_domainAssociation = std::move(value); }
-    inline DeleteDomainAssociationResult& WithDomainAssociation(const DomainAssociation& value) { SetDomainAssociation(value); return *this;}
-    inline DeleteDomainAssociationResult& WithDomainAssociation(DomainAssociation&& value) { SetDomainAssociation(std::move(value)); return *this;}
-    ///@}
+  inline const DomainAssociation& GetDomainAssociation() const { return m_domainAssociation; }
+  template <typename DomainAssociationT = DomainAssociation>
+  void SetDomainAssociation(DomainAssociationT&& value) {
+    m_domainAssociationHasBeenSet = true;
+    m_domainAssociation = std::forward<DomainAssociationT>(value);
+  }
+  template <typename DomainAssociationT = DomainAssociation>
+  DeleteDomainAssociationResult& WithDomainAssociation(DomainAssociationT&& value) {
+    SetDomainAssociation(std::forward<DomainAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDomainAssociationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDomainAssociationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDomainAssociationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    DomainAssociation m_domainAssociation;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDomainAssociationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  DomainAssociation m_domainAssociation;
 
-} // namespace Model
-} // namespace Amplify
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_domainAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Amplify
+}  // namespace Aws

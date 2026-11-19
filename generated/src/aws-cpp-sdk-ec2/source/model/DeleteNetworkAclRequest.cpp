@@ -3,31 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DeleteNetworkAclRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DeleteNetworkAclRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DeleteNetworkAclRequest::DeleteNetworkAclRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_networkAclIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteNetworkAclRequest::SerializePayload() const
-{
+Aws::String DeleteNetworkAclRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteNetworkAcl&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_networkAclIdHasBeenSet)
-  {
+  if (m_networkAclIdHasBeenSet) {
     ss << "NetworkAclId=" << StringUtils::URLEncode(m_networkAclId.c_str()) << "&";
   }
 
@@ -35,8 +25,4 @@ Aws::String DeleteNetworkAclRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteNetworkAclRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteNetworkAclRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

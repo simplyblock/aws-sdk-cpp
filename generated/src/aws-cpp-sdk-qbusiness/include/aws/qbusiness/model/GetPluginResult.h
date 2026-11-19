@@ -4,220 +4,290 @@
  */
 
 #pragma once
-#include <aws/qbusiness/QBusiness_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/qbusiness/model/PluginType.h>
-#include <aws/qbusiness/model/PluginAuthConfiguration.h>
+#include <aws/qbusiness/QBusiness_EXPORTS.h>
 #include <aws/qbusiness/model/CustomPluginConfiguration.h>
+#include <aws/qbusiness/model/PluginAuthConfiguration.h>
 #include <aws/qbusiness/model/PluginBuildStatus.h>
 #include <aws/qbusiness/model/PluginState.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/qbusiness/model/PluginType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QBusiness
-{
-namespace Model
-{
-  class GetPluginResult
-  {
-  public:
-    AWS_QBUSINESS_API GetPluginResult();
-    AWS_QBUSINESS_API GetPluginResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QBUSINESS_API GetPluginResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QBusiness {
+namespace Model {
+class GetPluginResult {
+ public:
+  AWS_QBUSINESS_API GetPluginResult() = default;
+  AWS_QBUSINESS_API GetPluginResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QBUSINESS_API GetPluginResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the application which contains the plugin.</p>
+   */
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  GetPluginResult& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the application which contains the plugin.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationId.assign(value); }
-    inline GetPluginResult& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline GetPluginResult& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline GetPluginResult& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the plugin.</p>
+   */
+  inline const Aws::String& GetPluginId() const { return m_pluginId; }
+  template <typename PluginIdT = Aws::String>
+  void SetPluginId(PluginIdT&& value) {
+    m_pluginIdHasBeenSet = true;
+    m_pluginId = std::forward<PluginIdT>(value);
+  }
+  template <typename PluginIdT = Aws::String>
+  GetPluginResult& WithPluginId(PluginIdT&& value) {
+    SetPluginId(std::forward<PluginIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the plugin.</p>
-     */
-    inline const Aws::String& GetPluginId() const{ return m_pluginId; }
-    inline void SetPluginId(const Aws::String& value) { m_pluginId = value; }
-    inline void SetPluginId(Aws::String&& value) { m_pluginId = std::move(value); }
-    inline void SetPluginId(const char* value) { m_pluginId.assign(value); }
-    inline GetPluginResult& WithPluginId(const Aws::String& value) { SetPluginId(value); return *this;}
-    inline GetPluginResult& WithPluginId(Aws::String&& value) { SetPluginId(std::move(value)); return *this;}
-    inline GetPluginResult& WithPluginId(const char* value) { SetPluginId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the plugin.</p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  GetPluginResult& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the plugin.</p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayName.assign(value); }
-    inline GetPluginResult& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline GetPluginResult& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline GetPluginResult& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the plugin.</p>
+   */
+  inline PluginType GetType() const { return m_type; }
+  inline void SetType(PluginType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline GetPluginResult& WithType(PluginType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the plugin.</p>
-     */
-    inline const PluginType& GetType() const{ return m_type; }
-    inline void SetType(const PluginType& value) { m_type = value; }
-    inline void SetType(PluginType&& value) { m_type = std::move(value); }
-    inline GetPluginResult& WithType(const PluginType& value) { SetType(value); return *this;}
-    inline GetPluginResult& WithType(PluginType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The source URL used for plugin configuration.</p>
+   */
+  inline const Aws::String& GetServerUrl() const { return m_serverUrl; }
+  template <typename ServerUrlT = Aws::String>
+  void SetServerUrl(ServerUrlT&& value) {
+    m_serverUrlHasBeenSet = true;
+    m_serverUrl = std::forward<ServerUrlT>(value);
+  }
+  template <typename ServerUrlT = Aws::String>
+  GetPluginResult& WithServerUrl(ServerUrlT&& value) {
+    SetServerUrl(std::forward<ServerUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The source URL used for plugin configuration.</p>
-     */
-    inline const Aws::String& GetServerUrl() const{ return m_serverUrl; }
-    inline void SetServerUrl(const Aws::String& value) { m_serverUrl = value; }
-    inline void SetServerUrl(Aws::String&& value) { m_serverUrl = std::move(value); }
-    inline void SetServerUrl(const char* value) { m_serverUrl.assign(value); }
-    inline GetPluginResult& WithServerUrl(const Aws::String& value) { SetServerUrl(value); return *this;}
-    inline GetPluginResult& WithServerUrl(Aws::String&& value) { SetServerUrl(std::move(value)); return *this;}
-    inline GetPluginResult& WithServerUrl(const char* value) { SetServerUrl(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const PluginAuthConfiguration& GetAuthConfiguration() const{ return m_authConfiguration; }
-    inline void SetAuthConfiguration(const PluginAuthConfiguration& value) { m_authConfiguration = value; }
-    inline void SetAuthConfiguration(PluginAuthConfiguration&& value) { m_authConfiguration = std::move(value); }
-    inline GetPluginResult& WithAuthConfiguration(const PluginAuthConfiguration& value) { SetAuthConfiguration(value); return *this;}
-    inline GetPluginResult& WithAuthConfiguration(PluginAuthConfiguration&& value) { SetAuthConfiguration(std::move(value)); return *this;}
-    ///@}
+  inline const PluginAuthConfiguration& GetAuthConfiguration() const { return m_authConfiguration; }
+  template <typename AuthConfigurationT = PluginAuthConfiguration>
+  void SetAuthConfiguration(AuthConfigurationT&& value) {
+    m_authConfigurationHasBeenSet = true;
+    m_authConfiguration = std::forward<AuthConfigurationT>(value);
+  }
+  template <typename AuthConfigurationT = PluginAuthConfiguration>
+  GetPluginResult& WithAuthConfiguration(AuthConfigurationT&& value) {
+    SetAuthConfiguration(std::forward<AuthConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Configuration information required to create a custom plugin.</p>
-     */
-    inline const CustomPluginConfiguration& GetCustomPluginConfiguration() const{ return m_customPluginConfiguration; }
-    inline void SetCustomPluginConfiguration(const CustomPluginConfiguration& value) { m_customPluginConfiguration = value; }
-    inline void SetCustomPluginConfiguration(CustomPluginConfiguration&& value) { m_customPluginConfiguration = std::move(value); }
-    inline GetPluginResult& WithCustomPluginConfiguration(const CustomPluginConfiguration& value) { SetCustomPluginConfiguration(value); return *this;}
-    inline GetPluginResult& WithCustomPluginConfiguration(CustomPluginConfiguration&& value) { SetCustomPluginConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration information required to create a custom plugin.</p>
+   */
+  inline const CustomPluginConfiguration& GetCustomPluginConfiguration() const { return m_customPluginConfiguration; }
+  template <typename CustomPluginConfigurationT = CustomPluginConfiguration>
+  void SetCustomPluginConfiguration(CustomPluginConfigurationT&& value) {
+    m_customPluginConfigurationHasBeenSet = true;
+    m_customPluginConfiguration = std::forward<CustomPluginConfigurationT>(value);
+  }
+  template <typename CustomPluginConfigurationT = CustomPluginConfiguration>
+  GetPluginResult& WithCustomPluginConfiguration(CustomPluginConfigurationT&& value) {
+    SetCustomPluginConfiguration(std::forward<CustomPluginConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of a plugin. A plugin is modified asynchronously.</p>
-     */
-    inline const PluginBuildStatus& GetBuildStatus() const{ return m_buildStatus; }
-    inline void SetBuildStatus(const PluginBuildStatus& value) { m_buildStatus = value; }
-    inline void SetBuildStatus(PluginBuildStatus&& value) { m_buildStatus = std::move(value); }
-    inline GetPluginResult& WithBuildStatus(const PluginBuildStatus& value) { SetBuildStatus(value); return *this;}
-    inline GetPluginResult& WithBuildStatus(PluginBuildStatus&& value) { SetBuildStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of a plugin. A plugin is modified asynchronously.</p>
+   */
+  inline PluginBuildStatus GetBuildStatus() const { return m_buildStatus; }
+  inline void SetBuildStatus(PluginBuildStatus value) {
+    m_buildStatusHasBeenSet = true;
+    m_buildStatus = value;
+  }
+  inline GetPluginResult& WithBuildStatus(PluginBuildStatus value) {
+    SetBuildStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the role with permission to access
-     * resources needed to create the plugin.</p>
-     */
-    inline const Aws::String& GetPluginArn() const{ return m_pluginArn; }
-    inline void SetPluginArn(const Aws::String& value) { m_pluginArn = value; }
-    inline void SetPluginArn(Aws::String&& value) { m_pluginArn = std::move(value); }
-    inline void SetPluginArn(const char* value) { m_pluginArn.assign(value); }
-    inline GetPluginResult& WithPluginArn(const Aws::String& value) { SetPluginArn(value); return *this;}
-    inline GetPluginResult& WithPluginArn(Aws::String&& value) { SetPluginArn(std::move(value)); return *this;}
-    inline GetPluginResult& WithPluginArn(const char* value) { SetPluginArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the role with permission to access
+   * resources needed to create the plugin.</p>
+   */
+  inline const Aws::String& GetPluginArn() const { return m_pluginArn; }
+  template <typename PluginArnT = Aws::String>
+  void SetPluginArn(PluginArnT&& value) {
+    m_pluginArnHasBeenSet = true;
+    m_pluginArn = std::forward<PluginArnT>(value);
+  }
+  template <typename PluginArnT = Aws::String>
+  GetPluginResult& WithPluginArn(PluginArnT&& value) {
+    SetPluginArn(std::forward<PluginArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current state of the plugin.</p>
-     */
-    inline const PluginState& GetState() const{ return m_state; }
-    inline void SetState(const PluginState& value) { m_state = value; }
-    inline void SetState(PluginState&& value) { m_state = std::move(value); }
-    inline GetPluginResult& WithState(const PluginState& value) { SetState(value); return *this;}
-    inline GetPluginResult& WithState(PluginState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current state of the plugin.</p>
+   */
+  inline PluginState GetState() const { return m_state; }
+  inline void SetState(PluginState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline GetPluginResult& WithState(PluginState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the plugin was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetPluginResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetPluginResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the plugin was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetPluginResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the plugin was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAt = std::move(value); }
-    inline GetPluginResult& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline GetPluginResult& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the plugin was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetPluginResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetPluginResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetPluginResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetPluginResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_applicationId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetPluginResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_pluginId;
+ private:
+  Aws::String m_applicationId;
 
-    Aws::String m_displayName;
+  Aws::String m_pluginId;
 
-    PluginType m_type;
+  Aws::String m_displayName;
 
-    Aws::String m_serverUrl;
+  PluginType m_type{PluginType::NOT_SET};
 
-    PluginAuthConfiguration m_authConfiguration;
+  Aws::String m_serverUrl;
 
-    CustomPluginConfiguration m_customPluginConfiguration;
+  PluginAuthConfiguration m_authConfiguration;
 
-    PluginBuildStatus m_buildStatus;
+  CustomPluginConfiguration m_customPluginConfiguration;
 
-    Aws::String m_pluginArn;
+  PluginBuildStatus m_buildStatus{PluginBuildStatus::NOT_SET};
 
-    PluginState m_state;
+  Aws::String m_pluginArn;
 
-    Aws::Utils::DateTime m_createdAt;
+  PluginState m_state{PluginState::NOT_SET};
 
-    Aws::Utils::DateTime m_updatedAt;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_requestId;
-  };
+  Aws::Utils::DateTime m_updatedAt{};
 
-} // namespace Model
-} // namespace QBusiness
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_pluginIdHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_serverUrlHasBeenSet = false;
+  bool m_authConfigurationHasBeenSet = false;
+  bool m_customPluginConfigurationHasBeenSet = false;
+  bool m_buildStatusHasBeenSet = false;
+  bool m_pluginArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace QBusiness
+}  // namespace Aws

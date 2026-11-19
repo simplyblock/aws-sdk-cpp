@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class PutQueryDefinitionResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult();
-    AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class PutQueryDefinitionResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult() = default;
+  AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API PutQueryDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the query definition.</p>
+   */
+  inline const Aws::String& GetQueryDefinitionId() const { return m_queryDefinitionId; }
+  template <typename QueryDefinitionIdT = Aws::String>
+  void SetQueryDefinitionId(QueryDefinitionIdT&& value) {
+    m_queryDefinitionIdHasBeenSet = true;
+    m_queryDefinitionId = std::forward<QueryDefinitionIdT>(value);
+  }
+  template <typename QueryDefinitionIdT = Aws::String>
+  PutQueryDefinitionResult& WithQueryDefinitionId(QueryDefinitionIdT&& value) {
+    SetQueryDefinitionId(std::forward<QueryDefinitionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the query definition.</p>
-     */
-    inline const Aws::String& GetQueryDefinitionId() const{ return m_queryDefinitionId; }
-    inline void SetQueryDefinitionId(const Aws::String& value) { m_queryDefinitionId = value; }
-    inline void SetQueryDefinitionId(Aws::String&& value) { m_queryDefinitionId = std::move(value); }
-    inline void SetQueryDefinitionId(const char* value) { m_queryDefinitionId.assign(value); }
-    inline PutQueryDefinitionResult& WithQueryDefinitionId(const Aws::String& value) { SetQueryDefinitionId(value); return *this;}
-    inline PutQueryDefinitionResult& WithQueryDefinitionId(Aws::String&& value) { SetQueryDefinitionId(std::move(value)); return *this;}
-    inline PutQueryDefinitionResult& WithQueryDefinitionId(const char* value) { SetQueryDefinitionId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutQueryDefinitionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutQueryDefinitionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutQueryDefinitionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutQueryDefinitionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_queryDefinitionId;
+ private:
+  Aws::String m_queryDefinitionId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_queryDefinitionIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/textract/model/GetAdapterVersionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Textract::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetAdapterVersionRequest::GetAdapterVersionRequest() : 
-    m_adapterIdHasBeenSet(false),
-    m_adapterVersionHasBeenSet(false)
-{
-}
+Aws::String GetAdapterVersionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String GetAdapterVersionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_adapterIdHasBeenSet)
-  {
-   payload.WithString("AdapterId", m_adapterId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_adapterIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_adapterVersionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_adapterVersionHasBeenSet)
-  {
-   payload.WithString("AdapterVersion", m_adapterVersion);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_adapterIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AdapterId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_adapterId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_adapterVersionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AdapterVersion"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_adapterVersion.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection GetAdapterVersionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetAdapterVersionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Textract.GetAdapterVersion"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
 #include <aws/bedrock-agent/model/AgentVersion.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
-  class GetAgentVersionResult
-  {
-  public:
-    AWS_BEDROCKAGENT_API GetAgentVersionResult();
-    AWS_BEDROCKAGENT_API GetAgentVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCKAGENT_API GetAgentVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
+class GetAgentVersionResult {
+ public:
+  AWS_BEDROCKAGENT_API GetAgentVersionResult() = default;
+  AWS_BEDROCKAGENT_API GetAgentVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCKAGENT_API GetAgentVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains details about the version of the agent.</p>
+   */
+  inline const AgentVersion& GetAgentVersion() const { return m_agentVersion; }
+  template <typename AgentVersionT = AgentVersion>
+  void SetAgentVersion(AgentVersionT&& value) {
+    m_agentVersionHasBeenSet = true;
+    m_agentVersion = std::forward<AgentVersionT>(value);
+  }
+  template <typename AgentVersionT = AgentVersion>
+  GetAgentVersionResult& WithAgentVersion(AgentVersionT&& value) {
+    SetAgentVersion(std::forward<AgentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains details about the version of the agent.</p>
-     */
-    inline const AgentVersion& GetAgentVersion() const{ return m_agentVersion; }
-    inline void SetAgentVersion(const AgentVersion& value) { m_agentVersion = value; }
-    inline void SetAgentVersion(AgentVersion&& value) { m_agentVersion = std::move(value); }
-    inline GetAgentVersionResult& WithAgentVersion(const AgentVersion& value) { SetAgentVersion(value); return *this;}
-    inline GetAgentVersionResult& WithAgentVersion(AgentVersion&& value) { SetAgentVersion(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAgentVersionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAgentVersionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAgentVersionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAgentVersionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AgentVersion m_agentVersion;
+ private:
+  AgentVersion m_agentVersion;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_agentVersionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

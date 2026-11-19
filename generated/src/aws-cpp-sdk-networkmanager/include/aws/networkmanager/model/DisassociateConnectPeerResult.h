@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/ConnectPeerAssociation.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class DisassociateConnectPeerResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API DisassociateConnectPeerResult();
-    AWS_NETWORKMANAGER_API DisassociateConnectPeerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API DisassociateConnectPeerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class DisassociateConnectPeerResult {
+ public:
+  AWS_NETWORKMANAGER_API DisassociateConnectPeerResult() = default;
+  AWS_NETWORKMANAGER_API DisassociateConnectPeerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API DisassociateConnectPeerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes the Connect peer association.</p>
+   */
+  inline const ConnectPeerAssociation& GetConnectPeerAssociation() const { return m_connectPeerAssociation; }
+  template <typename ConnectPeerAssociationT = ConnectPeerAssociation>
+  void SetConnectPeerAssociation(ConnectPeerAssociationT&& value) {
+    m_connectPeerAssociationHasBeenSet = true;
+    m_connectPeerAssociation = std::forward<ConnectPeerAssociationT>(value);
+  }
+  template <typename ConnectPeerAssociationT = ConnectPeerAssociation>
+  DisassociateConnectPeerResult& WithConnectPeerAssociation(ConnectPeerAssociationT&& value) {
+    SetConnectPeerAssociation(std::forward<ConnectPeerAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the Connect peer association.</p>
-     */
-    inline const ConnectPeerAssociation& GetConnectPeerAssociation() const{ return m_connectPeerAssociation; }
-    inline void SetConnectPeerAssociation(const ConnectPeerAssociation& value) { m_connectPeerAssociation = value; }
-    inline void SetConnectPeerAssociation(ConnectPeerAssociation&& value) { m_connectPeerAssociation = std::move(value); }
-    inline DisassociateConnectPeerResult& WithConnectPeerAssociation(const ConnectPeerAssociation& value) { SetConnectPeerAssociation(value); return *this;}
-    inline DisassociateConnectPeerResult& WithConnectPeerAssociation(ConnectPeerAssociation&& value) { SetConnectPeerAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DisassociateConnectPeerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DisassociateConnectPeerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DisassociateConnectPeerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DisassociateConnectPeerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ConnectPeerAssociation m_connectPeerAssociation;
+ private:
+  ConnectPeerAssociation m_connectPeerAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_connectPeerAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

@@ -4,80 +4,95 @@
  */
 
 #pragma once
-#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GeoRoutes
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GeoRoutes {
+namespace Model {
 
+/**
+ * <p>Represents the geometry of connections between non-contiguous parts of an
+ * isoline. These connections can be provided in either coordinate pairs
+ * (LineString) or encoded (Polyline) format, matching the format specified in the
+ * request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/IsolineConnectionGeometry">AWS
+ * API Reference</a></p>
+ */
+class IsolineConnectionGeometry {
+ public:
+  AWS_GEOROUTES_API IsolineConnectionGeometry() = default;
+  AWS_GEOROUTES_API IsolineConnectionGeometry(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API IsolineConnectionGeometry& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Geometry of the connection between different Isoline
-   * components.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/IsolineConnectionGeometry">AWS
-   * API Reference</a></p>
+   * <p>A series of <code>[longitude, latitude]</code> coordinate pairs defining the
+   * connection path when <code>Simple</code> geometry format is requested. These
+   * coordinates can be directly used as the coordinates array in a GeoJSON
+   * LineString without transformation.</p>  <p>LineString and Polyline are
+   * mutually exclusive properties.</p>
    */
-  class IsolineConnectionGeometry
-  {
-  public:
-    AWS_GEOROUTES_API IsolineConnectionGeometry();
-    AWS_GEOROUTES_API IsolineConnectionGeometry(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API IsolineConnectionGeometry& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::Vector<double>>& GetLineString() const { return m_lineString; }
+  inline bool LineStringHasBeenSet() const { return m_lineStringHasBeenSet; }
+  template <typename LineStringT = Aws::Vector<Aws::Vector<double>>>
+  void SetLineString(LineStringT&& value) {
+    m_lineStringHasBeenSet = true;
+    m_lineString = std::forward<LineStringT>(value);
+  }
+  template <typename LineStringT = Aws::Vector<Aws::Vector<double>>>
+  IsolineConnectionGeometry& WithLineString(LineStringT&& value) {
+    SetLineString(std::forward<LineStringT>(value));
+    return *this;
+  }
+  template <typename LineStringT = Aws::Vector<double>>
+  IsolineConnectionGeometry& AddLineString(LineStringT&& value) {
+    m_lineStringHasBeenSet = true;
+    m_lineString.emplace_back(std::forward<LineStringT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An encoded representation of the connection path when
+   * <code>FlexiblePolyline</code> geometry format is requested. This provides a more
+   * compact representation suitable for transmission and storage. To convert to
+   * GeoJSON, first decode to obtain coordinate pairs, then use those coordinates as
+   * the coordinates array in a GeoJSON LineString.</p>  <p>LineString and
+   * Polyline are mutually exclusive properties.</p>
+   */
+  inline const Aws::String& GetPolyline() const { return m_polyline; }
+  inline bool PolylineHasBeenSet() const { return m_polylineHasBeenSet; }
+  template <typename PolylineT = Aws::String>
+  void SetPolyline(PolylineT&& value) {
+    m_polylineHasBeenSet = true;
+    m_polyline = std::forward<PolylineT>(value);
+  }
+  template <typename PolylineT = Aws::String>
+  IsolineConnectionGeometry& WithPolyline(PolylineT&& value) {
+    SetPolyline(std::forward<PolylineT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::Vector<double>> m_lineString;
 
-    ///@{
-    /**
-     * <p>An ordered list of positions used to plot a route on a map.</p> 
-     * <p>LineString and Polyline are mutually exclusive properties.</p> 
-     */
-    inline const Aws::Vector<Aws::Vector<double>>& GetLineString() const{ return m_lineString; }
-    inline bool LineStringHasBeenSet() const { return m_lineStringHasBeenSet; }
-    inline void SetLineString(const Aws::Vector<Aws::Vector<double>>& value) { m_lineStringHasBeenSet = true; m_lineString = value; }
-    inline void SetLineString(Aws::Vector<Aws::Vector<double>>&& value) { m_lineStringHasBeenSet = true; m_lineString = std::move(value); }
-    inline IsolineConnectionGeometry& WithLineString(const Aws::Vector<Aws::Vector<double>>& value) { SetLineString(value); return *this;}
-    inline IsolineConnectionGeometry& WithLineString(Aws::Vector<Aws::Vector<double>>&& value) { SetLineString(std::move(value)); return *this;}
-    inline IsolineConnectionGeometry& AddLineString(const Aws::Vector<double>& value) { m_lineStringHasBeenSet = true; m_lineString.push_back(value); return *this; }
-    inline IsolineConnectionGeometry& AddLineString(Aws::Vector<double>&& value) { m_lineStringHasBeenSet = true; m_lineString.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_polyline;
+  bool m_lineStringHasBeenSet = false;
+  bool m_polylineHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>An ordered list of positions used to plot a route on a map in a lossy
-     * compression format.</p>  <p>LineString and Polyline are mutually exclusive
-     * properties.</p> 
-     */
-    inline const Aws::String& GetPolyline() const{ return m_polyline; }
-    inline bool PolylineHasBeenSet() const { return m_polylineHasBeenSet; }
-    inline void SetPolyline(const Aws::String& value) { m_polylineHasBeenSet = true; m_polyline = value; }
-    inline void SetPolyline(Aws::String&& value) { m_polylineHasBeenSet = true; m_polyline = std::move(value); }
-    inline void SetPolyline(const char* value) { m_polylineHasBeenSet = true; m_polyline.assign(value); }
-    inline IsolineConnectionGeometry& WithPolyline(const Aws::String& value) { SetPolyline(value); return *this;}
-    inline IsolineConnectionGeometry& WithPolyline(Aws::String&& value) { SetPolyline(std::move(value)); return *this;}
-    inline IsolineConnectionGeometry& WithPolyline(const char* value) { SetPolyline(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<Aws::Vector<double>> m_lineString;
-    bool m_lineStringHasBeenSet = false;
-
-    Aws::String m_polyline;
-    bool m_polylineHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GeoRoutes
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoRoutes
+}  // namespace Aws

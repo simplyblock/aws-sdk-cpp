@@ -3,49 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticbeanstalk/model/ListPlatformBranchesRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticbeanstalk/model/ListPlatformBranchesRequest.h>
 
 using namespace Aws::ElasticBeanstalk::Model;
 using namespace Aws::Utils;
 
-ListPlatformBranchesRequest::ListPlatformBranchesRequest() : 
-    m_filtersHasBeenSet(false),
-    m_maxRecords(0),
-    m_maxRecordsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListPlatformBranchesRequest::SerializePayload() const
-{
+Aws::String ListPlatformBranchesRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ListPlatformBranches&";
-  if(m_filtersHasBeenSet)
-  {
-    if (m_filters.empty())
-    {
+  if (m_filtersHasBeenSet) {
+    if (m_filters.empty()) {
       ss << "Filters=&";
-    }
-    else
-    {
+    } else {
       unsigned filtersCount = 1;
-      for(auto& item : m_filters)
-      {
+      for (auto& item : m_filters) {
         item.OutputToStream(ss, "Filters.member.", filtersCount, "");
         filtersCount++;
       }
     }
   }
 
-  if(m_maxRecordsHasBeenSet)
-  {
+  if (m_maxRecordsHasBeenSet) {
     ss << "MaxRecords=" << m_maxRecords << "&";
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
@@ -53,8 +37,4 @@ Aws::String ListPlatformBranchesRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ListPlatformBranchesRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ListPlatformBranchesRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

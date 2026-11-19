@@ -4,58 +4,55 @@
  */
 
 #pragma once
-#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
 
+/**
+ * <p>The summary of the trust store.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/TrustStoreSummary">AWS
+ * API Reference</a></p>
+ */
+class TrustStoreSummary {
+ public:
+  AWS_WORKSPACESWEB_API TrustStoreSummary() = default;
+  AWS_WORKSPACESWEB_API TrustStoreSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API TrustStoreSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The summary of the trust store.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/TrustStoreSummary">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the trust store.</p>
    */
-  class TrustStoreSummary
-  {
-  public:
-    AWS_WORKSPACESWEB_API TrustStoreSummary();
-    AWS_WORKSPACESWEB_API TrustStoreSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API TrustStoreSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetTrustStoreArn() const { return m_trustStoreArn; }
+  inline bool TrustStoreArnHasBeenSet() const { return m_trustStoreArnHasBeenSet; }
+  template <typename TrustStoreArnT = Aws::String>
+  void SetTrustStoreArn(TrustStoreArnT&& value) {
+    m_trustStoreArnHasBeenSet = true;
+    m_trustStoreArn = std::forward<TrustStoreArnT>(value);
+  }
+  template <typename TrustStoreArnT = Aws::String>
+  TrustStoreSummary& WithTrustStoreArn(TrustStoreArnT&& value) {
+    SetTrustStoreArn(std::forward<TrustStoreArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_trustStoreArn;
+  bool m_trustStoreArnHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The ARN of the trust store.</p>
-     */
-    inline const Aws::String& GetTrustStoreArn() const{ return m_trustStoreArn; }
-    inline bool TrustStoreArnHasBeenSet() const { return m_trustStoreArnHasBeenSet; }
-    inline void SetTrustStoreArn(const Aws::String& value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn = value; }
-    inline void SetTrustStoreArn(Aws::String&& value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn = std::move(value); }
-    inline void SetTrustStoreArn(const char* value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn.assign(value); }
-    inline TrustStoreSummary& WithTrustStoreArn(const Aws::String& value) { SetTrustStoreArn(value); return *this;}
-    inline TrustStoreSummary& WithTrustStoreArn(Aws::String&& value) { SetTrustStoreArn(std::move(value)); return *this;}
-    inline TrustStoreSummary& WithTrustStoreArn(const char* value) { SetTrustStoreArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_trustStoreArn;
-    bool m_trustStoreArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

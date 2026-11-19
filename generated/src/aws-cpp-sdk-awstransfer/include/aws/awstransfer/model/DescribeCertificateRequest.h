@@ -4,56 +4,55 @@
  */
 
 #pragma once
-#include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/awstransfer/TransferRequest.h>
+#include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Transfer
-{
-namespace Model
-{
+namespace Aws {
+namespace Transfer {
+namespace Model {
 
+/**
+ */
+class DescribeCertificateRequest : public TransferRequest {
+ public:
+  AWS_TRANSFER_API DescribeCertificateRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeCertificate"; }
+
+  AWS_TRANSFER_API Aws::String SerializePayload() const override;
+
+  AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>An array of identifiers for the imported certificates. You use this
+   * identifier for working with profiles and partner profiles.</p>
    */
-  class DescribeCertificateRequest : public TransferRequest
-  {
-  public:
-    AWS_TRANSFER_API DescribeCertificateRequest();
+  inline const Aws::String& GetCertificateId() const { return m_certificateId; }
+  inline bool CertificateIdHasBeenSet() const { return m_certificateIdHasBeenSet; }
+  template <typename CertificateIdT = Aws::String>
+  void SetCertificateId(CertificateIdT&& value) {
+    m_certificateIdHasBeenSet = true;
+    m_certificateId = std::forward<CertificateIdT>(value);
+  }
+  template <typename CertificateIdT = Aws::String>
+  DescribeCertificateRequest& WithCertificateId(CertificateIdT&& value) {
+    SetCertificateId(std::forward<CertificateIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateId;
+  bool m_certificateIdHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeCertificate"; }
-
-    AWS_TRANSFER_API Aws::String SerializePayload() const override;
-
-    AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>An array of identifiers for the imported certificates. You use this
-     * identifier for working with profiles and partner profiles.</p>
-     */
-    inline const Aws::String& GetCertificateId() const{ return m_certificateId; }
-    inline bool CertificateIdHasBeenSet() const { return m_certificateIdHasBeenSet; }
-    inline void SetCertificateId(const Aws::String& value) { m_certificateIdHasBeenSet = true; m_certificateId = value; }
-    inline void SetCertificateId(Aws::String&& value) { m_certificateIdHasBeenSet = true; m_certificateId = std::move(value); }
-    inline void SetCertificateId(const char* value) { m_certificateIdHasBeenSet = true; m_certificateId.assign(value); }
-    inline DescribeCertificateRequest& WithCertificateId(const Aws::String& value) { SetCertificateId(value); return *this;}
-    inline DescribeCertificateRequest& WithCertificateId(Aws::String&& value) { SetCertificateId(std::move(value)); return *this;}
-    inline DescribeCertificateRequest& WithCertificateId(const char* value) { SetCertificateId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateId;
-    bool m_certificateIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

@@ -11,63 +11,53 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-EvaluationAnswerOutput::EvaluationAnswerOutput() : 
-    m_valueHasBeenSet(false),
-    m_systemSuggestedValueHasBeenSet(false)
-{
-}
+EvaluationAnswerOutput::EvaluationAnswerOutput(JsonView jsonValue) { *this = jsonValue; }
 
-EvaluationAnswerOutput::EvaluationAnswerOutput(JsonView jsonValue)
-  : EvaluationAnswerOutput()
-{
-  *this = jsonValue;
-}
-
-EvaluationAnswerOutput& EvaluationAnswerOutput::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Value"))
-  {
+EvaluationAnswerOutput& EvaluationAnswerOutput::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Value")) {
     m_value = jsonValue.GetObject("Value");
-
     m_valueHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("SystemSuggestedValue"))
-  {
+  if (jsonValue.ValueExists("SystemSuggestedValue")) {
     m_systemSuggestedValue = jsonValue.GetObject("SystemSuggestedValue");
-
     m_systemSuggestedValueHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("SuggestedAnswers")) {
+    Aws::Utils::Array<JsonView> suggestedAnswersJsonList = jsonValue.GetArray("SuggestedAnswers");
+    for (unsigned suggestedAnswersIndex = 0; suggestedAnswersIndex < suggestedAnswersJsonList.GetLength(); ++suggestedAnswersIndex) {
+      m_suggestedAnswers.push_back(suggestedAnswersJsonList[suggestedAnswersIndex].AsObject());
+    }
+    m_suggestedAnswersHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue EvaluationAnswerOutput::Jsonize() const
-{
+JsonValue EvaluationAnswerOutput::Jsonize() const {
   JsonValue payload;
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithObject("Value", m_value.Jsonize());
-
+  if (m_valueHasBeenSet) {
+    payload.WithObject("Value", m_value.Jsonize());
   }
 
-  if(m_systemSuggestedValueHasBeenSet)
-  {
-   payload.WithObject("SystemSuggestedValue", m_systemSuggestedValue.Jsonize());
+  if (m_systemSuggestedValueHasBeenSet) {
+    payload.WithObject("SystemSuggestedValue", m_systemSuggestedValue.Jsonize());
+  }
 
+  if (m_suggestedAnswersHasBeenSet) {
+    Aws::Utils::Array<JsonValue> suggestedAnswersJsonList(m_suggestedAnswers.size());
+    for (unsigned suggestedAnswersIndex = 0; suggestedAnswersIndex < suggestedAnswersJsonList.GetLength(); ++suggestedAnswersIndex) {
+      suggestedAnswersJsonList[suggestedAnswersIndex].AsObject(m_suggestedAnswers[suggestedAnswersIndex].Jsonize());
+    }
+    payload.WithArray("SuggestedAnswers", std::move(suggestedAnswersJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

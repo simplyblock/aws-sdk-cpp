@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/greengrassv2/model/GetCoreDeviceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/greengrassv2/model/GetCoreDeviceRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::GreengrassV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCoreDeviceRequest::GetCoreDeviceRequest() : 
-    m_coreDeviceThingNameHasBeenSet(false)
-{
-}
-
-Aws::String GetCoreDeviceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCoreDeviceRequest::SerializePayload() const { return {}; }

@@ -5,80 +5,98 @@
 
 #pragma once
 #include <aws/chime-sdk-voice/ChimeSDKVoice_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/chime-sdk-voice/model/VoiceConnector.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKVoice
-{
-namespace Model
-{
-  class ListVoiceConnectorsResult
-  {
-  public:
-    AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult();
-    AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKVoice {
+namespace Model {
+class ListVoiceConnectorsResult {
+ public:
+  AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult() = default;
+  AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKVOICE_API ListVoiceConnectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the Voice Connectors.</p>
+   */
+  inline const Aws::Vector<VoiceConnector>& GetVoiceConnectors() const { return m_voiceConnectors; }
+  template <typename VoiceConnectorsT = Aws::Vector<VoiceConnector>>
+  void SetVoiceConnectors(VoiceConnectorsT&& value) {
+    m_voiceConnectorsHasBeenSet = true;
+    m_voiceConnectors = std::forward<VoiceConnectorsT>(value);
+  }
+  template <typename VoiceConnectorsT = Aws::Vector<VoiceConnector>>
+  ListVoiceConnectorsResult& WithVoiceConnectors(VoiceConnectorsT&& value) {
+    SetVoiceConnectors(std::forward<VoiceConnectorsT>(value));
+    return *this;
+  }
+  template <typename VoiceConnectorsT = VoiceConnector>
+  ListVoiceConnectorsResult& AddVoiceConnectors(VoiceConnectorsT&& value) {
+    m_voiceConnectorsHasBeenSet = true;
+    m_voiceConnectors.emplace_back(std::forward<VoiceConnectorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the Voice Connectors.</p>
-     */
-    inline const Aws::Vector<VoiceConnector>& GetVoiceConnectors() const{ return m_voiceConnectors; }
-    inline void SetVoiceConnectors(const Aws::Vector<VoiceConnector>& value) { m_voiceConnectors = value; }
-    inline void SetVoiceConnectors(Aws::Vector<VoiceConnector>&& value) { m_voiceConnectors = std::move(value); }
-    inline ListVoiceConnectorsResult& WithVoiceConnectors(const Aws::Vector<VoiceConnector>& value) { SetVoiceConnectors(value); return *this;}
-    inline ListVoiceConnectorsResult& WithVoiceConnectors(Aws::Vector<VoiceConnector>&& value) { SetVoiceConnectors(std::move(value)); return *this;}
-    inline ListVoiceConnectorsResult& AddVoiceConnectors(const VoiceConnector& value) { m_voiceConnectors.push_back(value); return *this; }
-    inline ListVoiceConnectorsResult& AddVoiceConnectors(VoiceConnector&& value) { m_voiceConnectors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token used to return the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListVoiceConnectorsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token used to return the next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListVoiceConnectorsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListVoiceConnectorsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListVoiceConnectorsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListVoiceConnectorsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListVoiceConnectorsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListVoiceConnectorsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListVoiceConnectorsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<VoiceConnector> m_voiceConnectors;
+ private:
+  Aws::Vector<VoiceConnector> m_voiceConnectors;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_voiceConnectorsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKVoice
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKVoice
+}  // namespace Aws

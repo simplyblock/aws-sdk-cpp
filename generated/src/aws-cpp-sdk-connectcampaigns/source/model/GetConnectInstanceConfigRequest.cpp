@@ -12,16 +12,4 @@ using namespace Aws::ConnectCampaigns::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConnectInstanceConfigRequest::GetConnectInstanceConfigRequest() : 
-    m_connectInstanceIdHasBeenSet(false)
-{
-}
-
-Aws::String GetConnectInstanceConfigRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConnectInstanceConfigRequest::SerializePayload() const { return {}; }

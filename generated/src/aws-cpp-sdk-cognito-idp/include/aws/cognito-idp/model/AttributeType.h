@@ -6,74 +6,83 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
 
+/**
+ * <p>The name and value of a user attribute.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/AttributeType">AWS
+ * API Reference</a></p>
+ */
+class AttributeType {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API AttributeType() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API AttributeType(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COGNITOIDENTITYPROVIDER_API AttributeType& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies whether the attribute is standard or custom.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/AttributeType">AWS
-   * API Reference</a></p>
+   * <p>The name of the attribute, for example <code>email</code> or
+   * <code>custom:department</code>.</p> <p>In some older user pools, the regex
+   * pattern for acceptable values of this parameter is
+   * <code>[\p{L}\p{M}\p{S}\p{N}\p{P}]+</code>. Older pools will eventually be
+   * updated to use the new pattern. Affected user pools are those created before May
+   * 2024 in US East (N. Virginia), US East (Ohio), US West (N. California), US West
+   * (Oregon), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Seoul),
+   * Asia Pacific (Singapore), Asia Pacific (Sydney), Canada (Central), Europe
+   * (Frankfurt), Europe (Ireland), Europe (London), Europe (Paris), Europe
+   * (Stockholm), Middle East (Bahrain), and South America (São Paulo). </p>
    */
-  class AttributeType
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API AttributeType();
-    AWS_COGNITOIDENTITYPROVIDER_API AttributeType(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COGNITOIDENTITYPROVIDER_API AttributeType& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  AttributeType& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The value of the attribute.</p>
+   */
+  inline const Aws::String& GetValue() const { return m_value; }
+  inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
+  template <typename ValueT = Aws::String>
+  void SetValue(ValueT&& value) {
+    m_valueHasBeenSet = true;
+    m_value = std::forward<ValueT>(value);
+  }
+  template <typename ValueT = Aws::String>
+  AttributeType& WithValue(ValueT&& value) {
+    SetValue(std::forward<ValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the attribute.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline AttributeType& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline AttributeType& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline AttributeType& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_value;
+  bool m_nameHasBeenSet = false;
+  bool m_valueHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The value of the attribute.</p>
-     */
-    inline const Aws::String& GetValue() const{ return m_value; }
-    inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
-    inline void SetValue(const Aws::String& value) { m_valueHasBeenSet = true; m_value = value; }
-    inline void SetValue(Aws::String&& value) { m_valueHasBeenSet = true; m_value = std::move(value); }
-    inline void SetValue(const char* value) { m_valueHasBeenSet = true; m_value.assign(value); }
-    inline AttributeType& WithValue(const Aws::String& value) { SetValue(value); return *this;}
-    inline AttributeType& WithValue(Aws::String&& value) { SetValue(std::move(value)); return *this;}
-    inline AttributeType& WithValue(const char* value) { SetValue(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_value;
-    bool m_valueHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

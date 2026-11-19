@@ -3,99 +3,309 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/PendingCreateStandbyWorkspacesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace WorkSpaces
-{
-namespace Model
-{
+namespace Aws {
+namespace WorkSpaces {
+namespace Model {
 
-PendingCreateStandbyWorkspacesRequest::PendingCreateStandbyWorkspacesRequest() : 
-    m_userNameHasBeenSet(false),
-    m_directoryIdHasBeenSet(false),
-    m_state(WorkspaceState::NOT_SET),
-    m_stateHasBeenSet(false),
-    m_workspaceIdHasBeenSet(false)
-{
+PendingCreateStandbyWorkspacesRequest::PendingCreateStandbyWorkspacesRequest(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-PendingCreateStandbyWorkspacesRequest::PendingCreateStandbyWorkspacesRequest(JsonView jsonValue)
-  : PendingCreateStandbyWorkspacesRequest()
-{
-  *this = jsonValue;
-}
+PendingCreateStandbyWorkspacesRequest& PendingCreateStandbyWorkspacesRequest::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-PendingCreateStandbyWorkspacesRequest& PendingCreateStandbyWorkspacesRequest::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("UserName"))
-  {
-    m_userName = jsonValue.GetString("UserName");
+              if (initialKeyStr == "UserName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_userName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_userName = ss.str();
+                  }
+                }
+                m_userNameHasBeenSet = true;
+              }
 
-    m_userNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DirectoryId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_directoryId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_directoryId = ss.str();
+                  }
+                }
+                m_directoryIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("DirectoryId"))
-  {
-    m_directoryId = jsonValue.GetString("DirectoryId");
+              else if (initialKeyStr == "State") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_state = WorkspaceStateMapper::GetWorkspaceStateForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_stateHasBeenSet = true;
+              }
 
-    m_directoryIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "WorkspaceId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_workspaceId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_workspaceId = ss.str();
+                  }
+                }
+                m_workspaceIdHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("PendingCreateStandbyWorkspacesRequest", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("State"))
-  {
-    m_state = WorkspaceStateMapper::GetWorkspaceStateForName(jsonValue.GetString("State"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_stateHasBeenSet = true;
-  }
+            if (initialKeyStr == "UserName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_userName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_userName = ss.str();
+                }
+              }
+              m_userNameHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("WorkspaceId"))
-  {
-    m_workspaceId = jsonValue.GetString("WorkspaceId");
+            else if (initialKeyStr == "DirectoryId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_directoryId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_directoryId = ss.str();
+                }
+              }
+              m_directoryIdHasBeenSet = true;
+            }
 
-    m_workspaceIdHasBeenSet = true;
+            else if (initialKeyStr == "State") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_state = WorkspaceStateMapper::GetWorkspaceStateForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_stateHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "WorkspaceId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_workspaceId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_workspaceId = ss.str();
+                }
+              }
+              m_workspaceIdHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue PendingCreateStandbyWorkspacesRequest::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_userNameHasBeenSet)
-  {
-   payload.WithString("UserName", m_userName);
-
+void PendingCreateStandbyWorkspacesRequest::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_userNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stateHasBeenSet) {
+    mapSize++;
+  }
+  if (m_workspaceIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_userNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_userName.c_str()));
   }
 
-  if(m_stateHasBeenSet)
-  {
-   payload.WithString("State", WorkspaceStateMapper::GetNameForWorkspaceState(m_state));
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
   }
 
-  if(m_workspaceIdHasBeenSet)
-  {
-   payload.WithString("WorkspaceId", m_workspaceId);
-
+  if (m_stateHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("State"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(WorkspaceStateMapper::GetNameForWorkspaceState(m_state).c_str()));
   }
 
-  return payload;
+  if (m_workspaceIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkspaceId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_workspaceId.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

@@ -5,109 +5,133 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/bedrock-agent/model/AgentStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
-  class PrepareAgentResult
-  {
-  public:
-    AWS_BEDROCKAGENT_API PrepareAgentResult();
-    AWS_BEDROCKAGENT_API PrepareAgentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCKAGENT_API PrepareAgentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
+class PrepareAgentResult {
+ public:
+  AWS_BEDROCKAGENT_API PrepareAgentResult() = default;
+  AWS_BEDROCKAGENT_API PrepareAgentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCKAGENT_API PrepareAgentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the agent for which the <code>DRAFT</code> version
+   * was created.</p>
+   */
+  inline const Aws::String& GetAgentId() const { return m_agentId; }
+  template <typename AgentIdT = Aws::String>
+  void SetAgentId(AgentIdT&& value) {
+    m_agentIdHasBeenSet = true;
+    m_agentId = std::forward<AgentIdT>(value);
+  }
+  template <typename AgentIdT = Aws::String>
+  PrepareAgentResult& WithAgentId(AgentIdT&& value) {
+    SetAgentId(std::forward<AgentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the agent for which the <code>DRAFT</code> version
-     * was created.</p>
-     */
-    inline const Aws::String& GetAgentId() const{ return m_agentId; }
-    inline void SetAgentId(const Aws::String& value) { m_agentId = value; }
-    inline void SetAgentId(Aws::String&& value) { m_agentId = std::move(value); }
-    inline void SetAgentId(const char* value) { m_agentId.assign(value); }
-    inline PrepareAgentResult& WithAgentId(const Aws::String& value) { SetAgentId(value); return *this;}
-    inline PrepareAgentResult& WithAgentId(Aws::String&& value) { SetAgentId(std::move(value)); return *this;}
-    inline PrepareAgentResult& WithAgentId(const char* value) { SetAgentId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the <code>DRAFT</code> version and whether it is ready for
+   * use.</p>
+   */
+  inline AgentStatus GetAgentStatus() const { return m_agentStatus; }
+  inline void SetAgentStatus(AgentStatus value) {
+    m_agentStatusHasBeenSet = true;
+    m_agentStatus = value;
+  }
+  inline PrepareAgentResult& WithAgentStatus(AgentStatus value) {
+    SetAgentStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the <code>DRAFT</code> version and whether it is ready for
-     * use.</p>
-     */
-    inline const AgentStatus& GetAgentStatus() const{ return m_agentStatus; }
-    inline void SetAgentStatus(const AgentStatus& value) { m_agentStatus = value; }
-    inline void SetAgentStatus(AgentStatus&& value) { m_agentStatus = std::move(value); }
-    inline PrepareAgentResult& WithAgentStatus(const AgentStatus& value) { SetAgentStatus(value); return *this;}
-    inline PrepareAgentResult& WithAgentStatus(AgentStatus&& value) { SetAgentStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the agent.</p>
+   */
+  inline const Aws::String& GetAgentVersion() const { return m_agentVersion; }
+  template <typename AgentVersionT = Aws::String>
+  void SetAgentVersion(AgentVersionT&& value) {
+    m_agentVersionHasBeenSet = true;
+    m_agentVersion = std::forward<AgentVersionT>(value);
+  }
+  template <typename AgentVersionT = Aws::String>
+  PrepareAgentResult& WithAgentVersion(AgentVersionT&& value) {
+    SetAgentVersion(std::forward<AgentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the agent.</p>
-     */
-    inline const Aws::String& GetAgentVersion() const{ return m_agentVersion; }
-    inline void SetAgentVersion(const Aws::String& value) { m_agentVersion = value; }
-    inline void SetAgentVersion(Aws::String&& value) { m_agentVersion = std::move(value); }
-    inline void SetAgentVersion(const char* value) { m_agentVersion.assign(value); }
-    inline PrepareAgentResult& WithAgentVersion(const Aws::String& value) { SetAgentVersion(value); return *this;}
-    inline PrepareAgentResult& WithAgentVersion(Aws::String&& value) { SetAgentVersion(std::move(value)); return *this;}
-    inline PrepareAgentResult& WithAgentVersion(const char* value) { SetAgentVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the <code>DRAFT</code> version of the agent was last
+   * prepared.</p>
+   */
+  inline const Aws::Utils::DateTime& GetPreparedAt() const { return m_preparedAt; }
+  template <typename PreparedAtT = Aws::Utils::DateTime>
+  void SetPreparedAt(PreparedAtT&& value) {
+    m_preparedAtHasBeenSet = true;
+    m_preparedAt = std::forward<PreparedAtT>(value);
+  }
+  template <typename PreparedAtT = Aws::Utils::DateTime>
+  PrepareAgentResult& WithPreparedAt(PreparedAtT&& value) {
+    SetPreparedAt(std::forward<PreparedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the <code>DRAFT</code> version of the agent was last
-     * prepared.</p>
-     */
-    inline const Aws::Utils::DateTime& GetPreparedAt() const{ return m_preparedAt; }
-    inline void SetPreparedAt(const Aws::Utils::DateTime& value) { m_preparedAt = value; }
-    inline void SetPreparedAt(Aws::Utils::DateTime&& value) { m_preparedAt = std::move(value); }
-    inline PrepareAgentResult& WithPreparedAt(const Aws::Utils::DateTime& value) { SetPreparedAt(value); return *this;}
-    inline PrepareAgentResult& WithPreparedAt(Aws::Utils::DateTime&& value) { SetPreparedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PrepareAgentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PrepareAgentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PrepareAgentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PrepareAgentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_agentId;
+ private:
+  Aws::String m_agentId;
 
-    AgentStatus m_agentStatus;
+  AgentStatus m_agentStatus{AgentStatus::NOT_SET};
 
-    Aws::String m_agentVersion;
+  Aws::String m_agentVersion;
 
-    Aws::Utils::DateTime m_preparedAt;
+  Aws::Utils::DateTime m_preparedAt{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_agentIdHasBeenSet = false;
+  bool m_agentStatusHasBeenSet = false;
+  bool m_agentVersionHasBeenSet = false;
+  bool m_preparedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ivs-realtime/Ivsrealtime_EXPORTS.h>
 #include <aws/ivs-realtime/model/PublicKey.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ivsrealtime
-{
-namespace Model
-{
-  class ImportPublicKeyResult
-  {
-  public:
-    AWS_IVSREALTIME_API ImportPublicKeyResult();
-    AWS_IVSREALTIME_API ImportPublicKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IVSREALTIME_API ImportPublicKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ivsrealtime {
+namespace Model {
+class ImportPublicKeyResult {
+ public:
+  AWS_IVSREALTIME_API ImportPublicKeyResult() = default;
+  AWS_IVSREALTIME_API ImportPublicKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IVSREALTIME_API ImportPublicKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The public key that was imported.</p>
+   */
+  inline const PublicKey& GetPublicKey() const { return m_publicKey; }
+  template <typename PublicKeyT = PublicKey>
+  void SetPublicKey(PublicKeyT&& value) {
+    m_publicKeyHasBeenSet = true;
+    m_publicKey = std::forward<PublicKeyT>(value);
+  }
+  template <typename PublicKeyT = PublicKey>
+  ImportPublicKeyResult& WithPublicKey(PublicKeyT&& value) {
+    SetPublicKey(std::forward<PublicKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The public key that was imported.</p>
-     */
-    inline const PublicKey& GetPublicKey() const{ return m_publicKey; }
-    inline void SetPublicKey(const PublicKey& value) { m_publicKey = value; }
-    inline void SetPublicKey(PublicKey&& value) { m_publicKey = std::move(value); }
-    inline ImportPublicKeyResult& WithPublicKey(const PublicKey& value) { SetPublicKey(value); return *this;}
-    inline ImportPublicKeyResult& WithPublicKey(PublicKey&& value) { SetPublicKey(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ImportPublicKeyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ImportPublicKeyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ImportPublicKeyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ImportPublicKeyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PublicKey m_publicKey;
+ private:
+  PublicKey m_publicKey;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_publicKeyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ivsrealtime
-} // namespace Aws
+}  // namespace Model
+}  // namespace ivsrealtime
+}  // namespace Aws

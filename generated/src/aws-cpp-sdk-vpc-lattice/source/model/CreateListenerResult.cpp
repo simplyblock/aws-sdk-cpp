@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/vpc-lattice/model/CreateListenerResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/vpc-lattice/model/CreateListenerResult.h>
 
 #include <utility>
 
@@ -17,77 +17,50 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateListenerResult::CreateListenerResult() : 
-    m_port(0),
-    m_protocol(ListenerProtocol::NOT_SET)
-{
-}
+CreateListenerResult::CreateListenerResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-CreateListenerResult::CreateListenerResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : CreateListenerResult()
-{
-  *this = result;
-}
-
-CreateListenerResult& CreateListenerResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+CreateListenerResult& CreateListenerResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("arn"))
-  {
+  if (jsonValue.ValueExists("arn")) {
     m_arn = jsonValue.GetString("arn");
-
+    m_arnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("defaultAction"))
-  {
-    m_defaultAction = jsonValue.GetObject("defaultAction");
-
-  }
-
-  if(jsonValue.ValueExists("id"))
-  {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
+    m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
+    m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("port"))
-  {
-    m_port = jsonValue.GetInteger("port");
-
-  }
-
-  if(jsonValue.ValueExists("protocol"))
-  {
+  if (jsonValue.ValueExists("protocol")) {
     m_protocol = ListenerProtocolMapper::GetListenerProtocolForName(jsonValue.GetString("protocol"));
-
+    m_protocolHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("serviceArn"))
-  {
+  if (jsonValue.ValueExists("port")) {
+    m_port = jsonValue.GetInteger("port");
+    m_portHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("serviceArn")) {
     m_serviceArn = jsonValue.GetString("serviceArn");
-
+    m_serviceArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("serviceId"))
-  {
+  if (jsonValue.ValueExists("serviceId")) {
     m_serviceId = jsonValue.GetString("serviceId");
-
+    m_serviceIdHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("defaultAction")) {
+    m_defaultAction = jsonValue.GetObject("defaultAction");
+    m_defaultActionHasBeenSet = true;
+  }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

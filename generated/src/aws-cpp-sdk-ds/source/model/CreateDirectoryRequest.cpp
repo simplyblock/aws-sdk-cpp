@@ -3,88 +3,97 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/CreateDirectoryRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectoryService::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateDirectoryRequest::CreateDirectoryRequest() : 
-    m_nameHasBeenSet(false),
-    m_shortNameHasBeenSet(false),
-    m_passwordHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_size(DirectorySize::NOT_SET),
-    m_sizeHasBeenSet(false),
-    m_vpcSettingsHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateDirectoryRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_shortNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_passwordHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sizeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcSettingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_networkTypeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_shortNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ShortName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_shortName.c_str()));
+  }
+
+  if (m_passwordHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Password"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_password.c_str()));
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_sizeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Size"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(DirectorySizeMapper::GetNameForDirectorySize(m_size).c_str()));
+  }
+
+  if (m_vpcSettingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcSettings"));
+    m_vpcSettings.CborEncode(encoder);
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_networkTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NetworkType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(NetworkTypeMapper::GetNameForNetworkType(m_networkType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateDirectoryRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_shortNameHasBeenSet)
-  {
-   payload.WithString("ShortName", m_shortName);
-
-  }
-
-  if(m_passwordHasBeenSet)
-  {
-   payload.WithString("Password", m_password);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
-  }
-
-  if(m_sizeHasBeenSet)
-  {
-   payload.WithString("Size", DirectorySizeMapper::GetNameForDirectorySize(m_size));
-  }
-
-  if(m_vpcSettingsHasBeenSet)
-  {
-   payload.WithObject("VpcSettings", m_vpcSettings.Jsonize());
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateDirectoryRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateDirectoryRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DirectoryService_20150416.CreateDirectory"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

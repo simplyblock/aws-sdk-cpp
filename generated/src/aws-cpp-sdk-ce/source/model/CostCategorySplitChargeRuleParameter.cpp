@@ -11,71 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CostExplorer
-{
-namespace Model
-{
+namespace Aws {
+namespace CostExplorer {
+namespace Model {
 
-CostCategorySplitChargeRuleParameter::CostCategorySplitChargeRuleParameter() : 
-    m_type(CostCategorySplitChargeRuleParameterType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_valuesHasBeenSet(false)
-{
-}
+CostCategorySplitChargeRuleParameter::CostCategorySplitChargeRuleParameter(JsonView jsonValue) { *this = jsonValue; }
 
-CostCategorySplitChargeRuleParameter::CostCategorySplitChargeRuleParameter(JsonView jsonValue)
-  : CostCategorySplitChargeRuleParameter()
-{
-  *this = jsonValue;
-}
-
-CostCategorySplitChargeRuleParameter& CostCategorySplitChargeRuleParameter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Type"))
-  {
-    m_type = CostCategorySplitChargeRuleParameterTypeMapper::GetCostCategorySplitChargeRuleParameterTypeForName(jsonValue.GetString("Type"));
-
+CostCategorySplitChargeRuleParameter& CostCategorySplitChargeRuleParameter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Type")) {
+    m_type =
+        CostCategorySplitChargeRuleParameterTypeMapper::GetCostCategorySplitChargeRuleParameterTypeForName(jsonValue.GetString("Type"));
     m_typeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Values"))
-  {
+  if (jsonValue.ValueExists("Values")) {
     Aws::Utils::Array<JsonView> valuesJsonList = jsonValue.GetArray("Values");
-    for(unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex)
-    {
+    for (unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex) {
       m_values.push_back(valuesJsonList[valuesIndex].AsString());
     }
     m_valuesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CostCategorySplitChargeRuleParameter::Jsonize() const
-{
+JsonValue CostCategorySplitChargeRuleParameter::Jsonize() const {
   JsonValue payload;
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", CostCategorySplitChargeRuleParameterTypeMapper::GetNameForCostCategorySplitChargeRuleParameterType(m_type));
+  if (m_typeHasBeenSet) {
+    payload.WithString("Type", CostCategorySplitChargeRuleParameterTypeMapper::GetNameForCostCategorySplitChargeRuleParameterType(m_type));
   }
 
-  if(m_valuesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> valuesJsonList(m_values.size());
-   for(unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex)
-   {
-     valuesJsonList[valuesIndex].AsString(m_values[valuesIndex]);
-   }
-   payload.WithArray("Values", std::move(valuesJsonList));
-
+  if (m_valuesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> valuesJsonList(m_values.size());
+    for (unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex) {
+      valuesJsonList[valuesIndex].AsString(m_values[valuesIndex]);
+    }
+    payload.WithArray("Values", std::move(valuesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CostExplorer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostExplorer
+}  // namespace Aws

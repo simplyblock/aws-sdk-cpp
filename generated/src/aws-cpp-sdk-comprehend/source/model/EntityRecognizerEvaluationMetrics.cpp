@@ -4,87 +4,150 @@
  */
 
 #include <aws/comprehend/model/EntityRecognizerEvaluationMetrics.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-EntityRecognizerEvaluationMetrics::EntityRecognizerEvaluationMetrics() : 
-    m_precision(0.0),
-    m_precisionHasBeenSet(false),
-    m_recall(0.0),
-    m_recallHasBeenSet(false),
-    m_f1Score(0.0),
-    m_f1ScoreHasBeenSet(false)
-{
+EntityRecognizerEvaluationMetrics::EntityRecognizerEvaluationMetrics(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-EntityRecognizerEvaluationMetrics::EntityRecognizerEvaluationMetrics(JsonView jsonValue)
-  : EntityRecognizerEvaluationMetrics()
-{
-  *this = jsonValue;
-}
+EntityRecognizerEvaluationMetrics& EntityRecognizerEvaluationMetrics::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-EntityRecognizerEvaluationMetrics& EntityRecognizerEvaluationMetrics::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Precision"))
-  {
-    m_precision = jsonValue.GetDouble("Precision");
+              if (initialKeyStr == "Precision") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_precision = val.value();
+                }
+                m_precisionHasBeenSet = true;
+              }
 
-    m_precisionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Recall") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_recall = val.value();
+                }
+                m_recallHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Recall"))
-  {
-    m_recall = jsonValue.GetDouble("Recall");
+              else if (initialKeyStr == "F1Score") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_f1Score = val.value();
+                }
+                m_f1ScoreHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("EntityRecognizerEvaluationMetrics", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_recallHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("F1Score"))
-  {
-    m_f1Score = jsonValue.GetDouble("F1Score");
+            if (initialKeyStr == "Precision") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_precision = val.value();
+              }
+              m_precisionHasBeenSet = true;
+            }
 
-    m_f1ScoreHasBeenSet = true;
+            else if (initialKeyStr == "Recall") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_recall = val.value();
+              }
+              m_recallHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "F1Score") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_f1Score = val.value();
+              }
+              m_f1ScoreHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue EntityRecognizerEvaluationMetrics::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_precisionHasBeenSet)
-  {
-   payload.WithDouble("Precision", m_precision);
-
+void EntityRecognizerEvaluationMetrics::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_precisionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_recallHasBeenSet) {
+    mapSize++;
+  }
+  if (m_f1ScoreHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_recallHasBeenSet)
-  {
-   payload.WithDouble("Recall", m_recall);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_precisionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Precision"));
+    encoder.WriteFloat(m_precision);
   }
 
-  if(m_f1ScoreHasBeenSet)
-  {
-   payload.WithDouble("F1Score", m_f1Score);
-
+  if (m_recallHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Recall"));
+    encoder.WriteFloat(m_recall);
   }
 
-  return payload;
+  if (m_f1ScoreHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("F1Score"));
+    encoder.WriteFloat(m_f1Score);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

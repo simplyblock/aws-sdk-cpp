@@ -5,79 +5,106 @@
 
 #pragma once
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/autoscaling/model/ResponseMetadata.h>
 #include <aws/autoscaling/model/MetricCollectionType.h>
 #include <aws/autoscaling/model/MetricGranularityType.h>
+#include <aws/autoscaling/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace AutoScaling
-{
-namespace Model
-{
-  class DescribeMetricCollectionTypesResult
-  {
-  public:
-    AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult();
-    AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace AutoScaling {
+namespace Model {
+class DescribeMetricCollectionTypesResult {
+ public:
+  AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult() = default;
+  AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_AUTOSCALING_API DescribeMetricCollectionTypesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The metrics.</p>
+   */
+  inline const Aws::Vector<MetricCollectionType>& GetMetrics() const { return m_metrics; }
+  template <typename MetricsT = Aws::Vector<MetricCollectionType>>
+  void SetMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics = std::forward<MetricsT>(value);
+  }
+  template <typename MetricsT = Aws::Vector<MetricCollectionType>>
+  DescribeMetricCollectionTypesResult& WithMetrics(MetricsT&& value) {
+    SetMetrics(std::forward<MetricsT>(value));
+    return *this;
+  }
+  template <typename MetricsT = MetricCollectionType>
+  DescribeMetricCollectionTypesResult& AddMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics.emplace_back(std::forward<MetricsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metrics.</p>
-     */
-    inline const Aws::Vector<MetricCollectionType>& GetMetrics() const{ return m_metrics; }
-    inline void SetMetrics(const Aws::Vector<MetricCollectionType>& value) { m_metrics = value; }
-    inline void SetMetrics(Aws::Vector<MetricCollectionType>&& value) { m_metrics = std::move(value); }
-    inline DescribeMetricCollectionTypesResult& WithMetrics(const Aws::Vector<MetricCollectionType>& value) { SetMetrics(value); return *this;}
-    inline DescribeMetricCollectionTypesResult& WithMetrics(Aws::Vector<MetricCollectionType>&& value) { SetMetrics(std::move(value)); return *this;}
-    inline DescribeMetricCollectionTypesResult& AddMetrics(const MetricCollectionType& value) { m_metrics.push_back(value); return *this; }
-    inline DescribeMetricCollectionTypesResult& AddMetrics(MetricCollectionType&& value) { m_metrics.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The granularities for the metrics.</p>
+   */
+  inline const Aws::Vector<MetricGranularityType>& GetGranularities() const { return m_granularities; }
+  template <typename GranularitiesT = Aws::Vector<MetricGranularityType>>
+  void SetGranularities(GranularitiesT&& value) {
+    m_granularitiesHasBeenSet = true;
+    m_granularities = std::forward<GranularitiesT>(value);
+  }
+  template <typename GranularitiesT = Aws::Vector<MetricGranularityType>>
+  DescribeMetricCollectionTypesResult& WithGranularities(GranularitiesT&& value) {
+    SetGranularities(std::forward<GranularitiesT>(value));
+    return *this;
+  }
+  template <typename GranularitiesT = MetricGranularityType>
+  DescribeMetricCollectionTypesResult& AddGranularities(GranularitiesT&& value) {
+    m_granularitiesHasBeenSet = true;
+    m_granularities.emplace_back(std::forward<GranularitiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The granularities for the metrics.</p>
-     */
-    inline const Aws::Vector<MetricGranularityType>& GetGranularities() const{ return m_granularities; }
-    inline void SetGranularities(const Aws::Vector<MetricGranularityType>& value) { m_granularities = value; }
-    inline void SetGranularities(Aws::Vector<MetricGranularityType>&& value) { m_granularities = std::move(value); }
-    inline DescribeMetricCollectionTypesResult& WithGranularities(const Aws::Vector<MetricGranularityType>& value) { SetGranularities(value); return *this;}
-    inline DescribeMetricCollectionTypesResult& WithGranularities(Aws::Vector<MetricGranularityType>&& value) { SetGranularities(std::move(value)); return *this;}
-    inline DescribeMetricCollectionTypesResult& AddGranularities(const MetricGranularityType& value) { m_granularities.push_back(value); return *this; }
-    inline DescribeMetricCollectionTypesResult& AddGranularities(MetricGranularityType&& value) { m_granularities.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeMetricCollectionTypesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeMetricCollectionTypesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeMetricCollectionTypesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MetricCollectionType> m_metrics;
+ private:
+  Aws::Vector<MetricCollectionType> m_metrics;
 
-    Aws::Vector<MetricGranularityType> m_granularities;
+  Aws::Vector<MetricGranularityType> m_granularities;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_metricsHasBeenSet = false;
+  bool m_granularitiesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AutoScaling
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScaling
+}  // namespace Aws

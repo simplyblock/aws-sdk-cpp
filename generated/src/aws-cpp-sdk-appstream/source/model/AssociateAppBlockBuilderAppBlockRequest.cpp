@@ -4,47 +4,45 @@
  */
 
 #include <aws/appstream/model/AssociateAppBlockBuilderAppBlockRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-AssociateAppBlockBuilderAppBlockRequest::AssociateAppBlockBuilderAppBlockRequest() : 
-    m_appBlockArnHasBeenSet(false),
-    m_appBlockBuilderNameHasBeenSet(false)
-{
-}
+Aws::String AssociateAppBlockBuilderAppBlockRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String AssociateAppBlockBuilderAppBlockRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_appBlockArnHasBeenSet)
-  {
-   payload.WithString("AppBlockArn", m_appBlockArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_appBlockArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_appBlockBuilderNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_appBlockBuilderNameHasBeenSet)
-  {
-   payload.WithString("AppBlockBuilderName", m_appBlockBuilderName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_appBlockArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AppBlockArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_appBlockArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_appBlockBuilderNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AppBlockBuilderName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_appBlockBuilderName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection AssociateAppBlockBuilderAppBlockRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection AssociateAppBlockBuilderAppBlockRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.AssociateAppBlockBuilderAppBlock"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

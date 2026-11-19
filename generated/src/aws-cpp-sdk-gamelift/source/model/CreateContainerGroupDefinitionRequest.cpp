@@ -3,95 +3,110 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/CreateContainerGroupDefinitionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateContainerGroupDefinitionRequest::CreateContainerGroupDefinitionRequest() : 
-    m_nameHasBeenSet(false),
-    m_schedulingStrategy(ContainerSchedulingStrategy::NOT_SET),
-    m_schedulingStrategyHasBeenSet(false),
-    m_totalMemoryLimit(0),
-    m_totalMemoryLimitHasBeenSet(false),
-    m_totalCpuLimit(0),
-    m_totalCpuLimitHasBeenSet(false),
-    m_containerDefinitionsHasBeenSet(false),
-    m_operatingSystem(ContainerOperatingSystem::NOT_SET),
-    m_operatingSystemHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateContainerGroupDefinitionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_containerGroupTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_totalMemoryLimitMebibytesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_totalVcpuLimitHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gameServerContainerDefinitionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_supportContainerDefinitionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_operatingSystemHasBeenSet) {
+    mapSize++;
+  }
+  if (m_versionDescriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_containerGroupTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ContainerGroupType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ContainerGroupTypeMapper::GetNameForContainerGroupType(m_containerGroupType).c_str()));
+  }
+
+  if (m_totalMemoryLimitMebibytesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TotalMemoryLimitMebibytes"));
+    (m_totalMemoryLimitMebibytes >= 0) ? encoder.WriteUInt(m_totalMemoryLimitMebibytes) : encoder.WriteNegInt(m_totalMemoryLimitMebibytes);
+  }
+
+  if (m_totalVcpuLimitHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TotalVcpuLimit"));
+    encoder.WriteFloat(m_totalVcpuLimit);
+  }
+
+  if (m_gameServerContainerDefinitionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GameServerContainerDefinition"));
+    m_gameServerContainerDefinition.CborEncode(encoder);
+  }
+
+  if (m_supportContainerDefinitionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SupportContainerDefinitions"));
+    encoder.WriteArrayStart(m_supportContainerDefinitions.size());
+    for (const auto& item_0 : m_supportContainerDefinitions) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_operatingSystemHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OperatingSystem"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ContainerOperatingSystemMapper::GetNameForContainerOperatingSystem(m_operatingSystem).c_str()));
+  }
+
+  if (m_versionDescriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VersionDescription"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_versionDescription.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateContainerGroupDefinitionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_schedulingStrategyHasBeenSet)
-  {
-   payload.WithString("SchedulingStrategy", ContainerSchedulingStrategyMapper::GetNameForContainerSchedulingStrategy(m_schedulingStrategy));
-  }
-
-  if(m_totalMemoryLimitHasBeenSet)
-  {
-   payload.WithInteger("TotalMemoryLimit", m_totalMemoryLimit);
-
-  }
-
-  if(m_totalCpuLimitHasBeenSet)
-  {
-   payload.WithInteger("TotalCpuLimit", m_totalCpuLimit);
-
-  }
-
-  if(m_containerDefinitionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> containerDefinitionsJsonList(m_containerDefinitions.size());
-   for(unsigned containerDefinitionsIndex = 0; containerDefinitionsIndex < containerDefinitionsJsonList.GetLength(); ++containerDefinitionsIndex)
-   {
-     containerDefinitionsJsonList[containerDefinitionsIndex].AsObject(m_containerDefinitions[containerDefinitionsIndex].Jsonize());
-   }
-   payload.WithArray("ContainerDefinitions", std::move(containerDefinitionsJsonList));
-
-  }
-
-  if(m_operatingSystemHasBeenSet)
-  {
-   payload.WithString("OperatingSystem", ContainerOperatingSystemMapper::GetNameForContainerOperatingSystem(m_operatingSystem));
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateContainerGroupDefinitionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateContainerGroupDefinitionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.CreateContainerGroupDefinition"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

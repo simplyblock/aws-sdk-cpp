@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConfiguredTableAssociationRequest::GetConfiguredTableAssociationRequest() : 
-    m_configuredTableAssociationIdentifierHasBeenSet(false),
-    m_membershipIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetConfiguredTableAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConfiguredTableAssociationRequest::SerializePayload() const { return {}; }

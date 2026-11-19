@@ -4,157 +4,183 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/kafka/model/BrokerSoftwareInfo.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/kafka/model/BrokerSoftwareInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>BrokerNodeInfo</p>
+       <p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BrokerNodeInfo">AWS
+ * API Reference</a></p>
+ */
+class BrokerNodeInfo {
+ public:
+  AWS_KAFKA_API BrokerNodeInfo() = default;
+  AWS_KAFKA_API BrokerNodeInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API BrokerNodeInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * 
-            <p>BrokerNodeInfo</p>
-         <p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BrokerNodeInfo">AWS
-   * API Reference</a></p>
+   *
+          <p>The attached elastic network interface of the broker.</p>
+
+   *
    */
-  class BrokerNodeInfo
-  {
-  public:
-    AWS_KAFKA_API BrokerNodeInfo();
-    AWS_KAFKA_API BrokerNodeInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API BrokerNodeInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAttachedENIId() const { return m_attachedENIId; }
+  inline bool AttachedENIIdHasBeenSet() const { return m_attachedENIIdHasBeenSet; }
+  template <typename AttachedENIIdT = Aws::String>
+  void SetAttachedENIId(AttachedENIIdT&& value) {
+    m_attachedENIIdHasBeenSet = true;
+    m_attachedENIId = std::forward<AttachedENIIdT>(value);
+  }
+  template <typename AttachedENIIdT = Aws::String>
+  BrokerNodeInfo& WithAttachedENIId(AttachedENIIdT&& value) {
+    SetAttachedENIId(std::forward<AttachedENIIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   *
+          <p>The ID of the broker.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The attached elastic network interface of the broker.</p>
-      
-     *   
-     */
-    inline const Aws::String& GetAttachedENIId() const{ return m_attachedENIId; }
-    inline bool AttachedENIIdHasBeenSet() const { return m_attachedENIIdHasBeenSet; }
-    inline void SetAttachedENIId(const Aws::String& value) { m_attachedENIIdHasBeenSet = true; m_attachedENIId = value; }
-    inline void SetAttachedENIId(Aws::String&& value) { m_attachedENIIdHasBeenSet = true; m_attachedENIId = std::move(value); }
-    inline void SetAttachedENIId(const char* value) { m_attachedENIIdHasBeenSet = true; m_attachedENIId.assign(value); }
-    inline BrokerNodeInfo& WithAttachedENIId(const Aws::String& value) { SetAttachedENIId(value); return *this;}
-    inline BrokerNodeInfo& WithAttachedENIId(Aws::String&& value) { SetAttachedENIId(std::move(value)); return *this;}
-    inline BrokerNodeInfo& WithAttachedENIId(const char* value) { SetAttachedENIId(value); return *this;}
-    ///@}
+   */
+  inline double GetBrokerId() const { return m_brokerId; }
+  inline bool BrokerIdHasBeenSet() const { return m_brokerIdHasBeenSet; }
+  inline void SetBrokerId(double value) {
+    m_brokerIdHasBeenSet = true;
+    m_brokerId = value;
+  }
+  inline BrokerNodeInfo& WithBrokerId(double value) {
+    SetBrokerId(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The ID of the broker.</p>
-         
-     */
-    inline double GetBrokerId() const{ return m_brokerId; }
-    inline bool BrokerIdHasBeenSet() const { return m_brokerIdHasBeenSet; }
-    inline void SetBrokerId(double value) { m_brokerIdHasBeenSet = true; m_brokerId = value; }
-    inline BrokerNodeInfo& WithBrokerId(double value) { SetBrokerId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The client subnet to which this broker node belongs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The client subnet to which this broker node belongs.</p>
-       
-     *  
-     */
-    inline const Aws::String& GetClientSubnet() const{ return m_clientSubnet; }
-    inline bool ClientSubnetHasBeenSet() const { return m_clientSubnetHasBeenSet; }
-    inline void SetClientSubnet(const Aws::String& value) { m_clientSubnetHasBeenSet = true; m_clientSubnet = value; }
-    inline void SetClientSubnet(Aws::String&& value) { m_clientSubnetHasBeenSet = true; m_clientSubnet = std::move(value); }
-    inline void SetClientSubnet(const char* value) { m_clientSubnetHasBeenSet = true; m_clientSubnet.assign(value); }
-    inline BrokerNodeInfo& WithClientSubnet(const Aws::String& value) { SetClientSubnet(value); return *this;}
-    inline BrokerNodeInfo& WithClientSubnet(Aws::String&& value) { SetClientSubnet(std::move(value)); return *this;}
-    inline BrokerNodeInfo& WithClientSubnet(const char* value) { SetClientSubnet(value); return *this;}
-    ///@}
+   *
+   */
+  inline const Aws::String& GetClientSubnet() const { return m_clientSubnet; }
+  inline bool ClientSubnetHasBeenSet() const { return m_clientSubnetHasBeenSet; }
+  template <typename ClientSubnetT = Aws::String>
+  void SetClientSubnet(ClientSubnetT&& value) {
+    m_clientSubnetHasBeenSet = true;
+    m_clientSubnet = std::forward<ClientSubnetT>(value);
+  }
+  template <typename ClientSubnetT = Aws::String>
+  BrokerNodeInfo& WithClientSubnet(ClientSubnetT&& value) {
+    SetClientSubnet(std::forward<ClientSubnetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The virtual private cloud (VPC) of the client.</p>
-         
-     */
-    inline const Aws::String& GetClientVpcIpAddress() const{ return m_clientVpcIpAddress; }
-    inline bool ClientVpcIpAddressHasBeenSet() const { return m_clientVpcIpAddressHasBeenSet; }
-    inline void SetClientVpcIpAddress(const Aws::String& value) { m_clientVpcIpAddressHasBeenSet = true; m_clientVpcIpAddress = value; }
-    inline void SetClientVpcIpAddress(Aws::String&& value) { m_clientVpcIpAddressHasBeenSet = true; m_clientVpcIpAddress = std::move(value); }
-    inline void SetClientVpcIpAddress(const char* value) { m_clientVpcIpAddressHasBeenSet = true; m_clientVpcIpAddress.assign(value); }
-    inline BrokerNodeInfo& WithClientVpcIpAddress(const Aws::String& value) { SetClientVpcIpAddress(value); return *this;}
-    inline BrokerNodeInfo& WithClientVpcIpAddress(Aws::String&& value) { SetClientVpcIpAddress(std::move(value)); return *this;}
-    inline BrokerNodeInfo& WithClientVpcIpAddress(const char* value) { SetClientVpcIpAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The virtual private cloud (VPC) of the client.</p>
 
-    ///@{
-    /**
-     * 
-            <p>Information about the version of software currently deployed on
-     * the Apache Kafka brokers in the cluster.</p>
-         
-     */
-    inline const BrokerSoftwareInfo& GetCurrentBrokerSoftwareInfo() const{ return m_currentBrokerSoftwareInfo; }
-    inline bool CurrentBrokerSoftwareInfoHasBeenSet() const { return m_currentBrokerSoftwareInfoHasBeenSet; }
-    inline void SetCurrentBrokerSoftwareInfo(const BrokerSoftwareInfo& value) { m_currentBrokerSoftwareInfoHasBeenSet = true; m_currentBrokerSoftwareInfo = value; }
-    inline void SetCurrentBrokerSoftwareInfo(BrokerSoftwareInfo&& value) { m_currentBrokerSoftwareInfoHasBeenSet = true; m_currentBrokerSoftwareInfo = std::move(value); }
-    inline BrokerNodeInfo& WithCurrentBrokerSoftwareInfo(const BrokerSoftwareInfo& value) { SetCurrentBrokerSoftwareInfo(value); return *this;}
-    inline BrokerNodeInfo& WithCurrentBrokerSoftwareInfo(BrokerSoftwareInfo&& value) { SetCurrentBrokerSoftwareInfo(std::move(value)); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetClientVpcIpAddress() const { return m_clientVpcIpAddress; }
+  inline bool ClientVpcIpAddressHasBeenSet() const { return m_clientVpcIpAddressHasBeenSet; }
+  template <typename ClientVpcIpAddressT = Aws::String>
+  void SetClientVpcIpAddress(ClientVpcIpAddressT&& value) {
+    m_clientVpcIpAddressHasBeenSet = true;
+    m_clientVpcIpAddress = std::forward<ClientVpcIpAddressT>(value);
+  }
+  template <typename ClientVpcIpAddressT = Aws::String>
+  BrokerNodeInfo& WithClientVpcIpAddress(ClientVpcIpAddressT&& value) {
+    SetClientVpcIpAddress(std::forward<ClientVpcIpAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>Endpoints for accessing the broker.</p>
-         
-     */
-    inline const Aws::Vector<Aws::String>& GetEndpoints() const{ return m_endpoints; }
-    inline bool EndpointsHasBeenSet() const { return m_endpointsHasBeenSet; }
-    inline void SetEndpoints(const Aws::Vector<Aws::String>& value) { m_endpointsHasBeenSet = true; m_endpoints = value; }
-    inline void SetEndpoints(Aws::Vector<Aws::String>&& value) { m_endpointsHasBeenSet = true; m_endpoints = std::move(value); }
-    inline BrokerNodeInfo& WithEndpoints(const Aws::Vector<Aws::String>& value) { SetEndpoints(value); return *this;}
-    inline BrokerNodeInfo& WithEndpoints(Aws::Vector<Aws::String>&& value) { SetEndpoints(std::move(value)); return *this;}
-    inline BrokerNodeInfo& AddEndpoints(const Aws::String& value) { m_endpointsHasBeenSet = true; m_endpoints.push_back(value); return *this; }
-    inline BrokerNodeInfo& AddEndpoints(Aws::String&& value) { m_endpointsHasBeenSet = true; m_endpoints.push_back(std::move(value)); return *this; }
-    inline BrokerNodeInfo& AddEndpoints(const char* value) { m_endpointsHasBeenSet = true; m_endpoints.push_back(value); return *this; }
-    ///@}
-  private:
+  ///@{
+  /**
+   *
+          <p>Information about the version of software currently deployed on
+   * the Apache Kafka brokers in the cluster.</p>
 
-    Aws::String m_attachedENIId;
-    bool m_attachedENIIdHasBeenSet = false;
+   */
+  inline const BrokerSoftwareInfo& GetCurrentBrokerSoftwareInfo() const { return m_currentBrokerSoftwareInfo; }
+  inline bool CurrentBrokerSoftwareInfoHasBeenSet() const { return m_currentBrokerSoftwareInfoHasBeenSet; }
+  template <typename CurrentBrokerSoftwareInfoT = BrokerSoftwareInfo>
+  void SetCurrentBrokerSoftwareInfo(CurrentBrokerSoftwareInfoT&& value) {
+    m_currentBrokerSoftwareInfoHasBeenSet = true;
+    m_currentBrokerSoftwareInfo = std::forward<CurrentBrokerSoftwareInfoT>(value);
+  }
+  template <typename CurrentBrokerSoftwareInfoT = BrokerSoftwareInfo>
+  BrokerNodeInfo& WithCurrentBrokerSoftwareInfo(CurrentBrokerSoftwareInfoT&& value) {
+    SetCurrentBrokerSoftwareInfo(std::forward<CurrentBrokerSoftwareInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    double m_brokerId;
-    bool m_brokerIdHasBeenSet = false;
+  ///@{
+  /**
+   *
+          <p>Endpoints for accessing the broker.</p>
 
-    Aws::String m_clientSubnet;
-    bool m_clientSubnetHasBeenSet = false;
+   */
+  inline const Aws::Vector<Aws::String>& GetEndpoints() const { return m_endpoints; }
+  inline bool EndpointsHasBeenSet() const { return m_endpointsHasBeenSet; }
+  template <typename EndpointsT = Aws::Vector<Aws::String>>
+  void SetEndpoints(EndpointsT&& value) {
+    m_endpointsHasBeenSet = true;
+    m_endpoints = std::forward<EndpointsT>(value);
+  }
+  template <typename EndpointsT = Aws::Vector<Aws::String>>
+  BrokerNodeInfo& WithEndpoints(EndpointsT&& value) {
+    SetEndpoints(std::forward<EndpointsT>(value));
+    return *this;
+  }
+  template <typename EndpointsT = Aws::String>
+  BrokerNodeInfo& AddEndpoints(EndpointsT&& value) {
+    m_endpointsHasBeenSet = true;
+    m_endpoints.emplace_back(std::forward<EndpointsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_attachedENIId;
 
-    Aws::String m_clientVpcIpAddress;
-    bool m_clientVpcIpAddressHasBeenSet = false;
+  double m_brokerId{0.0};
 
-    BrokerSoftwareInfo m_currentBrokerSoftwareInfo;
-    bool m_currentBrokerSoftwareInfoHasBeenSet = false;
+  Aws::String m_clientSubnet;
 
-    Aws::Vector<Aws::String> m_endpoints;
-    bool m_endpointsHasBeenSet = false;
-  };
+  Aws::String m_clientVpcIpAddress;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  BrokerSoftwareInfo m_currentBrokerSoftwareInfo;
+
+  Aws::Vector<Aws::String> m_endpoints;
+  bool m_attachedENIIdHasBeenSet = false;
+  bool m_brokerIdHasBeenSet = false;
+  bool m_clientSubnetHasBeenSet = false;
+  bool m_clientVpcIpAddressHasBeenSet = false;
+  bool m_currentBrokerSoftwareInfoHasBeenSet = false;
+  bool m_endpointsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

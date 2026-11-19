@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cleanroomsml/CleanRoomsML_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cleanroomsml/CleanRoomsMLEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CleanRoomsML
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CleanRoomsML {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CleanRoomsMLClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CleanRoomsMLEndpointProviderBase =
     EndpointProviderBase<CleanRoomsMLClientConfiguration, CleanRoomsMLBuiltInParameters, CleanRoomsMLClientContextParameters>;
 
 using CleanRoomsMLDefaultEpProviderBase =
-    DefaultEndpointProvider<CleanRoomsMLClientConfiguration, CleanRoomsMLBuiltInParameters, CleanRoomsMLClientContextParameters>;
+    BDDEndpointProvider<CleanRoomsMLClientConfiguration, CleanRoomsMLBuiltInParameters, CleanRoomsMLClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLEANROOMSML_API CleanRoomsMLEndpointProvider : public CleanRoomsMLDefaultEpProviderBase
-{
-public:
-    using CleanRoomsMLResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLEANROOMSML_API CleanRoomsMLEndpointProvider : public CleanRoomsMLDefaultEpProviderBase {
+ public:
+  using CleanRoomsMLResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CleanRoomsMLEndpointProvider()
-      : CleanRoomsMLDefaultEpProviderBase(Aws::CleanRoomsML::CleanRoomsMLEndpointRules::GetRulesBlob(), Aws::CleanRoomsML::CleanRoomsMLEndpointRules::RulesBlobSize)
-    {}
+  CleanRoomsMLEndpointProvider();
 
-    ~CleanRoomsMLEndpointProvider()
-    {
-    }
+  ~CleanRoomsMLEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CleanRoomsML
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CleanRoomsML
+}  // namespace Aws

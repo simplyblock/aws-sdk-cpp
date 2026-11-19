@@ -12,17 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteRecoveryPointRequest::DeleteRecoveryPointRequest() : 
-    m_backupVaultNameHasBeenSet(false),
-    m_recoveryPointArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteRecoveryPointRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteRecoveryPointRequest::SerializePayload() const { return {}; }

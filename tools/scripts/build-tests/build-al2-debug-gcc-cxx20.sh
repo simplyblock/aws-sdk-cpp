@@ -18,6 +18,14 @@ PREFIX_DIR="$1"
 mkdir "${PREFIX_DIR}/al2-build"
 mkdir "${PREFIX_DIR}/al2-install"
 cd "${PREFIX_DIR}/al2-build"
-cmake -GNinja ../aws-sdk-cpp -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=../aws-sdk-cpp/toolchains/gcc10-c++20.cmake -DCMAKE_INSTALL_PREFIX="${PREFIX_DIR}/al2-install"
+cmake -GNinja ../aws-sdk-cpp -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=../aws-sdk-cpp/toolchains/gcc10-c++20.cmake -DCMAKE_INSTALL_PREFIX="${PREFIX_DIR}/al2-install" -DAWS_ENABLE_CORE_INTEGRATION_TEST=ON
 ninja-build -j $(grep -c ^processor /proc/cpuinfo)
 ninja-build install
+
+# Clean up temp build files, however leave built integration tests as they have no install target
+rm -rf "${PREFIX_DIR}/al2-build/AWSSDK/"
+rm -rf "${PREFIX_DIR}/al2-build/CMakeFiles/"
+rm -rf "${PREFIX_DIR}/al2-build/crt/"
+rm -rf "${PREFIX_DIR}/al2-build/generated/"
+rm -rf "${PREFIX_DIR}/al2-build/lib/"
+rm -rf "${PREFIX_DIR}/al2-build/src/"

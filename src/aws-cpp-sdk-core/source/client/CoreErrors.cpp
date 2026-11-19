@@ -5,6 +5,7 @@
 
 #include <aws/core/client/AWSError.h>
 #include <aws/core/client/CoreErrors.h>
+#include <aws/core/internal/RetryErrorClassification.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/HashingUtils.h>
 
@@ -32,6 +33,8 @@ void CoreErrorsMapper::InitCoreErrorsMapper()
       return;
     }
     s_CoreErrorsMapper = Aws::New<ErrorsMapperContainer>("InitCoreErrorsMapper");
+
+    const RetryableType throttleType = RetryableType::RETRYABLE_THROTTLING;
 
     s_CoreErrorsMapper->emplace("IncompleteSignature", AWSError<CoreErrors>(CoreErrors::INCOMPLETE_SIGNATURE, false));
     s_CoreErrorsMapper->emplace("IncompleteSignatureException", AWSError<CoreErrors>(CoreErrors::INCOMPLETE_SIGNATURE, false));
@@ -65,11 +68,11 @@ void CoreErrorsMapper::InitCoreErrorsMapper()
     s_CoreErrorsMapper->emplace("ServiceUnavailableException", AWSError<CoreErrors>(CoreErrors::SERVICE_UNAVAILABLE, true));
     s_CoreErrorsMapper->emplace("ServiceUnavailableError", AWSError<CoreErrors>(CoreErrors::SERVICE_UNAVAILABLE, true));
     s_CoreErrorsMapper->emplace("ServiceUnavailable", AWSError<CoreErrors>(CoreErrors::SERVICE_UNAVAILABLE, true));
-    s_CoreErrorsMapper->emplace("RequestThrottledException", AWSError<CoreErrors>(CoreErrors::THROTTLING, true));
-    s_CoreErrorsMapper->emplace("RequestThrottled", AWSError<CoreErrors>(CoreErrors::THROTTLING, true));
-    s_CoreErrorsMapper->emplace("ThrottlingException", AWSError<CoreErrors>(CoreErrors::THROTTLING, true));
-    s_CoreErrorsMapper->emplace("ThrottledException", AWSError<CoreErrors>(CoreErrors::THROTTLING, true));
-    s_CoreErrorsMapper->emplace("Throttling", AWSError<CoreErrors>(CoreErrors::THROTTLING, true));
+    s_CoreErrorsMapper->emplace("RequestThrottledException", AWSError<CoreErrors>(CoreErrors::THROTTLING, throttleType));
+    s_CoreErrorsMapper->emplace("RequestThrottled", AWSError<CoreErrors>(CoreErrors::THROTTLING, throttleType));
+    s_CoreErrorsMapper->emplace("ThrottlingException", AWSError<CoreErrors>(CoreErrors::THROTTLING, throttleType));
+    s_CoreErrorsMapper->emplace("ThrottledException", AWSError<CoreErrors>(CoreErrors::THROTTLING, throttleType));
+    s_CoreErrorsMapper->emplace("Throttling", AWSError<CoreErrors>(CoreErrors::THROTTLING, throttleType));
     s_CoreErrorsMapper->emplace("ValidationErrorException", AWSError<CoreErrors>(CoreErrors::VALIDATION, false));
     s_CoreErrorsMapper->emplace("ValidationException", AWSError<CoreErrors>(CoreErrors::VALIDATION, false));
     s_CoreErrorsMapper->emplace("ValidationError", AWSError<CoreErrors>(CoreErrors::VALIDATION, false));
@@ -79,8 +82,8 @@ void CoreErrorsMapper::InitCoreErrorsMapper()
     s_CoreErrorsMapper->emplace("ResourceNotFound", AWSError<CoreErrors>(CoreErrors::RESOURCE_NOT_FOUND, false));
     s_CoreErrorsMapper->emplace("UnrecognizedClientException", AWSError<CoreErrors>(CoreErrors::UNRECOGNIZED_CLIENT, false));
     s_CoreErrorsMapper->emplace("UnrecognizedClient", AWSError<CoreErrors>(CoreErrors::UNRECOGNIZED_CLIENT, false));
-    s_CoreErrorsMapper->emplace("SlowDownException", AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, true));
-    s_CoreErrorsMapper->emplace("SlowDown", AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, true));
+    s_CoreErrorsMapper->emplace("SlowDownException", AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, throttleType));
+    s_CoreErrorsMapper->emplace("SlowDown", AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, throttleType));
     s_CoreErrorsMapper->emplace("SignatureDoesNotMatchException", AWSError<CoreErrors>(CoreErrors::SIGNATURE_DOES_NOT_MATCH, false));
     s_CoreErrorsMapper->emplace("SignatureDoesNotMatch", AWSError<CoreErrors>(CoreErrors::SIGNATURE_DOES_NOT_MATCH, false));
     s_CoreErrorsMapper->emplace("InvalidAccessKeyIdException", AWSError<CoreErrors>(CoreErrors::INVALID_ACCESS_KEY_ID, false));
@@ -89,6 +92,14 @@ void CoreErrorsMapper::InitCoreErrorsMapper()
     s_CoreErrorsMapper->emplace("RequestTimeTooSkewed", AWSError<CoreErrors>(CoreErrors::REQUEST_TIME_TOO_SKEWED, true));
     s_CoreErrorsMapper->emplace("RequestTimeoutException", AWSError<CoreErrors>(CoreErrors::REQUEST_TIMEOUT, true));
     s_CoreErrorsMapper->emplace("RequestTimeout", AWSError<CoreErrors>(CoreErrors::REQUEST_TIMEOUT, true));
+    for (const char* name : Aws::Client::Internal::STANDARD_ONLY_THROTTLING_ERROR_NAMES)
+    {
+        s_CoreErrorsMapper->emplace(name, AWSError<CoreErrors>(CoreErrors::THROTTLING, RetryableType::RETRYABLE_THROTTLING));
+    }
+    for (const char* name : Aws::Client::Internal::STANDARD_ONLY_TRANSIENT_ERROR_NAMES)
+    {
+        s_CoreErrorsMapper->emplace(name, AWSError<CoreErrors>(CoreErrors::NETWORK_CONNECTION, true));
+    }
 }
 
 void CoreErrorsMapper::CleanupCoreErrorsMapper()
@@ -122,7 +133,7 @@ AWS_CORE_API AWSError<CoreErrors> CoreErrorsMapper::GetErrorForHttpResponseCode(
             error = AWSError<CoreErrors>(CoreErrors::RESOURCE_NOT_FOUND, retryable);
             break;
         case HttpResponseCode::TOO_MANY_REQUESTS:
-            error = AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, retryable);
+            error = AWSError<CoreErrors>(CoreErrors::SLOW_DOWN, RetryableType::RETRYABLE_THROTTLING);
             break;
         case HttpResponseCode::INTERNAL_SERVER_ERROR:
             error = AWSError<CoreErrors>(CoreErrors::INTERNAL_FAILURE, retryable);
@@ -147,6 +158,41 @@ AWS_CORE_API AWSError<CoreErrors> CoreErrorsMapper::GetErrorForHttpResponseCode(
     }
     error.SetResponseCode(code);
     return error;
+}
+
+bool Aws::Client::Internal::IsStandardOnlyRetryableError(const AWSError<CoreErrors>& error)
+{
+    const CoreErrors errorType = error.GetErrorType();
+    const Aws::String& name = error.GetExceptionName();
+    if (errorType == CoreErrors::THROTTLING)
+    {
+        for (const char* standardOnlyName : STANDARD_ONLY_THROTTLING_ERROR_NAMES)
+        {
+            if (name == standardOnlyName)
+            {
+                return true;
+            }
+        }
+    }
+    if (errorType == CoreErrors::NETWORK_CONNECTION)
+    {
+        for (const char* standardOnlyName : STANDARD_ONLY_TRANSIENT_ERROR_NAMES)
+        {
+            if (name == standardOnlyName)
+            {
+                return true;
+            }
+        }
+    }
+    return error.GetResponseCode() == HttpResponseCode::TOO_MANY_REQUESTS && errorType == CoreErrors::UNKNOWN && !name.empty();
+}
+
+void Aws::Client::Internal::ClassifyUnmodeledTooManyRequests(AWSError<CoreErrors>& error)
+{
+    if (error.GetResponseCode() == HttpResponseCode::TOO_MANY_REQUESTS && error.GetErrorType() == CoreErrors::UNKNOWN)
+    {
+        error.SetRetryableType(RetryableType::RETRYABLE_THROTTLING);
+    }
 }
 
 /**

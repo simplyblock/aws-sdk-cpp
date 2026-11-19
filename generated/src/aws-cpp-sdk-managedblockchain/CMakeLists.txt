@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-managedblockchain "C++ SDK for the AWS managedblockchain service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-managedblockchain "C++ SDK for Amazon Managed Blockchain" aws-cpp-sdk-core)
 
 file(GLOB AWS_MANAGEDBLOCKCHAIN_HEADERS
     "include/aws/managedblockchain/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MANAGEDBLOCKCHAIN_HEADERS
 
 file(GLOB AWS_MANAGEDBLOCKCHAIN_MODEL_HEADERS
     "include/aws/managedblockchain/model/*.h"
+)
+
+file(GLOB AWS_MANAGEDBLOCKCHAIN_INTERNAL_HEADERS
+    "include/aws/managedblockchain/internal/*.h"
 )
 
 file(GLOB AWS_MANAGEDBLOCKCHAIN_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MANAGEDBLOCKCHAIN_MODEL_SOURCE
 
 file(GLOB MANAGEDBLOCKCHAIN_UNIFIED_HEADERS
     ${AWS_MANAGEDBLOCKCHAIN_HEADERS}
+    ${AWS_MANAGEDBLOCKCHAIN_INTERNAL_HEADERS}
     ${AWS_MANAGEDBLOCKCHAIN_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\managedblockchain" FILES ${AWS_MANAGEDBLOCKCHAIN_HEADERS})
+        source_group("Header Files\\aws\\managedblockchain\\internal" FILES ${AWS_MANAGEDBLOCKCHAIN_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\managedblockchain\\model" FILES ${AWS_MANAGEDBLOCKCHAIN_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MANAGEDBLOCKCHAIN_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MANAGEDBLOCKCHAIN_MODEL_SOURCE})

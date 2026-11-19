@@ -12,19 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteHostedConfigurationVersionRequest::DeleteHostedConfigurationVersionRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_configurationProfileIdHasBeenSet(false),
-    m_versionNumber(0),
-    m_versionNumberHasBeenSet(false)
-{
-}
-
-Aws::String DeleteHostedConfigurationVersionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteHostedConfigurationVersionRequest::SerializePayload() const { return {}; }

@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/MetricFilterMatchRecord.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class TestMetricFilterResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API TestMetricFilterResult();
-    AWS_CLOUDWATCHLOGS_API TestMetricFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API TestMetricFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class TestMetricFilterResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API TestMetricFilterResult() = default;
+  AWS_CLOUDWATCHLOGS_API TestMetricFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API TestMetricFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The matched events.</p>
+   */
+  inline const Aws::Vector<MetricFilterMatchRecord>& GetMatches() const { return m_matches; }
+  template <typename MatchesT = Aws::Vector<MetricFilterMatchRecord>>
+  void SetMatches(MatchesT&& value) {
+    m_matchesHasBeenSet = true;
+    m_matches = std::forward<MatchesT>(value);
+  }
+  template <typename MatchesT = Aws::Vector<MetricFilterMatchRecord>>
+  TestMetricFilterResult& WithMatches(MatchesT&& value) {
+    SetMatches(std::forward<MatchesT>(value));
+    return *this;
+  }
+  template <typename MatchesT = MetricFilterMatchRecord>
+  TestMetricFilterResult& AddMatches(MatchesT&& value) {
+    m_matchesHasBeenSet = true;
+    m_matches.emplace_back(std::forward<MatchesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The matched events.</p>
-     */
-    inline const Aws::Vector<MetricFilterMatchRecord>& GetMatches() const{ return m_matches; }
-    inline void SetMatches(const Aws::Vector<MetricFilterMatchRecord>& value) { m_matches = value; }
-    inline void SetMatches(Aws::Vector<MetricFilterMatchRecord>&& value) { m_matches = std::move(value); }
-    inline TestMetricFilterResult& WithMatches(const Aws::Vector<MetricFilterMatchRecord>& value) { SetMatches(value); return *this;}
-    inline TestMetricFilterResult& WithMatches(Aws::Vector<MetricFilterMatchRecord>&& value) { SetMatches(std::move(value)); return *this;}
-    inline TestMetricFilterResult& AddMatches(const MetricFilterMatchRecord& value) { m_matches.push_back(value); return *this; }
-    inline TestMetricFilterResult& AddMatches(MetricFilterMatchRecord&& value) { m_matches.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline TestMetricFilterResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline TestMetricFilterResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline TestMetricFilterResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  TestMetricFilterResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MetricFilterMatchRecord> m_matches;
+ private:
+  Aws::Vector<MetricFilterMatchRecord> m_matches;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_matchesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/devicefarm/DeviceFarm_EXPORTS.h>
 #include <aws/devicefarm/model/TestGridProject.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DeviceFarm
-{
-namespace Model
-{
-  class UpdateTestGridProjectResult
-  {
-  public:
-    AWS_DEVICEFARM_API UpdateTestGridProjectResult();
-    AWS_DEVICEFARM_API UpdateTestGridProjectResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEVICEFARM_API UpdateTestGridProjectResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DeviceFarm {
+namespace Model {
+class UpdateTestGridProjectResult {
+ public:
+  AWS_DEVICEFARM_API UpdateTestGridProjectResult() = default;
+  AWS_DEVICEFARM_API UpdateTestGridProjectResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEVICEFARM_API UpdateTestGridProjectResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The project, including updated information.</p>
+   */
+  inline const TestGridProject& GetTestGridProject() const { return m_testGridProject; }
+  template <typename TestGridProjectT = TestGridProject>
+  void SetTestGridProject(TestGridProjectT&& value) {
+    m_testGridProjectHasBeenSet = true;
+    m_testGridProject = std::forward<TestGridProjectT>(value);
+  }
+  template <typename TestGridProjectT = TestGridProject>
+  UpdateTestGridProjectResult& WithTestGridProject(TestGridProjectT&& value) {
+    SetTestGridProject(std::forward<TestGridProjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The project, including updated information.</p>
-     */
-    inline const TestGridProject& GetTestGridProject() const{ return m_testGridProject; }
-    inline void SetTestGridProject(const TestGridProject& value) { m_testGridProject = value; }
-    inline void SetTestGridProject(TestGridProject&& value) { m_testGridProject = std::move(value); }
-    inline UpdateTestGridProjectResult& WithTestGridProject(const TestGridProject& value) { SetTestGridProject(value); return *this;}
-    inline UpdateTestGridProjectResult& WithTestGridProject(TestGridProject&& value) { SetTestGridProject(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateTestGridProjectResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateTestGridProjectResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateTestGridProjectResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateTestGridProjectResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TestGridProject m_testGridProject;
+ private:
+  TestGridProject m_testGridProject;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_testGridProjectHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

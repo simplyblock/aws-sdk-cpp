@@ -4,72 +4,82 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/es/ElasticsearchService_EXPORTS.h>
 #include <aws/es/model/AuthorizedPrincipal.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p>Container for response parameters to the
+ * <code><a>AuthorizeVpcEndpointAccess</a></code> operation. Contains the account
+ * ID and the type of the account being authorized to access the VPC
+ * endpoint.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/AuthorizeVpcEndpointAccessResponse">AWS
+ * API Reference</a></p>
+ */
+class AuthorizeVpcEndpointAccessResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Container for response parameters to the
-   * <code><a>AuthorizeVpcEndpointAccess</a></code> operation. Contains the account
-   * ID and the type of the account being authorized to access the VPC
-   * endpoint.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/AuthorizeVpcEndpointAccessResponse">AWS
-   * API Reference</a></p>
+   * <p>Information about the account or service that was provided access to the
+   * domain.</p>
    */
-  class AuthorizeVpcEndpointAccessResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult();
-    AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API AuthorizeVpcEndpointAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const AuthorizedPrincipal& GetAuthorizedPrincipal() const { return m_authorizedPrincipal; }
+  template <typename AuthorizedPrincipalT = AuthorizedPrincipal>
+  void SetAuthorizedPrincipal(AuthorizedPrincipalT&& value) {
+    m_authorizedPrincipalHasBeenSet = true;
+    m_authorizedPrincipal = std::forward<AuthorizedPrincipalT>(value);
+  }
+  template <typename AuthorizedPrincipalT = AuthorizedPrincipal>
+  AuthorizeVpcEndpointAccessResult& WithAuthorizedPrincipal(AuthorizedPrincipalT&& value) {
+    SetAuthorizedPrincipal(std::forward<AuthorizedPrincipalT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the account or service that was provided access to the
-     * domain.</p>
-     */
-    inline const AuthorizedPrincipal& GetAuthorizedPrincipal() const{ return m_authorizedPrincipal; }
-    inline void SetAuthorizedPrincipal(const AuthorizedPrincipal& value) { m_authorizedPrincipal = value; }
-    inline void SetAuthorizedPrincipal(AuthorizedPrincipal&& value) { m_authorizedPrincipal = std::move(value); }
-    inline AuthorizeVpcEndpointAccessResult& WithAuthorizedPrincipal(const AuthorizedPrincipal& value) { SetAuthorizedPrincipal(value); return *this;}
-    inline AuthorizeVpcEndpointAccessResult& WithAuthorizedPrincipal(AuthorizedPrincipal&& value) { SetAuthorizedPrincipal(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AuthorizeVpcEndpointAccessResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AuthorizeVpcEndpointAccessResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AuthorizeVpcEndpointAccessResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AuthorizeVpcEndpointAccessResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  AuthorizedPrincipal m_authorizedPrincipal;
 
-    AuthorizedPrincipal m_authorizedPrincipal;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_authorizedPrincipalHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

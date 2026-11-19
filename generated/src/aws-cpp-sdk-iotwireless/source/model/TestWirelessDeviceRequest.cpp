@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotwireless/model/TestWirelessDeviceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotwireless/model/TestWirelessDeviceRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoTWireless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-TestWirelessDeviceRequest::TestWirelessDeviceRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String TestWirelessDeviceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String TestWirelessDeviceRequest::SerializePayload() const { return {}; }

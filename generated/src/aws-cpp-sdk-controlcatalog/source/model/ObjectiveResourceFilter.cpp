@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ControlCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ControlCatalog {
+namespace Model {
 
-ObjectiveResourceFilter::ObjectiveResourceFilter() : 
-    m_arnHasBeenSet(false)
-{
-}
+ObjectiveResourceFilter::ObjectiveResourceFilter(JsonView jsonValue) { *this = jsonValue; }
 
-ObjectiveResourceFilter::ObjectiveResourceFilter(JsonView jsonValue)
-  : ObjectiveResourceFilter()
-{
-  *this = jsonValue;
-}
-
-ObjectiveResourceFilter& ObjectiveResourceFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Arn"))
-  {
+ObjectiveResourceFilter& ObjectiveResourceFilter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Arn")) {
     m_arn = jsonValue.GetString("Arn");
-
     m_arnHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ObjectiveResourceFilter::Jsonize() const
-{
+JsonValue ObjectiveResourceFilter::Jsonize() const {
   JsonValue payload;
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("Arn", m_arn);
-
+  if (m_arnHasBeenSet) {
+    payload.WithString("Arn", m_arn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ControlCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ControlCatalog
+}  // namespace Aws

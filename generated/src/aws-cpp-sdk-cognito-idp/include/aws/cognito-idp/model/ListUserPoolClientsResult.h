@@ -5,87 +5,109 @@
 
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/cognito-idp/model/UserPoolClientDescription.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
+/**
+ * <p>Represents the response from the server that lists user pool
+ * clients.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ListUserPoolClientsResponse">AWS
+ * API Reference</a></p>
+ */
+class ListUserPoolClientsResult {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the response from the server that lists user pool
-   * clients.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ListUserPoolClientsResponse">AWS
-   * API Reference</a></p>
+   * <p>An array of app clients and their details. Includes app client ID and
+   * name.</p>
    */
-  class ListUserPoolClientsResult
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult();
-    AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOIDENTITYPROVIDER_API ListUserPoolClientsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<UserPoolClientDescription>& GetUserPoolClients() const { return m_userPoolClients; }
+  template <typename UserPoolClientsT = Aws::Vector<UserPoolClientDescription>>
+  void SetUserPoolClients(UserPoolClientsT&& value) {
+    m_userPoolClientsHasBeenSet = true;
+    m_userPoolClients = std::forward<UserPoolClientsT>(value);
+  }
+  template <typename UserPoolClientsT = Aws::Vector<UserPoolClientDescription>>
+  ListUserPoolClientsResult& WithUserPoolClients(UserPoolClientsT&& value) {
+    SetUserPoolClients(std::forward<UserPoolClientsT>(value));
+    return *this;
+  }
+  template <typename UserPoolClientsT = UserPoolClientDescription>
+  ListUserPoolClientsResult& AddUserPoolClients(UserPoolClientsT&& value) {
+    m_userPoolClientsHasBeenSet = true;
+    m_userPoolClients.emplace_back(std::forward<UserPoolClientsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifier that Amazon Cognito returned with the previous request to this
+   * operation. When you include a pagination token in your request, Amazon Cognito
+   * returns the next set of items in the list. By use of this token, you can
+   * paginate through the full list of items.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListUserPoolClientsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user pool clients in the response that lists user pool clients.</p>
-     */
-    inline const Aws::Vector<UserPoolClientDescription>& GetUserPoolClients() const{ return m_userPoolClients; }
-    inline void SetUserPoolClients(const Aws::Vector<UserPoolClientDescription>& value) { m_userPoolClients = value; }
-    inline void SetUserPoolClients(Aws::Vector<UserPoolClientDescription>&& value) { m_userPoolClients = std::move(value); }
-    inline ListUserPoolClientsResult& WithUserPoolClients(const Aws::Vector<UserPoolClientDescription>& value) { SetUserPoolClients(value); return *this;}
-    inline ListUserPoolClientsResult& WithUserPoolClients(Aws::Vector<UserPoolClientDescription>&& value) { SetUserPoolClients(std::move(value)); return *this;}
-    inline ListUserPoolClientsResult& AddUserPoolClients(const UserPoolClientDescription& value) { m_userPoolClients.push_back(value); return *this; }
-    inline ListUserPoolClientsResult& AddUserPoolClients(UserPoolClientDescription&& value) { m_userPoolClients.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>An identifier that was returned from the previous call to this operation,
-     * which can be used to return the next set of items in the list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListUserPoolClientsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListUserPoolClientsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListUserPoolClientsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListUserPoolClientsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListUserPoolClientsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListUserPoolClientsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListUserPoolClientsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<UserPoolClientDescription> m_userPoolClients;
 
-    Aws::Vector<UserPoolClientDescription> m_userPoolClients;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_userPoolClientsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

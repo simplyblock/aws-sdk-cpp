@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-dax "C++ SDK for the AWS dax service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-dax "C++ SDK for Amazon DynamoDB Accelerator (DAX)" aws-cpp-sdk-core)
 
 file(GLOB AWS_DAX_HEADERS
     "include/aws/dax/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DAX_HEADERS
 
 file(GLOB AWS_DAX_MODEL_HEADERS
     "include/aws/dax/model/*.h"
+)
+
+file(GLOB AWS_DAX_INTERNAL_HEADERS
+    "include/aws/dax/internal/*.h"
 )
 
 file(GLOB AWS_DAX_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DAX_MODEL_SOURCE
 
 file(GLOB DAX_UNIFIED_HEADERS
     ${AWS_DAX_HEADERS}
+    ${AWS_DAX_INTERNAL_HEADERS}
     ${AWS_DAX_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\dax" FILES ${AWS_DAX_HEADERS})
+        source_group("Header Files\\aws\\dax\\internal" FILES ${AWS_DAX_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\dax\\model" FILES ${AWS_DAX_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DAX_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DAX_MODEL_SOURCE})

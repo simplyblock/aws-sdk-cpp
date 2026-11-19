@@ -4,13 +4,14 @@
  */
 
 #include <aws/elasticfilesystem/EFSEndpointProvider.h>
+#include <aws/elasticfilesystem/internal/EFSEndpointRules.h>
 
-namespace Aws
-{
-namespace EFS
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace EFS
-} // namespace Aws
+namespace Aws {
+namespace EFS {
+namespace Endpoint {
+EFSEndpointProvider::EFSEndpointProvider()
+    : EFSDefaultEpProviderBase(Aws::EFS::EFSEndpointRules::GetRulesBlob(), Aws::EFS::EFSEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace EFS
+}  // namespace Aws

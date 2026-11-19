@@ -4,84 +4,104 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/redshift/model/ResponseMetadata.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/ClusterDbRevision.h>
+#include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
-  class DescribeClusterDbRevisionsResult
-  {
-  public:
-    AWS_REDSHIFT_API DescribeClusterDbRevisionsResult();
-    AWS_REDSHIFT_API DescribeClusterDbRevisionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API DescribeClusterDbRevisionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+class DescribeClusterDbRevisionsResult {
+ public:
+  AWS_REDSHIFT_API DescribeClusterDbRevisionsResult() = default;
+  AWS_REDSHIFT_API DescribeClusterDbRevisionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API DescribeClusterDbRevisionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A string representing the starting point for the next set of revisions. If a
+   * value is returned in a response, you can retrieve the next set of revisions by
+   * providing the value in the <code>marker</code> parameter and retrying the
+   * command. If the <code>marker</code> field is empty, all revisions have already
+   * been returned.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeClusterDbRevisionsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string representing the starting point for the next set of revisions. If a
-     * value is returned in a response, you can retrieve the next set of revisions by
-     * providing the value in the <code>marker</code> parameter and retrying the
-     * command. If the <code>marker</code> field is empty, all revisions have already
-     * been returned.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeClusterDbRevisionsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeClusterDbRevisionsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeClusterDbRevisionsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of revisions.</p>
+   */
+  inline const Aws::Vector<ClusterDbRevision>& GetClusterDbRevisions() const { return m_clusterDbRevisions; }
+  template <typename ClusterDbRevisionsT = Aws::Vector<ClusterDbRevision>>
+  void SetClusterDbRevisions(ClusterDbRevisionsT&& value) {
+    m_clusterDbRevisionsHasBeenSet = true;
+    m_clusterDbRevisions = std::forward<ClusterDbRevisionsT>(value);
+  }
+  template <typename ClusterDbRevisionsT = Aws::Vector<ClusterDbRevision>>
+  DescribeClusterDbRevisionsResult& WithClusterDbRevisions(ClusterDbRevisionsT&& value) {
+    SetClusterDbRevisions(std::forward<ClusterDbRevisionsT>(value));
+    return *this;
+  }
+  template <typename ClusterDbRevisionsT = ClusterDbRevision>
+  DescribeClusterDbRevisionsResult& AddClusterDbRevisions(ClusterDbRevisionsT&& value) {
+    m_clusterDbRevisionsHasBeenSet = true;
+    m_clusterDbRevisions.emplace_back(std::forward<ClusterDbRevisionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of revisions.</p>
-     */
-    inline const Aws::Vector<ClusterDbRevision>& GetClusterDbRevisions() const{ return m_clusterDbRevisions; }
-    inline void SetClusterDbRevisions(const Aws::Vector<ClusterDbRevision>& value) { m_clusterDbRevisions = value; }
-    inline void SetClusterDbRevisions(Aws::Vector<ClusterDbRevision>&& value) { m_clusterDbRevisions = std::move(value); }
-    inline DescribeClusterDbRevisionsResult& WithClusterDbRevisions(const Aws::Vector<ClusterDbRevision>& value) { SetClusterDbRevisions(value); return *this;}
-    inline DescribeClusterDbRevisionsResult& WithClusterDbRevisions(Aws::Vector<ClusterDbRevision>&& value) { SetClusterDbRevisions(std::move(value)); return *this;}
-    inline DescribeClusterDbRevisionsResult& AddClusterDbRevisions(const ClusterDbRevision& value) { m_clusterDbRevisions.push_back(value); return *this; }
-    inline DescribeClusterDbRevisionsResult& AddClusterDbRevisions(ClusterDbRevision&& value) { m_clusterDbRevisions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeClusterDbRevisionsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeClusterDbRevisionsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeClusterDbRevisionsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_marker;
+ private:
+  Aws::String m_marker;
 
-    Aws::Vector<ClusterDbRevision> m_clusterDbRevisions;
+  Aws::Vector<ClusterDbRevision> m_clusterDbRevisions;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_clusterDbRevisionsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

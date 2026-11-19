@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ChimeSDKMeetings
-{
-namespace Model
-{
+namespace Aws {
+namespace ChimeSDKMeetings {
+namespace Model {
 
-ContentFeatures::ContentFeatures() : 
-    m_maxResolution(ContentResolution::NOT_SET),
-    m_maxResolutionHasBeenSet(false)
-{
-}
+ContentFeatures::ContentFeatures(JsonView jsonValue) { *this = jsonValue; }
 
-ContentFeatures::ContentFeatures(JsonView jsonValue)
-  : ContentFeatures()
-{
-  *this = jsonValue;
-}
-
-ContentFeatures& ContentFeatures::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("MaxResolution"))
-  {
+ContentFeatures& ContentFeatures::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("MaxResolution")) {
     m_maxResolution = ContentResolutionMapper::GetContentResolutionForName(jsonValue.GetString("MaxResolution"));
-
     m_maxResolutionHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ContentFeatures::Jsonize() const
-{
+JsonValue ContentFeatures::Jsonize() const {
   JsonValue payload;
 
-  if(m_maxResolutionHasBeenSet)
-  {
-   payload.WithString("MaxResolution", ContentResolutionMapper::GetNameForContentResolution(m_maxResolution));
+  if (m_maxResolutionHasBeenSet) {
+    payload.WithString("MaxResolution", ContentResolutionMapper::GetNameForContentResolution(m_maxResolution));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ChimeSDKMeetings
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMeetings
+}  // namespace Aws

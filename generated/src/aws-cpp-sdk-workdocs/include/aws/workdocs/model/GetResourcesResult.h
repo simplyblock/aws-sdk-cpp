@@ -4,98 +4,127 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/workdocs/model/FolderMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/workdocs/model/DocumentMetadata.h>
+#include <aws/workdocs/model/FolderMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkDocs
-{
-namespace Model
-{
-  class GetResourcesResult
-  {
-  public:
-    AWS_WORKDOCS_API GetResourcesResult();
-    AWS_WORKDOCS_API GetResourcesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKDOCS_API GetResourcesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkDocs {
+namespace Model {
+class GetResourcesResult {
+ public:
+  AWS_WORKDOCS_API GetResourcesResult() = default;
+  AWS_WORKDOCS_API GetResourcesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKDOCS_API GetResourcesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The folders in the specified folder.</p>
+   */
+  inline const Aws::Vector<FolderMetadata>& GetFolders() const { return m_folders; }
+  template <typename FoldersT = Aws::Vector<FolderMetadata>>
+  void SetFolders(FoldersT&& value) {
+    m_foldersHasBeenSet = true;
+    m_folders = std::forward<FoldersT>(value);
+  }
+  template <typename FoldersT = Aws::Vector<FolderMetadata>>
+  GetResourcesResult& WithFolders(FoldersT&& value) {
+    SetFolders(std::forward<FoldersT>(value));
+    return *this;
+  }
+  template <typename FoldersT = FolderMetadata>
+  GetResourcesResult& AddFolders(FoldersT&& value) {
+    m_foldersHasBeenSet = true;
+    m_folders.emplace_back(std::forward<FoldersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The folders in the specified folder.</p>
-     */
-    inline const Aws::Vector<FolderMetadata>& GetFolders() const{ return m_folders; }
-    inline void SetFolders(const Aws::Vector<FolderMetadata>& value) { m_folders = value; }
-    inline void SetFolders(Aws::Vector<FolderMetadata>&& value) { m_folders = std::move(value); }
-    inline GetResourcesResult& WithFolders(const Aws::Vector<FolderMetadata>& value) { SetFolders(value); return *this;}
-    inline GetResourcesResult& WithFolders(Aws::Vector<FolderMetadata>&& value) { SetFolders(std::move(value)); return *this;}
-    inline GetResourcesResult& AddFolders(const FolderMetadata& value) { m_folders.push_back(value); return *this; }
-    inline GetResourcesResult& AddFolders(FolderMetadata&& value) { m_folders.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The documents in the specified collection.</p>
+   */
+  inline const Aws::Vector<DocumentMetadata>& GetDocuments() const { return m_documents; }
+  template <typename DocumentsT = Aws::Vector<DocumentMetadata>>
+  void SetDocuments(DocumentsT&& value) {
+    m_documentsHasBeenSet = true;
+    m_documents = std::forward<DocumentsT>(value);
+  }
+  template <typename DocumentsT = Aws::Vector<DocumentMetadata>>
+  GetResourcesResult& WithDocuments(DocumentsT&& value) {
+    SetDocuments(std::forward<DocumentsT>(value));
+    return *this;
+  }
+  template <typename DocumentsT = DocumentMetadata>
+  GetResourcesResult& AddDocuments(DocumentsT&& value) {
+    m_documentsHasBeenSet = true;
+    m_documents.emplace_back(std::forward<DocumentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The documents in the specified collection.</p>
-     */
-    inline const Aws::Vector<DocumentMetadata>& GetDocuments() const{ return m_documents; }
-    inline void SetDocuments(const Aws::Vector<DocumentMetadata>& value) { m_documents = value; }
-    inline void SetDocuments(Aws::Vector<DocumentMetadata>&& value) { m_documents = std::move(value); }
-    inline GetResourcesResult& WithDocuments(const Aws::Vector<DocumentMetadata>& value) { SetDocuments(value); return *this;}
-    inline GetResourcesResult& WithDocuments(Aws::Vector<DocumentMetadata>&& value) { SetDocuments(std::move(value)); return *this;}
-    inline GetResourcesResult& AddDocuments(const DocumentMetadata& value) { m_documents.push_back(value); return *this; }
-    inline GetResourcesResult& AddDocuments(DocumentMetadata&& value) { m_documents.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The marker to use when requesting the next set of results. If there are no
+   * additional results, the string is empty.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  GetResourcesResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The marker to use when requesting the next set of results. If there are no
-     * additional results, the string is empty.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline GetResourcesResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline GetResourcesResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline GetResourcesResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetResourcesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetResourcesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetResourcesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetResourcesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FolderMetadata> m_folders;
+ private:
+  Aws::Vector<FolderMetadata> m_folders;
 
-    Aws::Vector<DocumentMetadata> m_documents;
+  Aws::Vector<DocumentMetadata> m_documents;
 
-    Aws::String m_marker;
+  Aws::String m_marker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_foldersHasBeenSet = false;
+  bool m_documentsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/EndpointsResponse.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
-  class DeleteUserEndpointsResult
-  {
-  public:
-    AWS_PINPOINT_API DeleteUserEndpointsResult();
-    AWS_PINPOINT_API DeleteUserEndpointsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINT_API DeleteUserEndpointsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
+class DeleteUserEndpointsResult {
+ public:
+  AWS_PINPOINT_API DeleteUserEndpointsResult() = default;
+  AWS_PINPOINT_API DeleteUserEndpointsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINT_API DeleteUserEndpointsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const EndpointsResponse& GetEndpointsResponse() const{ return m_endpointsResponse; }
-    inline void SetEndpointsResponse(const EndpointsResponse& value) { m_endpointsResponse = value; }
-    inline void SetEndpointsResponse(EndpointsResponse&& value) { m_endpointsResponse = std::move(value); }
-    inline DeleteUserEndpointsResult& WithEndpointsResponse(const EndpointsResponse& value) { SetEndpointsResponse(value); return *this;}
-    inline DeleteUserEndpointsResult& WithEndpointsResponse(EndpointsResponse&& value) { SetEndpointsResponse(std::move(value)); return *this;}
-    ///@}
+  inline const EndpointsResponse& GetEndpointsResponse() const { return m_endpointsResponse; }
+  template <typename EndpointsResponseT = EndpointsResponse>
+  void SetEndpointsResponse(EndpointsResponseT&& value) {
+    m_endpointsResponseHasBeenSet = true;
+    m_endpointsResponse = std::forward<EndpointsResponseT>(value);
+  }
+  template <typename EndpointsResponseT = EndpointsResponse>
+  DeleteUserEndpointsResult& WithEndpointsResponse(EndpointsResponseT&& value) {
+    SetEndpointsResponse(std::forward<EndpointsResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteUserEndpointsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteUserEndpointsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteUserEndpointsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    EndpointsResponse m_endpointsResponse;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteUserEndpointsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  EndpointsResponse m_endpointsResponse;
 
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_endpointsResponseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

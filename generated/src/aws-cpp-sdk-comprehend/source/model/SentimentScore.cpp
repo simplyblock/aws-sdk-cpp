@@ -4,102 +4,171 @@
  */
 
 #include <aws/comprehend/model/SentimentScore.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-SentimentScore::SentimentScore() : 
-    m_positive(0.0),
-    m_positiveHasBeenSet(false),
-    m_negative(0.0),
-    m_negativeHasBeenSet(false),
-    m_neutral(0.0),
-    m_neutralHasBeenSet(false),
-    m_mixed(0.0),
-    m_mixedHasBeenSet(false)
-{
-}
+SentimentScore::SentimentScore(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-SentimentScore::SentimentScore(JsonView jsonValue)
-  : SentimentScore()
-{
-  *this = jsonValue;
-}
+SentimentScore& SentimentScore::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-SentimentScore& SentimentScore::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Positive"))
-  {
-    m_positive = jsonValue.GetDouble("Positive");
+              if (initialKeyStr == "Positive") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_positive = val.value();
+                }
+                m_positiveHasBeenSet = true;
+              }
 
-    m_positiveHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Negative") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_negative = val.value();
+                }
+                m_negativeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Negative"))
-  {
-    m_negative = jsonValue.GetDouble("Negative");
+              else if (initialKeyStr == "Neutral") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_neutral = val.value();
+                }
+                m_neutralHasBeenSet = true;
+              }
 
-    m_negativeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Mixed") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_mixed = val.value();
+                }
+                m_mixedHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("SentimentScore", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Neutral"))
-  {
-    m_neutral = jsonValue.GetDouble("Neutral");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_neutralHasBeenSet = true;
-  }
+            if (initialKeyStr == "Positive") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_positive = val.value();
+              }
+              m_positiveHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("Mixed"))
-  {
-    m_mixed = jsonValue.GetDouble("Mixed");
+            else if (initialKeyStr == "Negative") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_negative = val.value();
+              }
+              m_negativeHasBeenSet = true;
+            }
 
-    m_mixedHasBeenSet = true;
+            else if (initialKeyStr == "Neutral") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_neutral = val.value();
+              }
+              m_neutralHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Mixed") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_mixed = val.value();
+              }
+              m_mixedHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue SentimentScore::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_positiveHasBeenSet)
-  {
-   payload.WithDouble("Positive", m_positive);
-
+void SentimentScore::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_positiveHasBeenSet) {
+    mapSize++;
+  }
+  if (m_negativeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_neutralHasBeenSet) {
+    mapSize++;
+  }
+  if (m_mixedHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_negativeHasBeenSet)
-  {
-   payload.WithDouble("Negative", m_negative);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_positiveHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Positive"));
+    encoder.WriteFloat(m_positive);
   }
 
-  if(m_neutralHasBeenSet)
-  {
-   payload.WithDouble("Neutral", m_neutral);
-
+  if (m_negativeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Negative"));
+    encoder.WriteFloat(m_negative);
   }
 
-  if(m_mixedHasBeenSet)
-  {
-   payload.WithDouble("Mixed", m_mixed);
-
+  if (m_neutralHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Neutral"));
+    encoder.WriteFloat(m_neutral);
   }
 
-  return payload;
+  if (m_mixedHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Mixed"));
+    encoder.WriteFloat(m_mixed);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

@@ -12,63 +12,46 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateHoursOfOperationRequest::CreateHoursOfOperationRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_timeZoneHasBeenSet(false),
-    m_configHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateHoursOfOperationRequest::SerializePayload() const
-{
+Aws::String CreateHoursOfOperationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_timeZoneHasBeenSet)
-  {
-   payload.WithString("TimeZone", m_timeZone);
-
+  if (m_timeZoneHasBeenSet) {
+    payload.WithString("TimeZone", m_timeZone);
   }
 
-  if(m_configHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> configJsonList(m_config.size());
-   for(unsigned configIndex = 0; configIndex < configJsonList.GetLength(); ++configIndex)
-   {
-     configJsonList[configIndex].AsObject(m_config[configIndex].Jsonize());
-   }
-   payload.WithArray("Config", std::move(configJsonList));
-
+  if (m_configHasBeenSet) {
+    Aws::Utils::Array<JsonValue> configJsonList(m_config.size());
+    for (unsigned configIndex = 0; configIndex < configJsonList.GetLength(); ++configIndex) {
+      configJsonList[configIndex].AsObject(m_config[configIndex].Jsonize());
+    }
+    payload.WithArray("Config", std::move(configJsonList));
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
+  if (m_parentHoursOfOperationConfigsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> parentHoursOfOperationConfigsJsonList(m_parentHoursOfOperationConfigs.size());
+    for (unsigned parentHoursOfOperationConfigsIndex = 0;
+         parentHoursOfOperationConfigsIndex < parentHoursOfOperationConfigsJsonList.GetLength(); ++parentHoursOfOperationConfigsIndex) {
+      parentHoursOfOperationConfigsJsonList[parentHoursOfOperationConfigsIndex].AsObject(
+          m_parentHoursOfOperationConfigs[parentHoursOfOperationConfigsIndex].Jsonize());
+    }
+    payload.WithArray("ParentHoursOfOperationConfigs", std::move(parentHoursOfOperationConfigsJsonList));
+  }
 
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("Tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

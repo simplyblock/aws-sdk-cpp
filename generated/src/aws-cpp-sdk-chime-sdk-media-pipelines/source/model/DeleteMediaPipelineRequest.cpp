@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteMediaPipelineRequest::DeleteMediaPipelineRequest() : 
-    m_mediaPipelineIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteMediaPipelineRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteMediaPipelineRequest::SerializePayload() const { return {}; }

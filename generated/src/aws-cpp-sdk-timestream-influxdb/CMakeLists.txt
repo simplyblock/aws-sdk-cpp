@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-timestream-influxdb "C++ SDK for the AWS timestream-influxdb service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-timestream-influxdb "C++ SDK for Timestream InfluxDB" aws-cpp-sdk-core)
 
 file(GLOB AWS_TIMESTREAM-INFLUXDB_HEADERS
     "include/aws/timestream-influxdb/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_TIMESTREAM-INFLUXDB_HEADERS
 
 file(GLOB AWS_TIMESTREAM-INFLUXDB_MODEL_HEADERS
     "include/aws/timestream-influxdb/model/*.h"
+)
+
+file(GLOB AWS_TIMESTREAM-INFLUXDB_INTERNAL_HEADERS
+    "include/aws/timestream-influxdb/internal/*.h"
 )
 
 file(GLOB AWS_TIMESTREAM-INFLUXDB_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_TIMESTREAM-INFLUXDB_MODEL_SOURCE
 
 file(GLOB TIMESTREAM-INFLUXDB_UNIFIED_HEADERS
     ${AWS_TIMESTREAM-INFLUXDB_HEADERS}
+    ${AWS_TIMESTREAM-INFLUXDB_INTERNAL_HEADERS}
     ${AWS_TIMESTREAM-INFLUXDB_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\timestream-influxdb" FILES ${AWS_TIMESTREAM-INFLUXDB_HEADERS})
+        source_group("Header Files\\aws\\timestream-influxdb\\internal" FILES ${AWS_TIMESTREAM-INFLUXDB_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\timestream-influxdb\\model" FILES ${AWS_TIMESTREAM-INFLUXDB_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_TIMESTREAM-INFLUXDB_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_TIMESTREAM-INFLUXDB_MODEL_SOURCE})

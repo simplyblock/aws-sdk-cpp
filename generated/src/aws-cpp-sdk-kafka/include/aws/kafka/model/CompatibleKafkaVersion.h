@@ -4,84 +4,90 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>Contains source Apache Kafka versions and compatible target
+ * Apache Kafka versions.</p>
+      <p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/CompatibleKafkaVersion">AWS
+ * API Reference</a></p>
+ */
+class CompatibleKafkaVersion {
+ public:
+  AWS_KAFKA_API CompatibleKafkaVersion() = default;
+  AWS_KAFKA_API CompatibleKafkaVersion(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API CompatibleKafkaVersion& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * 
-            <p>Contains source Apache Kafka versions and compatible target
-   * Apache Kafka versions.</p>
-        <p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/CompatibleKafkaVersion">AWS
-   * API Reference</a></p>
+   *
+          <p>An Apache Kafka version.</p>
+
    */
-  class CompatibleKafkaVersion
-  {
-  public:
-    AWS_KAFKA_API CompatibleKafkaVersion();
-    AWS_KAFKA_API CompatibleKafkaVersion(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API CompatibleKafkaVersion& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetSourceVersion() const { return m_sourceVersion; }
+  inline bool SourceVersionHasBeenSet() const { return m_sourceVersionHasBeenSet; }
+  template <typename SourceVersionT = Aws::String>
+  void SetSourceVersion(SourceVersionT&& value) {
+    m_sourceVersionHasBeenSet = true;
+    m_sourceVersion = std::forward<SourceVersionT>(value);
+  }
+  template <typename SourceVersionT = Aws::String>
+  CompatibleKafkaVersion& WithSourceVersion(SourceVersionT&& value) {
+    SetSourceVersion(std::forward<SourceVersionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   *
+          <p>A list of Apache Kafka versions.</p>
 
-    ///@{
-    /**
-     * 
-            <p>An Apache Kafka version.</p>
-            
-     */
-    inline const Aws::String& GetSourceVersion() const{ return m_sourceVersion; }
-    inline bool SourceVersionHasBeenSet() const { return m_sourceVersionHasBeenSet; }
-    inline void SetSourceVersion(const Aws::String& value) { m_sourceVersionHasBeenSet = true; m_sourceVersion = value; }
-    inline void SetSourceVersion(Aws::String&& value) { m_sourceVersionHasBeenSet = true; m_sourceVersion = std::move(value); }
-    inline void SetSourceVersion(const char* value) { m_sourceVersionHasBeenSet = true; m_sourceVersion.assign(value); }
-    inline CompatibleKafkaVersion& WithSourceVersion(const Aws::String& value) { SetSourceVersion(value); return *this;}
-    inline CompatibleKafkaVersion& WithSourceVersion(Aws::String&& value) { SetSourceVersion(std::move(value)); return *this;}
-    inline CompatibleKafkaVersion& WithSourceVersion(const char* value) { SetSourceVersion(value); return *this;}
-    ///@}
+   */
+  inline const Aws::Vector<Aws::String>& GetTargetVersions() const { return m_targetVersions; }
+  inline bool TargetVersionsHasBeenSet() const { return m_targetVersionsHasBeenSet; }
+  template <typename TargetVersionsT = Aws::Vector<Aws::String>>
+  void SetTargetVersions(TargetVersionsT&& value) {
+    m_targetVersionsHasBeenSet = true;
+    m_targetVersions = std::forward<TargetVersionsT>(value);
+  }
+  template <typename TargetVersionsT = Aws::Vector<Aws::String>>
+  CompatibleKafkaVersion& WithTargetVersions(TargetVersionsT&& value) {
+    SetTargetVersions(std::forward<TargetVersionsT>(value));
+    return *this;
+  }
+  template <typename TargetVersionsT = Aws::String>
+  CompatibleKafkaVersion& AddTargetVersions(TargetVersionsT&& value) {
+    m_targetVersionsHasBeenSet = true;
+    m_targetVersions.emplace_back(std::forward<TargetVersionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_sourceVersion;
 
-    ///@{
-    /**
-     * 
-            <p>A list of Apache Kafka versions.</p>
-            
-     */
-    inline const Aws::Vector<Aws::String>& GetTargetVersions() const{ return m_targetVersions; }
-    inline bool TargetVersionsHasBeenSet() const { return m_targetVersionsHasBeenSet; }
-    inline void SetTargetVersions(const Aws::Vector<Aws::String>& value) { m_targetVersionsHasBeenSet = true; m_targetVersions = value; }
-    inline void SetTargetVersions(Aws::Vector<Aws::String>&& value) { m_targetVersionsHasBeenSet = true; m_targetVersions = std::move(value); }
-    inline CompatibleKafkaVersion& WithTargetVersions(const Aws::Vector<Aws::String>& value) { SetTargetVersions(value); return *this;}
-    inline CompatibleKafkaVersion& WithTargetVersions(Aws::Vector<Aws::String>&& value) { SetTargetVersions(std::move(value)); return *this;}
-    inline CompatibleKafkaVersion& AddTargetVersions(const Aws::String& value) { m_targetVersionsHasBeenSet = true; m_targetVersions.push_back(value); return *this; }
-    inline CompatibleKafkaVersion& AddTargetVersions(Aws::String&& value) { m_targetVersionsHasBeenSet = true; m_targetVersions.push_back(std::move(value)); return *this; }
-    inline CompatibleKafkaVersion& AddTargetVersions(const char* value) { m_targetVersionsHasBeenSet = true; m_targetVersions.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_targetVersions;
+  bool m_sourceVersionHasBeenSet = false;
+  bool m_targetVersionsHasBeenSet = false;
+};
 
-    Aws::String m_sourceVersion;
-    bool m_sourceVersionHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_targetVersions;
-    bool m_targetVersionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

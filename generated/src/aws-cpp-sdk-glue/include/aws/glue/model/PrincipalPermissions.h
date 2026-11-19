@@ -4,75 +4,83 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/DataLakePrincipal.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/glue/model/Permission.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Permissions granted to a principal.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PrincipalPermissions">AWS
+ * API Reference</a></p>
+ */
+class PrincipalPermissions {
+ public:
+  AWS_GLUE_API PrincipalPermissions() = default;
+  AWS_GLUE_API PrincipalPermissions(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API PrincipalPermissions& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Permissions granted to a principal.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PrincipalPermissions">AWS
-   * API Reference</a></p>
+   * <p>The principal who is granted permissions.</p>
    */
-  class PrincipalPermissions
-  {
-  public:
-    AWS_GLUE_API PrincipalPermissions();
-    AWS_GLUE_API PrincipalPermissions(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API PrincipalPermissions& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const DataLakePrincipal& GetPrincipal() const { return m_principal; }
+  inline bool PrincipalHasBeenSet() const { return m_principalHasBeenSet; }
+  template <typename PrincipalT = DataLakePrincipal>
+  void SetPrincipal(PrincipalT&& value) {
+    m_principalHasBeenSet = true;
+    m_principal = std::forward<PrincipalT>(value);
+  }
+  template <typename PrincipalT = DataLakePrincipal>
+  PrincipalPermissions& WithPrincipal(PrincipalT&& value) {
+    SetPrincipal(std::forward<PrincipalT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The permissions that are granted to the principal.</p>
+   */
+  inline const Aws::Vector<Permission>& GetPermissions() const { return m_permissions; }
+  inline bool PermissionsHasBeenSet() const { return m_permissionsHasBeenSet; }
+  template <typename PermissionsT = Aws::Vector<Permission>>
+  void SetPermissions(PermissionsT&& value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions = std::forward<PermissionsT>(value);
+  }
+  template <typename PermissionsT = Aws::Vector<Permission>>
+  PrincipalPermissions& WithPermissions(PermissionsT&& value) {
+    SetPermissions(std::forward<PermissionsT>(value));
+    return *this;
+  }
+  inline PrincipalPermissions& AddPermissions(Permission value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions.push_back(value);
+    return *this;
+  }
+  ///@}
+ private:
+  DataLakePrincipal m_principal;
 
-    ///@{
-    /**
-     * <p>The principal who is granted permissions.</p>
-     */
-    inline const DataLakePrincipal& GetPrincipal() const{ return m_principal; }
-    inline bool PrincipalHasBeenSet() const { return m_principalHasBeenSet; }
-    inline void SetPrincipal(const DataLakePrincipal& value) { m_principalHasBeenSet = true; m_principal = value; }
-    inline void SetPrincipal(DataLakePrincipal&& value) { m_principalHasBeenSet = true; m_principal = std::move(value); }
-    inline PrincipalPermissions& WithPrincipal(const DataLakePrincipal& value) { SetPrincipal(value); return *this;}
-    inline PrincipalPermissions& WithPrincipal(DataLakePrincipal&& value) { SetPrincipal(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<Permission> m_permissions;
+  bool m_principalHasBeenSet = false;
+  bool m_permissionsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The permissions that are granted to the principal.</p>
-     */
-    inline const Aws::Vector<Permission>& GetPermissions() const{ return m_permissions; }
-    inline bool PermissionsHasBeenSet() const { return m_permissionsHasBeenSet; }
-    inline void SetPermissions(const Aws::Vector<Permission>& value) { m_permissionsHasBeenSet = true; m_permissions = value; }
-    inline void SetPermissions(Aws::Vector<Permission>&& value) { m_permissionsHasBeenSet = true; m_permissions = std::move(value); }
-    inline PrincipalPermissions& WithPermissions(const Aws::Vector<Permission>& value) { SetPermissions(value); return *this;}
-    inline PrincipalPermissions& WithPermissions(Aws::Vector<Permission>&& value) { SetPermissions(std::move(value)); return *this;}
-    inline PrincipalPermissions& AddPermissions(const Permission& value) { m_permissionsHasBeenSet = true; m_permissions.push_back(value); return *this; }
-    inline PrincipalPermissions& AddPermissions(Permission&& value) { m_permissionsHasBeenSet = true; m_permissions.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    DataLakePrincipal m_principal;
-    bool m_principalHasBeenSet = false;
-
-    Aws::Vector<Permission> m_permissions;
-    bool m_permissionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

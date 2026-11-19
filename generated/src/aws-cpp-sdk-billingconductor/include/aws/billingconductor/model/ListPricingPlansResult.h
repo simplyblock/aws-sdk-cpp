@@ -5,97 +5,120 @@
 
 #pragma once
 #include <aws/billingconductor/BillingConductor_EXPORTS.h>
+#include <aws/billingconductor/model/PricingPlanListElement.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/billingconductor/model/PricingPlanListElement.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BillingConductor
-{
-namespace Model
-{
-  class ListPricingPlansResult
-  {
-  public:
-    AWS_BILLINGCONDUCTOR_API ListPricingPlansResult();
-    AWS_BILLINGCONDUCTOR_API ListPricingPlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BILLINGCONDUCTOR_API ListPricingPlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BillingConductor {
+namespace Model {
+class ListPricingPlansResult {
+ public:
+  AWS_BILLINGCONDUCTOR_API ListPricingPlansResult() = default;
+  AWS_BILLINGCONDUCTOR_API ListPricingPlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BILLINGCONDUCTOR_API ListPricingPlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The billing period for which the described pricing plans are applicable.
+   * </p>
+   */
+  inline const Aws::String& GetBillingPeriod() const { return m_billingPeriod; }
+  template <typename BillingPeriodT = Aws::String>
+  void SetBillingPeriod(BillingPeriodT&& value) {
+    m_billingPeriodHasBeenSet = true;
+    m_billingPeriod = std::forward<BillingPeriodT>(value);
+  }
+  template <typename BillingPeriodT = Aws::String>
+  ListPricingPlansResult& WithBillingPeriod(BillingPeriodT&& value) {
+    SetBillingPeriod(std::forward<BillingPeriodT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The billing period for which the described pricing plans are applicable.
-     * </p>
-     */
-    inline const Aws::String& GetBillingPeriod() const{ return m_billingPeriod; }
-    inline void SetBillingPeriod(const Aws::String& value) { m_billingPeriod = value; }
-    inline void SetBillingPeriod(Aws::String&& value) { m_billingPeriod = std::move(value); }
-    inline void SetBillingPeriod(const char* value) { m_billingPeriod.assign(value); }
-    inline ListPricingPlansResult& WithBillingPeriod(const Aws::String& value) { SetBillingPeriod(value); return *this;}
-    inline ListPricingPlansResult& WithBillingPeriod(Aws::String&& value) { SetBillingPeriod(std::move(value)); return *this;}
-    inline ListPricingPlansResult& WithBillingPeriod(const char* value) { SetBillingPeriod(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of <code>PricingPlanListElement</code> retrieved. </p>
+   */
+  inline const Aws::Vector<PricingPlanListElement>& GetPricingPlans() const { return m_pricingPlans; }
+  template <typename PricingPlansT = Aws::Vector<PricingPlanListElement>>
+  void SetPricingPlans(PricingPlansT&& value) {
+    m_pricingPlansHasBeenSet = true;
+    m_pricingPlans = std::forward<PricingPlansT>(value);
+  }
+  template <typename PricingPlansT = Aws::Vector<PricingPlanListElement>>
+  ListPricingPlansResult& WithPricingPlans(PricingPlansT&& value) {
+    SetPricingPlans(std::forward<PricingPlansT>(value));
+    return *this;
+  }
+  template <typename PricingPlansT = PricingPlanListElement>
+  ListPricingPlansResult& AddPricingPlans(PricingPlansT&& value) {
+    m_pricingPlansHasBeenSet = true;
+    m_pricingPlans.emplace_back(std::forward<PricingPlansT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>PricingPlanListElement</code> retrieved. </p>
-     */
-    inline const Aws::Vector<PricingPlanListElement>& GetPricingPlans() const{ return m_pricingPlans; }
-    inline void SetPricingPlans(const Aws::Vector<PricingPlanListElement>& value) { m_pricingPlans = value; }
-    inline void SetPricingPlans(Aws::Vector<PricingPlanListElement>&& value) { m_pricingPlans = std::move(value); }
-    inline ListPricingPlansResult& WithPricingPlans(const Aws::Vector<PricingPlanListElement>& value) { SetPricingPlans(value); return *this;}
-    inline ListPricingPlansResult& WithPricingPlans(Aws::Vector<PricingPlanListElement>&& value) { SetPricingPlans(std::move(value)); return *this;}
-    inline ListPricingPlansResult& AddPricingPlans(const PricingPlanListElement& value) { m_pricingPlans.push_back(value); return *this; }
-    inline ListPricingPlansResult& AddPricingPlans(PricingPlanListElement&& value) { m_pricingPlans.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that's used on subsequent calls to get pricing plans.
+   * </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListPricingPlansResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that's used on subsequent calls to get pricing plans.
-     * </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListPricingPlansResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListPricingPlansResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListPricingPlansResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListPricingPlansResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListPricingPlansResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListPricingPlansResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListPricingPlansResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_billingPeriod;
+ private:
+  Aws::String m_billingPeriod;
 
-    Aws::Vector<PricingPlanListElement> m_pricingPlans;
+  Aws::Vector<PricingPlanListElement> m_pricingPlans;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_billingPeriodHasBeenSet = false;
+  bool m_pricingPlansHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

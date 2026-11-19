@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/OptOutListInformation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
-  class DescribeOptOutListsResult
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult();
-    AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
+class DescribeOptOutListsResult {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult() = default;
+  AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINTSMSVOICEV2_API DescribeOptOutListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of OptOutListInformation objects that contain the details for the
+   * requested OptOutLists.</p>
+   */
+  inline const Aws::Vector<OptOutListInformation>& GetOptOutLists() const { return m_optOutLists; }
+  template <typename OptOutListsT = Aws::Vector<OptOutListInformation>>
+  void SetOptOutLists(OptOutListsT&& value) {
+    m_optOutListsHasBeenSet = true;
+    m_optOutLists = std::forward<OptOutListsT>(value);
+  }
+  template <typename OptOutListsT = Aws::Vector<OptOutListInformation>>
+  DescribeOptOutListsResult& WithOptOutLists(OptOutListsT&& value) {
+    SetOptOutLists(std::forward<OptOutListsT>(value));
+    return *this;
+  }
+  template <typename OptOutListsT = OptOutListInformation>
+  DescribeOptOutListsResult& AddOptOutLists(OptOutListsT&& value) {
+    m_optOutListsHasBeenSet = true;
+    m_optOutLists.emplace_back(std::forward<OptOutListsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of OptOutListInformation objects that contain the details for the
-     * requested OptOutLists.</p>
-     */
-    inline const Aws::Vector<OptOutListInformation>& GetOptOutLists() const{ return m_optOutLists; }
-    inline void SetOptOutLists(const Aws::Vector<OptOutListInformation>& value) { m_optOutLists = value; }
-    inline void SetOptOutLists(Aws::Vector<OptOutListInformation>&& value) { m_optOutLists = std::move(value); }
-    inline DescribeOptOutListsResult& WithOptOutLists(const Aws::Vector<OptOutListInformation>& value) { SetOptOutLists(value); return *this;}
-    inline DescribeOptOutListsResult& WithOptOutLists(Aws::Vector<OptOutListInformation>&& value) { SetOptOutLists(std::move(value)); return *this;}
-    inline DescribeOptOutListsResult& AddOptOutLists(const OptOutListInformation& value) { m_optOutLists.push_back(value); return *this; }
-    inline DescribeOptOutListsResult& AddOptOutLists(OptOutListInformation&& value) { m_optOutLists.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to be used for the next set of paginated results. If this field is
+   * empty then there are no more results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeOptOutListsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to be used for the next set of paginated results. If this field is
-     * empty then there are no more results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeOptOutListsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeOptOutListsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeOptOutListsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeOptOutListsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeOptOutListsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeOptOutListsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeOptOutListsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<OptOutListInformation> m_optOutLists;
+ private:
+  Aws::Vector<OptOutListInformation> m_optOutLists;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_optOutListsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

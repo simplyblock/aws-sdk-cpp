@@ -4,119 +4,154 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/iam/IAM_EXPORTS.h>
 #include <aws/iam/model/Group.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iam/model/ResponseMetadata.h>
 #include <aws/iam/model/User.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace IAM
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace IAM {
+namespace Model {
+/**
+ * <p>Contains the response to a successful <a
+ * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetGroup.html">GetGroup</a>
+ * request. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetGroupResponse">AWS
+ * API Reference</a></p>
+ */
+class GetGroupResult {
+ public:
+  AWS_IAM_API GetGroupResult() = default;
+  AWS_IAM_API GetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_IAM_API GetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the response to a successful <a>GetGroup</a> request. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetGroupResponse">AWS
-   * API Reference</a></p>
+   * <p>A structure that contains details about the group.</p>
    */
-  class GetGroupResult
-  {
-  public:
-    AWS_IAM_API GetGroupResult();
-    AWS_IAM_API GetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_IAM_API GetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Group& GetGroup() const { return m_group; }
+  template <typename GroupT = Group>
+  void SetGroup(GroupT&& value) {
+    m_groupHasBeenSet = true;
+    m_group = std::forward<GroupT>(value);
+  }
+  template <typename GroupT = Group>
+  GetGroupResult& WithGroup(GroupT&& value) {
+    SetGroup(std::forward<GroupT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of users in the group.</p>
+   */
+  inline const Aws::Vector<User>& GetUsers() const { return m_users; }
+  template <typename UsersT = Aws::Vector<User>>
+  void SetUsers(UsersT&& value) {
+    m_usersHasBeenSet = true;
+    m_users = std::forward<UsersT>(value);
+  }
+  template <typename UsersT = Aws::Vector<User>>
+  GetGroupResult& WithUsers(UsersT&& value) {
+    SetUsers(std::forward<UsersT>(value));
+    return *this;
+  }
+  template <typename UsersT = User>
+  GetGroupResult& AddUsers(UsersT&& value) {
+    m_usersHasBeenSet = true;
+    m_users.emplace_back(std::forward<UsersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains details about the group.</p>
-     */
-    inline const Group& GetGroup() const{ return m_group; }
-    inline void SetGroup(const Group& value) { m_group = value; }
-    inline void SetGroup(Group&& value) { m_group = std::move(value); }
-    inline GetGroupResult& WithGroup(const Group& value) { SetGroup(value); return *this;}
-    inline GetGroupResult& WithGroup(Group&& value) { SetGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A flag that indicates whether there are more items to return. If your results
+   * were truncated, you can make a subsequent pagination request using the
+   * <code>Marker</code> request parameter to retrieve more items. Note that IAM
+   * might return fewer than the <code>MaxItems</code> number of results even when
+   * there are more results available. We recommend that you check
+   * <code>IsTruncated</code> after every call to ensure that you receive all your
+   * results.</p>
+   */
+  inline bool GetIsTruncated() const { return m_isTruncated; }
+  inline void SetIsTruncated(bool value) {
+    m_isTruncatedHasBeenSet = true;
+    m_isTruncated = value;
+  }
+  inline GetGroupResult& WithIsTruncated(bool value) {
+    SetIsTruncated(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of users in the group.</p>
-     */
-    inline const Aws::Vector<User>& GetUsers() const{ return m_users; }
-    inline void SetUsers(const Aws::Vector<User>& value) { m_users = value; }
-    inline void SetUsers(Aws::Vector<User>&& value) { m_users = std::move(value); }
-    inline GetGroupResult& WithUsers(const Aws::Vector<User>& value) { SetUsers(value); return *this;}
-    inline GetGroupResult& WithUsers(Aws::Vector<User>&& value) { SetUsers(std::move(value)); return *this;}
-    inline GetGroupResult& AddUsers(const User& value) { m_users.push_back(value); return *this; }
-    inline GetGroupResult& AddUsers(User&& value) { m_users.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>When <code>IsTruncated</code> is <code>true</code>, this element is present
+   * and contains the value to use for the <code>Marker</code> parameter in a
+   * subsequent pagination request.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  GetGroupResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A flag that indicates whether there are more items to return. If your results
-     * were truncated, you can make a subsequent pagination request using the
-     * <code>Marker</code> request parameter to retrieve more items. Note that IAM
-     * might return fewer than the <code>MaxItems</code> number of results even when
-     * there are more results available. We recommend that you check
-     * <code>IsTruncated</code> after every call to ensure that you receive all your
-     * results.</p>
-     */
-    inline bool GetIsTruncated() const{ return m_isTruncated; }
-    inline void SetIsTruncated(bool value) { m_isTruncated = value; }
-    inline GetGroupResult& WithIsTruncated(bool value) { SetIsTruncated(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>When <code>IsTruncated</code> is <code>true</code>, this element is present
-     * and contains the value to use for the <code>Marker</code> parameter in a
-     * subsequent pagination request.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline GetGroupResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline GetGroupResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline GetGroupResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetGroupResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetGroupResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetGroupResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Group m_group;
 
-    Group m_group;
+  Aws::Vector<User> m_users;
 
-    Aws::Vector<User> m_users;
+  bool m_isTruncated{false};
 
-    bool m_isTruncated;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_groupHasBeenSet = false;
+  bool m_usersHasBeenSet = false;
+  bool m_isTruncatedHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace IAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace IAM
+}  // namespace Aws

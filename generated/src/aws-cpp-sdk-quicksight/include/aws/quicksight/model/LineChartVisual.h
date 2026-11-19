@@ -4,148 +4,204 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/quicksight/model/VisualTitleLabelOptions.h>
-#include <aws/quicksight/model/VisualSubtitleLabelOptions.h>
-#include <aws/quicksight/model/LineChartConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/quicksight/model/VisualCustomAction.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/ColumnHierarchy.h>
+#include <aws/quicksight/model/LineChartConfiguration.h>
+#include <aws/quicksight/model/VisualCustomAction.h>
+#include <aws/quicksight/model/VisualSubtitleLabelOptions.h>
+#include <aws/quicksight/model/VisualTitleLabelOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
 
+/**
+ * <p>A line chart.</p> <p>For more information, see <a
+ * href="https://docs.aws.amazon.com/quicksight/latest/user/line-charts.html">Using
+ * line charts</a> in the <i>Amazon Quick Suite User Guide</i>.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LineChartVisual">AWS
+ * API Reference</a></p>
+ */
+class LineChartVisual {
+ public:
+  AWS_QUICKSIGHT_API LineChartVisual() = default;
+  AWS_QUICKSIGHT_API LineChartVisual(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API LineChartVisual& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A line chart.</p> <p>For more information, see <a
-   * href="https://docs.aws.amazon.com/quicksight/latest/user/line-charts.html">Using
-   * line charts</a> in the <i>Amazon QuickSight User Guide</i>.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LineChartVisual">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier of a visual. This identifier must be unique within the
+   * context of a dashboard, template, or analysis. Two dashboards, analyses, or
+   * templates can have visuals with the same identifiers.</p>
    */
-  class LineChartVisual
-  {
-  public:
-    AWS_QUICKSIGHT_API LineChartVisual();
-    AWS_QUICKSIGHT_API LineChartVisual(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API LineChartVisual& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetVisualId() const { return m_visualId; }
+  inline bool VisualIdHasBeenSet() const { return m_visualIdHasBeenSet; }
+  template <typename VisualIdT = Aws::String>
+  void SetVisualId(VisualIdT&& value) {
+    m_visualIdHasBeenSet = true;
+    m_visualId = std::forward<VisualIdT>(value);
+  }
+  template <typename VisualIdT = Aws::String>
+  LineChartVisual& WithVisualId(VisualIdT&& value) {
+    SetVisualId(std::forward<VisualIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The title that is displayed on the visual.</p>
+   */
+  inline const VisualTitleLabelOptions& GetTitle() const { return m_title; }
+  inline bool TitleHasBeenSet() const { return m_titleHasBeenSet; }
+  template <typename TitleT = VisualTitleLabelOptions>
+  void SetTitle(TitleT&& value) {
+    m_titleHasBeenSet = true;
+    m_title = std::forward<TitleT>(value);
+  }
+  template <typename TitleT = VisualTitleLabelOptions>
+  LineChartVisual& WithTitle(TitleT&& value) {
+    SetTitle(std::forward<TitleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of a visual. This identifier must be unique within the
-     * context of a dashboard, template, or analysis. Two dashboards, analyses, or
-     * templates can have visuals with the same identifiers.</p>
-     */
-    inline const Aws::String& GetVisualId() const{ return m_visualId; }
-    inline bool VisualIdHasBeenSet() const { return m_visualIdHasBeenSet; }
-    inline void SetVisualId(const Aws::String& value) { m_visualIdHasBeenSet = true; m_visualId = value; }
-    inline void SetVisualId(Aws::String&& value) { m_visualIdHasBeenSet = true; m_visualId = std::move(value); }
-    inline void SetVisualId(const char* value) { m_visualIdHasBeenSet = true; m_visualId.assign(value); }
-    inline LineChartVisual& WithVisualId(const Aws::String& value) { SetVisualId(value); return *this;}
-    inline LineChartVisual& WithVisualId(Aws::String&& value) { SetVisualId(std::move(value)); return *this;}
-    inline LineChartVisual& WithVisualId(const char* value) { SetVisualId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The subtitle that is displayed on the visual.</p>
+   */
+  inline const VisualSubtitleLabelOptions& GetSubtitle() const { return m_subtitle; }
+  inline bool SubtitleHasBeenSet() const { return m_subtitleHasBeenSet; }
+  template <typename SubtitleT = VisualSubtitleLabelOptions>
+  void SetSubtitle(SubtitleT&& value) {
+    m_subtitleHasBeenSet = true;
+    m_subtitle = std::forward<SubtitleT>(value);
+  }
+  template <typename SubtitleT = VisualSubtitleLabelOptions>
+  LineChartVisual& WithSubtitle(SubtitleT&& value) {
+    SetSubtitle(std::forward<SubtitleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The title that is displayed on the visual.</p>
-     */
-    inline const VisualTitleLabelOptions& GetTitle() const{ return m_title; }
-    inline bool TitleHasBeenSet() const { return m_titleHasBeenSet; }
-    inline void SetTitle(const VisualTitleLabelOptions& value) { m_titleHasBeenSet = true; m_title = value; }
-    inline void SetTitle(VisualTitleLabelOptions&& value) { m_titleHasBeenSet = true; m_title = std::move(value); }
-    inline LineChartVisual& WithTitle(const VisualTitleLabelOptions& value) { SetTitle(value); return *this;}
-    inline LineChartVisual& WithTitle(VisualTitleLabelOptions&& value) { SetTitle(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration of a line chart.</p>
+   */
+  inline const LineChartConfiguration& GetChartConfiguration() const { return m_chartConfiguration; }
+  inline bool ChartConfigurationHasBeenSet() const { return m_chartConfigurationHasBeenSet; }
+  template <typename ChartConfigurationT = LineChartConfiguration>
+  void SetChartConfiguration(ChartConfigurationT&& value) {
+    m_chartConfigurationHasBeenSet = true;
+    m_chartConfiguration = std::forward<ChartConfigurationT>(value);
+  }
+  template <typename ChartConfigurationT = LineChartConfiguration>
+  LineChartVisual& WithChartConfiguration(ChartConfigurationT&& value) {
+    SetChartConfiguration(std::forward<ChartConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subtitle that is displayed on the visual.</p>
-     */
-    inline const VisualSubtitleLabelOptions& GetSubtitle() const{ return m_subtitle; }
-    inline bool SubtitleHasBeenSet() const { return m_subtitleHasBeenSet; }
-    inline void SetSubtitle(const VisualSubtitleLabelOptions& value) { m_subtitleHasBeenSet = true; m_subtitle = value; }
-    inline void SetSubtitle(VisualSubtitleLabelOptions&& value) { m_subtitleHasBeenSet = true; m_subtitle = std::move(value); }
-    inline LineChartVisual& WithSubtitle(const VisualSubtitleLabelOptions& value) { SetSubtitle(value); return *this;}
-    inline LineChartVisual& WithSubtitle(VisualSubtitleLabelOptions&& value) { SetSubtitle(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of custom actions that are configured for a visual.</p>
+   */
+  inline const Aws::Vector<VisualCustomAction>& GetActions() const { return m_actions; }
+  inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
+  template <typename ActionsT = Aws::Vector<VisualCustomAction>>
+  void SetActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions = std::forward<ActionsT>(value);
+  }
+  template <typename ActionsT = Aws::Vector<VisualCustomAction>>
+  LineChartVisual& WithActions(ActionsT&& value) {
+    SetActions(std::forward<ActionsT>(value));
+    return *this;
+  }
+  template <typename ActionsT = VisualCustomAction>
+  LineChartVisual& AddActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions.emplace_back(std::forward<ActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration of a line chart.</p>
-     */
-    inline const LineChartConfiguration& GetChartConfiguration() const{ return m_chartConfiguration; }
-    inline bool ChartConfigurationHasBeenSet() const { return m_chartConfigurationHasBeenSet; }
-    inline void SetChartConfiguration(const LineChartConfiguration& value) { m_chartConfigurationHasBeenSet = true; m_chartConfiguration = value; }
-    inline void SetChartConfiguration(LineChartConfiguration&& value) { m_chartConfigurationHasBeenSet = true; m_chartConfiguration = std::move(value); }
-    inline LineChartVisual& WithChartConfiguration(const LineChartConfiguration& value) { SetChartConfiguration(value); return *this;}
-    inline LineChartVisual& WithChartConfiguration(LineChartConfiguration&& value) { SetChartConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The column hierarchy that is used during drill-downs and drill-ups.</p>
+   */
+  inline const Aws::Vector<ColumnHierarchy>& GetColumnHierarchies() const { return m_columnHierarchies; }
+  inline bool ColumnHierarchiesHasBeenSet() const { return m_columnHierarchiesHasBeenSet; }
+  template <typename ColumnHierarchiesT = Aws::Vector<ColumnHierarchy>>
+  void SetColumnHierarchies(ColumnHierarchiesT&& value) {
+    m_columnHierarchiesHasBeenSet = true;
+    m_columnHierarchies = std::forward<ColumnHierarchiesT>(value);
+  }
+  template <typename ColumnHierarchiesT = Aws::Vector<ColumnHierarchy>>
+  LineChartVisual& WithColumnHierarchies(ColumnHierarchiesT&& value) {
+    SetColumnHierarchies(std::forward<ColumnHierarchiesT>(value));
+    return *this;
+  }
+  template <typename ColumnHierarchiesT = ColumnHierarchy>
+  LineChartVisual& AddColumnHierarchies(ColumnHierarchiesT&& value) {
+    m_columnHierarchiesHasBeenSet = true;
+    m_columnHierarchies.emplace_back(std::forward<ColumnHierarchiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of custom actions that are configured for a visual.</p>
-     */
-    inline const Aws::Vector<VisualCustomAction>& GetActions() const{ return m_actions; }
-    inline bool ActionsHasBeenSet() const { return m_actionsHasBeenSet; }
-    inline void SetActions(const Aws::Vector<VisualCustomAction>& value) { m_actionsHasBeenSet = true; m_actions = value; }
-    inline void SetActions(Aws::Vector<VisualCustomAction>&& value) { m_actionsHasBeenSet = true; m_actions = std::move(value); }
-    inline LineChartVisual& WithActions(const Aws::Vector<VisualCustomAction>& value) { SetActions(value); return *this;}
-    inline LineChartVisual& WithActions(Aws::Vector<VisualCustomAction>&& value) { SetActions(std::move(value)); return *this;}
-    inline LineChartVisual& AddActions(const VisualCustomAction& value) { m_actionsHasBeenSet = true; m_actions.push_back(value); return *this; }
-    inline LineChartVisual& AddActions(VisualCustomAction&& value) { m_actionsHasBeenSet = true; m_actions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The alt text for the visual.</p>
+   */
+  inline const Aws::String& GetVisualContentAltText() const { return m_visualContentAltText; }
+  inline bool VisualContentAltTextHasBeenSet() const { return m_visualContentAltTextHasBeenSet; }
+  template <typename VisualContentAltTextT = Aws::String>
+  void SetVisualContentAltText(VisualContentAltTextT&& value) {
+    m_visualContentAltTextHasBeenSet = true;
+    m_visualContentAltText = std::forward<VisualContentAltTextT>(value);
+  }
+  template <typename VisualContentAltTextT = Aws::String>
+  LineChartVisual& WithVisualContentAltText(VisualContentAltTextT&& value) {
+    SetVisualContentAltText(std::forward<VisualContentAltTextT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_visualId;
 
-    ///@{
-    /**
-     * <p>The column hierarchy that is used during drill-downs and drill-ups.</p>
-     */
-    inline const Aws::Vector<ColumnHierarchy>& GetColumnHierarchies() const{ return m_columnHierarchies; }
-    inline bool ColumnHierarchiesHasBeenSet() const { return m_columnHierarchiesHasBeenSet; }
-    inline void SetColumnHierarchies(const Aws::Vector<ColumnHierarchy>& value) { m_columnHierarchiesHasBeenSet = true; m_columnHierarchies = value; }
-    inline void SetColumnHierarchies(Aws::Vector<ColumnHierarchy>&& value) { m_columnHierarchiesHasBeenSet = true; m_columnHierarchies = std::move(value); }
-    inline LineChartVisual& WithColumnHierarchies(const Aws::Vector<ColumnHierarchy>& value) { SetColumnHierarchies(value); return *this;}
-    inline LineChartVisual& WithColumnHierarchies(Aws::Vector<ColumnHierarchy>&& value) { SetColumnHierarchies(std::move(value)); return *this;}
-    inline LineChartVisual& AddColumnHierarchies(const ColumnHierarchy& value) { m_columnHierarchiesHasBeenSet = true; m_columnHierarchies.push_back(value); return *this; }
-    inline LineChartVisual& AddColumnHierarchies(ColumnHierarchy&& value) { m_columnHierarchiesHasBeenSet = true; m_columnHierarchies.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  VisualTitleLabelOptions m_title;
 
-    Aws::String m_visualId;
-    bool m_visualIdHasBeenSet = false;
+  VisualSubtitleLabelOptions m_subtitle;
 
-    VisualTitleLabelOptions m_title;
-    bool m_titleHasBeenSet = false;
+  LineChartConfiguration m_chartConfiguration;
 
-    VisualSubtitleLabelOptions m_subtitle;
-    bool m_subtitleHasBeenSet = false;
+  Aws::Vector<VisualCustomAction> m_actions;
 
-    LineChartConfiguration m_chartConfiguration;
-    bool m_chartConfigurationHasBeenSet = false;
+  Aws::Vector<ColumnHierarchy> m_columnHierarchies;
 
-    Aws::Vector<VisualCustomAction> m_actions;
-    bool m_actionsHasBeenSet = false;
+  Aws::String m_visualContentAltText;
+  bool m_visualIdHasBeenSet = false;
+  bool m_titleHasBeenSet = false;
+  bool m_subtitleHasBeenSet = false;
+  bool m_chartConfigurationHasBeenSet = false;
+  bool m_actionsHasBeenSet = false;
+  bool m_columnHierarchiesHasBeenSet = false;
+  bool m_visualContentAltTextHasBeenSet = false;
+};
 
-    Aws::Vector<ColumnHierarchy> m_columnHierarchies;
-    bool m_columnHierarchiesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

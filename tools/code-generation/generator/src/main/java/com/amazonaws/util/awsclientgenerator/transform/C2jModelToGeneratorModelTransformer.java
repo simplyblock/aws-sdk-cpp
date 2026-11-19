@@ -25,6 +25,9 @@ import org.apache.commons.lang.WordUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import software.amazon.smithy.jmespath.JmespathExpression;
 
 public class C2jModelToGeneratorModelTransformer {
@@ -49,64 +52,51 @@ public class C2jModelToGeneratorModelTransformer {
         UNSUPPORTEDHTMLTAGS.add("</important>");
     }
 
-    // A list of non-compliant service models that are already released, so we keep them backward-compatible.
-    public static final HashSet<String> LEGACY_SERVICE_IDS = new HashSet<>();
+    // A few ancient models carry no "serviceId" at all, so their namespace cannot be keyed by one
+    // (identifiers must not be keyed on a display name, endpoint prefix, or model file name). Their
+    // already-released namespaces are therefore preserved by model (service) name. Every other
+    // preserved namespace lives in the shared, serviceId-keyed identifier table
+    // (service-namespace-table.json via ServiceNamespaceTable).
+    private static final Map<String, String> SERVICE_ID_LESS_NAMESPACES = new HashMap<>();
     static {
-        LEGACY_SERVICE_IDS.add("amp");
-        LEGACY_SERVICE_IDS.add("appintegrations");
-        LEGACY_SERVICE_IDS.add("billingconductor");
-        LEGACY_SERVICE_IDS.add("clouddirectory");
-        LEGACY_SERVICE_IDS.add("cloudfront");
-        LEGACY_SERVICE_IDS.add("cloudsearch");
-        LEGACY_SERVICE_IDS.add("cloudsearchdomain");
-        LEGACY_SERVICE_IDS.add("codeartifact");
-        LEGACY_SERVICE_IDS.add("codestar-notifications");
-        LEGACY_SERVICE_IDS.add("config");
-        LEGACY_SERVICE_IDS.add("databrew");
-        LEGACY_SERVICE_IDS.add("ec2");
-        LEGACY_SERVICE_IDS.add("elasticache");
-        LEGACY_SERVICE_IDS.add("emr-containers");
-        LEGACY_SERVICE_IDS.add("entitlement.marketplace");
-        LEGACY_SERVICE_IDS.add("events");
-        LEGACY_SERVICE_IDS.add("evidently");
-        LEGACY_SERVICE_IDS.add("forecast");
-        LEGACY_SERVICE_IDS.add("forecastquery");
-        LEGACY_SERVICE_IDS.add("grafana");
-        LEGACY_SERVICE_IDS.add("importexport");
-        LEGACY_SERVICE_IDS.add("inspector");
-        LEGACY_SERVICE_IDS.add("lambda");
-        LEGACY_SERVICE_IDS.add("location");
-        LEGACY_SERVICE_IDS.add("lookoutvision");
-        LEGACY_SERVICE_IDS.add("m2");
-        LEGACY_SERVICE_IDS.add("migrationhubstrategy");
-        LEGACY_SERVICE_IDS.add("mobile");
-        LEGACY_SERVICE_IDS.add("mobileanalytics");
-        LEGACY_SERVICE_IDS.add("mq");
-        LEGACY_SERVICE_IDS.add("nimble");
-        LEGACY_SERVICE_IDS.add("opensearch");
-        LEGACY_SERVICE_IDS.add("rbin");
-        LEGACY_SERVICE_IDS.add("rds-data");
-        LEGACY_SERVICE_IDS.add("redshift-data");
-        LEGACY_SERVICE_IDS.add("resiliencehub");
-        LEGACY_SERVICE_IDS.add("rum");
-        LEGACY_SERVICE_IDS.add("sagemaker-a2i-runtime");
-        LEGACY_SERVICE_IDS.add("sagemaker-edge");
-        LEGACY_SERVICE_IDS.add("schemas");
-        LEGACY_SERVICE_IDS.add("sdb");
-        LEGACY_SERVICE_IDS.add("transcribe");
-        LEGACY_SERVICE_IDS.add("transcribe-streaming");
-        LEGACY_SERVICE_IDS.add("wisdom");
-
-        // remaps
-        LEGACY_SERVICE_IDS.add("lex");
-        LEGACY_SERVICE_IDS.add("lexv2-runtime");
-        LEGACY_SERVICE_IDS.add("lexv2-models");
-        LEGACY_SERVICE_IDS.add("marketplace-entitlement");
-        LEGACY_SERVICE_IDS.add("sagemaker-runtime");
-        LEGACY_SERVICE_IDS.add("awstransfer");
-        LEGACY_SERVICE_IDS.add("transcribestreaming");
-        LEGACY_SERVICE_IDS.add("dynamodbstreams");
+        SERVICE_ID_LESS_NAMESPACES.put("importexport", "ImportExport");
+        SERVICE_ID_LESS_NAMESPACES.put("sdb", "SimpleDB");
     }
+
+    /**
+     * HTTP response status codes that should be retried if found in a modeled error.
+     */
+    private static Set<Integer> RESPONSE_CODES_TO_RETRY = ImmutableSet.of(500, 502, 503, 504);
+
+    /**
+     * Hard coded set of errors that are always throttle-able even if modeled
+     */
+    final private static Set<String> THROTTLE_ERRORS = ImmutableSet.of(
+            "Throttling",
+            "ThrottlingException",
+            "ThrottledException",
+            "RequestThrottledException",
+            "TooManyRequestsException",
+            "ProvisionedThroughputExceededException",
+            "TransactionInProgressException",
+            "RequestLimitExceeded",
+            "BandwidthLimitExceeded",
+            "LimitExceededException",
+            "RequestThrottled",
+            "SlowDown",
+            "PriorRequestNotComplete",
+            "EC2ThrottledException"
+    );
+
+    /**
+     * Hard coded set of errors that are always retryable even if modeled
+     */
+    final private static Set<String> RETRYABLE_ERRORS = ImmutableSet.of(
+            "RequestTimeout",
+            "InternalError",
+            "RequestTimeoutException",
+            "IDPCommunicationError"
+    );
 
     /**
      * Type representing what a member should be remapped to and services that it
@@ -153,9 +143,16 @@ public class C2jModelToGeneratorModelTransformer {
         serviceModel.setDocumentation(formatDocumentation(c2jServiceModel.getDocumentation(), 3));
         serviceModel.setServiceName(c2jServiceModel.getServiceName());
         serviceModel.setAuthSchemes(c2jServiceModel.getMetadata().getAuth());
+        //if auth field is not present, check for SignatureVersion
+        if( (c2jServiceModel.getMetadata().getAuth() == null || c2jServiceModel.getMetadata().getAuth().isEmpty() )
+            && (c2jServiceModel.getMetadata().getSignatureVersion() != null))
+        {
+            serviceModel.setAuthSchemes(Arrays.asList(c2jServiceModel.getMetadata().getSignatureVersion()));
+        }
 
         convertShapes();
         convertOperations();
+        applyLongPollingTrait();
         removeIgnoredOperations();
         removeUnreferencedShapes();
         postProcessShapes();
@@ -168,7 +165,16 @@ public class C2jModelToGeneratorModelTransformer {
         serviceModel.getMetadata().setHasEndpointDiscoveryTrait(hasEndpointDiscoveryTrait && !endpointOperationName.isEmpty());
         serviceModel.getMetadata().setRequireEndpointDiscovery(requireEndpointDiscovery);
         serviceModel.getMetadata().setEndpointOperationName(endpointOperationName);
-        serviceModel.getMetadata().setAwsQueryCompatible(c2jServiceModel.getMetadata().getAwsQueryCompatible() != null);
+
+        // add protocol check. only for json, query protocols
+        final String protocol = serviceModel.getMetadata().findFirstSupportedProtocol();
+
+        if ("json".equals(protocol) || "smithy-rpc-v2-cbor".equals(protocol)) {
+            serviceModel.getMetadata().setAwsQueryCompatible(
+                    c2jServiceModel.getMetadata().getAwsQueryCompatible() != null);
+        } else {
+            serviceModel.getMetadata().setAwsQueryCompatible(false);
+        }
 
         if (c2jServiceModel.getEndpointRules() != null) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -183,9 +189,19 @@ public class C2jModelToGeneratorModelTransformer {
             shortenedRules += "\0";
             serviceModel.setEndpointRules(shortenedRules);
         }
+        serviceModel.setRawEndpointRules(c2jServiceModel.getEndpointRules() );
         serviceModel.setEndpointRuleSetModel(c2jServiceModel.getEndpointRuleSetModel());
         serviceModel.setEndpointTests(c2jServiceModel.getEndpointTests());
         serviceModel.setClientContextParams(c2jServiceModel.getClientContextParams());
+
+        serviceModel.getServiceErrors()
+                .stream().filter(error -> THROTTLE_ERRORS.contains(error.getText()))
+                .forEach(error -> error.setThrottling(true));
+
+        serviceModel.getServiceErrors()
+                .stream().filter(error -> RETRYABLE_ERRORS.contains(error.getText()) &&
+                        !THROTTLE_ERRORS.contains(error.getText()))
+                .forEach(error -> error.setRetryable(true));
 
         return serviceModel;
     }
@@ -244,30 +260,21 @@ public class C2jModelToGeneratorModelTransformer {
             metadata.setEndpointPrefix(c2jMetadata.getEndpointPrefix());
             metadata.setProtocol(c2jMetadata.getProtocol());
         }
-        metadata.setNamespace(c2jMetadata.getServiceAbbreviation());
+        metadata.setProtocols(c2jMetadata.getProtocols());
+        metadata.setAuth(c2jMetadata.getAuth());
         metadata.setServiceFullName(c2jMetadata.getServiceFullName());
         metadata.setSignatureVersion(c2jMetadata.getSignatureVersion());
         metadata.setTargetPrefix(c2jMetadata.getTargetPrefix());
         metadata.setGlobalEndpoint(c2jMetadata.getGlobalEndpoint());
         metadata.setTimestampFormat(c2jMetadata.getTimestampFormat());
 
-        if (metadata.getNamespace() == null || metadata.getNamespace().isEmpty()) {
-            String serviceId = c2jMetadata.getServiceId();
-            if(LEGACY_SERVICE_IDS.contains(this.c2jServiceModel.getServiceName())) {
-                serviceId = c2jMetadata.getServiceFullName(); // fallback to full name for legacy already released models
-            }
-            if(serviceId == null || serviceId.isEmpty()) {
-                throw new SourceGenerationFailedException(String.format("Service model file %s must have metadata.serviceId present", c2jServiceModel.getServiceName()));
-            }
-            metadata.setNamespace(sanitizeServiceAbbreviation(serviceId));
-        } else {
-            metadata.setNamespace(sanitizeServiceAbbreviation(metadata.getNamespace()));
-        }
-        metadata.setServiceId(c2jMetadata.getServiceId() != null ? c2jMetadata.getServiceId() : c2jMetadata.getEndpointPrefix());
+        // Service namespace is derived from the service id ("serviceId") ONLY. The display-name
+        // fields (serviceAbbreviation / serviceFullName) MUST NOT be read to derive it. Names that
+        // diverge from the serviceId-derived name are preserved via the static, serviceId-keyed
+        // identifier table (ServiceNamespaceTable).
+        metadata.setNamespace(deriveNamespace(c2jMetadata, this.c2jServiceModel.getServiceName()));
 
-        if ("S3-CRT".equalsIgnoreCase(c2jServiceModel.getServiceName())) {
-            metadata.setNamespace("S3Crt");
-        }
+        metadata.setServiceId(c2jMetadata.getServiceId() != null ? c2jMetadata.getServiceId() : c2jMetadata.getEndpointPrefix());
 
         metadata.setClassNamePrefix(CppViewHelper.convertToUpperCamel(ifNotNullOrEmpty(c2jMetadata.getClientClassNamePrefix(), metadata.getNamespace())));
 
@@ -307,41 +314,51 @@ public class C2jModelToGeneratorModelTransformer {
              * Decide event payload type, should be one of them: "blob" | "string" | "structure" | null
              */
             if (shape.isEvent()) {
+                shape.setEventPayloadExplicit(shape.hasEventPayloadMembers());
                 if (!shape.getMembers().values().stream().anyMatch(member -> !member.isEventHeader())) {
                     // Header only event
                     shape.setEventPayloadType(null);
                 } else if (shape.hasEventPayloadMembers() || shape.getMembers().size() == 1) {
-                    if (shape.getMembers().size() == 1) {
-                        shape.getMembers().entrySet().stream().forEach(memberEntry -> {
-                            /**
-                             * Note: this is complicated and potentially not completely correct. 
-                             * So touch at your own risk until we have protocol tests supported.
-                             * In summary:
-                             * - we need to determine how to serialize events in eventstream
-                             * - to specify payload there is an eventpayload trait
-                             * - but what happens if that trait is not specified
-                             * - if there is one field and its a string, blob or struct then we assume that field is event payload
-                             *  (note: this might not be completely correct, spec is vague on that and other sdks do implicit struct around string and blob)
-                             * - if that one field is of any other type then treat parent shape as eventpayload
-                             * - if there is more than one field then parent shape is the payload
-                             */
-                            Shape memberShape = memberEntry.getValue().getShape();
-                            if (memberShape.isString() || 
-                                memberShape.isBlob() || 
-                                memberShape.isStructure()) {
-                                memberEntry.getValue().setEventPayload(true);
-                                shape.setEventPayloadMemberName(memberEntry.getKey());
-                                shape.setEventPayloadType(memberShape.getType());
-                            } else {
-                                if (!shape.getType().equals("structure")) {
-                                    throw new RuntimeException("Event shape should always has \"structure\" type if single member cannot be event payload.");
-                                }
-                                shape.setEventPayloadType(shape.getType());
+                    if (shape.getMembers().values().stream().filter(member -> !member.isEventHeader()).count() == 1) {
+                        final List<Map.Entry<String, ShapeMember>> memberEntries = shape.getMembers().entrySet().stream()
+                                .filter(member -> !member.getValue().isEventHeader())
+                                .collect(Collectors.toList());
+                        if (memberEntries.size() != 1) {
+                            throw new RuntimeException("Event shape should have exactly one payload member for event payload.");
+                        }
+                        /**
+                         * Note: this is complicated and potentially not completely correct.
+                         * So touch at your own risk until we have protocol tests supported.
+                         * In summary:
+                         * - we need to determine how to serialize events in eventstream
+                         * - to specify payload there is an eventpayload trait
+                         * - but what happens if that trait is not specified
+                         * - if there is one field and its a string or struct then we assume that field is event payload
+                         * - if there is one field and its a blob within structure and not explicitly marked as eventpayload then parent shape is eventpayload
+                         * - if that one field is of any other type then treat parent shape as eventpayload
+                         * - if there is more than one field then parent shape is the payload
+                         */
+                        final Map.Entry<String, ShapeMember> memberEntry = memberEntries.get(0);
+                        final Shape memberShape = memberEntry.getValue().getShape();
+                        if (memberShape.isString() ||
+                            memberShape.isBlob() && !shape.isStructure() ||
+                            memberShape.isBlob() && memberEntry.getValue().isEventPayload() ||
+                            memberShape.isStructure()) {
+                            memberEntry.getValue().setEventPayload(true);
+                            shape.setEventPayloadMemberName(memberEntry.getKey());
+                            shape.setEventPayloadType(memberShape.getType());
+                        } else {
+                            if (!shape.getType().equals("structure")) {
+                                throw new RuntimeException("Event shape should always has \"structure\" type if single member cannot be event payload.");
                             }
-
-                        });
+                            shape.setEventPayloadType(shape.getType());
+                        }
+                        shape.setEventStreamHeaders(shape.getMembers().entrySet().stream()
+                                .filter(headerEntry -> headerEntry.getValue().isEventHeader())
+                                .map(headerEntry -> Pair.of(headerEntry.getKey(), headerEntry.getValue().getShape()))
+                                .collect(Collectors.toMap(Pair::getKey, Pair::getValue)));
                     } else {
-                        throw new RuntimeException("Event shape used in Event Stream should only has one member if it has event payload member.");
+                        throw new RuntimeException("Event shape used in Event Stream should only has one non header member if it has event payload member.");
                     }
                 } else if (shape.getMembers().size() > 1) {
                     if (!shape.getType().equals("structure")) {
@@ -404,6 +421,10 @@ public class C2jModelToGeneratorModelTransformer {
         shape.setEvent(c2jShape.isEvent());
         shape.setException(c2jShape.isException());
         shape.setDocument(c2jShape.isDocument());
+        shape.setSparse(c2jShape.isSparse());
+        if (shape.isSparse() && !shape.isList() && !shape.isMap()) {
+            throw new SourceGenerationFailedException("The sparse trait is only applicable to list and map shapes, but was found on shape: " + shape.getName());
+        }
 
         if (c2jShape.getXmlNamespace() != null) {
             XmlNamespace xmlns = new XmlNamespace();
@@ -550,6 +571,24 @@ public class C2jModelToGeneratorModelTransformer {
         }
     }
 
+    private static final Map<String, Set<String>> LONG_POLLING_OPERATIONS = ImmutableMap.of(
+        "SQS", ImmutableSet.of("ReceiveMessage"),
+        "SFN", ImmutableSet.of("GetActivityTask"),
+        "SWF", ImmutableSet.of("PollForActivityTask", "PollForDecisionTask")
+    );
+
+    void applyLongPollingTrait() {
+        Optional.ofNullable(c2jServiceModel.getMetadata().getServiceId())
+            .map(LONG_POLLING_OPERATIONS::get)
+            .ifPresent(longPollOps -> {
+                for (Map.Entry<String, Operation> entry : operations.entrySet()) {
+                    if (longPollOps.contains(entry.getKey())) {
+                        entry.getValue().setLongPolling(true);
+                    }
+                }
+            });
+    }
+
     Operation convertOperation(C2jOperation c2jOperation) {
         Operation operation = new Operation();
 
@@ -575,6 +614,7 @@ public class C2jModelToGeneratorModelTransformer {
 
         operation.setDocumentation(formatDocumentation(crossLinkedShapeDocs, 9));
         operation.setAuthtype(c2jOperation.getAuthtype());
+        operation.setAuth(c2jOperation.getAuth());
         operation.setAuthorizer(c2jOperation.getAuthorizer());
         if (c2jOperation.getEndpoint() != null) {
             operation.setEndpoint(convertEndpoint(c2jOperation.getEndpoint()));
@@ -783,7 +823,7 @@ public class C2jModelToGeneratorModelTransformer {
                             member.getShape().getName(),
                             reservedMapping.getValue().remappingName,
                             member.getShape().getName(),
-                            false);
+                            reservedMapping.getKey().equals(shape.getPayload()));
                 });
         }
     }
@@ -814,6 +854,7 @@ public class C2jModelToGeneratorModelTransformer {
         cloned.setException(shape.isException());
         cloned.setXmlNamespace(shape.getXmlNamespace());
         cloned.setDocument(shape.isDocument());
+        cloned.setSparse(shape.isSparse());
         return cloned;
     }
 
@@ -899,9 +940,15 @@ public class C2jModelToGeneratorModelTransformer {
             // 1. Its shape is defined in C2J model.
             // 2. For XML payload type, it has extra member other than "message" and "code" (case insensitive).
             // 3. For JSON payload type, it has extra member other than "message" (case insensitive).
-            String errorPayloadType = CppViewHelper.computeServicePayloadType(this.c2jServiceModel.getMetadata().getProtocol());
+            // Look through priority list of protocols falling back to singular protocol if not found.
+            final Set<String> protocols = ImmutableSet.<String>builder()
+                    .addAll(this.c2jServiceModel.getMetadata().getProtocols() == null ? ImmutableSet.of(): this.c2jServiceModel.getMetadata().getProtocols())
+                    .addAll(StringUtils.isEmpty(this.c2jServiceModel.getMetadata().getProtocol()) ? ImmutableSet.of() : ImmutableSet.of(this.c2jServiceModel.getMetadata().getProtocol()))
+                    .build();
+            String errorPayloadType = CppViewHelper.computeServicePayloadType(protocols);
             if (errorPayloadType.equals("xml") && referencedShape.isXmlModeledException() ||
-                errorPayloadType.equals("json") && referencedShape.isJsonModeledException()) {
+                errorPayloadType.equals("json") && referencedShape.isJsonModeledException() ||
+                errorPayloadType.equals("smithy-rpc-v2-cbor") && referencedShape.isCborModeledException()) {
                 error.setModeled(true);
             }
 
@@ -918,16 +965,58 @@ public class C2jModelToGeneratorModelTransformer {
         error.setCoreError(CoreErrors.VARIANTS.containsKey(error.getName()));
 
         //query xml loads this inner structure to do this work.
-        if (c2jError.getError() != null && c2jError.getError().getCode() != null) {
-            if(c2jError.getError().getHttpStatusCode() >= 500 || !c2jError.getError().isSenderFault()) {
+        if (c2jError.getError() != null) {
+            if(RESPONSE_CODES_TO_RETRY.contains(c2jError.getError().getHttpStatusCode()) && !c2jError.getError().isSenderFault()) {
                 error.setRetryable(true);
             }
 
-            error.setText(c2jError.getError().getCode());
+            if (c2jError.getError().getCode() != null) {
+                error.setText(c2jError.getError().getCode());
+            }
         }
 
         allErrors.add(error);
         return error;
+    }
+
+    /**
+     * Derive the service namespace from the service id ("serviceId") only, consulting the frozen,
+     * serviceId-keyed identifier table (ServiceNamespaceTable) for already-released names that
+     * diverge from it.
+     *
+     * @param c2jMetadata      the raw C2J metadata for the service
+     * @param serviceModelName the model (service) name, used only for S3-CRT and for the two
+     *                         serviceId-less exceptions; never used to derive a tabled value
+     */
+    String deriveNamespace(C2jMetadata c2jMetadata, String serviceModelName) {
+        // S3-CRT is a projection of s3 with no model of its own.
+        if ("S3-CRT".equalsIgnoreCase(serviceModelName)) {
+            return "S3Crt";
+        }
+        // Exception: pre-serviceId models (see SERVICE_ID_LESS_NAMESPACES).
+        String serviceIdLess = SERVICE_ID_LESS_NAMESPACES.get(serviceModelName);
+        if (serviceIdLess != null) {
+            return serviceIdLess;
+        }
+        String serviceId = c2jMetadata.getServiceId();
+        if (serviceId == null || serviceId.isEmpty()) {
+            throw new SourceGenerationFailedException(String.format(
+                    "Service model file %s must have metadata.serviceId present", serviceModelName));
+        }
+        // Preserved, already-released name takes precedence over derivation.
+        String preserved = ServiceNamespaceTable.getNamespace(serviceId);
+        if (preserved != null) {
+            return preserved;
+        }
+        String derived = sanitizeServiceAbbreviation(serviceId);
+        // Uniqueness guard: a serviceId-derived name must never collide with a preserved one.
+        if (ServiceNamespaceTable.isReservedNamespace(derived)) {
+            throw new SourceGenerationFailedException(String.format(
+                    "Derived namespace '%s' for serviceId '%s' collides with a reserved namespace "
+                            + "in the identifier table; the serviceId or the table must be reconciled",
+                    derived, serviceId));
+        }
+        return derived;
     }
 
     String sanitizeServiceAbbreviation(String serviceAbbreviation) {

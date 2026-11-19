@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/networkmanager/NetworkManager_EXPORTS.h>
 
-#include <aws/networkmanager/NetworkManagerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace NetworkManager
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace NetworkManager {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using NetworkManagerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using NetworkManagerEndpointProviderBase =
     EndpointProviderBase<NetworkManagerClientConfiguration, NetworkManagerBuiltInParameters, NetworkManagerClientContextParameters>;
 
 using NetworkManagerDefaultEpProviderBase =
-    DefaultEndpointProvider<NetworkManagerClientConfiguration, NetworkManagerBuiltInParameters, NetworkManagerClientContextParameters>;
+    BDDEndpointProvider<NetworkManagerClientConfiguration, NetworkManagerBuiltInParameters, NetworkManagerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_NETWORKMANAGER_API NetworkManagerEndpointProvider : public NetworkManagerDefaultEpProviderBase
-{
-public:
-    using NetworkManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_NETWORKMANAGER_API NetworkManagerEndpointProvider : public NetworkManagerDefaultEpProviderBase {
+ public:
+  using NetworkManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    NetworkManagerEndpointProvider()
-      : NetworkManagerDefaultEpProviderBase(Aws::NetworkManager::NetworkManagerEndpointRules::GetRulesBlob(), Aws::NetworkManager::NetworkManagerEndpointRules::RulesBlobSize)
-    {}
+  NetworkManagerEndpointProvider();
 
-    ~NetworkManagerEndpointProvider()
-    {
-    }
+  ~NetworkManagerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace NetworkManager
+}  // namespace Aws

@@ -5,64 +5,71 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class GetAppliedSchemaVersionResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult();
-    AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class GetAppliedSchemaVersionResult {
+ public:
+  AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult() = default;
+  AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API GetAppliedSchemaVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Current applied schema ARN, including the minor version in use if one was
+   * provided.</p>
+   */
+  inline const Aws::String& GetAppliedSchemaArn() const { return m_appliedSchemaArn; }
+  template <typename AppliedSchemaArnT = Aws::String>
+  void SetAppliedSchemaArn(AppliedSchemaArnT&& value) {
+    m_appliedSchemaArnHasBeenSet = true;
+    m_appliedSchemaArn = std::forward<AppliedSchemaArnT>(value);
+  }
+  template <typename AppliedSchemaArnT = Aws::String>
+  GetAppliedSchemaVersionResult& WithAppliedSchemaArn(AppliedSchemaArnT&& value) {
+    SetAppliedSchemaArn(std::forward<AppliedSchemaArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Current applied schema ARN, including the minor version in use if one was
-     * provided.</p>
-     */
-    inline const Aws::String& GetAppliedSchemaArn() const{ return m_appliedSchemaArn; }
-    inline void SetAppliedSchemaArn(const Aws::String& value) { m_appliedSchemaArn = value; }
-    inline void SetAppliedSchemaArn(Aws::String&& value) { m_appliedSchemaArn = std::move(value); }
-    inline void SetAppliedSchemaArn(const char* value) { m_appliedSchemaArn.assign(value); }
-    inline GetAppliedSchemaVersionResult& WithAppliedSchemaArn(const Aws::String& value) { SetAppliedSchemaArn(value); return *this;}
-    inline GetAppliedSchemaVersionResult& WithAppliedSchemaArn(Aws::String&& value) { SetAppliedSchemaArn(std::move(value)); return *this;}
-    inline GetAppliedSchemaVersionResult& WithAppliedSchemaArn(const char* value) { SetAppliedSchemaArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAppliedSchemaVersionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAppliedSchemaVersionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAppliedSchemaVersionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAppliedSchemaVersionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appliedSchemaArn;
+ private:
+  Aws::String m_appliedSchemaArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appliedSchemaArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

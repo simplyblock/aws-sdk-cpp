@@ -4,132 +4,154 @@
  */
 
 #pragma once
-#include <aws/databrew/GlueDataBrew_EXPORTS.h>
-#include <aws/databrew/GlueDataBrewRequest.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/databrew/GlueDataBrewRequest.h>
+#include <aws/databrew/GlueDataBrew_EXPORTS.h>
 #include <aws/databrew/model/Rule.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GlueDataBrew
-{
-namespace Model
-{
+namespace Aws {
+namespace GlueDataBrew {
+namespace Model {
 
+/**
+ */
+class CreateRulesetRequest : public GlueDataBrewRequest {
+ public:
+  AWS_GLUEDATABREW_API CreateRulesetRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateRuleset"; }
+
+  AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name of the ruleset to be created. Valid characters are alphanumeric
+   * (A-Z, a-z, 0-9), hyphen (-), period (.), and space.</p>
    */
-  class CreateRulesetRequest : public GlueDataBrewRequest
-  {
-  public:
-    AWS_GLUEDATABREW_API CreateRulesetRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateRulesetRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateRuleset"; }
+  ///@{
+  /**
+   * <p>The description of the ruleset.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateRulesetRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of a resource (dataset) that the ruleset is
+   * associated with.</p>
+   */
+  inline const Aws::String& GetTargetArn() const { return m_targetArn; }
+  inline bool TargetArnHasBeenSet() const { return m_targetArnHasBeenSet; }
+  template <typename TargetArnT = Aws::String>
+  void SetTargetArn(TargetArnT&& value) {
+    m_targetArnHasBeenSet = true;
+    m_targetArn = std::forward<TargetArnT>(value);
+  }
+  template <typename TargetArnT = Aws::String>
+  CreateRulesetRequest& WithTargetArn(TargetArnT&& value) {
+    SetTargetArn(std::forward<TargetArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of rules that are defined with the ruleset. A rule includes one or
+   * more checks to be validated on a DataBrew dataset.</p>
+   */
+  inline const Aws::Vector<Rule>& GetRules() const { return m_rules; }
+  inline bool RulesHasBeenSet() const { return m_rulesHasBeenSet; }
+  template <typename RulesT = Aws::Vector<Rule>>
+  void SetRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules = std::forward<RulesT>(value);
+  }
+  template <typename RulesT = Aws::Vector<Rule>>
+  CreateRulesetRequest& WithRules(RulesT&& value) {
+    SetRules(std::forward<RulesT>(value));
+    return *this;
+  }
+  template <typename RulesT = Rule>
+  CreateRulesetRequest& AddRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules.emplace_back(std::forward<RulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the ruleset to be created. Valid characters are alphanumeric
-     * (A-Z, a-z, 0-9), hyphen (-), period (.), and space.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateRulesetRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateRulesetRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateRulesetRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Metadata tags to apply to the ruleset.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateRulesetRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateRulesetRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The description of the ruleset.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateRulesetRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateRulesetRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateRulesetRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of a resource (dataset) that the ruleset is
-     * associated with.</p>
-     */
-    inline const Aws::String& GetTargetArn() const{ return m_targetArn; }
-    inline bool TargetArnHasBeenSet() const { return m_targetArnHasBeenSet; }
-    inline void SetTargetArn(const Aws::String& value) { m_targetArnHasBeenSet = true; m_targetArn = value; }
-    inline void SetTargetArn(Aws::String&& value) { m_targetArnHasBeenSet = true; m_targetArn = std::move(value); }
-    inline void SetTargetArn(const char* value) { m_targetArnHasBeenSet = true; m_targetArn.assign(value); }
-    inline CreateRulesetRequest& WithTargetArn(const Aws::String& value) { SetTargetArn(value); return *this;}
-    inline CreateRulesetRequest& WithTargetArn(Aws::String&& value) { SetTargetArn(std::move(value)); return *this;}
-    inline CreateRulesetRequest& WithTargetArn(const char* value) { SetTargetArn(value); return *this;}
-    ///@}
+  Aws::String m_targetArn;
 
-    ///@{
-    /**
-     * <p>A list of rules that are defined with the ruleset. A rule includes one or
-     * more checks to be validated on a DataBrew dataset.</p>
-     */
-    inline const Aws::Vector<Rule>& GetRules() const{ return m_rules; }
-    inline bool RulesHasBeenSet() const { return m_rulesHasBeenSet; }
-    inline void SetRules(const Aws::Vector<Rule>& value) { m_rulesHasBeenSet = true; m_rules = value; }
-    inline void SetRules(Aws::Vector<Rule>&& value) { m_rulesHasBeenSet = true; m_rules = std::move(value); }
-    inline CreateRulesetRequest& WithRules(const Aws::Vector<Rule>& value) { SetRules(value); return *this;}
-    inline CreateRulesetRequest& WithRules(Aws::Vector<Rule>&& value) { SetRules(std::move(value)); return *this;}
-    inline CreateRulesetRequest& AddRules(const Rule& value) { m_rulesHasBeenSet = true; m_rules.push_back(value); return *this; }
-    inline CreateRulesetRequest& AddRules(Rule&& value) { m_rulesHasBeenSet = true; m_rules.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Rule> m_rules;
 
-    ///@{
-    /**
-     * <p>Metadata tags to apply to the ruleset.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateRulesetRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateRulesetRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateRulesetRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateRulesetRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateRulesetRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateRulesetRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateRulesetRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateRulesetRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateRulesetRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_targetArnHasBeenSet = false;
+  bool m_rulesHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_targetArn;
-    bool m_targetArnHasBeenSet = false;
-
-    Aws::Vector<Rule> m_rules;
-    bool m_rulesHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GlueDataBrew
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlueDataBrew
+}  // namespace Aws

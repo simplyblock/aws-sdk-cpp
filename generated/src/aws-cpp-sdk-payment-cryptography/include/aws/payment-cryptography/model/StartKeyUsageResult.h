@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/payment-cryptography/PaymentCryptography_EXPORTS.h>
 #include <aws/payment-cryptography/model/Key.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PaymentCryptography
-{
-namespace Model
-{
-  class StartKeyUsageResult
-  {
-  public:
-    AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult();
-    AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PaymentCryptography {
+namespace Model {
+class StartKeyUsageResult {
+ public:
+  AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult() = default;
+  AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PAYMENTCRYPTOGRAPHY_API StartKeyUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <code>KeyARN</code> of the Amazon Web Services Payment Cryptography key
+   * activated for use.</p>
+   */
+  inline const Key& GetKey() const { return m_key; }
+  template <typename KeyT = Key>
+  void SetKey(KeyT&& value) {
+    m_keyHasBeenSet = true;
+    m_key = std::forward<KeyT>(value);
+  }
+  template <typename KeyT = Key>
+  StartKeyUsageResult& WithKey(KeyT&& value) {
+    SetKey(std::forward<KeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>KeyARN</code> of the Amazon Web Services Payment Cryptography key
-     * activated for use.</p>
-     */
-    inline const Key& GetKey() const{ return m_key; }
-    inline void SetKey(const Key& value) { m_key = value; }
-    inline void SetKey(Key&& value) { m_key = std::move(value); }
-    inline StartKeyUsageResult& WithKey(const Key& value) { SetKey(value); return *this;}
-    inline StartKeyUsageResult& WithKey(Key&& value) { SetKey(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartKeyUsageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartKeyUsageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartKeyUsageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartKeyUsageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Key m_key;
+ private:
+  Key m_key;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_keyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PaymentCryptography
-} // namespace Aws
+}  // namespace Model
+}  // namespace PaymentCryptography
+}  // namespace Aws

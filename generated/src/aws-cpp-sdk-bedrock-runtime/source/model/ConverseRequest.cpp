@@ -12,84 +12,81 @@ using namespace Aws::BedrockRuntime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ConverseRequest::ConverseRequest() : 
-    m_modelIdHasBeenSet(false),
-    m_messagesHasBeenSet(false),
-    m_systemHasBeenSet(false),
-    m_inferenceConfigHasBeenSet(false),
-    m_toolConfigHasBeenSet(false),
-    m_guardrailConfigHasBeenSet(false),
-    m_additionalModelRequestFieldsHasBeenSet(false),
-    m_additionalModelResponseFieldPathsHasBeenSet(false)
-{
-}
-
-Aws::String ConverseRequest::SerializePayload() const
-{
+Aws::String ConverseRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_messagesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> messagesJsonList(m_messages.size());
-   for(unsigned messagesIndex = 0; messagesIndex < messagesJsonList.GetLength(); ++messagesIndex)
-   {
-     messagesJsonList[messagesIndex].AsObject(m_messages[messagesIndex].Jsonize());
-   }
-   payload.WithArray("messages", std::move(messagesJsonList));
-
+  if (m_messagesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> messagesJsonList(m_messages.size());
+    for (unsigned messagesIndex = 0; messagesIndex < messagesJsonList.GetLength(); ++messagesIndex) {
+      messagesJsonList[messagesIndex].AsObject(m_messages[messagesIndex].Jsonize());
+    }
+    payload.WithArray("messages", std::move(messagesJsonList));
   }
 
-  if(m_systemHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> systemJsonList(m_system.size());
-   for(unsigned systemIndex = 0; systemIndex < systemJsonList.GetLength(); ++systemIndex)
-   {
-     systemJsonList[systemIndex].AsObject(m_system[systemIndex].Jsonize());
-   }
-   payload.WithArray("system", std::move(systemJsonList));
-
+  if (m_systemHasBeenSet) {
+    Aws::Utils::Array<JsonValue> systemJsonList(m_system.size());
+    for (unsigned systemIndex = 0; systemIndex < systemJsonList.GetLength(); ++systemIndex) {
+      systemJsonList[systemIndex].AsObject(m_system[systemIndex].Jsonize());
+    }
+    payload.WithArray("system", std::move(systemJsonList));
   }
 
-  if(m_inferenceConfigHasBeenSet)
-  {
-   payload.WithObject("inferenceConfig", m_inferenceConfig.Jsonize());
-
+  if (m_inferenceConfigHasBeenSet) {
+    payload.WithObject("inferenceConfig", m_inferenceConfig.Jsonize());
   }
 
-  if(m_toolConfigHasBeenSet)
-  {
-   payload.WithObject("toolConfig", m_toolConfig.Jsonize());
-
+  if (m_toolConfigHasBeenSet) {
+    payload.WithObject("toolConfig", m_toolConfig.Jsonize());
   }
 
-  if(m_guardrailConfigHasBeenSet)
-  {
-   payload.WithObject("guardrailConfig", m_guardrailConfig.Jsonize());
-
+  if (m_guardrailConfigHasBeenSet) {
+    payload.WithObject("guardrailConfig", m_guardrailConfig.Jsonize());
   }
 
-  if(m_additionalModelRequestFieldsHasBeenSet)
-  {
-    if(!m_additionalModelRequestFields.View().IsNull())
-    {
-       payload.WithObject("additionalModelRequestFields", JsonValue(m_additionalModelRequestFields.View()));
+  if (m_additionalModelRequestFieldsHasBeenSet) {
+    if (!m_additionalModelRequestFields.View().IsNull()) {
+      payload.WithObject("additionalModelRequestFields", JsonValue(m_additionalModelRequestFields.View()));
     }
   }
 
-  if(m_additionalModelResponseFieldPathsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> additionalModelResponseFieldPathsJsonList(m_additionalModelResponseFieldPaths.size());
-   for(unsigned additionalModelResponseFieldPathsIndex = 0; additionalModelResponseFieldPathsIndex < additionalModelResponseFieldPathsJsonList.GetLength(); ++additionalModelResponseFieldPathsIndex)
-   {
-     additionalModelResponseFieldPathsJsonList[additionalModelResponseFieldPathsIndex].AsString(m_additionalModelResponseFieldPaths[additionalModelResponseFieldPathsIndex]);
-   }
-   payload.WithArray("additionalModelResponseFieldPaths", std::move(additionalModelResponseFieldPathsJsonList));
+  if (m_promptVariablesHasBeenSet) {
+    JsonValue promptVariablesJsonMap;
+    for (auto& promptVariablesItem : m_promptVariables) {
+      promptVariablesJsonMap.WithObject(promptVariablesItem.first, promptVariablesItem.second.Jsonize());
+    }
+    payload.WithObject("promptVariables", std::move(promptVariablesJsonMap));
+  }
 
+  if (m_additionalModelResponseFieldPathsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> additionalModelResponseFieldPathsJsonList(m_additionalModelResponseFieldPaths.size());
+    for (unsigned additionalModelResponseFieldPathsIndex = 0;
+         additionalModelResponseFieldPathsIndex < additionalModelResponseFieldPathsJsonList.GetLength();
+         ++additionalModelResponseFieldPathsIndex) {
+      additionalModelResponseFieldPathsJsonList[additionalModelResponseFieldPathsIndex].AsString(
+          m_additionalModelResponseFieldPaths[additionalModelResponseFieldPathsIndex]);
+    }
+    payload.WithArray("additionalModelResponseFieldPaths", std::move(additionalModelResponseFieldPathsJsonList));
+  }
+
+  if (m_requestMetadataHasBeenSet) {
+    JsonValue requestMetadataJsonMap;
+    for (auto& requestMetadataItem : m_requestMetadata) {
+      requestMetadataJsonMap.WithString(requestMetadataItem.first, requestMetadataItem.second);
+    }
+    payload.WithObject("requestMetadata", std::move(requestMetadataJsonMap));
+  }
+
+  if (m_performanceConfigHasBeenSet) {
+    payload.WithObject("performanceConfig", m_performanceConfig.Jsonize());
+  }
+
+  if (m_serviceTierHasBeenSet) {
+    payload.WithObject("serviceTier", m_serviceTier.Jsonize());
+  }
+
+  if (m_outputConfigHasBeenSet) {
+    payload.WithObject("outputConfig", m_outputConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

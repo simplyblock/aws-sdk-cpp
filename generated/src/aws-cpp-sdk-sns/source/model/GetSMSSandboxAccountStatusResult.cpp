@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sns/model/GetSMSSandboxAccountStatusResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/sns/model/GetSMSSandboxAccountStatusResult.h>
 
 #include <utility>
 
@@ -17,40 +17,33 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetSMSSandboxAccountStatusResult::GetSMSSandboxAccountStatusResult() : 
-    m_isInSandbox(false)
-{
-}
-
-GetSMSSandboxAccountStatusResult::GetSMSSandboxAccountStatusResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-  : GetSMSSandboxAccountStatusResult()
-{
+GetSMSSandboxAccountStatusResult::GetSMSSandboxAccountStatusResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-GetSMSSandboxAccountStatusResult& GetSMSSandboxAccountStatusResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+GetSMSSandboxAccountStatusResult& GetSMSSandboxAccountStatusResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "GetSMSSandboxAccountStatusResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "GetSMSSandboxAccountStatusResult")) {
     resultNode = rootNode.FirstChild("GetSMSSandboxAccountStatusResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode isInSandboxNode = resultNode.FirstChild("IsInSandbox");
-    if(!isInSandboxNode.IsNull())
-    {
-      m_isInSandbox = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(isInSandboxNode.GetText()).c_str()).c_str());
+    if (!isInSandboxNode.IsNull()) {
+      m_isInSandbox =
+          StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(isInSandboxNode.GetText()).c_str()).c_str());
+      m_isInSandboxHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::SNS::Model::GetSMSSandboxAccountStatusResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::SNS::Model::GetSMSSandboxAccountStatusResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

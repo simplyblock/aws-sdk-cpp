@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cloud9 "C++ SDK for the AWS cloud9 service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cloud9 "C++ SDK for AWS Cloud9" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLOUD9_HEADERS
     "include/aws/cloud9/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLOUD9_HEADERS
 
 file(GLOB AWS_CLOUD9_MODEL_HEADERS
     "include/aws/cloud9/model/*.h"
+)
+
+file(GLOB AWS_CLOUD9_INTERNAL_HEADERS
+    "include/aws/cloud9/internal/*.h"
 )
 
 file(GLOB AWS_CLOUD9_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLOUD9_MODEL_SOURCE
 
 file(GLOB CLOUD9_UNIFIED_HEADERS
     ${AWS_CLOUD9_HEADERS}
+    ${AWS_CLOUD9_INTERNAL_HEADERS}
     ${AWS_CLOUD9_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cloud9" FILES ${AWS_CLOUD9_HEADERS})
+        source_group("Header Files\\aws\\cloud9\\internal" FILES ${AWS_CLOUD9_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cloud9\\model" FILES ${AWS_CLOUD9_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLOUD9_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLOUD9_MODEL_SOURCE})

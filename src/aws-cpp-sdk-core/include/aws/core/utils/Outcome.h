@@ -6,6 +6,7 @@
 #pragma once
 
 #include <aws/core/Core_EXPORTS.h>
+#include <aws/core/utils/logging/LogMacros.h>
 
 #include <cassert>
 #include <utility>
@@ -14,6 +15,7 @@ namespace Aws
 {
     namespace Utils
     {
+        static const char OUTCOME_LOG_TAG[] = "Outcome";
 
         /**
          * Template class representing the outcome of making a request.  It will contain
@@ -25,6 +27,8 @@ namespace Aws
         class Outcome
         {
         public:
+            typedef R RESULT_TYPE;
+            typedef E ERROR_TYPE;
 
             Outcome() : result(), error(), success(false)
             {
@@ -130,11 +134,17 @@ namespace Aws
 
             inline const R& GetResult() const
             {
+                if (!success) {
+                    AWS_LOGSTREAM_FATAL(OUTCOME_LOG_TAG, "GetResult called on a failed outcome! Result is not initialized!");
+                }
                 return result;
             }
 
             inline R& GetResult()
             {
+                if (!success) {
+                    AWS_LOGSTREAM_FATAL(OUTCOME_LOG_TAG, "GetResult called on a failed outcome! Result is not initialized!");
+                }
                 return result;
             }
 
@@ -144,17 +154,26 @@ namespace Aws
              */
             inline R&& GetResultWithOwnership()
             {
+                if (!success) {
+                    AWS_LOGSTREAM_FATAL(OUTCOME_LOG_TAG, "GetResult called on a failed outcome! Result is not initialized!");
+                }
                 return std::move(result);
             }
 
             inline const E& GetError() const
             {
+                if (success) {
+                    AWS_LOGSTREAM_FATAL(OUTCOME_LOG_TAG, "GetError called on a success outcome! Error is not initialized!");
+                }
                 return error;
             }
 
             template<typename T>
             inline T GetError()
             {
+                if (success) {
+                    AWS_LOGSTREAM_FATAL(OUTCOME_LOG_TAG, "GetError called on a success outcome! Error is not initialized!");
+                }
                 return error.template GetModeledError<T>();
             }
 

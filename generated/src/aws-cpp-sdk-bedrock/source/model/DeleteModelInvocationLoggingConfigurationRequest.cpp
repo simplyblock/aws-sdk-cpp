@@ -12,15 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteModelInvocationLoggingConfigurationRequest::DeleteModelInvocationLoggingConfigurationRequest()
-{
-}
-
-Aws::String DeleteModelInvocationLoggingConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteModelInvocationLoggingConfigurationRequest::SerializePayload() const { return {}; }

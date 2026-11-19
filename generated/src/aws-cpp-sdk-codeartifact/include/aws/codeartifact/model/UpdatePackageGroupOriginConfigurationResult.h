@@ -5,85 +5,110 @@
 
 #pragma once
 #include <aws/codeartifact/CodeArtifact_EXPORTS.h>
+#include <aws/codeartifact/model/PackageGroupAllowedRepositoryUpdateType.h>
 #include <aws/codeartifact/model/PackageGroupDescription.h>
+#include <aws/codeartifact/model/PackageGroupOriginRestrictionType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/codeartifact/model/PackageGroupOriginRestrictionType.h>
-#include <aws/codeartifact/model/PackageGroupAllowedRepositoryUpdateType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeArtifact
-{
-namespace Model
-{
-  class UpdatePackageGroupOriginConfigurationResult
-  {
-  public:
-    AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult();
-    AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeArtifact {
+namespace Model {
+class UpdatePackageGroupOriginConfigurationResult {
+ public:
+  AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult() = default;
+  AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEARTIFACT_API UpdatePackageGroupOriginConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The package group and information about it after processing the request.
+   * </p>
+   */
+  inline const PackageGroupDescription& GetPackageGroup() const { return m_packageGroup; }
+  template <typename PackageGroupT = PackageGroupDescription>
+  void SetPackageGroup(PackageGroupT&& value) {
+    m_packageGroupHasBeenSet = true;
+    m_packageGroup = std::forward<PackageGroupT>(value);
+  }
+  template <typename PackageGroupT = PackageGroupDescription>
+  UpdatePackageGroupOriginConfigurationResult& WithPackageGroup(PackageGroupT&& value) {
+    SetPackageGroup(std::forward<PackageGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The package group and information about it after processing the request.
-     * </p>
-     */
-    inline const PackageGroupDescription& GetPackageGroup() const{ return m_packageGroup; }
-    inline void SetPackageGroup(const PackageGroupDescription& value) { m_packageGroup = value; }
-    inline void SetPackageGroup(PackageGroupDescription&& value) { m_packageGroup = std::move(value); }
-    inline UpdatePackageGroupOriginConfigurationResult& WithPackageGroup(const PackageGroupDescription& value) { SetPackageGroup(value); return *this;}
-    inline UpdatePackageGroupOriginConfigurationResult& WithPackageGroup(PackageGroupDescription&& value) { SetPackageGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the updated allowed repositories after processing the
+   * request.</p>
+   */
+  inline const Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>&
+  GetAllowedRepositoryUpdates() const {
+    return m_allowedRepositoryUpdates;
+  }
+  template <typename AllowedRepositoryUpdatesT =
+                Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>>
+  void SetAllowedRepositoryUpdates(AllowedRepositoryUpdatesT&& value) {
+    m_allowedRepositoryUpdatesHasBeenSet = true;
+    m_allowedRepositoryUpdates = std::forward<AllowedRepositoryUpdatesT>(value);
+  }
+  template <typename AllowedRepositoryUpdatesT =
+                Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>>
+  UpdatePackageGroupOriginConfigurationResult& WithAllowedRepositoryUpdates(AllowedRepositoryUpdatesT&& value) {
+    SetAllowedRepositoryUpdates(std::forward<AllowedRepositoryUpdatesT>(value));
+    return *this;
+  }
+  inline UpdatePackageGroupOriginConfigurationResult& AddAllowedRepositoryUpdates(
+      PackageGroupOriginRestrictionType key, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>> value) {
+    m_allowedRepositoryUpdatesHasBeenSet = true;
+    m_allowedRepositoryUpdates.emplace(key, value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the updated allowed repositories after processing the
-     * request.</p>
-     */
-    inline const Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>& GetAllowedRepositoryUpdates() const{ return m_allowedRepositoryUpdates; }
-    inline void SetAllowedRepositoryUpdates(const Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>& value) { m_allowedRepositoryUpdates = value; }
-    inline void SetAllowedRepositoryUpdates(Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>&& value) { m_allowedRepositoryUpdates = std::move(value); }
-    inline UpdatePackageGroupOriginConfigurationResult& WithAllowedRepositoryUpdates(const Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>& value) { SetAllowedRepositoryUpdates(value); return *this;}
-    inline UpdatePackageGroupOriginConfigurationResult& WithAllowedRepositoryUpdates(Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>&& value) { SetAllowedRepositoryUpdates(std::move(value)); return *this;}
-    inline UpdatePackageGroupOriginConfigurationResult& AddAllowedRepositoryUpdates(const PackageGroupOriginRestrictionType& key, const Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>& value) { m_allowedRepositoryUpdates.emplace(key, value); return *this; }
-    inline UpdatePackageGroupOriginConfigurationResult& AddAllowedRepositoryUpdates(PackageGroupOriginRestrictionType&& key, const Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>& value) { m_allowedRepositoryUpdates.emplace(std::move(key), value); return *this; }
-    inline UpdatePackageGroupOriginConfigurationResult& AddAllowedRepositoryUpdates(const PackageGroupOriginRestrictionType& key, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>&& value) { m_allowedRepositoryUpdates.emplace(key, std::move(value)); return *this; }
-    inline UpdatePackageGroupOriginConfigurationResult& AddAllowedRepositoryUpdates(PackageGroupOriginRestrictionType&& key, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>&& value) { m_allowedRepositoryUpdates.emplace(std::move(key), std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdatePackageGroupOriginConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdatePackageGroupOriginConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdatePackageGroupOriginConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdatePackageGroupOriginConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PackageGroupDescription m_packageGroup;
+ private:
+  PackageGroupDescription m_packageGroup;
 
-    Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>> m_allowedRepositoryUpdates;
+  Aws::Map<PackageGroupOriginRestrictionType, Aws::Map<PackageGroupAllowedRepositoryUpdateType, Aws::Vector<Aws::String>>>
+      m_allowedRepositoryUpdates;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_packageGroupHasBeenSet = false;
+  bool m_allowedRepositoryUpdatesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeArtifact
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeArtifact
+}  // namespace Aws

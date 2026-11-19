@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetPromptFileRequest::GetPromptFileRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_promptIdHasBeenSet(false)
-{
-}
-
-Aws::String GetPromptFileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetPromptFileRequest::SerializePayload() const { return {}; }

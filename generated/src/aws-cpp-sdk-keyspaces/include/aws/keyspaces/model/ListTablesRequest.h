@@ -4,89 +4,98 @@
  */
 
 #pragma once
-#include <aws/keyspaces/Keyspaces_EXPORTS.h>
-#include <aws/keyspaces/KeyspacesRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/keyspaces/KeyspacesRequest.h>
+#include <aws/keyspaces/Keyspaces_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Keyspaces
-{
-namespace Model
-{
+namespace Aws {
+namespace Keyspaces {
+namespace Model {
 
+/**
+ */
+class ListTablesRequest : public KeyspacesRequest {
+ public:
+  AWS_KEYSPACES_API ListTablesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListTables"; }
+
+  AWS_KEYSPACES_API Aws::String SerializePayload() const override;
+
+  AWS_KEYSPACES_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The pagination token. To resume pagination, provide the
+   * <code>NextToken</code> value as an argument of a subsequent API invocation.</p>
    */
-  class ListTablesRequest : public KeyspacesRequest
-  {
-  public:
-    AWS_KEYSPACES_API ListTablesRequest();
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTablesRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListTables"; }
+  ///@{
+  /**
+   * <p>The total number of tables to return in the output. If the total number of
+   * tables available is more than the value specified, a <code>NextToken</code> is
+   * provided in the output. To resume pagination, provide the <code>NextToken</code>
+   * value as an argument of a subsequent API invocation.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListTablesRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_KEYSPACES_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the keyspace.</p>
+   */
+  inline const Aws::String& GetKeyspaceName() const { return m_keyspaceName; }
+  inline bool KeyspaceNameHasBeenSet() const { return m_keyspaceNameHasBeenSet; }
+  template <typename KeyspaceNameT = Aws::String>
+  void SetKeyspaceName(KeyspaceNameT&& value) {
+    m_keyspaceNameHasBeenSet = true;
+    m_keyspaceName = std::forward<KeyspaceNameT>(value);
+  }
+  template <typename KeyspaceNameT = Aws::String>
+  ListTablesRequest& WithKeyspaceName(KeyspaceNameT&& value) {
+    SetKeyspaceName(std::forward<KeyspaceNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_nextToken;
 
-    AWS_KEYSPACES_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  int m_maxResults{0};
 
+  Aws::String m_keyspaceName;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_keyspaceNameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The pagination token. To resume pagination, provide the
-     * <code>NextToken</code> value as an argument of a subsequent API invocation.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListTablesRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTablesRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTablesRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The total number of tables to return in the output. If the total number of
-     * tables available is more than the value specified, a <code>NextToken</code> is
-     * provided in the output. To resume pagination, provide the <code>NextToken</code>
-     * value as an argument of a subsequent API invocation.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListTablesRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name of the keyspace.</p>
-     */
-    inline const Aws::String& GetKeyspaceName() const{ return m_keyspaceName; }
-    inline bool KeyspaceNameHasBeenSet() const { return m_keyspaceNameHasBeenSet; }
-    inline void SetKeyspaceName(const Aws::String& value) { m_keyspaceNameHasBeenSet = true; m_keyspaceName = value; }
-    inline void SetKeyspaceName(Aws::String&& value) { m_keyspaceNameHasBeenSet = true; m_keyspaceName = std::move(value); }
-    inline void SetKeyspaceName(const char* value) { m_keyspaceNameHasBeenSet = true; m_keyspaceName.assign(value); }
-    inline ListTablesRequest& WithKeyspaceName(const Aws::String& value) { SetKeyspaceName(value); return *this;}
-    inline ListTablesRequest& WithKeyspaceName(Aws::String&& value) { SetKeyspaceName(std::move(value)); return *this;}
-    inline ListTablesRequest& WithKeyspaceName(const char* value) { SetKeyspaceName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_keyspaceName;
-    bool m_keyspaceNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Keyspaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace Keyspaces
+}  // namespace Aws

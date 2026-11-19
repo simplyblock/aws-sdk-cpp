@@ -4,94 +4,111 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/ElastiCacheRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCacheRequest.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace ElastiCache {
+namespace Model {
 
+/**
+ */
+class BatchStopUpdateActionRequest : public ElastiCacheRequest {
+ public:
+  AWS_ELASTICACHE_API BatchStopUpdateActionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "BatchStopUpdateAction"; }
+
+  AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The replication group IDs</p>
    */
-  class BatchStopUpdateActionRequest : public ElastiCacheRequest
-  {
-  public:
-    AWS_ELASTICACHE_API BatchStopUpdateActionRequest();
+  inline const Aws::Vector<Aws::String>& GetReplicationGroupIds() const { return m_replicationGroupIds; }
+  inline bool ReplicationGroupIdsHasBeenSet() const { return m_replicationGroupIdsHasBeenSet; }
+  template <typename ReplicationGroupIdsT = Aws::Vector<Aws::String>>
+  void SetReplicationGroupIds(ReplicationGroupIdsT&& value) {
+    m_replicationGroupIdsHasBeenSet = true;
+    m_replicationGroupIds = std::forward<ReplicationGroupIdsT>(value);
+  }
+  template <typename ReplicationGroupIdsT = Aws::Vector<Aws::String>>
+  BatchStopUpdateActionRequest& WithReplicationGroupIds(ReplicationGroupIdsT&& value) {
+    SetReplicationGroupIds(std::forward<ReplicationGroupIdsT>(value));
+    return *this;
+  }
+  template <typename ReplicationGroupIdsT = Aws::String>
+  BatchStopUpdateActionRequest& AddReplicationGroupIds(ReplicationGroupIdsT&& value) {
+    m_replicationGroupIdsHasBeenSet = true;
+    m_replicationGroupIds.emplace_back(std::forward<ReplicationGroupIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "BatchStopUpdateAction"; }
+  ///@{
+  /**
+   * <p>The cache cluster IDs</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetCacheClusterIds() const { return m_cacheClusterIds; }
+  inline bool CacheClusterIdsHasBeenSet() const { return m_cacheClusterIdsHasBeenSet; }
+  template <typename CacheClusterIdsT = Aws::Vector<Aws::String>>
+  void SetCacheClusterIds(CacheClusterIdsT&& value) {
+    m_cacheClusterIdsHasBeenSet = true;
+    m_cacheClusterIds = std::forward<CacheClusterIdsT>(value);
+  }
+  template <typename CacheClusterIdsT = Aws::Vector<Aws::String>>
+  BatchStopUpdateActionRequest& WithCacheClusterIds(CacheClusterIdsT&& value) {
+    SetCacheClusterIds(std::forward<CacheClusterIdsT>(value));
+    return *this;
+  }
+  template <typename CacheClusterIdsT = Aws::String>
+  BatchStopUpdateActionRequest& AddCacheClusterIds(CacheClusterIdsT&& value) {
+    m_cacheClusterIdsHasBeenSet = true;
+    m_cacheClusterIds.emplace_back(std::forward<CacheClusterIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The unique ID of the service update</p>
+   */
+  inline const Aws::String& GetServiceUpdateName() const { return m_serviceUpdateName; }
+  inline bool ServiceUpdateNameHasBeenSet() const { return m_serviceUpdateNameHasBeenSet; }
+  template <typename ServiceUpdateNameT = Aws::String>
+  void SetServiceUpdateName(ServiceUpdateNameT&& value) {
+    m_serviceUpdateNameHasBeenSet = true;
+    m_serviceUpdateName = std::forward<ServiceUpdateNameT>(value);
+  }
+  template <typename ServiceUpdateNameT = Aws::String>
+  BatchStopUpdateActionRequest& WithServiceUpdateName(ServiceUpdateNameT&& value) {
+    SetServiceUpdateName(std::forward<ServiceUpdateNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_replicationGroupIds;
 
-  protected:
-    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  Aws::Vector<Aws::String> m_cacheClusterIds;
 
-  public:
+  Aws::String m_serviceUpdateName;
+  bool m_replicationGroupIdsHasBeenSet = false;
+  bool m_cacheClusterIdsHasBeenSet = false;
+  bool m_serviceUpdateNameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The replication group IDs</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetReplicationGroupIds() const{ return m_replicationGroupIds; }
-    inline bool ReplicationGroupIdsHasBeenSet() const { return m_replicationGroupIdsHasBeenSet; }
-    inline void SetReplicationGroupIds(const Aws::Vector<Aws::String>& value) { m_replicationGroupIdsHasBeenSet = true; m_replicationGroupIds = value; }
-    inline void SetReplicationGroupIds(Aws::Vector<Aws::String>&& value) { m_replicationGroupIdsHasBeenSet = true; m_replicationGroupIds = std::move(value); }
-    inline BatchStopUpdateActionRequest& WithReplicationGroupIds(const Aws::Vector<Aws::String>& value) { SetReplicationGroupIds(value); return *this;}
-    inline BatchStopUpdateActionRequest& WithReplicationGroupIds(Aws::Vector<Aws::String>&& value) { SetReplicationGroupIds(std::move(value)); return *this;}
-    inline BatchStopUpdateActionRequest& AddReplicationGroupIds(const Aws::String& value) { m_replicationGroupIdsHasBeenSet = true; m_replicationGroupIds.push_back(value); return *this; }
-    inline BatchStopUpdateActionRequest& AddReplicationGroupIds(Aws::String&& value) { m_replicationGroupIdsHasBeenSet = true; m_replicationGroupIds.push_back(std::move(value)); return *this; }
-    inline BatchStopUpdateActionRequest& AddReplicationGroupIds(const char* value) { m_replicationGroupIdsHasBeenSet = true; m_replicationGroupIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The cache cluster IDs</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetCacheClusterIds() const{ return m_cacheClusterIds; }
-    inline bool CacheClusterIdsHasBeenSet() const { return m_cacheClusterIdsHasBeenSet; }
-    inline void SetCacheClusterIds(const Aws::Vector<Aws::String>& value) { m_cacheClusterIdsHasBeenSet = true; m_cacheClusterIds = value; }
-    inline void SetCacheClusterIds(Aws::Vector<Aws::String>&& value) { m_cacheClusterIdsHasBeenSet = true; m_cacheClusterIds = std::move(value); }
-    inline BatchStopUpdateActionRequest& WithCacheClusterIds(const Aws::Vector<Aws::String>& value) { SetCacheClusterIds(value); return *this;}
-    inline BatchStopUpdateActionRequest& WithCacheClusterIds(Aws::Vector<Aws::String>&& value) { SetCacheClusterIds(std::move(value)); return *this;}
-    inline BatchStopUpdateActionRequest& AddCacheClusterIds(const Aws::String& value) { m_cacheClusterIdsHasBeenSet = true; m_cacheClusterIds.push_back(value); return *this; }
-    inline BatchStopUpdateActionRequest& AddCacheClusterIds(Aws::String&& value) { m_cacheClusterIdsHasBeenSet = true; m_cacheClusterIds.push_back(std::move(value)); return *this; }
-    inline BatchStopUpdateActionRequest& AddCacheClusterIds(const char* value) { m_cacheClusterIdsHasBeenSet = true; m_cacheClusterIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The unique ID of the service update</p>
-     */
-    inline const Aws::String& GetServiceUpdateName() const{ return m_serviceUpdateName; }
-    inline bool ServiceUpdateNameHasBeenSet() const { return m_serviceUpdateNameHasBeenSet; }
-    inline void SetServiceUpdateName(const Aws::String& value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName = value; }
-    inline void SetServiceUpdateName(Aws::String&& value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName = std::move(value); }
-    inline void SetServiceUpdateName(const char* value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName.assign(value); }
-    inline BatchStopUpdateActionRequest& WithServiceUpdateName(const Aws::String& value) { SetServiceUpdateName(value); return *this;}
-    inline BatchStopUpdateActionRequest& WithServiceUpdateName(Aws::String&& value) { SetServiceUpdateName(std::move(value)); return *this;}
-    inline BatchStopUpdateActionRequest& WithServiceUpdateName(const char* value) { SetServiceUpdateName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_replicationGroupIds;
-    bool m_replicationGroupIdsHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_cacheClusterIds;
-    bool m_cacheClusterIdsHasBeenSet = false;
-
-    Aws::String m_serviceUpdateName;
-    bool m_serviceUpdateNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

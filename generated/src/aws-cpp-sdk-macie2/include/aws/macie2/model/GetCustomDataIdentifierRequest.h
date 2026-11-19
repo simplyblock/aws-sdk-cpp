@@ -4,54 +4,53 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/macie2/Macie2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/macie2/Macie2Request.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Macie2
-{
-namespace Model
-{
+namespace Aws {
+namespace Macie2 {
+namespace Model {
 
+/**
+ */
+class GetCustomDataIdentifierRequest : public Macie2Request {
+ public:
+  AWS_MACIE2_API GetCustomDataIdentifierRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetCustomDataIdentifier"; }
+
+  AWS_MACIE2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier for the Amazon Macie resource that the request applies
+   * to.</p>
    */
-  class GetCustomDataIdentifierRequest : public Macie2Request
-  {
-  public:
-    AWS_MACIE2_API GetCustomDataIdentifierRequest();
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetCustomDataIdentifierRequest& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
+  bool m_idHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetCustomDataIdentifier"; }
-
-    AWS_MACIE2_API Aws::String SerializePayload() const override;
-
-
-    ///@{
-    /**
-     * <p>The unique identifier for the Amazon Macie resource that the request applies
-     * to.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline GetCustomDataIdentifierRequest& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetCustomDataIdentifierRequest& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetCustomDataIdentifierRequest& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

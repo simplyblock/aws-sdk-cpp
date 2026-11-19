@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCollaborationIdNamespaceAssociationRequest::GetCollaborationIdNamespaceAssociationRequest() : 
-    m_collaborationIdentifierHasBeenSet(false),
-    m_idNamespaceAssociationIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetCollaborationIdNamespaceAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCollaborationIdNamespaceAssociationRequest::SerializePayload() const { return {}; }

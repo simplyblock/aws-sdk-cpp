@@ -3,47 +3,30 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeNetworkInterfaceAttributeRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DescribeNetworkInterfaceAttributeRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DescribeNetworkInterfaceAttributeRequest::DescribeNetworkInterfaceAttributeRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_networkInterfaceIdHasBeenSet(false),
-    m_attribute(NetworkInterfaceAttribute::NOT_SET),
-    m_attributeHasBeenSet(false)
-{
-}
-
-Aws::String DescribeNetworkInterfaceAttributeRequest::SerializePayload() const
-{
+Aws::String DescribeNetworkInterfaceAttributeRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeNetworkInterfaceAttribute&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_networkInterfaceIdHasBeenSet)
-  {
+  if (m_networkInterfaceIdHasBeenSet) {
     ss << "NetworkInterfaceId=" << StringUtils::URLEncode(m_networkInterfaceId.c_str()) << "&";
   }
 
-  if(m_attributeHasBeenSet)
-  {
-    ss << "Attribute=" << NetworkInterfaceAttributeMapper::GetNameForNetworkInterfaceAttribute(m_attribute) << "&";
+  if (m_attributeHasBeenSet) {
+    ss << "Attribute=" << StringUtils::URLEncode(NetworkInterfaceAttributeMapper::GetNameForNetworkInterfaceAttribute(m_attribute)) << "&";
   }
 
   ss << "Version=2016-11-15";
   return ss.str();
 }
 
-
-void  DescribeNetworkInterfaceAttributeRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeNetworkInterfaceAttributeRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

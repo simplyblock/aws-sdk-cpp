@@ -4,102 +4,108 @@
  */
 
 #pragma once
-#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GreengrassV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GreengrassV2 {
+namespace Model {
 
+/**
+ * <p>Contains information about a component that is a candidate to deploy to a
+ * Greengrass core device.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ComponentCandidate">AWS
+ * API Reference</a></p>
+ */
+class ComponentCandidate {
+ public:
+  AWS_GREENGRASSV2_API ComponentCandidate() = default;
+  AWS_GREENGRASSV2_API ComponentCandidate(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GREENGRASSV2_API ComponentCandidate& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GREENGRASSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains information about a component that is a candidate to deploy to a
-   * Greengrass core device.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ComponentCandidate">AWS
-   * API Reference</a></p>
+   * <p>The name of the component.</p>
    */
-  class ComponentCandidate
-  {
-  public:
-    AWS_GREENGRASSV2_API ComponentCandidate();
-    AWS_GREENGRASSV2_API ComponentCandidate(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GREENGRASSV2_API ComponentCandidate& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GREENGRASSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetComponentName() const { return m_componentName; }
+  inline bool ComponentNameHasBeenSet() const { return m_componentNameHasBeenSet; }
+  template <typename ComponentNameT = Aws::String>
+  void SetComponentName(ComponentNameT&& value) {
+    m_componentNameHasBeenSet = true;
+    m_componentName = std::forward<ComponentNameT>(value);
+  }
+  template <typename ComponentNameT = Aws::String>
+  ComponentCandidate& WithComponentName(ComponentNameT&& value) {
+    SetComponentName(std::forward<ComponentNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The version of the component.</p>
+   */
+  inline const Aws::String& GetComponentVersion() const { return m_componentVersion; }
+  inline bool ComponentVersionHasBeenSet() const { return m_componentVersionHasBeenSet; }
+  template <typename ComponentVersionT = Aws::String>
+  void SetComponentVersion(ComponentVersionT&& value) {
+    m_componentVersionHasBeenSet = true;
+    m_componentVersion = std::forward<ComponentVersionT>(value);
+  }
+  template <typename ComponentVersionT = Aws::String>
+  ComponentCandidate& WithComponentVersion(ComponentVersionT&& value) {
+    SetComponentVersion(std::forward<ComponentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the component.</p>
-     */
-    inline const Aws::String& GetComponentName() const{ return m_componentName; }
-    inline bool ComponentNameHasBeenSet() const { return m_componentNameHasBeenSet; }
-    inline void SetComponentName(const Aws::String& value) { m_componentNameHasBeenSet = true; m_componentName = value; }
-    inline void SetComponentName(Aws::String&& value) { m_componentNameHasBeenSet = true; m_componentName = std::move(value); }
-    inline void SetComponentName(const char* value) { m_componentNameHasBeenSet = true; m_componentName.assign(value); }
-    inline ComponentCandidate& WithComponentName(const Aws::String& value) { SetComponentName(value); return *this;}
-    inline ComponentCandidate& WithComponentName(Aws::String&& value) { SetComponentName(std::move(value)); return *this;}
-    inline ComponentCandidate& WithComponentName(const char* value) { SetComponentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version requirements for the component's dependencies. Greengrass core
+   * devices get the version requirements from component recipes.</p> <p>IoT
+   * Greengrass V2 uses semantic version constraints. For more information, see <a
+   * href="https://semver.org/">Semantic Versioning</a>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetVersionRequirements() const { return m_versionRequirements; }
+  inline bool VersionRequirementsHasBeenSet() const { return m_versionRequirementsHasBeenSet; }
+  template <typename VersionRequirementsT = Aws::Map<Aws::String, Aws::String>>
+  void SetVersionRequirements(VersionRequirementsT&& value) {
+    m_versionRequirementsHasBeenSet = true;
+    m_versionRequirements = std::forward<VersionRequirementsT>(value);
+  }
+  template <typename VersionRequirementsT = Aws::Map<Aws::String, Aws::String>>
+  ComponentCandidate& WithVersionRequirements(VersionRequirementsT&& value) {
+    SetVersionRequirements(std::forward<VersionRequirementsT>(value));
+    return *this;
+  }
+  template <typename VersionRequirementsKeyT = Aws::String, typename VersionRequirementsValueT = Aws::String>
+  ComponentCandidate& AddVersionRequirements(VersionRequirementsKeyT&& key, VersionRequirementsValueT&& value) {
+    m_versionRequirementsHasBeenSet = true;
+    m_versionRequirements.emplace(std::forward<VersionRequirementsKeyT>(key), std::forward<VersionRequirementsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_componentName;
 
-    ///@{
-    /**
-     * <p>The version of the component.</p>
-     */
-    inline const Aws::String& GetComponentVersion() const{ return m_componentVersion; }
-    inline bool ComponentVersionHasBeenSet() const { return m_componentVersionHasBeenSet; }
-    inline void SetComponentVersion(const Aws::String& value) { m_componentVersionHasBeenSet = true; m_componentVersion = value; }
-    inline void SetComponentVersion(Aws::String&& value) { m_componentVersionHasBeenSet = true; m_componentVersion = std::move(value); }
-    inline void SetComponentVersion(const char* value) { m_componentVersionHasBeenSet = true; m_componentVersion.assign(value); }
-    inline ComponentCandidate& WithComponentVersion(const Aws::String& value) { SetComponentVersion(value); return *this;}
-    inline ComponentCandidate& WithComponentVersion(Aws::String&& value) { SetComponentVersion(std::move(value)); return *this;}
-    inline ComponentCandidate& WithComponentVersion(const char* value) { SetComponentVersion(value); return *this;}
-    ///@}
+  Aws::String m_componentVersion;
 
-    ///@{
-    /**
-     * <p>The version requirements for the component's dependencies. Greengrass core
-     * devices get the version requirements from component recipes.</p> <p>IoT
-     * Greengrass V2 uses semantic version constraints. For more information, see <a
-     * href="https://semver.org/">Semantic Versioning</a>.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetVersionRequirements() const{ return m_versionRequirements; }
-    inline bool VersionRequirementsHasBeenSet() const { return m_versionRequirementsHasBeenSet; }
-    inline void SetVersionRequirements(const Aws::Map<Aws::String, Aws::String>& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements = value; }
-    inline void SetVersionRequirements(Aws::Map<Aws::String, Aws::String>&& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements = std::move(value); }
-    inline ComponentCandidate& WithVersionRequirements(const Aws::Map<Aws::String, Aws::String>& value) { SetVersionRequirements(value); return *this;}
-    inline ComponentCandidate& WithVersionRequirements(Aws::Map<Aws::String, Aws::String>&& value) { SetVersionRequirements(std::move(value)); return *this;}
-    inline ComponentCandidate& AddVersionRequirements(const Aws::String& key, const Aws::String& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(key, value); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(Aws::String&& key, const Aws::String& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(std::move(key), value); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(const Aws::String& key, Aws::String&& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(key, std::move(value)); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(Aws::String&& key, Aws::String&& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(std::move(key), std::move(value)); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(const char* key, Aws::String&& value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(key, std::move(value)); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(Aws::String&& key, const char* value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(std::move(key), value); return *this; }
-    inline ComponentCandidate& AddVersionRequirements(const char* key, const char* value) { m_versionRequirementsHasBeenSet = true; m_versionRequirements.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_versionRequirements;
+  bool m_componentNameHasBeenSet = false;
+  bool m_componentVersionHasBeenSet = false;
+  bool m_versionRequirementsHasBeenSet = false;
+};
 
-    Aws::String m_componentName;
-    bool m_componentNameHasBeenSet = false;
-
-    Aws::String m_componentVersion;
-    bool m_componentVersionHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_versionRequirements;
-    bool m_versionRequirementsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GreengrassV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace GreengrassV2
+}  // namespace Aws

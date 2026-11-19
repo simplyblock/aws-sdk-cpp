@@ -76,8 +76,196 @@
                     "name": "rbin"
                 },
                 "aws.protocols#restJson1": {},
-                "smithy.api#documentation": "<p>This is the <i>Recycle Bin API Reference</i>. This documentation provides \n      descriptions and syntax for each of the actions and data types in Recycle Bin.</p>\n         <p>Recycle Bin is a resource recovery feature that enables you to restore accidentally \n      deleted snapshots and EBS-backed AMIs. When using Recycle Bin, if your resources are \n      deleted, they are retained in the Recycle Bin for a time period that you specify.</p>\n         <p>You can restore a resource from the Recycle Bin at any time before its retention period \n      expires. After you restore a resource from the Recycle Bin, the resource is removed from the \n      Recycle Bin, and you can then use it in the same way you use any other resource of that type \n      in your account. If the retention period expires and the resource is not restored, the resource \n      is permanently deleted from the Recycle Bin and is no longer available for recovery. For more \n      information about Recycle Bin, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html\">\n        Recycle Bin</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+                "smithy.api#documentation": "<p>This is the <i>Recycle Bin API Reference</i>. This documentation provides \n      descriptions and syntax for each of the actions and data types in Recycle Bin.</p>\n         <p>Recycle Bin is a resource recovery feature that enables you to restore accidentally deleted \n      EBS volumes, EBS snapshots, and EBS-backed AMIs. When using Recycle Bin, if your resources are \n      deleted, they are retained in the Recycle Bin for a time period that you specify.</p>\n         <p>You can restore a resource from the Recycle Bin at any time before its retention period \n      expires. After you restore a resource from the Recycle Bin, the resource is removed from the \n      Recycle Bin, and you can then use it in the same way you use any other resource of that type \n      in your account. If the retention period expires and the resource is not restored, the resource \n      is permanently deleted from the Recycle Bin and is no longer available for recovery. For more \n      information about Recycle Bin, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html\">\n        Recycle Bin</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
                 "smithy.api#title": "Amazon Recycle Bin",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rbin-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rbin-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rbin.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://rbin.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -85,27 +273,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -811,17 +999,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -832,17 +1009,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -859,17 +1025,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -880,17 +1035,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1018,7 +1162,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a Recycle Bin retention rule. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin-working-with-rules.html#recycle-bin-create-rule\">\n      Create Recycle Bin retention rules</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+                "smithy.api#documentation": "<p>Creates a Recycle Bin retention rule. You can create two types of retention rules:</p>\n         <ul>\n            <li>\n               <p>\n                  <b>Tag-level retention rules</b> - These retention rules use \n          resource tags to identify the resources to protect. For each retention rule, you specify one or \n          more tag key and value pairs. Resources (of the specified type) that have at least one of these \n          tag key and value pairs are automatically retained in the Recycle Bin upon deletion. Use this \n          type of retention rule to protect specific resources in your account based on their tags.</p>\n            </li>\n            <li>\n               <p>\n                  <b>Region-level retention rules</b> - These retention rules, \n          by default, apply to all of the resources (of the specified type) in the Region, even if the \n          resources are not tagged. However, you can specify exclusion tags to exclude resources that have \n          specific tags. Use this type of retention rule to protect all resources of a specific type in a \n          Region.</p>\n            </li>\n         </ul>\n         <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/recycle-bin.html\">\n      Create Recycle Bin retention rules</a> in the <i>Amazon EBS User Guide</i>.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/rules",
@@ -1032,7 +1176,7 @@
                 "RetentionPeriod": {
                     "target": "com.amazonaws.rbin#RetentionPeriod",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to retain resources.</p>",
+                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to \n  retain resources.</p>",
                         "smithy.api#required": {}
                     }
                 },
@@ -1051,20 +1195,26 @@
                 "ResourceType": {
                     "target": "com.amazonaws.rbin#ResourceType",
                     "traits": {
-                        "smithy.api#documentation": "<p>The resource type to be retained by the retention rule. Currently, only Amazon EBS snapshots \n      and EBS-backed AMIs are supported. To retain snapshots, specify <code>EBS_SNAPSHOT</code>. To \n      retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p>",
+                        "smithy.api#documentation": "<p>The resource type to be retained by the retention rule. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs \n      are supported.</p>\n         <ul>\n            <li>\n               <p>To retain EBS volumes, specify <code>EBS_VOLUME</code>.</p>\n            </li>\n            <li>\n               <p>To retain EBS snapshots, specify <code>EBS_SNAPSHOT</code>\n               </p>\n            </li>\n            <li>\n               <p>To retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the resource tags to use to identify resources that are to be retained by a \n  tag-level retention rule. For tag-level retention rules, only deleted resources, of the specified resource type, that \n  have one or more of the specified tag key and value pairs are retained. If a resource is deleted, but it does not have \n  any of the specified tag key and value pairs, it is immediately deleted without being retained by the retention rule.</p>\n         <p>You can add the same tag key and value pair to a maximum or five retention rules.</p>\n         <p>To create a Region-level retention rule, omit this parameter. A Region-level retention rule \n      does not have any resource tags specified. It retains all deleted resources of the specified \n      resource type in the Region in which the rule is created, even if the resources are not tagged.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Specifies the resource tags to use to identify resources that are to be retained by a \n  tag-level retention rule. For tag-level retention rules, only deleted resources, of the specified resource type, that \n  have one or more of the specified tag key and value pairs are retained. If a resource is deleted, but it does not have \n  any of the specified tag key and value pairs, it is immediately deleted without being retained by the retention rule.</p>\n         <p>You can add the same tag key and value pair to a maximum or five retention rules.</p>\n         <p>To create a Region-level retention rule, omit this parameter. A Region-level retention rule \n      does not have any resource tags specified. It retains all deleted resources of the specified \n      resource type in the Region in which the rule is created, even if the resources are not tagged.</p>"
                     }
                 },
                 "LockConfiguration": {
                     "target": "com.amazonaws.rbin#LockConfiguration",
                     "traits": {
                         "smithy.api#documentation": "<p>Information about the retention rule lock configuration.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Specifies the exclusion tags to use to identify resources that are to be excluded, \nor ignored, by a Region-level retention rule. Resources that have any of these tags are not retained by the retention rule \nupon deletion.</p>\n         <p>You can't specify exclusion tags for tag-level retention rules.</p>"
                     }
                 }
             },
@@ -1105,7 +1255,7 @@
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "Status": {
@@ -1123,13 +1273,19 @@
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "RuleArn": {
                     "target": "com.amazonaws.rbin#RuleArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the retention rule.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },
@@ -1200,6 +1356,18 @@
         "com.amazonaws.rbin#ErrorMessage": {
             "type": "string"
         },
+        "com.amazonaws.rbin#ExcludeResourceTags": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.rbin#ResourceTag"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 5
+                }
+            }
+        },
         "com.amazonaws.rbin#GetRule": {
             "type": "operation",
             "input": {
@@ -1268,13 +1436,13 @@
                 "RetentionPeriod": {
                     "target": "com.amazonaws.rbin#RetentionPeriod",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to retain resources.</p>"
+                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to \n  retain resources.</p>"
                     }
                 },
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "Status": {
@@ -1292,7 +1460,7 @@
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "LockEndTime": {
@@ -1305,6 +1473,12 @@
                     "target": "com.amazonaws.rbin#RuleArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the retention rule.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },
@@ -1374,20 +1548,26 @@
                 "ResourceType": {
                     "target": "com.amazonaws.rbin#ResourceType",
                     "traits": {
-                        "smithy.api#documentation": "<p>The resource type retained by the retention rule. Only retention rules that retain \n      the specified resource type are listed. Currently, only Amazon EBS snapshots and EBS-backed \n      AMIs are supported. To list retention rules that retain snapshots, specify \n      <code>EBS_SNAPSHOT</code>. To list retention rules that retain EBS-backed AMIs, specify \n      <code>EC2_IMAGE</code>.</p>",
+                        "smithy.api#documentation": "<p>The resource type retained by the retention rule. Only retention rules that retain \n      the specified resource type are listed. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs are supported.</p>\n         <ul>\n            <li>\n               <p>To list retention rules that retain EBS volumes, specify <code>EBS_VOLUME</code>.</p>\n            </li>\n            <li>\n               <p>To list retention rules that retain EBS snapshots, specify <code>EBS_SNAPSHOT</code>.</p>\n            </li>\n            <li>\n               <p>To list retention rules that retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
                         "smithy.api#documentation": "<p>The lock state of the retention rules to list. Only retention rules with the specified \n      lock state are returned.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },
@@ -1511,7 +1691,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Locks a retention rule. A locked retention rule can't be modified or deleted.</p>",
+                "smithy.api#documentation": "<p>Locks a Region-level retention rule. A locked retention rule can't be modified or \n      deleted.</p>\n         <note>\n            <p>You can't lock tag-level retention rules, or Region-level retention rules that \n        have exclusion tags.</p>\n         </note>",
                 "smithy.api#http": {
                     "method": "PATCH",
                     "uri": "/rules/{Identifier}/lock",
@@ -1569,7 +1749,7 @@
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "Status": {
@@ -1587,13 +1767,19 @@
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "RuleArn": {
                     "target": "com.amazonaws.rbin#RuleArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the retention rule.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },
@@ -1687,7 +1873,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
             }
         },
         "com.amazonaws.rbin#ResourceTagKey": {
@@ -1728,6 +1914,12 @@
                     "traits": {
                         "smithy.api#enumValue": "EC2_IMAGE"
                     }
+                },
+                "EBS_VOLUME": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "EBS_VOLUME"
+                    }
                 }
             }
         },
@@ -1737,7 +1929,7 @@
                 "RetentionPeriodValue": {
                     "target": "com.amazonaws.rbin#RetentionPeriodValue",
                     "traits": {
-                        "smithy.api#documentation": "<p>The period value for which the retention rule is to retain resources. The period is measured using \n      the unit specified for <b>RetentionPeriodUnit</b>.</p>",
+                        "smithy.api#documentation": "<p>The period value for which the retention rule is to retain resources, measured in days. \n      The supported retention periods are:</p>\n         <ul>\n            <li>\n               <p>EBS volumes: 1 - 7 days</p>\n            </li>\n            <li>\n               <p>EBS snapshots and EBS-backed AMIs: 1 - 365 days</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
@@ -1750,7 +1942,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to retain resources.</p>"
+                "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to \n  retain resources.</p>"
             }
         },
         "com.amazonaws.rbin#RetentionPeriodUnit": {
@@ -1780,7 +1972,7 @@
                     "min": 0,
                     "max": 1011
                 },
-                "smithy.api#pattern": "^arn:aws(-[a-z]{1,3}){0,2}:rbin:[a-z\\-0-9]{0,63}:[0-9]{12}:rule/[0-9a-zA-Z]{11}{0,1011}$"
+                "smithy.api#pattern": "^arn:\\S+:rbin:[a-z\\-0-9]{0,63}:[0-9]{12}:rule/[0-9a-zA-Z]{11}{0,1011}$"
             }
         },
         "com.amazonaws.rbin#RuleIdentifier": {
@@ -1824,13 +2016,13 @@
                 "RetentionPeriod": {
                     "target": "com.amazonaws.rbin#RetentionPeriod",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to retain resources.</p>"
+                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to \n  retain resources.</p>"
                     }
                 },
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "RuleArn": {
@@ -2023,7 +2215,7 @@
                 "UnlockDelayUnit": {
                     "target": "com.amazonaws.rbin#UnlockDelayUnit",
                     "traits": {
-                        "smithy.api#documentation": "<p>The unit of time in which to measure the unlock delay. Currently, the unlock delay can \n      be measure only in days.</p>",
+                        "smithy.api#documentation": "<p>The unit of time in which to measure the unlock delay. Currently, the unlock delay can \n      be measured only in days.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -2126,7 +2318,7 @@
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "Status": {
@@ -2144,7 +2336,7 @@
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "LockEndTime": {
@@ -2157,6 +2349,12 @@
                     "target": "com.amazonaws.rbin#RuleArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the retention rule.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },
@@ -2271,7 +2469,7 @@
                 "RetentionPeriod": {
                     "target": "com.amazonaws.rbin#RetentionPeriod",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to retain resources.</p>"
+                        "smithy.api#documentation": "<p>Information about the retention period for which the retention rule is to \n  retain resources.</p>"
                     }
                 },
                 "Description": {
@@ -2289,7 +2487,13 @@
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the resource tags to use to identify resources that are to be retained by a \n  tag-level retention rule. For tag-level retention rules, only deleted resources, of the specified resource type, that \n  have one or more of the specified tag key and value pairs are retained. If a resource is deleted, but it does not have \n  any of the specified tag key and value pairs, it is immediately deleted without being retained by the retention rule.</p>\n         <p>You can add the same tag key and value pair to a maximum or five retention rules.</p>\n         <p>To create a Region-level retention rule, omit this parameter. A Region-level retention rule \n      does not have any resource tags specified. It retains all deleted resources of the specified \n      resource type in the Region in which the rule is created, even if the resources are not tagged.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Specifies the resource tags to use to identify resources that are to be retained by a \n  tag-level retention rule. For tag-level retention rules, only deleted resources, of the specified resource type, that \n  have one or more of the specified tag key and value pairs are retained. If a resource is deleted, but it does not have \n  any of the specified tag key and value pairs, it is immediately deleted without being retained by the retention rule.</p>\n         <p>You can add the same tag key and value pair to a maximum or five retention rules.</p>\n         <p>To create a Region-level retention rule, omit this parameter. A Region-level retention rule \n      does not have any resource tags specified. It retains all deleted resources of the specified \n      resource type in the Region in which the rule is created, even if the resources are not tagged.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Specifies the exclusion tags to use to identify resources that are to be excluded, \nor ignored, by a Region-level retention rule. Resources that have any of these tags are not retained by the retention rule \nupon deletion.</p>\n         <p>You can't specify exclusion tags for tag-level retention rules.</p>"
                     }
                 }
             },
@@ -2324,7 +2528,7 @@
                 "ResourceTags": {
                     "target": "com.amazonaws.rbin#ResourceTags",
                     "traits": {
-                        "smithy.api#documentation": "<p>Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
+                        "smithy.api#documentation": "<p>[Tag-level retention rules only] Information about the resource tags used to identify resources that are retained by the retention \n      rule.</p>"
                     }
                 },
                 "Status": {
@@ -2336,7 +2540,7 @@
                 "LockState": {
                     "target": "com.amazonaws.rbin#LockState",
                     "traits": {
-                        "smithy.api#documentation": "<p>The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] The lock state for the retention rule.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>locked</code> - The retention rule is locked and can't be modified or deleted.</p>\n            </li>\n            <li>\n               <p>\n                  <code>pending_unlock</code> - The retention rule has been unlocked but it is still within \n          the unlock delay period. The retention rule can be modified or deleted only after the unlock \n          delay period has expired.</p>\n            </li>\n            <li>\n               <p>\n                  <code>unlocked</code> - The retention rule is unlocked and it can be modified or deleted by \n          any user with the required permissions.</p>\n            </li>\n            <li>\n               <p>\n                  <code>null</code> - The retention rule has never been locked. Once a retention rule has \n        been locked, it can transition between the <code>locked</code> and <code>unlocked</code> states \n        only; it can never transition back to <code>null</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "LockEndTime": {
@@ -2349,6 +2553,12 @@
                     "target": "com.amazonaws.rbin#RuleArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the retention rule.</p>"
+                    }
+                },
+                "ExcludeResourceTags": {
+                    "target": "com.amazonaws.rbin#ExcludeResourceTags",
+                    "traits": {
+                        "smithy.api#documentation": "<p>[Region-level retention rules only] Information about the exclusion tags used to identify resources that are to be \nexcluded, or ignored, by the retention rule.</p>"
                     }
                 }
             },

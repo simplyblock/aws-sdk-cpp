@@ -5,82 +5,108 @@
 
 #pragma once
 #include <aws/athena/Athena_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/athena/model/PreparedStatement.h>
 #include <aws/athena/model/UnprocessedPreparedStatementName.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Athena
-{
-namespace Model
-{
-  class BatchGetPreparedStatementResult
-  {
-  public:
-    AWS_ATHENA_API BatchGetPreparedStatementResult();
-    AWS_ATHENA_API BatchGetPreparedStatementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ATHENA_API BatchGetPreparedStatementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Athena {
+namespace Model {
+class BatchGetPreparedStatementResult {
+ public:
+  AWS_ATHENA_API BatchGetPreparedStatementResult() = default;
+  AWS_ATHENA_API BatchGetPreparedStatementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ATHENA_API BatchGetPreparedStatementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of prepared statements returned.</p>
+   */
+  inline const Aws::Vector<PreparedStatement>& GetPreparedStatements() const { return m_preparedStatements; }
+  template <typename PreparedStatementsT = Aws::Vector<PreparedStatement>>
+  void SetPreparedStatements(PreparedStatementsT&& value) {
+    m_preparedStatementsHasBeenSet = true;
+    m_preparedStatements = std::forward<PreparedStatementsT>(value);
+  }
+  template <typename PreparedStatementsT = Aws::Vector<PreparedStatement>>
+  BatchGetPreparedStatementResult& WithPreparedStatements(PreparedStatementsT&& value) {
+    SetPreparedStatements(std::forward<PreparedStatementsT>(value));
+    return *this;
+  }
+  template <typename PreparedStatementsT = PreparedStatement>
+  BatchGetPreparedStatementResult& AddPreparedStatements(PreparedStatementsT&& value) {
+    m_preparedStatementsHasBeenSet = true;
+    m_preparedStatements.emplace_back(std::forward<PreparedStatementsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of prepared statements returned.</p>
-     */
-    inline const Aws::Vector<PreparedStatement>& GetPreparedStatements() const{ return m_preparedStatements; }
-    inline void SetPreparedStatements(const Aws::Vector<PreparedStatement>& value) { m_preparedStatements = value; }
-    inline void SetPreparedStatements(Aws::Vector<PreparedStatement>&& value) { m_preparedStatements = std::move(value); }
-    inline BatchGetPreparedStatementResult& WithPreparedStatements(const Aws::Vector<PreparedStatement>& value) { SetPreparedStatements(value); return *this;}
-    inline BatchGetPreparedStatementResult& WithPreparedStatements(Aws::Vector<PreparedStatement>&& value) { SetPreparedStatements(std::move(value)); return *this;}
-    inline BatchGetPreparedStatementResult& AddPreparedStatements(const PreparedStatement& value) { m_preparedStatements.push_back(value); return *this; }
-    inline BatchGetPreparedStatementResult& AddPreparedStatements(PreparedStatement&& value) { m_preparedStatements.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of one or more prepared statements that were requested but could not
+   * be returned.</p>
+   */
+  inline const Aws::Vector<UnprocessedPreparedStatementName>& GetUnprocessedPreparedStatementNames() const {
+    return m_unprocessedPreparedStatementNames;
+  }
+  template <typename UnprocessedPreparedStatementNamesT = Aws::Vector<UnprocessedPreparedStatementName>>
+  void SetUnprocessedPreparedStatementNames(UnprocessedPreparedStatementNamesT&& value) {
+    m_unprocessedPreparedStatementNamesHasBeenSet = true;
+    m_unprocessedPreparedStatementNames = std::forward<UnprocessedPreparedStatementNamesT>(value);
+  }
+  template <typename UnprocessedPreparedStatementNamesT = Aws::Vector<UnprocessedPreparedStatementName>>
+  BatchGetPreparedStatementResult& WithUnprocessedPreparedStatementNames(UnprocessedPreparedStatementNamesT&& value) {
+    SetUnprocessedPreparedStatementNames(std::forward<UnprocessedPreparedStatementNamesT>(value));
+    return *this;
+  }
+  template <typename UnprocessedPreparedStatementNamesT = UnprocessedPreparedStatementName>
+  BatchGetPreparedStatementResult& AddUnprocessedPreparedStatementNames(UnprocessedPreparedStatementNamesT&& value) {
+    m_unprocessedPreparedStatementNamesHasBeenSet = true;
+    m_unprocessedPreparedStatementNames.emplace_back(std::forward<UnprocessedPreparedStatementNamesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of one or more prepared statements that were requested but could not
-     * be returned.</p>
-     */
-    inline const Aws::Vector<UnprocessedPreparedStatementName>& GetUnprocessedPreparedStatementNames() const{ return m_unprocessedPreparedStatementNames; }
-    inline void SetUnprocessedPreparedStatementNames(const Aws::Vector<UnprocessedPreparedStatementName>& value) { m_unprocessedPreparedStatementNames = value; }
-    inline void SetUnprocessedPreparedStatementNames(Aws::Vector<UnprocessedPreparedStatementName>&& value) { m_unprocessedPreparedStatementNames = std::move(value); }
-    inline BatchGetPreparedStatementResult& WithUnprocessedPreparedStatementNames(const Aws::Vector<UnprocessedPreparedStatementName>& value) { SetUnprocessedPreparedStatementNames(value); return *this;}
-    inline BatchGetPreparedStatementResult& WithUnprocessedPreparedStatementNames(Aws::Vector<UnprocessedPreparedStatementName>&& value) { SetUnprocessedPreparedStatementNames(std::move(value)); return *this;}
-    inline BatchGetPreparedStatementResult& AddUnprocessedPreparedStatementNames(const UnprocessedPreparedStatementName& value) { m_unprocessedPreparedStatementNames.push_back(value); return *this; }
-    inline BatchGetPreparedStatementResult& AddUnprocessedPreparedStatementNames(UnprocessedPreparedStatementName&& value) { m_unprocessedPreparedStatementNames.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetPreparedStatementResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetPreparedStatementResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetPreparedStatementResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetPreparedStatementResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PreparedStatement> m_preparedStatements;
+ private:
+  Aws::Vector<PreparedStatement> m_preparedStatements;
 
-    Aws::Vector<UnprocessedPreparedStatementName> m_unprocessedPreparedStatementNames;
+  Aws::Vector<UnprocessedPreparedStatementName> m_unprocessedPreparedStatementNames;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_preparedStatementsHasBeenSet = false;
+  bool m_unprocessedPreparedStatementNamesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

@@ -4,10 +4,10 @@
  */
 
 #include <aws/cloudsearch/model/DeleteSuggesterResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
@@ -17,38 +17,30 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteSuggesterResult::DeleteSuggesterResult()
-{
-}
+DeleteSuggesterResult::DeleteSuggesterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DeleteSuggesterResult::DeleteSuggesterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DeleteSuggesterResult& DeleteSuggesterResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteSuggesterResult& DeleteSuggesterResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteSuggesterResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteSuggesterResult")) {
     resultNode = rootNode.FirstChild("DeleteSuggesterResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode suggesterNode = resultNode.FirstChild("Suggester");
-    if(!suggesterNode.IsNull())
-    {
+    if (!suggesterNode.IsNull()) {
       m_suggester = suggesterNode;
+      m_suggesterHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::CloudSearch::Model::DeleteSuggesterResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::CloudSearch::Model::DeleteSuggesterResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

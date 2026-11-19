@@ -3,72 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/securityhub/model/DateRange.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/DateRange.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
 
-DateRange::DateRange() : 
-    m_value(0),
-    m_valueHasBeenSet(false),
-    m_unit(DateRangeUnit::NOT_SET),
-    m_unitHasBeenSet(false)
-{
-}
+DateRange::DateRange(JsonView jsonValue) { *this = jsonValue; }
 
-DateRange::DateRange(JsonView jsonValue)
-  : DateRange()
-{
-  *this = jsonValue;
-}
-
-DateRange& DateRange::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Value"))
-  {
+DateRange& DateRange::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Value")) {
     m_value = jsonValue.GetInteger("Value");
-
     m_valueHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Unit"))
-  {
+  if (jsonValue.ValueExists("Unit")) {
     m_unit = DateRangeUnitMapper::GetDateRangeUnitForName(jsonValue.GetString("Unit"));
-
     m_unitHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("Comparison")) {
+    m_comparison = DateRangeComparisonMapper::GetDateRangeComparisonForName(jsonValue.GetString("Comparison"));
+    m_comparisonHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue DateRange::Jsonize() const
-{
+JsonValue DateRange::Jsonize() const {
   JsonValue payload;
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithInteger("Value", m_value);
-
+  if (m_valueHasBeenSet) {
+    payload.WithInteger("Value", m_value);
   }
 
-  if(m_unitHasBeenSet)
-  {
-   payload.WithString("Unit", DateRangeUnitMapper::GetNameForDateRangeUnit(m_unit));
+  if (m_unitHasBeenSet) {
+    payload.WithString("Unit", DateRangeUnitMapper::GetNameForDateRangeUnit(m_unit));
+  }
+
+  if (m_comparisonHasBeenSet) {
+    payload.WithString("Comparison", DateRangeComparisonMapper::GetNameForDateRangeComparison(m_comparison));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

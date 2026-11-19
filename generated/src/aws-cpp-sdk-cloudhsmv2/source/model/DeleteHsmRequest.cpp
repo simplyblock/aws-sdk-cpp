@@ -4,61 +4,61 @@
  */
 
 #include <aws/cloudhsmv2/model/DeleteHsmRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CloudHSMV2::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteHsmRequest::DeleteHsmRequest() : 
-    m_clusterIdHasBeenSet(false),
-    m_hsmIdHasBeenSet(false),
-    m_eniIdHasBeenSet(false),
-    m_eniIpHasBeenSet(false)
-{
+Aws::String DeleteHsmRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_clusterIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_hsmIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eniIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eniIpHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_clusterIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ClusterId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_clusterId.c_str()));
+  }
+
+  if (m_hsmIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HsmId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hsmId.c_str()));
+  }
+
+  if (m_eniIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EniId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_eniId.c_str()));
+  }
+
+  if (m_eniIpHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EniIp"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_eniIp.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DeleteHsmRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_clusterIdHasBeenSet)
-  {
-   payload.WithString("ClusterId", m_clusterId);
-
-  }
-
-  if(m_hsmIdHasBeenSet)
-  {
-   payload.WithString("HsmId", m_hsmId);
-
-  }
-
-  if(m_eniIdHasBeenSet)
-  {
-   payload.WithString("EniId", m_eniId);
-
-  }
-
-  if(m_eniIpHasBeenSet)
-  {
-   payload.WithString("EniIp", m_eniIp);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DeleteHsmRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteHsmRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BaldrApiService.DeleteHsm"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

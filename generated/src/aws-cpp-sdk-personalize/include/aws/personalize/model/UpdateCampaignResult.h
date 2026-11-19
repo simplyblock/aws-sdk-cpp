@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Personalize
-{
-namespace Model
-{
-  class UpdateCampaignResult
-  {
-  public:
-    AWS_PERSONALIZE_API UpdateCampaignResult();
-    AWS_PERSONALIZE_API UpdateCampaignResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PERSONALIZE_API UpdateCampaignResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Personalize {
+namespace Model {
+class UpdateCampaignResult {
+ public:
+  AWS_PERSONALIZE_API UpdateCampaignResult() = default;
+  AWS_PERSONALIZE_API UpdateCampaignResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PERSONALIZE_API UpdateCampaignResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The same campaign ARN as given in the request.</p>
+   */
+  inline const Aws::String& GetCampaignArn() const { return m_campaignArn; }
+  template <typename CampaignArnT = Aws::String>
+  void SetCampaignArn(CampaignArnT&& value) {
+    m_campaignArnHasBeenSet = true;
+    m_campaignArn = std::forward<CampaignArnT>(value);
+  }
+  template <typename CampaignArnT = Aws::String>
+  UpdateCampaignResult& WithCampaignArn(CampaignArnT&& value) {
+    SetCampaignArn(std::forward<CampaignArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The same campaign ARN as given in the request.</p>
-     */
-    inline const Aws::String& GetCampaignArn() const{ return m_campaignArn; }
-    inline void SetCampaignArn(const Aws::String& value) { m_campaignArn = value; }
-    inline void SetCampaignArn(Aws::String&& value) { m_campaignArn = std::move(value); }
-    inline void SetCampaignArn(const char* value) { m_campaignArn.assign(value); }
-    inline UpdateCampaignResult& WithCampaignArn(const Aws::String& value) { SetCampaignArn(value); return *this;}
-    inline UpdateCampaignResult& WithCampaignArn(Aws::String&& value) { SetCampaignArn(std::move(value)); return *this;}
-    inline UpdateCampaignResult& WithCampaignArn(const char* value) { SetCampaignArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateCampaignResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateCampaignResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateCampaignResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateCampaignResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_campaignArn;
+ private:
+  Aws::String m_campaignArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_campaignArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

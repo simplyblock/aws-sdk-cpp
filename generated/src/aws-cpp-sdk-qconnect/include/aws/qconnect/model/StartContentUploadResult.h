@@ -4,114 +4,139 @@
  */
 
 #pragma once
-#include <aws/qconnect/QConnect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/qconnect/QConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QConnect
-{
-namespace Model
-{
-  class StartContentUploadResult
-  {
-  public:
-    AWS_QCONNECT_API StartContentUploadResult();
-    AWS_QCONNECT_API StartContentUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QCONNECT_API StartContentUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QConnect {
+namespace Model {
+class StartContentUploadResult {
+ public:
+  AWS_QCONNECT_API StartContentUploadResult() = default;
+  AWS_QCONNECT_API StartContentUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QCONNECT_API StartContentUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the upload.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  StartContentUploadResult& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The headers to include in the upload.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetHeadersToInclude() const{ return m_headersToInclude; }
-    inline void SetHeadersToInclude(const Aws::Map<Aws::String, Aws::String>& value) { m_headersToInclude = value; }
-    inline void SetHeadersToInclude(Aws::Map<Aws::String, Aws::String>&& value) { m_headersToInclude = std::move(value); }
-    inline StartContentUploadResult& WithHeadersToInclude(const Aws::Map<Aws::String, Aws::String>& value) { SetHeadersToInclude(value); return *this;}
-    inline StartContentUploadResult& WithHeadersToInclude(Aws::Map<Aws::String, Aws::String>&& value) { SetHeadersToInclude(std::move(value)); return *this;}
-    inline StartContentUploadResult& AddHeadersToInclude(const Aws::String& key, const Aws::String& value) { m_headersToInclude.emplace(key, value); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(Aws::String&& key, const Aws::String& value) { m_headersToInclude.emplace(std::move(key), value); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(const Aws::String& key, Aws::String&& value) { m_headersToInclude.emplace(key, std::move(value)); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(Aws::String&& key, Aws::String&& value) { m_headersToInclude.emplace(std::move(key), std::move(value)); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(const char* key, Aws::String&& value) { m_headersToInclude.emplace(key, std::move(value)); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(Aws::String&& key, const char* value) { m_headersToInclude.emplace(std::move(key), value); return *this; }
-    inline StartContentUploadResult& AddHeadersToInclude(const char* key, const char* value) { m_headersToInclude.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The URL of the upload.</p>
+   */
+  inline const Aws::String& GetUrl() const { return m_url; }
+  template <typename UrlT = Aws::String>
+  void SetUrl(UrlT&& value) {
+    m_urlHasBeenSet = true;
+    m_url = std::forward<UrlT>(value);
+  }
+  template <typename UrlT = Aws::String>
+  StartContentUploadResult& WithUrl(UrlT&& value) {
+    SetUrl(std::forward<UrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadId.assign(value); }
-    inline StartContentUploadResult& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline StartContentUploadResult& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline StartContentUploadResult& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The expiration time of the URL as an epoch timestamp.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUrlExpiry() const { return m_urlExpiry; }
+  template <typename UrlExpiryT = Aws::Utils::DateTime>
+  void SetUrlExpiry(UrlExpiryT&& value) {
+    m_urlExpiryHasBeenSet = true;
+    m_urlExpiry = std::forward<UrlExpiryT>(value);
+  }
+  template <typename UrlExpiryT = Aws::Utils::DateTime>
+  StartContentUploadResult& WithUrlExpiry(UrlExpiryT&& value) {
+    SetUrlExpiry(std::forward<UrlExpiryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL of the upload.</p>
-     */
-    inline const Aws::String& GetUrl() const{ return m_url; }
-    inline void SetUrl(const Aws::String& value) { m_url = value; }
-    inline void SetUrl(Aws::String&& value) { m_url = std::move(value); }
-    inline void SetUrl(const char* value) { m_url.assign(value); }
-    inline StartContentUploadResult& WithUrl(const Aws::String& value) { SetUrl(value); return *this;}
-    inline StartContentUploadResult& WithUrl(Aws::String&& value) { SetUrl(std::move(value)); return *this;}
-    inline StartContentUploadResult& WithUrl(const char* value) { SetUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The headers to include in the upload.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetHeadersToInclude() const { return m_headersToInclude; }
+  template <typename HeadersToIncludeT = Aws::Map<Aws::String, Aws::String>>
+  void SetHeadersToInclude(HeadersToIncludeT&& value) {
+    m_headersToIncludeHasBeenSet = true;
+    m_headersToInclude = std::forward<HeadersToIncludeT>(value);
+  }
+  template <typename HeadersToIncludeT = Aws::Map<Aws::String, Aws::String>>
+  StartContentUploadResult& WithHeadersToInclude(HeadersToIncludeT&& value) {
+    SetHeadersToInclude(std::forward<HeadersToIncludeT>(value));
+    return *this;
+  }
+  template <typename HeadersToIncludeKeyT = Aws::String, typename HeadersToIncludeValueT = Aws::String>
+  StartContentUploadResult& AddHeadersToInclude(HeadersToIncludeKeyT&& key, HeadersToIncludeValueT&& value) {
+    m_headersToIncludeHasBeenSet = true;
+    m_headersToInclude.emplace(std::forward<HeadersToIncludeKeyT>(key), std::forward<HeadersToIncludeValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The expiration time of the URL as an epoch timestamp.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUrlExpiry() const{ return m_urlExpiry; }
-    inline void SetUrlExpiry(const Aws::Utils::DateTime& value) { m_urlExpiry = value; }
-    inline void SetUrlExpiry(Aws::Utils::DateTime&& value) { m_urlExpiry = std::move(value); }
-    inline StartContentUploadResult& WithUrlExpiry(const Aws::Utils::DateTime& value) { SetUrlExpiry(value); return *this;}
-    inline StartContentUploadResult& WithUrlExpiry(Aws::Utils::DateTime&& value) { SetUrlExpiry(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartContentUploadResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartContentUploadResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartContentUploadResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartContentUploadResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Map<Aws::String, Aws::String> m_headersToInclude;
+ private:
+  Aws::String m_uploadId;
 
-    Aws::String m_uploadId;
+  Aws::String m_url;
 
-    Aws::String m_url;
+  Aws::Utils::DateTime m_urlExpiry{};
 
-    Aws::Utils::DateTime m_urlExpiry;
+  Aws::Map<Aws::String, Aws::String> m_headersToInclude;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_urlHasBeenSet = false;
+  bool m_urlExpiryHasBeenSet = false;
+  bool m_headersToIncludeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

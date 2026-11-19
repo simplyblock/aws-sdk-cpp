@@ -3,93 +3,213 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/transcribe/model/ContentRedaction.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace TranscribeService
-{
-namespace Model
-{
+namespace Aws {
+namespace TranscribeService {
+namespace Model {
 
-ContentRedaction::ContentRedaction() : 
-    m_redactionType(RedactionType::NOT_SET),
-    m_redactionTypeHasBeenSet(false),
-    m_redactionOutput(RedactionOutput::NOT_SET),
-    m_redactionOutputHasBeenSet(false),
-    m_piiEntityTypesHasBeenSet(false)
-{
-}
+ContentRedaction::ContentRedaction(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-ContentRedaction::ContentRedaction(JsonView jsonValue)
-  : ContentRedaction()
-{
-  *this = jsonValue;
-}
+ContentRedaction& ContentRedaction::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ContentRedaction& ContentRedaction::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RedactionType"))
-  {
-    m_redactionType = RedactionTypeMapper::GetRedactionTypeForName(jsonValue.GetString("RedactionType"));
+              if (initialKeyStr == "RedactionType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_redactionType = RedactionTypeMapper::GetRedactionTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_redactionTypeHasBeenSet = true;
+              }
 
-    m_redactionTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "RedactionOutput") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_redactionOutput = RedactionOutputMapper::GetRedactionOutputForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_redactionOutputHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("RedactionOutput"))
-  {
-    m_redactionOutput = RedactionOutputMapper::GetRedactionOutputForName(jsonValue.GetString("RedactionOutput"));
+              else if (initialKeyStr == "PiiEntityTypes") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        auto val = decoder->PopNextTextVal();
+                        if (val.has_value()) {
+                          m_piiEntityTypes.push_back(PiiEntityTypeMapper::GetPiiEntityTypeForName(
+                              Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len)));
+                        }
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        m_piiEntityTypes.push_back(PiiEntityTypeMapper::GetPiiEntityTypeForName(
+                            Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len)));
+                      }
+                    }
+                  }
+                }
+                m_piiEntityTypesHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ContentRedaction", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_redactionOutputHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("PiiEntityTypes"))
-  {
-    Aws::Utils::Array<JsonView> piiEntityTypesJsonList = jsonValue.GetArray("PiiEntityTypes");
-    for(unsigned piiEntityTypesIndex = 0; piiEntityTypesIndex < piiEntityTypesJsonList.GetLength(); ++piiEntityTypesIndex)
-    {
-      m_piiEntityTypes.push_back(PiiEntityTypeMapper::GetPiiEntityTypeForName(piiEntityTypesJsonList[piiEntityTypesIndex].AsString()));
+            if (initialKeyStr == "RedactionType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_redactionType = RedactionTypeMapper::GetRedactionTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_redactionTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "RedactionOutput") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_redactionOutput = RedactionOutputMapper::GetRedactionOutputForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_redactionOutputHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "PiiEntityTypes") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        m_piiEntityTypes.push_back(PiiEntityTypeMapper::GetPiiEntityTypeForName(
+                            Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len)));
+                      }
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_piiEntityTypes.push_back(PiiEntityTypeMapper::GetPiiEntityTypeForName(
+                          Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len)));
+                    }
+                  }
+                }
+              }
+              m_piiEntityTypesHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_piiEntityTypesHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue ContentRedaction::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_redactionTypeHasBeenSet)
-  {
-   payload.WithString("RedactionType", RedactionTypeMapper::GetNameForRedactionType(m_redactionType));
+void ContentRedaction::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_redactionTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_redactionOutputHasBeenSet) {
+    mapSize++;
+  }
+  if (m_piiEntityTypesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_redactionOutputHasBeenSet)
-  {
-   payload.WithString("RedactionOutput", RedactionOutputMapper::GetNameForRedactionOutput(m_redactionOutput));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_redactionTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RedactionType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(RedactionTypeMapper::GetNameForRedactionType(m_redactionType).c_str()));
   }
 
-  if(m_piiEntityTypesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> piiEntityTypesJsonList(m_piiEntityTypes.size());
-   for(unsigned piiEntityTypesIndex = 0; piiEntityTypesIndex < piiEntityTypesJsonList.GetLength(); ++piiEntityTypesIndex)
-   {
-     piiEntityTypesJsonList[piiEntityTypesIndex].AsString(PiiEntityTypeMapper::GetNameForPiiEntityType(m_piiEntityTypes[piiEntityTypesIndex]));
-   }
-   payload.WithArray("PiiEntityTypes", std::move(piiEntityTypesJsonList));
-
+  if (m_redactionOutputHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RedactionOutput"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(RedactionOutputMapper::GetNameForRedactionOutput(m_redactionOutput).c_str()));
   }
 
-  return payload;
+  if (m_piiEntityTypesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PiiEntityTypes"));
+    encoder.WriteArrayStart(m_piiEntityTypes.size());
+    for (const auto& item_0 : m_piiEntityTypes) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(PiiEntityTypeMapper::GetNameForPiiEntityType(item_0).c_str()));
+    }
+  }
 }
 
-} // namespace Model
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace TranscribeService
+}  // namespace Aws

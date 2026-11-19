@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/sdb/SimpleDB_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/endpoint/DefaultEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sdb/SimpleDB_EXPORTS.h>
 
-#include <aws/sdb/SimpleDBEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SimpleDB
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SimpleDB {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::EndpointProviderBase;
 using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::EndpointProviderBase;
 
 using SimpleDBClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -43,19 +37,14 @@ using SimpleDBDefaultEpProviderBase =
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SIMPLEDB_API SimpleDBEndpointProvider : public SimpleDBDefaultEpProviderBase
-{
-public:
-    using SimpleDBResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SIMPLEDB_API SimpleDBEndpointProvider : public SimpleDBDefaultEpProviderBase {
+ public:
+  using SimpleDBResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SimpleDBEndpointProvider()
-      : SimpleDBDefaultEpProviderBase(Aws::SimpleDB::SimpleDBEndpointRules::GetRulesBlob(), Aws::SimpleDB::SimpleDBEndpointRules::RulesBlobSize)
-    {}
+  SimpleDBEndpointProvider();
 
-    ~SimpleDBEndpointProvider()
-    {
-    }
+  ~SimpleDBEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SimpleDB
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SimpleDB
+}  // namespace Aws

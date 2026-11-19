@@ -3,77 +3,97 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/inspector2/model/AggregationResourceType.h>
-#include <aws/core/utils/HashingUtils.h>
 #include <aws/core/Globals.h>
 #include <aws/core/utils/EnumParseOverflowContainer.h>
+#include <aws/core/utils/HashingUtils.h>
+#include <aws/inspector2/model/AggregationResourceType.h>
 
 using namespace Aws::Utils;
 
+namespace Aws {
+namespace Inspector2 {
+namespace Model {
+namespace AggregationResourceTypeMapper {
 
-namespace Aws
-{
-  namespace Inspector2
-  {
-    namespace Model
-    {
-      namespace AggregationResourceTypeMapper
-      {
+static const int AWS_EC2_INSTANCE_HASH = HashingUtils::HashString("AWS_EC2_INSTANCE");
+static const int AWS_ECR_CONTAINER_IMAGE_HASH = HashingUtils::HashString("AWS_ECR_CONTAINER_IMAGE");
+static const int AWS_LAMBDA_FUNCTION_HASH = HashingUtils::HashString("AWS_LAMBDA_FUNCTION");
+static const int CODE_REPOSITORY_HASH = HashingUtils::HashString("CODE_REPOSITORY");
+static const int Microsoft_Compute_virtualMachines_HASH = HashingUtils::HashString("Microsoft.Compute/virtualMachines");
+static const int Microsoft_ContainerRegistry_registry_containerImage_HASH =
+    HashingUtils::HashString("Microsoft.ContainerRegistry/registry/containerImage");
+static const int Microsoft_Web_sites_HASH = HashingUtils::HashString("Microsoft.Web/sites");
+static const int cloudfunctions_googleapis_com_Function_HASH = HashingUtils::HashString("cloudfunctions.googleapis.com/Function");
+static const int compute_googleapis_com_Instance_HASH = HashingUtils::HashString("compute.googleapis.com/Instance");
+static const int artifactregistry_googleapis_com_DockerImage_HASH = HashingUtils::HashString("artifactregistry.googleapis.com/DockerImage");
 
-        static const int AWS_EC2_INSTANCE_HASH = HashingUtils::HashString("AWS_EC2_INSTANCE");
-        static const int AWS_ECR_CONTAINER_IMAGE_HASH = HashingUtils::HashString("AWS_ECR_CONTAINER_IMAGE");
-        static const int AWS_LAMBDA_FUNCTION_HASH = HashingUtils::HashString("AWS_LAMBDA_FUNCTION");
+AggregationResourceType GetAggregationResourceTypeForName(const Aws::String& name) {
+  int hashCode = HashingUtils::HashString(name.c_str());
+  if (hashCode == AWS_EC2_INSTANCE_HASH) {
+    return AggregationResourceType::AWS_EC2_INSTANCE;
+  } else if (hashCode == AWS_ECR_CONTAINER_IMAGE_HASH) {
+    return AggregationResourceType::AWS_ECR_CONTAINER_IMAGE;
+  } else if (hashCode == AWS_LAMBDA_FUNCTION_HASH) {
+    return AggregationResourceType::AWS_LAMBDA_FUNCTION;
+  } else if (hashCode == CODE_REPOSITORY_HASH) {
+    return AggregationResourceType::CODE_REPOSITORY;
+  } else if (hashCode == Microsoft_Compute_virtualMachines_HASH) {
+    return AggregationResourceType::Microsoft_Compute_virtualMachines;
+  } else if (hashCode == Microsoft_ContainerRegistry_registry_containerImage_HASH) {
+    return AggregationResourceType::Microsoft_ContainerRegistry_registry_containerImage;
+  } else if (hashCode == Microsoft_Web_sites_HASH) {
+    return AggregationResourceType::Microsoft_Web_sites;
+  } else if (hashCode == cloudfunctions_googleapis_com_Function_HASH) {
+    return AggregationResourceType::cloudfunctions_googleapis_com_Function;
+  } else if (hashCode == compute_googleapis_com_Instance_HASH) {
+    return AggregationResourceType::compute_googleapis_com_Instance;
+  } else if (hashCode == artifactregistry_googleapis_com_DockerImage_HASH) {
+    return AggregationResourceType::artifactregistry_googleapis_com_DockerImage;
+  }
+  EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+  if (overflowContainer) {
+    overflowContainer->StoreOverflow(hashCode, name);
+    return static_cast<AggregationResourceType>(hashCode);
+  }
 
+  return AggregationResourceType::NOT_SET;
+}
 
-        AggregationResourceType GetAggregationResourceTypeForName(const Aws::String& name)
-        {
-          int hashCode = HashingUtils::HashString(name.c_str());
-          if (hashCode == AWS_EC2_INSTANCE_HASH)
-          {
-            return AggregationResourceType::AWS_EC2_INSTANCE;
-          }
-          else if (hashCode == AWS_ECR_CONTAINER_IMAGE_HASH)
-          {
-            return AggregationResourceType::AWS_ECR_CONTAINER_IMAGE;
-          }
-          else if (hashCode == AWS_LAMBDA_FUNCTION_HASH)
-          {
-            return AggregationResourceType::AWS_LAMBDA_FUNCTION;
-          }
-          EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
-          if(overflowContainer)
-          {
-            overflowContainer->StoreOverflow(hashCode, name);
-            return static_cast<AggregationResourceType>(hashCode);
-          }
+Aws::String GetNameForAggregationResourceType(AggregationResourceType enumValue) {
+  switch (enumValue) {
+    case AggregationResourceType::NOT_SET:
+      return {};
+    case AggregationResourceType::AWS_EC2_INSTANCE:
+      return "AWS_EC2_INSTANCE";
+    case AggregationResourceType::AWS_ECR_CONTAINER_IMAGE:
+      return "AWS_ECR_CONTAINER_IMAGE";
+    case AggregationResourceType::AWS_LAMBDA_FUNCTION:
+      return "AWS_LAMBDA_FUNCTION";
+    case AggregationResourceType::CODE_REPOSITORY:
+      return "CODE_REPOSITORY";
+    case AggregationResourceType::Microsoft_Compute_virtualMachines:
+      return "Microsoft.Compute/virtualMachines";
+    case AggregationResourceType::Microsoft_ContainerRegistry_registry_containerImage:
+      return "Microsoft.ContainerRegistry/registry/containerImage";
+    case AggregationResourceType::Microsoft_Web_sites:
+      return "Microsoft.Web/sites";
+    case AggregationResourceType::cloudfunctions_googleapis_com_Function:
+      return "cloudfunctions.googleapis.com/Function";
+    case AggregationResourceType::compute_googleapis_com_Instance:
+      return "compute.googleapis.com/Instance";
+    case AggregationResourceType::artifactregistry_googleapis_com_DockerImage:
+      return "artifactregistry.googleapis.com/DockerImage";
+    default:
+      EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+      if (overflowContainer) {
+        return overflowContainer->RetrieveOverflow(static_cast<int>(enumValue));
+      }
 
-          return AggregationResourceType::NOT_SET;
-        }
+      return {};
+  }
+}
 
-        Aws::String GetNameForAggregationResourceType(AggregationResourceType enumValue)
-        {
-          switch(enumValue)
-          {
-          case AggregationResourceType::NOT_SET:
-            return {};
-          case AggregationResourceType::AWS_EC2_INSTANCE:
-            return "AWS_EC2_INSTANCE";
-          case AggregationResourceType::AWS_ECR_CONTAINER_IMAGE:
-            return "AWS_ECR_CONTAINER_IMAGE";
-          case AggregationResourceType::AWS_LAMBDA_FUNCTION:
-            return "AWS_LAMBDA_FUNCTION";
-          default:
-            EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
-            if(overflowContainer)
-            {
-              return overflowContainer->RetrieveOverflow(static_cast<int>(enumValue));
-            }
-
-            return {};
-          }
-        }
-
-      } // namespace AggregationResourceTypeMapper
-    } // namespace Model
-  } // namespace Inspector2
-} // namespace Aws
+}  // namespace AggregationResourceTypeMapper
+}  // namespace Model
+}  // namespace Inspector2
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pinpoint-email/model/DeleteDedicatedIpPoolRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pinpoint-email/model/DeleteDedicatedIpPoolRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::PinpointEmail::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDedicatedIpPoolRequest::DeleteDedicatedIpPoolRequest() : 
-    m_poolNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDedicatedIpPoolRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDedicatedIpPoolRequest::SerializePayload() const { return {}; }

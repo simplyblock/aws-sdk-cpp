@@ -4,129 +4,163 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/SecurityGroupVpcAssociationState.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>A security group association with a VPC that you made with <a
+ * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateSecurityGroupVpc.html">AssociateSecurityGroupVpc</a>.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SecurityGroupVpcAssociation">AWS
+ * API Reference</a></p>
+ */
+class SecurityGroupVpcAssociation {
+ public:
+  AWS_EC2_API SecurityGroupVpcAssociation() = default;
+  AWS_EC2_API SecurityGroupVpcAssociation(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API SecurityGroupVpcAssociation& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>A security group association with a VPC that you made with <a
-   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateSecurityGroupVpc.html">AssociateSecurityGroupVpc</a>.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SecurityGroupVpcAssociation">AWS
-   * API Reference</a></p>
+   * <p>The association's security group ID.</p>
    */
-  class SecurityGroupVpcAssociation
-  {
-  public:
-    AWS_EC2_API SecurityGroupVpcAssociation();
-    AWS_EC2_API SecurityGroupVpcAssociation(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API SecurityGroupVpcAssociation& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetGroupId() const { return m_groupId; }
+  inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
+  template <typename GroupIdT = Aws::String>
+  void SetGroupId(GroupIdT&& value) {
+    m_groupIdHasBeenSet = true;
+    m_groupId = std::forward<GroupIdT>(value);
+  }
+  template <typename GroupIdT = Aws::String>
+  SecurityGroupVpcAssociation& WithGroupId(GroupIdT&& value) {
+    SetGroupId(std::forward<GroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The association's VPC ID.</p>
+   */
+  inline const Aws::String& GetVpcId() const { return m_vpcId; }
+  inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
+  template <typename VpcIdT = Aws::String>
+  void SetVpcId(VpcIdT&& value) {
+    m_vpcIdHasBeenSet = true;
+    m_vpcId = std::forward<VpcIdT>(value);
+  }
+  template <typename VpcIdT = Aws::String>
+  SecurityGroupVpcAssociation& WithVpcId(VpcIdT&& value) {
+    SetVpcId(std::forward<VpcIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID of the owner of the VPC.</p>
+   */
+  inline const Aws::String& GetVpcOwnerId() const { return m_vpcOwnerId; }
+  inline bool VpcOwnerIdHasBeenSet() const { return m_vpcOwnerIdHasBeenSet; }
+  template <typename VpcOwnerIdT = Aws::String>
+  void SetVpcOwnerId(VpcOwnerIdT&& value) {
+    m_vpcOwnerIdHasBeenSet = true;
+    m_vpcOwnerId = std::forward<VpcOwnerIdT>(value);
+  }
+  template <typename VpcOwnerIdT = Aws::String>
+  SecurityGroupVpcAssociation& WithVpcOwnerId(VpcOwnerIdT&& value) {
+    SetVpcOwnerId(std::forward<VpcOwnerIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The association's security group ID.</p>
-     */
-    inline const Aws::String& GetGroupId() const{ return m_groupId; }
-    inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
-    inline void SetGroupId(const Aws::String& value) { m_groupIdHasBeenSet = true; m_groupId = value; }
-    inline void SetGroupId(Aws::String&& value) { m_groupIdHasBeenSet = true; m_groupId = std::move(value); }
-    inline void SetGroupId(const char* value) { m_groupIdHasBeenSet = true; m_groupId.assign(value); }
-    inline SecurityGroupVpcAssociation& WithGroupId(const Aws::String& value) { SetGroupId(value); return *this;}
-    inline SecurityGroupVpcAssociation& WithGroupId(Aws::String&& value) { SetGroupId(std::move(value)); return *this;}
-    inline SecurityGroupVpcAssociation& WithGroupId(const char* value) { SetGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The association's state.</p>
+   */
+  inline SecurityGroupVpcAssociationState GetState() const { return m_state; }
+  inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
+  inline void SetState(SecurityGroupVpcAssociationState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline SecurityGroupVpcAssociation& WithState(SecurityGroupVpcAssociationState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The association's VPC ID.</p>
-     */
-    inline const Aws::String& GetVpcId() const{ return m_vpcId; }
-    inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
-    inline void SetVpcId(const Aws::String& value) { m_vpcIdHasBeenSet = true; m_vpcId = value; }
-    inline void SetVpcId(Aws::String&& value) { m_vpcIdHasBeenSet = true; m_vpcId = std::move(value); }
-    inline void SetVpcId(const char* value) { m_vpcIdHasBeenSet = true; m_vpcId.assign(value); }
-    inline SecurityGroupVpcAssociation& WithVpcId(const Aws::String& value) { SetVpcId(value); return *this;}
-    inline SecurityGroupVpcAssociation& WithVpcId(Aws::String&& value) { SetVpcId(std::move(value)); return *this;}
-    inline SecurityGroupVpcAssociation& WithVpcId(const char* value) { SetVpcId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The association's state reason.</p>
+   */
+  inline const Aws::String& GetStateReason() const { return m_stateReason; }
+  inline bool StateReasonHasBeenSet() const { return m_stateReasonHasBeenSet; }
+  template <typename StateReasonT = Aws::String>
+  void SetStateReason(StateReasonT&& value) {
+    m_stateReasonHasBeenSet = true;
+    m_stateReason = std::forward<StateReasonT>(value);
+  }
+  template <typename StateReasonT = Aws::String>
+  SecurityGroupVpcAssociation& WithStateReason(StateReasonT&& value) {
+    SetStateReason(std::forward<StateReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID of the owner of the VPC.</p>
-     */
-    inline const Aws::String& GetVpcOwnerId() const{ return m_vpcOwnerId; }
-    inline bool VpcOwnerIdHasBeenSet() const { return m_vpcOwnerIdHasBeenSet; }
-    inline void SetVpcOwnerId(const Aws::String& value) { m_vpcOwnerIdHasBeenSet = true; m_vpcOwnerId = value; }
-    inline void SetVpcOwnerId(Aws::String&& value) { m_vpcOwnerIdHasBeenSet = true; m_vpcOwnerId = std::move(value); }
-    inline void SetVpcOwnerId(const char* value) { m_vpcOwnerIdHasBeenSet = true; m_vpcOwnerId.assign(value); }
-    inline SecurityGroupVpcAssociation& WithVpcOwnerId(const Aws::String& value) { SetVpcOwnerId(value); return *this;}
-    inline SecurityGroupVpcAssociation& WithVpcOwnerId(Aws::String&& value) { SetVpcOwnerId(std::move(value)); return *this;}
-    inline SecurityGroupVpcAssociation& WithVpcOwnerId(const char* value) { SetVpcOwnerId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID of the owner of the security group.</p>
+   */
+  inline const Aws::String& GetGroupOwnerId() const { return m_groupOwnerId; }
+  inline bool GroupOwnerIdHasBeenSet() const { return m_groupOwnerIdHasBeenSet; }
+  template <typename GroupOwnerIdT = Aws::String>
+  void SetGroupOwnerId(GroupOwnerIdT&& value) {
+    m_groupOwnerIdHasBeenSet = true;
+    m_groupOwnerId = std::forward<GroupOwnerIdT>(value);
+  }
+  template <typename GroupOwnerIdT = Aws::String>
+  SecurityGroupVpcAssociation& WithGroupOwnerId(GroupOwnerIdT&& value) {
+    SetGroupOwnerId(std::forward<GroupOwnerIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_groupId;
 
-    ///@{
-    /**
-     * <p>The association's state.</p>
-     */
-    inline const SecurityGroupVpcAssociationState& GetState() const{ return m_state; }
-    inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
-    inline void SetState(const SecurityGroupVpcAssociationState& value) { m_stateHasBeenSet = true; m_state = value; }
-    inline void SetState(SecurityGroupVpcAssociationState&& value) { m_stateHasBeenSet = true; m_state = std::move(value); }
-    inline SecurityGroupVpcAssociation& WithState(const SecurityGroupVpcAssociationState& value) { SetState(value); return *this;}
-    inline SecurityGroupVpcAssociation& WithState(SecurityGroupVpcAssociationState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_vpcId;
 
-    ///@{
-    /**
-     * <p>The association's state reason.</p>
-     */
-    inline const Aws::String& GetStateReason() const{ return m_stateReason; }
-    inline bool StateReasonHasBeenSet() const { return m_stateReasonHasBeenSet; }
-    inline void SetStateReason(const Aws::String& value) { m_stateReasonHasBeenSet = true; m_stateReason = value; }
-    inline void SetStateReason(Aws::String&& value) { m_stateReasonHasBeenSet = true; m_stateReason = std::move(value); }
-    inline void SetStateReason(const char* value) { m_stateReasonHasBeenSet = true; m_stateReason.assign(value); }
-    inline SecurityGroupVpcAssociation& WithStateReason(const Aws::String& value) { SetStateReason(value); return *this;}
-    inline SecurityGroupVpcAssociation& WithStateReason(Aws::String&& value) { SetStateReason(std::move(value)); return *this;}
-    inline SecurityGroupVpcAssociation& WithStateReason(const char* value) { SetStateReason(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_vpcOwnerId;
 
-    Aws::String m_groupId;
-    bool m_groupIdHasBeenSet = false;
+  SecurityGroupVpcAssociationState m_state{SecurityGroupVpcAssociationState::NOT_SET};
 
-    Aws::String m_vpcId;
-    bool m_vpcIdHasBeenSet = false;
+  Aws::String m_stateReason;
 
-    Aws::String m_vpcOwnerId;
-    bool m_vpcOwnerIdHasBeenSet = false;
+  Aws::String m_groupOwnerId;
+  bool m_groupIdHasBeenSet = false;
+  bool m_vpcIdHasBeenSet = false;
+  bool m_vpcOwnerIdHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_stateReasonHasBeenSet = false;
+  bool m_groupOwnerIdHasBeenSet = false;
+};
 
-    SecurityGroupVpcAssociationState m_state;
-    bool m_stateHasBeenSet = false;
-
-    Aws::String m_stateReason;
-    bool m_stateReasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

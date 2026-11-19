@@ -4,55 +4,54 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/glue/GlueRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/glue/GlueRequest.h>
+#include <aws/glue/Glue_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Glue {
+namespace Model {
 
+/**
+ */
+class DeleteDevEndpointRequest : public GlueRequest {
+ public:
+  AWS_GLUE_API DeleteDevEndpointRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteDevEndpoint"; }
+
+  AWS_GLUE_API Aws::String SerializePayload() const override;
+
+  AWS_GLUE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the <code>DevEndpoint</code>.</p>
    */
-  class DeleteDevEndpointRequest : public GlueRequest
-  {
-  public:
-    AWS_GLUE_API DeleteDevEndpointRequest();
+  inline const Aws::String& GetEndpointName() const { return m_endpointName; }
+  inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
+  template <typename EndpointNameT = Aws::String>
+  void SetEndpointName(EndpointNameT&& value) {
+    m_endpointNameHasBeenSet = true;
+    m_endpointName = std::forward<EndpointNameT>(value);
+  }
+  template <typename EndpointNameT = Aws::String>
+  DeleteDevEndpointRequest& WithEndpointName(EndpointNameT&& value) {
+    SetEndpointName(std::forward<EndpointNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endpointName;
+  bool m_endpointNameHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteDevEndpoint"; }
-
-    AWS_GLUE_API Aws::String SerializePayload() const override;
-
-    AWS_GLUE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the <code>DevEndpoint</code>.</p>
-     */
-    inline const Aws::String& GetEndpointName() const{ return m_endpointName; }
-    inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
-    inline void SetEndpointName(const Aws::String& value) { m_endpointNameHasBeenSet = true; m_endpointName = value; }
-    inline void SetEndpointName(Aws::String&& value) { m_endpointNameHasBeenSet = true; m_endpointName = std::move(value); }
-    inline void SetEndpointName(const char* value) { m_endpointNameHasBeenSet = true; m_endpointName.assign(value); }
-    inline DeleteDevEndpointRequest& WithEndpointName(const Aws::String& value) { SetEndpointName(value); return *this;}
-    inline DeleteDevEndpointRequest& WithEndpointName(Aws::String&& value) { SetEndpointName(std::move(value)); return *this;}
-    inline DeleteDevEndpointRequest& WithEndpointName(const char* value) { SetEndpointName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_endpointName;
-    bool m_endpointNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

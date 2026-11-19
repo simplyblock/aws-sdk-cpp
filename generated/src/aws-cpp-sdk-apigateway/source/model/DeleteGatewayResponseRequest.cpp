@@ -12,18 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteGatewayResponseRequest::DeleteGatewayResponseRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_responseType(GatewayResponseType::NOT_SET),
-    m_responseTypeHasBeenSet(false)
-{
-}
-
-Aws::String DeleteGatewayResponseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteGatewayResponseRequest::SerializePayload() const { return {}; }

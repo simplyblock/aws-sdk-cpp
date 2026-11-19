@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
 #include <aws/macie2/model/ManagedDataIdentifierSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Macie2
-{
-namespace Model
-{
-  class ListManagedDataIdentifiersResult
-  {
-  public:
-    AWS_MACIE2_API ListManagedDataIdentifiersResult();
-    AWS_MACIE2_API ListManagedDataIdentifiersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MACIE2_API ListManagedDataIdentifiersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Macie2 {
+namespace Model {
+class ListManagedDataIdentifiersResult {
+ public:
+  AWS_MACIE2_API ListManagedDataIdentifiersResult() = default;
+  AWS_MACIE2_API ListManagedDataIdentifiersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MACIE2_API ListManagedDataIdentifiersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of objects, one for each managed data identifier.</p>
+   */
+  inline const Aws::Vector<ManagedDataIdentifierSummary>& GetItems() const { return m_items; }
+  template <typename ItemsT = Aws::Vector<ManagedDataIdentifierSummary>>
+  void SetItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items = std::forward<ItemsT>(value);
+  }
+  template <typename ItemsT = Aws::Vector<ManagedDataIdentifierSummary>>
+  ListManagedDataIdentifiersResult& WithItems(ItemsT&& value) {
+    SetItems(std::forward<ItemsT>(value));
+    return *this;
+  }
+  template <typename ItemsT = ManagedDataIdentifierSummary>
+  ListManagedDataIdentifiersResult& AddItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items.emplace_back(std::forward<ItemsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects, one for each managed data identifier.</p>
-     */
-    inline const Aws::Vector<ManagedDataIdentifierSummary>& GetItems() const{ return m_items; }
-    inline void SetItems(const Aws::Vector<ManagedDataIdentifierSummary>& value) { m_items = value; }
-    inline void SetItems(Aws::Vector<ManagedDataIdentifierSummary>&& value) { m_items = std::move(value); }
-    inline ListManagedDataIdentifiersResult& WithItems(const Aws::Vector<ManagedDataIdentifierSummary>& value) { SetItems(value); return *this;}
-    inline ListManagedDataIdentifiersResult& WithItems(Aws::Vector<ManagedDataIdentifierSummary>&& value) { SetItems(std::move(value)); return *this;}
-    inline ListManagedDataIdentifiersResult& AddItems(const ManagedDataIdentifierSummary& value) { m_items.push_back(value); return *this; }
-    inline ListManagedDataIdentifiersResult& AddItems(ManagedDataIdentifierSummary&& value) { m_items.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The string to use in a subsequent request to get the next page of results in
+   * a paginated response. This value is null if there are no additional pages.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListManagedDataIdentifiersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The string to use in a subsequent request to get the next page of results in
-     * a paginated response. This value is null if there are no additional pages.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListManagedDataIdentifiersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListManagedDataIdentifiersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListManagedDataIdentifiersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListManagedDataIdentifiersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListManagedDataIdentifiersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListManagedDataIdentifiersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListManagedDataIdentifiersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ManagedDataIdentifierSummary> m_items;
+ private:
+  Aws::Vector<ManagedDataIdentifierSummary> m_items;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_itemsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

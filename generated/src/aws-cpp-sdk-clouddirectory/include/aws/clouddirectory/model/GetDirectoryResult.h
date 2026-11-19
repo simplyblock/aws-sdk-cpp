@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
 #include <aws/clouddirectory/model/Directory.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class GetDirectoryResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API GetDirectoryResult();
-    AWS_CLOUDDIRECTORY_API GetDirectoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API GetDirectoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class GetDirectoryResult {
+ public:
+  AWS_CLOUDDIRECTORY_API GetDirectoryResult() = default;
+  AWS_CLOUDDIRECTORY_API GetDirectoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API GetDirectoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Metadata about the directory.</p>
+   */
+  inline const Directory& GetDirectory() const { return m_directory; }
+  template <typename DirectoryT = Directory>
+  void SetDirectory(DirectoryT&& value) {
+    m_directoryHasBeenSet = true;
+    m_directory = std::forward<DirectoryT>(value);
+  }
+  template <typename DirectoryT = Directory>
+  GetDirectoryResult& WithDirectory(DirectoryT&& value) {
+    SetDirectory(std::forward<DirectoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Metadata about the directory.</p>
-     */
-    inline const Directory& GetDirectory() const{ return m_directory; }
-    inline void SetDirectory(const Directory& value) { m_directory = value; }
-    inline void SetDirectory(Directory&& value) { m_directory = std::move(value); }
-    inline GetDirectoryResult& WithDirectory(const Directory& value) { SetDirectory(value); return *this;}
-    inline GetDirectoryResult& WithDirectory(Directory&& value) { SetDirectory(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDirectoryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDirectoryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDirectoryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDirectoryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Directory m_directory;
+ private:
+  Directory m_directory;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_directoryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

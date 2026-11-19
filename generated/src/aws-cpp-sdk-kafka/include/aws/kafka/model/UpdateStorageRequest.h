@@ -4,133 +4,152 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
-#include <aws/kafka/KafkaRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/KafkaRequest.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/kafka/model/ProvisionedThroughput.h>
 #include <aws/kafka/model/StorageMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>Request object for UpdateStorage api. Its used to update the
+ * storage attributes for the cluster.</p>
+       <p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/UpdateStorageRequest">AWS
+ * API Reference</a></p>
+ */
+class UpdateStorageRequest : public KafkaRequest {
+ public:
+  AWS_KAFKA_API UpdateStorageRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateStorage"; }
+
+  AWS_KAFKA_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * 
-            <p>Request object for UpdateStorage api. Its used to update the
-   * storage attributes for the cluster.</p>
-         <p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/UpdateStorageRequest">AWS
-   * API Reference</a></p>
+   *
+          <p>The Amazon Resource Name (ARN) of the cluster to be
+   * updated.</p>
+
    */
-  class UpdateStorageRequest : public KafkaRequest
-  {
-  public:
-    AWS_KAFKA_API UpdateStorageRequest();
+  inline const Aws::String& GetClusterArn() const { return m_clusterArn; }
+  inline bool ClusterArnHasBeenSet() const { return m_clusterArnHasBeenSet; }
+  template <typename ClusterArnT = Aws::String>
+  void SetClusterArn(ClusterArnT&& value) {
+    m_clusterArnHasBeenSet = true;
+    m_clusterArn = std::forward<ClusterArnT>(value);
+  }
+  template <typename ClusterArnT = Aws::String>
+  UpdateStorageRequest& WithClusterArn(ClusterArnT&& value) {
+    SetClusterArn(std::forward<ClusterArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateStorage"; }
+  ///@{
+  /**
+   *
+          <p>The version of cluster to update from. A successful operation
+   * will then generate a new version.</p>
 
-    AWS_KAFKA_API Aws::String SerializePayload() const override;
+   */
+  inline const Aws::String& GetCurrentVersion() const { return m_currentVersion; }
+  inline bool CurrentVersionHasBeenSet() const { return m_currentVersionHasBeenSet; }
+  template <typename CurrentVersionT = Aws::String>
+  void SetCurrentVersion(CurrentVersionT&& value) {
+    m_currentVersionHasBeenSet = true;
+    m_currentVersion = std::forward<CurrentVersionT>(value);
+  }
+  template <typename CurrentVersionT = Aws::String>
+  UpdateStorageRequest& WithCurrentVersion(CurrentVersionT&& value) {
+    SetCurrentVersion(std::forward<CurrentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   *
+          <p>EBS volume provisioned throughput information.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) of the cluster to be
-     * updated.</p>
-         
-     */
-    inline const Aws::String& GetClusterArn() const{ return m_clusterArn; }
-    inline bool ClusterArnHasBeenSet() const { return m_clusterArnHasBeenSet; }
-    inline void SetClusterArn(const Aws::String& value) { m_clusterArnHasBeenSet = true; m_clusterArn = value; }
-    inline void SetClusterArn(Aws::String&& value) { m_clusterArnHasBeenSet = true; m_clusterArn = std::move(value); }
-    inline void SetClusterArn(const char* value) { m_clusterArnHasBeenSet = true; m_clusterArn.assign(value); }
-    inline UpdateStorageRequest& WithClusterArn(const Aws::String& value) { SetClusterArn(value); return *this;}
-    inline UpdateStorageRequest& WithClusterArn(Aws::String&& value) { SetClusterArn(std::move(value)); return *this;}
-    inline UpdateStorageRequest& WithClusterArn(const char* value) { SetClusterArn(value); return *this;}
-    ///@}
+   */
+  inline const ProvisionedThroughput& GetProvisionedThroughput() const { return m_provisionedThroughput; }
+  inline bool ProvisionedThroughputHasBeenSet() const { return m_provisionedThroughputHasBeenSet; }
+  template <typename ProvisionedThroughputT = ProvisionedThroughput>
+  void SetProvisionedThroughput(ProvisionedThroughputT&& value) {
+    m_provisionedThroughputHasBeenSet = true;
+    m_provisionedThroughput = std::forward<ProvisionedThroughputT>(value);
+  }
+  template <typename ProvisionedThroughputT = ProvisionedThroughput>
+  UpdateStorageRequest& WithProvisionedThroughput(ProvisionedThroughputT&& value) {
+    SetProvisionedThroughput(std::forward<ProvisionedThroughputT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The version of cluster to update from. A successful operation
-     * will then generate a new version.</p>
-         
-     */
-    inline const Aws::String& GetCurrentVersion() const{ return m_currentVersion; }
-    inline bool CurrentVersionHasBeenSet() const { return m_currentVersionHasBeenSet; }
-    inline void SetCurrentVersion(const Aws::String& value) { m_currentVersionHasBeenSet = true; m_currentVersion = value; }
-    inline void SetCurrentVersion(Aws::String&& value) { m_currentVersionHasBeenSet = true; m_currentVersion = std::move(value); }
-    inline void SetCurrentVersion(const char* value) { m_currentVersionHasBeenSet = true; m_currentVersion.assign(value); }
-    inline UpdateStorageRequest& WithCurrentVersion(const Aws::String& value) { SetCurrentVersion(value); return *this;}
-    inline UpdateStorageRequest& WithCurrentVersion(Aws::String&& value) { SetCurrentVersion(std::move(value)); return *this;}
-    inline UpdateStorageRequest& WithCurrentVersion(const char* value) { SetCurrentVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>Controls storage mode for supported storage tiers.</p>
 
-    ///@{
-    /**
-     * 
-            <p>EBS volume provisioned throughput information.</p>
-         
-     */
-    inline const ProvisionedThroughput& GetProvisionedThroughput() const{ return m_provisionedThroughput; }
-    inline bool ProvisionedThroughputHasBeenSet() const { return m_provisionedThroughputHasBeenSet; }
-    inline void SetProvisionedThroughput(const ProvisionedThroughput& value) { m_provisionedThroughputHasBeenSet = true; m_provisionedThroughput = value; }
-    inline void SetProvisionedThroughput(ProvisionedThroughput&& value) { m_provisionedThroughputHasBeenSet = true; m_provisionedThroughput = std::move(value); }
-    inline UpdateStorageRequest& WithProvisionedThroughput(const ProvisionedThroughput& value) { SetProvisionedThroughput(value); return *this;}
-    inline UpdateStorageRequest& WithProvisionedThroughput(ProvisionedThroughput&& value) { SetProvisionedThroughput(std::move(value)); return *this;}
-    ///@}
+   */
+  inline StorageMode GetStorageMode() const { return m_storageMode; }
+  inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
+  inline void SetStorageMode(StorageMode value) {
+    m_storageModeHasBeenSet = true;
+    m_storageMode = value;
+  }
+  inline UpdateStorageRequest& WithStorageMode(StorageMode value) {
+    SetStorageMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>Controls storage mode for supported storage tiers.</p>
-         
-     */
-    inline const StorageMode& GetStorageMode() const{ return m_storageMode; }
-    inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
-    inline void SetStorageMode(const StorageMode& value) { m_storageModeHasBeenSet = true; m_storageMode = value; }
-    inline void SetStorageMode(StorageMode&& value) { m_storageModeHasBeenSet = true; m_storageMode = std::move(value); }
-    inline UpdateStorageRequest& WithStorageMode(const StorageMode& value) { SetStorageMode(value); return *this;}
-    inline UpdateStorageRequest& WithStorageMode(StorageMode&& value) { SetStorageMode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>size of the EBS volume to update.</p>
 
-    ///@{
-    /**
-     * 
-            <p>size of the EBS volume to update.</p>
-         
-     */
-    inline int GetVolumeSizeGB() const{ return m_volumeSizeGB; }
-    inline bool VolumeSizeGBHasBeenSet() const { return m_volumeSizeGBHasBeenSet; }
-    inline void SetVolumeSizeGB(int value) { m_volumeSizeGBHasBeenSet = true; m_volumeSizeGB = value; }
-    inline UpdateStorageRequest& WithVolumeSizeGB(int value) { SetVolumeSizeGB(value); return *this;}
-    ///@}
-  private:
+   */
+  inline int GetVolumeSizeGB() const { return m_volumeSizeGB; }
+  inline bool VolumeSizeGBHasBeenSet() const { return m_volumeSizeGBHasBeenSet; }
+  inline void SetVolumeSizeGB(int value) {
+    m_volumeSizeGBHasBeenSet = true;
+    m_volumeSizeGB = value;
+  }
+  inline UpdateStorageRequest& WithVolumeSizeGB(int value) {
+    SetVolumeSizeGB(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterArn;
 
-    Aws::String m_clusterArn;
-    bool m_clusterArnHasBeenSet = false;
+  Aws::String m_currentVersion;
 
-    Aws::String m_currentVersion;
-    bool m_currentVersionHasBeenSet = false;
+  ProvisionedThroughput m_provisionedThroughput;
 
-    ProvisionedThroughput m_provisionedThroughput;
-    bool m_provisionedThroughputHasBeenSet = false;
+  StorageMode m_storageMode{StorageMode::NOT_SET};
 
-    StorageMode m_storageMode;
-    bool m_storageModeHasBeenSet = false;
+  int m_volumeSizeGB{0};
+  bool m_clusterArnHasBeenSet = false;
+  bool m_currentVersionHasBeenSet = false;
+  bool m_provisionedThroughputHasBeenSet = false;
+  bool m_storageModeHasBeenSet = false;
+  bool m_volumeSizeGBHasBeenSet = false;
+};
 
-    int m_volumeSizeGB;
-    bool m_volumeSizeGBHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

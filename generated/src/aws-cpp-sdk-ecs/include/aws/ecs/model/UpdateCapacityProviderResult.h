@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ecs/ECS_EXPORTS.h>
 #include <aws/ecs/model/CapacityProvider.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class UpdateCapacityProviderResult
-  {
-  public:
-    AWS_ECS_API UpdateCapacityProviderResult();
-    AWS_ECS_API UpdateCapacityProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API UpdateCapacityProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+class UpdateCapacityProviderResult {
+ public:
+  AWS_ECS_API UpdateCapacityProviderResult() = default;
+  AWS_ECS_API UpdateCapacityProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API UpdateCapacityProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Details about the capacity provider.</p>
+   */
+  inline const CapacityProvider& GetCapacityProvider() const { return m_capacityProvider; }
+  template <typename CapacityProviderT = CapacityProvider>
+  void SetCapacityProvider(CapacityProviderT&& value) {
+    m_capacityProviderHasBeenSet = true;
+    m_capacityProvider = std::forward<CapacityProviderT>(value);
+  }
+  template <typename CapacityProviderT = CapacityProvider>
+  UpdateCapacityProviderResult& WithCapacityProvider(CapacityProviderT&& value) {
+    SetCapacityProvider(std::forward<CapacityProviderT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about the capacity provider.</p>
-     */
-    inline const CapacityProvider& GetCapacityProvider() const{ return m_capacityProvider; }
-    inline void SetCapacityProvider(const CapacityProvider& value) { m_capacityProvider = value; }
-    inline void SetCapacityProvider(CapacityProvider&& value) { m_capacityProvider = std::move(value); }
-    inline UpdateCapacityProviderResult& WithCapacityProvider(const CapacityProvider& value) { SetCapacityProvider(value); return *this;}
-    inline UpdateCapacityProviderResult& WithCapacityProvider(CapacityProvider&& value) { SetCapacityProvider(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateCapacityProviderResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateCapacityProviderResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateCapacityProviderResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateCapacityProviderResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CapacityProvider m_capacityProvider;
+ private:
+  CapacityProvider m_capacityProvider;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_capacityProviderHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

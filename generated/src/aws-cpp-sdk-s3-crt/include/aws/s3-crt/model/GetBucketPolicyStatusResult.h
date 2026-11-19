@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3-crt/S3Crt_EXPORTS.h>
 #include <aws/s3-crt/model/PolicyStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Crt
-{
-namespace Model
-{
-  class GetBucketPolicyStatusResult
-  {
-  public:
-    AWS_S3CRT_API GetBucketPolicyStatusResult();
-    AWS_S3CRT_API GetBucketPolicyStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CRT_API GetBucketPolicyStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Crt {
+namespace Model {
+class GetBucketPolicyStatusResult {
+ public:
+  AWS_S3CRT_API GetBucketPolicyStatusResult() = default;
+  AWS_S3CRT_API GetBucketPolicyStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CRT_API GetBucketPolicyStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The policy status for the specified bucket.</p>
+   */
+  inline const PolicyStatus& GetPolicyStatus() const { return m_policyStatus; }
+  template <typename PolicyStatusT = PolicyStatus>
+  void SetPolicyStatus(PolicyStatusT&& value) {
+    m_policyStatusHasBeenSet = true;
+    m_policyStatus = std::forward<PolicyStatusT>(value);
+  }
+  template <typename PolicyStatusT = PolicyStatus>
+  GetBucketPolicyStatusResult& WithPolicyStatus(PolicyStatusT&& value) {
+    SetPolicyStatus(std::forward<PolicyStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The policy status for the specified bucket.</p>
-     */
-    inline const PolicyStatus& GetPolicyStatus() const{ return m_policyStatus; }
-    inline void SetPolicyStatus(const PolicyStatus& value) { m_policyStatus = value; }
-    inline void SetPolicyStatus(PolicyStatus&& value) { m_policyStatus = std::move(value); }
-    inline GetBucketPolicyStatusResult& WithPolicyStatus(const PolicyStatus& value) { SetPolicyStatus(value); return *this;}
-    inline GetBucketPolicyStatusResult& WithPolicyStatus(PolicyStatus&& value) { SetPolicyStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBucketPolicyStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBucketPolicyStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBucketPolicyStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBucketPolicyStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PolicyStatus m_policyStatus;
+ private:
+  PolicyStatus m_policyStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace S3Crt
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3Crt
+}  // namespace Aws

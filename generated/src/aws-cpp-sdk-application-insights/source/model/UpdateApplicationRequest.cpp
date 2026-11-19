@@ -4,94 +4,93 @@
  */
 
 #include <aws/application-insights/model/UpdateApplicationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ApplicationInsights::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateApplicationRequest::UpdateApplicationRequest() : 
-    m_resourceGroupNameHasBeenSet(false),
-    m_opsCenterEnabled(false),
-    m_opsCenterEnabledHasBeenSet(false),
-    m_cWEMonitorEnabled(false),
-    m_cWEMonitorEnabledHasBeenSet(false),
-    m_opsItemSNSTopicArnHasBeenSet(false),
-    m_sNSNotificationArnHasBeenSet(false),
-    m_removeSNSTopic(false),
-    m_removeSNSTopicHasBeenSet(false),
-    m_autoConfigEnabled(false),
-    m_autoConfigEnabledHasBeenSet(false),
-    m_attachMissingPermission(false),
-    m_attachMissingPermissionHasBeenSet(false)
-{
+Aws::String UpdateApplicationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_opsCenterEnabledHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cWEMonitorEnabledHasBeenSet) {
+    mapSize++;
+  }
+  if (m_opsItemSNSTopicArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sNSNotificationArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_removeSNSTopicHasBeenSet) {
+    mapSize++;
+  }
+  if (m_autoConfigEnabledHasBeenSet) {
+    mapSize++;
+  }
+  if (m_attachMissingPermissionHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_resourceGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceGroupName.c_str()));
+  }
+
+  if (m_opsCenterEnabledHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OpsCenterEnabled"));
+    encoder.WriteBool(m_opsCenterEnabled);
+  }
+
+  if (m_cWEMonitorEnabledHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CWEMonitorEnabled"));
+    encoder.WriteBool(m_cWEMonitorEnabled);
+  }
+
+  if (m_opsItemSNSTopicArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OpsItemSNSTopicArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_opsItemSNSTopicArn.c_str()));
+  }
+
+  if (m_sNSNotificationArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SNSNotificationArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sNSNotificationArn.c_str()));
+  }
+
+  if (m_removeSNSTopicHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RemoveSNSTopic"));
+    encoder.WriteBool(m_removeSNSTopic);
+  }
+
+  if (m_autoConfigEnabledHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AutoConfigEnabled"));
+    encoder.WriteBool(m_autoConfigEnabled);
+  }
+
+  if (m_attachMissingPermissionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AttachMissingPermission"));
+    encoder.WriteBool(m_attachMissingPermission);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateApplicationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceGroupNameHasBeenSet)
-  {
-   payload.WithString("ResourceGroupName", m_resourceGroupName);
-
-  }
-
-  if(m_opsCenterEnabledHasBeenSet)
-  {
-   payload.WithBool("OpsCenterEnabled", m_opsCenterEnabled);
-
-  }
-
-  if(m_cWEMonitorEnabledHasBeenSet)
-  {
-   payload.WithBool("CWEMonitorEnabled", m_cWEMonitorEnabled);
-
-  }
-
-  if(m_opsItemSNSTopicArnHasBeenSet)
-  {
-   payload.WithString("OpsItemSNSTopicArn", m_opsItemSNSTopicArn);
-
-  }
-
-  if(m_sNSNotificationArnHasBeenSet)
-  {
-   payload.WithString("SNSNotificationArn", m_sNSNotificationArn);
-
-  }
-
-  if(m_removeSNSTopicHasBeenSet)
-  {
-   payload.WithBool("RemoveSNSTopic", m_removeSNSTopic);
-
-  }
-
-  if(m_autoConfigEnabledHasBeenSet)
-  {
-   payload.WithBool("AutoConfigEnabled", m_autoConfigEnabled);
-
-  }
-
-  if(m_attachMissingPermissionHasBeenSet)
-  {
-   payload.WithBool("AttachMissingPermission", m_attachMissingPermission);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateApplicationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateApplicationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "EC2WindowsBarleyService.UpdateApplication"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

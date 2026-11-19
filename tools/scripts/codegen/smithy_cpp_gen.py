@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0.
+
+"""
+Wrapper for Smithy pagination generator
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import List
+
+SMITHY_GENERATOR_LOCATION = "tools/code-generation/smithy/cpp-codegen"
+SMITHY_TO_C2J_MAP_FILE = "tools/code-generation/smithy/cpp-codegen/smithy2c2j_service_map.json"
+SMITHY_API_DESCRIPTIONS_DIR = "tools/code-generation/smithy/api-descriptions"
+BDD_BYTECODER_FILE = "crt/aws-crt-cpp/crt/aws-c-sdkutils/compiler/bdd-bytecoder.py"
+ENDPOINT_BDD_TRAIT = "smithy.rules#endpointBdd"
+
+
+def bdd_endpoint_services():
+    """C2J service names whose Smithy model carries the endpointBdd trait on its service shape,
+    i.e. the services the Smithy generator will emit a BDD blob for. C2J must skip its JSON
+    endpoint-rules blob for exactly this set; services outside it (legacy/mock, or models lacking
+    the trait) keep the JSON path. This MUST stay in sync with EndpointRulesCodegenPlugin's
+    service.hasTrait(ENDPOINT_BDD_TRAIT) check — divergence causes a missing GetRulesBlob() symbol."""
+    with open(os.path.abspath(SMITHY_TO_C2J_MAP_FILE), 'r') as file:
+        smithy_to_c2j = json.load(file)
+    descriptions_dir = Path(os.path.abspath(SMITHY_API_DESCRIPTIONS_DIR))
+    services = {
+        smithy_to_c2j.get(model.stem, model.stem)
+        for model in descriptions_dir.glob("*.json")
+        if _has_bdd_service_shape(model)
+    }
+    if "s3" in services:
+        services.add("s3-crt")
+    return services
+
+
+def _has_bdd_service_shape(model_path):
+    """True if any service shape in the Smithy model carries the endpointBdd trait."""
+    shapes = json.loads(model_path.read_text()).get("shapes", {}).values()
+    return any(
+        shape.get("type") == "service" and ENDPOINT_BDD_TRAIT in shape.get("traits", {})
+        for shape in shapes
+    )
+
+
+class SmithyCppGen(object):
+    """Wrapper for Smithy C++ code generator for C++ SDK"""
+
+    def __init__(self, debug: bool, use_smithy_models: bool = False,
+                 smithy_model_services: set = None, use_smithy_bdd_endpoints: bool = False,
+                 **kwargs):
+        self.debug = debug
+        self.use_smithy_models = use_smithy_models
+        self.smithy_model_services = smithy_model_services or set()
+        self.use_smithy_bdd_endpoints = use_smithy_bdd_endpoints
+        with open(os.path.abspath(SMITHY_TO_C2J_MAP_FILE), 'r') as file:
+            self.smithy_c2j_data = json.load(file)
+            self.c2j_smithy_data = {value: key for key, value in self.smithy_c2j_data.items()}
+
+    def generate(self, clients_to_build: set):
+        """Generate Smithy-based code for SDK clients"""
+        smithy_services = [self.c2j_smithy_data.get(service, service) for service in clients_to_build]
+        if self.debug:
+            print(f"Generating Smithy code for: {','.join(smithy_services)}")
+        
+        if self._generate_pagination(smithy_services, json.dumps(self.smithy_c2j_data)):
+            target_dir = os.path.abspath("generated/src")
+            plugins_to_copy = ["smithy-cpp-codegen-paginators", "smithy-cpp-codegen-waiters"]
+            if self.use_smithy_models:
+                plugins_to_copy.append("smithy-cpp-codegen-models")
+                if self.debug:
+                    print(f"Including Smithy model files for: {sorted(self.smithy_model_services)}")
+            if self.use_smithy_bdd_endpoints:
+                plugins_to_copy.append("smithy-cpp-codegen-endpoint-rules")
+                if self.debug:
+                    print("Including Smithy-generated BDD endpoint-rules blob files")
+            self._copy_cpp_codegen_contents(
+                os.path.abspath("tools/code-generation/smithy/cpp-codegen"),
+                plugins_to_copy,
+                target_dir
+            )
+            return 0
+        return -1
+
+    def _generate_pagination(self, smithy_services: List[str], smithy_c2j_data: str):
+        smithy_codegen_command = [
+            "./gradlew",
+            "build",
+            "-PservicesFilter=" + ",".join(smithy_services),
+            "-Pc2jMap=" + smithy_c2j_data
+        ]
+        if self.use_smithy_models:
+            smithy_codegen_command.append("-PgenerateModels=true")
+        if self.use_smithy_bdd_endpoints:
+            smithy_codegen_command.append("-PgenerateEndpointRules=true")
+            smithy_codegen_command.append("-PbddBytecoderPath=" + os.path.abspath(BDD_BYTECODER_FILE))
+            smithy_codegen_command.append("-PpythonExecutable=" + sys.executable)
+        
+        try:
+            if self.debug:
+                print(f"RUNNING: {' '.join(smithy_codegen_command)}\nFROM: {SMITHY_GENERATOR_LOCATION}")
+
+            process = subprocess.run(
+                smithy_codegen_command,
+                timeout=6*60,
+                check=True,
+                capture_output=True,
+                text=True,
+                cwd=SMITHY_GENERATOR_LOCATION
+            )
+            print("Smithy codegen successful!")
+            if self.debug:
+                print(process.stdout)
+            print(f"Smithy code generation done, (re)generated {len(smithy_services)} package(s).")
+            return True
+
+        except subprocess.CalledProcessError as e:
+            print(f"Command failed: {e.returncode}\nError: {e.stderr}")
+            return False
+
+    def _copy_cpp_codegen_contents(self, top_level_dir: str, plugin_names: List[str], target_dir: str):
+        # Walk output directory to find generated code
+        output_dir = os.path.join(top_level_dir, "output")
+        # TODO: Verify if this check is still needed after Smithy generator always creates output
+        if not os.path.exists(output_dir):
+            if self.debug:
+                print(f"No output directory found at '{output_dir}'")
+            return
+            
+        for root, dirs, files in os.walk(output_dir):
+            for plugin_name in plugin_names:
+                if plugin_name not in dirs:
+                    continue
+                source_dir = os.path.join(root, plugin_name)
+                
+                # Extract service name from the projection directory
+                projection_dir = os.path.basename(os.path.dirname(source_dir))
+                smithy_service_name = projection_dir.split('.')[0]  # e.g., "api-gateway.2017-11-27" -> "api-gateway"
+                
+                # Map to c2j service name
+                c2j_service_name = self.smithy_c2j_data.get(smithy_service_name, smithy_service_name)
+
+                # For model files, only copy if service is in the smithy_model_services set
+                if plugin_name == "smithy-cpp-codegen-models":
+                    if c2j_service_name not in self.smithy_model_services:
+                        continue
+
+                service_target_dir = os.path.join(target_dir, f"aws-cpp-sdk-{c2j_service_name}")
+                os.makedirs(service_target_dir, exist_ok=True)
+                
+                for item in os.listdir(source_dir):
+                    source_item = os.path.join(source_dir, item)
+                    
+                    # Handle test directories separately - move to generated/tests
+                    if item == "generated" and os.path.isdir(source_item):
+                        generated_source = os.path.join(source_item, "tests")
+                        if os.path.exists(generated_source):
+                            test_target_dir = os.path.abspath("generated/tests")
+                            os.makedirs(test_target_dir, exist_ok=True)
+                            shutil.copytree(generated_source, test_target_dir, dirs_exist_ok=True)
+                            if self.debug:
+                                print(f"Copied tests from '{generated_source}' to '{test_target_dir}'")
+                        continue
+                    
+                    target_item = os.path.join(service_target_dir, item)
+                    if os.path.isdir(source_item):
+                        shutil.copytree(source_item, target_item, dirs_exist_ok=True)
+                    else:
+                        shutil.copy2(source_item, target_item)
+                        
+                if self.debug:
+                    print(f"Copied from '{source_dir}' to '{service_target_dir}'")
+        
+        # Cleanup output directory
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+            if self.debug:
+                print(f"Cleaned up '{output_dir}'")
+

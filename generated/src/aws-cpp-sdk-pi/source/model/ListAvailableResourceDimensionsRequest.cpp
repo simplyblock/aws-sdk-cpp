@@ -3,87 +3,84 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/pi/model/ListAvailableResourceDimensionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::PI::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListAvailableResourceDimensionsRequest::ListAvailableResourceDimensionsRequest() : 
-    m_serviceType(ServiceType::NOT_SET),
-    m_serviceTypeHasBeenSet(false),
-    m_identifierHasBeenSet(false),
-    m_metricsHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_authorizedActionsHasBeenSet(false)
-{
+Aws::String ListAvailableResourceDimensionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_serviceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_identifierHasBeenSet) {
+    mapSize++;
+  }
+  if (m_metricsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_authorizedActionsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_serviceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServiceType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ServiceTypeMapper::GetNameForServiceType(m_serviceType).c_str()));
+  }
+
+  if (m_identifierHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Identifier"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_identifier.c_str()));
+  }
+
+  if (m_metricsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Metrics"));
+    encoder.WriteArrayStart(m_metrics.size());
+    for (const auto& item_0 : m_metrics) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+
+  if (m_authorizedActionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AuthorizedActions"));
+    encoder.WriteArrayStart(m_authorizedActions.size());
+    for (const auto& item_0 : m_authorizedActions) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(FineGrainedActionMapper::GetNameForFineGrainedAction(item_0).c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ListAvailableResourceDimensionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_serviceTypeHasBeenSet)
-  {
-   payload.WithString("ServiceType", ServiceTypeMapper::GetNameForServiceType(m_serviceType));
-  }
-
-  if(m_identifierHasBeenSet)
-  {
-   payload.WithString("Identifier", m_identifier);
-
-  }
-
-  if(m_metricsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> metricsJsonList(m_metrics.size());
-   for(unsigned metricsIndex = 0; metricsIndex < metricsJsonList.GetLength(); ++metricsIndex)
-   {
-     metricsJsonList[metricsIndex].AsString(m_metrics[metricsIndex]);
-   }
-   payload.WithArray("Metrics", std::move(metricsJsonList));
-
-  }
-
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  if(m_authorizedActionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> authorizedActionsJsonList(m_authorizedActions.size());
-   for(unsigned authorizedActionsIndex = 0; authorizedActionsIndex < authorizedActionsJsonList.GetLength(); ++authorizedActionsIndex)
-   {
-     authorizedActionsJsonList[authorizedActionsIndex].AsString(FineGrainedActionMapper::GetNameForFineGrainedAction(m_authorizedActions[authorizedActionsIndex]));
-   }
-   payload.WithArray("AuthorizedActions", std::move(authorizedActionsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ListAvailableResourceDimensionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListAvailableResourceDimensionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PerformanceInsightsv20180227.ListAvailableResourceDimensions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

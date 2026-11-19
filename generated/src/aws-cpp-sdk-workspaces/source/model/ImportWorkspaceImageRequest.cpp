@@ -3,86 +3,85 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/ImportWorkspaceImageRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ImportWorkspaceImageRequest::ImportWorkspaceImageRequest() : 
-    m_ec2ImageIdHasBeenSet(false),
-    m_ingestionProcess(WorkspaceImageIngestionProcess::NOT_SET),
-    m_ingestionProcessHasBeenSet(false),
-    m_imageNameHasBeenSet(false),
-    m_imageDescriptionHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_applicationsHasBeenSet(false)
-{
+Aws::String ImportWorkspaceImageRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_ec2ImageIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ingestionProcessHasBeenSet) {
+    mapSize++;
+  }
+  if (m_imageNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_imageDescriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_applicationsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_ec2ImageIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Ec2ImageId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_ec2ImageId.c_str()));
+  }
+
+  if (m_ingestionProcessHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IngestionProcess"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(
+        WorkspaceImageIngestionProcessMapper::GetNameForWorkspaceImageIngestionProcess(m_ingestionProcess).c_str()));
+  }
+
+  if (m_imageNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImageName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_imageName.c_str()));
+  }
+
+  if (m_imageDescriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImageDescription"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_imageDescription.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_applicationsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Applications"));
+    encoder.WriteArrayStart(m_applications.size());
+    for (const auto& item_0 : m_applications) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(ApplicationMapper::GetNameForApplication(item_0).c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ImportWorkspaceImageRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_ec2ImageIdHasBeenSet)
-  {
-   payload.WithString("Ec2ImageId", m_ec2ImageId);
-
-  }
-
-  if(m_ingestionProcessHasBeenSet)
-  {
-   payload.WithString("IngestionProcess", WorkspaceImageIngestionProcessMapper::GetNameForWorkspaceImageIngestionProcess(m_ingestionProcess));
-  }
-
-  if(m_imageNameHasBeenSet)
-  {
-   payload.WithString("ImageName", m_imageName);
-
-  }
-
-  if(m_imageDescriptionHasBeenSet)
-  {
-   payload.WithString("ImageDescription", m_imageDescription);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  if(m_applicationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> applicationsJsonList(m_applications.size());
-   for(unsigned applicationsIndex = 0; applicationsIndex < applicationsJsonList.GetLength(); ++applicationsIndex)
-   {
-     applicationsJsonList[applicationsIndex].AsString(ApplicationMapper::GetNameForApplication(m_applications[applicationsIndex]));
-   }
-   payload.WithArray("Applications", std::move(applicationsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ImportWorkspaceImageRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ImportWorkspaceImageRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.ImportWorkspaceImage"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

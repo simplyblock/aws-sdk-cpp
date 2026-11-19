@@ -10,33 +10,23 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-ListResourceScansRequest::ListResourceScansRequest() : 
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String ListResourceScansRequest::SerializePayload() const
-{
+Aws::String ListResourceScansRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ListResourceScans&";
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
+  if (m_maxResultsHasBeenSet) {
     ss << "MaxResults=" << m_maxResults << "&";
+  }
+
+  if (m_scanTypeFilterHasBeenSet) {
+    ss << "ScanTypeFilter=" << StringUtils::URLEncode(ScanTypeMapper::GetNameForScanType(m_scanTypeFilter)) << "&";
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  ListResourceScansRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ListResourceScansRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

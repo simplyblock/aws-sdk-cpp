@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-oam "C++ SDK for the AWS oam service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-oam "C++ SDK for CloudWatch Observability Access Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_OAM_HEADERS
     "include/aws/oam/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OAM_HEADERS
 
 file(GLOB AWS_OAM_MODEL_HEADERS
     "include/aws/oam/model/*.h"
+)
+
+file(GLOB AWS_OAM_INTERNAL_HEADERS
+    "include/aws/oam/internal/*.h"
 )
 
 file(GLOB AWS_OAM_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OAM_MODEL_SOURCE
 
 file(GLOB OAM_UNIFIED_HEADERS
     ${AWS_OAM_HEADERS}
+    ${AWS_OAM_INTERNAL_HEADERS}
     ${AWS_OAM_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\oam" FILES ${AWS_OAM_HEADERS})
+        source_group("Header Files\\aws\\oam\\internal" FILES ${AWS_OAM_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\oam\\model" FILES ${AWS_OAM_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OAM_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OAM_MODEL_SOURCE})

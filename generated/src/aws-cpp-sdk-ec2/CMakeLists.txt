@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ec2 "C++ SDK for the AWS ec2 service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ec2 "C++ SDK for Amazon Elastic Compute Cloud" aws-cpp-sdk-core)
 
 file(GLOB AWS_EC2_HEADERS
     "include/aws/ec2/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EC2_HEADERS
 
 file(GLOB AWS_EC2_MODEL_HEADERS
     "include/aws/ec2/model/*.h"
+)
+
+file(GLOB AWS_EC2_INTERNAL_HEADERS
+    "include/aws/ec2/internal/*.h"
 )
 
 file(GLOB AWS_EC2_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EC2_MODEL_SOURCE
 
 file(GLOB EC2_UNIFIED_HEADERS
     ${AWS_EC2_HEADERS}
+    ${AWS_EC2_INTERNAL_HEADERS}
     ${AWS_EC2_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ec2" FILES ${AWS_EC2_HEADERS})
+        source_group("Header Files\\aws\\ec2\\internal" FILES ${AWS_EC2_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ec2\\model" FILES ${AWS_EC2_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EC2_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EC2_MODEL_SOURCE})

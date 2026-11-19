@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/accessanalyzer/AccessAnalyzer_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/accessanalyzer/AccessAnalyzerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace AccessAnalyzer
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace AccessAnalyzer {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using AccessAnalyzerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using AccessAnalyzerEndpointProviderBase =
     EndpointProviderBase<AccessAnalyzerClientConfiguration, AccessAnalyzerBuiltInParameters, AccessAnalyzerClientContextParameters>;
 
 using AccessAnalyzerDefaultEpProviderBase =
-    DefaultEndpointProvider<AccessAnalyzerClientConfiguration, AccessAnalyzerBuiltInParameters, AccessAnalyzerClientContextParameters>;
+    BDDEndpointProvider<AccessAnalyzerClientConfiguration, AccessAnalyzerBuiltInParameters, AccessAnalyzerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_ACCESSANALYZER_API AccessAnalyzerEndpointProvider : public AccessAnalyzerDefaultEpProviderBase
-{
-public:
-    using AccessAnalyzerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_ACCESSANALYZER_API AccessAnalyzerEndpointProvider : public AccessAnalyzerDefaultEpProviderBase {
+ public:
+  using AccessAnalyzerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    AccessAnalyzerEndpointProvider()
-      : AccessAnalyzerDefaultEpProviderBase(Aws::AccessAnalyzer::AccessAnalyzerEndpointRules::GetRulesBlob(), Aws::AccessAnalyzer::AccessAnalyzerEndpointRules::RulesBlobSize)
-    {}
+  AccessAnalyzerEndpointProvider();
 
-    ~AccessAnalyzerEndpointProvider()
-    {
-    }
+  ~AccessAnalyzerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace AccessAnalyzer
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace AccessAnalyzer
+}  // namespace Aws

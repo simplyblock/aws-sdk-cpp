@@ -4,13 +4,15 @@
  */
 
 #include <aws/backup-gateway/BackupGatewayEndpointProvider.h>
+#include <aws/backup-gateway/internal/BackupGatewayEndpointRules.h>
 
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace BackupGateway
-} // namespace Aws
+namespace Aws {
+namespace BackupGateway {
+namespace Endpoint {
+BackupGatewayEndpointProvider::BackupGatewayEndpointProvider()
+    : BackupGatewayDefaultEpProviderBase(Aws::BackupGateway::BackupGatewayEndpointRules::GetRulesBlob(),
+                                         Aws::BackupGateway::BackupGatewayEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace BackupGateway
+}  // namespace Aws

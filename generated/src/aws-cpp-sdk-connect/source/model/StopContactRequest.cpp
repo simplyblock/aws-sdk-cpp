@@ -12,38 +12,20 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopContactRequest::StopContactRequest() : 
-    m_contactIdHasBeenSet(false),
-    m_instanceIdHasBeenSet(false),
-    m_disconnectReasonHasBeenSet(false)
-{
-}
-
-Aws::String StopContactRequest::SerializePayload() const
-{
+Aws::String StopContactRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_contactIdHasBeenSet)
-  {
-   payload.WithString("ContactId", m_contactId);
-
+  if (m_contactIdHasBeenSet) {
+    payload.WithString("ContactId", m_contactId);
   }
 
-  if(m_instanceIdHasBeenSet)
-  {
-   payload.WithString("InstanceId", m_instanceId);
-
+  if (m_instanceIdHasBeenSet) {
+    payload.WithString("InstanceId", m_instanceId);
   }
 
-  if(m_disconnectReasonHasBeenSet)
-  {
-   payload.WithObject("DisconnectReason", m_disconnectReason.Jsonize());
-
+  if (m_disconnectReasonHasBeenSet) {
+    payload.WithObject("DisconnectReason", m_disconnectReason.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

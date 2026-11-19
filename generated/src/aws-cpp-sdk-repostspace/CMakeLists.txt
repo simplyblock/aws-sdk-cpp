@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-repostspace "C++ SDK for the AWS repostspace service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-repostspace "C++ SDK for AWS re:Post Private" aws-cpp-sdk-core)
 
 file(GLOB AWS_REPOSTSPACE_HEADERS
     "include/aws/repostspace/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_REPOSTSPACE_HEADERS
 
 file(GLOB AWS_REPOSTSPACE_MODEL_HEADERS
     "include/aws/repostspace/model/*.h"
+)
+
+file(GLOB AWS_REPOSTSPACE_INTERNAL_HEADERS
+    "include/aws/repostspace/internal/*.h"
 )
 
 file(GLOB AWS_REPOSTSPACE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_REPOSTSPACE_MODEL_SOURCE
 
 file(GLOB REPOSTSPACE_UNIFIED_HEADERS
     ${AWS_REPOSTSPACE_HEADERS}
+    ${AWS_REPOSTSPACE_INTERNAL_HEADERS}
     ${AWS_REPOSTSPACE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\repostspace" FILES ${AWS_REPOSTSPACE_HEADERS})
+        source_group("Header Files\\aws\\repostspace\\internal" FILES ${AWS_REPOSTSPACE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\repostspace\\model" FILES ${AWS_REPOSTSPACE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_REPOSTSPACE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_REPOSTSPACE_MODEL_SOURCE})

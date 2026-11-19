@@ -12,16 +12,4 @@ using namespace Aws::ConnectCampaigns::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCampaignStateRequest::GetCampaignStateRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetCampaignStateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCampaignStateRequest::SerializePayload() const { return {}; }

@@ -4,83 +4,91 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
-#include <aws/kafka/KafkaRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kafka/KafkaRequest.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>Disassociates sasl scram secrets to cluster.</p>
+
+ * <p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BatchDisassociateScramSecretRequest">AWS
+ * API Reference</a></p>
+ */
+class BatchDisassociateScramSecretRequest : public KafkaRequest {
+ public:
+  AWS_KAFKA_API BatchDisassociateScramSecretRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "BatchDisassociateScramSecret"; }
+
+  AWS_KAFKA_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * 
-            <p>Disassociates sasl scram secrets to cluster.</p>
-        
-   * <p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/BatchDisassociateScramSecretRequest">AWS
-   * API Reference</a></p>
+   *
+          <p>The Amazon Resource Name (ARN) of the cluster to be
+   * updated.</p>
+
    */
-  class BatchDisassociateScramSecretRequest : public KafkaRequest
-  {
-  public:
-    AWS_KAFKA_API BatchDisassociateScramSecretRequest();
+  inline const Aws::String& GetClusterArn() const { return m_clusterArn; }
+  inline bool ClusterArnHasBeenSet() const { return m_clusterArnHasBeenSet; }
+  template <typename ClusterArnT = Aws::String>
+  void SetClusterArn(ClusterArnT&& value) {
+    m_clusterArnHasBeenSet = true;
+    m_clusterArn = std::forward<ClusterArnT>(value);
+  }
+  template <typename ClusterArnT = Aws::String>
+  BatchDisassociateScramSecretRequest& WithClusterArn(ClusterArnT&& value) {
+    SetClusterArn(std::forward<ClusterArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "BatchDisassociateScramSecret"; }
+  ///@{
+  /**
+   *
+          <p>List of AWS Secrets Manager secret ARNs.</p>
 
-    AWS_KAFKA_API Aws::String SerializePayload() const override;
+   */
+  inline const Aws::Vector<Aws::String>& GetSecretArnList() const { return m_secretArnList; }
+  inline bool SecretArnListHasBeenSet() const { return m_secretArnListHasBeenSet; }
+  template <typename SecretArnListT = Aws::Vector<Aws::String>>
+  void SetSecretArnList(SecretArnListT&& value) {
+    m_secretArnListHasBeenSet = true;
+    m_secretArnList = std::forward<SecretArnListT>(value);
+  }
+  template <typename SecretArnListT = Aws::Vector<Aws::String>>
+  BatchDisassociateScramSecretRequest& WithSecretArnList(SecretArnListT&& value) {
+    SetSecretArnList(std::forward<SecretArnListT>(value));
+    return *this;
+  }
+  template <typename SecretArnListT = Aws::String>
+  BatchDisassociateScramSecretRequest& AddSecretArnList(SecretArnListT&& value) {
+    m_secretArnListHasBeenSet = true;
+    m_secretArnList.emplace_back(std::forward<SecretArnListT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterArn;
 
+  Aws::Vector<Aws::String> m_secretArnList;
+  bool m_clusterArnHasBeenSet = false;
+  bool m_secretArnListHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) of the cluster to be
-     * updated.</p>
-         
-     */
-    inline const Aws::String& GetClusterArn() const{ return m_clusterArn; }
-    inline bool ClusterArnHasBeenSet() const { return m_clusterArnHasBeenSet; }
-    inline void SetClusterArn(const Aws::String& value) { m_clusterArnHasBeenSet = true; m_clusterArn = value; }
-    inline void SetClusterArn(Aws::String&& value) { m_clusterArnHasBeenSet = true; m_clusterArn = std::move(value); }
-    inline void SetClusterArn(const char* value) { m_clusterArnHasBeenSet = true; m_clusterArn.assign(value); }
-    inline BatchDisassociateScramSecretRequest& WithClusterArn(const Aws::String& value) { SetClusterArn(value); return *this;}
-    inline BatchDisassociateScramSecretRequest& WithClusterArn(Aws::String&& value) { SetClusterArn(std::move(value)); return *this;}
-    inline BatchDisassociateScramSecretRequest& WithClusterArn(const char* value) { SetClusterArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * 
-            <p>List of AWS Secrets Manager secret ARNs.</p>
-         
-     */
-    inline const Aws::Vector<Aws::String>& GetSecretArnList() const{ return m_secretArnList; }
-    inline bool SecretArnListHasBeenSet() const { return m_secretArnListHasBeenSet; }
-    inline void SetSecretArnList(const Aws::Vector<Aws::String>& value) { m_secretArnListHasBeenSet = true; m_secretArnList = value; }
-    inline void SetSecretArnList(Aws::Vector<Aws::String>&& value) { m_secretArnListHasBeenSet = true; m_secretArnList = std::move(value); }
-    inline BatchDisassociateScramSecretRequest& WithSecretArnList(const Aws::Vector<Aws::String>& value) { SetSecretArnList(value); return *this;}
-    inline BatchDisassociateScramSecretRequest& WithSecretArnList(Aws::Vector<Aws::String>&& value) { SetSecretArnList(std::move(value)); return *this;}
-    inline BatchDisassociateScramSecretRequest& AddSecretArnList(const Aws::String& value) { m_secretArnListHasBeenSet = true; m_secretArnList.push_back(value); return *this; }
-    inline BatchDisassociateScramSecretRequest& AddSecretArnList(Aws::String&& value) { m_secretArnListHasBeenSet = true; m_secretArnList.push_back(std::move(value)); return *this; }
-    inline BatchDisassociateScramSecretRequest& AddSecretArnList(const char* value) { m_secretArnListHasBeenSet = true; m_secretArnList.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_clusterArn;
-    bool m_clusterArnHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_secretArnList;
-    bool m_secretArnListHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

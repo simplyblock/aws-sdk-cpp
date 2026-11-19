@@ -3,71 +3,112 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/keyspaces/model/AutoScalingSpecification.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Keyspaces
-{
-namespace Model
-{
+namespace Aws {
+namespace Keyspaces {
+namespace Model {
 
-AutoScalingSpecification::AutoScalingSpecification() : 
-    m_writeCapacityAutoScalingHasBeenSet(false),
-    m_readCapacityAutoScalingHasBeenSet(false)
-{
-}
+AutoScalingSpecification::AutoScalingSpecification(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-AutoScalingSpecification::AutoScalingSpecification(JsonView jsonValue)
-  : AutoScalingSpecification()
-{
-  *this = jsonValue;
-}
+AutoScalingSpecification& AutoScalingSpecification::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-AutoScalingSpecification& AutoScalingSpecification::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("writeCapacityAutoScaling"))
-  {
-    m_writeCapacityAutoScaling = jsonValue.GetObject("writeCapacityAutoScaling");
+              if (initialKeyStr == "writeCapacityAutoScaling") {
+                m_writeCapacityAutoScaling = AutoScalingSettings(decoder);
+                m_writeCapacityAutoScalingHasBeenSet = true;
+              }
 
-    m_writeCapacityAutoScalingHasBeenSet = true;
-  }
+              else if (initialKeyStr == "readCapacityAutoScaling") {
+                m_readCapacityAutoScaling = AutoScalingSettings(decoder);
+                m_readCapacityAutoScalingHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("AutoScalingSpecification", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("readCapacityAutoScaling"))
-  {
-    m_readCapacityAutoScaling = jsonValue.GetObject("readCapacityAutoScaling");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_readCapacityAutoScalingHasBeenSet = true;
+            if (initialKeyStr == "writeCapacityAutoScaling") {
+              m_writeCapacityAutoScaling = AutoScalingSettings(decoder);
+              m_writeCapacityAutoScalingHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "readCapacityAutoScaling") {
+              m_readCapacityAutoScaling = AutoScalingSettings(decoder);
+              m_readCapacityAutoScalingHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue AutoScalingSpecification::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_writeCapacityAutoScalingHasBeenSet)
-  {
-   payload.WithObject("writeCapacityAutoScaling", m_writeCapacityAutoScaling.Jsonize());
-
+void AutoScalingSpecification::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_writeCapacityAutoScalingHasBeenSet) {
+    mapSize++;
+  }
+  if (m_readCapacityAutoScalingHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_readCapacityAutoScalingHasBeenSet)
-  {
-   payload.WithObject("readCapacityAutoScaling", m_readCapacityAutoScaling.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_writeCapacityAutoScalingHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("writeCapacityAutoScaling"));
+    m_writeCapacityAutoScaling.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_readCapacityAutoScalingHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("readCapacityAutoScaling"));
+    m_readCapacityAutoScaling.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Keyspaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace Keyspaces
+}  // namespace Aws

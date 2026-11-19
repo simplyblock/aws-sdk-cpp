@@ -4,87 +4,106 @@
  */
 
 #pragma once
-#include <aws/email/SES_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/email/SES_EXPORTS.h>
 #include <aws/email/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SES
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SES {
+namespace Model {
+/**
+ * <p>A list of all identities that you have attempted to verify under your Amazon
+ * Web Services account, regardless of verification status.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/ListIdentitiesResponse">AWS
+ * API Reference</a></p>
+ */
+class ListIdentitiesResult {
+ public:
+  AWS_SES_API ListIdentitiesResult() = default;
+  AWS_SES_API ListIdentitiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SES_API ListIdentitiesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>A list of all identities that you have attempted to verify under your Amazon
-   * Web Services account, regardless of verification status.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/ListIdentitiesResponse">AWS
-   * API Reference</a></p>
+   * <p>A list of identities.</p>
    */
-  class ListIdentitiesResult
-  {
-  public:
-    AWS_SES_API ListIdentitiesResult();
-    AWS_SES_API ListIdentitiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SES_API ListIdentitiesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetIdentities() const { return m_identities; }
+  template <typename IdentitiesT = Aws::Vector<Aws::String>>
+  void SetIdentities(IdentitiesT&& value) {
+    m_identitiesHasBeenSet = true;
+    m_identities = std::forward<IdentitiesT>(value);
+  }
+  template <typename IdentitiesT = Aws::Vector<Aws::String>>
+  ListIdentitiesResult& WithIdentities(IdentitiesT&& value) {
+    SetIdentities(std::forward<IdentitiesT>(value));
+    return *this;
+  }
+  template <typename IdentitiesT = Aws::String>
+  ListIdentitiesResult& AddIdentities(IdentitiesT&& value) {
+    m_identitiesHasBeenSet = true;
+    m_identities.emplace_back(std::forward<IdentitiesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The token used for pagination.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListIdentitiesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of identities.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetIdentities() const{ return m_identities; }
-    inline void SetIdentities(const Aws::Vector<Aws::String>& value) { m_identities = value; }
-    inline void SetIdentities(Aws::Vector<Aws::String>&& value) { m_identities = std::move(value); }
-    inline ListIdentitiesResult& WithIdentities(const Aws::Vector<Aws::String>& value) { SetIdentities(value); return *this;}
-    inline ListIdentitiesResult& WithIdentities(Aws::Vector<Aws::String>&& value) { SetIdentities(std::move(value)); return *this;}
-    inline ListIdentitiesResult& AddIdentities(const Aws::String& value) { m_identities.push_back(value); return *this; }
-    inline ListIdentitiesResult& AddIdentities(Aws::String&& value) { m_identities.push_back(std::move(value)); return *this; }
-    inline ListIdentitiesResult& AddIdentities(const char* value) { m_identities.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The token used for pagination.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListIdentitiesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListIdentitiesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListIdentitiesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListIdentitiesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListIdentitiesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListIdentitiesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_identities;
 
-    Aws::Vector<Aws::String> m_identities;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_identitiesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace SES
-} // namespace Aws
+}  // namespace Model
+}  // namespace SES
+}  // namespace Aws

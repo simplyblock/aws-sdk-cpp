@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
-  class CreateInsightResult
-  {
-  public:
-    AWS_SECURITYHUB_API CreateInsightResult();
-    AWS_SECURITYHUB_API CreateInsightResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYHUB_API CreateInsightResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
+class CreateInsightResult {
+ public:
+  AWS_SECURITYHUB_API CreateInsightResult() = default;
+  AWS_SECURITYHUB_API CreateInsightResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYHUB_API CreateInsightResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the insight created.</p>
+   */
+  inline const Aws::String& GetInsightArn() const { return m_insightArn; }
+  template <typename InsightArnT = Aws::String>
+  void SetInsightArn(InsightArnT&& value) {
+    m_insightArnHasBeenSet = true;
+    m_insightArn = std::forward<InsightArnT>(value);
+  }
+  template <typename InsightArnT = Aws::String>
+  CreateInsightResult& WithInsightArn(InsightArnT&& value) {
+    SetInsightArn(std::forward<InsightArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the insight created.</p>
-     */
-    inline const Aws::String& GetInsightArn() const{ return m_insightArn; }
-    inline void SetInsightArn(const Aws::String& value) { m_insightArn = value; }
-    inline void SetInsightArn(Aws::String&& value) { m_insightArn = std::move(value); }
-    inline void SetInsightArn(const char* value) { m_insightArn.assign(value); }
-    inline CreateInsightResult& WithInsightArn(const Aws::String& value) { SetInsightArn(value); return *this;}
-    inline CreateInsightResult& WithInsightArn(Aws::String&& value) { SetInsightArn(std::move(value)); return *this;}
-    inline CreateInsightResult& WithInsightArn(const char* value) { SetInsightArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateInsightResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateInsightResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateInsightResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateInsightResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_insightArn;
+ private:
+  Aws::String m_insightArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_insightArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

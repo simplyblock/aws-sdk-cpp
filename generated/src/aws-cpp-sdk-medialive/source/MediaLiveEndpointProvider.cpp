@@ -4,13 +4,15 @@
  */
 
 #include <aws/medialive/MediaLiveEndpointProvider.h>
+#include <aws/medialive/internal/MediaLiveEndpointRules.h>
 
-namespace Aws
-{
-namespace MediaLive
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace MediaLive
-} // namespace Aws
+namespace Aws {
+namespace MediaLive {
+namespace Endpoint {
+MediaLiveEndpointProvider::MediaLiveEndpointProvider()
+    : MediaLiveDefaultEpProviderBase(Aws::MediaLive::MediaLiveEndpointRules::GetRulesBlob(),
+                                     Aws::MediaLive::MediaLiveEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace MediaLive
+}  // namespace Aws

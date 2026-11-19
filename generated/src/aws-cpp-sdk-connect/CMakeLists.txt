@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-connect "C++ SDK for the AWS connect service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-connect "C++ SDK for Amazon Connect Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONNECT_HEADERS
     "include/aws/connect/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONNECT_HEADERS
 
 file(GLOB AWS_CONNECT_MODEL_HEADERS
     "include/aws/connect/model/*.h"
+)
+
+file(GLOB AWS_CONNECT_INTERNAL_HEADERS
+    "include/aws/connect/internal/*.h"
 )
 
 file(GLOB AWS_CONNECT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONNECT_MODEL_SOURCE
 
 file(GLOB CONNECT_UNIFIED_HEADERS
     ${AWS_CONNECT_HEADERS}
+    ${AWS_CONNECT_INTERNAL_HEADERS}
     ${AWS_CONNECT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\connect" FILES ${AWS_CONNECT_HEADERS})
+        source_group("Header Files\\aws\\connect\\internal" FILES ${AWS_CONNECT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\connect\\model" FILES ${AWS_CONNECT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONNECT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONNECT_MODEL_SOURCE})

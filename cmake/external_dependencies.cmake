@@ -2,8 +2,10 @@
 if(PLATFORM_ANDROID AND ANDROID_BUILD_ZLIB)
     set(BUILD_ZLIB 1)
     message(STATUS "  Building Zlib as part of AWS SDK")
-elseif(NOT PLATFORM_WINDOWS AND NOT PLATFORM_CUSTOM)
-    #If zlib is required either by openssl and curl in their linking chain, we should find it.
+# If ENABLE_ZLIB_REQUEST_COMPRESSION is OFF, zlib check is skipped entirely
+elseif(NOT PLATFORM_WINDOWS AND NOT PLATFORM_CUSTOM AND
+       NOT ENABLE_ZLIB_REQUEST_COMPRESSION STREQUAL "OFF")
+    # If zlib is required either by openssl and curl in their linking chain, we should find it.
     include(FindZLIB)
     if(NOT ZLIB_FOUND)
         message(FATAL_ERROR "Could not find zlib")
@@ -105,6 +107,9 @@ if(NOT NO_HTTP_CLIENT AND NOT USE_CRT_HTTP_CLIENT)
     endif()
 elseif(USE_CRT_HTTP_CLIENT)
     add_definitions("-DAWS_SDK_USE_CRT_HTTP -DHAVE_H2_CLIENT")
+    if(USE_CRT_HTTP_CLIENT_ASYNC_IO)
+        add_definitions("-DAWS_CRT_HTTP_USE_ASYNC_IO")
+    endif()
 else()
     message(STATUS "You will need to inject an http client implementation before making any http requests!")
 endif()

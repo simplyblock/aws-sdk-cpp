@@ -4,72 +4,77 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
-#include <aws/lightsail/LightsailRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lightsail/LightsailRequest.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/DomainEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Lightsail
-{
-namespace Model
-{
+namespace Aws {
+namespace Lightsail {
+namespace Model {
 
+/**
+ */
+class UpdateDomainEntryRequest : public LightsailRequest {
+ public:
+  AWS_LIGHTSAIL_API UpdateDomainEntryRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateDomainEntry"; }
+
+  AWS_LIGHTSAIL_API Aws::String SerializePayload() const override;
+
+  AWS_LIGHTSAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the domain recordset to update.</p>
    */
-  class UpdateDomainEntryRequest : public LightsailRequest
-  {
-  public:
-    AWS_LIGHTSAIL_API UpdateDomainEntryRequest();
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  UpdateDomainEntryRequest& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateDomainEntry"; }
+  ///@{
+  /**
+   * <p>An array of key-value pairs containing information about the domain
+   * entry.</p>
+   */
+  inline const DomainEntry& GetDomainEntry() const { return m_domainEntry; }
+  inline bool DomainEntryHasBeenSet() const { return m_domainEntryHasBeenSet; }
+  template <typename DomainEntryT = DomainEntry>
+  void SetDomainEntry(DomainEntryT&& value) {
+    m_domainEntryHasBeenSet = true;
+    m_domainEntry = std::forward<DomainEntryT>(value);
+  }
+  template <typename DomainEntryT = DomainEntry>
+  UpdateDomainEntryRequest& WithDomainEntry(DomainEntryT&& value) {
+    SetDomainEntry(std::forward<DomainEntryT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainName;
 
-    AWS_LIGHTSAIL_API Aws::String SerializePayload() const override;
+  DomainEntry m_domainEntry;
+  bool m_domainNameHasBeenSet = false;
+  bool m_domainEntryHasBeenSet = false;
+};
 
-    AWS_LIGHTSAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the domain recordset to update.</p>
-     */
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
-    inline void SetDomainName(const Aws::String& value) { m_domainNameHasBeenSet = true; m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainNameHasBeenSet = true; m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainNameHasBeenSet = true; m_domainName.assign(value); }
-    inline UpdateDomainEntryRequest& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline UpdateDomainEntryRequest& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline UpdateDomainEntryRequest& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>An array of key-value pairs containing information about the domain
-     * entry.</p>
-     */
-    inline const DomainEntry& GetDomainEntry() const{ return m_domainEntry; }
-    inline bool DomainEntryHasBeenSet() const { return m_domainEntryHasBeenSet; }
-    inline void SetDomainEntry(const DomainEntry& value) { m_domainEntryHasBeenSet = true; m_domainEntry = value; }
-    inline void SetDomainEntry(DomainEntry&& value) { m_domainEntryHasBeenSet = true; m_domainEntry = std::move(value); }
-    inline UpdateDomainEntryRequest& WithDomainEntry(const DomainEntry& value) { SetDomainEntry(value); return *this;}
-    inline UpdateDomainEntryRequest& WithDomainEntry(DomainEntry&& value) { SetDomainEntry(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainName;
-    bool m_domainNameHasBeenSet = false;
-
-    DomainEntry m_domainEntry;
-    bool m_domainEntryHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

@@ -3,55 +3,55 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/AcceptPortfolioShareRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-AcceptPortfolioShareRequest::AcceptPortfolioShareRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_portfolioIdHasBeenSet(false),
-    m_portfolioShareType(PortfolioShareType::NOT_SET),
-    m_portfolioShareTypeHasBeenSet(false)
-{
+Aws::String AcceptPortfolioShareRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioShareTypeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_portfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_portfolioId.c_str()));
+  }
+
+  if (m_portfolioShareTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioShareType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(PortfolioShareTypeMapper::GetNameForPortfolioShareType(m_portfolioShareType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String AcceptPortfolioShareRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_portfolioIdHasBeenSet)
-  {
-   payload.WithString("PortfolioId", m_portfolioId);
-
-  }
-
-  if(m_portfolioShareTypeHasBeenSet)
-  {
-   payload.WithString("PortfolioShareType", PortfolioShareTypeMapper::GetNameForPortfolioShareType(m_portfolioShareType));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection AcceptPortfolioShareRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection AcceptPortfolioShareRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.AcceptPortfolioShare"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

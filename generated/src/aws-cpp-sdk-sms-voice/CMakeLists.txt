@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sms-voice "C++ SDK for the AWS sms-voice service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sms-voice "C++ SDK for Amazon Pinpoint SMS and Voice Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_SMS-VOICE_HEADERS
     "include/aws/sms-voice/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SMS-VOICE_HEADERS
 
 file(GLOB AWS_SMS-VOICE_MODEL_HEADERS
     "include/aws/sms-voice/model/*.h"
+)
+
+file(GLOB AWS_SMS-VOICE_INTERNAL_HEADERS
+    "include/aws/sms-voice/internal/*.h"
 )
 
 file(GLOB AWS_SMS-VOICE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SMS-VOICE_MODEL_SOURCE
 
 file(GLOB SMS-VOICE_UNIFIED_HEADERS
     ${AWS_SMS-VOICE_HEADERS}
+    ${AWS_SMS-VOICE_INTERNAL_HEADERS}
     ${AWS_SMS-VOICE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sms-voice" FILES ${AWS_SMS-VOICE_HEADERS})
+        source_group("Header Files\\aws\\sms-voice\\internal" FILES ${AWS_SMS-VOICE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sms-voice\\model" FILES ${AWS_SMS-VOICE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SMS-VOICE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SMS-VOICE_MODEL_SOURCE})

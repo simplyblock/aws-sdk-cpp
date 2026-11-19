@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-es "C++ SDK for the AWS es service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-es "C++ SDK for Amazon Elasticsearch Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_ES_HEADERS
     "include/aws/es/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ES_HEADERS
 
 file(GLOB AWS_ES_MODEL_HEADERS
     "include/aws/es/model/*.h"
+)
+
+file(GLOB AWS_ES_INTERNAL_HEADERS
+    "include/aws/es/internal/*.h"
 )
 
 file(GLOB AWS_ES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ES_MODEL_SOURCE
 
 file(GLOB ES_UNIFIED_HEADERS
     ${AWS_ES_HEADERS}
+    ${AWS_ES_INTERNAL_HEADERS}
     ${AWS_ES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\es" FILES ${AWS_ES_HEADERS})
+        source_group("Header Files\\aws\\es\\internal" FILES ${AWS_ES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\es\\model" FILES ${AWS_ES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ES_MODEL_SOURCE})

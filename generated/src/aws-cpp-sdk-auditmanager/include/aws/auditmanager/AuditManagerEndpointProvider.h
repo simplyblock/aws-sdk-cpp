@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/auditmanager/AuditManagerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace AuditManager
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace AuditManager {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using AuditManagerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using AuditManagerEndpointProviderBase =
     EndpointProviderBase<AuditManagerClientConfiguration, AuditManagerBuiltInParameters, AuditManagerClientContextParameters>;
 
 using AuditManagerDefaultEpProviderBase =
-    DefaultEndpointProvider<AuditManagerClientConfiguration, AuditManagerBuiltInParameters, AuditManagerClientContextParameters>;
+    BDDEndpointProvider<AuditManagerClientConfiguration, AuditManagerBuiltInParameters, AuditManagerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_AUDITMANAGER_API AuditManagerEndpointProvider : public AuditManagerDefaultEpProviderBase
-{
-public:
-    using AuditManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_AUDITMANAGER_API AuditManagerEndpointProvider : public AuditManagerDefaultEpProviderBase {
+ public:
+  using AuditManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    AuditManagerEndpointProvider()
-      : AuditManagerDefaultEpProviderBase(Aws::AuditManager::AuditManagerEndpointRules::GetRulesBlob(), Aws::AuditManager::AuditManagerEndpointRules::RulesBlobSize)
-    {}
+  AuditManagerEndpointProvider();
 
-    ~AuditManagerEndpointProvider()
-    {
-    }
+  ~AuditManagerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace AuditManager
+}  // namespace Aws

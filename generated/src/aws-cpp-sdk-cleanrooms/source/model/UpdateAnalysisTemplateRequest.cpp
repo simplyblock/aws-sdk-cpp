@@ -12,26 +12,12 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAnalysisTemplateRequest::UpdateAnalysisTemplateRequest() : 
-    m_membershipIdentifierHasBeenSet(false),
-    m_analysisTemplateIdentifierHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAnalysisTemplateRequest::SerializePayload() const
-{
+Aws::String UpdateAnalysisTemplateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

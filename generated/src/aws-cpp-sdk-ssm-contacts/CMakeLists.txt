@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ssm-contacts "C++ SDK for the AWS ssm-contacts service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ssm-contacts "C++ SDK for AWS Systems Manager Incident Manager Contacts" aws-cpp-sdk-core)
 
 file(GLOB AWS_SSM-CONTACTS_HEADERS
     "include/aws/ssm-contacts/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SSM-CONTACTS_HEADERS
 
 file(GLOB AWS_SSM-CONTACTS_MODEL_HEADERS
     "include/aws/ssm-contacts/model/*.h"
+)
+
+file(GLOB AWS_SSM-CONTACTS_INTERNAL_HEADERS
+    "include/aws/ssm-contacts/internal/*.h"
 )
 
 file(GLOB AWS_SSM-CONTACTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SSM-CONTACTS_MODEL_SOURCE
 
 file(GLOB SSM-CONTACTS_UNIFIED_HEADERS
     ${AWS_SSM-CONTACTS_HEADERS}
+    ${AWS_SSM-CONTACTS_INTERNAL_HEADERS}
     ${AWS_SSM-CONTACTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ssm-contacts" FILES ${AWS_SSM-CONTACTS_HEADERS})
+        source_group("Header Files\\aws\\ssm-contacts\\internal" FILES ${AWS_SSM-CONTACTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ssm-contacts\\model" FILES ${AWS_SSM-CONTACTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SSM-CONTACTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SSM-CONTACTS_MODEL_SOURCE})

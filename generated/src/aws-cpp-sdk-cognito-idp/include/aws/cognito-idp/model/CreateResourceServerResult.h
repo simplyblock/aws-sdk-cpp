@@ -6,61 +6,71 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/ResourceServerType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
-  class CreateResourceServerResult
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult();
-    AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
+class CreateResourceServerResult {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOIDENTITYPROVIDER_API CreateResourceServerResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the new resource server.</p>
+   */
+  inline const ResourceServerType& GetResourceServer() const { return m_resourceServer; }
+  template <typename ResourceServerT = ResourceServerType>
+  void SetResourceServer(ResourceServerT&& value) {
+    m_resourceServerHasBeenSet = true;
+    m_resourceServer = std::forward<ResourceServerT>(value);
+  }
+  template <typename ResourceServerT = ResourceServerType>
+  CreateResourceServerResult& WithResourceServer(ResourceServerT&& value) {
+    SetResourceServer(std::forward<ResourceServerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The newly created resource server.</p>
-     */
-    inline const ResourceServerType& GetResourceServer() const{ return m_resourceServer; }
-    inline void SetResourceServer(const ResourceServerType& value) { m_resourceServer = value; }
-    inline void SetResourceServer(ResourceServerType&& value) { m_resourceServer = std::move(value); }
-    inline CreateResourceServerResult& WithResourceServer(const ResourceServerType& value) { SetResourceServer(value); return *this;}
-    inline CreateResourceServerResult& WithResourceServer(ResourceServerType&& value) { SetResourceServer(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateResourceServerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateResourceServerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateResourceServerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateResourceServerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResourceServerType m_resourceServer;
+ private:
+  ResourceServerType m_resourceServer;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceServerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

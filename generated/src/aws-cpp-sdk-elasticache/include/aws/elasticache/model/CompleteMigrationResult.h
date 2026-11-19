@@ -4,59 +4,92 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/ReplicationGroup.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
+#include <aws/elasticache/model/ServerlessCache.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class CompleteMigrationResult
-  {
-  public:
-    AWS_ELASTICACHE_API CompleteMigrationResult();
-    AWS_ELASTICACHE_API CompleteMigrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API CompleteMigrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class CompleteMigrationResult {
+ public:
+  AWS_ELASTICACHE_API CompleteMigrationResult() = default;
+  AWS_ELASTICACHE_API CompleteMigrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API CompleteMigrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ReplicationGroup& GetReplicationGroup() const{ return m_replicationGroup; }
-    inline void SetReplicationGroup(const ReplicationGroup& value) { m_replicationGroup = value; }
-    inline void SetReplicationGroup(ReplicationGroup&& value) { m_replicationGroup = std::move(value); }
-    inline CompleteMigrationResult& WithReplicationGroup(const ReplicationGroup& value) { SetReplicationGroup(value); return *this;}
-    inline CompleteMigrationResult& WithReplicationGroup(ReplicationGroup&& value) { SetReplicationGroup(std::move(value)); return *this;}
-    ///@}
+  inline const ReplicationGroup& GetReplicationGroup() const { return m_replicationGroup; }
+  template <typename ReplicationGroupT = ReplicationGroup>
+  void SetReplicationGroup(ReplicationGroupT&& value) {
+    m_replicationGroupHasBeenSet = true;
+    m_replicationGroup = std::forward<ReplicationGroupT>(value);
+  }
+  template <typename ReplicationGroupT = ReplicationGroup>
+  CompleteMigrationResult& WithReplicationGroup(ReplicationGroupT&& value) {
+    SetReplicationGroup(std::forward<ReplicationGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CompleteMigrationResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CompleteMigrationResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Provides the details of the serverless cache for which the migration
+   * completed.</p>
+   */
+  inline const ServerlessCache& GetServerlessCache() const { return m_serverlessCache; }
+  template <typename ServerlessCacheT = ServerlessCache>
+  void SetServerlessCache(ServerlessCacheT&& value) {
+    m_serverlessCacheHasBeenSet = true;
+    m_serverlessCache = std::forward<ServerlessCacheT>(value);
+  }
+  template <typename ServerlessCacheT = ServerlessCache>
+  CompleteMigrationResult& WithServerlessCache(ServerlessCacheT&& value) {
+    SetServerlessCache(std::forward<ServerlessCacheT>(value));
+    return *this;
+  }
+  ///@}
 
-    ReplicationGroup m_replicationGroup;
+  ///@{
 
-    ResponseMetadata m_responseMetadata;
-  };
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CompleteMigrationResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+ private:
+  ReplicationGroup m_replicationGroup;
+
+  ServerlessCache m_serverlessCache;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replicationGroupHasBeenSet = false;
+  bool m_serverlessCacheHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

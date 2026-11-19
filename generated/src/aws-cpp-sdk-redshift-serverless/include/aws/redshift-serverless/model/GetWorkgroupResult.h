@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/redshift-serverless/RedshiftServerless_EXPORTS.h>
 #include <aws/redshift-serverless/model/Workgroup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RedshiftServerless
-{
-namespace Model
-{
-  class GetWorkgroupResult
-  {
-  public:
-    AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult();
-    AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RedshiftServerless {
+namespace Model {
+class GetWorkgroupResult {
+ public:
+  AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult() = default;
+  AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REDSHIFTSERVERLESS_API GetWorkgroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The returned workgroup object.</p>
+   */
+  inline const Workgroup& GetWorkgroup() const { return m_workgroup; }
+  template <typename WorkgroupT = Workgroup>
+  void SetWorkgroup(WorkgroupT&& value) {
+    m_workgroupHasBeenSet = true;
+    m_workgroup = std::forward<WorkgroupT>(value);
+  }
+  template <typename WorkgroupT = Workgroup>
+  GetWorkgroupResult& WithWorkgroup(WorkgroupT&& value) {
+    SetWorkgroup(std::forward<WorkgroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The returned workgroup object.</p>
-     */
-    inline const Workgroup& GetWorkgroup() const{ return m_workgroup; }
-    inline void SetWorkgroup(const Workgroup& value) { m_workgroup = value; }
-    inline void SetWorkgroup(Workgroup&& value) { m_workgroup = std::move(value); }
-    inline GetWorkgroupResult& WithWorkgroup(const Workgroup& value) { SetWorkgroup(value); return *this;}
-    inline GetWorkgroupResult& WithWorkgroup(Workgroup&& value) { SetWorkgroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetWorkgroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetWorkgroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetWorkgroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetWorkgroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Workgroup m_workgroup;
+ private:
+  Workgroup m_workgroup;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workgroupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RedshiftServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace RedshiftServerless
+}  // namespace Aws

@@ -4,87 +4,94 @@
  */
 
 #pragma once
-#include <aws/dataexchange/DataExchange_EXPORTS.h>
-#include <aws/dataexchange/DataExchangeRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/dataexchange/DataExchangeRequest.h>
+#include <aws/dataexchange/DataExchange_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DataExchange
-{
-namespace Model
-{
+namespace Aws {
+namespace DataExchange {
+namespace Model {
 
+/**
+ */
+class DeleteAssetRequest : public DataExchangeRequest {
+ public:
+  AWS_DATAEXCHANGE_API DeleteAssetRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteAsset"; }
+
+  AWS_DATAEXCHANGE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier for an asset.</p>
    */
-  class DeleteAssetRequest : public DataExchangeRequest
-  {
-  public:
-    AWS_DATAEXCHANGE_API DeleteAssetRequest();
+  inline const Aws::String& GetAssetId() const { return m_assetId; }
+  inline bool AssetIdHasBeenSet() const { return m_assetIdHasBeenSet; }
+  template <typename AssetIdT = Aws::String>
+  void SetAssetId(AssetIdT&& value) {
+    m_assetIdHasBeenSet = true;
+    m_assetId = std::forward<AssetIdT>(value);
+  }
+  template <typename AssetIdT = Aws::String>
+  DeleteAssetRequest& WithAssetId(AssetIdT&& value) {
+    SetAssetId(std::forward<AssetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteAsset"; }
+  ///@{
+  /**
+   * <p>The unique identifier for a data set.</p>
+   */
+  inline const Aws::String& GetDataSetId() const { return m_dataSetId; }
+  inline bool DataSetIdHasBeenSet() const { return m_dataSetIdHasBeenSet; }
+  template <typename DataSetIdT = Aws::String>
+  void SetDataSetId(DataSetIdT&& value) {
+    m_dataSetIdHasBeenSet = true;
+    m_dataSetId = std::forward<DataSetIdT>(value);
+  }
+  template <typename DataSetIdT = Aws::String>
+  DeleteAssetRequest& WithDataSetId(DataSetIdT&& value) {
+    SetDataSetId(std::forward<DataSetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DATAEXCHANGE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The unique identifier for a revision.</p>
+   */
+  inline const Aws::String& GetRevisionId() const { return m_revisionId; }
+  inline bool RevisionIdHasBeenSet() const { return m_revisionIdHasBeenSet; }
+  template <typename RevisionIdT = Aws::String>
+  void SetRevisionId(RevisionIdT&& value) {
+    m_revisionIdHasBeenSet = true;
+    m_revisionId = std::forward<RevisionIdT>(value);
+  }
+  template <typename RevisionIdT = Aws::String>
+  DeleteAssetRequest& WithRevisionId(RevisionIdT&& value) {
+    SetRevisionId(std::forward<RevisionIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_assetId;
 
+  Aws::String m_dataSetId;
 
-    ///@{
-    /**
-     * <p>The unique identifier for an asset.</p>
-     */
-    inline const Aws::String& GetAssetId() const{ return m_assetId; }
-    inline bool AssetIdHasBeenSet() const { return m_assetIdHasBeenSet; }
-    inline void SetAssetId(const Aws::String& value) { m_assetIdHasBeenSet = true; m_assetId = value; }
-    inline void SetAssetId(Aws::String&& value) { m_assetIdHasBeenSet = true; m_assetId = std::move(value); }
-    inline void SetAssetId(const char* value) { m_assetIdHasBeenSet = true; m_assetId.assign(value); }
-    inline DeleteAssetRequest& WithAssetId(const Aws::String& value) { SetAssetId(value); return *this;}
-    inline DeleteAssetRequest& WithAssetId(Aws::String&& value) { SetAssetId(std::move(value)); return *this;}
-    inline DeleteAssetRequest& WithAssetId(const char* value) { SetAssetId(value); return *this;}
-    ///@}
+  Aws::String m_revisionId;
+  bool m_assetIdHasBeenSet = false;
+  bool m_dataSetIdHasBeenSet = false;
+  bool m_revisionIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The unique identifier for a data set.</p>
-     */
-    inline const Aws::String& GetDataSetId() const{ return m_dataSetId; }
-    inline bool DataSetIdHasBeenSet() const { return m_dataSetIdHasBeenSet; }
-    inline void SetDataSetId(const Aws::String& value) { m_dataSetIdHasBeenSet = true; m_dataSetId = value; }
-    inline void SetDataSetId(Aws::String&& value) { m_dataSetIdHasBeenSet = true; m_dataSetId = std::move(value); }
-    inline void SetDataSetId(const char* value) { m_dataSetIdHasBeenSet = true; m_dataSetId.assign(value); }
-    inline DeleteAssetRequest& WithDataSetId(const Aws::String& value) { SetDataSetId(value); return *this;}
-    inline DeleteAssetRequest& WithDataSetId(Aws::String&& value) { SetDataSetId(std::move(value)); return *this;}
-    inline DeleteAssetRequest& WithDataSetId(const char* value) { SetDataSetId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The unique identifier for a revision.</p>
-     */
-    inline const Aws::String& GetRevisionId() const{ return m_revisionId; }
-    inline bool RevisionIdHasBeenSet() const { return m_revisionIdHasBeenSet; }
-    inline void SetRevisionId(const Aws::String& value) { m_revisionIdHasBeenSet = true; m_revisionId = value; }
-    inline void SetRevisionId(Aws::String&& value) { m_revisionIdHasBeenSet = true; m_revisionId = std::move(value); }
-    inline void SetRevisionId(const char* value) { m_revisionIdHasBeenSet = true; m_revisionId.assign(value); }
-    inline DeleteAssetRequest& WithRevisionId(const Aws::String& value) { SetRevisionId(value); return *this;}
-    inline DeleteAssetRequest& WithRevisionId(Aws::String&& value) { SetRevisionId(std::move(value)); return *this;}
-    inline DeleteAssetRequest& WithRevisionId(const char* value) { SetRevisionId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_assetId;
-    bool m_assetIdHasBeenSet = false;
-
-    Aws::String m_dataSetId;
-    bool m_dataSetIdHasBeenSet = false;
-
-    Aws::String m_revisionId;
-    bool m_revisionIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataExchange
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataExchange
+}  // namespace Aws

@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/GetResourcePoliciesResponseEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
-  class GetResourcePoliciesResult
-  {
-  public:
-    AWS_SSM_API GetResourcePoliciesResult();
-    AWS_SSM_API GetResourcePoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSM_API GetResourcePoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
+class GetResourcePoliciesResult {
+ public:
+  AWS_SSM_API GetResourcePoliciesResult() = default;
+  AWS_SSM_API GetResourcePoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSM_API GetResourcePoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The token for the next set of items to return. Use this token to get the next
+   * set of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetResourcePoliciesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of items to return. Use this token to get the next
-     * set of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetResourcePoliciesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetResourcePoliciesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetResourcePoliciesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of the <code>Policy</code> object.</p>
+   */
+  inline const Aws::Vector<GetResourcePoliciesResponseEntry>& GetPolicies() const { return m_policies; }
+  template <typename PoliciesT = Aws::Vector<GetResourcePoliciesResponseEntry>>
+  void SetPolicies(PoliciesT&& value) {
+    m_policiesHasBeenSet = true;
+    m_policies = std::forward<PoliciesT>(value);
+  }
+  template <typename PoliciesT = Aws::Vector<GetResourcePoliciesResponseEntry>>
+  GetResourcePoliciesResult& WithPolicies(PoliciesT&& value) {
+    SetPolicies(std::forward<PoliciesT>(value));
+    return *this;
+  }
+  template <typename PoliciesT = GetResourcePoliciesResponseEntry>
+  GetResourcePoliciesResult& AddPolicies(PoliciesT&& value) {
+    m_policiesHasBeenSet = true;
+    m_policies.emplace_back(std::forward<PoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of the <code>Policy</code> object.</p>
-     */
-    inline const Aws::Vector<GetResourcePoliciesResponseEntry>& GetPolicies() const{ return m_policies; }
-    inline void SetPolicies(const Aws::Vector<GetResourcePoliciesResponseEntry>& value) { m_policies = value; }
-    inline void SetPolicies(Aws::Vector<GetResourcePoliciesResponseEntry>&& value) { m_policies = std::move(value); }
-    inline GetResourcePoliciesResult& WithPolicies(const Aws::Vector<GetResourcePoliciesResponseEntry>& value) { SetPolicies(value); return *this;}
-    inline GetResourcePoliciesResult& WithPolicies(Aws::Vector<GetResourcePoliciesResponseEntry>&& value) { SetPolicies(std::move(value)); return *this;}
-    inline GetResourcePoliciesResult& AddPolicies(const GetResourcePoliciesResponseEntry& value) { m_policies.push_back(value); return *this; }
-    inline GetResourcePoliciesResult& AddPolicies(GetResourcePoliciesResponseEntry&& value) { m_policies.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetResourcePoliciesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetResourcePoliciesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetResourcePoliciesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetResourcePoliciesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<GetResourcePoliciesResponseEntry> m_policies;
+  Aws::Vector<GetResourcePoliciesResponseEntry> m_policies;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_policiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

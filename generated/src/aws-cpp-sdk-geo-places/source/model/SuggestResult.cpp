@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/geo-places/model/SuggestResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/geo-places/model/SuggestResult.h>
 
 #include <utility>
 
@@ -17,50 +17,38 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-SuggestResult::SuggestResult()
-{
-}
+SuggestResult::SuggestResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-SuggestResult::SuggestResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-SuggestResult& SuggestResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+SuggestResult& SuggestResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("ResultItems"))
-  {
+  if (jsonValue.ValueExists("ResultItems")) {
     Aws::Utils::Array<JsonView> resultItemsJsonList = jsonValue.GetArray("ResultItems");
-    for(unsigned resultItemsIndex = 0; resultItemsIndex < resultItemsJsonList.GetLength(); ++resultItemsIndex)
-    {
+    for (unsigned resultItemsIndex = 0; resultItemsIndex < resultItemsJsonList.GetLength(); ++resultItemsIndex) {
       m_resultItems.push_back(resultItemsJsonList[resultItemsIndex].AsObject());
     }
+    m_resultItemsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("QueryRefinements"))
-  {
+  if (jsonValue.ValueExists("QueryRefinements")) {
     Aws::Utils::Array<JsonView> queryRefinementsJsonList = jsonValue.GetArray("QueryRefinements");
-    for(unsigned queryRefinementsIndex = 0; queryRefinementsIndex < queryRefinementsJsonList.GetLength(); ++queryRefinementsIndex)
-    {
+    for (unsigned queryRefinementsIndex = 0; queryRefinementsIndex < queryRefinementsJsonList.GetLength(); ++queryRefinementsIndex) {
       m_queryRefinements.push_back(queryRefinementsJsonList[queryRefinementsIndex].AsObject());
     }
+    m_queryRefinementsHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& pricingBucketIter = headers.find("x-amz-geo-pricing-bucket");
-  if(pricingBucketIter != headers.end())
-  {
+  if (pricingBucketIter != headers.end()) {
     m_pricingBucket = pricingBucketIter->second;
+    m_pricingBucketHasBeenSet = true;
   }
 
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

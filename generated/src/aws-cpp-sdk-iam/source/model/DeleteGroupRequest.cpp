@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iam/model/DeleteGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/iam/model/DeleteGroupRequest.h>
 
 using namespace Aws::IAM::Model;
 using namespace Aws::Utils;
 
-DeleteGroupRequest::DeleteGroupRequest() : 
-    m_groupNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteGroupRequest::SerializePayload() const
-{
+Aws::String DeleteGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteGroup&";
-  if(m_groupNameHasBeenSet)
-  {
+  if (m_groupNameHasBeenSet) {
     ss << "GroupName=" << StringUtils::URLEncode(m_groupName.c_str()) << "&";
   }
 
@@ -28,8 +21,4 @@ Aws::String DeleteGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

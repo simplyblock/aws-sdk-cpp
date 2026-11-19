@@ -4,89 +4,119 @@
  */
 
 #pragma once
-#include <aws/vpc-lattice/VPCLattice_EXPORTS.h>
-#include <aws/vpc-lattice/VPCLatticeRequest.h>
-#include <aws/vpc-lattice/model/AuthType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/vpc-lattice/VPCLatticeRequest.h>
+#include <aws/vpc-lattice/VPCLattice_EXPORTS.h>
+#include <aws/vpc-lattice/model/AuthType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace VPCLattice
-{
-namespace Model
-{
+namespace Aws {
+namespace VPCLattice {
+namespace Model {
 
+/**
+ */
+class UpdateServiceRequest : public VPCLatticeRequest {
+ public:
+  AWS_VPCLATTICE_API UpdateServiceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateService"; }
+
+  AWS_VPCLATTICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID or ARN of the service.</p>
    */
-  class UpdateServiceRequest : public VPCLatticeRequest
-  {
-  public:
-    AWS_VPCLATTICE_API UpdateServiceRequest();
+  inline const Aws::String& GetServiceIdentifier() const { return m_serviceIdentifier; }
+  inline bool ServiceIdentifierHasBeenSet() const { return m_serviceIdentifierHasBeenSet; }
+  template <typename ServiceIdentifierT = Aws::String>
+  void SetServiceIdentifier(ServiceIdentifierT&& value) {
+    m_serviceIdentifierHasBeenSet = true;
+    m_serviceIdentifier = std::forward<ServiceIdentifierT>(value);
+  }
+  template <typename ServiceIdentifierT = Aws::String>
+  UpdateServiceRequest& WithServiceIdentifier(ServiceIdentifierT&& value) {
+    SetServiceIdentifier(std::forward<ServiceIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateService"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the certificate.</p>
+   */
+  inline const Aws::String& GetCertificateArn() const { return m_certificateArn; }
+  inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
+  template <typename CertificateArnT = Aws::String>
+  void SetCertificateArn(CertificateArnT&& value) {
+    m_certificateArnHasBeenSet = true;
+    m_certificateArn = std::forward<CertificateArnT>(value);
+  }
+  template <typename CertificateArnT = Aws::String>
+  UpdateServiceRequest& WithCertificateArn(CertificateArnT&& value) {
+    SetCertificateArn(std::forward<CertificateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_VPCLATTICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The type of IAM policy.</p> <ul> <li> <p> <code>NONE</code>: The resource
+   * does not use an IAM policy. This is the default.</p> </li> <li> <p>
+   * <code>AWS_IAM</code>: The resource uses an IAM policy. When this type is used,
+   * auth is enabled and an auth policy is required.</p> </li> </ul>
+   */
+  inline AuthType GetAuthType() const { return m_authType; }
+  inline bool AuthTypeHasBeenSet() const { return m_authTypeHasBeenSet; }
+  inline void SetAuthType(AuthType value) {
+    m_authTypeHasBeenSet = true;
+    m_authType = value;
+  }
+  inline UpdateServiceRequest& WithAuthType(AuthType value) {
+    SetAuthType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The amount of time, in seconds, that a connection can remain idle (no data
+   * sent) before VPC Lattice closes it. The valid range is 60 to 600 seconds. If you
+   * don't specify a value, the default is 60 seconds. This setting does not change
+   * the maximum connection duration of 10 minutes; connections are still closed when
+   * they reach that limit.</p>
+   */
+  inline int GetIdleTimeoutSeconds() const { return m_idleTimeoutSeconds; }
+  inline bool IdleTimeoutSecondsHasBeenSet() const { return m_idleTimeoutSecondsHasBeenSet; }
+  inline void SetIdleTimeoutSeconds(int value) {
+    m_idleTimeoutSecondsHasBeenSet = true;
+    m_idleTimeoutSeconds = value;
+  }
+  inline UpdateServiceRequest& WithIdleTimeoutSeconds(int value) {
+    SetIdleTimeoutSeconds(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_serviceIdentifier;
 
-    ///@{
-    /**
-     * <p>The type of IAM policy.</p> <ul> <li> <p> <code>NONE</code>: The resource
-     * does not use an IAM policy. This is the default.</p> </li> <li> <p>
-     * <code>AWS_IAM</code>: The resource uses an IAM policy. When this type is used,
-     * auth is enabled and an auth policy is required.</p> </li> </ul>
-     */
-    inline const AuthType& GetAuthType() const{ return m_authType; }
-    inline bool AuthTypeHasBeenSet() const { return m_authTypeHasBeenSet; }
-    inline void SetAuthType(const AuthType& value) { m_authTypeHasBeenSet = true; m_authType = value; }
-    inline void SetAuthType(AuthType&& value) { m_authTypeHasBeenSet = true; m_authType = std::move(value); }
-    inline UpdateServiceRequest& WithAuthType(const AuthType& value) { SetAuthType(value); return *this;}
-    inline UpdateServiceRequest& WithAuthType(AuthType&& value) { SetAuthType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_certificateArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the certificate.</p>
-     */
-    inline const Aws::String& GetCertificateArn() const{ return m_certificateArn; }
-    inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
-    inline void SetCertificateArn(const Aws::String& value) { m_certificateArnHasBeenSet = true; m_certificateArn = value; }
-    inline void SetCertificateArn(Aws::String&& value) { m_certificateArnHasBeenSet = true; m_certificateArn = std::move(value); }
-    inline void SetCertificateArn(const char* value) { m_certificateArnHasBeenSet = true; m_certificateArn.assign(value); }
-    inline UpdateServiceRequest& WithCertificateArn(const Aws::String& value) { SetCertificateArn(value); return *this;}
-    inline UpdateServiceRequest& WithCertificateArn(Aws::String&& value) { SetCertificateArn(std::move(value)); return *this;}
-    inline UpdateServiceRequest& WithCertificateArn(const char* value) { SetCertificateArn(value); return *this;}
-    ///@}
+  AuthType m_authType{AuthType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The ID or Amazon Resource Name (ARN) of the service.</p>
-     */
-    inline const Aws::String& GetServiceIdentifier() const{ return m_serviceIdentifier; }
-    inline bool ServiceIdentifierHasBeenSet() const { return m_serviceIdentifierHasBeenSet; }
-    inline void SetServiceIdentifier(const Aws::String& value) { m_serviceIdentifierHasBeenSet = true; m_serviceIdentifier = value; }
-    inline void SetServiceIdentifier(Aws::String&& value) { m_serviceIdentifierHasBeenSet = true; m_serviceIdentifier = std::move(value); }
-    inline void SetServiceIdentifier(const char* value) { m_serviceIdentifierHasBeenSet = true; m_serviceIdentifier.assign(value); }
-    inline UpdateServiceRequest& WithServiceIdentifier(const Aws::String& value) { SetServiceIdentifier(value); return *this;}
-    inline UpdateServiceRequest& WithServiceIdentifier(Aws::String&& value) { SetServiceIdentifier(std::move(value)); return *this;}
-    inline UpdateServiceRequest& WithServiceIdentifier(const char* value) { SetServiceIdentifier(value); return *this;}
-    ///@}
-  private:
+  int m_idleTimeoutSeconds{0};
+  bool m_serviceIdentifierHasBeenSet = false;
+  bool m_certificateArnHasBeenSet = false;
+  bool m_authTypeHasBeenSet = false;
+  bool m_idleTimeoutSecondsHasBeenSet = false;
+};
 
-    AuthType m_authType;
-    bool m_authTypeHasBeenSet = false;
-
-    Aws::String m_certificateArn;
-    bool m_certificateArnHasBeenSet = false;
-
-    Aws::String m_serviceIdentifier;
-    bool m_serviceIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace VPCLattice
-} // namespace Aws
+}  // namespace Model
+}  // namespace VPCLattice
+}  // namespace Aws

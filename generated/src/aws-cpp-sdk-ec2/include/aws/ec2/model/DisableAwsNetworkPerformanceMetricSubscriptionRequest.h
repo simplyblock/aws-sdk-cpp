@@ -4,124 +4,141 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/MetricType.h>
 #include <aws/ec2/model/StatisticType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
+/**
+ */
+class DisableAwsNetworkPerformanceMetricSubscriptionRequest : public EC2Request {
+ public:
+  AWS_EC2_API DisableAwsNetworkPerformanceMetricSubscriptionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DisableAwsNetworkPerformanceMetricSubscription"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The source Region or Availability Zone that the metric subscription is
+   * disabled for. For example, <code>us-east-1</code>.</p>
    */
-  class DisableAwsNetworkPerformanceMetricSubscriptionRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API DisableAwsNetworkPerformanceMetricSubscriptionRequest();
+  inline const Aws::String& GetSource() const { return m_source; }
+  inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
+  template <typename SourceT = Aws::String>
+  void SetSource(SourceT&& value) {
+    m_sourceHasBeenSet = true;
+    m_source = std::forward<SourceT>(value);
+  }
+  template <typename SourceT = Aws::String>
+  DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithSource(SourceT&& value) {
+    SetSource(std::forward<SourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DisableAwsNetworkPerformanceMetricSubscription"; }
+  ///@{
+  /**
+   * <p>The target Region or Availability Zone that the metric subscription is
+   * disabled for. For example, <code>eu-north-1</code>.</p>
+   */
+  inline const Aws::String& GetDestination() const { return m_destination; }
+  inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
+  template <typename DestinationT = Aws::String>
+  void SetDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination = std::forward<DestinationT>(value);
+  }
+  template <typename DestinationT = Aws::String>
+  DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDestination(DestinationT&& value) {
+    SetDestination(std::forward<DestinationT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The metric used for the disabled subscription.</p>
+   */
+  inline MetricType GetMetric() const { return m_metric; }
+  inline bool MetricHasBeenSet() const { return m_metricHasBeenSet; }
+  inline void SetMetric(MetricType value) {
+    m_metricHasBeenSet = true;
+    m_metric = value;
+  }
+  inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithMetric(MetricType value) {
+    SetMetric(value);
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The statistic used for the disabled subscription. </p>
+   */
+  inline StatisticType GetStatistic() const { return m_statistic; }
+  inline bool StatisticHasBeenSet() const { return m_statisticHasBeenSet; }
+  inline void SetStatistic(StatisticType value) {
+    m_statisticHasBeenSet = true;
+    m_statistic = value;
+  }
+  inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithStatistic(StatisticType value) {
+    SetStatistic(value);
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>Checks whether you have the required permissions for the action, without
+   * actually making the request, and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_source;
 
-    ///@{
-    /**
-     * <p>The source Region or Availability Zone that the metric subscription is
-     * disabled for. For example, <code>us-east-1</code>.</p>
-     */
-    inline const Aws::String& GetSource() const{ return m_source; }
-    inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
-    inline void SetSource(const Aws::String& value) { m_sourceHasBeenSet = true; m_source = value; }
-    inline void SetSource(Aws::String&& value) { m_sourceHasBeenSet = true; m_source = std::move(value); }
-    inline void SetSource(const char* value) { m_sourceHasBeenSet = true; m_source.assign(value); }
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithSource(const Aws::String& value) { SetSource(value); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithSource(Aws::String&& value) { SetSource(std::move(value)); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithSource(const char* value) { SetSource(value); return *this;}
-    ///@}
+  Aws::String m_destination;
 
-    ///@{
-    /**
-     * <p>The target Region or Availability Zone that the metric subscription is
-     * disabled for. For example, <code>eu-north-1</code>.</p>
-     */
-    inline const Aws::String& GetDestination() const{ return m_destination; }
-    inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
-    inline void SetDestination(const Aws::String& value) { m_destinationHasBeenSet = true; m_destination = value; }
-    inline void SetDestination(Aws::String&& value) { m_destinationHasBeenSet = true; m_destination = std::move(value); }
-    inline void SetDestination(const char* value) { m_destinationHasBeenSet = true; m_destination.assign(value); }
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDestination(const Aws::String& value) { SetDestination(value); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDestination(Aws::String&& value) { SetDestination(std::move(value)); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDestination(const char* value) { SetDestination(value); return *this;}
-    ///@}
+  MetricType m_metric{MetricType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The metric used for the disabled subscription.</p>
-     */
-    inline const MetricType& GetMetric() const{ return m_metric; }
-    inline bool MetricHasBeenSet() const { return m_metricHasBeenSet; }
-    inline void SetMetric(const MetricType& value) { m_metricHasBeenSet = true; m_metric = value; }
-    inline void SetMetric(MetricType&& value) { m_metricHasBeenSet = true; m_metric = std::move(value); }
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithMetric(const MetricType& value) { SetMetric(value); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithMetric(MetricType&& value) { SetMetric(std::move(value)); return *this;}
-    ///@}
+  StatisticType m_statistic{StatisticType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The statistic used for the disabled subscription. </p>
-     */
-    inline const StatisticType& GetStatistic() const{ return m_statistic; }
-    inline bool StatisticHasBeenSet() const { return m_statisticHasBeenSet; }
-    inline void SetStatistic(const StatisticType& value) { m_statisticHasBeenSet = true; m_statistic = value; }
-    inline void SetStatistic(StatisticType&& value) { m_statisticHasBeenSet = true; m_statistic = std::move(value); }
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithStatistic(const StatisticType& value) { SetStatistic(value); return *this;}
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithStatistic(StatisticType&& value) { SetStatistic(std::move(value)); return *this;}
-    ///@}
+  bool m_dryRun{false};
+  bool m_sourceHasBeenSet = false;
+  bool m_destinationHasBeenSet = false;
+  bool m_metricHasBeenSet = false;
+  bool m_statisticHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Checks whether you have the required permissions for the action, without
-     * actually making the request, and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline DisableAwsNetworkPerformanceMetricSubscriptionRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_source;
-    bool m_sourceHasBeenSet = false;
-
-    Aws::String m_destination;
-    bool m_destinationHasBeenSet = false;
-
-    MetricType m_metric;
-    bool m_metricHasBeenSet = false;
-
-    StatisticType m_statistic;
-    bool m_statisticHasBeenSet = false;
-
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

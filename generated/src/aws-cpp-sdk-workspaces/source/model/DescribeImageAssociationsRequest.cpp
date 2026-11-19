@@ -3,53 +3,50 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/DescribeImageAssociationsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeImageAssociationsRequest::DescribeImageAssociationsRequest() : 
-    m_imageIdHasBeenSet(false),
-    m_associatedResourceTypesHasBeenSet(false)
-{
-}
+Aws::String DescribeImageAssociationsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeImageAssociationsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_imageIdHasBeenSet)
-  {
-   payload.WithString("ImageId", m_imageId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_imageIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_associatedResourceTypesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_associatedResourceTypesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> associatedResourceTypesJsonList(m_associatedResourceTypes.size());
-   for(unsigned associatedResourceTypesIndex = 0; associatedResourceTypesIndex < associatedResourceTypesJsonList.GetLength(); ++associatedResourceTypesIndex)
-   {
-     associatedResourceTypesJsonList[associatedResourceTypesIndex].AsString(ImageAssociatedResourceTypeMapper::GetNameForImageAssociatedResourceType(m_associatedResourceTypes[associatedResourceTypesIndex]));
-   }
-   payload.WithArray("AssociatedResourceTypes", std::move(associatedResourceTypesJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_imageIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImageId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_imageId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_associatedResourceTypesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AssociatedResourceTypes"));
+    encoder.WriteArrayStart(m_associatedResourceTypes.size());
+    for (const auto& item_0 : m_associatedResourceTypes) {
+      encoder.WriteText(
+          Aws::Crt::ByteCursorFromCString(ImageAssociatedResourceTypeMapper::GetNameForImageAssociatedResourceType(item_0).c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeImageAssociationsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeImageAssociationsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.DescribeImageAssociations"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

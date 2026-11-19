@@ -6,75 +6,89 @@
 #pragma once
 #include <aws/AWSMigrationHub/MigrationHub_EXPORTS.h>
 #include <aws/AWSMigrationHub/model/ApplicationStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MigrationHub
-{
-namespace Model
-{
-  class DescribeApplicationStateResult
-  {
-  public:
-    AWS_MIGRATIONHUB_API DescribeApplicationStateResult();
-    AWS_MIGRATIONHUB_API DescribeApplicationStateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MIGRATIONHUB_API DescribeApplicationStateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MigrationHub {
+namespace Model {
+class DescribeApplicationStateResult {
+ public:
+  AWS_MIGRATIONHUB_API DescribeApplicationStateResult() = default;
+  AWS_MIGRATIONHUB_API DescribeApplicationStateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MIGRATIONHUB_API DescribeApplicationStateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Status of the application - Not Started, In-Progress, Complete.</p>
+   */
+  inline ApplicationStatus GetApplicationStatus() const { return m_applicationStatus; }
+  inline void SetApplicationStatus(ApplicationStatus value) {
+    m_applicationStatusHasBeenSet = true;
+    m_applicationStatus = value;
+  }
+  inline DescribeApplicationStateResult& WithApplicationStatus(ApplicationStatus value) {
+    SetApplicationStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Status of the application - Not Started, In-Progress, Complete.</p>
-     */
-    inline const ApplicationStatus& GetApplicationStatus() const{ return m_applicationStatus; }
-    inline void SetApplicationStatus(const ApplicationStatus& value) { m_applicationStatus = value; }
-    inline void SetApplicationStatus(ApplicationStatus&& value) { m_applicationStatus = std::move(value); }
-    inline DescribeApplicationStateResult& WithApplicationStatus(const ApplicationStatus& value) { SetApplicationStatus(value); return *this;}
-    inline DescribeApplicationStateResult& WithApplicationStatus(ApplicationStatus&& value) { SetApplicationStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp when the application status was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTime() const { return m_lastUpdatedTime; }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  void SetLastUpdatedTime(LastUpdatedTimeT&& value) {
+    m_lastUpdatedTimeHasBeenSet = true;
+    m_lastUpdatedTime = std::forward<LastUpdatedTimeT>(value);
+  }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  DescribeApplicationStateResult& WithLastUpdatedTime(LastUpdatedTimeT&& value) {
+    SetLastUpdatedTime(std::forward<LastUpdatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp when the application status was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTime() const{ return m_lastUpdatedTime; }
-    inline void SetLastUpdatedTime(const Aws::Utils::DateTime& value) { m_lastUpdatedTime = value; }
-    inline void SetLastUpdatedTime(Aws::Utils::DateTime&& value) { m_lastUpdatedTime = std::move(value); }
-    inline DescribeApplicationStateResult& WithLastUpdatedTime(const Aws::Utils::DateTime& value) { SetLastUpdatedTime(value); return *this;}
-    inline DescribeApplicationStateResult& WithLastUpdatedTime(Aws::Utils::DateTime&& value) { SetLastUpdatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeApplicationStateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeApplicationStateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeApplicationStateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeApplicationStateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ApplicationStatus m_applicationStatus;
+ private:
+  ApplicationStatus m_applicationStatus{ApplicationStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_lastUpdatedTime;
+  Aws::Utils::DateTime m_lastUpdatedTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationStatusHasBeenSet = false;
+  bool m_lastUpdatedTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MigrationHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace MigrationHub
+}  // namespace Aws

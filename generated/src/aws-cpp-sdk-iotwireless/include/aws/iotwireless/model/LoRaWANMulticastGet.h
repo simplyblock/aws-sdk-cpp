@@ -5,90 +5,145 @@
 
 #pragma once
 #include <aws/iotwireless/IoTWireless_EXPORTS.h>
-#include <aws/iotwireless/model/SupportedRfRegion.h>
+#include <aws/iotwireless/model/DefaultSessionParametersMulticast.h>
 #include <aws/iotwireless/model/DlClass.h>
+#include <aws/iotwireless/model/ParticipatingGatewaysMulticast.h>
+#include <aws/iotwireless/model/SupportedRfRegion.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoTWireless
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTWireless {
+namespace Model {
 
+/**
+ * <p>The LoRaWAN information that is to be returned from getting multicast group
+ * information.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iotwireless-2020-11-22/LoRaWANMulticastGet">AWS
+ * API Reference</a></p>
+ */
+class LoRaWANMulticastGet {
+ public:
+  AWS_IOTWIRELESS_API LoRaWANMulticastGet() = default;
+  AWS_IOTWIRELESS_API LoRaWANMulticastGet(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTWIRELESS_API LoRaWANMulticastGet& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTWIRELESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline SupportedRfRegion GetRfRegion() const { return m_rfRegion; }
+  inline bool RfRegionHasBeenSet() const { return m_rfRegionHasBeenSet; }
+  inline void SetRfRegion(SupportedRfRegion value) {
+    m_rfRegionHasBeenSet = true;
+    m_rfRegion = value;
+  }
+  inline LoRaWANMulticastGet& WithRfRegion(SupportedRfRegion value) {
+    SetRfRegion(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline DlClass GetDlClass() const { return m_dlClass; }
+  inline bool DlClassHasBeenSet() const { return m_dlClassHasBeenSet; }
+  inline void SetDlClass(DlClass value) {
+    m_dlClassHasBeenSet = true;
+    m_dlClass = value;
+  }
+  inline LoRaWANMulticastGet& WithDlClass(DlClass value) {
+    SetDlClass(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline int GetNumberOfDevicesRequested() const { return m_numberOfDevicesRequested; }
+  inline bool NumberOfDevicesRequestedHasBeenSet() const { return m_numberOfDevicesRequestedHasBeenSet; }
+  inline void SetNumberOfDevicesRequested(int value) {
+    m_numberOfDevicesRequestedHasBeenSet = true;
+    m_numberOfDevicesRequested = value;
+  }
+  inline LoRaWANMulticastGet& WithNumberOfDevicesRequested(int value) {
+    SetNumberOfDevicesRequested(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline int GetNumberOfDevicesInGroup() const { return m_numberOfDevicesInGroup; }
+  inline bool NumberOfDevicesInGroupHasBeenSet() const { return m_numberOfDevicesInGroupHasBeenSet; }
+  inline void SetNumberOfDevicesInGroup(int value) {
+    m_numberOfDevicesInGroupHasBeenSet = true;
+    m_numberOfDevicesInGroup = value;
+  }
+  inline LoRaWANMulticastGet& WithNumberOfDevicesInGroup(int value) {
+    SetNumberOfDevicesInGroup(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const ParticipatingGatewaysMulticast& GetParticipatingGateways() const { return m_participatingGateways; }
+  inline bool ParticipatingGatewaysHasBeenSet() const { return m_participatingGatewaysHasBeenSet; }
+  template <typename ParticipatingGatewaysT = ParticipatingGatewaysMulticast>
+  void SetParticipatingGateways(ParticipatingGatewaysT&& value) {
+    m_participatingGatewaysHasBeenSet = true;
+    m_participatingGateways = std::forward<ParticipatingGatewaysT>(value);
+  }
+  template <typename ParticipatingGatewaysT = ParticipatingGatewaysMulticast>
+  LoRaWANMulticastGet& WithParticipatingGateways(ParticipatingGatewaysT&& value) {
+    SetParticipatingGateways(std::forward<ParticipatingGatewaysT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>The LoRaWAN information that is to be returned from getting multicast group
-   * information.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iotwireless-2020-11-22/LoRaWANMulticastGet">AWS
-   * API Reference</a></p>
+   * <p>The default session parameters for the multicast group.</p>
    */
-  class LoRaWANMulticastGet
-  {
-  public:
-    AWS_IOTWIRELESS_API LoRaWANMulticastGet();
-    AWS_IOTWIRELESS_API LoRaWANMulticastGet(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTWIRELESS_API LoRaWANMulticastGet& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTWIRELESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const DefaultSessionParametersMulticast& GetDefaultSessionParameters() const { return m_defaultSessionParameters; }
+  inline bool DefaultSessionParametersHasBeenSet() const { return m_defaultSessionParametersHasBeenSet; }
+  template <typename DefaultSessionParametersT = DefaultSessionParametersMulticast>
+  void SetDefaultSessionParameters(DefaultSessionParametersT&& value) {
+    m_defaultSessionParametersHasBeenSet = true;
+    m_defaultSessionParameters = std::forward<DefaultSessionParametersT>(value);
+  }
+  template <typename DefaultSessionParametersT = DefaultSessionParametersMulticast>
+  LoRaWANMulticastGet& WithDefaultSessionParameters(DefaultSessionParametersT&& value) {
+    SetDefaultSessionParameters(std::forward<DefaultSessionParametersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  SupportedRfRegion m_rfRegion{SupportedRfRegion::NOT_SET};
 
+  DlClass m_dlClass{DlClass::NOT_SET};
 
-    ///@{
-    
-    inline const SupportedRfRegion& GetRfRegion() const{ return m_rfRegion; }
-    inline bool RfRegionHasBeenSet() const { return m_rfRegionHasBeenSet; }
-    inline void SetRfRegion(const SupportedRfRegion& value) { m_rfRegionHasBeenSet = true; m_rfRegion = value; }
-    inline void SetRfRegion(SupportedRfRegion&& value) { m_rfRegionHasBeenSet = true; m_rfRegion = std::move(value); }
-    inline LoRaWANMulticastGet& WithRfRegion(const SupportedRfRegion& value) { SetRfRegion(value); return *this;}
-    inline LoRaWANMulticastGet& WithRfRegion(SupportedRfRegion&& value) { SetRfRegion(std::move(value)); return *this;}
-    ///@}
+  int m_numberOfDevicesRequested{0};
 
-    ///@{
-    
-    inline const DlClass& GetDlClass() const{ return m_dlClass; }
-    inline bool DlClassHasBeenSet() const { return m_dlClassHasBeenSet; }
-    inline void SetDlClass(const DlClass& value) { m_dlClassHasBeenSet = true; m_dlClass = value; }
-    inline void SetDlClass(DlClass&& value) { m_dlClassHasBeenSet = true; m_dlClass = std::move(value); }
-    inline LoRaWANMulticastGet& WithDlClass(const DlClass& value) { SetDlClass(value); return *this;}
-    inline LoRaWANMulticastGet& WithDlClass(DlClass&& value) { SetDlClass(std::move(value)); return *this;}
-    ///@}
+  int m_numberOfDevicesInGroup{0};
 
-    ///@{
-    
-    inline int GetNumberOfDevicesRequested() const{ return m_numberOfDevicesRequested; }
-    inline bool NumberOfDevicesRequestedHasBeenSet() const { return m_numberOfDevicesRequestedHasBeenSet; }
-    inline void SetNumberOfDevicesRequested(int value) { m_numberOfDevicesRequestedHasBeenSet = true; m_numberOfDevicesRequested = value; }
-    inline LoRaWANMulticastGet& WithNumberOfDevicesRequested(int value) { SetNumberOfDevicesRequested(value); return *this;}
-    ///@}
+  ParticipatingGatewaysMulticast m_participatingGateways;
 
-    ///@{
-    
-    inline int GetNumberOfDevicesInGroup() const{ return m_numberOfDevicesInGroup; }
-    inline bool NumberOfDevicesInGroupHasBeenSet() const { return m_numberOfDevicesInGroupHasBeenSet; }
-    inline void SetNumberOfDevicesInGroup(int value) { m_numberOfDevicesInGroupHasBeenSet = true; m_numberOfDevicesInGroup = value; }
-    inline LoRaWANMulticastGet& WithNumberOfDevicesInGroup(int value) { SetNumberOfDevicesInGroup(value); return *this;}
-    ///@}
-  private:
+  DefaultSessionParametersMulticast m_defaultSessionParameters;
+  bool m_rfRegionHasBeenSet = false;
+  bool m_dlClassHasBeenSet = false;
+  bool m_numberOfDevicesRequestedHasBeenSet = false;
+  bool m_numberOfDevicesInGroupHasBeenSet = false;
+  bool m_participatingGatewaysHasBeenSet = false;
+  bool m_defaultSessionParametersHasBeenSet = false;
+};
 
-    SupportedRfRegion m_rfRegion;
-    bool m_rfRegionHasBeenSet = false;
-
-    DlClass m_dlClass;
-    bool m_dlClassHasBeenSet = false;
-
-    int m_numberOfDevicesRequested;
-    bool m_numberOfDevicesRequestedHasBeenSet = false;
-
-    int m_numberOfDevicesInGroup;
-    bool m_numberOfDevicesInGroupHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTWireless
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTWireless
+}  // namespace Aws

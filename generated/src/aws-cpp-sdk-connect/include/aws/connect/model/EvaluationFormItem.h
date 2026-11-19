@@ -6,72 +6,77 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/EvaluationFormQuestion.h>
+#include <aws/core/utils/memory/stl/AWSAllocator.h>
+
 #include <utility>
-#include <memory>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class EvaluationFormSection;
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class EvaluationFormSection;
 
+/**
+ * <p>Information about an item from an evaluation form. The item must be either a
+ * section or a question.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EvaluationFormItem">AWS
+ * API Reference</a></p>
+ */
+class EvaluationFormItem {
+ public:
+  AWS_CONNECT_API EvaluationFormItem() = default;
+  AWS_CONNECT_API EvaluationFormItem(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API EvaluationFormItem& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about an item from an evaluation form. The item must be either a
-   * section or a question.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EvaluationFormItem">AWS
-   * API Reference</a></p>
+   * <p>The information of the section.</p>
    */
-  class EvaluationFormItem
-  {
-  public:
-    AWS_CONNECT_API EvaluationFormItem();
-    AWS_CONNECT_API EvaluationFormItem(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API EvaluationFormItem& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const EvaluationFormSection& GetSection() const { return *m_section; }
+  inline bool SectionHasBeenSet() const { return m_sectionHasBeenSet; }
+  template <typename SectionT = EvaluationFormSection>
+  void SetSection(SectionT&& value) {
+    m_sectionHasBeenSet = true;
+    m_section = Aws::MakeShared<EvaluationFormSection>("EvaluationFormItem", std::forward<SectionT>(value));
+  }
+  template <typename SectionT = EvaluationFormSection>
+  EvaluationFormItem& WithSection(SectionT&& value) {
+    SetSection(std::forward<SectionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The information of the question.</p>
+   */
+  inline const EvaluationFormQuestion& GetQuestion() const { return m_question; }
+  inline bool QuestionHasBeenSet() const { return m_questionHasBeenSet; }
+  template <typename QuestionT = EvaluationFormQuestion>
+  void SetQuestion(QuestionT&& value) {
+    m_questionHasBeenSet = true;
+    m_question = std::forward<QuestionT>(value);
+  }
+  template <typename QuestionT = EvaluationFormQuestion>
+  EvaluationFormItem& WithQuestion(QuestionT&& value) {
+    SetQuestion(std::forward<QuestionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  std::shared_ptr<EvaluationFormSection> m_section;
 
-    ///@{
-    /**
-     * <p>The information of the section.</p>
-     */
-    AWS_CONNECT_API const EvaluationFormSection& GetSection() const;
-    AWS_CONNECT_API bool SectionHasBeenSet() const;
-    AWS_CONNECT_API void SetSection(const EvaluationFormSection& value);
-    AWS_CONNECT_API void SetSection(EvaluationFormSection&& value);
-    AWS_CONNECT_API EvaluationFormItem& WithSection(const EvaluationFormSection& value);
-    AWS_CONNECT_API EvaluationFormItem& WithSection(EvaluationFormSection&& value);
-    ///@}
+  EvaluationFormQuestion m_question;
+  bool m_sectionHasBeenSet = false;
+  bool m_questionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The information of the question.</p>
-     */
-    inline const EvaluationFormQuestion& GetQuestion() const{ return m_question; }
-    inline bool QuestionHasBeenSet() const { return m_questionHasBeenSet; }
-    inline void SetQuestion(const EvaluationFormQuestion& value) { m_questionHasBeenSet = true; m_question = value; }
-    inline void SetQuestion(EvaluationFormQuestion&& value) { m_questionHasBeenSet = true; m_question = std::move(value); }
-    inline EvaluationFormItem& WithQuestion(const EvaluationFormQuestion& value) { SetQuestion(value); return *this;}
-    inline EvaluationFormItem& WithQuestion(EvaluationFormQuestion&& value) { SetQuestion(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    std::shared_ptr<EvaluationFormSection> m_section;
-    bool m_sectionHasBeenSet = false;
-
-    EvaluationFormQuestion m_question;
-    bool m_questionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
 
-#include <aws/socialmessaging/SocialMessagingEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SocialMessaging
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SocialMessaging {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SocialMessagingClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SocialMessagingEndpointProviderBase =
     EndpointProviderBase<SocialMessagingClientConfiguration, SocialMessagingBuiltInParameters, SocialMessagingClientContextParameters>;
 
 using SocialMessagingDefaultEpProviderBase =
-    DefaultEndpointProvider<SocialMessagingClientConfiguration, SocialMessagingBuiltInParameters, SocialMessagingClientContextParameters>;
+    BDDEndpointProvider<SocialMessagingClientConfiguration, SocialMessagingBuiltInParameters, SocialMessagingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SOCIALMESSAGING_API SocialMessagingEndpointProvider : public SocialMessagingDefaultEpProviderBase
-{
-public:
-    using SocialMessagingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SOCIALMESSAGING_API SocialMessagingEndpointProvider : public SocialMessagingDefaultEpProviderBase {
+ public:
+  using SocialMessagingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SocialMessagingEndpointProvider()
-      : SocialMessagingDefaultEpProviderBase(Aws::SocialMessaging::SocialMessagingEndpointRules::GetRulesBlob(), Aws::SocialMessaging::SocialMessagingEndpointRules::RulesBlobSize)
-    {}
+  SocialMessagingEndpointProvider();
 
-    ~SocialMessagingEndpointProvider()
-    {
-    }
+  ~SocialMessagingEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SocialMessaging
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SocialMessaging
+}  // namespace Aws

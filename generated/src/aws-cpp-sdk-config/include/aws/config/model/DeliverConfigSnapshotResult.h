@@ -5,69 +5,76 @@
 
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
+/**
+ * <p>The output for the <a>DeliverConfigSnapshot</a> action, in JSON
+ * format.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DeliverConfigSnapshotResponse">AWS
+ * API Reference</a></p>
+ */
+class DeliverConfigSnapshotResult {
+ public:
+  AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult() = default;
+  AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The output for the <a>DeliverConfigSnapshot</a> action, in JSON
-   * format.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DeliverConfigSnapshotResponse">AWS
-   * API Reference</a></p>
+   * <p>The ID of the snapshot that is being created.</p>
    */
-  class DeliverConfigSnapshotResult
-  {
-  public:
-    AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult();
-    AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONFIGSERVICE_API DeliverConfigSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetConfigSnapshotId() const { return m_configSnapshotId; }
+  template <typename ConfigSnapshotIdT = Aws::String>
+  void SetConfigSnapshotId(ConfigSnapshotIdT&& value) {
+    m_configSnapshotIdHasBeenSet = true;
+    m_configSnapshotId = std::forward<ConfigSnapshotIdT>(value);
+  }
+  template <typename ConfigSnapshotIdT = Aws::String>
+  DeliverConfigSnapshotResult& WithConfigSnapshotId(ConfigSnapshotIdT&& value) {
+    SetConfigSnapshotId(std::forward<ConfigSnapshotIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The ID of the snapshot that is being created.</p>
-     */
-    inline const Aws::String& GetConfigSnapshotId() const{ return m_configSnapshotId; }
-    inline void SetConfigSnapshotId(const Aws::String& value) { m_configSnapshotId = value; }
-    inline void SetConfigSnapshotId(Aws::String&& value) { m_configSnapshotId = std::move(value); }
-    inline void SetConfigSnapshotId(const char* value) { m_configSnapshotId.assign(value); }
-    inline DeliverConfigSnapshotResult& WithConfigSnapshotId(const Aws::String& value) { SetConfigSnapshotId(value); return *this;}
-    inline DeliverConfigSnapshotResult& WithConfigSnapshotId(Aws::String&& value) { SetConfigSnapshotId(std::move(value)); return *this;}
-    inline DeliverConfigSnapshotResult& WithConfigSnapshotId(const char* value) { SetConfigSnapshotId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeliverConfigSnapshotResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeliverConfigSnapshotResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeliverConfigSnapshotResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeliverConfigSnapshotResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_configSnapshotId;
 
-    Aws::String m_configSnapshotId;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configSnapshotIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

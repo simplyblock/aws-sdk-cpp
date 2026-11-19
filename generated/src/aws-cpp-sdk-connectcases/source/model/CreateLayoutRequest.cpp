@@ -12,32 +12,16 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateLayoutRequest::CreateLayoutRequest() : 
-    m_contentHasBeenSet(false),
-    m_domainIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String CreateLayoutRequest::SerializePayload() const
-{
+Aws::String CreateLayoutRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_contentHasBeenSet)
-  {
-   payload.WithObject("content", m_content.Jsonize());
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_contentHasBeenSet) {
+    payload.WithObject("content", m_content.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

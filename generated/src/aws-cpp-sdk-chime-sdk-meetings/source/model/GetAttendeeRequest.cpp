@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKMeetings::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAttendeeRequest::GetAttendeeRequest() : 
-    m_meetingIdHasBeenSet(false),
-    m_attendeeIdHasBeenSet(false)
-{
-}
-
-Aws::String GetAttendeeRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAttendeeRequest::SerializePayload() const { return {}; }

@@ -4,161 +4,189 @@
  */
 
 #pragma once
-#include <aws/sagemaker-geospatial/SageMakerGeospatial_EXPORTS.h>
-#include <aws/sagemaker-geospatial/SageMakerGeospatialRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker-geospatial/model/VectorEnrichmentJobInputConfig.h>
-#include <aws/sagemaker-geospatial/model/VectorEnrichmentJobConfig.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker-geospatial/SageMakerGeospatialRequest.h>
+#include <aws/sagemaker-geospatial/SageMakerGeospatial_EXPORTS.h>
+#include <aws/sagemaker-geospatial/model/VectorEnrichmentJobConfig.h>
+#include <aws/sagemaker-geospatial/model/VectorEnrichmentJobInputConfig.h>
 
-namespace Aws
-{
-namespace SageMakerGeospatial
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace SageMakerGeospatial {
+namespace Model {
+
+/**
+ */
+class StartVectorEnrichmentJobRequest : public SageMakerGeospatialRequest {
+ public:
+  AWS_SAGEMAKERGEOSPATIAL_API StartVectorEnrichmentJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartVectorEnrichmentJob"; }
+
+  AWS_SAGEMAKERGEOSPATIAL_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique token that guarantees that the call to this API is idempotent.</p>
    */
-  class StartVectorEnrichmentJobRequest : public SageMakerGeospatialRequest
-  {
-  public:
-    AWS_SAGEMAKERGEOSPATIAL_API StartVectorEnrichmentJobRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  StartVectorEnrichmentJobRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartVectorEnrichmentJob"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role that you specified for the
+   * job.</p>
+   */
+  inline const Aws::String& GetExecutionRoleArn() const { return m_executionRoleArn; }
+  inline bool ExecutionRoleArnHasBeenSet() const { return m_executionRoleArnHasBeenSet; }
+  template <typename ExecutionRoleArnT = Aws::String>
+  void SetExecutionRoleArn(ExecutionRoleArnT&& value) {
+    m_executionRoleArnHasBeenSet = true;
+    m_executionRoleArn = std::forward<ExecutionRoleArnT>(value);
+  }
+  template <typename ExecutionRoleArnT = Aws::String>
+  StartVectorEnrichmentJobRequest& WithExecutionRoleArn(ExecutionRoleArnT&& value) {
+    SetExecutionRoleArn(std::forward<ExecutionRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKERGEOSPATIAL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Input configuration information for the Vector Enrichment job.</p>
+   */
+  inline const VectorEnrichmentJobInputConfig& GetInputConfig() const { return m_inputConfig; }
+  inline bool InputConfigHasBeenSet() const { return m_inputConfigHasBeenSet; }
+  template <typename InputConfigT = VectorEnrichmentJobInputConfig>
+  void SetInputConfig(InputConfigT&& value) {
+    m_inputConfigHasBeenSet = true;
+    m_inputConfig = std::forward<InputConfigT>(value);
+  }
+  template <typename InputConfigT = VectorEnrichmentJobInputConfig>
+  StartVectorEnrichmentJobRequest& WithInputConfig(InputConfigT&& value) {
+    SetInputConfig(std::forward<InputConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An object containing information about the job configuration.</p>
+   */
+  inline const VectorEnrichmentJobConfig& GetJobConfig() const { return m_jobConfig; }
+  inline bool JobConfigHasBeenSet() const { return m_jobConfigHasBeenSet; }
+  template <typename JobConfigT = VectorEnrichmentJobConfig>
+  void SetJobConfig(JobConfigT&& value) {
+    m_jobConfigHasBeenSet = true;
+    m_jobConfig = std::forward<JobConfigT>(value);
+  }
+  template <typename JobConfigT = VectorEnrichmentJobConfig>
+  StartVectorEnrichmentJobRequest& WithJobConfig(JobConfigT&& value) {
+    SetJobConfig(std::forward<JobConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique token that guarantees that the call to this API is idempotent.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline StartVectorEnrichmentJobRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Key Management Service key ID for server-side encryption.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  StartVectorEnrichmentJobRequest& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the IAM role that you specified for the
-     * job.</p>
-     */
-    inline const Aws::String& GetExecutionRoleArn() const{ return m_executionRoleArn; }
-    inline bool ExecutionRoleArnHasBeenSet() const { return m_executionRoleArnHasBeenSet; }
-    inline void SetExecutionRoleArn(const Aws::String& value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn = value; }
-    inline void SetExecutionRoleArn(Aws::String&& value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn = std::move(value); }
-    inline void SetExecutionRoleArn(const char* value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn.assign(value); }
-    inline StartVectorEnrichmentJobRequest& WithExecutionRoleArn(const Aws::String& value) { SetExecutionRoleArn(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithExecutionRoleArn(Aws::String&& value) { SetExecutionRoleArn(std::move(value)); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithExecutionRoleArn(const char* value) { SetExecutionRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the Vector Enrichment job.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  StartVectorEnrichmentJobRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Input configuration information for the Vector Enrichment job.</p>
-     */
-    inline const VectorEnrichmentJobInputConfig& GetInputConfig() const{ return m_inputConfig; }
-    inline bool InputConfigHasBeenSet() const { return m_inputConfigHasBeenSet; }
-    inline void SetInputConfig(const VectorEnrichmentJobInputConfig& value) { m_inputConfigHasBeenSet = true; m_inputConfig = value; }
-    inline void SetInputConfig(VectorEnrichmentJobInputConfig&& value) { m_inputConfigHasBeenSet = true; m_inputConfig = std::move(value); }
-    inline StartVectorEnrichmentJobRequest& WithInputConfig(const VectorEnrichmentJobInputConfig& value) { SetInputConfig(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithInputConfig(VectorEnrichmentJobInputConfig&& value) { SetInputConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Each tag consists of a key and a value.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  StartVectorEnrichmentJobRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  StartVectorEnrichmentJobRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>An object containing information about the job configuration.</p>
-     */
-    inline const VectorEnrichmentJobConfig& GetJobConfig() const{ return m_jobConfig; }
-    inline bool JobConfigHasBeenSet() const { return m_jobConfigHasBeenSet; }
-    inline void SetJobConfig(const VectorEnrichmentJobConfig& value) { m_jobConfigHasBeenSet = true; m_jobConfig = value; }
-    inline void SetJobConfig(VectorEnrichmentJobConfig&& value) { m_jobConfigHasBeenSet = true; m_jobConfig = std::move(value); }
-    inline StartVectorEnrichmentJobRequest& WithJobConfig(const VectorEnrichmentJobConfig& value) { SetJobConfig(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithJobConfig(VectorEnrichmentJobConfig&& value) { SetJobConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_executionRoleArn;
 
-    ///@{
-    /**
-     * <p>The Key Management Service key ID for server-side encryption.</p>
-     */
-    inline const Aws::String& GetKmsKeyId() const{ return m_kmsKeyId; }
-    inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
-    inline void SetKmsKeyId(const Aws::String& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = value; }
-    inline void SetKmsKeyId(Aws::String&& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = std::move(value); }
-    inline void SetKmsKeyId(const char* value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId.assign(value); }
-    inline StartVectorEnrichmentJobRequest& WithKmsKeyId(const Aws::String& value) { SetKmsKeyId(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithKmsKeyId(Aws::String&& value) { SetKmsKeyId(std::move(value)); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithKmsKeyId(const char* value) { SetKmsKeyId(value); return *this;}
-    ///@}
+  VectorEnrichmentJobInputConfig m_inputConfig;
 
-    ///@{
-    /**
-     * <p>The name of the Vector Enrichment job.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline StartVectorEnrichmentJobRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  VectorEnrichmentJobConfig m_jobConfig;
 
-    ///@{
-    /**
-     * <p>Each tag consists of a key and a value.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline StartVectorEnrichmentJobRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline StartVectorEnrichmentJobRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline StartVectorEnrichmentJobRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline StartVectorEnrichmentJobRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::String m_kmsKeyId;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_executionRoleArn;
-    bool m_executionRoleArnHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_executionRoleArnHasBeenSet = false;
+  bool m_inputConfigHasBeenSet = false;
+  bool m_jobConfigHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    VectorEnrichmentJobInputConfig m_inputConfig;
-    bool m_inputConfigHasBeenSet = false;
-
-    VectorEnrichmentJobConfig m_jobConfig;
-    bool m_jobConfigHasBeenSet = false;
-
-    Aws::String m_kmsKeyId;
-    bool m_kmsKeyIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMakerGeospatial
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMakerGeospatial
+}  // namespace Aws

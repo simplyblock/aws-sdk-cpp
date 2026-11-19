@@ -4,143 +4,168 @@
  */
 
 #pragma once
-#include <aws/backup-gateway/BackupGateway_EXPORTS.h>
 #include <aws/backup-gateway/BackupGatewayRequest.h>
+#include <aws/backup-gateway/BackupGateway_EXPORTS.h>
+#include <aws/backup-gateway/model/Tag.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/backup-gateway/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace BackupGateway {
+namespace Model {
 
+/**
+ */
+class ImportHypervisorConfigurationRequest : public BackupGatewayRequest {
+ public:
+  AWS_BACKUPGATEWAY_API ImportHypervisorConfigurationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ImportHypervisorConfiguration"; }
+
+  AWS_BACKUPGATEWAY_API Aws::String SerializePayload() const override;
+
+  AWS_BACKUPGATEWAY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the hypervisor.</p>
    */
-  class ImportHypervisorConfigurationRequest : public BackupGatewayRequest
-  {
-  public:
-    AWS_BACKUPGATEWAY_API ImportHypervisorConfigurationRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ImportHypervisorConfigurationRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ImportHypervisorConfiguration"; }
+  ///@{
+  /**
+   * <p>The server host of the hypervisor. This can be either an IP address or a
+   * fully-qualified domain name (FQDN).</p>
+   */
+  inline const Aws::String& GetHost() const { return m_host; }
+  inline bool HostHasBeenSet() const { return m_hostHasBeenSet; }
+  template <typename HostT = Aws::String>
+  void SetHost(HostT&& value) {
+    m_hostHasBeenSet = true;
+    m_host = std::forward<HostT>(value);
+  }
+  template <typename HostT = Aws::String>
+  ImportHypervisorConfigurationRequest& WithHost(HostT&& value) {
+    SetHost(std::forward<HostT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BACKUPGATEWAY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The username for the hypervisor.</p>
+   */
+  inline const Aws::String& GetUsername() const { return m_username; }
+  inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
+  template <typename UsernameT = Aws::String>
+  void SetUsername(UsernameT&& value) {
+    m_usernameHasBeenSet = true;
+    m_username = std::forward<UsernameT>(value);
+  }
+  template <typename UsernameT = Aws::String>
+  ImportHypervisorConfigurationRequest& WithUsername(UsernameT&& value) {
+    SetUsername(std::forward<UsernameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BACKUPGATEWAY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The password for the hypervisor.</p>
+   */
+  inline const Aws::String& GetPassword() const { return m_password; }
+  inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
+  template <typename PasswordT = Aws::String>
+  void SetPassword(PasswordT&& value) {
+    m_passwordHasBeenSet = true;
+    m_password = std::forward<PasswordT>(value);
+  }
+  template <typename PasswordT = Aws::String>
+  ImportHypervisorConfigurationRequest& WithPassword(PasswordT&& value) {
+    SetPassword(std::forward<PasswordT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Key Management Service for the hypervisor.</p>
+   */
+  inline const Aws::String& GetKmsKeyArn() const { return m_kmsKeyArn; }
+  inline bool KmsKeyArnHasBeenSet() const { return m_kmsKeyArnHasBeenSet; }
+  template <typename KmsKeyArnT = Aws::String>
+  void SetKmsKeyArn(KmsKeyArnT&& value) {
+    m_kmsKeyArnHasBeenSet = true;
+    m_kmsKeyArn = std::forward<KmsKeyArnT>(value);
+  }
+  template <typename KmsKeyArnT = Aws::String>
+  ImportHypervisorConfigurationRequest& WithKmsKeyArn(KmsKeyArnT&& value) {
+    SetKmsKeyArn(std::forward<KmsKeyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The server host of the hypervisor. This can be either an IP address or a
-     * fully-qualified domain name (FQDN).</p>
-     */
-    inline const Aws::String& GetHost() const{ return m_host; }
-    inline bool HostHasBeenSet() const { return m_hostHasBeenSet; }
-    inline void SetHost(const Aws::String& value) { m_hostHasBeenSet = true; m_host = value; }
-    inline void SetHost(Aws::String&& value) { m_hostHasBeenSet = true; m_host = std::move(value); }
-    inline void SetHost(const char* value) { m_hostHasBeenSet = true; m_host.assign(value); }
-    inline ImportHypervisorConfigurationRequest& WithHost(const Aws::String& value) { SetHost(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithHost(Aws::String&& value) { SetHost(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithHost(const char* value) { SetHost(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags of the hypervisor configuration to import.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  ImportHypervisorConfigurationRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  ImportHypervisorConfigurationRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The Key Management Service for the hypervisor.</p>
-     */
-    inline const Aws::String& GetKmsKeyArn() const{ return m_kmsKeyArn; }
-    inline bool KmsKeyArnHasBeenSet() const { return m_kmsKeyArnHasBeenSet; }
-    inline void SetKmsKeyArn(const Aws::String& value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn = value; }
-    inline void SetKmsKeyArn(Aws::String&& value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn = std::move(value); }
-    inline void SetKmsKeyArn(const char* value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn.assign(value); }
-    inline ImportHypervisorConfigurationRequest& WithKmsKeyArn(const Aws::String& value) { SetKmsKeyArn(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithKmsKeyArn(Aws::String&& value) { SetKmsKeyArn(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithKmsKeyArn(const char* value) { SetKmsKeyArn(value); return *this;}
-    ///@}
+  Aws::String m_host;
 
-    ///@{
-    /**
-     * <p>The name of the hypervisor.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ImportHypervisorConfigurationRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_username;
 
-    ///@{
-    /**
-     * <p>The password for the hypervisor.</p>
-     */
-    inline const Aws::String& GetPassword() const{ return m_password; }
-    inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
-    inline void SetPassword(const Aws::String& value) { m_passwordHasBeenSet = true; m_password = value; }
-    inline void SetPassword(Aws::String&& value) { m_passwordHasBeenSet = true; m_password = std::move(value); }
-    inline void SetPassword(const char* value) { m_passwordHasBeenSet = true; m_password.assign(value); }
-    inline ImportHypervisorConfigurationRequest& WithPassword(const Aws::String& value) { SetPassword(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithPassword(Aws::String&& value) { SetPassword(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithPassword(const char* value) { SetPassword(value); return *this;}
-    ///@}
+  Aws::String m_password;
 
-    ///@{
-    /**
-     * <p>The tags of the hypervisor configuration to import.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ImportHypervisorConfigurationRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline ImportHypervisorConfigurationRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_kmsKeyArn;
 
-    ///@{
-    /**
-     * <p>The username for the hypervisor.</p>
-     */
-    inline const Aws::String& GetUsername() const{ return m_username; }
-    inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
-    inline void SetUsername(const Aws::String& value) { m_usernameHasBeenSet = true; m_username = value; }
-    inline void SetUsername(Aws::String&& value) { m_usernameHasBeenSet = true; m_username = std::move(value); }
-    inline void SetUsername(const char* value) { m_usernameHasBeenSet = true; m_username.assign(value); }
-    inline ImportHypervisorConfigurationRequest& WithUsername(const Aws::String& value) { SetUsername(value); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithUsername(Aws::String&& value) { SetUsername(std::move(value)); return *this;}
-    inline ImportHypervisorConfigurationRequest& WithUsername(const char* value) { SetUsername(value); return *this;}
-    ///@}
-  private:
+  Aws::Vector<Tag> m_tags;
+  bool m_nameHasBeenSet = false;
+  bool m_hostHasBeenSet = false;
+  bool m_usernameHasBeenSet = false;
+  bool m_passwordHasBeenSet = false;
+  bool m_kmsKeyArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_host;
-    bool m_hostHasBeenSet = false;
-
-    Aws::String m_kmsKeyArn;
-    bool m_kmsKeyArnHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_password;
-    bool m_passwordHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_username;
-    bool m_usernameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace BackupGateway
+}  // namespace Aws

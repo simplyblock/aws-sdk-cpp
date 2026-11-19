@@ -12,40 +12,31 @@ using namespace Aws::ControlTower::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateLandingZoneRequest::UpdateLandingZoneRequest() : 
-    m_landingZoneIdentifierHasBeenSet(false),
-    m_manifestHasBeenSet(false),
-    m_versionHasBeenSet(false)
-{
-}
-
-Aws::String UpdateLandingZoneRequest::SerializePayload() const
-{
+Aws::String UpdateLandingZoneRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_landingZoneIdentifierHasBeenSet)
-  {
-   payload.WithString("landingZoneIdentifier", m_landingZoneIdentifier);
-
+  if (m_versionHasBeenSet) {
+    payload.WithString("version", m_version);
   }
 
-  if(m_manifestHasBeenSet)
-  {
-    if(!m_manifest.View().IsNull())
-    {
-       payload.WithObject("manifest", JsonValue(m_manifest.View()));
+  if (m_remediationTypesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> remediationTypesJsonList(m_remediationTypes.size());
+    for (unsigned remediationTypesIndex = 0; remediationTypesIndex < remediationTypesJsonList.GetLength(); ++remediationTypesIndex) {
+      remediationTypesJsonList[remediationTypesIndex].AsString(
+          RemediationTypeMapper::GetNameForRemediationType(m_remediationTypes[remediationTypesIndex]));
     }
+    payload.WithArray("remediationTypes", std::move(remediationTypesJsonList));
   }
 
-  if(m_versionHasBeenSet)
-  {
-   payload.WithString("version", m_version);
+  if (m_landingZoneIdentifierHasBeenSet) {
+    payload.WithString("landingZoneIdentifier", m_landingZoneIdentifier);
+  }
 
+  if (m_manifestHasBeenSet) {
+    if (!m_manifest.View().IsNull()) {
+      payload.WithObject("manifest", JsonValue(m_manifest.View()));
+    }
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

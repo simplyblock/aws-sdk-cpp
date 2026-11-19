@@ -4,62 +4,61 @@
  */
 
 #include <aws/appstream/model/DescribeApplicationFleetAssociationsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeApplicationFleetAssociationsRequest::DescribeApplicationFleetAssociationsRequest() : 
-    m_fleetNameHasBeenSet(false),
-    m_applicationArnHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
+Aws::String DescribeApplicationFleetAssociationsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_fleetNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_applicationArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_fleetNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FleetName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_fleetName.c_str()));
+  }
+
+  if (m_applicationArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ApplicationArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationArn.c_str()));
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DescribeApplicationFleetAssociationsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_fleetNameHasBeenSet)
-  {
-   payload.WithString("FleetName", m_fleetName);
-
-  }
-
-  if(m_applicationArnHasBeenSet)
-  {
-   payload.WithString("ApplicationArn", m_applicationArn);
-
-  }
-
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DescribeApplicationFleetAssociationsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeApplicationFleetAssociationsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.DescribeApplicationFleetAssociations"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/drs/Drs_EXPORTS.h>
 #include <aws/drs/model/Job.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace drs
-{
-namespace Model
-{
-  class AssociateSourceNetworkStackResult
-  {
-  public:
-    AWS_DRS_API AssociateSourceNetworkStackResult();
-    AWS_DRS_API AssociateSourceNetworkStackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DRS_API AssociateSourceNetworkStackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace drs {
+namespace Model {
+class AssociateSourceNetworkStackResult {
+ public:
+  AWS_DRS_API AssociateSourceNetworkStackResult() = default;
+  AWS_DRS_API AssociateSourceNetworkStackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DRS_API AssociateSourceNetworkStackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Source Network association Job.</p>
+   */
+  inline const Job& GetJob() const { return m_job; }
+  template <typename JobT = Job>
+  void SetJob(JobT&& value) {
+    m_jobHasBeenSet = true;
+    m_job = std::forward<JobT>(value);
+  }
+  template <typename JobT = Job>
+  AssociateSourceNetworkStackResult& WithJob(JobT&& value) {
+    SetJob(std::forward<JobT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Source Network association Job.</p>
-     */
-    inline const Job& GetJob() const{ return m_job; }
-    inline void SetJob(const Job& value) { m_job = value; }
-    inline void SetJob(Job&& value) { m_job = std::move(value); }
-    inline AssociateSourceNetworkStackResult& WithJob(const Job& value) { SetJob(value); return *this;}
-    inline AssociateSourceNetworkStackResult& WithJob(Job&& value) { SetJob(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateSourceNetworkStackResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateSourceNetworkStackResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateSourceNetworkStackResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateSourceNetworkStackResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Job m_job;
+ private:
+  Job m_job;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace drs
-} // namespace Aws
+}  // namespace Model
+}  // namespace drs
+}  // namespace Aws

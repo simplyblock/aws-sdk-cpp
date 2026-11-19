@@ -10,23 +10,14 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DescribeStacksRequest::DescribeStacksRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String DescribeStacksRequest::SerializePayload() const
-{
+Aws::String DescribeStacksRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeStacks&";
-  if(m_stackNameHasBeenSet)
-  {
+  if (m_stackNameHasBeenSet) {
     ss << "StackName=" << StringUtils::URLEncode(m_stackName.c_str()) << "&";
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String DescribeStacksRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeStacksRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeStacksRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

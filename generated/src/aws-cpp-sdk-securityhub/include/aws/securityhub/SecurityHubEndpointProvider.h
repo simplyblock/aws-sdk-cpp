@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 
-#include <aws/securityhub/SecurityHubEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SecurityHub
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SecurityHub {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SecurityHubClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SecurityHubEndpointProviderBase =
     EndpointProviderBase<SecurityHubClientConfiguration, SecurityHubBuiltInParameters, SecurityHubClientContextParameters>;
 
 using SecurityHubDefaultEpProviderBase =
-    DefaultEndpointProvider<SecurityHubClientConfiguration, SecurityHubBuiltInParameters, SecurityHubClientContextParameters>;
+    BDDEndpointProvider<SecurityHubClientConfiguration, SecurityHubBuiltInParameters, SecurityHubClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SECURITYHUB_API SecurityHubEndpointProvider : public SecurityHubDefaultEpProviderBase
-{
-public:
-    using SecurityHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SECURITYHUB_API SecurityHubEndpointProvider : public SecurityHubDefaultEpProviderBase {
+ public:
+  using SecurityHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SecurityHubEndpointProvider()
-      : SecurityHubDefaultEpProviderBase(Aws::SecurityHub::SecurityHubEndpointRules::GetRulesBlob(), Aws::SecurityHub::SecurityHubEndpointRules::RulesBlobSize)
-    {}
+  SecurityHubEndpointProvider();
 
-    ~SecurityHubEndpointProvider()
-    {
-    }
+  ~SecurityHubEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SecurityHub
+}  // namespace Aws

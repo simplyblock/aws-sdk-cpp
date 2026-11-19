@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/logs/model/PutDeliverySourceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/logs/model/PutDeliverySourceRequest.h>
 
 #include <utility>
 
@@ -12,58 +12,42 @@ using namespace Aws::CloudWatchLogs::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutDeliverySourceRequest::PutDeliverySourceRequest() : 
-    m_nameHasBeenSet(false),
-    m_resourceArnHasBeenSet(false),
-    m_logTypeHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String PutDeliverySourceRequest::SerializePayload() const
-{
+Aws::String PutDeliverySourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_resourceArnHasBeenSet)
-  {
-   payload.WithString("resourceArn", m_resourceArn);
-
+  if (m_resourceArnHasBeenSet) {
+    payload.WithString("resourceArn", m_resourceArn);
   }
 
-  if(m_logTypeHasBeenSet)
-  {
-   payload.WithString("logType", m_logType);
-
+  if (m_logTypeHasBeenSet) {
+    payload.WithString("logType", m_logType);
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
+  }
 
+  if (m_deliverySourceConfigurationHasBeenSet) {
+    JsonValue deliverySourceConfigurationJsonMap;
+    for (auto& deliverySourceConfigurationItem : m_deliverySourceConfiguration) {
+      deliverySourceConfigurationJsonMap.WithString(deliverySourceConfigurationItem.first, deliverySourceConfigurationItem.second);
+    }
+    payload.WithObject("deliverySourceConfiguration", std::move(deliverySourceConfigurationJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection PutDeliverySourceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutDeliverySourceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Logs_20140328.PutDeliverySource"));
   return headers;
-
 }
-
-
-
-

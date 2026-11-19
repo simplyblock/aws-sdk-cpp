@@ -4,65 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/waf-regional/WAFRegional_EXPORTS.h>
 #include <aws/waf-regional/model/WebACLSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WAFRegional
-{
-namespace Model
-{
-  class GetWebACLForResourceResult
-  {
-  public:
-    AWS_WAFREGIONAL_API GetWebACLForResourceResult();
-    AWS_WAFREGIONAL_API GetWebACLForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WAFREGIONAL_API GetWebACLForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WAFRegional {
+namespace Model {
+class GetWebACLForResourceResult {
+ public:
+  AWS_WAFREGIONAL_API GetWebACLForResourceResult() = default;
+  AWS_WAFREGIONAL_API GetWebACLForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WAFREGIONAL_API GetWebACLForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the web ACL that you specified in the
+   * <code>GetWebACLForResource</code> request. If there is no associated resource, a
+   * null WebACLSummary is returned.</p>
+   */
+  inline const WebACLSummary& GetWebACLSummary() const { return m_webACLSummary; }
+  template <typename WebACLSummaryT = WebACLSummary>
+  void SetWebACLSummary(WebACLSummaryT&& value) {
+    m_webACLSummaryHasBeenSet = true;
+    m_webACLSummary = std::forward<WebACLSummaryT>(value);
+  }
+  template <typename WebACLSummaryT = WebACLSummary>
+  GetWebACLForResourceResult& WithWebACLSummary(WebACLSummaryT&& value) {
+    SetWebACLSummary(std::forward<WebACLSummaryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the web ACL that you specified in the
-     * <code>GetWebACLForResource</code> request. If there is no associated resource, a
-     * null WebACLSummary is returned.</p>
-     */
-    inline const WebACLSummary& GetWebACLSummary() const{ return m_webACLSummary; }
-    inline void SetWebACLSummary(const WebACLSummary& value) { m_webACLSummary = value; }
-    inline void SetWebACLSummary(WebACLSummary&& value) { m_webACLSummary = std::move(value); }
-    inline GetWebACLForResourceResult& WithWebACLSummary(const WebACLSummary& value) { SetWebACLSummary(value); return *this;}
-    inline GetWebACLForResourceResult& WithWebACLSummary(WebACLSummary&& value) { SetWebACLSummary(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetWebACLForResourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetWebACLForResourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetWebACLForResourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetWebACLForResourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    WebACLSummary m_webACLSummary;
+ private:
+  WebACLSummary m_webACLSummary;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_webACLSummaryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WAFRegional
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAFRegional
+}  // namespace Aws

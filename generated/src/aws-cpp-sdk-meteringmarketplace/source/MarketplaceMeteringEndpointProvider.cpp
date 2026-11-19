@@ -4,13 +4,15 @@
  */
 
 #include <aws/meteringmarketplace/MarketplaceMeteringEndpointProvider.h>
+#include <aws/meteringmarketplace/internal/MarketplaceMeteringEndpointRules.h>
 
-namespace Aws
-{
-namespace MarketplaceMetering
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace MarketplaceMetering
-} // namespace Aws
+namespace Aws {
+namespace MarketplaceMetering {
+namespace Endpoint {
+MarketplaceMeteringEndpointProvider::MarketplaceMeteringEndpointProvider()
+    : MarketplaceMeteringDefaultEpProviderBase(Aws::MarketplaceMetering::MarketplaceMeteringEndpointRules::GetRulesBlob(),
+                                               Aws::MarketplaceMetering::MarketplaceMeteringEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace MarketplaceMetering
+}  // namespace Aws

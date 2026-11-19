@@ -4,75 +4,119 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/TransitGatewayRoute.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class SearchTransitGatewayRoutesResponse
-  {
-  public:
-    AWS_EC2_API SearchTransitGatewayRoutesResponse();
-    AWS_EC2_API SearchTransitGatewayRoutesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API SearchTransitGatewayRoutesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class SearchTransitGatewayRoutesResponse {
+ public:
+  AWS_EC2_API SearchTransitGatewayRoutesResponse() = default;
+  AWS_EC2_API SearchTransitGatewayRoutesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API SearchTransitGatewayRoutesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the routes.</p>
+   */
+  inline const Aws::Vector<TransitGatewayRoute>& GetRoutes() const { return m_routes; }
+  template <typename RoutesT = Aws::Vector<TransitGatewayRoute>>
+  void SetRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes = std::forward<RoutesT>(value);
+  }
+  template <typename RoutesT = Aws::Vector<TransitGatewayRoute>>
+  SearchTransitGatewayRoutesResponse& WithRoutes(RoutesT&& value) {
+    SetRoutes(std::forward<RoutesT>(value));
+    return *this;
+  }
+  template <typename RoutesT = TransitGatewayRoute>
+  SearchTransitGatewayRoutesResponse& AddRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes.emplace_back(std::forward<RoutesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the routes.</p>
-     */
-    inline const Aws::Vector<TransitGatewayRoute>& GetRoutes() const{ return m_routes; }
-    inline void SetRoutes(const Aws::Vector<TransitGatewayRoute>& value) { m_routes = value; }
-    inline void SetRoutes(Aws::Vector<TransitGatewayRoute>&& value) { m_routes = std::move(value); }
-    inline SearchTransitGatewayRoutesResponse& WithRoutes(const Aws::Vector<TransitGatewayRoute>& value) { SetRoutes(value); return *this;}
-    inline SearchTransitGatewayRoutesResponse& WithRoutes(Aws::Vector<TransitGatewayRoute>&& value) { SetRoutes(std::move(value)); return *this;}
-    inline SearchTransitGatewayRoutesResponse& AddRoutes(const TransitGatewayRoute& value) { m_routes.push_back(value); return *this; }
-    inline SearchTransitGatewayRoutesResponse& AddRoutes(TransitGatewayRoute&& value) { m_routes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether there are additional routes available.</p>
+   */
+  inline bool GetAdditionalRoutesAvailable() const { return m_additionalRoutesAvailable; }
+  inline void SetAdditionalRoutesAvailable(bool value) {
+    m_additionalRoutesAvailableHasBeenSet = true;
+    m_additionalRoutesAvailable = value;
+  }
+  inline SearchTransitGatewayRoutesResponse& WithAdditionalRoutesAvailable(bool value) {
+    SetAdditionalRoutesAvailable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether there are additional routes available.</p>
-     */
-    inline bool GetAdditionalRoutesAvailable() const{ return m_additionalRoutesAvailable; }
-    inline void SetAdditionalRoutesAvailable(bool value) { m_additionalRoutesAvailable = value; }
-    inline SearchTransitGatewayRoutesResponse& WithAdditionalRoutesAvailable(bool value) { SetAdditionalRoutesAvailable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  SearchTransitGatewayRoutesResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline SearchTransitGatewayRoutesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline SearchTransitGatewayRoutesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<TransitGatewayRoute> m_routes;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  SearchTransitGatewayRoutesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    bool m_additionalRoutesAvailable;
+ private:
+  Aws::Vector<TransitGatewayRoute> m_routes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  bool m_additionalRoutesAvailable{false};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+  Aws::String m_nextToken;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_routesHasBeenSet = false;
+  bool m_additionalRoutesAvailableHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

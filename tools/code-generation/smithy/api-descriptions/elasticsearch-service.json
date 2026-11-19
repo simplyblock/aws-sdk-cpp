@@ -497,6 +497,9 @@
                     "target": "com.amazonaws.elasticsearchservice#StartElasticsearchServiceSoftwareUpdate"
                 },
                 {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateClone"
+                },
+                {
                     "target": "com.amazonaws.elasticsearchservice#UpdateElasticsearchDomainConfig"
                 },
                 {
@@ -527,6 +530,257 @@
                 "smithy.api#xmlNamespace": {
                     "uri": "http://es.amazonaws.com/doc/2015-01-01/"
                 },
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-cn"
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-us-gov"
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://es-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://es-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://aos.{Region}.api.aws",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://aos.{Region}.api.amazonwebservices.com.cn",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://es.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://es.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 16,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAA8AAAADAAAAAQAAAAQF9eENAAAAAgAAAAUF9eENAAAAAwAAAAsAAAAGAAAABAAAAAcF9eEMAAAABQAAAAgF9eELAAAABwX14QgAAAAJAAAACAX14QkAAAAKAAAACQX14QgF9eEKAAAABAAAAA0AAAAMAAAABgX14QYF9eEHAAAABQAAAA4F9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAAQAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -534,27 +788,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -1452,17 +1706,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1473,17 +1716,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1500,17 +1732,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1521,17 +1742,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -2087,6 +2297,88 @@
                 "smithy.api#documentation": "<p>Specifies Auto-Tune type. Valid value is SCHEDULED_ACTION. </p>"
             }
         },
+        "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseOptions": {
+            "type": "structure",
+            "members": {
+                "Enabled": {
+                    "target": "com.amazonaws.elasticsearchservice#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "StartTime": {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The timestamp at which the automated snapshot pause begins.</p>"
+                    }
+                },
+                "EndTime": {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The timestamp at which the automated snapshot pause ends.</p>"
+                    }
+                },
+                "State": {
+                    "target": "com.amazonaws.elasticsearchservice#PauseState",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current state of the automated snapshot pause. Valid values are <code>Active</code>, <code>Completed</code>, <code>Scheduled</code>, and <code>Disabled</code>.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the automated snapshot pause options for the domain. These options allow you to temporarily pause automated snapshots for a specified time period.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseOptionsStatus": {
+            "type": "structure",
+            "members": {
+                "Options": {
+                    "target": "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Automated snapshot pause options for the specified Elasticsearch domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#OptionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the automated snapshot pause options for the specified Elasticsearch domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The status of automated snapshot pause options for the specified Elasticsearch domain.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseRequestOptions": {
+            "type": "structure",
+            "members": {
+                "Enabled": {
+                    "target": "com.amazonaws.elasticsearchservice#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "StartTime": {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The timestamp at which the automated snapshot pause should begin.</p>"
+                    }
+                },
+                "EndTime": {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The timestamp at which the automated snapshot pause should end. The maximum allowed\n           duration between <code>StartTime</code> and <code>EndTime</code> is 3 days.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the automated snapshot pause request options for the domain.</p>\n       <important>\n           <p>Suspending snapshots reduces data protection. You cannot restore your domain to\n               points in time when snapshots are suspended. Use this feature only for short-term\n               operational needs such as migrations or maintenance windows.</p>\n       </important>\n       <p>Maximum suspension duration: 3 days.</p>"
+            }
+        },
         "com.amazonaws.elasticsearchservice#BackendRole": {
             "type": "string",
             "traits": {
@@ -2458,6 +2750,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The IAM principal who initiated the configuration change.</p>"
                     }
+                },
+                "ClonedBlueGreenUpgradeDetails": {
+                    "target": "com.amazonaws.elasticsearchservice#ClonedBlueGreenUpgradeDetails",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Details about a cloned blue/green upgrade, when the change is one.</p>"
+                    }
                 }
             },
             "traits": {
@@ -2471,6 +2769,86 @@
                     "min": 1,
                     "max": 64
                 }
+            }
+        },
+        "com.amazonaws.elasticsearchservice#ClonedBlueGreenOptions": {
+            "type": "structure",
+            "members": {
+                "RetentionOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#RetentionOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>How long to keep the cluster that you cut over from after cutover completes. When you start the upgrade, only <code>RetentionInHours</code> is accepted.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Options for a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#ClonedBlueGreenScheduledAction": {
+            "type": "structure",
+            "members": {
+                "Action": {
+                    "target": "com.amazonaws.elasticsearchservice#ClonedBlueGreenScheduledActionType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The action that the service takes.</p>"
+                    }
+                },
+                "ScheduledTime": {
+                    "target": "com.amazonaws.elasticsearchservice#UpdateTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The time at which the service takes the action.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>An action that the service takes automatically at a scheduled time during a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#ClonedBlueGreenScheduledActionType": {
+            "type": "enum",
+            "members": {
+                "AUTOMATIC_CUTOVER_TO_PRIMARY": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "AutomaticCutoverToPrimaryCluster"
+                    }
+                },
+                "DELETE_PRIMARY_CLUSTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DeletePrimaryCluster"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p><code>AutomaticCutoverToPrimaryCluster</code> cuts the domain back over to the primary cluster if you haven't cut over by the scheduled time. <code>DeletePrimaryCluster</code> deletes the primary cluster when the retention period ends.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#ClonedBlueGreenUpgradeDetails": {
+            "type": "structure",
+            "members": {
+                "TrafficSplit": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercents",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current split of search traffic between the primary and cloned clusters.</p>"
+                    }
+                },
+                "ScheduledAction": {
+                    "target": "com.amazonaws.elasticsearchservice#ClonedBlueGreenScheduledAction",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The action that the service takes automatically if you don't act before the scheduled time.</p>"
+                    }
+                },
+                "RetentionInHours": {
+                    "target": "com.amazonaws.elasticsearchservice#IntegerClass",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The retention period, in hours, for the cluster that you cut over from.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The state of a cloned blue/green upgrade. Members that don't apply are omitted.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#CloudWatchLogsLogGroupArn": {
@@ -2797,6 +3175,30 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of <code>Tag</code> added during domain creation.</p>"
                     }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the deployment strategy options.</p>"
+                    }
+                },
+                "AutomatedSnapshotPauseOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseRequestOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the automated snapshot pause options for the domain.</p>\n        <important>\n            <p>Suspending snapshots reduces data protection. You cannot restore your domain to\n                points in time when snapshots are suspended. Use this feature only for short-term\n                operational needs such as migrations or maintenance windows.</p>\n        </important>\n        <p>Maximum suspension duration: 3 days.</p>"
+                    }
+                },
+                "UseCase": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainUseCase",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>"
+                    }
+                },
+                "EngineMode": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainEngineMode",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The engine mode for the domain. For valid values and requirements, see <code>DomainEngineMode</code>.</p>"
+                    }
                 }
             },
             "traits": {
@@ -3099,6 +3501,89 @@
         },
         "com.amazonaws.elasticsearchservice#CrossClusterSearchConnectionStatusMessage": {
             "type": "string"
+        },
+        "com.amazonaws.elasticsearchservice#CutoverOptions": {
+            "type": "structure",
+            "members": {
+                "Target": {
+                    "target": "com.amazonaws.elasticsearchservice#CutoverTarget",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The cluster that the domain is cutting over to.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#CutoverStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The status of the cutover.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The cutover target and status for a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#CutoverRequestOptions": {
+            "type": "structure",
+            "members": {
+                "Target": {
+                    "target": "com.amazonaws.elasticsearchservice#CutoverTarget",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The cluster to cut over to. <code>ClonedCluster</code> makes the cloned cluster serve the domain. <code>PrimaryCluster</code> keeps the primary cluster and ends the upgrade.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The cutover to perform for a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#CutoverStatus": {
+            "type": "enum",
+            "members": {
+                "IN_PROGRESS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "InProgress"
+                    }
+                },
+                "COMPLETED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Completed"
+                    }
+                },
+                "FAILED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Failed"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The status of a cutover.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#CutoverTarget": {
+            "type": "enum",
+            "members": {
+                "CLONED_CLUSTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ClonedCluster"
+                    }
+                },
+                "PRIMARY_CLUSTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "PrimaryCluster"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The cluster to cut over to in a cloned blue/green upgrade.</p>"
+            }
         },
         "com.amazonaws.elasticsearchservice#DeleteElasticsearchDomain": {
             "type": "operation",
@@ -3476,6 +3961,98 @@
                 }
             }
         },
+        "com.amazonaws.elasticsearchservice#DeploymentStrategy": {
+            "type": "enum",
+            "members": {
+                "DEFAULT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Default"
+                    }
+                },
+                "CAPACITY_OPTIMIZED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CapacityOptimized"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DeploymentStrategyOptions": {
+            "type": "structure",
+            "members": {
+                "DeploymentStrategy": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategy",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the deployment strategy options for the domain.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DeploymentStrategyOptionsStatus": {
+            "type": "structure",
+            "members": {
+                "Options": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies deployment strategy options for the specified Elasticsearch domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#OptionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the status of the deployment strategy options for the specified Elasticsearch domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the status of deployment strategy options for the specified Elasticsearch domain.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DeploymentStrategyOverride": {
+            "type": "enum",
+            "members": {
+                "CLONED_BLUE_GREEN": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ClonedBlueGreen"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The deployment strategy override for an operation. The only valid value is <code>ClonedBlueGreen</code>.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DeploymentStrategyOverrideOptions": {
+            "type": "structure",
+            "members": {
+                "DeploymentStrategy": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOverride",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The deployment strategy to use for this operation. The only valid value is <code>ClonedBlueGreen</code>, which creates a cloned cluster on the target version next to the primary cluster so that you can validate it and shift traffic to it before you cut over.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "ClonedBlueGreenOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#ClonedBlueGreenOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Options that apply when <code>DeploymentStrategy</code> is <code>ClonedBlueGreen</code>.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Overrides the deployment strategy for a single operation, such as a version upgrade.</p>"
+            }
+        },
         "com.amazonaws.elasticsearchservice#DeploymentType": {
             "type": "string",
             "traits": {
@@ -3536,13 +4113,15 @@
                     "target": "com.amazonaws.elasticsearchservice#MaxResults",
                     "traits": {
                         "smithy.api#default": 0,
-                        "smithy.api#documentation": "<p>Set this value to limit the number of results returned. If not specified, defaults to 100.</p>"
+                        "smithy.api#documentation": "<p>Set this value to limit the number of results returned. If not specified, defaults to 100.</p>",
+                        "smithy.api#httpQuery": "maxResults"
                     }
                 },
                 "NextToken": {
                     "target": "com.amazonaws.elasticsearchservice#NextToken",
                     "traits": {
-                        "smithy.api#documentation": "<p>NextToken is sent in case the earlier API call results contain the NextToken. It is used for pagination.</p>"
+                        "smithy.api#documentation": "<p>NextToken is sent in case the earlier API call results contain the NextToken. It is used for pagination.</p>",
+                        "smithy.api#httpQuery": "nextToken"
                     }
                 }
             },
@@ -4590,7 +5169,7 @@
                 "TLSSecurityPolicy": {
                     "target": "com.amazonaws.elasticsearchservice#TLSSecurityPolicy",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specify the TLS security policy that needs to be applied to the HTTPS endpoint of Elasticsearch domain.\n        <br></br> It can be one of the following values:\n        <ul>\n            <li><b>Policy-Min-TLS-1-0-2019-07: </b> TLS security policy that supports TLS version 1.0 to TLS version 1.2</li>\n            <li><b>Policy-Min-TLS-1-2-2019-07: </b> TLS security policy that supports only TLS version 1.2</li>\n            <li><b>Policy-Min-TLS-1-2-PFS-2023-10: </b> TLS security policy that supports TLS version 1.2 to TLS version 1.3 with perfect forward secrecy cipher suites</li>\n        </ul>\n    </p>"
+                        "smithy.api#documentation": "<p>Specify the TLS security policy that needs to be applied to the HTTPS endpoint of Elasticsearch domain.\n        <br></br> It can be one of the following values:\n        <ul>\n            <li><b>Policy-Min-TLS-1-0-2019-07: </b> TLS security policy that supports TLS version 1.0 to TLS version 1.2</li>\n            <li><b>Policy-Min-TLS-1-2-2019-07: </b> TLS security policy that supports only TLS version 1.2</li>\n            <li><b>Policy-Min-TLS-1-2-PFS-2023-10: </b> TLS security policy that supports TLS version 1.2 to TLS version 1.3 with perfect forward secrecy cipher suites</li>\n            <li><b>Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08: </b> TLS security policy that supports TLS version 1.3 with FIPS</li>\n        </ul>\n    </p>"
                     }
                 },
                 "CustomEndpointEnabled": {
@@ -4636,6 +5215,26 @@
             },
             "traits": {
                 "smithy.api#documentation": "<p>The configured endpoint options for the domain and their current status.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DomainEngineMode": {
+            "type": "enum",
+            "members": {
+                "GENERAL": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "GENERAL"
+                    }
+                },
+                "OPTIMIZED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "OPTIMIZED"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The engine mode for the domain. Valid values are <code>GENERAL</code> (the standard\n          Elasticsearch/OpenSearch engine) and <code>OPTIMIZED</code> (the cost- and\n          performance-optimized engine for observability and log-analytics workloads). If you don't\n          specify an engine mode, <code>GENERAL</code> is used. <code>OPTIMIZED</code> requires\n          OpenSearch 3.5 or later, OpenSearch Optimized instance types (OR1, OR2, OM2, or OI2) for the\n          data tier, and encryption at rest, and is available only for the <code>OBSERVABILITY</code>\n          and <code>MIXED</code> use cases. The engine mode can't be changed after the domain is\n          created.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#DomainId": {
@@ -4866,6 +5465,38 @@
                         "smithy.api#enumValue": "Deleting"
                     }
                 }
+            }
+        },
+        "com.amazonaws.elasticsearchservice#DomainUseCase": {
+            "type": "enum",
+            "members": {
+                "SEARCH": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SEARCH"
+                    }
+                },
+                "VECTOR": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "VECTOR"
+                    }
+                },
+                "OBSERVABILITY": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "OBSERVABILITY"
+                    }
+                },
+                "MIXED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "MIXED"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The primary use case for the domain, which determines the default configuration and the\n          engine modes that are available. Valid values are <code>SEARCH</code> (full-text search,\n          e-commerce, content discovery, and hybrid and semantic search), <code>VECTOR</code> (k-NN\n          and semantic search, and retrieval-augmented generation), <code>OBSERVABILITY</code> (logs,\n          metrics, traces, and dashboards), and <code>MIXED</code> (a combination of search and\n          analytics). If you don't specify a use case, <code>MIXED</code> is used.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#Double": {
@@ -5545,6 +6176,30 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Information about the domain properties that are currently being modified.</p>"
                     }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOptionsStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies <code>DeploymentStrategyOptions</code> for the domain. </p>"
+                    }
+                },
+                "AutomatedSnapshotPauseOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseOptionsStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies <code>AutomatedSnapshotPauseOptions</code> for the domain. </p>"
+                    }
+                },
+                "UseCase": {
+                    "target": "com.amazonaws.elasticsearchservice#UseCaseStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The use case configured for the domain.</p>"
+                    }
+                },
+                "EngineMode": {
+                    "target": "com.amazonaws.elasticsearchservice#EngineModeStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The engine mode configured for the domain.</p>"
+                    }
                 }
             },
             "traits": {
@@ -5716,6 +6371,30 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Information about the domain properties that are currently being modified.</p>"
                     }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the Elasticsearch domain's deployment strategy options.</p>"
+                    }
+                },
+                "AutomatedSnapshotPauseOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the Elasticsearch domain's automated snapshot pause options.</p>"
+                    }
+                },
+                "UseCase": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainUseCase",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The primary use case for the domain.</p>"
+                    }
+                },
+                "EngineMode": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainEngineMode",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The engine mode for the domain.</p>"
+                    }
                 }
             },
             "traits": {
@@ -5832,6 +6511,28 @@
             },
             "value": {
                 "target": "com.amazonaws.elasticsearchservice#ServiceUrl"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#EngineModeStatus": {
+            "type": "structure",
+            "members": {
+                "Options": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainEngineMode",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The engine mode configured for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#OptionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the engine mode for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The status of the engine mode for the domain.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#EngineType": {
@@ -7907,6 +8608,35 @@
                 "smithy.api#sensitive": {}
             }
         },
+        "com.amazonaws.elasticsearchservice#PauseState": {
+            "type": "enum",
+            "members": {
+                "ACTIVE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Active"
+                    }
+                },
+                "COMPLETED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Completed"
+                    }
+                },
+                "SCHEDULED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Scheduled"
+                    }
+                },
+                "DISABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Disabled"
+                    }
+                }
+            }
+        },
         "com.amazonaws.elasticsearchservice#PolicyDocument": {
             "type": "string",
             "traits": {
@@ -8402,6 +9132,46 @@
                 "smithy.api#documentation": "<p>An exception for accessing or deleting a resource that does not exist. Gives http status code of 400.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 409
+            }
+        },
+        "com.amazonaws.elasticsearchservice#RetentionAction": {
+            "type": "enum",
+            "members": {
+                "ROLLBACK_TO_PRIMARY_CLUSTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "RollbackToPrimaryCluster"
+                    }
+                },
+                "DELETE_PRIMARY_CLUSTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DeletePrimaryCluster"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The action that ends the retention period. <code>RollbackToPrimaryCluster</code> moves the domain back to the primary cluster. <code>DeletePrimaryCluster</code> deletes the primary cluster.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#RetentionOptions": {
+            "type": "union",
+            "members": {
+                "RetentionInHours": {
+                    "target": "com.amazonaws.elasticsearchservice#IntegerClass",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The number of hours to keep the cluster that you cut over from. The retention period starts when cutover completes. The minimum is 1 hour. In an <code>UpdateClone</code> response after cutover completes, this value is the number of hours remaining in the retention period, rounded up.</p>"
+                    }
+                },
+                "RetentionAction": {
+                    "target": "com.amazonaws.elasticsearchservice#RetentionAction",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Ends the retention period now. Valid only after cutover completes.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Controls how long the cluster that you cut over from is kept after cutover completes. Specify exactly one of <code>RetentionInHours</code> or <code>RetentionAction</code>.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#RevokeVpcEndpointAccess": {
@@ -8982,6 +9752,12 @@
                     "traits": {
                         "smithy.api#enumValue": "Policy-Min-TLS-1-2-PFS-2023-10"
                     }
+                },
+                "POLICY_MIN_TLS_1_2_RFC9151_FIPS_2024_08": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Policy-Min-TLS-1-2-RFC9151-FIPS-2024-08"
+                    }
                 }
             }
         },
@@ -9056,6 +9832,133 @@
                 "smithy.api#default": 0
             }
         },
+        "com.amazonaws.elasticsearchservice#TrafficPercent": {
+            "type": "integer",
+            "traits": {
+                "smithy.api#default": 0,
+                "smithy.api#documentation": "<p>A traffic percentage from 0 to 100.</p>",
+                "smithy.api#range": {
+                    "min": 0,
+                    "max": 100
+                }
+            }
+        },
+        "com.amazonaws.elasticsearchservice#TrafficPercents": {
+            "type": "structure",
+            "members": {
+                "PrimaryReadTrafficPercent": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercent",
+                    "traits": {
+                        "smithy.api#default": 0,
+                        "smithy.api#documentation": "<p>The percentage of search traffic sent to the primary cluster.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "CloneReadTrafficPercent": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercent",
+                    "traits": {
+                        "smithy.api#default": 0,
+                        "smithy.api#documentation": "<p>The percentage of search traffic sent to the cloned cluster.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The split of search traffic between the primary and cloned clusters.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#TrafficSplitOptions": {
+            "type": "structure",
+            "members": {
+                "Current": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercents",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The traffic split currently in effect.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Target": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercents",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The requested traffic split.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficSplitStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The status of the traffic shift.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The traffic split and status for a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#TrafficSplitRequestOptions": {
+            "type": "structure",
+            "members": {
+                "Strategy": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficStrategy",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The traffic shifting strategy. The only valid value is <code>ShiftReadTrafficPercent</code>.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "CloneReadTrafficPercent": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficPercent",
+                    "traits": {
+                        "smithy.api#default": 0,
+                        "smithy.api#documentation": "<p>The percentage of search traffic, from 0 to 100, to send to the cloned cluster. The rest goes to the primary cluster.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The traffic shift to perform for a cloned blue/green upgrade.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#TrafficSplitStatus": {
+            "type": "enum",
+            "members": {
+                "IN_PROGRESS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "InProgress"
+                    }
+                },
+                "COMPLETED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Completed"
+                    }
+                },
+                "FAILED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Failed"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The status of a traffic shift.</p>"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#TrafficStrategy": {
+            "type": "enum",
+            "members": {
+                "SHIFT_READ_TRAFFIC_PERCENT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ShiftReadTrafficPercent"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The strategy used to shift traffic between the primary and cloned clusters.</p>"
+            }
+        },
         "com.amazonaws.elasticsearchservice#UIntValue": {
             "type": "integer",
             "traits": {
@@ -9063,6 +9966,116 @@
                 "smithy.api#range": {
                     "min": 0
                 }
+            }
+        },
+        "com.amazonaws.elasticsearchservice#UpdateClone": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.elasticsearchservice#UpdateCloneRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.elasticsearchservice#UpdateCloneResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.elasticsearchservice#BaseException"
+                },
+                {
+                    "target": "com.amazonaws.elasticsearchservice#DisabledOperationException"
+                },
+                {
+                    "target": "com.amazonaws.elasticsearchservice#InternalException"
+                },
+                {
+                    "target": "com.amazonaws.elasticsearchservice#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.elasticsearchservice#ValidationException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Manages a cloned blue/green upgrade that is in progress on a domain. Use it to shift a percentage of search traffic to the cloned cluster, to cut over to the cloned cluster or back to the primary cluster, or to change the retention period. Specify exactly one of <code>TrafficSplitOptions</code>, <code>CutoverOptions</code>, or <code>RetentionOptions</code> in each request.</p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/2015-01-01/es/domain/{DomainName}/clone",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.elasticsearchservice#UpdateCloneRequest": {
+            "type": "structure",
+            "members": {
+                "DomainName": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the domain that has a cloned blue/green upgrade in progress.</p>",
+                        "smithy.api#httpLabel": {},
+                        "smithy.api#required": {}
+                    }
+                },
+                "TrafficSplitOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficSplitRequestOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Shifts a percentage of search traffic from the primary cluster to the cloned cluster.</p>"
+                    }
+                },
+                "CutoverOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#CutoverRequestOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Cuts the domain over to the cloned cluster or back to the primary cluster.</p>"
+                    }
+                },
+                "RetentionOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#RetentionOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Changes the retention period, or ends it after cutover completes.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Container for the request parameters to the <code>UpdateClone</code> operation.</p>",
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.elasticsearchservice#UpdateCloneResponse": {
+            "type": "structure",
+            "members": {
+                "DomainName": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "ChangeId": {
+                    "target": "com.amazonaws.elasticsearchservice#GUID",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The unique identifier of the configuration change. Use it with <code>DescribeDomainChangeProgress</code> to track the change.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "CutoverOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#CutoverOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The requested cutover target and the status of the cutover.</p>"
+                    }
+                },
+                "TrafficSplitOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#TrafficSplitOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current and requested traffic split, and the status of the traffic shift.</p>"
+                    }
+                },
+                "RetentionOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#RetentionOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The retention settings for the upgrade.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Container for the response returned by the <code>UpdateClone</code> operation.</p>",
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.elasticsearchservice#UpdateElasticsearchDomainConfig": {
@@ -9195,6 +10208,30 @@
                     "target": "com.amazonaws.elasticsearchservice#DryRun",
                     "traits": {
                         "smithy.api#documentation": "<p>\n           This flag, when set to True, specifies whether the <code>UpdateElasticsearchDomain</code> request should return the results of validation checks without actually applying the change.\n           This flag, when set to True, specifies the deployment mechanism through which the update shall be applied on the domain.\n           This will not actually perform the Update.\n       </p>"
+                    }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the deployment strategy options.</p>"
+                    }
+                },
+                "AutomatedSnapshotPauseOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#AutomatedSnapshotPauseRequestOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the automated snapshot pause options for the domain.</p>\n      <important>\n          <p>Suspending snapshots reduces data protection. You cannot restore your domain to\n              points in time when snapshots are suspended. Use this feature only for short-term\n              operational needs such as migrations or maintenance windows.</p>\n      </important>\n      <p>Maximum suspension duration: 3 days.</p>"
+                    }
+                },
+                "UseCase": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainUseCase",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The primary use case for the domain. For valid values, see <code>DomainUseCase</code>.</p>"
+                    }
+                },
+                "EngineMode": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainEngineMode",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The engine mode for the domain. For valid values and requirements, see <code>DomainEngineMode</code>.</p>"
                     }
                 }
             },
@@ -9448,6 +10485,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>\n      This flag, when set to True, indicates that an Upgrade Eligibility Check needs to be performed.\n      This will not actually perform the Upgrade.\n    </p>"
                     }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOverrideOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Overrides the deployment strategy for this upgrade. To run a cloned blue/green upgrade, set <code>DeploymentStrategy</code> to <code>ClonedBlueGreen</code>.</p>"
+                    }
                 }
             },
             "traits": {
@@ -9471,6 +10514,12 @@
                     "target": "com.amazonaws.elasticsearchservice#Boolean",
                     "traits": {
                         "smithy.api#documentation": "<p>\n      This flag, when set to True, indicates that an Upgrade Eligibility Check needs to be performed.\n      This will not actually perform the Upgrade.\n    </p>"
+                    }
+                },
+                "DeploymentStrategyOptions": {
+                    "target": "com.amazonaws.elasticsearchservice#DeploymentStrategyOverrideOptions",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The deployment strategy override used for the upgrade.</p>"
                     }
                 },
                 "ChangeProgressDetails": {
@@ -9611,6 +10660,28 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.elasticsearchservice#UpgradeStepItem"
+            }
+        },
+        "com.amazonaws.elasticsearchservice#UseCaseStatus": {
+            "type": "structure",
+            "members": {
+                "Options": {
+                    "target": "com.amazonaws.elasticsearchservice#DomainUseCase",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The use case configured for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Status": {
+                    "target": "com.amazonaws.elasticsearchservice#OptionStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the use case for the domain.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The status of the use case for the domain.</p>"
             }
         },
         "com.amazonaws.elasticsearchservice#UserPoolId": {

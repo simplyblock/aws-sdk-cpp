@@ -4,94 +4,97 @@
  */
 
 #include <aws/appstream/model/CreateAppBlockRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateAppBlockRequest::CreateAppBlockRequest() : 
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_displayNameHasBeenSet(false),
-    m_sourceS3LocationHasBeenSet(false),
-    m_setupScriptDetailsHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_postSetupScriptDetailsHasBeenSet(false),
-    m_packagingType(PackagingType::NOT_SET),
-    m_packagingTypeHasBeenSet(false)
-{
+Aws::String CreateAppBlockRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_displayNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceS3LocationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_setupScriptDetailsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_postSetupScriptDetailsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_packagingTypeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_displayNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DisplayName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_displayName.c_str()));
+  }
+
+  if (m_sourceS3LocationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourceS3Location"));
+    m_sourceS3Location.CborEncode(encoder);
+  }
+
+  if (m_setupScriptDetailsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SetupScriptDetails"));
+    m_setupScriptDetails.CborEncode(encoder);
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteMapStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.first.c_str()));
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.second.c_str()));
+    }
+  }
+
+  if (m_postSetupScriptDetailsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PostSetupScriptDetails"));
+    m_postSetupScriptDetails.CborEncode(encoder);
+  }
+
+  if (m_packagingTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PackagingType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PackagingTypeMapper::GetNameForPackagingType(m_packagingType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateAppBlockRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
-  }
-
-  if(m_displayNameHasBeenSet)
-  {
-   payload.WithString("DisplayName", m_displayName);
-
-  }
-
-  if(m_sourceS3LocationHasBeenSet)
-  {
-   payload.WithObject("SourceS3Location", m_sourceS3Location.Jsonize());
-
-  }
-
-  if(m_setupScriptDetailsHasBeenSet)
-  {
-   payload.WithObject("SetupScriptDetails", m_setupScriptDetails.Jsonize());
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
-
-  }
-
-  if(m_postSetupScriptDetailsHasBeenSet)
-  {
-   payload.WithObject("PostSetupScriptDetails", m_postSetupScriptDetails.Jsonize());
-
-  }
-
-  if(m_packagingTypeHasBeenSet)
-  {
-   payload.WithString("PackagingType", PackagingTypeMapper::GetNameForPackagingType(m_packagingType));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateAppBlockRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateAppBlockRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.CreateAppBlock"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

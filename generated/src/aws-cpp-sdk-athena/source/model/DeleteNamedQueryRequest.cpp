@@ -12,33 +12,18 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteNamedQueryRequest::DeleteNamedQueryRequest() : 
-    m_namedQueryId(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_namedQueryIdHasBeenSet(true)
-{
-}
-
-Aws::String DeleteNamedQueryRequest::SerializePayload() const
-{
+Aws::String DeleteNamedQueryRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_namedQueryIdHasBeenSet)
-  {
-   payload.WithString("NamedQueryId", m_namedQueryId);
-
+  if (m_namedQueryIdHasBeenSet) {
+    payload.WithString("NamedQueryId", m_namedQueryId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteNamedQueryRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteNamedQueryRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.DeleteNamedQuery"));
   return headers;
-
 }
-
-
-
-

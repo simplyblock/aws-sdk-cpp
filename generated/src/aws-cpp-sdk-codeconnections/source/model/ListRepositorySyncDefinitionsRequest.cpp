@@ -4,47 +4,45 @@
  */
 
 #include <aws/codeconnections/model/ListRepositorySyncDefinitionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeConnections::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListRepositorySyncDefinitionsRequest::ListRepositorySyncDefinitionsRequest() : 
-    m_repositoryLinkIdHasBeenSet(false),
-    m_syncType(SyncConfigurationType::NOT_SET),
-    m_syncTypeHasBeenSet(false)
-{
-}
+Aws::String ListRepositorySyncDefinitionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String ListRepositorySyncDefinitionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_repositoryLinkIdHasBeenSet)
-  {
-   payload.WithString("RepositoryLinkId", m_repositoryLinkId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_repositoryLinkIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_syncTypeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_syncTypeHasBeenSet)
-  {
-   payload.WithString("SyncType", SyncConfigurationTypeMapper::GetNameForSyncConfigurationType(m_syncType));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_repositoryLinkIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RepositoryLinkId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_repositoryLinkId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_syncTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SyncType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(SyncConfigurationTypeMapper::GetNameForSyncConfigurationType(m_syncType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection ListRepositorySyncDefinitionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListRepositorySyncDefinitionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "com.amazonaws.codeconnections.CodeConnections_20231201.ListRepositorySyncDefinitions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

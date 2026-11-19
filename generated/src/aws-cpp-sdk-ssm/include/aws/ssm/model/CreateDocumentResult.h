@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/DocumentDescription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
-  class CreateDocumentResult
-  {
-  public:
-    AWS_SSM_API CreateDocumentResult();
-    AWS_SSM_API CreateDocumentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSM_API CreateDocumentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
+class CreateDocumentResult {
+ public:
+  AWS_SSM_API CreateDocumentResult() = default;
+  AWS_SSM_API CreateDocumentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSM_API CreateDocumentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the SSM document.</p>
+   */
+  inline const DocumentDescription& GetDocumentDescription() const { return m_documentDescription; }
+  template <typename DocumentDescriptionT = DocumentDescription>
+  void SetDocumentDescription(DocumentDescriptionT&& value) {
+    m_documentDescriptionHasBeenSet = true;
+    m_documentDescription = std::forward<DocumentDescriptionT>(value);
+  }
+  template <typename DocumentDescriptionT = DocumentDescription>
+  CreateDocumentResult& WithDocumentDescription(DocumentDescriptionT&& value) {
+    SetDocumentDescription(std::forward<DocumentDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the SSM document.</p>
-     */
-    inline const DocumentDescription& GetDocumentDescription() const{ return m_documentDescription; }
-    inline void SetDocumentDescription(const DocumentDescription& value) { m_documentDescription = value; }
-    inline void SetDocumentDescription(DocumentDescription&& value) { m_documentDescription = std::move(value); }
-    inline CreateDocumentResult& WithDocumentDescription(const DocumentDescription& value) { SetDocumentDescription(value); return *this;}
-    inline CreateDocumentResult& WithDocumentDescription(DocumentDescription&& value) { SetDocumentDescription(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDocumentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDocumentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDocumentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDocumentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DocumentDescription m_documentDescription;
+ private:
+  DocumentDescription m_documentDescription;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_documentDescriptionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

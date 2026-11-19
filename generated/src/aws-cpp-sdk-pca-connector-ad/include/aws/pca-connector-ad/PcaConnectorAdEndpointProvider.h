@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
 
-#include <aws/pca-connector-ad/PcaConnectorAdEndpointRules.h>
-
-
-namespace Aws
-{
-namespace PcaConnectorAd
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace PcaConnectorAd {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using PcaConnectorAdClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using PcaConnectorAdEndpointProviderBase =
     EndpointProviderBase<PcaConnectorAdClientConfiguration, PcaConnectorAdBuiltInParameters, PcaConnectorAdClientContextParameters>;
 
 using PcaConnectorAdDefaultEpProviderBase =
-    DefaultEndpointProvider<PcaConnectorAdClientConfiguration, PcaConnectorAdBuiltInParameters, PcaConnectorAdClientContextParameters>;
+    BDDEndpointProvider<PcaConnectorAdClientConfiguration, PcaConnectorAdBuiltInParameters, PcaConnectorAdClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_PCACONNECTORAD_API PcaConnectorAdEndpointProvider : public PcaConnectorAdDefaultEpProviderBase
-{
-public:
-    using PcaConnectorAdResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_PCACONNECTORAD_API PcaConnectorAdEndpointProvider : public PcaConnectorAdDefaultEpProviderBase {
+ public:
+  using PcaConnectorAdResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    PcaConnectorAdEndpointProvider()
-      : PcaConnectorAdDefaultEpProviderBase(Aws::PcaConnectorAd::PcaConnectorAdEndpointRules::GetRulesBlob(), Aws::PcaConnectorAd::PcaConnectorAdEndpointRules::RulesBlobSize)
-    {}
+  PcaConnectorAdEndpointProvider();
 
-    ~PcaConnectorAdEndpointProvider()
-    {
-    }
+  ~PcaConnectorAdEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace PcaConnectorAd
+}  // namespace Aws

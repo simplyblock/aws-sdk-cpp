@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/appfabric/AppFabric_EXPORTS.h>
 #include <aws/appfabric/model/AppBundle.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppFabric
-{
-namespace Model
-{
-  class CreateAppBundleResult
-  {
-  public:
-    AWS_APPFABRIC_API CreateAppBundleResult();
-    AWS_APPFABRIC_API CreateAppBundleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPFABRIC_API CreateAppBundleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppFabric {
+namespace Model {
+class CreateAppBundleResult {
+ public:
+  AWS_APPFABRIC_API CreateAppBundleResult() = default;
+  AWS_APPFABRIC_API CreateAppBundleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPFABRIC_API CreateAppBundleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains information about an app bundle.</p>
+   */
+  inline const AppBundle& GetAppBundle() const { return m_appBundle; }
+  template <typename AppBundleT = AppBundle>
+  void SetAppBundle(AppBundleT&& value) {
+    m_appBundleHasBeenSet = true;
+    m_appBundle = std::forward<AppBundleT>(value);
+  }
+  template <typename AppBundleT = AppBundle>
+  CreateAppBundleResult& WithAppBundle(AppBundleT&& value) {
+    SetAppBundle(std::forward<AppBundleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains information about an app bundle.</p>
-     */
-    inline const AppBundle& GetAppBundle() const{ return m_appBundle; }
-    inline void SetAppBundle(const AppBundle& value) { m_appBundle = value; }
-    inline void SetAppBundle(AppBundle&& value) { m_appBundle = std::move(value); }
-    inline CreateAppBundleResult& WithAppBundle(const AppBundle& value) { SetAppBundle(value); return *this;}
-    inline CreateAppBundleResult& WithAppBundle(AppBundle&& value) { SetAppBundle(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAppBundleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAppBundleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAppBundleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAppBundleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppBundle m_appBundle;
+ private:
+  AppBundle m_appBundle;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appBundleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppFabric
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppFabric
+}  // namespace Aws

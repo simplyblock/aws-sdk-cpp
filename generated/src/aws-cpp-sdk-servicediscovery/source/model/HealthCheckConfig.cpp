@@ -3,86 +3,214 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicediscovery/model/HealthCheckConfig.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ServiceDiscovery
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceDiscovery {
+namespace Model {
 
-HealthCheckConfig::HealthCheckConfig() : 
-    m_type(HealthCheckType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_resourcePathHasBeenSet(false),
-    m_failureThreshold(0),
-    m_failureThresholdHasBeenSet(false)
-{
-}
+HealthCheckConfig::HealthCheckConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-HealthCheckConfig::HealthCheckConfig(JsonView jsonValue)
-  : HealthCheckConfig()
-{
-  *this = jsonValue;
-}
+HealthCheckConfig& HealthCheckConfig::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-HealthCheckConfig& HealthCheckConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Type"))
-  {
-    m_type = HealthCheckTypeMapper::GetHealthCheckTypeForName(jsonValue.GetString("Type"));
+              if (initialKeyStr == "Type") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_type = HealthCheckTypeMapper::GetHealthCheckTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_typeHasBeenSet = true;
+              }
 
-    m_typeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ResourcePath") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_resourcePath = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_resourcePath = ss.str();
+                  }
+                }
+                m_resourcePathHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ResourcePath"))
-  {
-    m_resourcePath = jsonValue.GetString("ResourcePath");
+              else if (initialKeyStr == "FailureThreshold") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_failureThreshold = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_failureThreshold = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_failureThresholdHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("HealthCheckConfig", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_resourcePathHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("FailureThreshold"))
-  {
-    m_failureThreshold = jsonValue.GetInteger("FailureThreshold");
+            if (initialKeyStr == "Type") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_type = HealthCheckTypeMapper::GetHealthCheckTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_typeHasBeenSet = true;
+            }
 
-    m_failureThresholdHasBeenSet = true;
+            else if (initialKeyStr == "ResourcePath") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_resourcePath = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_resourcePath = ss.str();
+                }
+              }
+              m_resourcePathHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "FailureThreshold") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_failureThreshold = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_failureThreshold = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_failureThresholdHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue HealthCheckConfig::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", HealthCheckTypeMapper::GetNameForHealthCheckType(m_type));
+void HealthCheckConfig::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_typeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resourcePathHasBeenSet) {
+    mapSize++;
+  }
+  if (m_failureThresholdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_resourcePathHasBeenSet)
-  {
-   payload.WithString("ResourcePath", m_resourcePath);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_typeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Type"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(HealthCheckTypeMapper::GetNameForHealthCheckType(m_type).c_str()));
   }
 
-  if(m_failureThresholdHasBeenSet)
-  {
-   payload.WithInteger("FailureThreshold", m_failureThreshold);
-
+  if (m_resourcePathHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourcePath"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourcePath.c_str()));
   }
 
-  return payload;
+  if (m_failureThresholdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FailureThreshold"));
+    (m_failureThreshold >= 0) ? encoder.WriteUInt(m_failureThreshold) : encoder.WriteNegInt(m_failureThreshold);
+  }
 }
 
-} // namespace Model
-} // namespace ServiceDiscovery
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceDiscovery
+}  // namespace Aws

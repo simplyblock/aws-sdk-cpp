@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-workspaces-thin-client "C++ SDK for the AWS workspaces-thin-client service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-workspaces-thin-client "C++ SDK for Amazon WorkSpaces Thin Client" aws-cpp-sdk-core)
 
 file(GLOB AWS_WORKSPACES-THIN-CLIENT_HEADERS
     "include/aws/workspaces-thin-client/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_WORKSPACES-THIN-CLIENT_HEADERS
 
 file(GLOB AWS_WORKSPACES-THIN-CLIENT_MODEL_HEADERS
     "include/aws/workspaces-thin-client/model/*.h"
+)
+
+file(GLOB AWS_WORKSPACES-THIN-CLIENT_INTERNAL_HEADERS
+    "include/aws/workspaces-thin-client/internal/*.h"
 )
 
 file(GLOB AWS_WORKSPACES-THIN-CLIENT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_WORKSPACES-THIN-CLIENT_MODEL_SOURCE
 
 file(GLOB WORKSPACES-THIN-CLIENT_UNIFIED_HEADERS
     ${AWS_WORKSPACES-THIN-CLIENT_HEADERS}
+    ${AWS_WORKSPACES-THIN-CLIENT_INTERNAL_HEADERS}
     ${AWS_WORKSPACES-THIN-CLIENT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\workspaces-thin-client" FILES ${AWS_WORKSPACES-THIN-CLIENT_HEADERS})
+        source_group("Header Files\\aws\\workspaces-thin-client\\internal" FILES ${AWS_WORKSPACES-THIN-CLIENT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\workspaces-thin-client\\model" FILES ${AWS_WORKSPACES-THIN-CLIENT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_WORKSPACES-THIN-CLIENT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_WORKSPACES-THIN-CLIENT_MODEL_SOURCE})

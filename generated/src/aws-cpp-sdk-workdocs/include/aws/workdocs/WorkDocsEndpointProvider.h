@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
 
-#include <aws/workdocs/WorkDocsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace WorkDocs
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace WorkDocs {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using WorkDocsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using WorkDocsEndpointProviderBase =
     EndpointProviderBase<WorkDocsClientConfiguration, WorkDocsBuiltInParameters, WorkDocsClientContextParameters>;
 
 using WorkDocsDefaultEpProviderBase =
-    DefaultEndpointProvider<WorkDocsClientConfiguration, WorkDocsBuiltInParameters, WorkDocsClientContextParameters>;
+    BDDEndpointProvider<WorkDocsClientConfiguration, WorkDocsBuiltInParameters, WorkDocsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_WORKDOCS_API WorkDocsEndpointProvider : public WorkDocsDefaultEpProviderBase
-{
-public:
-    using WorkDocsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_WORKDOCS_API WorkDocsEndpointProvider : public WorkDocsDefaultEpProviderBase {
+ public:
+  using WorkDocsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    WorkDocsEndpointProvider()
-      : WorkDocsDefaultEpProviderBase(Aws::WorkDocs::WorkDocsEndpointRules::GetRulesBlob(), Aws::WorkDocs::WorkDocsEndpointRules::RulesBlobSize)
-    {}
+  WorkDocsEndpointProvider();
 
-    ~WorkDocsEndpointProvider()
-    {
-    }
+  ~WorkDocsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace WorkDocs
+}  // namespace Aws

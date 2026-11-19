@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AccessAnalyzer
-{
-namespace Model
-{
+namespace Aws {
+namespace AccessAnalyzer {
+namespace Model {
 
-AccessPreviewStatusReason::AccessPreviewStatusReason() : 
-    m_code(AccessPreviewStatusReasonCode::NOT_SET),
-    m_codeHasBeenSet(false)
-{
-}
+AccessPreviewStatusReason::AccessPreviewStatusReason(JsonView jsonValue) { *this = jsonValue; }
 
-AccessPreviewStatusReason::AccessPreviewStatusReason(JsonView jsonValue)
-  : AccessPreviewStatusReason()
-{
-  *this = jsonValue;
-}
-
-AccessPreviewStatusReason& AccessPreviewStatusReason::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("code"))
-  {
+AccessPreviewStatusReason& AccessPreviewStatusReason::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("code")) {
     m_code = AccessPreviewStatusReasonCodeMapper::GetAccessPreviewStatusReasonCodeForName(jsonValue.GetString("code"));
-
     m_codeHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue AccessPreviewStatusReason::Jsonize() const
-{
+JsonValue AccessPreviewStatusReason::Jsonize() const {
   JsonValue payload;
 
-  if(m_codeHasBeenSet)
-  {
-   payload.WithString("code", AccessPreviewStatusReasonCodeMapper::GetNameForAccessPreviewStatusReasonCode(m_code));
+  if (m_codeHasBeenSet) {
+    payload.WithString("code", AccessPreviewStatusReasonCodeMapper::GetNameForAccessPreviewStatusReasonCode(m_code));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AccessAnalyzer
-} // namespace Aws
+}  // namespace Model
+}  // namespace AccessAnalyzer
+}  // namespace Aws

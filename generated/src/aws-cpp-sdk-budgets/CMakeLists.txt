@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-budgets "C++ SDK for the AWS budgets service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-budgets "C++ SDK for AWS Budgets" aws-cpp-sdk-core)
 
 file(GLOB AWS_BUDGETS_HEADERS
     "include/aws/budgets/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BUDGETS_HEADERS
 
 file(GLOB AWS_BUDGETS_MODEL_HEADERS
     "include/aws/budgets/model/*.h"
+)
+
+file(GLOB AWS_BUDGETS_INTERNAL_HEADERS
+    "include/aws/budgets/internal/*.h"
 )
 
 file(GLOB AWS_BUDGETS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BUDGETS_MODEL_SOURCE
 
 file(GLOB BUDGETS_UNIFIED_HEADERS
     ${AWS_BUDGETS_HEADERS}
+    ${AWS_BUDGETS_INTERNAL_HEADERS}
     ${AWS_BUDGETS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\budgets" FILES ${AWS_BUDGETS_HEADERS})
+        source_group("Header Files\\aws\\budgets\\internal" FILES ${AWS_BUDGETS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\budgets\\model" FILES ${AWS_BUDGETS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BUDGETS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BUDGETS_MODEL_SOURCE})

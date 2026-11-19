@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediapackage-vod/model/DeletePackagingGroupRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediapackage-vod/model/DeletePackagingGroupRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::MediaPackageVod::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeletePackagingGroupRequest::DeletePackagingGroupRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeletePackagingGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeletePackagingGroupRequest::SerializePayload() const { return {}; }

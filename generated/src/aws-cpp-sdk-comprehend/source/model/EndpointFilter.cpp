@@ -4,96 +4,279 @@
  */
 
 #include <aws/comprehend/model/EndpointFilter.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-EndpointFilter::EndpointFilter() : 
-    m_modelArnHasBeenSet(false),
-    m_status(EndpointStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_creationTimeBeforeHasBeenSet(false),
-    m_creationTimeAfterHasBeenSet(false)
-{
-}
+EndpointFilter::EndpointFilter(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-EndpointFilter::EndpointFilter(JsonView jsonValue)
-  : EndpointFilter()
-{
-  *this = jsonValue;
-}
+EndpointFilter& EndpointFilter::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-EndpointFilter& EndpointFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ModelArn"))
-  {
-    m_modelArn = jsonValue.GetString("ModelArn");
+              if (initialKeyStr == "ModelArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_modelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_modelArn = ss.str();
+                  }
+                }
+                m_modelArnHasBeenSet = true;
+              }
 
-    m_modelArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = EndpointStatusMapper::GetEndpointStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Status"))
-  {
-    m_status = EndpointStatusMapper::GetEndpointStatusForName(jsonValue.GetString("Status"));
+              else if (initialKeyStr == "CreationTimeBefore") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_creationTimeBefore = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_creationTimeBefore = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_creationTimeBeforeHasBeenSet = true;
+              }
 
-    m_statusHasBeenSet = true;
-  }
+              else if (initialKeyStr == "CreationTimeAfter") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_creationTimeAfter = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_creationTimeAfter = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_creationTimeAfterHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("EndpointFilter", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("CreationTimeBefore"))
-  {
-    m_creationTimeBefore = jsonValue.GetDouble("CreationTimeBefore");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_creationTimeBeforeHasBeenSet = true;
-  }
+            if (initialKeyStr == "ModelArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_modelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_modelArn = ss.str();
+                }
+              }
+              m_modelArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("CreationTimeAfter"))
-  {
-    m_creationTimeAfter = jsonValue.GetDouble("CreationTimeAfter");
+            else if (initialKeyStr == "Status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status = EndpointStatusMapper::GetEndpointStatusForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
 
-    m_creationTimeAfterHasBeenSet = true;
+            else if (initialKeyStr == "CreationTimeBefore") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_creationTimeBefore = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_creationTimeBefore = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_creationTimeBeforeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "CreationTimeAfter") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_creationTimeAfter = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_creationTimeAfter = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_creationTimeAfterHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue EndpointFilter::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_modelArnHasBeenSet)
-  {
-   payload.WithString("ModelArn", m_modelArn);
-
+void EndpointFilter::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_modelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_creationTimeBeforeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_creationTimeAfterHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", EndpointStatusMapper::GetNameForEndpointStatus(m_status));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_modelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ModelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_modelArn.c_str()));
   }
 
-  if(m_creationTimeBeforeHasBeenSet)
-  {
-   payload.WithDouble("CreationTimeBefore", m_creationTimeBefore.SecondsWithMSPrecision());
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(EndpointStatusMapper::GetNameForEndpointStatus(m_status).c_str()));
   }
 
-  if(m_creationTimeAfterHasBeenSet)
-  {
-   payload.WithDouble("CreationTimeAfter", m_creationTimeAfter.SecondsWithMSPrecision());
+  if (m_creationTimeBeforeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreationTimeBefore"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_creationTimeBefore.Seconds());
   }
 
-  return payload;
+  if (m_creationTimeAfterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreationTimeAfter"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_creationTimeAfter.Seconds());
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

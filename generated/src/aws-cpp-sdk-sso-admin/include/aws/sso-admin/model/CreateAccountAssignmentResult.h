@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/sso-admin/SSOAdmin_EXPORTS.h>
 #include <aws/sso-admin/model/AccountAssignmentOperationStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOAdmin
-{
-namespace Model
-{
-  class CreateAccountAssignmentResult
-  {
-  public:
-    AWS_SSOADMIN_API CreateAccountAssignmentResult();
-    AWS_SSOADMIN_API CreateAccountAssignmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOADMIN_API CreateAccountAssignmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOAdmin {
+namespace Model {
+class CreateAccountAssignmentResult {
+ public:
+  AWS_SSOADMIN_API CreateAccountAssignmentResult() = default;
+  AWS_SSOADMIN_API CreateAccountAssignmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOADMIN_API CreateAccountAssignmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status object for the account assignment creation operation.</p>
+   */
+  inline const AccountAssignmentOperationStatus& GetAccountAssignmentCreationStatus() const { return m_accountAssignmentCreationStatus; }
+  template <typename AccountAssignmentCreationStatusT = AccountAssignmentOperationStatus>
+  void SetAccountAssignmentCreationStatus(AccountAssignmentCreationStatusT&& value) {
+    m_accountAssignmentCreationStatusHasBeenSet = true;
+    m_accountAssignmentCreationStatus = std::forward<AccountAssignmentCreationStatusT>(value);
+  }
+  template <typename AccountAssignmentCreationStatusT = AccountAssignmentOperationStatus>
+  CreateAccountAssignmentResult& WithAccountAssignmentCreationStatus(AccountAssignmentCreationStatusT&& value) {
+    SetAccountAssignmentCreationStatus(std::forward<AccountAssignmentCreationStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status object for the account assignment creation operation.</p>
-     */
-    inline const AccountAssignmentOperationStatus& GetAccountAssignmentCreationStatus() const{ return m_accountAssignmentCreationStatus; }
-    inline void SetAccountAssignmentCreationStatus(const AccountAssignmentOperationStatus& value) { m_accountAssignmentCreationStatus = value; }
-    inline void SetAccountAssignmentCreationStatus(AccountAssignmentOperationStatus&& value) { m_accountAssignmentCreationStatus = std::move(value); }
-    inline CreateAccountAssignmentResult& WithAccountAssignmentCreationStatus(const AccountAssignmentOperationStatus& value) { SetAccountAssignmentCreationStatus(value); return *this;}
-    inline CreateAccountAssignmentResult& WithAccountAssignmentCreationStatus(AccountAssignmentOperationStatus&& value) { SetAccountAssignmentCreationStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAccountAssignmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAccountAssignmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAccountAssignmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAccountAssignmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AccountAssignmentOperationStatus m_accountAssignmentCreationStatus;
+ private:
+  AccountAssignmentOperationStatus m_accountAssignmentCreationStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountAssignmentCreationStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

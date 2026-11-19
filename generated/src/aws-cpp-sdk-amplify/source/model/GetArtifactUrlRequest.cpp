@@ -12,16 +12,4 @@ using namespace Aws::Amplify::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetArtifactUrlRequest::GetArtifactUrlRequest() : 
-    m_artifactIdHasBeenSet(false)
-{
-}
-
-Aws::String GetArtifactUrlRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetArtifactUrlRequest::SerializePayload() const { return {}; }

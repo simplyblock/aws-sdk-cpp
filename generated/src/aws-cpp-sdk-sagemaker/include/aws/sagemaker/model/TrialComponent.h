@@ -4,405 +4,526 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/TrialComponentSource.h>
-#include <aws/sagemaker/model/TrialComponentStatus.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/UserContext.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/MetadataProperties.h>
-#include <aws/sagemaker/model/TrialComponentSourceDetail.h>
-#include <aws/sagemaker/model/TrialComponentParameterValue.h>
+#include <aws/sagemaker/model/Parent.h>
+#include <aws/sagemaker/model/Tag.h>
 #include <aws/sagemaker/model/TrialComponentArtifact.h>
 #include <aws/sagemaker/model/TrialComponentMetricSummary.h>
-#include <aws/sagemaker/model/Tag.h>
-#include <aws/sagemaker/model/Parent.h>
+#include <aws/sagemaker/model/TrialComponentParameterValue.h>
+#include <aws/sagemaker/model/TrialComponentSource.h>
+#include <aws/sagemaker/model/TrialComponentSourceDetail.h>
+#include <aws/sagemaker/model/TrialComponentStatus.h>
+#include <aws/sagemaker/model/UserContext.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>The properties of a trial component as returned by the <a
+ * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a>
+ * API.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrialComponent">AWS
+ * API Reference</a></p>
+ */
+class TrialComponent {
+ public:
+  AWS_SAGEMAKER_API TrialComponent() = default;
+  AWS_SAGEMAKER_API TrialComponent(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API TrialComponent& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The properties of a trial component as returned by the <a
-   * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a>
-   * API.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrialComponent">AWS
-   * API Reference</a></p>
+   * <p>The name of the trial component.</p>
    */
-  class TrialComponent
-  {
-  public:
-    AWS_SAGEMAKER_API TrialComponent();
-    AWS_SAGEMAKER_API TrialComponent(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API TrialComponent& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetTrialComponentName() const { return m_trialComponentName; }
+  inline bool TrialComponentNameHasBeenSet() const { return m_trialComponentNameHasBeenSet; }
+  template <typename TrialComponentNameT = Aws::String>
+  void SetTrialComponentName(TrialComponentNameT&& value) {
+    m_trialComponentNameHasBeenSet = true;
+    m_trialComponentName = std::forward<TrialComponentNameT>(value);
+  }
+  template <typename TrialComponentNameT = Aws::String>
+  TrialComponent& WithTrialComponentName(TrialComponentNameT&& value) {
+    SetTrialComponentName(std::forward<TrialComponentNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the component as displayed. If <code>DisplayName</code> isn't
+   * specified, <code>TrialComponentName</code> is displayed.</p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  TrialComponent& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the trial component.</p>
-     */
-    inline const Aws::String& GetTrialComponentName() const{ return m_trialComponentName; }
-    inline bool TrialComponentNameHasBeenSet() const { return m_trialComponentNameHasBeenSet; }
-    inline void SetTrialComponentName(const Aws::String& value) { m_trialComponentNameHasBeenSet = true; m_trialComponentName = value; }
-    inline void SetTrialComponentName(Aws::String&& value) { m_trialComponentNameHasBeenSet = true; m_trialComponentName = std::move(value); }
-    inline void SetTrialComponentName(const char* value) { m_trialComponentNameHasBeenSet = true; m_trialComponentName.assign(value); }
-    inline TrialComponent& WithTrialComponentName(const Aws::String& value) { SetTrialComponentName(value); return *this;}
-    inline TrialComponent& WithTrialComponentName(Aws::String&& value) { SetTrialComponentName(std::move(value)); return *this;}
-    inline TrialComponent& WithTrialComponentName(const char* value) { SetTrialComponentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the trial component.</p>
+   */
+  inline const Aws::String& GetTrialComponentArn() const { return m_trialComponentArn; }
+  inline bool TrialComponentArnHasBeenSet() const { return m_trialComponentArnHasBeenSet; }
+  template <typename TrialComponentArnT = Aws::String>
+  void SetTrialComponentArn(TrialComponentArnT&& value) {
+    m_trialComponentArnHasBeenSet = true;
+    m_trialComponentArn = std::forward<TrialComponentArnT>(value);
+  }
+  template <typename TrialComponentArnT = Aws::String>
+  TrialComponent& WithTrialComponentArn(TrialComponentArnT&& value) {
+    SetTrialComponentArn(std::forward<TrialComponentArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the component as displayed. If <code>DisplayName</code> isn't
-     * specified, <code>TrialComponentName</code> is displayed.</p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayNameHasBeenSet = true; m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayNameHasBeenSet = true; m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayNameHasBeenSet = true; m_displayName.assign(value); }
-    inline TrialComponent& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline TrialComponent& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline TrialComponent& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) and job type of the source of the
+   * component.</p>
+   */
+  inline const TrialComponentSource& GetSource() const { return m_source; }
+  inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
+  template <typename SourceT = TrialComponentSource>
+  void SetSource(SourceT&& value) {
+    m_sourceHasBeenSet = true;
+    m_source = std::forward<SourceT>(value);
+  }
+  template <typename SourceT = TrialComponentSource>
+  TrialComponent& WithSource(SourceT&& value) {
+    SetSource(std::forward<SourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the trial component.</p>
-     */
-    inline const Aws::String& GetTrialComponentArn() const{ return m_trialComponentArn; }
-    inline bool TrialComponentArnHasBeenSet() const { return m_trialComponentArnHasBeenSet; }
-    inline void SetTrialComponentArn(const Aws::String& value) { m_trialComponentArnHasBeenSet = true; m_trialComponentArn = value; }
-    inline void SetTrialComponentArn(Aws::String&& value) { m_trialComponentArnHasBeenSet = true; m_trialComponentArn = std::move(value); }
-    inline void SetTrialComponentArn(const char* value) { m_trialComponentArnHasBeenSet = true; m_trialComponentArn.assign(value); }
-    inline TrialComponent& WithTrialComponentArn(const Aws::String& value) { SetTrialComponentArn(value); return *this;}
-    inline TrialComponent& WithTrialComponentArn(Aws::String&& value) { SetTrialComponentArn(std::move(value)); return *this;}
-    inline TrialComponent& WithTrialComponentArn(const char* value) { SetTrialComponentArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) and job type of the source of the
-     * component.</p>
-     */
-    inline const TrialComponentSource& GetSource() const{ return m_source; }
-    inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
-    inline void SetSource(const TrialComponentSource& value) { m_sourceHasBeenSet = true; m_source = value; }
-    inline void SetSource(TrialComponentSource&& value) { m_sourceHasBeenSet = true; m_source = std::move(value); }
-    inline TrialComponent& WithSource(const TrialComponentSource& value) { SetSource(value); return *this;}
-    inline TrialComponent& WithSource(TrialComponentSource&& value) { SetSource(std::move(value)); return *this;}
-    ///@}
+  inline const TrialComponentStatus& GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  template <typename StatusT = TrialComponentStatus>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = TrialComponentStatus>
+  TrialComponent& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const TrialComponentStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const TrialComponentStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(TrialComponentStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline TrialComponent& WithStatus(const TrialComponentStatus& value) { SetStatus(value); return *this;}
-    inline TrialComponent& WithStatus(TrialComponentStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When the component started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  TrialComponent& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When the component started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline TrialComponent& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline TrialComponent& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When the component ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  TrialComponent& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When the component ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
-    inline TrialComponent& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline TrialComponent& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When the component was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  TrialComponent& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When the component was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline TrialComponent& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline TrialComponent& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Who created the trial component.</p>
+   */
+  inline const UserContext& GetCreatedBy() const { return m_createdBy; }
+  inline bool CreatedByHasBeenSet() const { return m_createdByHasBeenSet; }
+  template <typename CreatedByT = UserContext>
+  void SetCreatedBy(CreatedByT&& value) {
+    m_createdByHasBeenSet = true;
+    m_createdBy = std::forward<CreatedByT>(value);
+  }
+  template <typename CreatedByT = UserContext>
+  TrialComponent& WithCreatedBy(CreatedByT&& value) {
+    SetCreatedBy(std::forward<CreatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Who created the trial component.</p>
-     */
-    inline const UserContext& GetCreatedBy() const{ return m_createdBy; }
-    inline bool CreatedByHasBeenSet() const { return m_createdByHasBeenSet; }
-    inline void SetCreatedBy(const UserContext& value) { m_createdByHasBeenSet = true; m_createdBy = value; }
-    inline void SetCreatedBy(UserContext&& value) { m_createdByHasBeenSet = true; m_createdBy = std::move(value); }
-    inline TrialComponent& WithCreatedBy(const UserContext& value) { SetCreatedBy(value); return *this;}
-    inline TrialComponent& WithCreatedBy(UserContext&& value) { SetCreatedBy(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When the component was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  TrialComponent& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When the component was last modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline TrialComponent& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline TrialComponent& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const UserContext& GetLastModifiedBy() const{ return m_lastModifiedBy; }
-    inline bool LastModifiedByHasBeenSet() const { return m_lastModifiedByHasBeenSet; }
-    inline void SetLastModifiedBy(const UserContext& value) { m_lastModifiedByHasBeenSet = true; m_lastModifiedBy = value; }
-    inline void SetLastModifiedBy(UserContext&& value) { m_lastModifiedByHasBeenSet = true; m_lastModifiedBy = std::move(value); }
-    inline TrialComponent& WithLastModifiedBy(const UserContext& value) { SetLastModifiedBy(value); return *this;}
-    inline TrialComponent& WithLastModifiedBy(UserContext&& value) { SetLastModifiedBy(std::move(value)); return *this;}
-    ///@}
+  inline const UserContext& GetLastModifiedBy() const { return m_lastModifiedBy; }
+  inline bool LastModifiedByHasBeenSet() const { return m_lastModifiedByHasBeenSet; }
+  template <typename LastModifiedByT = UserContext>
+  void SetLastModifiedBy(LastModifiedByT&& value) {
+    m_lastModifiedByHasBeenSet = true;
+    m_lastModifiedBy = std::forward<LastModifiedByT>(value);
+  }
+  template <typename LastModifiedByT = UserContext>
+  TrialComponent& WithLastModifiedBy(LastModifiedByT&& value) {
+    SetLastModifiedBy(std::forward<LastModifiedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The hyperparameters of the component.</p>
-     */
-    inline const Aws::Map<Aws::String, TrialComponentParameterValue>& GetParameters() const{ return m_parameters; }
-    inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
-    inline void SetParameters(const Aws::Map<Aws::String, TrialComponentParameterValue>& value) { m_parametersHasBeenSet = true; m_parameters = value; }
-    inline void SetParameters(Aws::Map<Aws::String, TrialComponentParameterValue>&& value) { m_parametersHasBeenSet = true; m_parameters = std::move(value); }
-    inline TrialComponent& WithParameters(const Aws::Map<Aws::String, TrialComponentParameterValue>& value) { SetParameters(value); return *this;}
-    inline TrialComponent& WithParameters(Aws::Map<Aws::String, TrialComponentParameterValue>&& value) { SetParameters(std::move(value)); return *this;}
-    inline TrialComponent& AddParameters(const Aws::String& key, const TrialComponentParameterValue& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, value); return *this; }
-    inline TrialComponent& AddParameters(Aws::String&& key, const TrialComponentParameterValue& value) { m_parametersHasBeenSet = true; m_parameters.emplace(std::move(key), value); return *this; }
-    inline TrialComponent& AddParameters(const Aws::String& key, TrialComponentParameterValue&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddParameters(Aws::String&& key, TrialComponentParameterValue&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(std::move(key), std::move(value)); return *this; }
-    inline TrialComponent& AddParameters(const char* key, TrialComponentParameterValue&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddParameters(const char* key, const TrialComponentParameterValue& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The hyperparameters of the component.</p>
+   */
+  inline const Aws::Map<Aws::String, TrialComponentParameterValue>& GetParameters() const { return m_parameters; }
+  inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
+  template <typename ParametersT = Aws::Map<Aws::String, TrialComponentParameterValue>>
+  void SetParameters(ParametersT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters = std::forward<ParametersT>(value);
+  }
+  template <typename ParametersT = Aws::Map<Aws::String, TrialComponentParameterValue>>
+  TrialComponent& WithParameters(ParametersT&& value) {
+    SetParameters(std::forward<ParametersT>(value));
+    return *this;
+  }
+  template <typename ParametersKeyT = Aws::String, typename ParametersValueT = TrialComponentParameterValue>
+  TrialComponent& AddParameters(ParametersKeyT&& key, ParametersValueT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters.emplace(std::forward<ParametersKeyT>(key), std::forward<ParametersValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The input artifacts of the component.</p>
-     */
-    inline const Aws::Map<Aws::String, TrialComponentArtifact>& GetInputArtifacts() const{ return m_inputArtifacts; }
-    inline bool InputArtifactsHasBeenSet() const { return m_inputArtifactsHasBeenSet; }
-    inline void SetInputArtifacts(const Aws::Map<Aws::String, TrialComponentArtifact>& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts = value; }
-    inline void SetInputArtifacts(Aws::Map<Aws::String, TrialComponentArtifact>&& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts = std::move(value); }
-    inline TrialComponent& WithInputArtifacts(const Aws::Map<Aws::String, TrialComponentArtifact>& value) { SetInputArtifacts(value); return *this;}
-    inline TrialComponent& WithInputArtifacts(Aws::Map<Aws::String, TrialComponentArtifact>&& value) { SetInputArtifacts(std::move(value)); return *this;}
-    inline TrialComponent& AddInputArtifacts(const Aws::String& key, const TrialComponentArtifact& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(key, value); return *this; }
-    inline TrialComponent& AddInputArtifacts(Aws::String&& key, const TrialComponentArtifact& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(std::move(key), value); return *this; }
-    inline TrialComponent& AddInputArtifacts(const Aws::String& key, TrialComponentArtifact&& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddInputArtifacts(Aws::String&& key, TrialComponentArtifact&& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(std::move(key), std::move(value)); return *this; }
-    inline TrialComponent& AddInputArtifacts(const char* key, TrialComponentArtifact&& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddInputArtifacts(const char* key, const TrialComponentArtifact& value) { m_inputArtifactsHasBeenSet = true; m_inputArtifacts.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The input artifacts of the component.</p>
+   */
+  inline const Aws::Map<Aws::String, TrialComponentArtifact>& GetInputArtifacts() const { return m_inputArtifacts; }
+  inline bool InputArtifactsHasBeenSet() const { return m_inputArtifactsHasBeenSet; }
+  template <typename InputArtifactsT = Aws::Map<Aws::String, TrialComponentArtifact>>
+  void SetInputArtifacts(InputArtifactsT&& value) {
+    m_inputArtifactsHasBeenSet = true;
+    m_inputArtifacts = std::forward<InputArtifactsT>(value);
+  }
+  template <typename InputArtifactsT = Aws::Map<Aws::String, TrialComponentArtifact>>
+  TrialComponent& WithInputArtifacts(InputArtifactsT&& value) {
+    SetInputArtifacts(std::forward<InputArtifactsT>(value));
+    return *this;
+  }
+  template <typename InputArtifactsKeyT = Aws::String, typename InputArtifactsValueT = TrialComponentArtifact>
+  TrialComponent& AddInputArtifacts(InputArtifactsKeyT&& key, InputArtifactsValueT&& value) {
+    m_inputArtifactsHasBeenSet = true;
+    m_inputArtifacts.emplace(std::forward<InputArtifactsKeyT>(key), std::forward<InputArtifactsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The output artifacts of the component.</p>
-     */
-    inline const Aws::Map<Aws::String, TrialComponentArtifact>& GetOutputArtifacts() const{ return m_outputArtifacts; }
-    inline bool OutputArtifactsHasBeenSet() const { return m_outputArtifactsHasBeenSet; }
-    inline void SetOutputArtifacts(const Aws::Map<Aws::String, TrialComponentArtifact>& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts = value; }
-    inline void SetOutputArtifacts(Aws::Map<Aws::String, TrialComponentArtifact>&& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts = std::move(value); }
-    inline TrialComponent& WithOutputArtifacts(const Aws::Map<Aws::String, TrialComponentArtifact>& value) { SetOutputArtifacts(value); return *this;}
-    inline TrialComponent& WithOutputArtifacts(Aws::Map<Aws::String, TrialComponentArtifact>&& value) { SetOutputArtifacts(std::move(value)); return *this;}
-    inline TrialComponent& AddOutputArtifacts(const Aws::String& key, const TrialComponentArtifact& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(key, value); return *this; }
-    inline TrialComponent& AddOutputArtifacts(Aws::String&& key, const TrialComponentArtifact& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(std::move(key), value); return *this; }
-    inline TrialComponent& AddOutputArtifacts(const Aws::String& key, TrialComponentArtifact&& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddOutputArtifacts(Aws::String&& key, TrialComponentArtifact&& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(std::move(key), std::move(value)); return *this; }
-    inline TrialComponent& AddOutputArtifacts(const char* key, TrialComponentArtifact&& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(key, std::move(value)); return *this; }
-    inline TrialComponent& AddOutputArtifacts(const char* key, const TrialComponentArtifact& value) { m_outputArtifactsHasBeenSet = true; m_outputArtifacts.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The output artifacts of the component.</p>
+   */
+  inline const Aws::Map<Aws::String, TrialComponentArtifact>& GetOutputArtifacts() const { return m_outputArtifacts; }
+  inline bool OutputArtifactsHasBeenSet() const { return m_outputArtifactsHasBeenSet; }
+  template <typename OutputArtifactsT = Aws::Map<Aws::String, TrialComponentArtifact>>
+  void SetOutputArtifacts(OutputArtifactsT&& value) {
+    m_outputArtifactsHasBeenSet = true;
+    m_outputArtifacts = std::forward<OutputArtifactsT>(value);
+  }
+  template <typename OutputArtifactsT = Aws::Map<Aws::String, TrialComponentArtifact>>
+  TrialComponent& WithOutputArtifacts(OutputArtifactsT&& value) {
+    SetOutputArtifacts(std::forward<OutputArtifactsT>(value));
+    return *this;
+  }
+  template <typename OutputArtifactsKeyT = Aws::String, typename OutputArtifactsValueT = TrialComponentArtifact>
+  TrialComponent& AddOutputArtifacts(OutputArtifactsKeyT&& key, OutputArtifactsValueT&& value) {
+    m_outputArtifactsHasBeenSet = true;
+    m_outputArtifacts.emplace(std::forward<OutputArtifactsKeyT>(key), std::forward<OutputArtifactsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metrics for the component.</p>
-     */
-    inline const Aws::Vector<TrialComponentMetricSummary>& GetMetrics() const{ return m_metrics; }
-    inline bool MetricsHasBeenSet() const { return m_metricsHasBeenSet; }
-    inline void SetMetrics(const Aws::Vector<TrialComponentMetricSummary>& value) { m_metricsHasBeenSet = true; m_metrics = value; }
-    inline void SetMetrics(Aws::Vector<TrialComponentMetricSummary>&& value) { m_metricsHasBeenSet = true; m_metrics = std::move(value); }
-    inline TrialComponent& WithMetrics(const Aws::Vector<TrialComponentMetricSummary>& value) { SetMetrics(value); return *this;}
-    inline TrialComponent& WithMetrics(Aws::Vector<TrialComponentMetricSummary>&& value) { SetMetrics(std::move(value)); return *this;}
-    inline TrialComponent& AddMetrics(const TrialComponentMetricSummary& value) { m_metricsHasBeenSet = true; m_metrics.push_back(value); return *this; }
-    inline TrialComponent& AddMetrics(TrialComponentMetricSummary&& value) { m_metricsHasBeenSet = true; m_metrics.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The metrics for the component.</p>
+   */
+  inline const Aws::Vector<TrialComponentMetricSummary>& GetMetrics() const { return m_metrics; }
+  inline bool MetricsHasBeenSet() const { return m_metricsHasBeenSet; }
+  template <typename MetricsT = Aws::Vector<TrialComponentMetricSummary>>
+  void SetMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics = std::forward<MetricsT>(value);
+  }
+  template <typename MetricsT = Aws::Vector<TrialComponentMetricSummary>>
+  TrialComponent& WithMetrics(MetricsT&& value) {
+    SetMetrics(std::forward<MetricsT>(value));
+    return *this;
+  }
+  template <typename MetricsT = TrialComponentMetricSummary>
+  TrialComponent& AddMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics.emplace_back(std::forward<MetricsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const MetadataProperties& GetMetadataProperties() const{ return m_metadataProperties; }
-    inline bool MetadataPropertiesHasBeenSet() const { return m_metadataPropertiesHasBeenSet; }
-    inline void SetMetadataProperties(const MetadataProperties& value) { m_metadataPropertiesHasBeenSet = true; m_metadataProperties = value; }
-    inline void SetMetadataProperties(MetadataProperties&& value) { m_metadataPropertiesHasBeenSet = true; m_metadataProperties = std::move(value); }
-    inline TrialComponent& WithMetadataProperties(const MetadataProperties& value) { SetMetadataProperties(value); return *this;}
-    inline TrialComponent& WithMetadataProperties(MetadataProperties&& value) { SetMetadataProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Details of the source of the component.</p>
-     */
-    inline const TrialComponentSourceDetail& GetSourceDetail() const{ return m_sourceDetail; }
-    inline bool SourceDetailHasBeenSet() const { return m_sourceDetailHasBeenSet; }
-    inline void SetSourceDetail(const TrialComponentSourceDetail& value) { m_sourceDetailHasBeenSet = true; m_sourceDetail = value; }
-    inline void SetSourceDetail(TrialComponentSourceDetail&& value) { m_sourceDetailHasBeenSet = true; m_sourceDetail = std::move(value); }
-    inline TrialComponent& WithSourceDetail(const TrialComponentSourceDetail& value) { SetSourceDetail(value); return *this;}
-    inline TrialComponent& WithSourceDetail(TrialComponentSourceDetail&& value) { SetSourceDetail(std::move(value)); return *this;}
-    ///@}
+  inline const MetadataProperties& GetMetadataProperties() const { return m_metadataProperties; }
+  inline bool MetadataPropertiesHasBeenSet() const { return m_metadataPropertiesHasBeenSet; }
+  template <typename MetadataPropertiesT = MetadataProperties>
+  void SetMetadataProperties(MetadataPropertiesT&& value) {
+    m_metadataPropertiesHasBeenSet = true;
+    m_metadataProperties = std::forward<MetadataPropertiesT>(value);
+  }
+  template <typename MetadataPropertiesT = MetadataProperties>
+  TrialComponent& WithMetadataProperties(MetadataPropertiesT&& value) {
+    SetMetadataProperties(std::forward<MetadataPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the lineage group resource.</p>
-     */
-    inline const Aws::String& GetLineageGroupArn() const{ return m_lineageGroupArn; }
-    inline bool LineageGroupArnHasBeenSet() const { return m_lineageGroupArnHasBeenSet; }
-    inline void SetLineageGroupArn(const Aws::String& value) { m_lineageGroupArnHasBeenSet = true; m_lineageGroupArn = value; }
-    inline void SetLineageGroupArn(Aws::String&& value) { m_lineageGroupArnHasBeenSet = true; m_lineageGroupArn = std::move(value); }
-    inline void SetLineageGroupArn(const char* value) { m_lineageGroupArnHasBeenSet = true; m_lineageGroupArn.assign(value); }
-    inline TrialComponent& WithLineageGroupArn(const Aws::String& value) { SetLineageGroupArn(value); return *this;}
-    inline TrialComponent& WithLineageGroupArn(Aws::String&& value) { SetLineageGroupArn(std::move(value)); return *this;}
-    inline TrialComponent& WithLineageGroupArn(const char* value) { SetLineageGroupArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details of the source of the component.</p>
+   */
+  inline const TrialComponentSourceDetail& GetSourceDetail() const { return m_sourceDetail; }
+  inline bool SourceDetailHasBeenSet() const { return m_sourceDetailHasBeenSet; }
+  template <typename SourceDetailT = TrialComponentSourceDetail>
+  void SetSourceDetail(SourceDetailT&& value) {
+    m_sourceDetailHasBeenSet = true;
+    m_sourceDetail = std::forward<SourceDetailT>(value);
+  }
+  template <typename SourceDetailT = TrialComponentSourceDetail>
+  TrialComponent& WithSourceDetail(SourceDetailT&& value) {
+    SetSourceDetail(std::forward<SourceDetailT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of tags that are associated with the component. You can use <a
-     * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a>
-     * API to search on the tags.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline TrialComponent& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline TrialComponent& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline TrialComponent& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline TrialComponent& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the lineage group resource.</p>
+   */
+  inline const Aws::String& GetLineageGroupArn() const { return m_lineageGroupArn; }
+  inline bool LineageGroupArnHasBeenSet() const { return m_lineageGroupArnHasBeenSet; }
+  template <typename LineageGroupArnT = Aws::String>
+  void SetLineageGroupArn(LineageGroupArnT&& value) {
+    m_lineageGroupArnHasBeenSet = true;
+    m_lineageGroupArn = std::forward<LineageGroupArnT>(value);
+  }
+  template <typename LineageGroupArnT = Aws::String>
+  TrialComponent& WithLineageGroupArn(LineageGroupArnT&& value) {
+    SetLineageGroupArn(std::forward<LineageGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of the parents of the component. A parent is a trial the component
-     * is associated with and the experiment the trial is part of. A component might
-     * not have any parents.</p>
-     */
-    inline const Aws::Vector<Parent>& GetParents() const{ return m_parents; }
-    inline bool ParentsHasBeenSet() const { return m_parentsHasBeenSet; }
-    inline void SetParents(const Aws::Vector<Parent>& value) { m_parentsHasBeenSet = true; m_parents = value; }
-    inline void SetParents(Aws::Vector<Parent>&& value) { m_parentsHasBeenSet = true; m_parents = std::move(value); }
-    inline TrialComponent& WithParents(const Aws::Vector<Parent>& value) { SetParents(value); return *this;}
-    inline TrialComponent& WithParents(Aws::Vector<Parent>&& value) { SetParents(std::move(value)); return *this;}
-    inline TrialComponent& AddParents(const Parent& value) { m_parentsHasBeenSet = true; m_parents.push_back(value); return *this; }
-    inline TrialComponent& AddParents(Parent&& value) { m_parentsHasBeenSet = true; m_parents.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of tags that are associated with the component. You can use <a
+   * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html">Search</a>
+   * API to search on the tags.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  TrialComponent& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  TrialComponent& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the experiment run.</p>
-     */
-    inline const Aws::String& GetRunName() const{ return m_runName; }
-    inline bool RunNameHasBeenSet() const { return m_runNameHasBeenSet; }
-    inline void SetRunName(const Aws::String& value) { m_runNameHasBeenSet = true; m_runName = value; }
-    inline void SetRunName(Aws::String&& value) { m_runNameHasBeenSet = true; m_runName = std::move(value); }
-    inline void SetRunName(const char* value) { m_runNameHasBeenSet = true; m_runName.assign(value); }
-    inline TrialComponent& WithRunName(const Aws::String& value) { SetRunName(value); return *this;}
-    inline TrialComponent& WithRunName(Aws::String&& value) { SetRunName(std::move(value)); return *this;}
-    inline TrialComponent& WithRunName(const char* value) { SetRunName(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>An array of the parents of the component. A parent is a trial the component
+   * is associated with and the experiment the trial is part of. A component might
+   * not have any parents.</p>
+   */
+  inline const Aws::Vector<Parent>& GetParents() const { return m_parents; }
+  inline bool ParentsHasBeenSet() const { return m_parentsHasBeenSet; }
+  template <typename ParentsT = Aws::Vector<Parent>>
+  void SetParents(ParentsT&& value) {
+    m_parentsHasBeenSet = true;
+    m_parents = std::forward<ParentsT>(value);
+  }
+  template <typename ParentsT = Aws::Vector<Parent>>
+  TrialComponent& WithParents(ParentsT&& value) {
+    SetParents(std::forward<ParentsT>(value));
+    return *this;
+  }
+  template <typename ParentsT = Parent>
+  TrialComponent& AddParents(ParentsT&& value) {
+    m_parentsHasBeenSet = true;
+    m_parents.emplace_back(std::forward<ParentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_trialComponentName;
-    bool m_trialComponentNameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The name of the experiment run.</p>
+   */
+  inline const Aws::String& GetRunName() const { return m_runName; }
+  inline bool RunNameHasBeenSet() const { return m_runNameHasBeenSet; }
+  template <typename RunNameT = Aws::String>
+  void SetRunName(RunNameT&& value) {
+    m_runNameHasBeenSet = true;
+    m_runName = std::forward<RunNameT>(value);
+  }
+  template <typename RunNameT = Aws::String>
+  TrialComponent& WithRunName(RunNameT&& value) {
+    SetRunName(std::forward<RunNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_trialComponentName;
 
-    Aws::String m_displayName;
-    bool m_displayNameHasBeenSet = false;
+  Aws::String m_displayName;
 
-    Aws::String m_trialComponentArn;
-    bool m_trialComponentArnHasBeenSet = false;
+  Aws::String m_trialComponentArn;
 
-    TrialComponentSource m_source;
-    bool m_sourceHasBeenSet = false;
+  TrialComponentSource m_source;
 
-    TrialComponentStatus m_status;
-    bool m_statusHasBeenSet = false;
+  TrialComponentStatus m_status;
 
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_startTime{};
 
-    Aws::Utils::DateTime m_endTime;
-    bool m_endTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_endTime{};
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    UserContext m_createdBy;
-    bool m_createdByHasBeenSet = false;
+  UserContext m_createdBy;
 
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    UserContext m_lastModifiedBy;
-    bool m_lastModifiedByHasBeenSet = false;
+  UserContext m_lastModifiedBy;
 
-    Aws::Map<Aws::String, TrialComponentParameterValue> m_parameters;
-    bool m_parametersHasBeenSet = false;
+  Aws::Map<Aws::String, TrialComponentParameterValue> m_parameters;
 
-    Aws::Map<Aws::String, TrialComponentArtifact> m_inputArtifacts;
-    bool m_inputArtifactsHasBeenSet = false;
+  Aws::Map<Aws::String, TrialComponentArtifact> m_inputArtifacts;
 
-    Aws::Map<Aws::String, TrialComponentArtifact> m_outputArtifacts;
-    bool m_outputArtifactsHasBeenSet = false;
+  Aws::Map<Aws::String, TrialComponentArtifact> m_outputArtifacts;
 
-    Aws::Vector<TrialComponentMetricSummary> m_metrics;
-    bool m_metricsHasBeenSet = false;
+  Aws::Vector<TrialComponentMetricSummary> m_metrics;
 
-    MetadataProperties m_metadataProperties;
-    bool m_metadataPropertiesHasBeenSet = false;
+  MetadataProperties m_metadataProperties;
 
-    TrialComponentSourceDetail m_sourceDetail;
-    bool m_sourceDetailHasBeenSet = false;
+  TrialComponentSourceDetail m_sourceDetail;
 
-    Aws::String m_lineageGroupArn;
-    bool m_lineageGroupArnHasBeenSet = false;
+  Aws::String m_lineageGroupArn;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::Vector<Parent> m_parents;
-    bool m_parentsHasBeenSet = false;
+  Aws::Vector<Parent> m_parents;
 
-    Aws::String m_runName;
-    bool m_runNameHasBeenSet = false;
-  };
+  Aws::String m_runName;
+  bool m_trialComponentNameHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_trialComponentArnHasBeenSet = false;
+  bool m_sourceHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_createdByHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_lastModifiedByHasBeenSet = false;
+  bool m_parametersHasBeenSet = false;
+  bool m_inputArtifactsHasBeenSet = false;
+  bool m_outputArtifactsHasBeenSet = false;
+  bool m_metricsHasBeenSet = false;
+  bool m_metadataPropertiesHasBeenSet = false;
+  bool m_sourceDetailHasBeenSet = false;
+  bool m_lineageGroupArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_parentsHasBeenSet = false;
+  bool m_runNameHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

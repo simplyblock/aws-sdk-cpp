@@ -4,199 +4,240 @@
  */
 
 #pragma once
-#include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/comprehend/ComprehendRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/comprehend/model/TaskConfig.h>
-#include <aws/comprehend/model/ModelType.h>
+#include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/comprehend/model/DataSecurityConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/comprehend/model/ModelType.h>
 #include <aws/comprehend/model/Tag.h>
-#include <utility>
+#include <aws/comprehend/model/TaskConfig.h>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Comprehend {
+namespace Model {
+
+/**
+ */
+class CreateFlywheelRequest : public ComprehendRequest {
+ public:
+  AWS_COMPREHEND_API CreateFlywheelRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateFlywheel"; }
+
+  AWS_COMPREHEND_API Aws::String SerializePayload() const override;
+
+  AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Name for the flywheel.</p>
    */
-  class CreateFlywheelRequest : public ComprehendRequest
-  {
-  public:
-    AWS_COMPREHEND_API CreateFlywheelRequest();
+  inline const Aws::String& GetFlywheelName() const { return m_flywheelName; }
+  inline bool FlywheelNameHasBeenSet() const { return m_flywheelNameHasBeenSet; }
+  template <typename FlywheelNameT = Aws::String>
+  void SetFlywheelName(FlywheelNameT&& value) {
+    m_flywheelNameHasBeenSet = true;
+    m_flywheelName = std::forward<FlywheelNameT>(value);
+  }
+  template <typename FlywheelNameT = Aws::String>
+  CreateFlywheelRequest& WithFlywheelName(FlywheelNameT&& value) {
+    SetFlywheelName(std::forward<FlywheelNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateFlywheel"; }
+  ///@{
+  /**
+   * <p>To associate an existing model with the flywheel, specify the Amazon Resource
+   * Number (ARN) of the model version. Do not set <code>TaskConfig</code> or
+   * <code>ModelType</code> if you specify an <code>ActiveModelArn</code>.</p>
+   */
+  inline const Aws::String& GetActiveModelArn() const { return m_activeModelArn; }
+  inline bool ActiveModelArnHasBeenSet() const { return m_activeModelArnHasBeenSet; }
+  template <typename ActiveModelArnT = Aws::String>
+  void SetActiveModelArn(ActiveModelArnT&& value) {
+    m_activeModelArnHasBeenSet = true;
+    m_activeModelArn = std::forward<ActiveModelArnT>(value);
+  }
+  template <typename ActiveModelArnT = Aws::String>
+  CreateFlywheelRequest& WithActiveModelArn(ActiveModelArnT&& value) {
+    SetActiveModelArn(std::forward<ActiveModelArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COMPREHEND_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon Comprehend
+   * the permissions required to access the flywheel data in the data lake.</p>
+   */
+  inline const Aws::String& GetDataAccessRoleArn() const { return m_dataAccessRoleArn; }
+  inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
+  template <typename DataAccessRoleArnT = Aws::String>
+  void SetDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    m_dataAccessRoleArnHasBeenSet = true;
+    m_dataAccessRoleArn = std::forward<DataAccessRoleArnT>(value);
+  }
+  template <typename DataAccessRoleArnT = Aws::String>
+  CreateFlywheelRequest& WithDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    SetDataAccessRoleArn(std::forward<DataAccessRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COMPREHEND_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Configuration about the model associated with the flywheel. You need to set
+   * <code>TaskConfig</code> if you are creating a flywheel for a new model.</p>
+   */
+  inline const TaskConfig& GetTaskConfig() const { return m_taskConfig; }
+  inline bool TaskConfigHasBeenSet() const { return m_taskConfigHasBeenSet; }
+  template <typename TaskConfigT = TaskConfig>
+  void SetTaskConfig(TaskConfigT&& value) {
+    m_taskConfigHasBeenSet = true;
+    m_taskConfig = std::forward<TaskConfigT>(value);
+  }
+  template <typename TaskConfigT = TaskConfig>
+  CreateFlywheelRequest& WithTaskConfig(TaskConfigT&& value) {
+    SetTaskConfig(std::forward<TaskConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The model type. You need to set <code>ModelType</code> if you are creating a
+   * flywheel for a new model.</p>
+   */
+  inline ModelType GetModelType() const { return m_modelType; }
+  inline bool ModelTypeHasBeenSet() const { return m_modelTypeHasBeenSet; }
+  inline void SetModelType(ModelType value) {
+    m_modelTypeHasBeenSet = true;
+    m_modelType = value;
+  }
+  inline CreateFlywheelRequest& WithModelType(ModelType value) {
+    SetModelType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name for the flywheel.</p>
-     */
-    inline const Aws::String& GetFlywheelName() const{ return m_flywheelName; }
-    inline bool FlywheelNameHasBeenSet() const { return m_flywheelNameHasBeenSet; }
-    inline void SetFlywheelName(const Aws::String& value) { m_flywheelNameHasBeenSet = true; m_flywheelName = value; }
-    inline void SetFlywheelName(Aws::String&& value) { m_flywheelNameHasBeenSet = true; m_flywheelName = std::move(value); }
-    inline void SetFlywheelName(const char* value) { m_flywheelNameHasBeenSet = true; m_flywheelName.assign(value); }
-    inline CreateFlywheelRequest& WithFlywheelName(const Aws::String& value) { SetFlywheelName(value); return *this;}
-    inline CreateFlywheelRequest& WithFlywheelName(Aws::String&& value) { SetFlywheelName(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& WithFlywheelName(const char* value) { SetFlywheelName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Enter the S3 location for the data lake. You can specify a new S3 bucket or a
+   * new folder of an existing S3 bucket. The flywheel creates the data lake at this
+   * location.</p>
+   */
+  inline const Aws::String& GetDataLakeS3Uri() const { return m_dataLakeS3Uri; }
+  inline bool DataLakeS3UriHasBeenSet() const { return m_dataLakeS3UriHasBeenSet; }
+  template <typename DataLakeS3UriT = Aws::String>
+  void SetDataLakeS3Uri(DataLakeS3UriT&& value) {
+    m_dataLakeS3UriHasBeenSet = true;
+    m_dataLakeS3Uri = std::forward<DataLakeS3UriT>(value);
+  }
+  template <typename DataLakeS3UriT = Aws::String>
+  CreateFlywheelRequest& WithDataLakeS3Uri(DataLakeS3UriT&& value) {
+    SetDataLakeS3Uri(std::forward<DataLakeS3UriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>To associate an existing model with the flywheel, specify the Amazon Resource
-     * Number (ARN) of the model version. Do not set <code>TaskConfig</code> or
-     * <code>ModelType</code> if you specify an <code>ActiveModelArn</code>.</p>
-     */
-    inline const Aws::String& GetActiveModelArn() const{ return m_activeModelArn; }
-    inline bool ActiveModelArnHasBeenSet() const { return m_activeModelArnHasBeenSet; }
-    inline void SetActiveModelArn(const Aws::String& value) { m_activeModelArnHasBeenSet = true; m_activeModelArn = value; }
-    inline void SetActiveModelArn(Aws::String&& value) { m_activeModelArnHasBeenSet = true; m_activeModelArn = std::move(value); }
-    inline void SetActiveModelArn(const char* value) { m_activeModelArnHasBeenSet = true; m_activeModelArn.assign(value); }
-    inline CreateFlywheelRequest& WithActiveModelArn(const Aws::String& value) { SetActiveModelArn(value); return *this;}
-    inline CreateFlywheelRequest& WithActiveModelArn(Aws::String&& value) { SetActiveModelArn(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& WithActiveModelArn(const char* value) { SetActiveModelArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Data security configurations.</p>
+   */
+  inline const DataSecurityConfig& GetDataSecurityConfig() const { return m_dataSecurityConfig; }
+  inline bool DataSecurityConfigHasBeenSet() const { return m_dataSecurityConfigHasBeenSet; }
+  template <typename DataSecurityConfigT = DataSecurityConfig>
+  void SetDataSecurityConfig(DataSecurityConfigT&& value) {
+    m_dataSecurityConfigHasBeenSet = true;
+    m_dataSecurityConfig = std::forward<DataSecurityConfigT>(value);
+  }
+  template <typename DataSecurityConfigT = DataSecurityConfig>
+  CreateFlywheelRequest& WithDataSecurityConfig(DataSecurityConfigT&& value) {
+    SetDataSecurityConfig(std::forward<DataSecurityConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the IAM role that grants Amazon Comprehend
-     * the permissions required to access the flywheel data in the data lake.</p>
-     */
-    inline const Aws::String& GetDataAccessRoleArn() const{ return m_dataAccessRoleArn; }
-    inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
-    inline void SetDataAccessRoleArn(const Aws::String& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = value; }
-    inline void SetDataAccessRoleArn(Aws::String&& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = std::move(value); }
-    inline void SetDataAccessRoleArn(const char* value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn.assign(value); }
-    inline CreateFlywheelRequest& WithDataAccessRoleArn(const Aws::String& value) { SetDataAccessRoleArn(value); return *this;}
-    inline CreateFlywheelRequest& WithDataAccessRoleArn(Aws::String&& value) { SetDataAccessRoleArn(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& WithDataAccessRoleArn(const char* value) { SetDataAccessRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique identifier for the request. If you don't set the client request
+   * token, Amazon Comprehend generates one.</p>
+   */
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  CreateFlywheelRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Configuration about the model associated with the flywheel. You need to set
-     * <code>TaskConfig</code> if you are creating a flywheel for a new model.</p>
-     */
-    inline const TaskConfig& GetTaskConfig() const{ return m_taskConfig; }
-    inline bool TaskConfigHasBeenSet() const { return m_taskConfigHasBeenSet; }
-    inline void SetTaskConfig(const TaskConfig& value) { m_taskConfigHasBeenSet = true; m_taskConfig = value; }
-    inline void SetTaskConfig(TaskConfig&& value) { m_taskConfigHasBeenSet = true; m_taskConfig = std::move(value); }
-    inline CreateFlywheelRequest& WithTaskConfig(const TaskConfig& value) { SetTaskConfig(value); return *this;}
-    inline CreateFlywheelRequest& WithTaskConfig(TaskConfig&& value) { SetTaskConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags to associate with this flywheel.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateFlywheelRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateFlywheelRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_flywheelName;
 
-    ///@{
-    /**
-     * <p>The model type. You need to set <code>ModelType</code> if you are creating a
-     * flywheel for a new model.</p>
-     */
-    inline const ModelType& GetModelType() const{ return m_modelType; }
-    inline bool ModelTypeHasBeenSet() const { return m_modelTypeHasBeenSet; }
-    inline void SetModelType(const ModelType& value) { m_modelTypeHasBeenSet = true; m_modelType = value; }
-    inline void SetModelType(ModelType&& value) { m_modelTypeHasBeenSet = true; m_modelType = std::move(value); }
-    inline CreateFlywheelRequest& WithModelType(const ModelType& value) { SetModelType(value); return *this;}
-    inline CreateFlywheelRequest& WithModelType(ModelType&& value) { SetModelType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_activeModelArn;
 
-    ///@{
-    /**
-     * <p>Enter the S3 location for the data lake. You can specify a new S3 bucket or a
-     * new folder of an existing S3 bucket. The flywheel creates the data lake at this
-     * location.</p>
-     */
-    inline const Aws::String& GetDataLakeS3Uri() const{ return m_dataLakeS3Uri; }
-    inline bool DataLakeS3UriHasBeenSet() const { return m_dataLakeS3UriHasBeenSet; }
-    inline void SetDataLakeS3Uri(const Aws::String& value) { m_dataLakeS3UriHasBeenSet = true; m_dataLakeS3Uri = value; }
-    inline void SetDataLakeS3Uri(Aws::String&& value) { m_dataLakeS3UriHasBeenSet = true; m_dataLakeS3Uri = std::move(value); }
-    inline void SetDataLakeS3Uri(const char* value) { m_dataLakeS3UriHasBeenSet = true; m_dataLakeS3Uri.assign(value); }
-    inline CreateFlywheelRequest& WithDataLakeS3Uri(const Aws::String& value) { SetDataLakeS3Uri(value); return *this;}
-    inline CreateFlywheelRequest& WithDataLakeS3Uri(Aws::String&& value) { SetDataLakeS3Uri(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& WithDataLakeS3Uri(const char* value) { SetDataLakeS3Uri(value); return *this;}
-    ///@}
+  Aws::String m_dataAccessRoleArn;
 
-    ///@{
-    /**
-     * <p>Data security configurations.</p>
-     */
-    inline const DataSecurityConfig& GetDataSecurityConfig() const{ return m_dataSecurityConfig; }
-    inline bool DataSecurityConfigHasBeenSet() const { return m_dataSecurityConfigHasBeenSet; }
-    inline void SetDataSecurityConfig(const DataSecurityConfig& value) { m_dataSecurityConfigHasBeenSet = true; m_dataSecurityConfig = value; }
-    inline void SetDataSecurityConfig(DataSecurityConfig&& value) { m_dataSecurityConfigHasBeenSet = true; m_dataSecurityConfig = std::move(value); }
-    inline CreateFlywheelRequest& WithDataSecurityConfig(const DataSecurityConfig& value) { SetDataSecurityConfig(value); return *this;}
-    inline CreateFlywheelRequest& WithDataSecurityConfig(DataSecurityConfig&& value) { SetDataSecurityConfig(std::move(value)); return *this;}
-    ///@}
+  TaskConfig m_taskConfig;
 
-    ///@{
-    /**
-     * <p>A unique identifier for the request. If you don't set the client request
-     * token, Amazon Comprehend generates one.</p>
-     */
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline CreateFlywheelRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline CreateFlywheelRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
+  ModelType m_modelType{ModelType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The tags to associate with this flywheel.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateFlywheelRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateFlywheelRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateFlywheelRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateFlywheelRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_dataLakeS3Uri;
 
-    Aws::String m_flywheelName;
-    bool m_flywheelNameHasBeenSet = false;
+  DataSecurityConfig m_dataSecurityConfig;
 
-    Aws::String m_activeModelArn;
-    bool m_activeModelArnHasBeenSet = false;
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    Aws::String m_dataAccessRoleArn;
-    bool m_dataAccessRoleArnHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
+  bool m_flywheelNameHasBeenSet = false;
+  bool m_activeModelArnHasBeenSet = false;
+  bool m_dataAccessRoleArnHasBeenSet = false;
+  bool m_taskConfigHasBeenSet = false;
+  bool m_modelTypeHasBeenSet = false;
+  bool m_dataLakeS3UriHasBeenSet = false;
+  bool m_dataSecurityConfigHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+};
 
-    TaskConfig m_taskConfig;
-    bool m_taskConfigHasBeenSet = false;
-
-    ModelType m_modelType;
-    bool m_modelTypeHasBeenSet = false;
-
-    Aws::String m_dataLakeS3Uri;
-    bool m_dataLakeS3UriHasBeenSet = false;
-
-    DataSecurityConfig m_dataSecurityConfig;
-    bool m_dataSecurityConfigHasBeenSet = false;
-
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

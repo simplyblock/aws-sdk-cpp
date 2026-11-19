@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/InstanceAccess.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class GetInstanceAccessResult
-  {
-  public:
-    AWS_GAMELIFT_API GetInstanceAccessResult();
-    AWS_GAMELIFT_API GetInstanceAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API GetInstanceAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class GetInstanceAccessResult {
+ public:
+  AWS_GAMELIFT_API GetInstanceAccessResult() = default;
+  AWS_GAMELIFT_API GetInstanceAccessResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API GetInstanceAccessResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The connection information for a fleet instance, including IP address and
+   * access credentials.</p>
+   */
+  inline const InstanceAccess& GetInstanceAccess() const { return m_instanceAccess; }
+  template <typename InstanceAccessT = InstanceAccess>
+  void SetInstanceAccess(InstanceAccessT&& value) {
+    m_instanceAccessHasBeenSet = true;
+    m_instanceAccess = std::forward<InstanceAccessT>(value);
+  }
+  template <typename InstanceAccessT = InstanceAccess>
+  GetInstanceAccessResult& WithInstanceAccess(InstanceAccessT&& value) {
+    SetInstanceAccess(std::forward<InstanceAccessT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The connection information for a fleet instance, including IP address and
-     * access credentials.</p>
-     */
-    inline const InstanceAccess& GetInstanceAccess() const{ return m_instanceAccess; }
-    inline void SetInstanceAccess(const InstanceAccess& value) { m_instanceAccess = value; }
-    inline void SetInstanceAccess(InstanceAccess&& value) { m_instanceAccess = std::move(value); }
-    inline GetInstanceAccessResult& WithInstanceAccess(const InstanceAccess& value) { SetInstanceAccess(value); return *this;}
-    inline GetInstanceAccessResult& WithInstanceAccess(InstanceAccess&& value) { SetInstanceAccess(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetInstanceAccessResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetInstanceAccessResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetInstanceAccessResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetInstanceAccessResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    InstanceAccess m_instanceAccess;
+ private:
+  InstanceAccess m_instanceAccess;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceAccessHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

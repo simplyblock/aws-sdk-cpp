@@ -4,55 +4,75 @@
  */
 
 #pragma once
-#include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
-#include <aws/timestream-influxdb/TimestreamInfluxDBRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/timestream-influxdb/TimestreamInfluxDBRequest.h>
+#include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace TimestreamInfluxDB
-{
-namespace Model
-{
+namespace Aws {
+namespace TimestreamInfluxDB {
+namespace Model {
 
+/**
+ */
+class DeleteDbInstanceRequest : public TimestreamInfluxDBRequest {
+ public:
+  AWS_TIMESTREAMINFLUXDB_API DeleteDbInstanceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteDbInstance"; }
+
+  AWS_TIMESTREAMINFLUXDB_API Aws::String SerializePayload() const override;
+
+  AWS_TIMESTREAMINFLUXDB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The id of the DB instance.</p>
    */
-  class DeleteDbInstanceRequest : public TimestreamInfluxDBRequest
-  {
-  public:
-    AWS_TIMESTREAMINFLUXDB_API DeleteDbInstanceRequest();
+  inline const Aws::String& GetIdentifier() const { return m_identifier; }
+  inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
+  template <typename IdentifierT = Aws::String>
+  void SetIdentifier(IdentifierT&& value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = std::forward<IdentifierT>(value);
+  }
+  template <typename IdentifierT = Aws::String>
+  DeleteDbInstanceRequest& WithIdentifier(IdentifierT&& value) {
+    SetIdentifier(std::forward<IdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteDbInstance"; }
+  ///@{
+  /**
+   * <p>Specifies whether to retain automated backups after the DB instance is
+   * deleted. If set to true, automated backups are not deleted and can be restored
+   * later.</p>
+   */
+  inline bool GetRetainAutomatedBackups() const { return m_retainAutomatedBackups; }
+  inline bool RetainAutomatedBackupsHasBeenSet() const { return m_retainAutomatedBackupsHasBeenSet; }
+  inline void SetRetainAutomatedBackups(bool value) {
+    m_retainAutomatedBackupsHasBeenSet = true;
+    m_retainAutomatedBackups = value;
+  }
+  inline DeleteDbInstanceRequest& WithRetainAutomatedBackups(bool value) {
+    SetRetainAutomatedBackups(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_identifier;
 
-    AWS_TIMESTREAMINFLUXDB_API Aws::String SerializePayload() const override;
+  bool m_retainAutomatedBackups{false};
+  bool m_identifierHasBeenSet = false;
+  bool m_retainAutomatedBackupsHasBeenSet = false;
+};
 
-    AWS_TIMESTREAMINFLUXDB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The id of the DB instance.</p>
-     */
-    inline const Aws::String& GetIdentifier() const{ return m_identifier; }
-    inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
-    inline void SetIdentifier(const Aws::String& value) { m_identifierHasBeenSet = true; m_identifier = value; }
-    inline void SetIdentifier(Aws::String&& value) { m_identifierHasBeenSet = true; m_identifier = std::move(value); }
-    inline void SetIdentifier(const char* value) { m_identifierHasBeenSet = true; m_identifier.assign(value); }
-    inline DeleteDbInstanceRequest& WithIdentifier(const Aws::String& value) { SetIdentifier(value); return *this;}
-    inline DeleteDbInstanceRequest& WithIdentifier(Aws::String&& value) { SetIdentifier(std::move(value)); return *this;}
-    inline DeleteDbInstanceRequest& WithIdentifier(const char* value) { SetIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_identifier;
-    bool m_identifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TimestreamInfluxDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamInfluxDB
+}  // namespace Aws

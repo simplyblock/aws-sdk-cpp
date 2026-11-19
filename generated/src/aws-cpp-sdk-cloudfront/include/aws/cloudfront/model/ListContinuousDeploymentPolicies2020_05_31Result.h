@@ -6,61 +6,72 @@
 #pragma once
 #include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/cloudfront/model/ContinuousDeploymentPolicyList.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFront
-{
-namespace Model
-{
-  class ListContinuousDeploymentPolicies2020_05_31Result
-  {
-  public:
-    AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result();
-    AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFront {
+namespace Model {
+class ListContinuousDeploymentPolicies2020_05_31Result {
+ public:
+  AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result() = default;
+  AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFRONT_API ListContinuousDeploymentPolicies2020_05_31Result& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A list of continuous deployment policies.</p>
+   */
+  inline const ContinuousDeploymentPolicyList& GetContinuousDeploymentPolicyList() const { return m_continuousDeploymentPolicyList; }
+  template <typename ContinuousDeploymentPolicyListT = ContinuousDeploymentPolicyList>
+  void SetContinuousDeploymentPolicyList(ContinuousDeploymentPolicyListT&& value) {
+    m_continuousDeploymentPolicyListHasBeenSet = true;
+    m_continuousDeploymentPolicyList = std::forward<ContinuousDeploymentPolicyListT>(value);
+  }
+  template <typename ContinuousDeploymentPolicyListT = ContinuousDeploymentPolicyList>
+  ListContinuousDeploymentPolicies2020_05_31Result& WithContinuousDeploymentPolicyList(ContinuousDeploymentPolicyListT&& value) {
+    SetContinuousDeploymentPolicyList(std::forward<ContinuousDeploymentPolicyListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of continuous deployment policies.</p>
-     */
-    inline const ContinuousDeploymentPolicyList& GetContinuousDeploymentPolicyList() const{ return m_continuousDeploymentPolicyList; }
-    inline void SetContinuousDeploymentPolicyList(const ContinuousDeploymentPolicyList& value) { m_continuousDeploymentPolicyList = value; }
-    inline void SetContinuousDeploymentPolicyList(ContinuousDeploymentPolicyList&& value) { m_continuousDeploymentPolicyList = std::move(value); }
-    inline ListContinuousDeploymentPolicies2020_05_31Result& WithContinuousDeploymentPolicyList(const ContinuousDeploymentPolicyList& value) { SetContinuousDeploymentPolicyList(value); return *this;}
-    inline ListContinuousDeploymentPolicies2020_05_31Result& WithContinuousDeploymentPolicyList(ContinuousDeploymentPolicyList&& value) { SetContinuousDeploymentPolicyList(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListContinuousDeploymentPolicies2020_05_31Result& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListContinuousDeploymentPolicies2020_05_31Result& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListContinuousDeploymentPolicies2020_05_31Result& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListContinuousDeploymentPolicies2020_05_31Result& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContinuousDeploymentPolicyList m_continuousDeploymentPolicyList;
+ private:
+  ContinuousDeploymentPolicyList m_continuousDeploymentPolicyList;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_continuousDeploymentPolicyListHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

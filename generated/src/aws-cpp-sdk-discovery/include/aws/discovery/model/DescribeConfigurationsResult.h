@@ -4,66 +4,80 @@
  */
 
 #pragma once
-#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ApplicationDiscoveryService
-{
-namespace Model
-{
-  class DescribeConfigurationsResult
-  {
-  public:
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult();
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ApplicationDiscoveryService {
+namespace Model {
+class DescribeConfigurationsResult {
+ public:
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult() = default;
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeConfigurationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A key in the response map. The value is an array of data.</p>
+   */
+  inline const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& GetConfigurations() const { return m_configurations; }
+  template <typename ConfigurationsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  void SetConfigurations(ConfigurationsT&& value) {
+    m_configurationsHasBeenSet = true;
+    m_configurations = std::forward<ConfigurationsT>(value);
+  }
+  template <typename ConfigurationsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  DescribeConfigurationsResult& WithConfigurations(ConfigurationsT&& value) {
+    SetConfigurations(std::forward<ConfigurationsT>(value));
+    return *this;
+  }
+  template <typename ConfigurationsT = Aws::Map<Aws::String, Aws::String>>
+  DescribeConfigurationsResult& AddConfigurations(ConfigurationsT&& value) {
+    m_configurationsHasBeenSet = true;
+    m_configurations.emplace_back(std::forward<ConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A key in the response map. The value is an array of data.</p>
-     */
-    inline const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& GetConfigurations() const{ return m_configurations; }
-    inline void SetConfigurations(const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& value) { m_configurations = value; }
-    inline void SetConfigurations(Aws::Vector<Aws::Map<Aws::String, Aws::String>>&& value) { m_configurations = std::move(value); }
-    inline DescribeConfigurationsResult& WithConfigurations(const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& value) { SetConfigurations(value); return *this;}
-    inline DescribeConfigurationsResult& WithConfigurations(Aws::Vector<Aws::Map<Aws::String, Aws::String>>&& value) { SetConfigurations(std::move(value)); return *this;}
-    inline DescribeConfigurationsResult& AddConfigurations(const Aws::Map<Aws::String, Aws::String>& value) { m_configurations.push_back(value); return *this; }
-    inline DescribeConfigurationsResult& AddConfigurations(Aws::Map<Aws::String, Aws::String>&& value) { m_configurations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeConfigurationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeConfigurationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeConfigurationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeConfigurationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::Map<Aws::String, Aws::String>> m_configurations;
+ private:
+  Aws::Vector<Aws::Map<Aws::String, Aws::String>> m_configurations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ApplicationDiscoveryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationDiscoveryService
+}  // namespace Aws

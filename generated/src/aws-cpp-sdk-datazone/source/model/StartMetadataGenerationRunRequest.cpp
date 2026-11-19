@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/datazone/model/StartMetadataGenerationRunRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/datazone/model/StartMetadataGenerationRunRequest.h>
 
 #include <utility>
 
@@ -12,47 +12,28 @@ using namespace Aws::DataZone::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartMetadataGenerationRunRequest::StartMetadataGenerationRunRequest() : 
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_domainIdentifierHasBeenSet(false),
-    m_owningProjectIdentifierHasBeenSet(false),
-    m_targetHasBeenSet(false),
-    m_type(MetadataGenerationRunType::NOT_SET),
-    m_typeHasBeenSet(false)
-{
-}
-
-Aws::String StartMetadataGenerationRunRequest::SerializePayload() const
-{
+Aws::String StartMetadataGenerationRunRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_typesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> typesJsonList(m_types.size());
+    for (unsigned typesIndex = 0; typesIndex < typesJsonList.GetLength(); ++typesIndex) {
+      typesJsonList[typesIndex].AsString(MetadataGenerationRunTypeMapper::GetNameForMetadataGenerationRunType(m_types[typesIndex]));
+    }
+    payload.WithArray("types", std::move(typesJsonList));
   }
 
-  if(m_owningProjectIdentifierHasBeenSet)
-  {
-   payload.WithString("owningProjectIdentifier", m_owningProjectIdentifier);
-
+  if (m_targetHasBeenSet) {
+    payload.WithObject("target", m_target.Jsonize());
   }
 
-  if(m_targetHasBeenSet)
-  {
-   payload.WithObject("target", m_target.Jsonize());
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", MetadataGenerationRunTypeMapper::GetNameForMetadataGenerationRunType(m_type));
+  if (m_owningProjectIdentifierHasBeenSet) {
+    payload.WithString("owningProjectIdentifier", m_owningProjectIdentifier);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

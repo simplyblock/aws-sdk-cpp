@@ -4,84 +4,131 @@
  */
 
 #include <aws/codedeploy/model/BlueGreenDeploymentConfiguration.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeDeploy
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeDeploy {
+namespace Model {
 
-BlueGreenDeploymentConfiguration::BlueGreenDeploymentConfiguration() : 
-    m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet(false),
-    m_deploymentReadyOptionHasBeenSet(false),
-    m_greenFleetProvisioningOptionHasBeenSet(false)
-{
+BlueGreenDeploymentConfiguration::BlueGreenDeploymentConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-BlueGreenDeploymentConfiguration::BlueGreenDeploymentConfiguration(JsonView jsonValue)
-  : BlueGreenDeploymentConfiguration()
-{
-  *this = jsonValue;
-}
+BlueGreenDeploymentConfiguration& BlueGreenDeploymentConfiguration::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-BlueGreenDeploymentConfiguration& BlueGreenDeploymentConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("terminateBlueInstancesOnDeploymentSuccess"))
-  {
-    m_terminateBlueInstancesOnDeploymentSuccess = jsonValue.GetObject("terminateBlueInstancesOnDeploymentSuccess");
+              if (initialKeyStr == "terminateBlueInstancesOnDeploymentSuccess") {
+                m_terminateBlueInstancesOnDeploymentSuccess = BlueInstanceTerminationOption(decoder);
+                m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet = true;
+              }
 
-    m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet = true;
-  }
+              else if (initialKeyStr == "deploymentReadyOption") {
+                m_deploymentReadyOption = DeploymentReadyOption(decoder);
+                m_deploymentReadyOptionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("deploymentReadyOption"))
-  {
-    m_deploymentReadyOption = jsonValue.GetObject("deploymentReadyOption");
+              else if (initialKeyStr == "greenFleetProvisioningOption") {
+                m_greenFleetProvisioningOption = GreenFleetProvisioningOption(decoder);
+                m_greenFleetProvisioningOptionHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("BlueGreenDeploymentConfiguration", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_deploymentReadyOptionHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("greenFleetProvisioningOption"))
-  {
-    m_greenFleetProvisioningOption = jsonValue.GetObject("greenFleetProvisioningOption");
+            if (initialKeyStr == "terminateBlueInstancesOnDeploymentSuccess") {
+              m_terminateBlueInstancesOnDeploymentSuccess = BlueInstanceTerminationOption(decoder);
+              m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet = true;
+            }
 
-    m_greenFleetProvisioningOptionHasBeenSet = true;
+            else if (initialKeyStr == "deploymentReadyOption") {
+              m_deploymentReadyOption = DeploymentReadyOption(decoder);
+              m_deploymentReadyOptionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "greenFleetProvisioningOption") {
+              m_greenFleetProvisioningOption = GreenFleetProvisioningOption(decoder);
+              m_greenFleetProvisioningOptionHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue BlueGreenDeploymentConfiguration::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet)
-  {
-   payload.WithObject("terminateBlueInstancesOnDeploymentSuccess", m_terminateBlueInstancesOnDeploymentSuccess.Jsonize());
-
+void BlueGreenDeploymentConfiguration::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deploymentReadyOptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_greenFleetProvisioningOptionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_deploymentReadyOptionHasBeenSet)
-  {
-   payload.WithObject("deploymentReadyOption", m_deploymentReadyOption.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_terminateBlueInstancesOnDeploymentSuccessHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("terminateBlueInstancesOnDeploymentSuccess"));
+    m_terminateBlueInstancesOnDeploymentSuccess.CborEncode(encoder);
   }
 
-  if(m_greenFleetProvisioningOptionHasBeenSet)
-  {
-   payload.WithObject("greenFleetProvisioningOption", m_greenFleetProvisioningOption.Jsonize());
-
+  if (m_deploymentReadyOptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("deploymentReadyOption"));
+    m_deploymentReadyOption.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_greenFleetProvisioningOptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("greenFleetProvisioningOption"));
+    m_greenFleetProvisioningOption.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace CodeDeploy
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeDeploy
+}  // namespace Aws

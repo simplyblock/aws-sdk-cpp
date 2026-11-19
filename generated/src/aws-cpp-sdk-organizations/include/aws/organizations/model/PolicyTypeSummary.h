@@ -7,72 +7,73 @@
 #include <aws/organizations/Organizations_EXPORTS.h>
 #include <aws/organizations/model/PolicyType.h>
 #include <aws/organizations/model/PolicyTypeStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Organizations
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Organizations {
+namespace Model {
 
+/**
+ * <p>Contains information about a policy type and its status in the associated
+ * root.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/PolicyTypeSummary">AWS
+ * API Reference</a></p>
+ */
+class PolicyTypeSummary {
+ public:
+  AWS_ORGANIZATIONS_API PolicyTypeSummary() = default;
+  AWS_ORGANIZATIONS_API PolicyTypeSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ORGANIZATIONS_API PolicyTypeSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ORGANIZATIONS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains information about a policy type and its status in the associated
-   * root.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/PolicyTypeSummary">AWS
-   * API Reference</a></p>
+   * <p>The name of the policy type.</p>
    */
-  class PolicyTypeSummary
-  {
-  public:
-    AWS_ORGANIZATIONS_API PolicyTypeSummary();
-    AWS_ORGANIZATIONS_API PolicyTypeSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ORGANIZATIONS_API PolicyTypeSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ORGANIZATIONS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline PolicyType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(PolicyType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline PolicyTypeSummary& WithType(PolicyType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The status of the policy type as it relates to the associated root. To attach
+   * a policy of the specified type to a root or to an OU or account in that root, it
+   * must be available in the organization and enabled for that root.</p>
+   */
+  inline PolicyTypeStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(PolicyTypeStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline PolicyTypeSummary& WithStatus(PolicyTypeStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+ private:
+  PolicyType m_type{PolicyType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The name of the policy type.</p>
-     */
-    inline const PolicyType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const PolicyType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(PolicyType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline PolicyTypeSummary& WithType(const PolicyType& value) { SetType(value); return *this;}
-    inline PolicyTypeSummary& WithType(PolicyType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  PolicyTypeStatus m_status{PolicyTypeStatus::NOT_SET};
+  bool m_typeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The status of the policy type as it relates to the associated root. To attach
-     * a policy of the specified type to a root or to an OU or account in that root, it
-     * must be available in the organization and enabled for that root.</p>
-     */
-    inline const PolicyTypeStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const PolicyTypeStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(PolicyTypeStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline PolicyTypeSummary& WithStatus(const PolicyTypeStatus& value) { SetStatus(value); return *this;}
-    inline PolicyTypeSummary& WithStatus(PolicyTypeStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    PolicyType m_type;
-    bool m_typeHasBeenSet = false;
-
-    PolicyTypeStatus m_status;
-    bool m_statusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Organizations
-} // namespace Aws
+}  // namespace Model
+}  // namespace Organizations
+}  // namespace Aws

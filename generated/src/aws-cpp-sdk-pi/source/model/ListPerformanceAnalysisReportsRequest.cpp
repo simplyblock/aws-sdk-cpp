@@ -3,71 +3,70 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/pi/model/ListPerformanceAnalysisReportsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::PI::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListPerformanceAnalysisReportsRequest::ListPerformanceAnalysisReportsRequest() : 
-    m_serviceType(ServiceType::NOT_SET),
-    m_serviceTypeHasBeenSet(false),
-    m_identifierHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_listTags(false),
-    m_listTagsHasBeenSet(false)
-{
+Aws::String ListPerformanceAnalysisReportsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_serviceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_identifierHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxResultsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_listTagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_serviceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServiceType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ServiceTypeMapper::GetNameForServiceType(m_serviceType).c_str()));
+  }
+
+  if (m_identifierHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Identifier"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_identifier.c_str()));
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+
+  if (m_maxResultsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxResults"));
+    (m_maxResults >= 0) ? encoder.WriteUInt(m_maxResults) : encoder.WriteNegInt(m_maxResults);
+  }
+
+  if (m_listTagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ListTags"));
+    encoder.WriteBool(m_listTags);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ListPerformanceAnalysisReportsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_serviceTypeHasBeenSet)
-  {
-   payload.WithString("ServiceType", ServiceTypeMapper::GetNameForServiceType(m_serviceType));
-  }
-
-  if(m_identifierHasBeenSet)
-  {
-   payload.WithString("Identifier", m_identifier);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
-  }
-
-  if(m_listTagsHasBeenSet)
-  {
-   payload.WithBool("ListTags", m_listTags);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ListPerformanceAnalysisReportsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListPerformanceAnalysisReportsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PerformanceInsightsv20180227.ListPerformanceAnalysisReports"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/migrationhuborchestrator/model/GetTemplateStepGroupRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/migrationhuborchestrator/model/GetTemplateStepGroupRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::MigrationHubOrchestrator::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetTemplateStepGroupRequest::GetTemplateStepGroupRequest() : 
-    m_templateIdHasBeenSet(false),
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetTemplateStepGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetTemplateStepGroupRequest::SerializePayload() const { return {}; }

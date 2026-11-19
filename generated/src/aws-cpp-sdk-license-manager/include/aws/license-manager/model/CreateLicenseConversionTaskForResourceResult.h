@@ -4,64 +4,73 @@
  */
 
 #pragma once
-#include <aws/license-manager/LicenseManager_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/license-manager/LicenseManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManager
-{
-namespace Model
-{
-  class CreateLicenseConversionTaskForResourceResult
-  {
-  public:
-    AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult();
-    AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManager {
+namespace Model {
+class CreateLicenseConversionTaskForResourceResult {
+ public:
+  AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult() = default;
+  AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGER_API CreateLicenseConversionTaskForResourceResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the created license type conversion task.</p>
+   */
+  inline const Aws::String& GetLicenseConversionTaskId() const { return m_licenseConversionTaskId; }
+  template <typename LicenseConversionTaskIdT = Aws::String>
+  void SetLicenseConversionTaskId(LicenseConversionTaskIdT&& value) {
+    m_licenseConversionTaskIdHasBeenSet = true;
+    m_licenseConversionTaskId = std::forward<LicenseConversionTaskIdT>(value);
+  }
+  template <typename LicenseConversionTaskIdT = Aws::String>
+  CreateLicenseConversionTaskForResourceResult& WithLicenseConversionTaskId(LicenseConversionTaskIdT&& value) {
+    SetLicenseConversionTaskId(std::forward<LicenseConversionTaskIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the created license type conversion task.</p>
-     */
-    inline const Aws::String& GetLicenseConversionTaskId() const{ return m_licenseConversionTaskId; }
-    inline void SetLicenseConversionTaskId(const Aws::String& value) { m_licenseConversionTaskId = value; }
-    inline void SetLicenseConversionTaskId(Aws::String&& value) { m_licenseConversionTaskId = std::move(value); }
-    inline void SetLicenseConversionTaskId(const char* value) { m_licenseConversionTaskId.assign(value); }
-    inline CreateLicenseConversionTaskForResourceResult& WithLicenseConversionTaskId(const Aws::String& value) { SetLicenseConversionTaskId(value); return *this;}
-    inline CreateLicenseConversionTaskForResourceResult& WithLicenseConversionTaskId(Aws::String&& value) { SetLicenseConversionTaskId(std::move(value)); return *this;}
-    inline CreateLicenseConversionTaskForResourceResult& WithLicenseConversionTaskId(const char* value) { SetLicenseConversionTaskId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateLicenseConversionTaskForResourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateLicenseConversionTaskForResourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateLicenseConversionTaskForResourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateLicenseConversionTaskForResourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_licenseConversionTaskId;
+ private:
+  Aws::String m_licenseConversionTaskId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_licenseConversionTaskIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManager
+}  // namespace Aws

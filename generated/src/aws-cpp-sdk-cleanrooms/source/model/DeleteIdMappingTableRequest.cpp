@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteIdMappingTableRequest::DeleteIdMappingTableRequest() : 
-    m_idMappingTableIdentifierHasBeenSet(false),
-    m_membershipIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteIdMappingTableRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteIdMappingTableRequest::SerializePayload() const { return {}; }

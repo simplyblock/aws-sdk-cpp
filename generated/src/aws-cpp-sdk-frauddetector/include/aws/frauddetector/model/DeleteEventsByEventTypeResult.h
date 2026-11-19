@@ -4,79 +4,91 @@
  */
 
 #pragma once
-#include <aws/frauddetector/FraudDetector_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/frauddetector/FraudDetector_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FraudDetector
-{
-namespace Model
-{
-  class DeleteEventsByEventTypeResult
-  {
-  public:
-    AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult();
-    AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FraudDetector {
+namespace Model {
+class DeleteEventsByEventTypeResult {
+ public:
+  AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult() = default;
+  AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FRAUDDETECTOR_API DeleteEventsByEventTypeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Name of event type for which to delete the events.</p>
+   */
+  inline const Aws::String& GetEventTypeName() const { return m_eventTypeName; }
+  template <typename EventTypeNameT = Aws::String>
+  void SetEventTypeName(EventTypeNameT&& value) {
+    m_eventTypeNameHasBeenSet = true;
+    m_eventTypeName = std::forward<EventTypeNameT>(value);
+  }
+  template <typename EventTypeNameT = Aws::String>
+  DeleteEventsByEventTypeResult& WithEventTypeName(EventTypeNameT&& value) {
+    SetEventTypeName(std::forward<EventTypeNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of event type for which to delete the events.</p>
-     */
-    inline const Aws::String& GetEventTypeName() const{ return m_eventTypeName; }
-    inline void SetEventTypeName(const Aws::String& value) { m_eventTypeName = value; }
-    inline void SetEventTypeName(Aws::String&& value) { m_eventTypeName = std::move(value); }
-    inline void SetEventTypeName(const char* value) { m_eventTypeName.assign(value); }
-    inline DeleteEventsByEventTypeResult& WithEventTypeName(const Aws::String& value) { SetEventTypeName(value); return *this;}
-    inline DeleteEventsByEventTypeResult& WithEventTypeName(Aws::String&& value) { SetEventTypeName(std::move(value)); return *this;}
-    inline DeleteEventsByEventTypeResult& WithEventTypeName(const char* value) { SetEventTypeName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the delete request.</p>
+   */
+  inline const Aws::String& GetEventsDeletionStatus() const { return m_eventsDeletionStatus; }
+  template <typename EventsDeletionStatusT = Aws::String>
+  void SetEventsDeletionStatus(EventsDeletionStatusT&& value) {
+    m_eventsDeletionStatusHasBeenSet = true;
+    m_eventsDeletionStatus = std::forward<EventsDeletionStatusT>(value);
+  }
+  template <typename EventsDeletionStatusT = Aws::String>
+  DeleteEventsByEventTypeResult& WithEventsDeletionStatus(EventsDeletionStatusT&& value) {
+    SetEventsDeletionStatus(std::forward<EventsDeletionStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the delete request.</p>
-     */
-    inline const Aws::String& GetEventsDeletionStatus() const{ return m_eventsDeletionStatus; }
-    inline void SetEventsDeletionStatus(const Aws::String& value) { m_eventsDeletionStatus = value; }
-    inline void SetEventsDeletionStatus(Aws::String&& value) { m_eventsDeletionStatus = std::move(value); }
-    inline void SetEventsDeletionStatus(const char* value) { m_eventsDeletionStatus.assign(value); }
-    inline DeleteEventsByEventTypeResult& WithEventsDeletionStatus(const Aws::String& value) { SetEventsDeletionStatus(value); return *this;}
-    inline DeleteEventsByEventTypeResult& WithEventsDeletionStatus(Aws::String&& value) { SetEventsDeletionStatus(std::move(value)); return *this;}
-    inline DeleteEventsByEventTypeResult& WithEventsDeletionStatus(const char* value) { SetEventsDeletionStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteEventsByEventTypeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteEventsByEventTypeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteEventsByEventTypeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteEventsByEventTypeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_eventTypeName;
+ private:
+  Aws::String m_eventTypeName;
 
-    Aws::String m_eventsDeletionStatus;
+  Aws::String m_eventsDeletionStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventTypeNameHasBeenSet = false;
+  bool m_eventsDeletionStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FraudDetector
-} // namespace Aws
+}  // namespace Model
+}  // namespace FraudDetector
+}  // namespace Aws

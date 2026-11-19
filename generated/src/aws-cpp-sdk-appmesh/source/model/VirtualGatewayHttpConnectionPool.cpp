@@ -11,65 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppMesh
-{
-namespace Model
-{
+namespace Aws {
+namespace AppMesh {
+namespace Model {
 
-VirtualGatewayHttpConnectionPool::VirtualGatewayHttpConnectionPool() : 
-    m_maxConnections(0),
-    m_maxConnectionsHasBeenSet(false),
-    m_maxPendingRequests(0),
-    m_maxPendingRequestsHasBeenSet(false)
-{
-}
+VirtualGatewayHttpConnectionPool::VirtualGatewayHttpConnectionPool(JsonView jsonValue) { *this = jsonValue; }
 
-VirtualGatewayHttpConnectionPool::VirtualGatewayHttpConnectionPool(JsonView jsonValue)
-  : VirtualGatewayHttpConnectionPool()
-{
-  *this = jsonValue;
-}
-
-VirtualGatewayHttpConnectionPool& VirtualGatewayHttpConnectionPool::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("maxConnections"))
-  {
+VirtualGatewayHttpConnectionPool& VirtualGatewayHttpConnectionPool::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("maxConnections")) {
     m_maxConnections = jsonValue.GetInteger("maxConnections");
-
     m_maxConnectionsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("maxPendingRequests"))
-  {
+  if (jsonValue.ValueExists("maxPendingRequests")) {
     m_maxPendingRequests = jsonValue.GetInteger("maxPendingRequests");
-
     m_maxPendingRequestsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue VirtualGatewayHttpConnectionPool::Jsonize() const
-{
+JsonValue VirtualGatewayHttpConnectionPool::Jsonize() const {
   JsonValue payload;
 
-  if(m_maxConnectionsHasBeenSet)
-  {
-   payload.WithInteger("maxConnections", m_maxConnections);
-
+  if (m_maxConnectionsHasBeenSet) {
+    payload.WithInteger("maxConnections", m_maxConnections);
   }
 
-  if(m_maxPendingRequestsHasBeenSet)
-  {
-   payload.WithInteger("maxPendingRequests", m_maxPendingRequests);
-
+  if (m_maxPendingRequestsHasBeenSet) {
+    payload.WithInteger("maxPendingRequests", m_maxPendingRequests);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppMesh
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppMesh
+}  // namespace Aws

@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateUserPhoneConfigRequest::UpdateUserPhoneConfigRequest() : 
-    m_phoneConfigHasBeenSet(false),
-    m_userIdHasBeenSet(false),
-    m_instanceIdHasBeenSet(false)
-{
-}
-
-Aws::String UpdateUserPhoneConfigRequest::SerializePayload() const
-{
+Aws::String UpdateUserPhoneConfigRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_phoneConfigHasBeenSet)
-  {
-   payload.WithObject("PhoneConfig", m_phoneConfig.Jsonize());
-
+  if (m_phoneConfigHasBeenSet) {
+    payload.WithObject("PhoneConfig", m_phoneConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

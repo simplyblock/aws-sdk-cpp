@@ -4,64 +4,79 @@
  */
 
 #pragma once
-#include <aws/sdb/SimpleDB_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sdb/model/ResponseMetadata.h>
+#include <aws/sdb/SimpleDB_EXPORTS.h>
 #include <aws/sdb/model/Attribute.h>
+#include <aws/sdb/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SimpleDB
-{
-namespace Model
-{
-  class GetAttributesResult
-  {
-  public:
-    AWS_SIMPLEDB_API GetAttributesResult();
-    AWS_SIMPLEDB_API GetAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SIMPLEDB_API GetAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SimpleDB {
+namespace Model {
+class GetAttributesResult {
+ public:
+  AWS_SIMPLEDB_API GetAttributesResult() = default;
+  AWS_SIMPLEDB_API GetAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SIMPLEDB_API GetAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * The list of attributes returned by the operation.
+   */
+  inline const Aws::Vector<Attribute>& GetAttributes() const { return m_attributes; }
+  template <typename AttributesT = Aws::Vector<Attribute>>
+  void SetAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes = std::forward<AttributesT>(value);
+  }
+  template <typename AttributesT = Aws::Vector<Attribute>>
+  GetAttributesResult& WithAttributes(AttributesT&& value) {
+    SetAttributes(std::forward<AttributesT>(value));
+    return *this;
+  }
+  template <typename AttributesT = Attribute>
+  GetAttributesResult& AddAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes.emplace_back(std::forward<AttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The list of attributes returned by the operation.
-     */
-    inline const Aws::Vector<Attribute>& GetAttributes() const{ return m_attributes; }
-    inline void SetAttributes(const Aws::Vector<Attribute>& value) { m_attributes = value; }
-    inline void SetAttributes(Aws::Vector<Attribute>&& value) { m_attributes = std::move(value); }
-    inline GetAttributesResult& WithAttributes(const Aws::Vector<Attribute>& value) { SetAttributes(value); return *this;}
-    inline GetAttributesResult& WithAttributes(Aws::Vector<Attribute>&& value) { SetAttributes(std::move(value)); return *this;}
-    inline GetAttributesResult& AddAttributes(const Attribute& value) { m_attributes.push_back(value); return *this; }
-    inline GetAttributesResult& AddAttributes(Attribute&& value) { m_attributes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetAttributesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetAttributesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetAttributesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Attribute> m_attributes;
+ private:
+  Aws::Vector<Attribute> m_attributes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attributesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SimpleDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace SimpleDB
+}  // namespace Aws

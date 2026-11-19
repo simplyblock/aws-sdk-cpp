@@ -3,84 +3,267 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/LogSubscription.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DirectoryService
-{
-namespace Model
-{
+namespace Aws {
+namespace DirectoryService {
+namespace Model {
 
-LogSubscription::LogSubscription() : 
-    m_directoryIdHasBeenSet(false),
-    m_logGroupNameHasBeenSet(false),
-    m_subscriptionCreatedDateTimeHasBeenSet(false)
-{
-}
+LogSubscription::LogSubscription(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-LogSubscription::LogSubscription(JsonView jsonValue)
-  : LogSubscription()
-{
-  *this = jsonValue;
-}
+LogSubscription& LogSubscription::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-LogSubscription& LogSubscription::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("DirectoryId"))
-  {
-    m_directoryId = jsonValue.GetString("DirectoryId");
+              if (initialKeyStr == "DirectoryId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_directoryId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_directoryId = ss.str();
+                  }
+                }
+                m_directoryIdHasBeenSet = true;
+              }
 
-    m_directoryIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "LogGroupName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_logGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_logGroupName = ss.str();
+                  }
+                }
+                m_logGroupNameHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("LogGroupName"))
-  {
-    m_logGroupName = jsonValue.GetString("LogGroupName");
+              else if (initialKeyStr == "SubscriptionCreatedDateTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_subscriptionCreatedDateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_subscriptionCreatedDateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_subscriptionCreatedDateTimeHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("LogSubscription", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_logGroupNameHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("SubscriptionCreatedDateTime"))
-  {
-    m_subscriptionCreatedDateTime = jsonValue.GetDouble("SubscriptionCreatedDateTime");
+            if (initialKeyStr == "DirectoryId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_directoryId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_directoryId = ss.str();
+                }
+              }
+              m_directoryIdHasBeenSet = true;
+            }
 
-    m_subscriptionCreatedDateTimeHasBeenSet = true;
+            else if (initialKeyStr == "LogGroupName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_logGroupName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_logGroupName = ss.str();
+                }
+              }
+              m_logGroupNameHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SubscriptionCreatedDateTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_subscriptionCreatedDateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_subscriptionCreatedDateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_subscriptionCreatedDateTimeHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue LogSubscription::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
+void LogSubscription::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_logGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subscriptionCreatedDateTimeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_logGroupNameHasBeenSet)
-  {
-   payload.WithString("LogGroupName", m_logGroupName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
   }
 
-  if(m_subscriptionCreatedDateTimeHasBeenSet)
-  {
-   payload.WithDouble("SubscriptionCreatedDateTime", m_subscriptionCreatedDateTime.SecondsWithMSPrecision());
+  if (m_logGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LogGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_logGroupName.c_str()));
   }
 
-  return payload;
+  if (m_subscriptionCreatedDateTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubscriptionCreatedDateTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_subscriptionCreatedDateTime.Seconds());
+  }
 }
 
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

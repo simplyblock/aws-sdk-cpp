@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/workspaces-web/model/IpAccessSettingsSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
-  class ListIpAccessSettingsResult
-  {
-  public:
-    AWS_WORKSPACESWEB_API ListIpAccessSettingsResult();
-    AWS_WORKSPACESWEB_API ListIpAccessSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESWEB_API ListIpAccessSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
+class ListIpAccessSettingsResult {
+ public:
+  AWS_WORKSPACESWEB_API ListIpAccessSettingsResult() = default;
+  AWS_WORKSPACESWEB_API ListIpAccessSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESWEB_API ListIpAccessSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The IP access settings.</p>
+   */
+  inline const Aws::Vector<IpAccessSettingsSummary>& GetIpAccessSettings() const { return m_ipAccessSettings; }
+  template <typename IpAccessSettingsT = Aws::Vector<IpAccessSettingsSummary>>
+  void SetIpAccessSettings(IpAccessSettingsT&& value) {
+    m_ipAccessSettingsHasBeenSet = true;
+    m_ipAccessSettings = std::forward<IpAccessSettingsT>(value);
+  }
+  template <typename IpAccessSettingsT = Aws::Vector<IpAccessSettingsSummary>>
+  ListIpAccessSettingsResult& WithIpAccessSettings(IpAccessSettingsT&& value) {
+    SetIpAccessSettings(std::forward<IpAccessSettingsT>(value));
+    return *this;
+  }
+  template <typename IpAccessSettingsT = IpAccessSettingsSummary>
+  ListIpAccessSettingsResult& AddIpAccessSettings(IpAccessSettingsT&& value) {
+    m_ipAccessSettingsHasBeenSet = true;
+    m_ipAccessSettings.emplace_back(std::forward<IpAccessSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP access settings.</p>
-     */
-    inline const Aws::Vector<IpAccessSettingsSummary>& GetIpAccessSettings() const{ return m_ipAccessSettings; }
-    inline void SetIpAccessSettings(const Aws::Vector<IpAccessSettingsSummary>& value) { m_ipAccessSettings = value; }
-    inline void SetIpAccessSettings(Aws::Vector<IpAccessSettingsSummary>&& value) { m_ipAccessSettings = std::move(value); }
-    inline ListIpAccessSettingsResult& WithIpAccessSettings(const Aws::Vector<IpAccessSettingsSummary>& value) { SetIpAccessSettings(value); return *this;}
-    inline ListIpAccessSettingsResult& WithIpAccessSettings(Aws::Vector<IpAccessSettingsSummary>&& value) { SetIpAccessSettings(std::move(value)); return *this;}
-    inline ListIpAccessSettingsResult& AddIpAccessSettings(const IpAccessSettingsSummary& value) { m_ipAccessSettings.push_back(value); return *this; }
-    inline ListIpAccessSettingsResult& AddIpAccessSettings(IpAccessSettingsSummary&& value) { m_ipAccessSettings.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token used to retrieve the next page of results for this
+   * operation.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListIpAccessSettingsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token used to retrieve the next page of results for this
-     * operation.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListIpAccessSettingsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListIpAccessSettingsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListIpAccessSettingsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListIpAccessSettingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListIpAccessSettingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListIpAccessSettingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListIpAccessSettingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<IpAccessSettingsSummary> m_ipAccessSettings;
+ private:
+  Aws::Vector<IpAccessSettingsSummary> m_ipAccessSettings;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ipAccessSettingsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

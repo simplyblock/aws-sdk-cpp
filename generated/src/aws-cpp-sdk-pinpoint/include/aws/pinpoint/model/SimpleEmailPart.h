@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pinpoint/Pinpoint_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
 
+/**
+ * <p>Specifies the subject or body of an email message, represented as textual
+ * email data and the applicable character set.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/SimpleEmailPart">AWS
+ * API Reference</a></p>
+ */
+class SimpleEmailPart {
+ public:
+  AWS_PINPOINT_API SimpleEmailPart() = default;
+  AWS_PINPOINT_API SimpleEmailPart(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API SimpleEmailPart& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies the subject or body of an email message, represented as textual
-   * email data and the applicable character set.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/SimpleEmailPart">AWS
-   * API Reference</a></p>
+   * <p>The applicable character set for the message content.</p>
    */
-  class SimpleEmailPart
-  {
-  public:
-    AWS_PINPOINT_API SimpleEmailPart();
-    AWS_PINPOINT_API SimpleEmailPart(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API SimpleEmailPart& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCharset() const { return m_charset; }
+  inline bool CharsetHasBeenSet() const { return m_charsetHasBeenSet; }
+  template <typename CharsetT = Aws::String>
+  void SetCharset(CharsetT&& value) {
+    m_charsetHasBeenSet = true;
+    m_charset = std::forward<CharsetT>(value);
+  }
+  template <typename CharsetT = Aws::String>
+  SimpleEmailPart& WithCharset(CharsetT&& value) {
+    SetCharset(std::forward<CharsetT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The textual data of the message content.</p>
+   */
+  inline const Aws::String& GetData() const { return m_data; }
+  inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
+  template <typename DataT = Aws::String>
+  void SetData(DataT&& value) {
+    m_dataHasBeenSet = true;
+    m_data = std::forward<DataT>(value);
+  }
+  template <typename DataT = Aws::String>
+  SimpleEmailPart& WithData(DataT&& value) {
+    SetData(std::forward<DataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_charset;
 
-    ///@{
-    /**
-     * <p>The applicable character set for the message content.</p>
-     */
-    inline const Aws::String& GetCharset() const{ return m_charset; }
-    inline bool CharsetHasBeenSet() const { return m_charsetHasBeenSet; }
-    inline void SetCharset(const Aws::String& value) { m_charsetHasBeenSet = true; m_charset = value; }
-    inline void SetCharset(Aws::String&& value) { m_charsetHasBeenSet = true; m_charset = std::move(value); }
-    inline void SetCharset(const char* value) { m_charsetHasBeenSet = true; m_charset.assign(value); }
-    inline SimpleEmailPart& WithCharset(const Aws::String& value) { SetCharset(value); return *this;}
-    inline SimpleEmailPart& WithCharset(Aws::String&& value) { SetCharset(std::move(value)); return *this;}
-    inline SimpleEmailPart& WithCharset(const char* value) { SetCharset(value); return *this;}
-    ///@}
+  Aws::String m_data;
+  bool m_charsetHasBeenSet = false;
+  bool m_dataHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The textual data of the message content.</p>
-     */
-    inline const Aws::String& GetData() const{ return m_data; }
-    inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
-    inline void SetData(const Aws::String& value) { m_dataHasBeenSet = true; m_data = value; }
-    inline void SetData(Aws::String&& value) { m_dataHasBeenSet = true; m_data = std::move(value); }
-    inline void SetData(const char* value) { m_dataHasBeenSet = true; m_data.assign(value); }
-    inline SimpleEmailPart& WithData(const Aws::String& value) { SetData(value); return *this;}
-    inline SimpleEmailPart& WithData(Aws::String&& value) { SetData(std::move(value)); return *this;}
-    inline SimpleEmailPart& WithData(const char* value) { SetData(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_charset;
-    bool m_charsetHasBeenSet = false;
-
-    Aws::String m_data;
-    bool m_dataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

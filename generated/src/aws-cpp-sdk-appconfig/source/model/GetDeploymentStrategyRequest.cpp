@@ -12,16 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDeploymentStrategyRequest::GetDeploymentStrategyRequest() : 
-    m_deploymentStrategyIdHasBeenSet(false)
-{
-}
-
-Aws::String GetDeploymentStrategyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDeploymentStrategyRequest::SerializePayload() const { return {}; }

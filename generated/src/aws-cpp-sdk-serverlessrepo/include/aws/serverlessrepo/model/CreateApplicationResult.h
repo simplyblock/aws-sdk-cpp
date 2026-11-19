@@ -4,253 +4,330 @@
  */
 
 #pragma once
-#include <aws/serverlessrepo/ServerlessApplicationRepository_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/serverlessrepo/ServerlessApplicationRepository_EXPORTS.h>
 #include <aws/serverlessrepo/model/Version.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ServerlessApplicationRepository
-{
-namespace Model
-{
-  class CreateApplicationResult
-  {
-  public:
-    AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult();
-    AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ServerlessApplicationRepository {
+namespace Model {
+class CreateApplicationResult {
+ public:
+  AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult() = default;
+  AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SERVERLESSAPPLICATIONREPOSITORY_API CreateApplicationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The application Amazon Resource Name (ARN).</p>
+   */
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  CreateApplicationResult& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The application Amazon Resource Name (ARN).</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationId.assign(value); }
-    inline CreateApplicationResult& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline CreateApplicationResult& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the author publishing the app.</p><p>Minimum length=1. Maximum
+   * length=127.</p><p>Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";</p>
+   */
+  inline const Aws::String& GetAuthor() const { return m_author; }
+  template <typename AuthorT = Aws::String>
+  void SetAuthor(AuthorT&& value) {
+    m_authorHasBeenSet = true;
+    m_author = std::forward<AuthorT>(value);
+  }
+  template <typename AuthorT = Aws::String>
+  CreateApplicationResult& WithAuthor(AuthorT&& value) {
+    SetAuthor(std::forward<AuthorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the author publishing the app.</p><p>Minimum length=1. Maximum
-     * length=127.</p><p>Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";</p>
-     */
-    inline const Aws::String& GetAuthor() const{ return m_author; }
-    inline void SetAuthor(const Aws::String& value) { m_author = value; }
-    inline void SetAuthor(Aws::String&& value) { m_author = std::move(value); }
-    inline void SetAuthor(const char* value) { m_author.assign(value); }
-    inline CreateApplicationResult& WithAuthor(const Aws::String& value) { SetAuthor(value); return *this;}
-    inline CreateApplicationResult& WithAuthor(Aws::String&& value) { SetAuthor(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithAuthor(const char* value) { SetAuthor(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time this resource was created.</p>
+   */
+  inline const Aws::String& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::String>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::String>
+  CreateApplicationResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time this resource was created.</p>
-     */
-    inline const Aws::String& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::String& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::String&& value) { m_creationTime = std::move(value); }
-    inline void SetCreationTime(const char* value) { m_creationTime.assign(value); }
-    inline CreateApplicationResult& WithCreationTime(const Aws::String& value) { SetCreationTime(value); return *this;}
-    inline CreateApplicationResult& WithCreationTime(Aws::String&& value) { SetCreationTime(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithCreationTime(const char* value) { SetCreationTime(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the application.</p><p>Minimum length=1. Maximum
+   * length=256</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateApplicationResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the application.</p><p>Minimum length=1. Maximum
-     * length=256</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline CreateApplicationResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateApplicationResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A URL with more information about the application, for example the location
+   * of your GitHub repository for the application.</p>
+   */
+  inline const Aws::String& GetHomePageUrl() const { return m_homePageUrl; }
+  template <typename HomePageUrlT = Aws::String>
+  void SetHomePageUrl(HomePageUrlT&& value) {
+    m_homePageUrlHasBeenSet = true;
+    m_homePageUrl = std::forward<HomePageUrlT>(value);
+  }
+  template <typename HomePageUrlT = Aws::String>
+  CreateApplicationResult& WithHomePageUrl(HomePageUrlT&& value) {
+    SetHomePageUrl(std::forward<HomePageUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A URL with more information about the application, for example the location
-     * of your GitHub repository for the application.</p>
-     */
-    inline const Aws::String& GetHomePageUrl() const{ return m_homePageUrl; }
-    inline void SetHomePageUrl(const Aws::String& value) { m_homePageUrl = value; }
-    inline void SetHomePageUrl(Aws::String&& value) { m_homePageUrl = std::move(value); }
-    inline void SetHomePageUrl(const char* value) { m_homePageUrl.assign(value); }
-    inline CreateApplicationResult& WithHomePageUrl(const Aws::String& value) { SetHomePageUrl(value); return *this;}
-    inline CreateApplicationResult& WithHomePageUrl(Aws::String&& value) { SetHomePageUrl(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithHomePageUrl(const char* value) { SetHomePageUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether the author of this application has been verified. This means means
+   * that AWS has made a good faith review, as a reasonable and prudent service
+   * provider, of the information provided by the requester and has confirmed that
+   * the requester's identity is as claimed.</p>
+   */
+  inline bool GetIsVerifiedAuthor() const { return m_isVerifiedAuthor; }
+  inline void SetIsVerifiedAuthor(bool value) {
+    m_isVerifiedAuthorHasBeenSet = true;
+    m_isVerifiedAuthor = value;
+  }
+  inline CreateApplicationResult& WithIsVerifiedAuthor(bool value) {
+    SetIsVerifiedAuthor(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether the author of this application has been verified. This means means
-     * that AWS has made a good faith review, as a reasonable and prudent service
-     * provider, of the information provided by the requester and has confirmed that
-     * the requester's identity is as claimed.</p>
-     */
-    inline bool GetIsVerifiedAuthor() const{ return m_isVerifiedAuthor; }
-    inline void SetIsVerifiedAuthor(bool value) { m_isVerifiedAuthor = value; }
-    inline CreateApplicationResult& WithIsVerifiedAuthor(bool value) { SetIsVerifiedAuthor(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Labels to improve discovery of apps in search results.</p><p>Minimum
+   * length=1. Maximum length=127. Maximum number of labels: 10</p><p>Pattern:
+   * "^[a-zA-Z0-9+\\-_:\\/@]+$";</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetLabels() const { return m_labels; }
+  template <typename LabelsT = Aws::Vector<Aws::String>>
+  void SetLabels(LabelsT&& value) {
+    m_labelsHasBeenSet = true;
+    m_labels = std::forward<LabelsT>(value);
+  }
+  template <typename LabelsT = Aws::Vector<Aws::String>>
+  CreateApplicationResult& WithLabels(LabelsT&& value) {
+    SetLabels(std::forward<LabelsT>(value));
+    return *this;
+  }
+  template <typename LabelsT = Aws::String>
+  CreateApplicationResult& AddLabels(LabelsT&& value) {
+    m_labelsHasBeenSet = true;
+    m_labels.emplace_back(std::forward<LabelsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Labels to improve discovery of apps in search results.</p><p>Minimum
-     * length=1. Maximum length=127. Maximum number of labels: 10</p><p>Pattern:
-     * "^[a-zA-Z0-9+\\-_:\\/@]+$";</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetLabels() const{ return m_labels; }
-    inline void SetLabels(const Aws::Vector<Aws::String>& value) { m_labels = value; }
-    inline void SetLabels(Aws::Vector<Aws::String>&& value) { m_labels = std::move(value); }
-    inline CreateApplicationResult& WithLabels(const Aws::Vector<Aws::String>& value) { SetLabels(value); return *this;}
-    inline CreateApplicationResult& WithLabels(Aws::Vector<Aws::String>&& value) { SetLabels(std::move(value)); return *this;}
-    inline CreateApplicationResult& AddLabels(const Aws::String& value) { m_labels.push_back(value); return *this; }
-    inline CreateApplicationResult& AddLabels(Aws::String&& value) { m_labels.push_back(std::move(value)); return *this; }
-    inline CreateApplicationResult& AddLabels(const char* value) { m_labels.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A link to a license file of the app that matches the spdxLicenseID value of
+   * your application.</p><p>Maximum size 5 MB</p>
+   */
+  inline const Aws::String& GetLicenseUrl() const { return m_licenseUrl; }
+  template <typename LicenseUrlT = Aws::String>
+  void SetLicenseUrl(LicenseUrlT&& value) {
+    m_licenseUrlHasBeenSet = true;
+    m_licenseUrl = std::forward<LicenseUrlT>(value);
+  }
+  template <typename LicenseUrlT = Aws::String>
+  CreateApplicationResult& WithLicenseUrl(LicenseUrlT&& value) {
+    SetLicenseUrl(std::forward<LicenseUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A link to a license file of the app that matches the spdxLicenseID value of
-     * your application.</p><p>Maximum size 5 MB</p>
-     */
-    inline const Aws::String& GetLicenseUrl() const{ return m_licenseUrl; }
-    inline void SetLicenseUrl(const Aws::String& value) { m_licenseUrl = value; }
-    inline void SetLicenseUrl(Aws::String&& value) { m_licenseUrl = std::move(value); }
-    inline void SetLicenseUrl(const char* value) { m_licenseUrl.assign(value); }
-    inline CreateApplicationResult& WithLicenseUrl(const Aws::String& value) { SetLicenseUrl(value); return *this;}
-    inline CreateApplicationResult& WithLicenseUrl(Aws::String&& value) { SetLicenseUrl(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithLicenseUrl(const char* value) { SetLicenseUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the application.</p><p>Minimum length=1. Maximum
+   * length=140</p><p>Pattern: "[a-zA-Z0-9\\-]+";</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateApplicationResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the application.</p><p>Minimum length=1. Maximum
-     * length=140</p><p>Pattern: "[a-zA-Z0-9\\-]+";</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline CreateApplicationResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateApplicationResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A link to the readme file in Markdown language that contains a more detailed
+   * description of the application and how it works.</p><p>Maximum size 5 MB</p>
+   */
+  inline const Aws::String& GetReadmeUrl() const { return m_readmeUrl; }
+  template <typename ReadmeUrlT = Aws::String>
+  void SetReadmeUrl(ReadmeUrlT&& value) {
+    m_readmeUrlHasBeenSet = true;
+    m_readmeUrl = std::forward<ReadmeUrlT>(value);
+  }
+  template <typename ReadmeUrlT = Aws::String>
+  CreateApplicationResult& WithReadmeUrl(ReadmeUrlT&& value) {
+    SetReadmeUrl(std::forward<ReadmeUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A link to the readme file in Markdown language that contains a more detailed
-     * description of the application and how it works.</p><p>Maximum size 5 MB</p>
-     */
-    inline const Aws::String& GetReadmeUrl() const{ return m_readmeUrl; }
-    inline void SetReadmeUrl(const Aws::String& value) { m_readmeUrl = value; }
-    inline void SetReadmeUrl(Aws::String&& value) { m_readmeUrl = std::move(value); }
-    inline void SetReadmeUrl(const char* value) { m_readmeUrl.assign(value); }
-    inline CreateApplicationResult& WithReadmeUrl(const Aws::String& value) { SetReadmeUrl(value); return *this;}
-    inline CreateApplicationResult& WithReadmeUrl(Aws::String&& value) { SetReadmeUrl(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithReadmeUrl(const char* value) { SetReadmeUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A valid identifier from https://spdx.org/licenses/.</p>
+   */
+  inline const Aws::String& GetSpdxLicenseId() const { return m_spdxLicenseId; }
+  template <typename SpdxLicenseIdT = Aws::String>
+  void SetSpdxLicenseId(SpdxLicenseIdT&& value) {
+    m_spdxLicenseIdHasBeenSet = true;
+    m_spdxLicenseId = std::forward<SpdxLicenseIdT>(value);
+  }
+  template <typename SpdxLicenseIdT = Aws::String>
+  CreateApplicationResult& WithSpdxLicenseId(SpdxLicenseIdT&& value) {
+    SetSpdxLicenseId(std::forward<SpdxLicenseIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A valid identifier from https://spdx.org/licenses/.</p>
-     */
-    inline const Aws::String& GetSpdxLicenseId() const{ return m_spdxLicenseId; }
-    inline void SetSpdxLicenseId(const Aws::String& value) { m_spdxLicenseId = value; }
-    inline void SetSpdxLicenseId(Aws::String&& value) { m_spdxLicenseId = std::move(value); }
-    inline void SetSpdxLicenseId(const char* value) { m_spdxLicenseId.assign(value); }
-    inline CreateApplicationResult& WithSpdxLicenseId(const Aws::String& value) { SetSpdxLicenseId(value); return *this;}
-    inline CreateApplicationResult& WithSpdxLicenseId(Aws::String&& value) { SetSpdxLicenseId(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithSpdxLicenseId(const char* value) { SetSpdxLicenseId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The URL to the public profile of a verified author. This URL is submitted by
+   * the author.</p>
+   */
+  inline const Aws::String& GetVerifiedAuthorUrl() const { return m_verifiedAuthorUrl; }
+  template <typename VerifiedAuthorUrlT = Aws::String>
+  void SetVerifiedAuthorUrl(VerifiedAuthorUrlT&& value) {
+    m_verifiedAuthorUrlHasBeenSet = true;
+    m_verifiedAuthorUrl = std::forward<VerifiedAuthorUrlT>(value);
+  }
+  template <typename VerifiedAuthorUrlT = Aws::String>
+  CreateApplicationResult& WithVerifiedAuthorUrl(VerifiedAuthorUrlT&& value) {
+    SetVerifiedAuthorUrl(std::forward<VerifiedAuthorUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL to the public profile of a verified author. This URL is submitted by
-     * the author.</p>
-     */
-    inline const Aws::String& GetVerifiedAuthorUrl() const{ return m_verifiedAuthorUrl; }
-    inline void SetVerifiedAuthorUrl(const Aws::String& value) { m_verifiedAuthorUrl = value; }
-    inline void SetVerifiedAuthorUrl(Aws::String&& value) { m_verifiedAuthorUrl = std::move(value); }
-    inline void SetVerifiedAuthorUrl(const char* value) { m_verifiedAuthorUrl.assign(value); }
-    inline CreateApplicationResult& WithVerifiedAuthorUrl(const Aws::String& value) { SetVerifiedAuthorUrl(value); return *this;}
-    inline CreateApplicationResult& WithVerifiedAuthorUrl(Aws::String&& value) { SetVerifiedAuthorUrl(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithVerifiedAuthorUrl(const char* value) { SetVerifiedAuthorUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Version information about the application.</p>
+   */
+  inline const Version& GetVersion() const { return m_version; }
+  template <typename VersionT = Version>
+  void SetVersion(VersionT&& value) {
+    m_versionHasBeenSet = true;
+    m_version = std::forward<VersionT>(value);
+  }
+  template <typename VersionT = Version>
+  CreateApplicationResult& WithVersion(VersionT&& value) {
+    SetVersion(std::forward<VersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Version information about the application.</p>
-     */
-    inline const Version& GetVersion() const{ return m_version; }
-    inline void SetVersion(const Version& value) { m_version = value; }
-    inline void SetVersion(Version&& value) { m_version = std::move(value); }
-    inline CreateApplicationResult& WithVersion(const Version& value) { SetVersion(value); return *this;}
-    inline CreateApplicationResult& WithVersion(Version&& value) { SetVersion(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_applicationId;
+ private:
+  Aws::String m_applicationId;
 
-    Aws::String m_author;
+  Aws::String m_author;
 
-    Aws::String m_creationTime;
+  Aws::String m_creationTime;
 
-    Aws::String m_description;
+  Aws::String m_description;
 
-    Aws::String m_homePageUrl;
+  Aws::String m_homePageUrl;
 
-    bool m_isVerifiedAuthor;
+  bool m_isVerifiedAuthor{false};
 
-    Aws::Vector<Aws::String> m_labels;
+  Aws::Vector<Aws::String> m_labels;
 
-    Aws::String m_licenseUrl;
+  Aws::String m_licenseUrl;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    Aws::String m_readmeUrl;
+  Aws::String m_readmeUrl;
 
-    Aws::String m_spdxLicenseId;
+  Aws::String m_spdxLicenseId;
 
-    Aws::String m_verifiedAuthorUrl;
+  Aws::String m_verifiedAuthorUrl;
 
-    Version m_version;
+  Version m_version;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_authorHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_homePageUrlHasBeenSet = false;
+  bool m_isVerifiedAuthorHasBeenSet = false;
+  bool m_labelsHasBeenSet = false;
+  bool m_licenseUrlHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_readmeUrlHasBeenSet = false;
+  bool m_spdxLicenseIdHasBeenSet = false;
+  bool m_verifiedAuthorUrlHasBeenSet = false;
+  bool m_versionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ServerlessApplicationRepository
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServerlessApplicationRepository
+}  // namespace Aws

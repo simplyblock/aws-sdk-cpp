@@ -434,6 +434,39 @@ TEST_F(JsonSerializerTest, TestGetAllObjects)
     ASSERT_EQ(42, all["Key2"].AsInteger());
 }
 
+TEST_F(JsonSerializerTest, TestWithNull)
+{
+    JsonValue value;
+    value.WithString("Key1", "value1");
+    value.WithNull("Key2");
+    value.WithNull(Aws::String("Key3"));
+    value.WithInteger("Key4", 42);
+
+    auto view = value.View();
+
+    ASSERT_TRUE(view.KeyExists("Key2"));
+    ASSERT_FALSE(view.ValueExists("Key2"));
+    ASSERT_TRUE(view.GetObject("Key2").IsNull());
+
+    ASSERT_TRUE(view.KeyExists("Key3"));
+    ASSERT_FALSE(view.ValueExists("Key3"));
+    ASSERT_TRUE(view.GetObject("Key3").IsNull());
+
+    ASSERT_STREQ("value1", view.GetString("Key1").c_str());
+    ASSERT_EQ(42, view.GetInteger("Key4"));
+
+    Aws::String serialized = view.WriteCompact();
+    JsonValue reparsed(serialized);
+    ASSERT_TRUE(reparsed.WasParseSuccessful());
+    auto reparsedView = reparsed.View();
+    ASSERT_TRUE(reparsedView.KeyExists("Key2"));
+    ASSERT_FALSE(reparsedView.ValueExists("Key2"));
+    ASSERT_TRUE(reparsedView.GetObject("Key2").IsNull());
+    ASSERT_TRUE(reparsedView.KeyExists("Key3"));
+    ASSERT_FALSE(reparsedView.ValueExists("Key3"));
+    ASSERT_TRUE(reparsedView.GetObject("Key3").IsNull());
+}
+
 TEST_F(JsonSerializerTest, TestEquality)
 {
     auto input = R"({"AWS" : {
@@ -450,4 +483,45 @@ TEST_F(JsonSerializerTest, TestEquality)
     ASSERT_EQ(parsed, built);
     built.WithString("AWS", "Amazon Web Services");
     ASSERT_NE(parsed, built);
+}
+
+TEST_F(JsonSerializerTest, TestParseLargeIntegerLiteralRoundTrips)
+{
+    const Aws::String input = R"({"n":100000000000000000000000000})";
+    JsonValue value(input);
+    ASSERT_TRUE(value.WasParseSuccessful());
+
+    const Aws::String compact = value.View().WriteCompact();
+    ASSERT_FALSE(compact.empty());
+    ASSERT_EQ(input, compact);
+
+    const Aws::String readable = value.View().WriteReadable();
+    ASSERT_FALSE(readable.empty());
+}
+
+TEST_F(JsonSerializerTest, TestParseInt64OverflowLiteralSaturates)
+{
+    const Aws::String input = R"({"n":9223372036854775808})";
+    JsonValue value(input);
+    ASSERT_TRUE(value.WasParseSuccessful());
+
+    ASSERT_EQ(INT64_MAX, value.View().GetInt64("n"));
+}
+
+TEST_F(JsonSerializerTest, TestParseInt64OverflowDoubleSaturates)
+{
+    const Aws::String input = R"({"n":9223372036854775808.0})";
+    JsonValue value(input);
+    ASSERT_TRUE(value.WasParseSuccessful());
+
+    ASSERT_EQ(INT64_MAX, value.View().GetInt64("n"));
+}
+
+TEST_F(JsonSerializerTest, TestParseScientificNotationInteger)
+{
+    const Aws::String input = R"({"n":5e9})";
+    JsonValue value(input);
+    ASSERT_TRUE(value.WasParseSuccessful());
+
+    ASSERT_EQ(5000000000LL, value.View().GetInt64("n"));
 }

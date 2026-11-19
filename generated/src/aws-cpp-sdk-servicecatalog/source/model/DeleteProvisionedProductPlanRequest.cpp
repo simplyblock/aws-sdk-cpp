@@ -3,56 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/DeleteProvisionedProductPlanRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteProvisionedProductPlanRequest::DeleteProvisionedProductPlanRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_planIdHasBeenSet(false),
-    m_ignoreErrors(false),
-    m_ignoreErrorsHasBeenSet(false)
-{
+Aws::String DeleteProvisionedProductPlanRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_planIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ignoreErrorsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_planIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PlanId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_planId.c_str()));
+  }
+
+  if (m_ignoreErrorsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IgnoreErrors"));
+    encoder.WriteBool(m_ignoreErrors);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DeleteProvisionedProductPlanRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_planIdHasBeenSet)
-  {
-   payload.WithString("PlanId", m_planId);
-
-  }
-
-  if(m_ignoreErrorsHasBeenSet)
-  {
-   payload.WithBool("IgnoreErrors", m_ignoreErrors);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DeleteProvisionedProductPlanRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteProvisionedProductPlanRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.DeleteProvisionedProductPlan"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

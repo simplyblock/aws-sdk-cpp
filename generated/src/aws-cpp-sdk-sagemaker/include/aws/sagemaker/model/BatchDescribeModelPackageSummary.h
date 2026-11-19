@@ -4,168 +4,219 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/InferenceSpecification.h>
-#include <aws/sagemaker/model/ModelPackageStatus.h>
 #include <aws/sagemaker/model/ModelApprovalStatus.h>
+#include <aws/sagemaker/model/ModelPackageRegistrationType.h>
+#include <aws/sagemaker/model/ModelPackageStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Provides summary information about the model package.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDescribeModelPackageSummary">AWS
+ * API Reference</a></p>
+ */
+class BatchDescribeModelPackageSummary {
+ public:
+  AWS_SAGEMAKER_API BatchDescribeModelPackageSummary() = default;
+  AWS_SAGEMAKER_API BatchDescribeModelPackageSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API BatchDescribeModelPackageSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides summary information about the model package.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDescribeModelPackageSummary">AWS
-   * API Reference</a></p>
+   * <p>The group name for the model package</p>
    */
-  class BatchDescribeModelPackageSummary
-  {
-  public:
-    AWS_SAGEMAKER_API BatchDescribeModelPackageSummary();
-    AWS_SAGEMAKER_API BatchDescribeModelPackageSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API BatchDescribeModelPackageSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetModelPackageGroupName() const { return m_modelPackageGroupName; }
+  inline bool ModelPackageGroupNameHasBeenSet() const { return m_modelPackageGroupNameHasBeenSet; }
+  template <typename ModelPackageGroupNameT = Aws::String>
+  void SetModelPackageGroupName(ModelPackageGroupNameT&& value) {
+    m_modelPackageGroupNameHasBeenSet = true;
+    m_modelPackageGroupName = std::forward<ModelPackageGroupNameT>(value);
+  }
+  template <typename ModelPackageGroupNameT = Aws::String>
+  BatchDescribeModelPackageSummary& WithModelPackageGroupName(ModelPackageGroupNameT&& value) {
+    SetModelPackageGroupName(std::forward<ModelPackageGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The version number of a versioned model.</p>
+   */
+  inline int GetModelPackageVersion() const { return m_modelPackageVersion; }
+  inline bool ModelPackageVersionHasBeenSet() const { return m_modelPackageVersionHasBeenSet; }
+  inline void SetModelPackageVersion(int value) {
+    m_modelPackageVersionHasBeenSet = true;
+    m_modelPackageVersion = value;
+  }
+  inline BatchDescribeModelPackageSummary& WithModelPackageVersion(int value) {
+    SetModelPackageVersion(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The group name for the model package</p>
-     */
-    inline const Aws::String& GetModelPackageGroupName() const{ return m_modelPackageGroupName; }
-    inline bool ModelPackageGroupNameHasBeenSet() const { return m_modelPackageGroupNameHasBeenSet; }
-    inline void SetModelPackageGroupName(const Aws::String& value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName = value; }
-    inline void SetModelPackageGroupName(Aws::String&& value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName = std::move(value); }
-    inline void SetModelPackageGroupName(const char* value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName.assign(value); }
-    inline BatchDescribeModelPackageSummary& WithModelPackageGroupName(const Aws::String& value) { SetModelPackageGroupName(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageGroupName(Aws::String&& value) { SetModelPackageGroupName(std::move(value)); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageGroupName(const char* value) { SetModelPackageGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the model package.</p>
+   */
+  inline const Aws::String& GetModelPackageArn() const { return m_modelPackageArn; }
+  inline bool ModelPackageArnHasBeenSet() const { return m_modelPackageArnHasBeenSet; }
+  template <typename ModelPackageArnT = Aws::String>
+  void SetModelPackageArn(ModelPackageArnT&& value) {
+    m_modelPackageArnHasBeenSet = true;
+    m_modelPackageArn = std::forward<ModelPackageArnT>(value);
+  }
+  template <typename ModelPackageArnT = Aws::String>
+  BatchDescribeModelPackageSummary& WithModelPackageArn(ModelPackageArnT&& value) {
+    SetModelPackageArn(std::forward<ModelPackageArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version number of a versioned model.</p>
-     */
-    inline int GetModelPackageVersion() const{ return m_modelPackageVersion; }
-    inline bool ModelPackageVersionHasBeenSet() const { return m_modelPackageVersionHasBeenSet; }
-    inline void SetModelPackageVersion(int value) { m_modelPackageVersionHasBeenSet = true; m_modelPackageVersion = value; }
-    inline BatchDescribeModelPackageSummary& WithModelPackageVersion(int value) { SetModelPackageVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the model package.</p>
+   */
+  inline const Aws::String& GetModelPackageDescription() const { return m_modelPackageDescription; }
+  inline bool ModelPackageDescriptionHasBeenSet() const { return m_modelPackageDescriptionHasBeenSet; }
+  template <typename ModelPackageDescriptionT = Aws::String>
+  void SetModelPackageDescription(ModelPackageDescriptionT&& value) {
+    m_modelPackageDescriptionHasBeenSet = true;
+    m_modelPackageDescription = std::forward<ModelPackageDescriptionT>(value);
+  }
+  template <typename ModelPackageDescriptionT = Aws::String>
+  BatchDescribeModelPackageSummary& WithModelPackageDescription(ModelPackageDescriptionT&& value) {
+    SetModelPackageDescription(std::forward<ModelPackageDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the model package.</p>
-     */
-    inline const Aws::String& GetModelPackageArn() const{ return m_modelPackageArn; }
-    inline bool ModelPackageArnHasBeenSet() const { return m_modelPackageArnHasBeenSet; }
-    inline void SetModelPackageArn(const Aws::String& value) { m_modelPackageArnHasBeenSet = true; m_modelPackageArn = value; }
-    inline void SetModelPackageArn(Aws::String&& value) { m_modelPackageArnHasBeenSet = true; m_modelPackageArn = std::move(value); }
-    inline void SetModelPackageArn(const char* value) { m_modelPackageArnHasBeenSet = true; m_modelPackageArn.assign(value); }
-    inline BatchDescribeModelPackageSummary& WithModelPackageArn(const Aws::String& value) { SetModelPackageArn(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageArn(Aws::String&& value) { SetModelPackageArn(std::move(value)); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageArn(const char* value) { SetModelPackageArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The creation time of the mortgage package summary.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  BatchDescribeModelPackageSummary& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the model package.</p>
-     */
-    inline const Aws::String& GetModelPackageDescription() const{ return m_modelPackageDescription; }
-    inline bool ModelPackageDescriptionHasBeenSet() const { return m_modelPackageDescriptionHasBeenSet; }
-    inline void SetModelPackageDescription(const Aws::String& value) { m_modelPackageDescriptionHasBeenSet = true; m_modelPackageDescription = value; }
-    inline void SetModelPackageDescription(Aws::String&& value) { m_modelPackageDescriptionHasBeenSet = true; m_modelPackageDescription = std::move(value); }
-    inline void SetModelPackageDescription(const char* value) { m_modelPackageDescriptionHasBeenSet = true; m_modelPackageDescription.assign(value); }
-    inline BatchDescribeModelPackageSummary& WithModelPackageDescription(const Aws::String& value) { SetModelPackageDescription(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageDescription(Aws::String&& value) { SetModelPackageDescription(std::move(value)); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageDescription(const char* value) { SetModelPackageDescription(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The creation time of the mortgage package summary.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline BatchDescribeModelPackageSummary& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  inline const InferenceSpecification& GetInferenceSpecification() const { return m_inferenceSpecification; }
+  inline bool InferenceSpecificationHasBeenSet() const { return m_inferenceSpecificationHasBeenSet; }
+  template <typename InferenceSpecificationT = InferenceSpecification>
+  void SetInferenceSpecification(InferenceSpecificationT&& value) {
+    m_inferenceSpecificationHasBeenSet = true;
+    m_inferenceSpecification = std::forward<InferenceSpecificationT>(value);
+  }
+  template <typename InferenceSpecificationT = InferenceSpecification>
+  BatchDescribeModelPackageSummary& WithInferenceSpecification(InferenceSpecificationT&& value) {
+    SetInferenceSpecification(std::forward<InferenceSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const InferenceSpecification& GetInferenceSpecification() const{ return m_inferenceSpecification; }
-    inline bool InferenceSpecificationHasBeenSet() const { return m_inferenceSpecificationHasBeenSet; }
-    inline void SetInferenceSpecification(const InferenceSpecification& value) { m_inferenceSpecificationHasBeenSet = true; m_inferenceSpecification = value; }
-    inline void SetInferenceSpecification(InferenceSpecification&& value) { m_inferenceSpecificationHasBeenSet = true; m_inferenceSpecification = std::move(value); }
-    inline BatchDescribeModelPackageSummary& WithInferenceSpecification(const InferenceSpecification& value) { SetInferenceSpecification(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithInferenceSpecification(InferenceSpecification&& value) { SetInferenceSpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the mortgage package.</p>
+   */
+  inline ModelPackageStatus GetModelPackageStatus() const { return m_modelPackageStatus; }
+  inline bool ModelPackageStatusHasBeenSet() const { return m_modelPackageStatusHasBeenSet; }
+  inline void SetModelPackageStatus(ModelPackageStatus value) {
+    m_modelPackageStatusHasBeenSet = true;
+    m_modelPackageStatus = value;
+  }
+  inline BatchDescribeModelPackageSummary& WithModelPackageStatus(ModelPackageStatus value) {
+    SetModelPackageStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the mortgage package.</p>
-     */
-    inline const ModelPackageStatus& GetModelPackageStatus() const{ return m_modelPackageStatus; }
-    inline bool ModelPackageStatusHasBeenSet() const { return m_modelPackageStatusHasBeenSet; }
-    inline void SetModelPackageStatus(const ModelPackageStatus& value) { m_modelPackageStatusHasBeenSet = true; m_modelPackageStatus = value; }
-    inline void SetModelPackageStatus(ModelPackageStatus&& value) { m_modelPackageStatusHasBeenSet = true; m_modelPackageStatus = std::move(value); }
-    inline BatchDescribeModelPackageSummary& WithModelPackageStatus(const ModelPackageStatus& value) { SetModelPackageStatus(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelPackageStatus(ModelPackageStatus&& value) { SetModelPackageStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The approval status of the model.</p>
+   */
+  inline ModelApprovalStatus GetModelApprovalStatus() const { return m_modelApprovalStatus; }
+  inline bool ModelApprovalStatusHasBeenSet() const { return m_modelApprovalStatusHasBeenSet; }
+  inline void SetModelApprovalStatus(ModelApprovalStatus value) {
+    m_modelApprovalStatusHasBeenSet = true;
+    m_modelApprovalStatus = value;
+  }
+  inline BatchDescribeModelPackageSummary& WithModelApprovalStatus(ModelApprovalStatus value) {
+    SetModelApprovalStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The approval status of the model.</p>
-     */
-    inline const ModelApprovalStatus& GetModelApprovalStatus() const{ return m_modelApprovalStatus; }
-    inline bool ModelApprovalStatusHasBeenSet() const { return m_modelApprovalStatusHasBeenSet; }
-    inline void SetModelApprovalStatus(const ModelApprovalStatus& value) { m_modelApprovalStatusHasBeenSet = true; m_modelApprovalStatus = value; }
-    inline void SetModelApprovalStatus(ModelApprovalStatus&& value) { m_modelApprovalStatusHasBeenSet = true; m_modelApprovalStatus = std::move(value); }
-    inline BatchDescribeModelPackageSummary& WithModelApprovalStatus(const ModelApprovalStatus& value) { SetModelApprovalStatus(value); return *this;}
-    inline BatchDescribeModelPackageSummary& WithModelApprovalStatus(ModelApprovalStatus&& value) { SetModelApprovalStatus(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p> The package registration type of the model package summary. </p>
+   */
+  inline ModelPackageRegistrationType GetModelPackageRegistrationType() const { return m_modelPackageRegistrationType; }
+  inline bool ModelPackageRegistrationTypeHasBeenSet() const { return m_modelPackageRegistrationTypeHasBeenSet; }
+  inline void SetModelPackageRegistrationType(ModelPackageRegistrationType value) {
+    m_modelPackageRegistrationTypeHasBeenSet = true;
+    m_modelPackageRegistrationType = value;
+  }
+  inline BatchDescribeModelPackageSummary& WithModelPackageRegistrationType(ModelPackageRegistrationType value) {
+    SetModelPackageRegistrationType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_modelPackageGroupName;
 
-    Aws::String m_modelPackageGroupName;
-    bool m_modelPackageGroupNameHasBeenSet = false;
+  int m_modelPackageVersion{0};
 
-    int m_modelPackageVersion;
-    bool m_modelPackageVersionHasBeenSet = false;
+  Aws::String m_modelPackageArn;
 
-    Aws::String m_modelPackageArn;
-    bool m_modelPackageArnHasBeenSet = false;
+  Aws::String m_modelPackageDescription;
 
-    Aws::String m_modelPackageDescription;
-    bool m_modelPackageDescriptionHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  InferenceSpecification m_inferenceSpecification;
 
-    InferenceSpecification m_inferenceSpecification;
-    bool m_inferenceSpecificationHasBeenSet = false;
+  ModelPackageStatus m_modelPackageStatus{ModelPackageStatus::NOT_SET};
 
-    ModelPackageStatus m_modelPackageStatus;
-    bool m_modelPackageStatusHasBeenSet = false;
+  ModelApprovalStatus m_modelApprovalStatus{ModelApprovalStatus::NOT_SET};
 
-    ModelApprovalStatus m_modelApprovalStatus;
-    bool m_modelApprovalStatusHasBeenSet = false;
-  };
+  ModelPackageRegistrationType m_modelPackageRegistrationType{ModelPackageRegistrationType::NOT_SET};
+  bool m_modelPackageGroupNameHasBeenSet = false;
+  bool m_modelPackageVersionHasBeenSet = false;
+  bool m_modelPackageArnHasBeenSet = false;
+  bool m_modelPackageDescriptionHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_inferenceSpecificationHasBeenSet = false;
+  bool m_modelPackageStatusHasBeenSet = false;
+  bool m_modelApprovalStatusHasBeenSet = false;
+  bool m_modelPackageRegistrationTypeHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

@@ -4,75 +4,100 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
 
+/**
+ * <p>Contains details about the remote Amazon Web Services account that made the
+ * API call.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/RemoteAccountDetails">AWS
+ * API Reference</a></p>
+ */
+class RemoteAccountDetails {
+ public:
+  AWS_GUARDDUTY_API RemoteAccountDetails() = default;
+  AWS_GUARDDUTY_API RemoteAccountDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API RemoteAccountDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains details about the remote Amazon Web Services account that made the
-   * API call.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/RemoteAccountDetails">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Web Services account ID of the remote API caller.</p>
    */
-  class RemoteAccountDetails
-  {
-  public:
-    AWS_GUARDDUTY_API RemoteAccountDetails();
-    AWS_GUARDDUTY_API RemoteAccountDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API RemoteAccountDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  RemoteAccountDetails& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Details on whether the Amazon Web Services account of the remote API caller
+   * is related to your GuardDuty environment. If this value is <code>True</code> the
+   * API caller is affiliated to your account in some way. If it is
+   * <code>False</code> the API caller is from outside your environment.</p>
+   */
+  inline bool GetAffiliated() const { return m_affiliated; }
+  inline bool AffiliatedHasBeenSet() const { return m_affiliatedHasBeenSet; }
+  inline void SetAffiliated(bool value) {
+    m_affiliatedHasBeenSet = true;
+    m_affiliated = value;
+  }
+  inline RemoteAccountDetails& WithAffiliated(bool value) {
+    SetAffiliated(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID of the remote API caller.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline RemoteAccountDetails& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline RemoteAccountDetails& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline RemoteAccountDetails& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If the remote account belongs to an Amazon Web Services service, this field
+   * indicates which service the remote account belongs to.</p>
+   */
+  inline const Aws::String& GetAwsServiceName() const { return m_awsServiceName; }
+  inline bool AwsServiceNameHasBeenSet() const { return m_awsServiceNameHasBeenSet; }
+  template <typename AwsServiceNameT = Aws::String>
+  void SetAwsServiceName(AwsServiceNameT&& value) {
+    m_awsServiceNameHasBeenSet = true;
+    m_awsServiceName = std::forward<AwsServiceNameT>(value);
+  }
+  template <typename AwsServiceNameT = Aws::String>
+  RemoteAccountDetails& WithAwsServiceName(AwsServiceNameT&& value) {
+    SetAwsServiceName(std::forward<AwsServiceNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
-    ///@{
-    /**
-     * <p>Details on whether the Amazon Web Services account of the remote API caller
-     * is related to your GuardDuty environment. If this value is <code>True</code> the
-     * API caller is affiliated to your account in some way. If it is
-     * <code>False</code> the API caller is from outside your environment.</p>
-     */
-    inline bool GetAffiliated() const{ return m_affiliated; }
-    inline bool AffiliatedHasBeenSet() const { return m_affiliatedHasBeenSet; }
-    inline void SetAffiliated(bool value) { m_affiliatedHasBeenSet = true; m_affiliated = value; }
-    inline RemoteAccountDetails& WithAffiliated(bool value) { SetAffiliated(value); return *this;}
-    ///@}
-  private:
+  bool m_affiliated{false};
 
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
+  Aws::String m_awsServiceName;
+  bool m_accountIdHasBeenSet = false;
+  bool m_affiliatedHasBeenSet = false;
+  bool m_awsServiceNameHasBeenSet = false;
+};
 
-    bool m_affiliated;
-    bool m_affiliatedHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

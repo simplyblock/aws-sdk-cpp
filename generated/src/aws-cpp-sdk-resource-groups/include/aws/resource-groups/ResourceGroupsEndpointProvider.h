@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
 
-#include <aws/resource-groups/ResourceGroupsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ResourceGroups
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ResourceGroups {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ResourceGroupsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using ResourceGroupsEndpointProviderBase =
     EndpointProviderBase<ResourceGroupsClientConfiguration, ResourceGroupsBuiltInParameters, ResourceGroupsClientContextParameters>;
 
 using ResourceGroupsDefaultEpProviderBase =
-    DefaultEndpointProvider<ResourceGroupsClientConfiguration, ResourceGroupsBuiltInParameters, ResourceGroupsClientContextParameters>;
+    BDDEndpointProvider<ResourceGroupsClientConfiguration, ResourceGroupsBuiltInParameters, ResourceGroupsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_RESOURCEGROUPS_API ResourceGroupsEndpointProvider : public ResourceGroupsDefaultEpProviderBase
-{
-public:
-    using ResourceGroupsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_RESOURCEGROUPS_API ResourceGroupsEndpointProvider : public ResourceGroupsDefaultEpProviderBase {
+ public:
+  using ResourceGroupsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ResourceGroupsEndpointProvider()
-      : ResourceGroupsDefaultEpProviderBase(Aws::ResourceGroups::ResourceGroupsEndpointRules::GetRulesBlob(), Aws::ResourceGroups::ResourceGroupsEndpointRules::RulesBlobSize)
-    {}
+  ResourceGroupsEndpointProvider();
 
-    ~ResourceGroupsEndpointProvider()
-    {
-    }
+  ~ResourceGroupsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ResourceGroups
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ResourceGroups
+}  // namespace Aws

@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/PushNotificationTemplateResponse.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
-  class GetPushTemplateResult
-  {
-  public:
-    AWS_PINPOINT_API GetPushTemplateResult();
-    AWS_PINPOINT_API GetPushTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINT_API GetPushTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
+class GetPushTemplateResult {
+ public:
+  AWS_PINPOINT_API GetPushTemplateResult() = default;
+  AWS_PINPOINT_API GetPushTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINT_API GetPushTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const PushNotificationTemplateResponse& GetPushNotificationTemplateResponse() const{ return m_pushNotificationTemplateResponse; }
-    inline void SetPushNotificationTemplateResponse(const PushNotificationTemplateResponse& value) { m_pushNotificationTemplateResponse = value; }
-    inline void SetPushNotificationTemplateResponse(PushNotificationTemplateResponse&& value) { m_pushNotificationTemplateResponse = std::move(value); }
-    inline GetPushTemplateResult& WithPushNotificationTemplateResponse(const PushNotificationTemplateResponse& value) { SetPushNotificationTemplateResponse(value); return *this;}
-    inline GetPushTemplateResult& WithPushNotificationTemplateResponse(PushNotificationTemplateResponse&& value) { SetPushNotificationTemplateResponse(std::move(value)); return *this;}
-    ///@}
+  inline const PushNotificationTemplateResponse& GetPushNotificationTemplateResponse() const { return m_pushNotificationTemplateResponse; }
+  template <typename PushNotificationTemplateResponseT = PushNotificationTemplateResponse>
+  void SetPushNotificationTemplateResponse(PushNotificationTemplateResponseT&& value) {
+    m_pushNotificationTemplateResponseHasBeenSet = true;
+    m_pushNotificationTemplateResponse = std::forward<PushNotificationTemplateResponseT>(value);
+  }
+  template <typename PushNotificationTemplateResponseT = PushNotificationTemplateResponse>
+  GetPushTemplateResult& WithPushNotificationTemplateResponse(PushNotificationTemplateResponseT&& value) {
+    SetPushNotificationTemplateResponse(std::forward<PushNotificationTemplateResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetPushTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetPushTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetPushTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    PushNotificationTemplateResponse m_pushNotificationTemplateResponse;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetPushTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  PushNotificationTemplateResponse m_pushNotificationTemplateResponse;
 
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_pushNotificationTemplateResponseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

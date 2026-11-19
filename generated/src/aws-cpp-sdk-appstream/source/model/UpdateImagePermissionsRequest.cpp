@@ -4,54 +4,53 @@
  */
 
 #include <aws/appstream/model/UpdateImagePermissionsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateImagePermissionsRequest::UpdateImagePermissionsRequest() : 
-    m_nameHasBeenSet(false),
-    m_sharedAccountIdHasBeenSet(false),
-    m_imagePermissionsHasBeenSet(false)
-{
+Aws::String UpdateImagePermissionsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sharedAccountIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_imagePermissionsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_sharedAccountIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SharedAccountId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sharedAccountId.c_str()));
+  }
+
+  if (m_imagePermissionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ImagePermissions"));
+    m_imagePermissions.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateImagePermissionsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_sharedAccountIdHasBeenSet)
-  {
-   payload.WithString("SharedAccountId", m_sharedAccountId);
-
-  }
-
-  if(m_imagePermissionsHasBeenSet)
-  {
-   payload.WithObject("ImagePermissions", m_imagePermissions.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateImagePermissionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateImagePermissionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.UpdateImagePermissions"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

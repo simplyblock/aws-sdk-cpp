@@ -4,139 +4,158 @@
  */
 
 #pragma once
-#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
+#include <aws/kinesisanalyticsv2/model/ApplicationMode.h>
 #include <aws/kinesisanalyticsv2/model/ApplicationStatus.h>
 #include <aws/kinesisanalyticsv2/model/RuntimeEnvironment.h>
-#include <aws/kinesisanalyticsv2/model/ApplicationMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace KinesisAnalyticsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisAnalyticsV2 {
+namespace Model {
 
+/**
+ * <p>Provides application summary information, including the application Amazon
+ * Resource Name (ARN), name, and status.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/ApplicationSummary">AWS
+ * API Reference</a></p>
+ */
+class ApplicationSummary {
+ public:
+  AWS_KINESISANALYTICSV2_API ApplicationSummary() = default;
+  AWS_KINESISANALYTICSV2_API ApplicationSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API ApplicationSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides application summary information, including the application Amazon
-   * Resource Name (ARN), name, and status.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/ApplicationSummary">AWS
-   * API Reference</a></p>
+   * <p>The name of the application.</p>
    */
-  class ApplicationSummary
-  {
-  public:
-    AWS_KINESISANALYTICSV2_API ApplicationSummary();
-    AWS_KINESISANALYTICSV2_API ApplicationSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API ApplicationSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetApplicationName() const { return m_applicationName; }
+  inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
+  template <typename ApplicationNameT = Aws::String>
+  void SetApplicationName(ApplicationNameT&& value) {
+    m_applicationNameHasBeenSet = true;
+    m_applicationName = std::forward<ApplicationNameT>(value);
+  }
+  template <typename ApplicationNameT = Aws::String>
+  ApplicationSummary& WithApplicationName(ApplicationNameT&& value) {
+    SetApplicationName(std::forward<ApplicationNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the application.</p>
+   */
+  inline const Aws::String& GetApplicationARN() const { return m_applicationARN; }
+  inline bool ApplicationARNHasBeenSet() const { return m_applicationARNHasBeenSet; }
+  template <typename ApplicationARNT = Aws::String>
+  void SetApplicationARN(ApplicationARNT&& value) {
+    m_applicationARNHasBeenSet = true;
+    m_applicationARN = std::forward<ApplicationARNT>(value);
+  }
+  template <typename ApplicationARNT = Aws::String>
+  ApplicationSummary& WithApplicationARN(ApplicationARNT&& value) {
+    SetApplicationARN(std::forward<ApplicationARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the application.</p>
-     */
-    inline const Aws::String& GetApplicationName() const{ return m_applicationName; }
-    inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
-    inline void SetApplicationName(const Aws::String& value) { m_applicationNameHasBeenSet = true; m_applicationName = value; }
-    inline void SetApplicationName(Aws::String&& value) { m_applicationNameHasBeenSet = true; m_applicationName = std::move(value); }
-    inline void SetApplicationName(const char* value) { m_applicationNameHasBeenSet = true; m_applicationName.assign(value); }
-    inline ApplicationSummary& WithApplicationName(const Aws::String& value) { SetApplicationName(value); return *this;}
-    inline ApplicationSummary& WithApplicationName(Aws::String&& value) { SetApplicationName(std::move(value)); return *this;}
-    inline ApplicationSummary& WithApplicationName(const char* value) { SetApplicationName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the application.</p>
+   */
+  inline ApplicationStatus GetApplicationStatus() const { return m_applicationStatus; }
+  inline bool ApplicationStatusHasBeenSet() const { return m_applicationStatusHasBeenSet; }
+  inline void SetApplicationStatus(ApplicationStatus value) {
+    m_applicationStatusHasBeenSet = true;
+    m_applicationStatus = value;
+  }
+  inline ApplicationSummary& WithApplicationStatus(ApplicationStatus value) {
+    SetApplicationStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the application.</p>
-     */
-    inline const Aws::String& GetApplicationARN() const{ return m_applicationARN; }
-    inline bool ApplicationARNHasBeenSet() const { return m_applicationARNHasBeenSet; }
-    inline void SetApplicationARN(const Aws::String& value) { m_applicationARNHasBeenSet = true; m_applicationARN = value; }
-    inline void SetApplicationARN(Aws::String&& value) { m_applicationARNHasBeenSet = true; m_applicationARN = std::move(value); }
-    inline void SetApplicationARN(const char* value) { m_applicationARNHasBeenSet = true; m_applicationARN.assign(value); }
-    inline ApplicationSummary& WithApplicationARN(const Aws::String& value) { SetApplicationARN(value); return *this;}
-    inline ApplicationSummary& WithApplicationARN(Aws::String&& value) { SetApplicationARN(std::move(value)); return *this;}
-    inline ApplicationSummary& WithApplicationARN(const char* value) { SetApplicationARN(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides the current application version.</p>
+   */
+  inline long long GetApplicationVersionId() const { return m_applicationVersionId; }
+  inline bool ApplicationVersionIdHasBeenSet() const { return m_applicationVersionIdHasBeenSet; }
+  inline void SetApplicationVersionId(long long value) {
+    m_applicationVersionIdHasBeenSet = true;
+    m_applicationVersionId = value;
+  }
+  inline ApplicationSummary& WithApplicationVersionId(long long value) {
+    SetApplicationVersionId(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the application.</p>
-     */
-    inline const ApplicationStatus& GetApplicationStatus() const{ return m_applicationStatus; }
-    inline bool ApplicationStatusHasBeenSet() const { return m_applicationStatusHasBeenSet; }
-    inline void SetApplicationStatus(const ApplicationStatus& value) { m_applicationStatusHasBeenSet = true; m_applicationStatus = value; }
-    inline void SetApplicationStatus(ApplicationStatus&& value) { m_applicationStatusHasBeenSet = true; m_applicationStatus = std::move(value); }
-    inline ApplicationSummary& WithApplicationStatus(const ApplicationStatus& value) { SetApplicationStatus(value); return *this;}
-    inline ApplicationSummary& WithApplicationStatus(ApplicationStatus&& value) { SetApplicationStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The runtime environment for the application.</p>
+   */
+  inline RuntimeEnvironment GetRuntimeEnvironment() const { return m_runtimeEnvironment; }
+  inline bool RuntimeEnvironmentHasBeenSet() const { return m_runtimeEnvironmentHasBeenSet; }
+  inline void SetRuntimeEnvironment(RuntimeEnvironment value) {
+    m_runtimeEnvironmentHasBeenSet = true;
+    m_runtimeEnvironment = value;
+  }
+  inline ApplicationSummary& WithRuntimeEnvironment(RuntimeEnvironment value) {
+    SetRuntimeEnvironment(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides the current application version.</p>
-     */
-    inline long long GetApplicationVersionId() const{ return m_applicationVersionId; }
-    inline bool ApplicationVersionIdHasBeenSet() const { return m_applicationVersionIdHasBeenSet; }
-    inline void SetApplicationVersionId(long long value) { m_applicationVersionIdHasBeenSet = true; m_applicationVersionId = value; }
-    inline ApplicationSummary& WithApplicationVersionId(long long value) { SetApplicationVersionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>For a Managed Service for Apache Flink application, the mode is
+   * <code>STREAMING</code>. For a Managed Service for Apache Flink Studio notebook,
+   * it is <code>INTERACTIVE</code>.</p>
+   */
+  inline ApplicationMode GetApplicationMode() const { return m_applicationMode; }
+  inline bool ApplicationModeHasBeenSet() const { return m_applicationModeHasBeenSet; }
+  inline void SetApplicationMode(ApplicationMode value) {
+    m_applicationModeHasBeenSet = true;
+    m_applicationMode = value;
+  }
+  inline ApplicationSummary& WithApplicationMode(ApplicationMode value) {
+    SetApplicationMode(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationName;
 
-    ///@{
-    /**
-     * <p>The runtime environment for the application.</p>
-     */
-    inline const RuntimeEnvironment& GetRuntimeEnvironment() const{ return m_runtimeEnvironment; }
-    inline bool RuntimeEnvironmentHasBeenSet() const { return m_runtimeEnvironmentHasBeenSet; }
-    inline void SetRuntimeEnvironment(const RuntimeEnvironment& value) { m_runtimeEnvironmentHasBeenSet = true; m_runtimeEnvironment = value; }
-    inline void SetRuntimeEnvironment(RuntimeEnvironment&& value) { m_runtimeEnvironmentHasBeenSet = true; m_runtimeEnvironment = std::move(value); }
-    inline ApplicationSummary& WithRuntimeEnvironment(const RuntimeEnvironment& value) { SetRuntimeEnvironment(value); return *this;}
-    inline ApplicationSummary& WithRuntimeEnvironment(RuntimeEnvironment&& value) { SetRuntimeEnvironment(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_applicationARN;
 
-    ///@{
-    /**
-     * <p>For a Managed Service for Apache Flink application, the mode is
-     * <code>STREAMING</code>. For a Managed Service for Apache Flink Studio notebook,
-     * it is <code>INTERACTIVE</code>.</p>
-     */
-    inline const ApplicationMode& GetApplicationMode() const{ return m_applicationMode; }
-    inline bool ApplicationModeHasBeenSet() const { return m_applicationModeHasBeenSet; }
-    inline void SetApplicationMode(const ApplicationMode& value) { m_applicationModeHasBeenSet = true; m_applicationMode = value; }
-    inline void SetApplicationMode(ApplicationMode&& value) { m_applicationModeHasBeenSet = true; m_applicationMode = std::move(value); }
-    inline ApplicationSummary& WithApplicationMode(const ApplicationMode& value) { SetApplicationMode(value); return *this;}
-    inline ApplicationSummary& WithApplicationMode(ApplicationMode&& value) { SetApplicationMode(std::move(value)); return *this;}
-    ///@}
-  private:
+  ApplicationStatus m_applicationStatus{ApplicationStatus::NOT_SET};
 
-    Aws::String m_applicationName;
-    bool m_applicationNameHasBeenSet = false;
+  long long m_applicationVersionId{0};
 
-    Aws::String m_applicationARN;
-    bool m_applicationARNHasBeenSet = false;
+  RuntimeEnvironment m_runtimeEnvironment{RuntimeEnvironment::NOT_SET};
 
-    ApplicationStatus m_applicationStatus;
-    bool m_applicationStatusHasBeenSet = false;
+  ApplicationMode m_applicationMode{ApplicationMode::NOT_SET};
+  bool m_applicationNameHasBeenSet = false;
+  bool m_applicationARNHasBeenSet = false;
+  bool m_applicationStatusHasBeenSet = false;
+  bool m_applicationVersionIdHasBeenSet = false;
+  bool m_runtimeEnvironmentHasBeenSet = false;
+  bool m_applicationModeHasBeenSet = false;
+};
 
-    long long m_applicationVersionId;
-    bool m_applicationVersionIdHasBeenSet = false;
-
-    RuntimeEnvironment m_runtimeEnvironment;
-    bool m_runtimeEnvironmentHasBeenSet = false;
-
-    ApplicationMode m_applicationMode;
-    bool m_applicationModeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace KinesisAnalyticsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisAnalyticsV2
+}  // namespace Aws

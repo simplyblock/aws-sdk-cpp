@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-FlowCompletionEvent::FlowCompletionEvent() : 
-    m_completionReason(FlowCompletionReason::NOT_SET),
-    m_completionReasonHasBeenSet(false)
-{
-}
+FlowCompletionEvent::FlowCompletionEvent(JsonView jsonValue) { *this = jsonValue; }
 
-FlowCompletionEvent::FlowCompletionEvent(JsonView jsonValue)
-  : FlowCompletionEvent()
-{
-  *this = jsonValue;
-}
-
-FlowCompletionEvent& FlowCompletionEvent::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("completionReason"))
-  {
+FlowCompletionEvent& FlowCompletionEvent::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("completionReason")) {
     m_completionReason = FlowCompletionReasonMapper::GetFlowCompletionReasonForName(jsonValue.GetString("completionReason"));
-
     m_completionReasonHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue FlowCompletionEvent::Jsonize() const
-{
+JsonValue FlowCompletionEvent::Jsonize() const {
   JsonValue payload;
 
-  if(m_completionReasonHasBeenSet)
-  {
-   payload.WithString("completionReason", FlowCompletionReasonMapper::GetNameForFlowCompletionReason(m_completionReason));
+  if (m_completionReasonHasBeenSet) {
+    payload.WithString("completionReason", FlowCompletionReasonMapper::GetNameForFlowCompletionReason(m_completionReason));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

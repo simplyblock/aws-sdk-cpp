@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/Device.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class CreateDeviceResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API CreateDeviceResult();
-    AWS_NETWORKMANAGER_API CreateDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API CreateDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class CreateDeviceResult {
+ public:
+  AWS_NETWORKMANAGER_API CreateDeviceResult() = default;
+  AWS_NETWORKMANAGER_API CreateDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API CreateDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the device.</p>
+   */
+  inline const Device& GetDevice() const { return m_device; }
+  template <typename DeviceT = Device>
+  void SetDevice(DeviceT&& value) {
+    m_deviceHasBeenSet = true;
+    m_device = std::forward<DeviceT>(value);
+  }
+  template <typename DeviceT = Device>
+  CreateDeviceResult& WithDevice(DeviceT&& value) {
+    SetDevice(std::forward<DeviceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the device.</p>
-     */
-    inline const Device& GetDevice() const{ return m_device; }
-    inline void SetDevice(const Device& value) { m_device = value; }
-    inline void SetDevice(Device&& value) { m_device = std::move(value); }
-    inline CreateDeviceResult& WithDevice(const Device& value) { SetDevice(value); return *this;}
-    inline CreateDeviceResult& WithDevice(Device&& value) { SetDevice(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDeviceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDeviceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDeviceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDeviceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Device m_device;
+ private:
+  Device m_device;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deviceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

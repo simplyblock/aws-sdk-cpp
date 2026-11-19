@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteCustomModelRequest::DeleteCustomModelRequest() : 
-    m_modelIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteCustomModelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteCustomModelRequest::SerializePayload() const { return {}; }

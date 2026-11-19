@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-workspaces "C++ SDK for the AWS workspaces service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-workspaces "C++ SDK for Amazon WorkSpaces" aws-cpp-sdk-core)
 
 file(GLOB AWS_WORKSPACES_HEADERS
     "include/aws/workspaces/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_WORKSPACES_HEADERS
 
 file(GLOB AWS_WORKSPACES_MODEL_HEADERS
     "include/aws/workspaces/model/*.h"
+)
+
+file(GLOB AWS_WORKSPACES_INTERNAL_HEADERS
+    "include/aws/workspaces/internal/*.h"
 )
 
 file(GLOB AWS_WORKSPACES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_WORKSPACES_MODEL_SOURCE
 
 file(GLOB WORKSPACES_UNIFIED_HEADERS
     ${AWS_WORKSPACES_HEADERS}
+    ${AWS_WORKSPACES_INTERNAL_HEADERS}
     ${AWS_WORKSPACES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\workspaces" FILES ${AWS_WORKSPACES_HEADERS})
+        source_group("Header Files\\aws\\workspaces\\internal" FILES ${AWS_WORKSPACES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\workspaces\\model" FILES ${AWS_WORKSPACES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_WORKSPACES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_WORKSPACES_MODEL_SOURCE})

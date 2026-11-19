@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/codeguru-reviewer/CodeGuruReviewer_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/codeguru-reviewer/CodeGuruReviewerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CodeGuruReviewer
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CodeGuruReviewer {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CodeGuruReviewerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CodeGuruReviewerEndpointProviderBase =
     EndpointProviderBase<CodeGuruReviewerClientConfiguration, CodeGuruReviewerBuiltInParameters, CodeGuruReviewerClientContextParameters>;
 
 using CodeGuruReviewerDefaultEpProviderBase =
-    DefaultEndpointProvider<CodeGuruReviewerClientConfiguration, CodeGuruReviewerBuiltInParameters, CodeGuruReviewerClientContextParameters>;
+    BDDEndpointProvider<CodeGuruReviewerClientConfiguration, CodeGuruReviewerBuiltInParameters, CodeGuruReviewerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CODEGURUREVIEWER_API CodeGuruReviewerEndpointProvider : public CodeGuruReviewerDefaultEpProviderBase
-{
-public:
-    using CodeGuruReviewerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CODEGURUREVIEWER_API CodeGuruReviewerEndpointProvider : public CodeGuruReviewerDefaultEpProviderBase {
+ public:
+  using CodeGuruReviewerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CodeGuruReviewerEndpointProvider()
-      : CodeGuruReviewerDefaultEpProviderBase(Aws::CodeGuruReviewer::CodeGuruReviewerEndpointRules::GetRulesBlob(), Aws::CodeGuruReviewer::CodeGuruReviewerEndpointRules::RulesBlobSize)
-    {}
+  CodeGuruReviewerEndpointProvider();
 
-    ~CodeGuruReviewerEndpointProvider()
-    {
-    }
+  ~CodeGuruReviewerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CodeGuruReviewer
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CodeGuruReviewer
+}  // namespace Aws

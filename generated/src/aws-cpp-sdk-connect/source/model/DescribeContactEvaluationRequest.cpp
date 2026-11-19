@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeContactEvaluationRequest::DescribeContactEvaluationRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_evaluationIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeContactEvaluationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeContactEvaluationRequest::SerializePayload() const { return {}; }

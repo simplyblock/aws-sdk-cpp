@@ -5,59 +5,84 @@
 
 #pragma once
 #include <aws/connect-contact-lens/ConnectContactLens_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/connect-contact-lens/model/PointOfInterest.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ConnectContactLens
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectContactLens {
+namespace Model {
 
+/**
+ * <p>Provides information about the category rule that was matched.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-contact-lens-2020-08-21/CategoryDetails">AWS
+ * API Reference</a></p>
+ */
+class CategoryDetails {
+ public:
+  AWS_CONNECTCONTACTLENS_API CategoryDetails() = default;
+  AWS_CONNECTCONTACTLENS_API CategoryDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCONTACTLENS_API CategoryDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCONTACTLENS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides information about the category rule that was matched.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-contact-lens-2020-08-21/CategoryDetails">AWS
-   * API Reference</a></p>
+   * <p>The section of audio where the category rule was detected.</p>
    */
-  class CategoryDetails
-  {
-  public:
-    AWS_CONNECTCONTACTLENS_API CategoryDetails();
-    AWS_CONNECTCONTACTLENS_API CategoryDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCONTACTLENS_API CategoryDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCONTACTLENS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<PointOfInterest>& GetPointsOfInterest() const { return m_pointsOfInterest; }
+  inline bool PointsOfInterestHasBeenSet() const { return m_pointsOfInterestHasBeenSet; }
+  template <typename PointsOfInterestT = Aws::Vector<PointOfInterest>>
+  void SetPointsOfInterest(PointsOfInterestT&& value) {
+    m_pointsOfInterestHasBeenSet = true;
+    m_pointsOfInterest = std::forward<PointsOfInterestT>(value);
+  }
+  template <typename PointsOfInterestT = Aws::Vector<PointOfInterest>>
+  CategoryDetails& WithPointsOfInterest(PointsOfInterestT&& value) {
+    SetPointsOfInterest(std::forward<PointsOfInterestT>(value));
+    return *this;
+  }
+  template <typename PointsOfInterestT = PointOfInterest>
+  CategoryDetails& AddPointsOfInterest(PointsOfInterestT&& value) {
+    m_pointsOfInterestHasBeenSet = true;
+    m_pointsOfInterest.emplace_back(std::forward<PointsOfInterestT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of the rule that created the matched category.</p>
+   */
+  inline const Aws::String& GetRuleId() const { return m_ruleId; }
+  inline bool RuleIdHasBeenSet() const { return m_ruleIdHasBeenSet; }
+  template <typename RuleIdT = Aws::String>
+  void SetRuleId(RuleIdT&& value) {
+    m_ruleIdHasBeenSet = true;
+    m_ruleId = std::forward<RuleIdT>(value);
+  }
+  template <typename RuleIdT = Aws::String>
+  CategoryDetails& WithRuleId(RuleIdT&& value) {
+    SetRuleId(std::forward<RuleIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<PointOfInterest> m_pointsOfInterest;
 
-    ///@{
-    /**
-     * <p>The section of audio where the category rule was detected.</p>
-     */
-    inline const Aws::Vector<PointOfInterest>& GetPointsOfInterest() const{ return m_pointsOfInterest; }
-    inline bool PointsOfInterestHasBeenSet() const { return m_pointsOfInterestHasBeenSet; }
-    inline void SetPointsOfInterest(const Aws::Vector<PointOfInterest>& value) { m_pointsOfInterestHasBeenSet = true; m_pointsOfInterest = value; }
-    inline void SetPointsOfInterest(Aws::Vector<PointOfInterest>&& value) { m_pointsOfInterestHasBeenSet = true; m_pointsOfInterest = std::move(value); }
-    inline CategoryDetails& WithPointsOfInterest(const Aws::Vector<PointOfInterest>& value) { SetPointsOfInterest(value); return *this;}
-    inline CategoryDetails& WithPointsOfInterest(Aws::Vector<PointOfInterest>&& value) { SetPointsOfInterest(std::move(value)); return *this;}
-    inline CategoryDetails& AddPointsOfInterest(const PointOfInterest& value) { m_pointsOfInterestHasBeenSet = true; m_pointsOfInterest.push_back(value); return *this; }
-    inline CategoryDetails& AddPointsOfInterest(PointOfInterest&& value) { m_pointsOfInterestHasBeenSet = true; m_pointsOfInterest.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_ruleId;
+  bool m_pointsOfInterestHasBeenSet = false;
+  bool m_ruleIdHasBeenSet = false;
+};
 
-    Aws::Vector<PointOfInterest> m_pointsOfInterest;
-    bool m_pointsOfInterestHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectContactLens
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectContactLens
+}  // namespace Aws

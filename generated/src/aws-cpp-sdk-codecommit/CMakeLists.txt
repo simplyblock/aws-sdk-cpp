@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codecommit "C++ SDK for the AWS codecommit service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codecommit "C++ SDK for AWS CodeCommit" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODECOMMIT_HEADERS
     "include/aws/codecommit/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODECOMMIT_HEADERS
 
 file(GLOB AWS_CODECOMMIT_MODEL_HEADERS
     "include/aws/codecommit/model/*.h"
+)
+
+file(GLOB AWS_CODECOMMIT_INTERNAL_HEADERS
+    "include/aws/codecommit/internal/*.h"
 )
 
 file(GLOB AWS_CODECOMMIT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODECOMMIT_MODEL_SOURCE
 
 file(GLOB CODECOMMIT_UNIFIED_HEADERS
     ${AWS_CODECOMMIT_HEADERS}
+    ${AWS_CODECOMMIT_INTERNAL_HEADERS}
     ${AWS_CODECOMMIT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codecommit" FILES ${AWS_CODECOMMIT_HEADERS})
+        source_group("Header Files\\aws\\codecommit\\internal" FILES ${AWS_CODECOMMIT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codecommit\\model" FILES ${AWS_CODECOMMIT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODECOMMIT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODECOMMIT_MODEL_SOURCE})

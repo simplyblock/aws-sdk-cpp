@@ -4,170 +4,223 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/lexv2-models/model/ExportResourceSpecification.h>
-#include <aws/lexv2-models/model/ImportExportFileFormat.h>
-#include <aws/lexv2-models/model/ExportStatus.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+#include <aws/lexv2-models/model/ExportResourceSpecification.h>
+#include <aws/lexv2-models/model/ExportStatus.h>
+#include <aws/lexv2-models/model/ImportExportFileFormat.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LexModelsV2
-{
-namespace Model
-{
-  class DescribeExportResult
-  {
-  public:
-    AWS_LEXMODELSV2_API DescribeExportResult();
-    AWS_LEXMODELSV2_API DescribeExportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LEXMODELSV2_API DescribeExportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LexModelsV2 {
+namespace Model {
+class DescribeExportResult {
+ public:
+  AWS_LEXMODELSV2_API DescribeExportResult() = default;
+  AWS_LEXMODELSV2_API DescribeExportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LEXMODELSV2_API DescribeExportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the described export.</p>
+   */
+  inline const Aws::String& GetExportId() const { return m_exportId; }
+  template <typename ExportIdT = Aws::String>
+  void SetExportId(ExportIdT&& value) {
+    m_exportIdHasBeenSet = true;
+    m_exportId = std::forward<ExportIdT>(value);
+  }
+  template <typename ExportIdT = Aws::String>
+  DescribeExportResult& WithExportId(ExportIdT&& value) {
+    SetExportId(std::forward<ExportIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the described export.</p>
-     */
-    inline const Aws::String& GetExportId() const{ return m_exportId; }
-    inline void SetExportId(const Aws::String& value) { m_exportId = value; }
-    inline void SetExportId(Aws::String&& value) { m_exportId = std::move(value); }
-    inline void SetExportId(const char* value) { m_exportId.assign(value); }
-    inline DescribeExportResult& WithExportId(const Aws::String& value) { SetExportId(value); return *this;}
-    inline DescribeExportResult& WithExportId(Aws::String&& value) { SetExportId(std::move(value)); return *this;}
-    inline DescribeExportResult& WithExportId(const char* value) { SetExportId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The bot, bot ID, and optional locale ID of the exported bot or bot
+   * locale.</p>
+   */
+  inline const ExportResourceSpecification& GetResourceSpecification() const { return m_resourceSpecification; }
+  template <typename ResourceSpecificationT = ExportResourceSpecification>
+  void SetResourceSpecification(ResourceSpecificationT&& value) {
+    m_resourceSpecificationHasBeenSet = true;
+    m_resourceSpecification = std::forward<ResourceSpecificationT>(value);
+  }
+  template <typename ResourceSpecificationT = ExportResourceSpecification>
+  DescribeExportResult& WithResourceSpecification(ResourceSpecificationT&& value) {
+    SetResourceSpecification(std::forward<ResourceSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The bot, bot ID, and optional locale ID of the exported bot or bot
-     * locale.</p>
-     */
-    inline const ExportResourceSpecification& GetResourceSpecification() const{ return m_resourceSpecification; }
-    inline void SetResourceSpecification(const ExportResourceSpecification& value) { m_resourceSpecification = value; }
-    inline void SetResourceSpecification(ExportResourceSpecification&& value) { m_resourceSpecification = std::move(value); }
-    inline DescribeExportResult& WithResourceSpecification(const ExportResourceSpecification& value) { SetResourceSpecification(value); return *this;}
-    inline DescribeExportResult& WithResourceSpecification(ExportResourceSpecification&& value) { SetResourceSpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The file format used in the files that describe the resource. </p>
+   */
+  inline ImportExportFileFormat GetFileFormat() const { return m_fileFormat; }
+  inline void SetFileFormat(ImportExportFileFormat value) {
+    m_fileFormatHasBeenSet = true;
+    m_fileFormat = value;
+  }
+  inline DescribeExportResult& WithFileFormat(ImportExportFileFormat value) {
+    SetFileFormat(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The file format used in the files that describe the resource. </p>
-     */
-    inline const ImportExportFileFormat& GetFileFormat() const{ return m_fileFormat; }
-    inline void SetFileFormat(const ImportExportFileFormat& value) { m_fileFormat = value; }
-    inline void SetFileFormat(ImportExportFileFormat&& value) { m_fileFormat = std::move(value); }
-    inline DescribeExportResult& WithFileFormat(const ImportExportFileFormat& value) { SetFileFormat(value); return *this;}
-    inline DescribeExportResult& WithFileFormat(ImportExportFileFormat&& value) { SetFileFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the export. When the status is <code>Complete</code> the export
+   * archive file is available for download.</p>
+   */
+  inline ExportStatus GetExportStatus() const { return m_exportStatus; }
+  inline void SetExportStatus(ExportStatus value) {
+    m_exportStatusHasBeenSet = true;
+    m_exportStatus = value;
+  }
+  inline DescribeExportResult& WithExportStatus(ExportStatus value) {
+    SetExportStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the export. When the status is <code>Complete</code> the export
-     * archive file is available for download.</p>
-     */
-    inline const ExportStatus& GetExportStatus() const{ return m_exportStatus; }
-    inline void SetExportStatus(const ExportStatus& value) { m_exportStatus = value; }
-    inline void SetExportStatus(ExportStatus&& value) { m_exportStatus = std::move(value); }
-    inline DescribeExportResult& WithExportStatus(const ExportStatus& value) { SetExportStatus(value); return *this;}
-    inline DescribeExportResult& WithExportStatus(ExportStatus&& value) { SetExportStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If the <code>exportStatus</code> is failed, contains one or more reasons why
+   * the export could not be completed.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetFailureReasons() const { return m_failureReasons; }
+  template <typename FailureReasonsT = Aws::Vector<Aws::String>>
+  void SetFailureReasons(FailureReasonsT&& value) {
+    m_failureReasonsHasBeenSet = true;
+    m_failureReasons = std::forward<FailureReasonsT>(value);
+  }
+  template <typename FailureReasonsT = Aws::Vector<Aws::String>>
+  DescribeExportResult& WithFailureReasons(FailureReasonsT&& value) {
+    SetFailureReasons(std::forward<FailureReasonsT>(value));
+    return *this;
+  }
+  template <typename FailureReasonsT = Aws::String>
+  DescribeExportResult& AddFailureReasons(FailureReasonsT&& value) {
+    m_failureReasonsHasBeenSet = true;
+    m_failureReasons.emplace_back(std::forward<FailureReasonsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the <code>exportStatus</code> is failed, contains one or more reasons why
-     * the export could not be completed.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetFailureReasons() const{ return m_failureReasons; }
-    inline void SetFailureReasons(const Aws::Vector<Aws::String>& value) { m_failureReasons = value; }
-    inline void SetFailureReasons(Aws::Vector<Aws::String>&& value) { m_failureReasons = std::move(value); }
-    inline DescribeExportResult& WithFailureReasons(const Aws::Vector<Aws::String>& value) { SetFailureReasons(value); return *this;}
-    inline DescribeExportResult& WithFailureReasons(Aws::Vector<Aws::String>&& value) { SetFailureReasons(std::move(value)); return *this;}
-    inline DescribeExportResult& AddFailureReasons(const Aws::String& value) { m_failureReasons.push_back(value); return *this; }
-    inline DescribeExportResult& AddFailureReasons(Aws::String&& value) { m_failureReasons.push_back(std::move(value)); return *this; }
-    inline DescribeExportResult& AddFailureReasons(const char* value) { m_failureReasons.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A pre-signed S3 URL that points to the bot or bot locale archive. The URL is
+   * only available for 5 minutes after calling the <code>DescribeExport</code>
+   * operation.</p>
+   */
+  inline const Aws::String& GetDownloadUrl() const { return m_downloadUrl; }
+  template <typename DownloadUrlT = Aws::String>
+  void SetDownloadUrl(DownloadUrlT&& value) {
+    m_downloadUrlHasBeenSet = true;
+    m_downloadUrl = std::forward<DownloadUrlT>(value);
+  }
+  template <typename DownloadUrlT = Aws::String>
+  DescribeExportResult& WithDownloadUrl(DownloadUrlT&& value) {
+    SetDownloadUrl(std::forward<DownloadUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A pre-signed S3 URL that points to the bot or bot locale archive. The URL is
-     * only available for 5 minutes after calling the <code>DescribeExport</code>
-     * operation.</p>
-     */
-    inline const Aws::String& GetDownloadUrl() const{ return m_downloadUrl; }
-    inline void SetDownloadUrl(const Aws::String& value) { m_downloadUrl = value; }
-    inline void SetDownloadUrl(Aws::String&& value) { m_downloadUrl = std::move(value); }
-    inline void SetDownloadUrl(const char* value) { m_downloadUrl.assign(value); }
-    inline DescribeExportResult& WithDownloadUrl(const Aws::String& value) { SetDownloadUrl(value); return *this;}
-    inline DescribeExportResult& WithDownloadUrl(Aws::String&& value) { SetDownloadUrl(std::move(value)); return *this;}
-    inline DescribeExportResult& WithDownloadUrl(const char* value) { SetDownloadUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the export was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDateTime() const { return m_creationDateTime; }
+  template <typename CreationDateTimeT = Aws::Utils::DateTime>
+  void SetCreationDateTime(CreationDateTimeT&& value) {
+    m_creationDateTimeHasBeenSet = true;
+    m_creationDateTime = std::forward<CreationDateTimeT>(value);
+  }
+  template <typename CreationDateTimeT = Aws::Utils::DateTime>
+  DescribeExportResult& WithCreationDateTime(CreationDateTimeT&& value) {
+    SetCreationDateTime(std::forward<CreationDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the export was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDateTime() const{ return m_creationDateTime; }
-    inline void SetCreationDateTime(const Aws::Utils::DateTime& value) { m_creationDateTime = value; }
-    inline void SetCreationDateTime(Aws::Utils::DateTime&& value) { m_creationDateTime = std::move(value); }
-    inline DescribeExportResult& WithCreationDateTime(const Aws::Utils::DateTime& value) { SetCreationDateTime(value); return *this;}
-    inline DescribeExportResult& WithCreationDateTime(Aws::Utils::DateTime&& value) { SetCreationDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The last date and time that the export was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedDateTime() const { return m_lastUpdatedDateTime; }
+  template <typename LastUpdatedDateTimeT = Aws::Utils::DateTime>
+  void SetLastUpdatedDateTime(LastUpdatedDateTimeT&& value) {
+    m_lastUpdatedDateTimeHasBeenSet = true;
+    m_lastUpdatedDateTime = std::forward<LastUpdatedDateTimeT>(value);
+  }
+  template <typename LastUpdatedDateTimeT = Aws::Utils::DateTime>
+  DescribeExportResult& WithLastUpdatedDateTime(LastUpdatedDateTimeT&& value) {
+    SetLastUpdatedDateTime(std::forward<LastUpdatedDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The last date and time that the export was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedDateTime() const{ return m_lastUpdatedDateTime; }
-    inline void SetLastUpdatedDateTime(const Aws::Utils::DateTime& value) { m_lastUpdatedDateTime = value; }
-    inline void SetLastUpdatedDateTime(Aws::Utils::DateTime&& value) { m_lastUpdatedDateTime = std::move(value); }
-    inline DescribeExportResult& WithLastUpdatedDateTime(const Aws::Utils::DateTime& value) { SetLastUpdatedDateTime(value); return *this;}
-    inline DescribeExportResult& WithLastUpdatedDateTime(Aws::Utils::DateTime&& value) { SetLastUpdatedDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeExportResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeExportResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeExportResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeExportResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_exportId;
+ private:
+  Aws::String m_exportId;
 
-    ExportResourceSpecification m_resourceSpecification;
+  ExportResourceSpecification m_resourceSpecification;
 
-    ImportExportFileFormat m_fileFormat;
+  ImportExportFileFormat m_fileFormat{ImportExportFileFormat::NOT_SET};
 
-    ExportStatus m_exportStatus;
+  ExportStatus m_exportStatus{ExportStatus::NOT_SET};
 
-    Aws::Vector<Aws::String> m_failureReasons;
+  Aws::Vector<Aws::String> m_failureReasons;
 
-    Aws::String m_downloadUrl;
+  Aws::String m_downloadUrl;
 
-    Aws::Utils::DateTime m_creationDateTime;
+  Aws::Utils::DateTime m_creationDateTime{};
 
-    Aws::Utils::DateTime m_lastUpdatedDateTime;
+  Aws::Utils::DateTime m_lastUpdatedDateTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_exportIdHasBeenSet = false;
+  bool m_resourceSpecificationHasBeenSet = false;
+  bool m_fileFormatHasBeenSet = false;
+  bool m_exportStatusHasBeenSet = false;
+  bool m_failureReasonsHasBeenSet = false;
+  bool m_downloadUrlHasBeenSet = false;
+  bool m_creationDateTimeHasBeenSet = false;
+  bool m_lastUpdatedDateTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

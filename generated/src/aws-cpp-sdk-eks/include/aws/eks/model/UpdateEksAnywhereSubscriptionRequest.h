@@ -4,86 +4,95 @@
  */
 
 #pragma once
-#include <aws/eks/EKS_EXPORTS.h>
-#include <aws/eks/EKSRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/eks/EKSRequest.h>
+#include <aws/eks/EKS_EXPORTS.h>
 
-namespace Aws
-{
-namespace EKS
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace EKS {
+namespace Model {
+
+/**
+ */
+class UpdateEksAnywhereSubscriptionRequest : public EKSRequest {
+ public:
+  AWS_EKS_API UpdateEksAnywhereSubscriptionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateEksAnywhereSubscription"; }
+
+  AWS_EKS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID of the subscription.</p>
    */
-  class UpdateEksAnywhereSubscriptionRequest : public EKSRequest
-  {
-  public:
-    AWS_EKS_API UpdateEksAnywhereSubscriptionRequest();
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateEksAnywhereSubscriptionRequest& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateEksAnywhereSubscription"; }
+  ///@{
+  /**
+   * <p>A boolean indicating whether or not to automatically renew the
+   * subscription.</p>
+   */
+  inline bool GetAutoRenew() const { return m_autoRenew; }
+  inline bool AutoRenewHasBeenSet() const { return m_autoRenewHasBeenSet; }
+  inline void SetAutoRenew(bool value) {
+    m_autoRenewHasBeenSet = true;
+    m_autoRenew = value;
+  }
+  inline UpdateEksAnywhereSubscriptionRequest& WithAutoRenew(bool value) {
+    SetAutoRenew(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EKS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier to ensure the idempotency of the
+   * request.</p>
+   */
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  UpdateEksAnywhereSubscriptionRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
+  bool m_autoRenew{false};
 
-    ///@{
-    /**
-     * <p>The ID of the subscription.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline UpdateEksAnywhereSubscriptionRequest& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateEksAnywhereSubscriptionRequest& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateEksAnywhereSubscriptionRequest& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_idHasBeenSet = false;
+  bool m_autoRenewHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+};
 
-    ///@{
-    /**
-     * <p>A boolean indicating whether or not to automatically renew the
-     * subscription.</p>
-     */
-    inline bool GetAutoRenew() const{ return m_autoRenew; }
-    inline bool AutoRenewHasBeenSet() const { return m_autoRenewHasBeenSet; }
-    inline void SetAutoRenew(bool value) { m_autoRenewHasBeenSet = true; m_autoRenew = value; }
-    inline UpdateEksAnywhereSubscriptionRequest& WithAutoRenew(bool value) { SetAutoRenew(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier to ensure the idempotency of the
-     * request.</p>
-     */
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline UpdateEksAnywhereSubscriptionRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline UpdateEksAnywhereSubscriptionRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline UpdateEksAnywhereSubscriptionRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    bool m_autoRenew;
-    bool m_autoRenewHasBeenSet = false;
-
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

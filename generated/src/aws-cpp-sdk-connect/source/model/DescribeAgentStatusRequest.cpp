@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeAgentStatusRequest::DescribeAgentStatusRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_agentStatusIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeAgentStatusRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeAgentStatusRequest::SerializePayload() const { return {}; }

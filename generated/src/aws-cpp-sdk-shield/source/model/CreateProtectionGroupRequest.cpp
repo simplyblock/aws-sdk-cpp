@@ -3,86 +3,86 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/shield/model/CreateProtectionGroupRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Shield::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateProtectionGroupRequest::CreateProtectionGroupRequest() : 
-    m_protectionGroupIdHasBeenSet(false),
-    m_aggregation(ProtectionGroupAggregation::NOT_SET),
-    m_aggregationHasBeenSet(false),
-    m_pattern(ProtectionGroupPattern::NOT_SET),
-    m_patternHasBeenSet(false),
-    m_resourceType(ProtectedResourceType::NOT_SET),
-    m_resourceTypeHasBeenSet(false),
-    m_membersHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateProtectionGroupRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_protectionGroupIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_aggregationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_patternHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resourceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_membersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_protectionGroupIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ProtectionGroupId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_protectionGroupId.c_str()));
+  }
+
+  if (m_aggregationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Aggregation"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ProtectionGroupAggregationMapper::GetNameForProtectionGroupAggregation(m_aggregation).c_str()));
+  }
+
+  if (m_patternHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Pattern"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ProtectionGroupPatternMapper::GetNameForProtectionGroupPattern(m_pattern).c_str()));
+  }
+
+  if (m_resourceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ProtectedResourceTypeMapper::GetNameForProtectedResourceType(m_resourceType).c_str()));
+  }
+
+  if (m_membersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Members"));
+    encoder.WriteArrayStart(m_members.size());
+    for (const auto& item_0 : m_members) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateProtectionGroupRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_protectionGroupIdHasBeenSet)
-  {
-   payload.WithString("ProtectionGroupId", m_protectionGroupId);
-
-  }
-
-  if(m_aggregationHasBeenSet)
-  {
-   payload.WithString("Aggregation", ProtectionGroupAggregationMapper::GetNameForProtectionGroupAggregation(m_aggregation));
-  }
-
-  if(m_patternHasBeenSet)
-  {
-   payload.WithString("Pattern", ProtectionGroupPatternMapper::GetNameForProtectionGroupPattern(m_pattern));
-  }
-
-  if(m_resourceTypeHasBeenSet)
-  {
-   payload.WithString("ResourceType", ProtectedResourceTypeMapper::GetNameForProtectedResourceType(m_resourceType));
-  }
-
-  if(m_membersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> membersJsonList(m_members.size());
-   for(unsigned membersIndex = 0; membersIndex < membersJsonList.GetLength(); ++membersIndex)
-   {
-     membersJsonList[membersIndex].AsString(m_members[membersIndex]);
-   }
-   payload.WithArray("Members", std::move(membersJsonList));
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateProtectionGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateProtectionGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSShield_20160616.CreateProtectionGroup"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

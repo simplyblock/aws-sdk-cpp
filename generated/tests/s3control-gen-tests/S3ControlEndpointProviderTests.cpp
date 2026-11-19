@@ -74,7 +74,7 @@ protected:
 };
 
 Aws::UniquePtrSafeDeleted<Aws::Vector<S3ControlEndpointProviderEndpointTestCase>> S3ControlEndpointProviderTests::TEST_CASES;
-const size_t S3ControlEndpointProviderTests::TEST_CASES_SZ = 112;
+const size_t S3ControlEndpointProviderTests::TEST_CASES_SZ = 134;
 
 Aws::Vector<S3ControlEndpointProviderEndpointTestCase> S3ControlEndpointProviderTests::getTestCase() {
 
@@ -164,10 +164,7 @@ Aws::Vector<S3ControlEndpointProviderEndpointTestCase> S3ControlEndpointProvider
     {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint"),
      EpParam("UseFIPS", true), EpParam("AccountId", "123456789012"), EpParam("Region", "cn-north-1"), EpParam("UseDualStack", false)}, // params
     {}, // tags
-    {{/*epUrl*/"https://s3-outposts-fips.cn-north-1.amazonaws.com.cn",
-       {/*authScheme*/}, 
-       {/*properties*/},
-       {/*headers*/{"x-amz-account-id", {"123456789012"}}, {"x-amz-outpost-id", {"op-01234567890123456"}}}}, {/*No error*/}} // expect
+    {{/*No endpoint expected*/}, /*error*/"Partition does not support FIPS"} // expect
   },
   /*TEST CASE 9*/
   {"govcloud with fips + arn region@us-gov-west-1", // documentation
@@ -905,24 +902,24 @@ Aws::Vector<S3ControlEndpointProviderEndpointTestCase> S3ControlEndpointProvider
   },
   /*TEST CASE 93*/
   {"ListRegionalBuckets + OutpostId with fips in CN.", // documentation
-    {EpParam("RequiresAccountId", true), EpParam("OutpostId", "op-123"), EpParam("UseFIPS", true), EpParam("AccountId", "0123456789012"), EpParam("Region", "cn-north-1"),
+    {EpParam("RequiresAccountId", true), EpParam("OutpostId", "op-123"), EpParam("UseFIPS", true), EpParam("AccountId", "012345678912"), EpParam("Region", "cn-north-1"),
      EpParam("UseDualStack", false)}, // params
     {}, // tags
     {{/*No endpoint expected*/}, /*error*/"Partition does not support FIPS"} // expect
   },
   /*TEST CASE 94*/
   {"ListRegionalBuckets + invalid OutpostId.", // documentation
-    {EpParam("RequiresAccountId", true), EpParam("OutpostId", "?outpost/invalid+"), EpParam("UseFIPS", false), EpParam("AccountId", "0123456789012"), EpParam("Region", "us-west-1"),
+    {EpParam("RequiresAccountId", true), EpParam("OutpostId", "?outpost/invalid+"), EpParam("UseFIPS", false), EpParam("AccountId", "012345678912"), EpParam("Region", "us-west-1"),
      EpParam("UseDualStack", false)}, // params
     {}, // tags
     {{/*No endpoint expected*/}, /*error*/"OutpostId must only contain a-z, A-Z, 0-9 and `-`."} // expect
   },
   /*TEST CASE 95*/
   {"bucket ARN with mismatched accountId", // documentation
-    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "0123456789012"), EpParam("Bucket", "arn:aws:s3-outposts:us-west-2:999999:outpost:op-01234567890123456:bucket:mybucket"),
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "012345678912"), EpParam("Bucket", "arn:aws:s3-outposts:us-west-2:999999:outpost:op-01234567890123456:bucket:mybucket"),
      EpParam("Region", "us-west-2"), EpParam("UseDualStack", false)}, // params
     {}, // tags
-    {{/*No endpoint expected*/}, /*error*/"Invalid ARN: the accountId specified in the ARN (`999999`) does not match the parameter (`0123456789012`)"} // expect
+    {{/*No endpoint expected*/}, /*error*/"Invalid ARN: the accountId specified in the ARN (`999999`) does not match the parameter (`012345678912`)"} // expect
   },
   /*TEST CASE 96*/
   {"OutpostId with invalid region", // documentation
@@ -1052,6 +1049,201 @@ Aws::Vector<S3ControlEndpointProviderEndpointTestCase> S3ControlEndpointProvider
     {EpParam("UseFIPS", false), EpParam("Endpoint", "https://10.0.1.12:433"), EpParam("Bucket", "bucketName"), EpParam("Region", "snow"), EpParam("UseDualStack", true)}, // params
     {}, // tags
     {{/*No endpoint expected*/}, /*error*/"S3 Snow does not support DualStack"} // expect
+  },
+  /*TEST CASE 112*/
+  {"Tagging on express bucket routed to s3express-control", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 113*/
+  {"Tagging on express ap routed to s3express-control", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:accesspoint/crachlintest--use1-az4--xa-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 114*/
+  {"Tagging on express bucket routed to s3express-control FIPS when FIPS enabled", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", true),
+     EpParam("AccountId", "871317572157"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control-fips.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 115*/
+  {"Tagging on express bucket cn routed to s3express-control china endpoint", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws-cn:s3express:cn-north-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Region", "cn-north-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.cn-north-1.amazonaws.com.cn",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 116*/
+  {"Tagging on express bucket cn routed to s3express-control china endpoint with FIPS", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws-cn:s3express:cn-north-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", true),
+     EpParam("AccountId", "871317572157"), EpParam("Region", "cn-north-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Partition does not support FIPS"} // expect
+  },
+  /*TEST CASE 117*/
+  {"Tagging on express bucket with custom endpoint routed to custom endpoint", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://my-endpoint.express-control.s3.aws.dev",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 118*/
+  {"Tagging on express access point with custom endpoint routed to custom endpoint", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:accesspoint/crachlintest--use1-az4--xa-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://my-endpoint.express-control.s3.aws.dev",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 119*/
+  {"Tagging on express bucket with dualstack and custom endpoint fails", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("ResourceArn", "arn:aws:s3express:us-east-1:871317572157:bucket/crachlintest--use1-az4--x-s3"), EpParam("UseFIPS", false),
+     EpParam("AccountId", "871317572157"), EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", true)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Invalid Configuration: DualStack and custom endpoint are not supported"} // expect
+  },
+  /*TEST CASE 120*/
+  {"Access Point APIs on express bucket routed to s3express-control", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 121*/
+  {"Access Point APIs on express bucket routed to s3express-control for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"), EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "us-east-1"),
+     EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 122*/
+  {"Access Point APIs on express bucket routed to s3express-control for FIPS", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", true), EpParam("AccountId", "871317572157"),
+     EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control-fips.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 123*/
+  {"Access Point APIs on express bucket routed to s3express-control for FIPS for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", true), EpParam("AccountId", "871317572157"), EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "us-east-1"),
+     EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control-fips.us-east-1.amazonaws.com",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 124*/
+  {"Access Point APIs on express bucket routed to s3express-control for china region", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Region", "cn-north-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.cn-north-1.amazonaws.com.cn",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 125*/
+  {"Access Point APIs on express bucket routed to s3express-control for china region for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"), EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "cn-north-1"),
+     EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://s3express-control.cn-north-1.amazonaws.com.cn",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 126*/
+  {"Error when Access Point APIs on express bucket routed to s3express-control for china and FIPS", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", true), EpParam("AccountId", "871317572157"), EpParam("Region", "cn-north-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Partition does not support FIPS"} // expect
+  },
+  /*TEST CASE 127*/
+  {"Error Access Point APIs on express bucket routed to s3express-control invalid zone", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint-garbage-zone--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Unrecognized S3Express Access Point name format."} // expect
+  },
+  /*TEST CASE 128*/
+  {"Access Point APIs on express bucket routed to custom endpoint if provided", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://my-endpoint.express-control.s3.aws.dev",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 129*/
+  {"Access Point APIs on express bucket routed to custom endpoint if provided for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"), EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"),
+     EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "us-east-1"), EpParam("UseDualStack", false)}, // params
+    {}, // tags
+    {{/*epUrl*/"https://my-endpoint.express-control.s3.aws.dev",
+       {/*authScheme*/}, 
+       {/*properties*/},
+       {/*headers*/}}, {/*No error*/}} // expect
+  },
+  /*TEST CASE 130*/
+  {"Error on Access Point APIs on express bucket for dual stack", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Region", "us-east-1"), EpParam("UseDualStack", true)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"S3Express does not support Dual-stack."} // expect
+  },
+  /*TEST CASE 131*/
+  {"Error Access Point APIs on express bucket for dual stack for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"), EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "us-east-1"),
+     EpParam("UseDualStack", true)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"S3Express does not support Dual-stack."} // expect
+  },
+  /*TEST CASE 132*/
+  {"Error on Access Point APIs on express bucket for custom endpoint and dual stack", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("AccessPointName", "myaccesspoint--abcd-ab1--xa-s3"), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"),
+     EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"), EpParam("Region", "us-east-1"), EpParam("UseDualStack", true)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Invalid Configuration: DualStack and custom endpoint are not supported"} // expect
+  },
+  /*TEST CASE 133*/
+  {"Error Access Point APIs on express bucket for custom endpoint and dual stack for List", // documentation
+    {EpParam("RequiresAccountId", true), EpParam("UseFIPS", false), EpParam("AccountId", "871317572157"), EpParam("Endpoint", "https://my-endpoint.express-control.s3.aws.dev"),
+     EpParam("UseS3ExpressControlEndpoint", true), EpParam("Region", "us-east-1"), EpParam("UseDualStack", true)}, // params
+    {}, // tags
+    {{/*No endpoint expected*/}, /*error*/"Invalid Configuration: DualStack and custom endpoint are not supported"} // expect
   }
   };
   return test_cases;

@@ -52,6 +52,10 @@ namespace Aws
              */
             AWS_CORE_API std::shared_ptr<Hash> CreateCRC32CImplementation();
             /**
+             * Create a CRC32 Hash provider
+             */
+            AWS_CORE_API std::shared_ptr<Hash> CreateCRC64Implementation();
+            /**
              * Create a Sha1 Hash provider
              */
             AWS_CORE_API std::shared_ptr<Hash> CreateSha1Implementation();
@@ -63,6 +67,10 @@ namespace Aws
              * Create a Sha256 HMACHash provider
              */
             AWS_CORE_API std::shared_ptr<HMAC> CreateSha256HMACImplementation();
+            /**
+             * Create a Sha512 Hash provider
+             */
+            AWS_CORE_API std::shared_ptr<Hash> CreateSha512Implementation();
 
             /**
              * Create AES in CBC mode off of a 256 bit key. Auto Generates a 16 byte secure random IV
@@ -129,6 +137,11 @@ namespace Aws
              * Set the global factory for CRC32 Hash providers
              */
             AWS_CORE_API void SetCRC32Factory(const std::shared_ptr<HashFactory>& factory);
+            /**
+             * Set the global factory for CRC32 Hash providers
+             */
+            AWS_CORE_API void
+            SetCRC64Factory(const std::shared_ptr<HashFactory> &factory);
             /**
              * Set the global factory for CRC32C Hash providers
              */

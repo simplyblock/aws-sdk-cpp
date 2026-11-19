@@ -12,16 +12,4 @@ using namespace Aws::ConnectCampaigns::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteCampaignRequest::DeleteCampaignRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteCampaignRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteCampaignRequest::SerializePayload() const { return {}; }

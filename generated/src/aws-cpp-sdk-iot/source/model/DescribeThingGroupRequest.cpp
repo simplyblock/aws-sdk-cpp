@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iot/model/DescribeThingGroupRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iot/model/DescribeThingGroupRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoT::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeThingGroupRequest::DescribeThingGroupRequest() : 
-    m_thingGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String DescribeThingGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeThingGroupRequest::SerializePayload() const { return {}; }

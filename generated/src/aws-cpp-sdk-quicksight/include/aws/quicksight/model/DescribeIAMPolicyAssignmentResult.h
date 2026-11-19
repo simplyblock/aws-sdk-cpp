@@ -4,74 +4,90 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/IAMPolicyAssignment.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeIAMPolicyAssignmentResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult();
-    AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeIAMPolicyAssignmentResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult() = default;
+  AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeIAMPolicyAssignmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information describing the IAM policy assignment.</p>
+   */
+  inline const IAMPolicyAssignment& GetIAMPolicyAssignment() const { return m_iAMPolicyAssignment; }
+  template <typename IAMPolicyAssignmentT = IAMPolicyAssignment>
+  void SetIAMPolicyAssignment(IAMPolicyAssignmentT&& value) {
+    m_iAMPolicyAssignmentHasBeenSet = true;
+    m_iAMPolicyAssignment = std::forward<IAMPolicyAssignmentT>(value);
+  }
+  template <typename IAMPolicyAssignmentT = IAMPolicyAssignment>
+  DescribeIAMPolicyAssignmentResult& WithIAMPolicyAssignment(IAMPolicyAssignmentT&& value) {
+    SetIAMPolicyAssignment(std::forward<IAMPolicyAssignmentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information describing the IAM policy assignment.</p>
-     */
-    inline const IAMPolicyAssignment& GetIAMPolicyAssignment() const{ return m_iAMPolicyAssignment; }
-    inline void SetIAMPolicyAssignment(const IAMPolicyAssignment& value) { m_iAMPolicyAssignment = value; }
-    inline void SetIAMPolicyAssignment(IAMPolicyAssignment&& value) { m_iAMPolicyAssignment = std::move(value); }
-    inline DescribeIAMPolicyAssignmentResult& WithIAMPolicyAssignment(const IAMPolicyAssignment& value) { SetIAMPolicyAssignment(value); return *this;}
-    inline DescribeIAMPolicyAssignmentResult& WithIAMPolicyAssignment(IAMPolicyAssignment&& value) { SetIAMPolicyAssignment(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeIAMPolicyAssignmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeIAMPolicyAssignmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeIAMPolicyAssignmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeIAMPolicyAssignmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeIAMPolicyAssignmentResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeIAMPolicyAssignmentResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    IAMPolicyAssignment m_iAMPolicyAssignment;
+ private:
+  IAMPolicyAssignment m_iAMPolicyAssignment;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_iAMPolicyAssignmentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

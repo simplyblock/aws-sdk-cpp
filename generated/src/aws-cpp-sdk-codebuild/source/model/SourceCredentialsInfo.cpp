@@ -4,98 +4,263 @@
  */
 
 #include <aws/codebuild/model/SourceCredentialsInfo.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeBuild {
+namespace Model {
 
-SourceCredentialsInfo::SourceCredentialsInfo() : 
-    m_arnHasBeenSet(false),
-    m_serverType(ServerType::NOT_SET),
-    m_serverTypeHasBeenSet(false),
-    m_authType(AuthType::NOT_SET),
-    m_authTypeHasBeenSet(false),
-    m_resourceHasBeenSet(false)
-{
-}
+SourceCredentialsInfo::SourceCredentialsInfo(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-SourceCredentialsInfo::SourceCredentialsInfo(JsonView jsonValue)
-  : SourceCredentialsInfo()
-{
-  *this = jsonValue;
-}
+SourceCredentialsInfo& SourceCredentialsInfo::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-SourceCredentialsInfo& SourceCredentialsInfo::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("arn"))
-  {
-    m_arn = jsonValue.GetString("arn");
+              if (initialKeyStr == "arn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_arn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_arn = ss.str();
+                  }
+                }
+                m_arnHasBeenSet = true;
+              }
 
-    m_arnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "serverType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_serverType =
+                      ServerTypeMapper::GetServerTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_serverTypeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("serverType"))
-  {
-    m_serverType = ServerTypeMapper::GetServerTypeForName(jsonValue.GetString("serverType"));
+              else if (initialKeyStr == "authType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_authType =
+                      AuthTypeMapper::GetAuthTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_authTypeHasBeenSet = true;
+              }
 
-    m_serverTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "resource") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_resource = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_resource = ss.str();
+                  }
+                }
+                m_resourceHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("SourceCredentialsInfo", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("authType"))
-  {
-    m_authType = AuthTypeMapper::GetAuthTypeForName(jsonValue.GetString("authType"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_authTypeHasBeenSet = true;
-  }
+            if (initialKeyStr == "arn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_arn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_arn = ss.str();
+                }
+              }
+              m_arnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("resource"))
-  {
-    m_resource = jsonValue.GetString("resource");
+            else if (initialKeyStr == "serverType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_serverType =
+                    ServerTypeMapper::GetServerTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_serverTypeHasBeenSet = true;
+            }
 
-    m_resourceHasBeenSet = true;
+            else if (initialKeyStr == "authType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_authType =
+                    AuthTypeMapper::GetAuthTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_authTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "resource") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_resource = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_resource = ss.str();
+                }
+              }
+              m_resourceHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue SourceCredentialsInfo::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("arn", m_arn);
-
+void SourceCredentialsInfo::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_arnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_serverTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_authTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resourceHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_serverTypeHasBeenSet)
-  {
-   payload.WithString("serverType", ServerTypeMapper::GetNameForServerType(m_serverType));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_arnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("arn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_arn.c_str()));
   }
 
-  if(m_authTypeHasBeenSet)
-  {
-   payload.WithString("authType", AuthTypeMapper::GetNameForAuthType(m_authType));
+  if (m_serverTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("serverType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ServerTypeMapper::GetNameForServerType(m_serverType).c_str()));
   }
 
-  if(m_resourceHasBeenSet)
-  {
-   payload.WithString("resource", m_resource);
-
+  if (m_authTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("authType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(AuthTypeMapper::GetNameForAuthType(m_authType).c_str()));
   }
 
-  return payload;
+  if (m_resourceHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("resource"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resource.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteRestApiRequest::DeleteRestApiRequest() : 
-    m_restApiIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteRestApiRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteRestApiRequest::SerializePayload() const { return {}; }

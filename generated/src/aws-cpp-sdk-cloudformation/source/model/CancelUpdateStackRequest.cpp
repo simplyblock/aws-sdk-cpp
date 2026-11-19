@@ -10,23 +10,14 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-CancelUpdateStackRequest::CancelUpdateStackRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_clientRequestTokenHasBeenSet(false)
-{
-}
-
-Aws::String CancelUpdateStackRequest::SerializePayload() const
-{
+Aws::String CancelUpdateStackRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CancelUpdateStack&";
-  if(m_stackNameHasBeenSet)
-  {
+  if (m_stackNameHasBeenSet) {
     ss << "StackName=" << StringUtils::URLEncode(m_stackName.c_str()) << "&";
   }
 
-  if(m_clientRequestTokenHasBeenSet)
-  {
+  if (m_clientRequestTokenHasBeenSet) {
     ss << "ClientRequestToken=" << StringUtils::URLEncode(m_clientRequestToken.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String CancelUpdateStackRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CancelUpdateStackRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CancelUpdateStackRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

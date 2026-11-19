@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/MatchmakingRuleSet.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class DescribeMatchmakingRuleSetsResult
-  {
-  public:
-    AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult();
-    AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class DescribeMatchmakingRuleSetsResult {
+ public:
+  AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult() = default;
+  AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API DescribeMatchmakingRuleSetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A collection of requested matchmaking rule set objects. </p>
+   */
+  inline const Aws::Vector<MatchmakingRuleSet>& GetRuleSets() const { return m_ruleSets; }
+  template <typename RuleSetsT = Aws::Vector<MatchmakingRuleSet>>
+  void SetRuleSets(RuleSetsT&& value) {
+    m_ruleSetsHasBeenSet = true;
+    m_ruleSets = std::forward<RuleSetsT>(value);
+  }
+  template <typename RuleSetsT = Aws::Vector<MatchmakingRuleSet>>
+  DescribeMatchmakingRuleSetsResult& WithRuleSets(RuleSetsT&& value) {
+    SetRuleSets(std::forward<RuleSetsT>(value));
+    return *this;
+  }
+  template <typename RuleSetsT = MatchmakingRuleSet>
+  DescribeMatchmakingRuleSetsResult& AddRuleSets(RuleSetsT&& value) {
+    m_ruleSetsHasBeenSet = true;
+    m_ruleSets.emplace_back(std::forward<RuleSetsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A collection of requested matchmaking rule set objects. </p>
-     */
-    inline const Aws::Vector<MatchmakingRuleSet>& GetRuleSets() const{ return m_ruleSets; }
-    inline void SetRuleSets(const Aws::Vector<MatchmakingRuleSet>& value) { m_ruleSets = value; }
-    inline void SetRuleSets(Aws::Vector<MatchmakingRuleSet>&& value) { m_ruleSets = std::move(value); }
-    inline DescribeMatchmakingRuleSetsResult& WithRuleSets(const Aws::Vector<MatchmakingRuleSet>& value) { SetRuleSets(value); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& WithRuleSets(Aws::Vector<MatchmakingRuleSet>&& value) { SetRuleSets(std::move(value)); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& AddRuleSets(const MatchmakingRuleSet& value) { m_ruleSets.push_back(value); return *this; }
-    inline DescribeMatchmakingRuleSetsResult& AddRuleSets(MatchmakingRuleSet&& value) { m_ruleSets.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that indicates where to resume retrieving results on the next call to
+   * this operation. If no token is returned, these results represent the end of the
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeMatchmakingRuleSetsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that indicates where to resume retrieving results on the next call to
-     * this operation. If no token is returned, these results represent the end of the
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeMatchmakingRuleSetsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeMatchmakingRuleSetsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeMatchmakingRuleSetsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeMatchmakingRuleSetsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MatchmakingRuleSet> m_ruleSets;
+ private:
+  Aws::Vector<MatchmakingRuleSet> m_ruleSets;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ruleSetsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

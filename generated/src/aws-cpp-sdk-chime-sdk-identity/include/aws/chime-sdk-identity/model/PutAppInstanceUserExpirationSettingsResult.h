@@ -5,78 +5,94 @@
 
 #pragma once
 #include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/chime-sdk-identity/model/ExpirationSettings.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
-  class PutAppInstanceUserExpirationSettingsResult
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult();
-    AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKIdentity {
+namespace Model {
+class PutAppInstanceUserExpirationSettingsResult {
+ public:
+  AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult() = default;
+  AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKIDENTITY_API PutAppInstanceUserExpirationSettingsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the <code>AppInstanceUser</code>.</p>
+   */
+  inline const Aws::String& GetAppInstanceUserArn() const { return m_appInstanceUserArn; }
+  template <typename AppInstanceUserArnT = Aws::String>
+  void SetAppInstanceUserArn(AppInstanceUserArnT&& value) {
+    m_appInstanceUserArnHasBeenSet = true;
+    m_appInstanceUserArn = std::forward<AppInstanceUserArnT>(value);
+  }
+  template <typename AppInstanceUserArnT = Aws::String>
+  PutAppInstanceUserExpirationSettingsResult& WithAppInstanceUserArn(AppInstanceUserArnT&& value) {
+    SetAppInstanceUserArn(std::forward<AppInstanceUserArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the <code>AppInstanceUser</code>.</p>
-     */
-    inline const Aws::String& GetAppInstanceUserArn() const{ return m_appInstanceUserArn; }
-    inline void SetAppInstanceUserArn(const Aws::String& value) { m_appInstanceUserArn = value; }
-    inline void SetAppInstanceUserArn(Aws::String&& value) { m_appInstanceUserArn = std::move(value); }
-    inline void SetAppInstanceUserArn(const char* value) { m_appInstanceUserArn.assign(value); }
-    inline PutAppInstanceUserExpirationSettingsResult& WithAppInstanceUserArn(const Aws::String& value) { SetAppInstanceUserArn(value); return *this;}
-    inline PutAppInstanceUserExpirationSettingsResult& WithAppInstanceUserArn(Aws::String&& value) { SetAppInstanceUserArn(std::move(value)); return *this;}
-    inline PutAppInstanceUserExpirationSettingsResult& WithAppInstanceUserArn(const char* value) { SetAppInstanceUserArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Settings that control the interval after which an
+   * <code>AppInstanceUser</code> is automatically deleted.</p>
+   */
+  inline const ExpirationSettings& GetExpirationSettings() const { return m_expirationSettings; }
+  template <typename ExpirationSettingsT = ExpirationSettings>
+  void SetExpirationSettings(ExpirationSettingsT&& value) {
+    m_expirationSettingsHasBeenSet = true;
+    m_expirationSettings = std::forward<ExpirationSettingsT>(value);
+  }
+  template <typename ExpirationSettingsT = ExpirationSettings>
+  PutAppInstanceUserExpirationSettingsResult& WithExpirationSettings(ExpirationSettingsT&& value) {
+    SetExpirationSettings(std::forward<ExpirationSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Settings that control the interval after which an
-     * <code>AppInstanceUser</code> is automatically deleted.</p>
-     */
-    inline const ExpirationSettings& GetExpirationSettings() const{ return m_expirationSettings; }
-    inline void SetExpirationSettings(const ExpirationSettings& value) { m_expirationSettings = value; }
-    inline void SetExpirationSettings(ExpirationSettings&& value) { m_expirationSettings = std::move(value); }
-    inline PutAppInstanceUserExpirationSettingsResult& WithExpirationSettings(const ExpirationSettings& value) { SetExpirationSettings(value); return *this;}
-    inline PutAppInstanceUserExpirationSettingsResult& WithExpirationSettings(ExpirationSettings&& value) { SetExpirationSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutAppInstanceUserExpirationSettingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutAppInstanceUserExpirationSettingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutAppInstanceUserExpirationSettingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutAppInstanceUserExpirationSettingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appInstanceUserArn;
+ private:
+  Aws::String m_appInstanceUserArn;
 
-    ExpirationSettings m_expirationSettings;
+  ExpirationSettings m_expirationSettings;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appInstanceUserArnHasBeenSet = false;
+  bool m_expirationSettingsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

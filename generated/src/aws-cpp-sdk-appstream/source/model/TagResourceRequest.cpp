@@ -4,52 +4,49 @@
  */
 
 #include <aws/appstream/model/TagResourceRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-TagResourceRequest::TagResourceRequest() : 
-    m_resourceArnHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
+Aws::String TagResourceRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String TagResourceRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceArnHasBeenSet)
-  {
-   payload.WithString("ResourceArn", m_resourceArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_resourceArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteMapStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.first.c_str()));
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.second.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection TagResourceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TagResourceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.TagResource"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

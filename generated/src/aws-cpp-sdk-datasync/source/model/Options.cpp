@@ -3,254 +3,504 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/Options.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DataSync
-{
-namespace Model
-{
+namespace Aws {
+namespace DataSync {
+namespace Model {
 
-Options::Options() : 
-    m_verifyMode(VerifyMode::NOT_SET),
-    m_verifyModeHasBeenSet(false),
-    m_overwriteMode(OverwriteMode::NOT_SET),
-    m_overwriteModeHasBeenSet(false),
-    m_atime(Atime::NOT_SET),
-    m_atimeHasBeenSet(false),
-    m_mtime(Mtime::NOT_SET),
-    m_mtimeHasBeenSet(false),
-    m_uid(Uid::NOT_SET),
-    m_uidHasBeenSet(false),
-    m_gid(Gid::NOT_SET),
-    m_gidHasBeenSet(false),
-    m_preserveDeletedFiles(PreserveDeletedFiles::NOT_SET),
-    m_preserveDeletedFilesHasBeenSet(false),
-    m_preserveDevices(PreserveDevices::NOT_SET),
-    m_preserveDevicesHasBeenSet(false),
-    m_posixPermissions(PosixPermissions::NOT_SET),
-    m_posixPermissionsHasBeenSet(false),
-    m_bytesPerSecond(0),
-    m_bytesPerSecondHasBeenSet(false),
-    m_taskQueueing(TaskQueueing::NOT_SET),
-    m_taskQueueingHasBeenSet(false),
-    m_logLevel(LogLevel::NOT_SET),
-    m_logLevelHasBeenSet(false),
-    m_transferMode(TransferMode::NOT_SET),
-    m_transferModeHasBeenSet(false),
-    m_securityDescriptorCopyFlags(SmbSecurityDescriptorCopyFlags::NOT_SET),
-    m_securityDescriptorCopyFlagsHasBeenSet(false),
-    m_objectTags(ObjectTags::NOT_SET),
-    m_objectTagsHasBeenSet(false)
-{
-}
+Options::Options(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-Options::Options(JsonView jsonValue)
-  : Options()
-{
-  *this = jsonValue;
-}
+Options& Options::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-Options& Options::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("VerifyMode"))
-  {
-    m_verifyMode = VerifyModeMapper::GetVerifyModeForName(jsonValue.GetString("VerifyMode"));
+              if (initialKeyStr == "VerifyMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_verifyMode =
+                      VerifyModeMapper::GetVerifyModeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_verifyModeHasBeenSet = true;
+              }
 
-    m_verifyModeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "OverwriteMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_overwriteMode = OverwriteModeMapper::GetOverwriteModeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_overwriteModeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("OverwriteMode"))
-  {
-    m_overwriteMode = OverwriteModeMapper::GetOverwriteModeForName(jsonValue.GetString("OverwriteMode"));
+              else if (initialKeyStr == "Atime") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_atime = AtimeMapper::GetAtimeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_atimeHasBeenSet = true;
+              }
 
-    m_overwriteModeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Mtime") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_mtime = MtimeMapper::GetMtimeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_mtimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Atime"))
-  {
-    m_atime = AtimeMapper::GetAtimeForName(jsonValue.GetString("Atime"));
+              else if (initialKeyStr == "Uid") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_uid = UidMapper::GetUidForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_uidHasBeenSet = true;
+              }
 
-    m_atimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Gid") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_gid = GidMapper::GetGidForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_gidHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Mtime"))
-  {
-    m_mtime = MtimeMapper::GetMtimeForName(jsonValue.GetString("Mtime"));
+              else if (initialKeyStr == "PreserveDeletedFiles") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_preserveDeletedFiles = PreserveDeletedFilesMapper::GetPreserveDeletedFilesForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_preserveDeletedFilesHasBeenSet = true;
+              }
 
-    m_mtimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "PreserveDevices") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_preserveDevices = PreserveDevicesMapper::GetPreserveDevicesForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_preserveDevicesHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Uid"))
-  {
-    m_uid = UidMapper::GetUidForName(jsonValue.GetString("Uid"));
+              else if (initialKeyStr == "PosixPermissions") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_posixPermissions = PosixPermissionsMapper::GetPosixPermissionsForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_posixPermissionsHasBeenSet = true;
+              }
 
-    m_uidHasBeenSet = true;
-  }
+              else if (initialKeyStr == "BytesPerSecond") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_bytesPerSecond = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_bytesPerSecond = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_bytesPerSecondHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Gid"))
-  {
-    m_gid = GidMapper::GetGidForName(jsonValue.GetString("Gid"));
+              else if (initialKeyStr == "TaskQueueing") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_taskQueueing = TaskQueueingMapper::GetTaskQueueingForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_taskQueueingHasBeenSet = true;
+              }
 
-    m_gidHasBeenSet = true;
-  }
+              else if (initialKeyStr == "LogLevel") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_logLevel =
+                      LogLevelMapper::GetLogLevelForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_logLevelHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("PreserveDeletedFiles"))
-  {
-    m_preserveDeletedFiles = PreserveDeletedFilesMapper::GetPreserveDeletedFilesForName(jsonValue.GetString("PreserveDeletedFiles"));
+              else if (initialKeyStr == "TransferMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_transferMode = TransferModeMapper::GetTransferModeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_transferModeHasBeenSet = true;
+              }
 
-    m_preserveDeletedFilesHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SecurityDescriptorCopyFlags") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_securityDescriptorCopyFlags = SmbSecurityDescriptorCopyFlagsMapper::GetSmbSecurityDescriptorCopyFlagsForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_securityDescriptorCopyFlagsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("PreserveDevices"))
-  {
-    m_preserveDevices = PreserveDevicesMapper::GetPreserveDevicesForName(jsonValue.GetString("PreserveDevices"));
+              else if (initialKeyStr == "ObjectTags") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_objectTags =
+                      ObjectTagsMapper::GetObjectTagsForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_objectTagsHasBeenSet = true;
+              }
 
-    m_preserveDevicesHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ObjectMetadata") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_objectMetadata = ObjectMetadataMapper::GetObjectMetadataForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_objectMetadataHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("Options", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("PosixPermissions"))
-  {
-    m_posixPermissions = PosixPermissionsMapper::GetPosixPermissionsForName(jsonValue.GetString("PosixPermissions"));
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_posixPermissionsHasBeenSet = true;
-  }
+            if (initialKeyStr == "VerifyMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_verifyMode =
+                    VerifyModeMapper::GetVerifyModeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_verifyModeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("BytesPerSecond"))
-  {
-    m_bytesPerSecond = jsonValue.GetInt64("BytesPerSecond");
+            else if (initialKeyStr == "OverwriteMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_overwriteMode = OverwriteModeMapper::GetOverwriteModeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_overwriteModeHasBeenSet = true;
+            }
 
-    m_bytesPerSecondHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Atime") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_atime = AtimeMapper::GetAtimeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_atimeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("TaskQueueing"))
-  {
-    m_taskQueueing = TaskQueueingMapper::GetTaskQueueingForName(jsonValue.GetString("TaskQueueing"));
+            else if (initialKeyStr == "Mtime") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_mtime = MtimeMapper::GetMtimeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_mtimeHasBeenSet = true;
+            }
 
-    m_taskQueueingHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Uid") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_uid = UidMapper::GetUidForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_uidHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("LogLevel"))
-  {
-    m_logLevel = LogLevelMapper::GetLogLevelForName(jsonValue.GetString("LogLevel"));
+            else if (initialKeyStr == "Gid") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_gid = GidMapper::GetGidForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_gidHasBeenSet = true;
+            }
 
-    m_logLevelHasBeenSet = true;
-  }
+            else if (initialKeyStr == "PreserveDeletedFiles") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_preserveDeletedFiles = PreserveDeletedFilesMapper::GetPreserveDeletedFilesForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_preserveDeletedFilesHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("TransferMode"))
-  {
-    m_transferMode = TransferModeMapper::GetTransferModeForName(jsonValue.GetString("TransferMode"));
+            else if (initialKeyStr == "PreserveDevices") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_preserveDevices = PreserveDevicesMapper::GetPreserveDevicesForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_preserveDevicesHasBeenSet = true;
+            }
 
-    m_transferModeHasBeenSet = true;
-  }
+            else if (initialKeyStr == "PosixPermissions") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_posixPermissions = PosixPermissionsMapper::GetPosixPermissionsForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_posixPermissionsHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("SecurityDescriptorCopyFlags"))
-  {
-    m_securityDescriptorCopyFlags = SmbSecurityDescriptorCopyFlagsMapper::GetSmbSecurityDescriptorCopyFlagsForName(jsonValue.GetString("SecurityDescriptorCopyFlags"));
+            else if (initialKeyStr == "BytesPerSecond") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_bytesPerSecond = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_bytesPerSecond = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_bytesPerSecondHasBeenSet = true;
+            }
 
-    m_securityDescriptorCopyFlagsHasBeenSet = true;
-  }
+            else if (initialKeyStr == "TaskQueueing") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_taskQueueing = TaskQueueingMapper::GetTaskQueueingForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_taskQueueingHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("ObjectTags"))
-  {
-    m_objectTags = ObjectTagsMapper::GetObjectTagsForName(jsonValue.GetString("ObjectTags"));
+            else if (initialKeyStr == "LogLevel") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_logLevel =
+                    LogLevelMapper::GetLogLevelForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_logLevelHasBeenSet = true;
+            }
 
-    m_objectTagsHasBeenSet = true;
+            else if (initialKeyStr == "TransferMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_transferMode = TransferModeMapper::GetTransferModeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_transferModeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "SecurityDescriptorCopyFlags") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_securityDescriptorCopyFlags = SmbSecurityDescriptorCopyFlagsMapper::GetSmbSecurityDescriptorCopyFlagsForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_securityDescriptorCopyFlagsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ObjectTags") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_objectTags =
+                    ObjectTagsMapper::GetObjectTagsForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_objectTagsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ObjectMetadata") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_objectMetadata = ObjectMetadataMapper::GetObjectMetadataForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_objectMetadataHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue Options::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_verifyModeHasBeenSet)
-  {
-   payload.WithString("VerifyMode", VerifyModeMapper::GetNameForVerifyMode(m_verifyMode));
+void Options::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_verifyModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_overwriteModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_atimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_mtimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_uidHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gidHasBeenSet) {
+    mapSize++;
+  }
+  if (m_preserveDeletedFilesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_preserveDevicesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_posixPermissionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_bytesPerSecondHasBeenSet) {
+    mapSize++;
+  }
+  if (m_taskQueueingHasBeenSet) {
+    mapSize++;
+  }
+  if (m_logLevelHasBeenSet) {
+    mapSize++;
+  }
+  if (m_transferModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_securityDescriptorCopyFlagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_objectTagsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_objectMetadataHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_overwriteModeHasBeenSet)
-  {
-   payload.WithString("OverwriteMode", OverwriteModeMapper::GetNameForOverwriteMode(m_overwriteMode));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_verifyModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VerifyMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(VerifyModeMapper::GetNameForVerifyMode(m_verifyMode).c_str()));
   }
 
-  if(m_atimeHasBeenSet)
-  {
-   payload.WithString("Atime", AtimeMapper::GetNameForAtime(m_atime));
+  if (m_overwriteModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OverwriteMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(OverwriteModeMapper::GetNameForOverwriteMode(m_overwriteMode).c_str()));
   }
 
-  if(m_mtimeHasBeenSet)
-  {
-   payload.WithString("Mtime", MtimeMapper::GetNameForMtime(m_mtime));
+  if (m_atimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Atime"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(AtimeMapper::GetNameForAtime(m_atime).c_str()));
   }
 
-  if(m_uidHasBeenSet)
-  {
-   payload.WithString("Uid", UidMapper::GetNameForUid(m_uid));
+  if (m_mtimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Mtime"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(MtimeMapper::GetNameForMtime(m_mtime).c_str()));
   }
 
-  if(m_gidHasBeenSet)
-  {
-   payload.WithString("Gid", GidMapper::GetNameForGid(m_gid));
+  if (m_uidHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Uid"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(UidMapper::GetNameForUid(m_uid).c_str()));
   }
 
-  if(m_preserveDeletedFilesHasBeenSet)
-  {
-   payload.WithString("PreserveDeletedFiles", PreserveDeletedFilesMapper::GetNameForPreserveDeletedFiles(m_preserveDeletedFiles));
+  if (m_gidHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Gid"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(GidMapper::GetNameForGid(m_gid).c_str()));
   }
 
-  if(m_preserveDevicesHasBeenSet)
-  {
-   payload.WithString("PreserveDevices", PreserveDevicesMapper::GetNameForPreserveDevices(m_preserveDevices));
+  if (m_preserveDeletedFilesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PreserveDeletedFiles"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(PreserveDeletedFilesMapper::GetNameForPreserveDeletedFiles(m_preserveDeletedFiles).c_str()));
   }
 
-  if(m_posixPermissionsHasBeenSet)
-  {
-   payload.WithString("PosixPermissions", PosixPermissionsMapper::GetNameForPosixPermissions(m_posixPermissions));
+  if (m_preserveDevicesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PreserveDevices"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PreserveDevicesMapper::GetNameForPreserveDevices(m_preserveDevices).c_str()));
   }
 
-  if(m_bytesPerSecondHasBeenSet)
-  {
-   payload.WithInt64("BytesPerSecond", m_bytesPerSecond);
-
+  if (m_posixPermissionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PosixPermissions"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PosixPermissionsMapper::GetNameForPosixPermissions(m_posixPermissions).c_str()));
   }
 
-  if(m_taskQueueingHasBeenSet)
-  {
-   payload.WithString("TaskQueueing", TaskQueueingMapper::GetNameForTaskQueueing(m_taskQueueing));
+  if (m_bytesPerSecondHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BytesPerSecond"));
+    (m_bytesPerSecond >= 0) ? encoder.WriteUInt(m_bytesPerSecond) : encoder.WriteNegInt(m_bytesPerSecond);
   }
 
-  if(m_logLevelHasBeenSet)
-  {
-   payload.WithString("LogLevel", LogLevelMapper::GetNameForLogLevel(m_logLevel));
+  if (m_taskQueueingHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TaskQueueing"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TaskQueueingMapper::GetNameForTaskQueueing(m_taskQueueing).c_str()));
   }
 
-  if(m_transferModeHasBeenSet)
-  {
-   payload.WithString("TransferMode", TransferModeMapper::GetNameForTransferMode(m_transferMode));
+  if (m_logLevelHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LogLevel"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(LogLevelMapper::GetNameForLogLevel(m_logLevel).c_str()));
   }
 
-  if(m_securityDescriptorCopyFlagsHasBeenSet)
-  {
-   payload.WithString("SecurityDescriptorCopyFlags", SmbSecurityDescriptorCopyFlagsMapper::GetNameForSmbSecurityDescriptorCopyFlags(m_securityDescriptorCopyFlags));
+  if (m_transferModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TransferMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TransferModeMapper::GetNameForTransferMode(m_transferMode).c_str()));
   }
 
-  if(m_objectTagsHasBeenSet)
-  {
-   payload.WithString("ObjectTags", ObjectTagsMapper::GetNameForObjectTags(m_objectTags));
+  if (m_securityDescriptorCopyFlagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SecurityDescriptorCopyFlags"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(
+        SmbSecurityDescriptorCopyFlagsMapper::GetNameForSmbSecurityDescriptorCopyFlags(m_securityDescriptorCopyFlags).c_str()));
   }
 
-  return payload;
+  if (m_objectTagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ObjectTags"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ObjectTagsMapper::GetNameForObjectTags(m_objectTags).c_str()));
+  }
+
+  if (m_objectMetadataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ObjectMetadata"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ObjectMetadataMapper::GetNameForObjectMetadata(m_objectMetadata).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

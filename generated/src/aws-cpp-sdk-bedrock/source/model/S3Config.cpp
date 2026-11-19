@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Bedrock
-{
-namespace Model
-{
+namespace Aws {
+namespace Bedrock {
+namespace Model {
 
-S3Config::S3Config() : 
-    m_bucketNameHasBeenSet(false),
-    m_keyPrefixHasBeenSet(false)
-{
-}
+S3Config::S3Config(JsonView jsonValue) { *this = jsonValue; }
 
-S3Config::S3Config(JsonView jsonValue)
-  : S3Config()
-{
-  *this = jsonValue;
-}
-
-S3Config& S3Config::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("bucketName"))
-  {
+S3Config& S3Config::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("bucketName")) {
     m_bucketName = jsonValue.GetString("bucketName");
-
     m_bucketNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("keyPrefix"))
-  {
+  if (jsonValue.ValueExists("keyPrefix")) {
     m_keyPrefix = jsonValue.GetString("keyPrefix");
-
     m_keyPrefixHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue S3Config::Jsonize() const
-{
+JsonValue S3Config::Jsonize() const {
   JsonValue payload;
 
-  if(m_bucketNameHasBeenSet)
-  {
-   payload.WithString("bucketName", m_bucketName);
-
+  if (m_bucketNameHasBeenSet) {
+    payload.WithString("bucketName", m_bucketName);
   }
 
-  if(m_keyPrefixHasBeenSet)
-  {
-   payload.WithString("keyPrefix", m_keyPrefix);
-
+  if (m_keyPrefixHasBeenSet) {
+    payload.WithString("keyPrefix", m_keyPrefix);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

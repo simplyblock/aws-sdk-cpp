@@ -12,35 +12,16 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListSourceRepositoryBranchesRequest::ListSourceRepositoryBranchesRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_projectNameHasBeenSet(false),
-    m_sourceRepositoryNameHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String ListSourceRepositoryBranchesRequest::SerializePayload() const
-{
+Aws::String ListSourceRepositoryBranchesRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("maxResults", m_maxResults);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("maxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

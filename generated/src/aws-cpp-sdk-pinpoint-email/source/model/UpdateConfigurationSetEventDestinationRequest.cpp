@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pinpoint-email/model/UpdateConfigurationSetEventDestinationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pinpoint-email/model/UpdateConfigurationSetEventDestinationRequest.h>
 
 #include <utility>
 
@@ -12,26 +12,12 @@ using namespace Aws::PinpointEmail::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateConfigurationSetEventDestinationRequest::UpdateConfigurationSetEventDestinationRequest() : 
-    m_configurationSetNameHasBeenSet(false),
-    m_eventDestinationNameHasBeenSet(false),
-    m_eventDestinationHasBeenSet(false)
-{
-}
-
-Aws::String UpdateConfigurationSetEventDestinationRequest::SerializePayload() const
-{
+Aws::String UpdateConfigurationSetEventDestinationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_eventDestinationHasBeenSet)
-  {
-   payload.WithObject("EventDestination", m_eventDestination.Jsonize());
-
+  if (m_eventDestinationHasBeenSet) {
+    payload.WithObject("EventDestination", m_eventDestination.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -12,17 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConfigurationProfileRequest::GetConfigurationProfileRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_configurationProfileIdHasBeenSet(false)
-{
-}
-
-Aws::String GetConfigurationProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConfigurationProfileRequest::SerializePayload() const { return {}; }

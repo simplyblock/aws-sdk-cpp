@@ -3,65 +3,43 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/CreateCacheSubnetGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticache/model/CreateCacheSubnetGroupRequest.h>
 
 using namespace Aws::ElastiCache::Model;
 using namespace Aws::Utils;
 
-CreateCacheSubnetGroupRequest::CreateCacheSubnetGroupRequest() : 
-    m_cacheSubnetGroupNameHasBeenSet(false),
-    m_cacheSubnetGroupDescriptionHasBeenSet(false),
-    m_subnetIdsHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateCacheSubnetGroupRequest::SerializePayload() const
-{
+Aws::String CreateCacheSubnetGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateCacheSubnetGroup&";
-  if(m_cacheSubnetGroupNameHasBeenSet)
-  {
+  if (m_cacheSubnetGroupNameHasBeenSet) {
     ss << "CacheSubnetGroupName=" << StringUtils::URLEncode(m_cacheSubnetGroupName.c_str()) << "&";
   }
 
-  if(m_cacheSubnetGroupDescriptionHasBeenSet)
-  {
+  if (m_cacheSubnetGroupDescriptionHasBeenSet) {
     ss << "CacheSubnetGroupDescription=" << StringUtils::URLEncode(m_cacheSubnetGroupDescription.c_str()) << "&";
   }
 
-  if(m_subnetIdsHasBeenSet)
-  {
-    if (m_subnetIds.empty())
-    {
+  if (m_subnetIdsHasBeenSet) {
+    if (m_subnetIds.empty()) {
       ss << "SubnetIds=&";
-    }
-    else
-    {
+    } else {
       unsigned subnetIdsCount = 1;
-      for(auto& item : m_subnetIds)
-      {
-        ss << "SubnetIds.member." << subnetIdsCount << "="
-            << StringUtils::URLEncode(item.c_str()) << "&";
+      for (auto& item : m_subnetIds) {
+        ss << "SubnetIds.SubnetIdentifier." << subnetIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
         subnetIdsCount++;
       }
     }
   }
 
-  if(m_tagsHasBeenSet)
-  {
-    if (m_tags.empty())
-    {
+  if (m_tagsHasBeenSet) {
+    if (m_tags.empty()) {
       ss << "Tags=&";
-    }
-    else
-    {
+    } else {
       unsigned tagsCount = 1;
-      for(auto& item : m_tags)
-      {
-        item.OutputToStream(ss, "Tags.member.", tagsCount, "");
+      for (auto& item : m_tags) {
+        item.OutputToStream(ss, "Tags.Tag.", tagsCount, "");
         tagsCount++;
       }
     }
@@ -71,8 +49,4 @@ Aws::String CreateCacheSubnetGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CreateCacheSubnetGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateCacheSubnetGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

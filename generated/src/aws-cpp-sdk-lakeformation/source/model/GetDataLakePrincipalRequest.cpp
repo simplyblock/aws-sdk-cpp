@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lakeformation/model/GetDataLakePrincipalRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lakeformation/model/GetDataLakePrincipalRequest.h>
 
 #include <utility>
 
@@ -12,15 +12,4 @@ using namespace Aws::LakeFormation::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDataLakePrincipalRequest::GetDataLakePrincipalRequest()
-{
-}
-
-Aws::String GetDataLakePrincipalRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDataLakePrincipalRequest::SerializePayload() const { return {}; }

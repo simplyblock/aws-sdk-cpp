@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/DisassociateMacSecKeyRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DisassociateMacSecKeyRequest::DisassociateMacSecKeyRequest() : 
-    m_connectionIdHasBeenSet(false),
-    m_secretARNHasBeenSet(false)
-{
-}
+Aws::String DisassociateMacSecKeyRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DisassociateMacSecKeyRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_connectionIdHasBeenSet)
-  {
-   payload.WithString("connectionId", m_connectionId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_connectionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_secretARNHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_secretARNHasBeenSet)
-  {
-   payload.WithString("secretARN", m_secretARN);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_connectionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("connectionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_connectionId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_secretARNHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("secretARN"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_secretARN.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DisassociateMacSecKeyRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DisassociateMacSecKeyRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.DisassociateMacSecKey"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,55 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/EnableSsoRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectoryService::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-EnableSsoRequest::EnableSsoRequest() : 
-    m_directoryIdHasBeenSet(false),
-    m_userNameHasBeenSet(false),
-    m_passwordHasBeenSet(false)
-{
+Aws::String EnableSsoRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_userNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_passwordHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
+  }
+
+  if (m_userNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_userName.c_str()));
+  }
+
+  if (m_passwordHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Password"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_password.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String EnableSsoRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
-  }
-
-  if(m_userNameHasBeenSet)
-  {
-   payload.WithString("UserName", m_userName);
-
-  }
-
-  if(m_passwordHasBeenSet)
-  {
-   payload.WithString("Password", m_password);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection EnableSsoRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection EnableSsoRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DirectoryService_20150416.EnableSso"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

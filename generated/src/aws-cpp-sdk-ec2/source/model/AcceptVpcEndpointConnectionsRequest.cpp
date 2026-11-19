@@ -3,43 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/AcceptVpcEndpointConnectionsRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/AcceptVpcEndpointConnectionsRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-AcceptVpcEndpointConnectionsRequest::AcceptVpcEndpointConnectionsRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_serviceIdHasBeenSet(false),
-    m_vpcEndpointIdsHasBeenSet(false)
-{
-}
-
-Aws::String AcceptVpcEndpointConnectionsRequest::SerializePayload() const
-{
+Aws::String AcceptVpcEndpointConnectionsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=AcceptVpcEndpointConnections&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_serviceIdHasBeenSet)
-  {
+  if (m_serviceIdHasBeenSet) {
     ss << "ServiceId=" << StringUtils::URLEncode(m_serviceId.c_str()) << "&";
   }
 
-  if(m_vpcEndpointIdsHasBeenSet)
-  {
+  if (m_vpcEndpointIdsHasBeenSet) {
     unsigned vpcEndpointIdsCount = 1;
-    for(auto& item : m_vpcEndpointIds)
-    {
-      ss << "VpcEndpointId." << vpcEndpointIdsCount << "="
-          << StringUtils::URLEncode(item.c_str()) << "&";
+    for (auto& item : m_vpcEndpointIds) {
+      ss << "VpcEndpointId." << vpcEndpointIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
       vpcEndpointIdsCount++;
+    }
+  }
+
+  if (m_transitGatewayAttachmentIdsHasBeenSet) {
+    unsigned transitGatewayAttachmentIdsCount = 1;
+    for (auto& item : m_transitGatewayAttachmentIds) {
+      ss << "TransitGatewayAttachmentId." << transitGatewayAttachmentIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
+      transitGatewayAttachmentIdsCount++;
     }
   }
 
@@ -47,8 +41,4 @@ Aws::String AcceptVpcEndpointConnectionsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  AcceptVpcEndpointConnectionsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void AcceptVpcEndpointConnectionsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

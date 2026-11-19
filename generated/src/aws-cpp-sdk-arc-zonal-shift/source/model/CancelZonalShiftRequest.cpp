@@ -12,16 +12,4 @@ using namespace Aws::ARCZonalShift::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CancelZonalShiftRequest::CancelZonalShiftRequest() : 
-    m_zonalShiftIdHasBeenSet(false)
-{
-}
-
-Aws::String CancelZonalShiftRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String CancelZonalShiftRequest::SerializePayload() const { return {}; }

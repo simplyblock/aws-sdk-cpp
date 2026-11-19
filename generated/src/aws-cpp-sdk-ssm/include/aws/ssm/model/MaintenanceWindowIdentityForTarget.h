@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ssm/SSM_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
 
+/**
+ * <p>The maintenance window to which the specified target belongs.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/MaintenanceWindowIdentityForTarget">AWS
+ * API Reference</a></p>
+ */
+class MaintenanceWindowIdentityForTarget {
+ public:
+  AWS_SSM_API MaintenanceWindowIdentityForTarget() = default;
+  AWS_SSM_API MaintenanceWindowIdentityForTarget(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SSM_API MaintenanceWindowIdentityForTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SSM_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The maintenance window to which the specified target belongs.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/MaintenanceWindowIdentityForTarget">AWS
-   * API Reference</a></p>
+   * <p>The ID of the maintenance window.</p>
    */
-  class MaintenanceWindowIdentityForTarget
-  {
-  public:
-    AWS_SSM_API MaintenanceWindowIdentityForTarget();
-    AWS_SSM_API MaintenanceWindowIdentityForTarget(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SSM_API MaintenanceWindowIdentityForTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SSM_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetWindowId() const { return m_windowId; }
+  inline bool WindowIdHasBeenSet() const { return m_windowIdHasBeenSet; }
+  template <typename WindowIdT = Aws::String>
+  void SetWindowId(WindowIdT&& value) {
+    m_windowIdHasBeenSet = true;
+    m_windowId = std::forward<WindowIdT>(value);
+  }
+  template <typename WindowIdT = Aws::String>
+  MaintenanceWindowIdentityForTarget& WithWindowId(WindowIdT&& value) {
+    SetWindowId(std::forward<WindowIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the maintenance window.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  MaintenanceWindowIdentityForTarget& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_windowId;
 
-    ///@{
-    /**
-     * <p>The ID of the maintenance window.</p>
-     */
-    inline const Aws::String& GetWindowId() const{ return m_windowId; }
-    inline bool WindowIdHasBeenSet() const { return m_windowIdHasBeenSet; }
-    inline void SetWindowId(const Aws::String& value) { m_windowIdHasBeenSet = true; m_windowId = value; }
-    inline void SetWindowId(Aws::String&& value) { m_windowIdHasBeenSet = true; m_windowId = std::move(value); }
-    inline void SetWindowId(const char* value) { m_windowIdHasBeenSet = true; m_windowId.assign(value); }
-    inline MaintenanceWindowIdentityForTarget& WithWindowId(const Aws::String& value) { SetWindowId(value); return *this;}
-    inline MaintenanceWindowIdentityForTarget& WithWindowId(Aws::String&& value) { SetWindowId(std::move(value)); return *this;}
-    inline MaintenanceWindowIdentityForTarget& WithWindowId(const char* value) { SetWindowId(value); return *this;}
-    ///@}
+  Aws::String m_name;
+  bool m_windowIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the maintenance window.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline MaintenanceWindowIdentityForTarget& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline MaintenanceWindowIdentityForTarget& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline MaintenanceWindowIdentityForTarget& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_windowId;
-    bool m_windowIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

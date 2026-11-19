@@ -4,93 +4,105 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/redshift/RedshiftRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/RedshiftRequest.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Redshift {
+namespace Model {
 
+/**
+ */
+class AuthorizeEndpointAccessRequest : public RedshiftRequest {
+ public:
+  AWS_REDSHIFT_API AuthorizeEndpointAccessRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AuthorizeEndpointAccess"; }
+
+  AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The cluster identifier of the cluster to grant access to.</p>
    */
-  class AuthorizeEndpointAccessRequest : public RedshiftRequest
-  {
-  public:
-    AWS_REDSHIFT_API AuthorizeEndpointAccessRequest();
+  inline const Aws::String& GetClusterIdentifier() const { return m_clusterIdentifier; }
+  inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
+  template <typename ClusterIdentifierT = Aws::String>
+  void SetClusterIdentifier(ClusterIdentifierT&& value) {
+    m_clusterIdentifierHasBeenSet = true;
+    m_clusterIdentifier = std::forward<ClusterIdentifierT>(value);
+  }
+  template <typename ClusterIdentifierT = Aws::String>
+  AuthorizeEndpointAccessRequest& WithClusterIdentifier(ClusterIdentifierT&& value) {
+    SetClusterIdentifier(std::forward<ClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AuthorizeEndpointAccess"; }
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID to grant access to.</p>
+   */
+  inline const Aws::String& GetAccount() const { return m_account; }
+  inline bool AccountHasBeenSet() const { return m_accountHasBeenSet; }
+  template <typename AccountT = Aws::String>
+  void SetAccount(AccountT&& value) {
+    m_accountHasBeenSet = true;
+    m_account = std::forward<AccountT>(value);
+  }
+  template <typename AccountT = Aws::String>
+  AuthorizeEndpointAccessRequest& WithAccount(AccountT&& value) {
+    SetAccount(std::forward<AccountT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The virtual private cloud (VPC) identifiers to grant access to.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetVpcIds() const { return m_vpcIds; }
+  inline bool VpcIdsHasBeenSet() const { return m_vpcIdsHasBeenSet; }
+  template <typename VpcIdsT = Aws::Vector<Aws::String>>
+  void SetVpcIds(VpcIdsT&& value) {
+    m_vpcIdsHasBeenSet = true;
+    m_vpcIds = std::forward<VpcIdsT>(value);
+  }
+  template <typename VpcIdsT = Aws::Vector<Aws::String>>
+  AuthorizeEndpointAccessRequest& WithVpcIds(VpcIdsT&& value) {
+    SetVpcIds(std::forward<VpcIdsT>(value));
+    return *this;
+  }
+  template <typename VpcIdsT = Aws::String>
+  AuthorizeEndpointAccessRequest& AddVpcIds(VpcIdsT&& value) {
+    m_vpcIdsHasBeenSet = true;
+    m_vpcIds.emplace_back(std::forward<VpcIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterIdentifier;
 
-  protected:
-    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  Aws::String m_account;
 
-  public:
+  Aws::Vector<Aws::String> m_vpcIds;
+  bool m_clusterIdentifierHasBeenSet = false;
+  bool m_accountHasBeenSet = false;
+  bool m_vpcIdsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The cluster identifier of the cluster to grant access to.</p>
-     */
-    inline const Aws::String& GetClusterIdentifier() const{ return m_clusterIdentifier; }
-    inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
-    inline void SetClusterIdentifier(const Aws::String& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = value; }
-    inline void SetClusterIdentifier(Aws::String&& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = std::move(value); }
-    inline void SetClusterIdentifier(const char* value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier.assign(value); }
-    inline AuthorizeEndpointAccessRequest& WithClusterIdentifier(const Aws::String& value) { SetClusterIdentifier(value); return *this;}
-    inline AuthorizeEndpointAccessRequest& WithClusterIdentifier(Aws::String&& value) { SetClusterIdentifier(std::move(value)); return *this;}
-    inline AuthorizeEndpointAccessRequest& WithClusterIdentifier(const char* value) { SetClusterIdentifier(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID to grant access to.</p>
-     */
-    inline const Aws::String& GetAccount() const{ return m_account; }
-    inline bool AccountHasBeenSet() const { return m_accountHasBeenSet; }
-    inline void SetAccount(const Aws::String& value) { m_accountHasBeenSet = true; m_account = value; }
-    inline void SetAccount(Aws::String&& value) { m_accountHasBeenSet = true; m_account = std::move(value); }
-    inline void SetAccount(const char* value) { m_accountHasBeenSet = true; m_account.assign(value); }
-    inline AuthorizeEndpointAccessRequest& WithAccount(const Aws::String& value) { SetAccount(value); return *this;}
-    inline AuthorizeEndpointAccessRequest& WithAccount(Aws::String&& value) { SetAccount(std::move(value)); return *this;}
-    inline AuthorizeEndpointAccessRequest& WithAccount(const char* value) { SetAccount(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The virtual private cloud (VPC) identifiers to grant access to.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetVpcIds() const{ return m_vpcIds; }
-    inline bool VpcIdsHasBeenSet() const { return m_vpcIdsHasBeenSet; }
-    inline void SetVpcIds(const Aws::Vector<Aws::String>& value) { m_vpcIdsHasBeenSet = true; m_vpcIds = value; }
-    inline void SetVpcIds(Aws::Vector<Aws::String>&& value) { m_vpcIdsHasBeenSet = true; m_vpcIds = std::move(value); }
-    inline AuthorizeEndpointAccessRequest& WithVpcIds(const Aws::Vector<Aws::String>& value) { SetVpcIds(value); return *this;}
-    inline AuthorizeEndpointAccessRequest& WithVpcIds(Aws::Vector<Aws::String>&& value) { SetVpcIds(std::move(value)); return *this;}
-    inline AuthorizeEndpointAccessRequest& AddVpcIds(const Aws::String& value) { m_vpcIdsHasBeenSet = true; m_vpcIds.push_back(value); return *this; }
-    inline AuthorizeEndpointAccessRequest& AddVpcIds(Aws::String&& value) { m_vpcIdsHasBeenSet = true; m_vpcIds.push_back(std::move(value)); return *this; }
-    inline AuthorizeEndpointAccessRequest& AddVpcIds(const char* value) { m_vpcIdsHasBeenSet = true; m_vpcIds.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_clusterIdentifier;
-    bool m_clusterIdentifierHasBeenSet = false;
-
-    Aws::String m_account;
-    bool m_accountHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_vpcIds;
-    bool m_vpcIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

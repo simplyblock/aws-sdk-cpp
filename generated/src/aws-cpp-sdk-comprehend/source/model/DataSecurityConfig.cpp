@@ -4,98 +4,297 @@
  */
 
 #include <aws/comprehend/model/DataSecurityConfig.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-DataSecurityConfig::DataSecurityConfig() : 
-    m_modelKmsKeyIdHasBeenSet(false),
-    m_volumeKmsKeyIdHasBeenSet(false),
-    m_dataLakeKmsKeyIdHasBeenSet(false),
-    m_vpcConfigHasBeenSet(false)
-{
-}
+DataSecurityConfig::DataSecurityConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-DataSecurityConfig::DataSecurityConfig(JsonView jsonValue)
-  : DataSecurityConfig()
-{
-  *this = jsonValue;
-}
+DataSecurityConfig& DataSecurityConfig::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-DataSecurityConfig& DataSecurityConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ModelKmsKeyId"))
-  {
-    m_modelKmsKeyId = jsonValue.GetString("ModelKmsKeyId");
+              if (initialKeyStr == "ModelKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_modelKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_modelKmsKeyId = ss.str();
+                  }
+                }
+                m_modelKmsKeyIdHasBeenSet = true;
+              }
 
-    m_modelKmsKeyIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "VolumeKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_volumeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_volumeKmsKeyId = ss.str();
+                  }
+                }
+                m_volumeKmsKeyIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("VolumeKmsKeyId"))
-  {
-    m_volumeKmsKeyId = jsonValue.GetString("VolumeKmsKeyId");
+              else if (initialKeyStr == "DataLakeKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_dataLakeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_dataLakeKmsKeyId = ss.str();
+                  }
+                }
+                m_dataLakeKmsKeyIdHasBeenSet = true;
+              }
 
-    m_volumeKmsKeyIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "VpcConfig") {
+                m_vpcConfig = VpcConfig(decoder);
+                m_vpcConfigHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("DataSecurityConfig", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("DataLakeKmsKeyId"))
-  {
-    m_dataLakeKmsKeyId = jsonValue.GetString("DataLakeKmsKeyId");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_dataLakeKmsKeyIdHasBeenSet = true;
-  }
+            if (initialKeyStr == "ModelKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_modelKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_modelKmsKeyId = ss.str();
+                }
+              }
+              m_modelKmsKeyIdHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VpcConfig"))
-  {
-    m_vpcConfig = jsonValue.GetObject("VpcConfig");
+            else if (initialKeyStr == "VolumeKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_volumeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_volumeKmsKeyId = ss.str();
+                }
+              }
+              m_volumeKmsKeyIdHasBeenSet = true;
+            }
 
-    m_vpcConfigHasBeenSet = true;
+            else if (initialKeyStr == "DataLakeKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_dataLakeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_dataLakeKmsKeyId = ss.str();
+                }
+              }
+              m_dataLakeKmsKeyIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "VpcConfig") {
+              m_vpcConfig = VpcConfig(decoder);
+              m_vpcConfigHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue DataSecurityConfig::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_modelKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("ModelKmsKeyId", m_modelKmsKeyId);
-
+void DataSecurityConfig::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_modelKmsKeyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_volumeKmsKeyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dataLakeKmsKeyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcConfigHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_volumeKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("VolumeKmsKeyId", m_volumeKmsKeyId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_modelKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ModelKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_modelKmsKeyId.c_str()));
   }
 
-  if(m_dataLakeKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("DataLakeKmsKeyId", m_dataLakeKmsKeyId);
-
+  if (m_volumeKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VolumeKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_volumeKmsKeyId.c_str()));
   }
 
-  if(m_vpcConfigHasBeenSet)
-  {
-   payload.WithObject("VpcConfig", m_vpcConfig.Jsonize());
-
+  if (m_dataLakeKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataLakeKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_dataLakeKmsKeyId.c_str()));
   }
 
-  return payload;
+  if (m_vpcConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcConfig"));
+    m_vpcConfig.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

@@ -12,25 +12,12 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutVoiceConnectorEmergencyCallingConfigurationRequest::PutVoiceConnectorEmergencyCallingConfigurationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false),
-    m_emergencyCallingConfigurationHasBeenSet(false)
-{
-}
-
-Aws::String PutVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const
-{
+Aws::String PutVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_emergencyCallingConfigurationHasBeenSet)
-  {
-   payload.WithObject("EmergencyCallingConfiguration", m_emergencyCallingConfiguration.Jsonize());
-
+  if (m_emergencyCallingConfigurationHasBeenSet) {
+    payload.WithObject("EmergencyCallingConfiguration", m_emergencyCallingConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

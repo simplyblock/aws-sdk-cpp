@@ -12,16 +12,4 @@ using namespace Aws::Amplify::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteWebhookRequest::DeleteWebhookRequest() : 
-    m_webhookIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteWebhookRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteWebhookRequest::SerializePayload() const { return {}; }

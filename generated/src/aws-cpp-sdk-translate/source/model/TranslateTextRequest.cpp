@@ -3,74 +3,73 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/translate/model/TranslateTextRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Translate::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-TranslateTextRequest::TranslateTextRequest() : 
-    m_textHasBeenSet(false),
-    m_terminologyNamesHasBeenSet(false),
-    m_sourceLanguageCodeHasBeenSet(false),
-    m_targetLanguageCodeHasBeenSet(false),
-    m_settingsHasBeenSet(false)
-{
+Aws::String TranslateTextRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_textHasBeenSet) {
+    mapSize++;
+  }
+  if (m_terminologyNamesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceLanguageCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetLanguageCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_settingsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_textHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Text"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_text.c_str()));
+  }
+
+  if (m_terminologyNamesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TerminologyNames"));
+    encoder.WriteArrayStart(m_terminologyNames.size());
+    for (const auto& item_0 : m_terminologyNames) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_sourceLanguageCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourceLanguageCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sourceLanguageCode.c_str()));
+  }
+
+  if (m_targetLanguageCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TargetLanguageCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_targetLanguageCode.c_str()));
+  }
+
+  if (m_settingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Settings"));
+    m_settings.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String TranslateTextRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_textHasBeenSet)
-  {
-   payload.WithString("Text", m_text);
-
-  }
-
-  if(m_terminologyNamesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> terminologyNamesJsonList(m_terminologyNames.size());
-   for(unsigned terminologyNamesIndex = 0; terminologyNamesIndex < terminologyNamesJsonList.GetLength(); ++terminologyNamesIndex)
-   {
-     terminologyNamesJsonList[terminologyNamesIndex].AsString(m_terminologyNames[terminologyNamesIndex]);
-   }
-   payload.WithArray("TerminologyNames", std::move(terminologyNamesJsonList));
-
-  }
-
-  if(m_sourceLanguageCodeHasBeenSet)
-  {
-   payload.WithString("SourceLanguageCode", m_sourceLanguageCode);
-
-  }
-
-  if(m_targetLanguageCodeHasBeenSet)
-  {
-   payload.WithString("TargetLanguageCode", m_targetLanguageCode);
-
-  }
-
-  if(m_settingsHasBeenSet)
-  {
-   payload.WithObject("Settings", m_settings.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection TranslateTextRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TranslateTextRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSShineFrontendService_20170701.TranslateText"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

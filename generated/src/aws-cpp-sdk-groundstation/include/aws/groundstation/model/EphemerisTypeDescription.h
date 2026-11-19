@@ -6,65 +6,89 @@
 #pragma once
 #include <aws/groundstation/GroundStation_EXPORTS.h>
 #include <aws/groundstation/model/EphemerisDescription.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GroundStation
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GroundStation {
+namespace Model {
 
-  /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/EphemerisTypeDescription">AWS
-   * API Reference</a></p>
-   */
-  class EphemerisTypeDescription
-  {
-  public:
-    AWS_GROUNDSTATION_API EphemerisTypeDescription();
-    AWS_GROUNDSTATION_API EphemerisTypeDescription(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GROUNDSTATION_API EphemerisTypeDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GROUNDSTATION_API Aws::Utils::Json::JsonValue Jsonize() const;
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/EphemerisTypeDescription">AWS
+ * API Reference</a></p>
+ */
+class EphemerisTypeDescription {
+ public:
+  AWS_GROUNDSTATION_API EphemerisTypeDescription() = default;
+  AWS_GROUNDSTATION_API EphemerisTypeDescription(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GROUNDSTATION_API EphemerisTypeDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GROUNDSTATION_API Aws::Utils::Json::JsonValue Jsonize() const;
 
+  ///@{
 
-    ///@{
-    
-    inline const EphemerisDescription& GetOem() const{ return m_oem; }
-    inline bool OemHasBeenSet() const { return m_oemHasBeenSet; }
-    inline void SetOem(const EphemerisDescription& value) { m_oemHasBeenSet = true; m_oem = value; }
-    inline void SetOem(EphemerisDescription&& value) { m_oemHasBeenSet = true; m_oem = std::move(value); }
-    inline EphemerisTypeDescription& WithOem(const EphemerisDescription& value) { SetOem(value); return *this;}
-    inline EphemerisTypeDescription& WithOem(EphemerisDescription&& value) { SetOem(std::move(value)); return *this;}
-    ///@}
+  inline const EphemerisDescription& GetTle() const { return m_tle; }
+  inline bool TleHasBeenSet() const { return m_tleHasBeenSet; }
+  template <typename TleT = EphemerisDescription>
+  void SetTle(TleT&& value) {
+    m_tleHasBeenSet = true;
+    m_tle = std::forward<TleT>(value);
+  }
+  template <typename TleT = EphemerisDescription>
+  EphemerisTypeDescription& WithTle(TleT&& value) {
+    SetTle(std::forward<TleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const EphemerisDescription& GetTle() const{ return m_tle; }
-    inline bool TleHasBeenSet() const { return m_tleHasBeenSet; }
-    inline void SetTle(const EphemerisDescription& value) { m_tleHasBeenSet = true; m_tle = value; }
-    inline void SetTle(EphemerisDescription&& value) { m_tleHasBeenSet = true; m_tle = std::move(value); }
-    inline EphemerisTypeDescription& WithTle(const EphemerisDescription& value) { SetTle(value); return *this;}
-    inline EphemerisTypeDescription& WithTle(EphemerisDescription&& value) { SetTle(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    EphemerisDescription m_oem;
-    bool m_oemHasBeenSet = false;
+  inline const EphemerisDescription& GetOem() const { return m_oem; }
+  inline bool OemHasBeenSet() const { return m_oemHasBeenSet; }
+  template <typename OemT = EphemerisDescription>
+  void SetOem(OemT&& value) {
+    m_oemHasBeenSet = true;
+    m_oem = std::forward<OemT>(value);
+  }
+  template <typename OemT = EphemerisDescription>
+  EphemerisTypeDescription& WithOem(OemT&& value) {
+    SetOem(std::forward<OemT>(value));
+    return *this;
+  }
+  ///@}
 
-    EphemerisDescription m_tle;
-    bool m_tleHasBeenSet = false;
-  };
+  ///@{
 
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+  inline const EphemerisDescription& GetAzEl() const { return m_azEl; }
+  inline bool AzElHasBeenSet() const { return m_azElHasBeenSet; }
+  template <typename AzElT = EphemerisDescription>
+  void SetAzEl(AzElT&& value) {
+    m_azElHasBeenSet = true;
+    m_azEl = std::forward<AzElT>(value);
+  }
+  template <typename AzElT = EphemerisDescription>
+  EphemerisTypeDescription& WithAzEl(AzElT&& value) {
+    SetAzEl(std::forward<AzElT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  EphemerisDescription m_tle;
+
+  EphemerisDescription m_oem;
+
+  EphemerisDescription m_azEl;
+  bool m_tleHasBeenSet = false;
+  bool m_oemHasBeenSet = false;
+  bool m_azElHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

@@ -4,85 +4,151 @@
  */
 
 #include <aws/compute-optimizer/model/RDSDBUtilizationMetric.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-RDSDBUtilizationMetric::RDSDBUtilizationMetric() : 
-    m_name(RDSDBMetricName::NOT_SET),
-    m_nameHasBeenSet(false),
-    m_statistic(RDSDBMetricStatistic::NOT_SET),
-    m_statisticHasBeenSet(false),
-    m_value(0.0),
-    m_valueHasBeenSet(false)
-{
-}
+RDSDBUtilizationMetric::RDSDBUtilizationMetric(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RDSDBUtilizationMetric::RDSDBUtilizationMetric(JsonView jsonValue)
-  : RDSDBUtilizationMetric()
-{
-  *this = jsonValue;
-}
+RDSDBUtilizationMetric& RDSDBUtilizationMetric::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RDSDBUtilizationMetric& RDSDBUtilizationMetric::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("name"))
-  {
-    m_name = RDSDBMetricNameMapper::GetRDSDBMetricNameForName(jsonValue.GetString("name"));
+              if (initialKeyStr == "name") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_name = RDSDBMetricNameMapper::GetRDSDBMetricNameForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_nameHasBeenSet = true;
+              }
 
-    m_nameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "statistic") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_statistic = RDSDBMetricStatisticMapper::GetRDSDBMetricStatisticForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statisticHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("statistic"))
-  {
-    m_statistic = RDSDBMetricStatisticMapper::GetRDSDBMetricStatisticForName(jsonValue.GetString("statistic"));
+              else if (initialKeyStr == "value") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_value = val.value();
+                }
+                m_valueHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RDSDBUtilizationMetric", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_statisticHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("value"))
-  {
-    m_value = jsonValue.GetDouble("value");
+            if (initialKeyStr == "name") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_name = RDSDBMetricNameMapper::GetRDSDBMetricNameForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_nameHasBeenSet = true;
+            }
 
-    m_valueHasBeenSet = true;
+            else if (initialKeyStr == "statistic") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_statistic = RDSDBMetricStatisticMapper::GetRDSDBMetricStatisticForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statisticHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "value") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_value = val.value();
+              }
+              m_valueHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue RDSDBUtilizationMetric::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", RDSDBMetricNameMapper::GetNameForRDSDBMetricName(m_name));
+void RDSDBUtilizationMetric::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statisticHasBeenSet) {
+    mapSize++;
+  }
+  if (m_valueHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_statisticHasBeenSet)
-  {
-   payload.WithString("statistic", RDSDBMetricStatisticMapper::GetNameForRDSDBMetricStatistic(m_statistic));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(RDSDBMetricNameMapper::GetNameForRDSDBMetricName(m_name).c_str()));
   }
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithDouble("value", m_value);
-
+  if (m_statisticHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("statistic"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(RDSDBMetricStatisticMapper::GetNameForRDSDBMetricStatistic(m_statistic).c_str()));
   }
 
-  return payload;
+  if (m_valueHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("value"));
+    encoder.WriteFloat(m_value);
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

@@ -4,72 +4,85 @@
  */
 
 #pragma once
-#include <aws/rds-data/RDSDataService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rds-data/RDSDataService_EXPORTS.h>
 #include <aws/rds-data/model/UpdateResult.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RDSDataService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RDSDataService {
+namespace Model {
+/**
+ * <p>The response elements represent the output of a SQL statement over an array
+ * of data.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/BatchExecuteStatementResponse">AWS
+ * API Reference</a></p>
+ */
+class BatchExecuteStatementResult {
+ public:
+  AWS_RDSDATASERVICE_API BatchExecuteStatementResult() = default;
+  AWS_RDSDATASERVICE_API BatchExecuteStatementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RDSDATASERVICE_API BatchExecuteStatementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response elements represent the output of a SQL statement over an array
-   * of data.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/BatchExecuteStatementResponse">AWS
-   * API Reference</a></p>
+   * <p>The execution results of each batch entry.</p>
    */
-  class BatchExecuteStatementResult
-  {
-  public:
-    AWS_RDSDATASERVICE_API BatchExecuteStatementResult();
-    AWS_RDSDATASERVICE_API BatchExecuteStatementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RDSDATASERVICE_API BatchExecuteStatementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<UpdateResult>& GetUpdateResults() const { return m_updateResults; }
+  template <typename UpdateResultsT = Aws::Vector<UpdateResult>>
+  void SetUpdateResults(UpdateResultsT&& value) {
+    m_updateResultsHasBeenSet = true;
+    m_updateResults = std::forward<UpdateResultsT>(value);
+  }
+  template <typename UpdateResultsT = Aws::Vector<UpdateResult>>
+  BatchExecuteStatementResult& WithUpdateResults(UpdateResultsT&& value) {
+    SetUpdateResults(std::forward<UpdateResultsT>(value));
+    return *this;
+  }
+  template <typename UpdateResultsT = UpdateResult>
+  BatchExecuteStatementResult& AddUpdateResults(UpdateResultsT&& value) {
+    m_updateResultsHasBeenSet = true;
+    m_updateResults.emplace_back(std::forward<UpdateResultsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The execution results of each batch entry.</p>
-     */
-    inline const Aws::Vector<UpdateResult>& GetUpdateResults() const{ return m_updateResults; }
-    inline void SetUpdateResults(const Aws::Vector<UpdateResult>& value) { m_updateResults = value; }
-    inline void SetUpdateResults(Aws::Vector<UpdateResult>&& value) { m_updateResults = std::move(value); }
-    inline BatchExecuteStatementResult& WithUpdateResults(const Aws::Vector<UpdateResult>& value) { SetUpdateResults(value); return *this;}
-    inline BatchExecuteStatementResult& WithUpdateResults(Aws::Vector<UpdateResult>&& value) { SetUpdateResults(std::move(value)); return *this;}
-    inline BatchExecuteStatementResult& AddUpdateResults(const UpdateResult& value) { m_updateResults.push_back(value); return *this; }
-    inline BatchExecuteStatementResult& AddUpdateResults(UpdateResult&& value) { m_updateResults.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchExecuteStatementResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchExecuteStatementResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchExecuteStatementResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchExecuteStatementResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<UpdateResult> m_updateResults;
 
-    Aws::Vector<UpdateResult> m_updateResults;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_updateResultsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace RDSDataService
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDSDataService
+}  // namespace Aws

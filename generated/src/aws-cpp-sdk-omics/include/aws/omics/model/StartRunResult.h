@@ -4,144 +4,218 @@
  */
 
 #pragma once
-#include <aws/omics/Omics_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/omics/model/RunStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/omics/Omics_EXPORTS.h>
+#include <aws/omics/model/ConfigurationDetails.h>
+#include <aws/omics/model/RunStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Omics
-{
-namespace Model
-{
-  class StartRunResult
-  {
-  public:
-    AWS_OMICS_API StartRunResult();
-    AWS_OMICS_API StartRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OMICS_API StartRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Omics {
+namespace Model {
+class StartRunResult {
+ public:
+  AWS_OMICS_API StartRunResult() = default;
+  AWS_OMICS_API StartRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OMICS_API StartRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Unique resource identifier for the run.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  StartRunResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The run's ARN.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline StartRunResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline StartRunResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline StartRunResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The run's ID.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  StartRunResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The run's ID.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline StartRunResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline StartRunResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline StartRunResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The run's status.</p>
+   */
+  inline RunStatus GetStatus() const { return m_status; }
+  inline void SetStatus(RunStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline StartRunResult& WithStatus(RunStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The run's status.</p>
-     */
-    inline const RunStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const RunStatus& value) { m_status = value; }
-    inline void SetStatus(RunStatus&& value) { m_status = std::move(value); }
-    inline StartRunResult& WithStatus(const RunStatus& value) { SetStatus(value); return *this;}
-    inline StartRunResult& WithStatus(RunStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The run's tags.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  StartRunResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  StartRunResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The run's tags.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline StartRunResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline StartRunResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline StartRunResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline StartRunResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline StartRunResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline StartRunResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline StartRunResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline StartRunResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline StartRunResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The universally unique identifier for a run.</p>
+   */
+  inline const Aws::String& GetUuid() const { return m_uuid; }
+  template <typename UuidT = Aws::String>
+  void SetUuid(UuidT&& value) {
+    m_uuidHasBeenSet = true;
+    m_uuid = std::forward<UuidT>(value);
+  }
+  template <typename UuidT = Aws::String>
+  StartRunResult& WithUuid(UuidT&& value) {
+    SetUuid(std::forward<UuidT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The universally unique identifier for a run.</p>
-     */
-    inline const Aws::String& GetUuid() const{ return m_uuid; }
-    inline void SetUuid(const Aws::String& value) { m_uuid = value; }
-    inline void SetUuid(Aws::String&& value) { m_uuid = std::move(value); }
-    inline void SetUuid(const char* value) { m_uuid.assign(value); }
-    inline StartRunResult& WithUuid(const Aws::String& value) { SetUuid(value); return *this;}
-    inline StartRunResult& WithUuid(Aws::String&& value) { SetUuid(std::move(value)); return *this;}
-    inline StartRunResult& WithUuid(const char* value) { SetUuid(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The destination for workflow outputs.</p>
+   */
+  inline const Aws::String& GetRunOutputUri() const { return m_runOutputUri; }
+  template <typename RunOutputUriT = Aws::String>
+  void SetRunOutputUri(RunOutputUriT&& value) {
+    m_runOutputUriHasBeenSet = true;
+    m_runOutputUri = std::forward<RunOutputUriT>(value);
+  }
+  template <typename RunOutputUriT = Aws::String>
+  StartRunResult& WithRunOutputUri(RunOutputUriT&& value) {
+    SetRunOutputUri(std::forward<RunOutputUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destination for workflow outputs.</p>
-     */
-    inline const Aws::String& GetRunOutputUri() const{ return m_runOutputUri; }
-    inline void SetRunOutputUri(const Aws::String& value) { m_runOutputUri = value; }
-    inline void SetRunOutputUri(Aws::String&& value) { m_runOutputUri = std::move(value); }
-    inline void SetRunOutputUri(const char* value) { m_runOutputUri.assign(value); }
-    inline StartRunResult& WithRunOutputUri(const Aws::String& value) { SetRunOutputUri(value); return *this;}
-    inline StartRunResult& WithRunOutputUri(Aws::String&& value) { SetRunOutputUri(std::move(value)); return *this;}
-    inline StartRunResult& WithRunOutputUri(const char* value) { SetRunOutputUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration details for the workflow run.</p>
+   */
+  inline const ConfigurationDetails& GetConfiguration() const { return m_configuration; }
+  template <typename ConfigurationT = ConfigurationDetails>
+  void SetConfiguration(ConfigurationT&& value) {
+    m_configurationHasBeenSet = true;
+    m_configuration = std::forward<ConfigurationT>(value);
+  }
+  template <typename ConfigurationT = ConfigurationDetails>
+  StartRunResult& WithConfiguration(ConfigurationT&& value) {
+    SetConfiguration(std::forward<ConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartRunResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartRunResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartRunResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Networking mode for the workflow run.</p>
+   */
+  inline const Aws::String& GetNetworkingMode() const { return m_networkingMode; }
+  template <typename NetworkingModeT = Aws::String>
+  void SetNetworkingMode(NetworkingModeT&& value) {
+    m_networkingModeHasBeenSet = true;
+    m_networkingMode = std::forward<NetworkingModeT>(value);
+  }
+  template <typename NetworkingModeT = Aws::String>
+  StartRunResult& WithNetworkingMode(NetworkingModeT&& value) {
+    SetNetworkingMode(std::forward<NetworkingModeT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
+  ///@{
 
-    Aws::String m_id;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartRunResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RunStatus m_status;
+ private:
+  Aws::String m_arn;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::String m_id;
 
-    Aws::String m_uuid;
+  RunStatus m_status{RunStatus::NOT_SET};
 
-    Aws::String m_runOutputUri;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_uuid;
 
-} // namespace Model
-} // namespace Omics
-} // namespace Aws
+  Aws::String m_runOutputUri;
+
+  ConfigurationDetails m_configuration;
+
+  Aws::String m_networkingMode;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_uuidHasBeenSet = false;
+  bool m_runOutputUriHasBeenSet = false;
+  bool m_configurationHasBeenSet = false;
+  bool m_networkingModeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Omics
+}  // namespace Aws

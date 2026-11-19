@@ -4,118 +4,169 @@
  */
 
 #pragma once
-#include <aws/kms/KMS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kms/KMS_EXPORTS.h>
 #include <aws/kms/model/EncryptionAlgorithmSpec.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KMS
-{
-namespace Model
-{
-  class DecryptResult
-  {
-  public:
-    AWS_KMS_API DecryptResult();
-    AWS_KMS_API DecryptResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KMS_API DecryptResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KMS {
+namespace Model {
+class DecryptResult {
+ public:
+  AWS_KMS_API DecryptResult() = default;
+  AWS_KMS_API DecryptResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KMS_API DecryptResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (<a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN">key
+   * ARN</a>) of the KMS key that was used to decrypt the ciphertext.</p>
+   */
+  inline const Aws::String& GetKeyId() const { return m_keyId; }
+  template <typename KeyIdT = Aws::String>
+  void SetKeyId(KeyIdT&& value) {
+    m_keyIdHasBeenSet = true;
+    m_keyId = std::forward<KeyIdT>(value);
+  }
+  template <typename KeyIdT = Aws::String>
+  DecryptResult& WithKeyId(KeyIdT&& value) {
+    SetKeyId(std::forward<KeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (<a
-     * href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN">key
-     * ARN</a>) of the KMS key that was used to decrypt the ciphertext.</p>
-     */
-    inline const Aws::String& GetKeyId() const{ return m_keyId; }
-    inline void SetKeyId(const Aws::String& value) { m_keyId = value; }
-    inline void SetKeyId(Aws::String&& value) { m_keyId = std::move(value); }
-    inline void SetKeyId(const char* value) { m_keyId.assign(value); }
-    inline DecryptResult& WithKeyId(const Aws::String& value) { SetKeyId(value); return *this;}
-    inline DecryptResult& WithKeyId(Aws::String&& value) { SetKeyId(std::move(value)); return *this;}
-    inline DecryptResult& WithKeyId(const char* value) { SetKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Decrypted plaintext data. When you use the HTTP API or the Amazon Web
+   * Services CLI, the value is Base64-encoded. Otherwise, it is not
+   * Base64-encoded.</p> <p>If the response includes the
+   * <code>CiphertextForRecipient</code> field, the <code>Plaintext</code> field is
+   * null or empty.</p>
+   */
+  inline const Aws::Utils::CryptoBuffer& GetPlaintext() const { return m_plaintext; }
+  template <typename PlaintextT = Aws::Utils::CryptoBuffer>
+  void SetPlaintext(PlaintextT&& value) {
+    m_plaintextHasBeenSet = true;
+    m_plaintext = std::forward<PlaintextT>(value);
+  }
+  template <typename PlaintextT = Aws::Utils::CryptoBuffer>
+  DecryptResult& WithPlaintext(PlaintextT&& value) {
+    SetPlaintext(std::forward<PlaintextT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Decrypted plaintext data. When you use the HTTP API or the Amazon Web
-     * Services CLI, the value is Base64-encoded. Otherwise, it is not
-     * Base64-encoded.</p> <p>If the response includes the
-     * <code>CiphertextForRecipient</code> field, the <code>Plaintext</code> field is
-     * null or empty.</p>
-     */
-    inline const Aws::Utils::CryptoBuffer& GetPlaintext() const{ return m_plaintext; }
-    inline void SetPlaintext(const Aws::Utils::CryptoBuffer& value) { m_plaintext = value; }
-    inline void SetPlaintext(Aws::Utils::CryptoBuffer&& value) { m_plaintext = std::move(value); }
-    inline DecryptResult& WithPlaintext(const Aws::Utils::CryptoBuffer& value) { SetPlaintext(value); return *this;}
-    inline DecryptResult& WithPlaintext(Aws::Utils::CryptoBuffer&& value) { SetPlaintext(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The encryption algorithm that was used to decrypt the ciphertext.</p>
+   */
+  inline EncryptionAlgorithmSpec GetEncryptionAlgorithm() const { return m_encryptionAlgorithm; }
+  inline void SetEncryptionAlgorithm(EncryptionAlgorithmSpec value) {
+    m_encryptionAlgorithmHasBeenSet = true;
+    m_encryptionAlgorithm = value;
+  }
+  inline DecryptResult& WithEncryptionAlgorithm(EncryptionAlgorithmSpec value) {
+    SetEncryptionAlgorithm(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The encryption algorithm that was used to decrypt the ciphertext.</p>
-     */
-    inline const EncryptionAlgorithmSpec& GetEncryptionAlgorithm() const{ return m_encryptionAlgorithm; }
-    inline void SetEncryptionAlgorithm(const EncryptionAlgorithmSpec& value) { m_encryptionAlgorithm = value; }
-    inline void SetEncryptionAlgorithm(EncryptionAlgorithmSpec&& value) { m_encryptionAlgorithm = std::move(value); }
-    inline DecryptResult& WithEncryptionAlgorithm(const EncryptionAlgorithmSpec& value) { SetEncryptionAlgorithm(value); return *this;}
-    inline DecryptResult& WithEncryptionAlgorithm(EncryptionAlgorithmSpec&& value) { SetEncryptionAlgorithm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The plaintext data encrypted with the public key from the attestation
+   * document. This ciphertext can be decrypted only by using a private key from the
+   * attested environment. </p> <p>This field is included in the response only when
+   * the <code>Recipient</code> parameter in the request includes a valid attestation
+   * document from an Amazon Web Services Nitro enclave or NitroTPM. For information
+   * about the interaction between KMS and Amazon Web Services Nitro Enclaves or
+   * Amazon Web Services NitroTPM, see <a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html">Cryptographic
+   * attestation support in KMS</a> in the <i>Key Management Service Developer
+   * Guide</i>.</p>
+   */
+  inline const Aws::Utils::ByteBuffer& GetCiphertextForRecipient() const { return m_ciphertextForRecipient; }
+  template <typename CiphertextForRecipientT = Aws::Utils::ByteBuffer>
+  void SetCiphertextForRecipient(CiphertextForRecipientT&& value) {
+    m_ciphertextForRecipientHasBeenSet = true;
+    m_ciphertextForRecipient = std::forward<CiphertextForRecipientT>(value);
+  }
+  template <typename CiphertextForRecipientT = Aws::Utils::ByteBuffer>
+  DecryptResult& WithCiphertextForRecipient(CiphertextForRecipientT&& value) {
+    SetCiphertextForRecipient(std::forward<CiphertextForRecipientT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The plaintext data encrypted with the public key in the attestation document.
-     * </p> <p>This field is included in the response only when the
-     * <code>Recipient</code> parameter in the request includes a valid attestation
-     * document from an Amazon Web Services Nitro enclave. For information about the
-     * interaction between KMS and Amazon Web Services Nitro Enclaves, see <a
-     * href="https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html">How
-     * Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management Service
-     * Developer Guide</i>.</p>
-     */
-    inline const Aws::Utils::ByteBuffer& GetCiphertextForRecipient() const{ return m_ciphertextForRecipient; }
-    inline void SetCiphertextForRecipient(const Aws::Utils::ByteBuffer& value) { m_ciphertextForRecipient = value; }
-    inline void SetCiphertextForRecipient(Aws::Utils::ByteBuffer&& value) { m_ciphertextForRecipient = std::move(value); }
-    inline DecryptResult& WithCiphertextForRecipient(const Aws::Utils::ByteBuffer& value) { SetCiphertextForRecipient(value); return *this;}
-    inline DecryptResult& WithCiphertextForRecipient(Aws::Utils::ByteBuffer&& value) { SetCiphertextForRecipient(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the key material used to decrypt the ciphertext. This field
+   * is present only when the operation uses a symmetric encryption KMS key. This
+   * field is omitted if the request includes the <code>Recipient</code>
+   * parameter.</p>
+   */
+  inline const Aws::String& GetKeyMaterialId() const { return m_keyMaterialId; }
+  template <typename KeyMaterialIdT = Aws::String>
+  void SetKeyMaterialId(KeyMaterialIdT&& value) {
+    m_keyMaterialIdHasBeenSet = true;
+    m_keyMaterialId = std::forward<KeyMaterialIdT>(value);
+  }
+  template <typename KeyMaterialIdT = Aws::String>
+  DecryptResult& WithKeyMaterialId(KeyMaterialIdT&& value) {
+    SetKeyMaterialId(std::forward<KeyMaterialIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DecryptResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DecryptResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DecryptResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_keyId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DecryptResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Utils::CryptoBuffer m_plaintext;
+ private:
+  Aws::String m_keyId;
 
-    EncryptionAlgorithmSpec m_encryptionAlgorithm;
+  Aws::Utils::CryptoBuffer m_plaintext{};
 
-    Aws::Utils::ByteBuffer m_ciphertextForRecipient;
+  EncryptionAlgorithmSpec m_encryptionAlgorithm{EncryptionAlgorithmSpec::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::Utils::ByteBuffer m_ciphertextForRecipient{};
 
-} // namespace Model
-} // namespace KMS
-} // namespace Aws
+  Aws::String m_keyMaterialId;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_keyIdHasBeenSet = false;
+  bool m_plaintextHasBeenSet = false;
+  bool m_encryptionAlgorithmHasBeenSet = false;
+  bool m_ciphertextForRecipientHasBeenSet = false;
+  bool m_keyMaterialIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace KMS
+}  // namespace Aws

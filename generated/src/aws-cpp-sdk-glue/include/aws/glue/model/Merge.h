@@ -4,116 +4,136 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Specifies a transform that merges a <code>DynamicFrame</code> with a staging
+ * <code>DynamicFrame</code> based on the specified primary keys to identify
+ * records. Duplicate records (records with the same primary keys) are not
+ * de-duplicated. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Merge">AWS API
+ * Reference</a></p>
+ */
+class Merge {
+ public:
+  AWS_GLUE_API Merge() = default;
+  AWS_GLUE_API Merge(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Merge& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies a transform that merges a <code>DynamicFrame</code> with a staging
-   * <code>DynamicFrame</code> based on the specified primary keys to identify
-   * records. Duplicate records (records with the same primary keys) are not
-   * de-duplicated. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Merge">AWS API
-   * Reference</a></p>
+   * <p>The name of the transform node.</p>
    */
-  class Merge
-  {
-  public:
-    AWS_GLUE_API Merge();
-    AWS_GLUE_API Merge(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Merge& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Merge& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The data inputs identified by their node names.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetInputs() const { return m_inputs; }
+  inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  void SetInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs = std::forward<InputsT>(value);
+  }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  Merge& WithInputs(InputsT&& value) {
+    SetInputs(std::forward<InputsT>(value));
+    return *this;
+  }
+  template <typename InputsT = Aws::String>
+  Merge& AddInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs.emplace_back(std::forward<InputsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the transform node.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Merge& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Merge& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Merge& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The source <code>DynamicFrame</code> that will be merged with a staging
+   * <code>DynamicFrame</code>.</p>
+   */
+  inline const Aws::String& GetSource() const { return m_source; }
+  inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
+  template <typename SourceT = Aws::String>
+  void SetSource(SourceT&& value) {
+    m_sourceHasBeenSet = true;
+    m_source = std::forward<SourceT>(value);
+  }
+  template <typename SourceT = Aws::String>
+  Merge& WithSource(SourceT&& value) {
+    SetSource(std::forward<SourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The data inputs identified by their node names.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetInputs() const{ return m_inputs; }
-    inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
-    inline void SetInputs(const Aws::Vector<Aws::String>& value) { m_inputsHasBeenSet = true; m_inputs = value; }
-    inline void SetInputs(Aws::Vector<Aws::String>&& value) { m_inputsHasBeenSet = true; m_inputs = std::move(value); }
-    inline Merge& WithInputs(const Aws::Vector<Aws::String>& value) { SetInputs(value); return *this;}
-    inline Merge& WithInputs(Aws::Vector<Aws::String>&& value) { SetInputs(std::move(value)); return *this;}
-    inline Merge& AddInputs(const Aws::String& value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    inline Merge& AddInputs(Aws::String&& value) { m_inputsHasBeenSet = true; m_inputs.push_back(std::move(value)); return *this; }
-    inline Merge& AddInputs(const char* value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of primary key fields to match records from the source and staging
+   * dynamic frames.</p>
+   */
+  inline const Aws::Vector<Aws::Vector<Aws::String>>& GetPrimaryKeys() const { return m_primaryKeys; }
+  inline bool PrimaryKeysHasBeenSet() const { return m_primaryKeysHasBeenSet; }
+  template <typename PrimaryKeysT = Aws::Vector<Aws::Vector<Aws::String>>>
+  void SetPrimaryKeys(PrimaryKeysT&& value) {
+    m_primaryKeysHasBeenSet = true;
+    m_primaryKeys = std::forward<PrimaryKeysT>(value);
+  }
+  template <typename PrimaryKeysT = Aws::Vector<Aws::Vector<Aws::String>>>
+  Merge& WithPrimaryKeys(PrimaryKeysT&& value) {
+    SetPrimaryKeys(std::forward<PrimaryKeysT>(value));
+    return *this;
+  }
+  template <typename PrimaryKeysT = Aws::Vector<Aws::String>>
+  Merge& AddPrimaryKeys(PrimaryKeysT&& value) {
+    m_primaryKeysHasBeenSet = true;
+    m_primaryKeys.emplace_back(std::forward<PrimaryKeysT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The source <code>DynamicFrame</code> that will be merged with a staging
-     * <code>DynamicFrame</code>.</p>
-     */
-    inline const Aws::String& GetSource() const{ return m_source; }
-    inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
-    inline void SetSource(const Aws::String& value) { m_sourceHasBeenSet = true; m_source = value; }
-    inline void SetSource(Aws::String&& value) { m_sourceHasBeenSet = true; m_source = std::move(value); }
-    inline void SetSource(const char* value) { m_sourceHasBeenSet = true; m_source.assign(value); }
-    inline Merge& WithSource(const Aws::String& value) { SetSource(value); return *this;}
-    inline Merge& WithSource(Aws::String&& value) { SetSource(std::move(value)); return *this;}
-    inline Merge& WithSource(const char* value) { SetSource(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_inputs;
 
-    ///@{
-    /**
-     * <p>The list of primary key fields to match records from the source and staging
-     * dynamic frames.</p>
-     */
-    inline const Aws::Vector<Aws::Vector<Aws::String>>& GetPrimaryKeys() const{ return m_primaryKeys; }
-    inline bool PrimaryKeysHasBeenSet() const { return m_primaryKeysHasBeenSet; }
-    inline void SetPrimaryKeys(const Aws::Vector<Aws::Vector<Aws::String>>& value) { m_primaryKeysHasBeenSet = true; m_primaryKeys = value; }
-    inline void SetPrimaryKeys(Aws::Vector<Aws::Vector<Aws::String>>&& value) { m_primaryKeysHasBeenSet = true; m_primaryKeys = std::move(value); }
-    inline Merge& WithPrimaryKeys(const Aws::Vector<Aws::Vector<Aws::String>>& value) { SetPrimaryKeys(value); return *this;}
-    inline Merge& WithPrimaryKeys(Aws::Vector<Aws::Vector<Aws::String>>&& value) { SetPrimaryKeys(std::move(value)); return *this;}
-    inline Merge& AddPrimaryKeys(const Aws::Vector<Aws::String>& value) { m_primaryKeysHasBeenSet = true; m_primaryKeys.push_back(value); return *this; }
-    inline Merge& AddPrimaryKeys(Aws::Vector<Aws::String>&& value) { m_primaryKeysHasBeenSet = true; m_primaryKeys.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_source;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<Aws::Vector<Aws::String>> m_primaryKeys;
+  bool m_nameHasBeenSet = false;
+  bool m_inputsHasBeenSet = false;
+  bool m_sourceHasBeenSet = false;
+  bool m_primaryKeysHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_inputs;
-    bool m_inputsHasBeenSet = false;
-
-    Aws::String m_source;
-    bool m_sourceHasBeenSet = false;
-
-    Aws::Vector<Aws::Vector<Aws::String>> m_primaryKeys;
-    bool m_primaryKeysHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

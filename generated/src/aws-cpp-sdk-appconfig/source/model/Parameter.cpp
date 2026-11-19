@@ -11,79 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppConfig
-{
-namespace Model
-{
+namespace Aws {
+namespace AppConfig {
+namespace Model {
 
-Parameter::Parameter() : 
-    m_descriptionHasBeenSet(false),
-    m_required(false),
-    m_requiredHasBeenSet(false),
-    m_dynamic(false),
-    m_dynamicHasBeenSet(false)
-{
-}
+Parameter::Parameter(JsonView jsonValue) { *this = jsonValue; }
 
-Parameter::Parameter(JsonView jsonValue)
-  : Parameter()
-{
-  *this = jsonValue;
-}
-
-Parameter& Parameter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Description"))
-  {
+Parameter& Parameter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Description")) {
     m_description = jsonValue.GetString("Description");
-
     m_descriptionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Required"))
-  {
+  if (jsonValue.ValueExists("Required")) {
     m_required = jsonValue.GetBool("Required");
-
     m_requiredHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Dynamic"))
-  {
+  if (jsonValue.ValueExists("Dynamic")) {
     m_dynamic = jsonValue.GetBool("Dynamic");
-
     m_dynamicHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue Parameter::Jsonize() const
-{
+JsonValue Parameter::Jsonize() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_requiredHasBeenSet)
-  {
-   payload.WithBool("Required", m_required);
-
+  if (m_requiredHasBeenSet) {
+    payload.WithBool("Required", m_required);
   }
 
-  if(m_dynamicHasBeenSet)
-  {
-   payload.WithBool("Dynamic", m_dynamic);
-
+  if (m_dynamicHasBeenSet) {
+    payload.WithBool("Dynamic", m_dynamic);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppConfig
+}  // namespace Aws

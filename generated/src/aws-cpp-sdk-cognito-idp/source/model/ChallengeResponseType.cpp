@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
-ChallengeResponseType::ChallengeResponseType() : 
-    m_challengeName(ChallengeName::NOT_SET),
-    m_challengeNameHasBeenSet(false),
-    m_challengeResponse(ChallengeResponse::NOT_SET),
-    m_challengeResponseHasBeenSet(false)
-{
-}
+ChallengeResponseType::ChallengeResponseType(JsonView jsonValue) { *this = jsonValue; }
 
-ChallengeResponseType::ChallengeResponseType(JsonView jsonValue)
-  : ChallengeResponseType()
-{
-  *this = jsonValue;
-}
-
-ChallengeResponseType& ChallengeResponseType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ChallengeName"))
-  {
+ChallengeResponseType& ChallengeResponseType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ChallengeName")) {
     m_challengeName = ChallengeNameMapper::GetChallengeNameForName(jsonValue.GetString("ChallengeName"));
-
     m_challengeNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ChallengeResponse"))
-  {
+  if (jsonValue.ValueExists("ChallengeResponse")) {
     m_challengeResponse = ChallengeResponseMapper::GetChallengeResponseForName(jsonValue.GetString("ChallengeResponse"));
-
     m_challengeResponseHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ChallengeResponseType::Jsonize() const
-{
+JsonValue ChallengeResponseType::Jsonize() const {
   JsonValue payload;
 
-  if(m_challengeNameHasBeenSet)
-  {
-   payload.WithString("ChallengeName", ChallengeNameMapper::GetNameForChallengeName(m_challengeName));
+  if (m_challengeNameHasBeenSet) {
+    payload.WithString("ChallengeName", ChallengeNameMapper::GetNameForChallengeName(m_challengeName));
   }
 
-  if(m_challengeResponseHasBeenSet)
-  {
-   payload.WithString("ChallengeResponse", ChallengeResponseMapper::GetNameForChallengeResponse(m_challengeResponse));
+  if (m_challengeResponseHasBeenSet) {
+    payload.WithString("ChallengeResponse", ChallengeResponseMapper::GetNameForChallengeResponse(m_challengeResponse));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

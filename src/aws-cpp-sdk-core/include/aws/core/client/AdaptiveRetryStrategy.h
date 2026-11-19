@@ -9,6 +9,9 @@
 #include <aws/core/client/RetryStrategy.h>
 #include <aws/core/utils/DateTime.h>
 
+#include <condition_variable>
+#include <mutex>
+
 namespace Aws
 {
 namespace Client
@@ -107,8 +110,9 @@ protected:
     // The last time when the client was throttled.
     Aws::Utils::DateTime m_lastThrottleTime;
 
-    // TokenBucket's mutex to synchronize read/write operations
-    std::recursive_mutex m_mutex;
+private:
+    std::mutex m_mutex;
+    std::condition_variable m_capacityCV;
 };
 
 /**
@@ -123,6 +127,7 @@ public:
      */
     AdaptiveRetryStrategy(long maxAttempts = 3);
     AdaptiveRetryStrategy(std::shared_ptr<RetryQuotaContainer> retryQuotaContainer, long maxAttempts = 3);
+    explicit AdaptiveRetryStrategy(const StandardRetryStrategyOptions& options);
 
     /**
      * Retrieve and consume a send token.

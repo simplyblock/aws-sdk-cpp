@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKIdentity::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAppInstanceUserRequest::DeleteAppInstanceUserRequest() : 
-    m_appInstanceUserArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAppInstanceUserRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAppInstanceUserRequest::SerializePayload() const { return {}; }

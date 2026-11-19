@@ -3,133 +3,93 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ModifyInstanceAttributeRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/ModifyInstanceAttributeRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-ModifyInstanceAttributeRequest::ModifyInstanceAttributeRequest() : 
-    m_sourceDestCheckHasBeenSet(false),
-    m_disableApiStopHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_instanceIdHasBeenSet(false),
-    m_attribute(InstanceAttributeName::NOT_SET),
-    m_attributeHasBeenSet(false),
-    m_valueHasBeenSet(false),
-    m_blockDeviceMappingsHasBeenSet(false),
-    m_disableApiTerminationHasBeenSet(false),
-    m_instanceTypeHasBeenSet(false),
-    m_kernelHasBeenSet(false),
-    m_ramdiskHasBeenSet(false),
-    m_userDataHasBeenSet(false),
-    m_instanceInitiatedShutdownBehaviorHasBeenSet(false),
-    m_groupsHasBeenSet(false),
-    m_ebsOptimizedHasBeenSet(false),
-    m_sriovNetSupportHasBeenSet(false),
-    m_enaSupportHasBeenSet(false)
-{
-}
-
-Aws::String ModifyInstanceAttributeRequest::SerializePayload() const
-{
+Aws::String ModifyInstanceAttributeRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ModifyInstanceAttribute&";
-  if(m_sourceDestCheckHasBeenSet)
-  {
+  if (m_sourceDestCheckHasBeenSet) {
     m_sourceDestCheck.OutputToStream(ss, "SourceDestCheck");
   }
 
-  if(m_disableApiStopHasBeenSet)
-  {
+  if (m_enclaveOptionsHasBeenSet) {
+    m_enclaveOptions.OutputToStream(ss, "EnclaveOptions");
+  }
+
+  if (m_disableApiStopHasBeenSet) {
     m_disableApiStop.OutputToStream(ss, "DisableApiStop");
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_instanceIdHasBeenSet)
-  {
+  if (m_instanceIdHasBeenSet) {
     ss << "InstanceId=" << StringUtils::URLEncode(m_instanceId.c_str()) << "&";
   }
 
-  if(m_attributeHasBeenSet)
-  {
-    ss << "Attribute=" << InstanceAttributeNameMapper::GetNameForInstanceAttributeName(m_attribute) << "&";
+  if (m_attributeHasBeenSet) {
+    ss << "Attribute=" << StringUtils::URLEncode(InstanceAttributeNameMapper::GetNameForInstanceAttributeName(m_attribute)) << "&";
   }
 
-  if(m_valueHasBeenSet)
-  {
+  if (m_valueHasBeenSet) {
     ss << "Value=" << StringUtils::URLEncode(m_value.c_str()) << "&";
   }
 
-  if(m_blockDeviceMappingsHasBeenSet)
-  {
+  if (m_blockDeviceMappingsHasBeenSet) {
     unsigned blockDeviceMappingsCount = 1;
-    for(auto& item : m_blockDeviceMappings)
-    {
+    for (auto& item : m_blockDeviceMappings) {
       item.OutputToStream(ss, "BlockDeviceMapping.", blockDeviceMappingsCount, "");
       blockDeviceMappingsCount++;
     }
   }
 
-  if(m_disableApiTerminationHasBeenSet)
-  {
+  if (m_disableApiTerminationHasBeenSet) {
     m_disableApiTermination.OutputToStream(ss, "DisableApiTermination");
   }
 
-  if(m_instanceTypeHasBeenSet)
-  {
+  if (m_instanceTypeHasBeenSet) {
     m_instanceType.OutputToStream(ss, "InstanceType");
   }
 
-  if(m_kernelHasBeenSet)
-  {
+  if (m_kernelHasBeenSet) {
     m_kernel.OutputToStream(ss, "Kernel");
   }
 
-  if(m_ramdiskHasBeenSet)
-  {
+  if (m_ramdiskHasBeenSet) {
     m_ramdisk.OutputToStream(ss, "Ramdisk");
   }
 
-  if(m_userDataHasBeenSet)
-  {
+  if (m_userDataHasBeenSet) {
     m_userData.OutputToStream(ss, "UserData");
   }
 
-  if(m_instanceInitiatedShutdownBehaviorHasBeenSet)
-  {
+  if (m_instanceInitiatedShutdownBehaviorHasBeenSet) {
     m_instanceInitiatedShutdownBehavior.OutputToStream(ss, "InstanceInitiatedShutdownBehavior");
   }
 
-  if(m_groupsHasBeenSet)
-  {
+  if (m_groupsHasBeenSet) {
     unsigned groupsCount = 1;
-    for(auto& item : m_groups)
-    {
-      ss << "GroupId." << groupsCount << "="
-          << StringUtils::URLEncode(item.c_str()) << "&";
+    for (auto& item : m_groups) {
+      ss << "GroupId." << groupsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
       groupsCount++;
     }
   }
 
-  if(m_ebsOptimizedHasBeenSet)
-  {
+  if (m_ebsOptimizedHasBeenSet) {
     m_ebsOptimized.OutputToStream(ss, "EbsOptimized");
   }
 
-  if(m_sriovNetSupportHasBeenSet)
-  {
+  if (m_sriovNetSupportHasBeenSet) {
     m_sriovNetSupport.OutputToStream(ss, "SriovNetSupport");
   }
 
-  if(m_enaSupportHasBeenSet)
-  {
+  if (m_enaSupportHasBeenSet) {
     m_enaSupport.OutputToStream(ss, "EnaSupport");
   }
 
@@ -137,8 +97,4 @@ Aws::String ModifyInstanceAttributeRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ModifyInstanceAttributeRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ModifyInstanceAttributeRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/deadline/model/DeleteQueueEnvironmentRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/deadline/model/DeleteQueueEnvironmentRequest.h>
 
 #include <utility>
 
@@ -12,18 +12,4 @@ using namespace Aws::deadline::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteQueueEnvironmentRequest::DeleteQueueEnvironmentRequest() : 
-    m_farmIdHasBeenSet(false),
-    m_queueIdHasBeenSet(false),
-    m_queueEnvironmentIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteQueueEnvironmentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteQueueEnvironmentRequest::SerializePayload() const { return {}; }

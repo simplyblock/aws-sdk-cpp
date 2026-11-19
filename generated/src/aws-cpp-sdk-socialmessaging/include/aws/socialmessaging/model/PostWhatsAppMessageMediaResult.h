@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SocialMessaging
-{
-namespace Model
-{
-  class PostWhatsAppMessageMediaResult
-  {
-  public:
-    AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult();
-    AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SocialMessaging {
+namespace Model {
+class PostWhatsAppMessageMediaResult {
+ public:
+  AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult() = default;
+  AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SOCIALMESSAGING_API PostWhatsAppMessageMediaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the posted WhatsApp message.</p>
+   */
+  inline const Aws::String& GetMediaId() const { return m_mediaId; }
+  template <typename MediaIdT = Aws::String>
+  void SetMediaId(MediaIdT&& value) {
+    m_mediaIdHasBeenSet = true;
+    m_mediaId = std::forward<MediaIdT>(value);
+  }
+  template <typename MediaIdT = Aws::String>
+  PostWhatsAppMessageMediaResult& WithMediaId(MediaIdT&& value) {
+    SetMediaId(std::forward<MediaIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the posted WhatsApp message.</p>
-     */
-    inline const Aws::String& GetMediaId() const{ return m_mediaId; }
-    inline void SetMediaId(const Aws::String& value) { m_mediaId = value; }
-    inline void SetMediaId(Aws::String&& value) { m_mediaId = std::move(value); }
-    inline void SetMediaId(const char* value) { m_mediaId.assign(value); }
-    inline PostWhatsAppMessageMediaResult& WithMediaId(const Aws::String& value) { SetMediaId(value); return *this;}
-    inline PostWhatsAppMessageMediaResult& WithMediaId(Aws::String&& value) { SetMediaId(std::move(value)); return *this;}
-    inline PostWhatsAppMessageMediaResult& WithMediaId(const char* value) { SetMediaId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PostWhatsAppMessageMediaResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PostWhatsAppMessageMediaResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PostWhatsAppMessageMediaResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PostWhatsAppMessageMediaResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_mediaId;
+ private:
+  Aws::String m_mediaId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_mediaIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SocialMessaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace SocialMessaging
+}  // namespace Aws

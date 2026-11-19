@@ -4,74 +4,75 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/fsx/model/ServiceLimit.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace FSx
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace FSx {
+namespace Model {
 
+/**
+ * <p>An error indicating that a particular service limit was exceeded. You can
+ * increase some service limits by contacting Amazon Web Services
+ * Support.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/ServiceLimitExceeded">AWS
+ * API Reference</a></p>
+ */
+class ServiceLimitExceeded {
+ public:
+  AWS_FSX_API ServiceLimitExceeded() = default;
+  AWS_FSX_API ServiceLimitExceeded(Aws::Utils::Json::JsonView jsonValue);
+  AWS_FSX_API ServiceLimitExceeded& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_FSX_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An error indicating that a particular service limit was exceeded. You can
-   * increase some service limits by contacting Amazon Web Services
-   * Support.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/ServiceLimitExceeded">AWS
-   * API Reference</a></p>
+   * <p>Enumeration of the service limit that was exceeded. </p>
    */
-  class ServiceLimitExceeded
-  {
-  public:
-    AWS_FSX_API ServiceLimitExceeded();
-    AWS_FSX_API ServiceLimitExceeded(Aws::Utils::Json::JsonView jsonValue);
-    AWS_FSX_API ServiceLimitExceeded& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_FSX_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ServiceLimit GetLimit() const { return m_limit; }
+  inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
+  inline void SetLimit(ServiceLimit value) {
+    m_limitHasBeenSet = true;
+    m_limit = value;
+  }
+  inline ServiceLimitExceeded& WithLimit(ServiceLimit value) {
+    SetLimit(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Enumeration of the service limit that was exceeded. </p>
-     */
-    inline const ServiceLimit& GetLimit() const{ return m_limit; }
-    inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
-    inline void SetLimit(const ServiceLimit& value) { m_limitHasBeenSet = true; m_limit = value; }
-    inline void SetLimit(ServiceLimit&& value) { m_limitHasBeenSet = true; m_limit = std::move(value); }
-    inline ServiceLimitExceeded& WithLimit(const ServiceLimit& value) { SetLimit(value); return *this;}
-    inline ServiceLimitExceeded& WithLimit(ServiceLimit&& value) { SetLimit(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ServiceLimitExceeded& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ServiceLimit m_limit{ServiceLimit::NOT_SET};
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ServiceLimitExceeded& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ServiceLimitExceeded& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ServiceLimitExceeded& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_message;
+  bool m_limitHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+};
 
-    ServiceLimit m_limit;
-    bool m_limitHasBeenSet = false;
-
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

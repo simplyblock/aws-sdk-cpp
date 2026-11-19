@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sqs "C++ SDK for the AWS sqs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sqs "C++ SDK for Amazon Simple Queue Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_SQS_HEADERS
     "include/aws/sqs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SQS_HEADERS
 
 file(GLOB AWS_SQS_MODEL_HEADERS
     "include/aws/sqs/model/*.h"
+)
+
+file(GLOB AWS_SQS_INTERNAL_HEADERS
+    "include/aws/sqs/internal/*.h"
 )
 
 file(GLOB AWS_SQS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SQS_MODEL_SOURCE
 
 file(GLOB SQS_UNIFIED_HEADERS
     ${AWS_SQS_HEADERS}
+    ${AWS_SQS_INTERNAL_HEADERS}
     ${AWS_SQS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sqs" FILES ${AWS_SQS_HEADERS})
+        source_group("Header Files\\aws\\sqs\\internal" FILES ${AWS_SQS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sqs\\model" FILES ${AWS_SQS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SQS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SQS_MODEL_SOURCE})

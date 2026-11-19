@@ -7,64 +7,76 @@
 #include <aws/cloudsearch/CloudSearch_EXPORTS.h>
 #include <aws/cloudsearch/model/AccessPoliciesStatus.h>
 #include <aws/cloudsearch/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudSearch
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudSearch {
+namespace Model {
+/**
+ * <p>The result of a <code>DescribeServiceAccessPolicies</code>
+ * request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cloudsearch-2013-01-01/DescribeServiceAccessPoliciesResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeServiceAccessPoliciesResult {
+ public:
+  AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult() = default;
+  AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>The result of a <code>DescribeServiceAccessPolicies</code>
-   * request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cloudsearch-2013-01-01/DescribeServiceAccessPoliciesResponse">AWS
-   * API Reference</a></p>
+   * <p>The access rules configured for the domain specified in the request.</p>
    */
-  class DescribeServiceAccessPoliciesResult
-  {
-  public:
-    AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult();
-    AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDSEARCH_API DescribeServiceAccessPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const AccessPoliciesStatus& GetAccessPolicies() const { return m_accessPolicies; }
+  template <typename AccessPoliciesT = AccessPoliciesStatus>
+  void SetAccessPolicies(AccessPoliciesT&& value) {
+    m_accessPoliciesHasBeenSet = true;
+    m_accessPolicies = std::forward<AccessPoliciesT>(value);
+  }
+  template <typename AccessPoliciesT = AccessPoliciesStatus>
+  DescribeServiceAccessPoliciesResult& WithAccessPolicies(AccessPoliciesT&& value) {
+    SetAccessPolicies(std::forward<AccessPoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The access rules configured for the domain specified in the request.</p>
-     */
-    inline const AccessPoliciesStatus& GetAccessPolicies() const{ return m_accessPolicies; }
-    inline void SetAccessPolicies(const AccessPoliciesStatus& value) { m_accessPolicies = value; }
-    inline void SetAccessPolicies(AccessPoliciesStatus&& value) { m_accessPolicies = std::move(value); }
-    inline DescribeServiceAccessPoliciesResult& WithAccessPolicies(const AccessPoliciesStatus& value) { SetAccessPolicies(value); return *this;}
-    inline DescribeServiceAccessPoliciesResult& WithAccessPolicies(AccessPoliciesStatus&& value) { SetAccessPolicies(std::move(value)); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeServiceAccessPoliciesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeServiceAccessPoliciesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeServiceAccessPoliciesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  AccessPoliciesStatus m_accessPolicies;
 
-    AccessPoliciesStatus m_accessPolicies;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessPoliciesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace CloudSearch
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudSearch
+}  // namespace Aws

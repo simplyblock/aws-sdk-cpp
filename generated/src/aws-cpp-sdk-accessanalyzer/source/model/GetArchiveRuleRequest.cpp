@@ -12,17 +12,4 @@ using namespace Aws::AccessAnalyzer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetArchiveRuleRequest::GetArchiveRuleRequest() : 
-    m_analyzerNameHasBeenSet(false),
-    m_ruleNameHasBeenSet(false)
-{
-}
-
-Aws::String GetArchiveRuleRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetArchiveRuleRequest::SerializePayload() const { return {}; }

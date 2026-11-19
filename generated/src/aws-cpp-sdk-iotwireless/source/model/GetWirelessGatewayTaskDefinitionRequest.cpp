@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotwireless/model/GetWirelessGatewayTaskDefinitionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotwireless/model/GetWirelessGatewayTaskDefinitionRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoTWireless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetWirelessGatewayTaskDefinitionRequest::GetWirelessGatewayTaskDefinitionRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetWirelessGatewayTaskDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetWirelessGatewayTaskDefinitionRequest::SerializePayload() const { return {}; }

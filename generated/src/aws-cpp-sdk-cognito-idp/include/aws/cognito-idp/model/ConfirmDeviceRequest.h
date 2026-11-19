@@ -4,109 +4,124 @@
  */
 
 #pragma once
-#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/CognitoIdentityProviderRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/DeviceSecretVerifierConfigType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
+/**
+ * <p>The confirm-device request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ConfirmDeviceRequest">AWS
+ * API Reference</a></p>
+ */
+class ConfirmDeviceRequest : public CognitoIdentityProviderRequest {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API ConfirmDeviceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ConfirmDevice"; }
+
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::String SerializePayload() const override;
+
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>Confirms the device request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ConfirmDeviceRequest">AWS
-   * API Reference</a></p>
+   * <p>A valid access token that Amazon Cognito issued to the currently signed-in
+   * user. Must include a scope claim for
+   * <code>aws.cognito.signin.user.admin</code>.</p>
    */
-  class ConfirmDeviceRequest : public CognitoIdentityProviderRequest
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API ConfirmDeviceRequest();
+  inline const Aws::String& GetAccessToken() const { return m_accessToken; }
+  inline bool AccessTokenHasBeenSet() const { return m_accessTokenHasBeenSet; }
+  template <typename AccessTokenT = Aws::String>
+  void SetAccessToken(AccessTokenT&& value) {
+    m_accessTokenHasBeenSet = true;
+    m_accessToken = std::forward<AccessTokenT>(value);
+  }
+  template <typename AccessTokenT = Aws::String>
+  ConfirmDeviceRequest& WithAccessToken(AccessTokenT&& value) {
+    SetAccessToken(std::forward<AccessTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ConfirmDevice"; }
+  ///@{
+  /**
+   * <p>The unique identifier, or device key, of the device that you want to update
+   * the status for.</p>
+   */
+  inline const Aws::String& GetDeviceKey() const { return m_deviceKey; }
+  inline bool DeviceKeyHasBeenSet() const { return m_deviceKeyHasBeenSet; }
+  template <typename DeviceKeyT = Aws::String>
+  void SetDeviceKey(DeviceKeyT&& value) {
+    m_deviceKeyHasBeenSet = true;
+    m_deviceKey = std::forward<DeviceKeyT>(value);
+  }
+  template <typename DeviceKeyT = Aws::String>
+  ConfirmDeviceRequest& WithDeviceKey(DeviceKeyT&& value) {
+    SetDeviceKey(std::forward<DeviceKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The configuration of the device secret verifier.</p>
+   */
+  inline const DeviceSecretVerifierConfigType& GetDeviceSecretVerifierConfig() const { return m_deviceSecretVerifierConfig; }
+  inline bool DeviceSecretVerifierConfigHasBeenSet() const { return m_deviceSecretVerifierConfigHasBeenSet; }
+  template <typename DeviceSecretVerifierConfigT = DeviceSecretVerifierConfigType>
+  void SetDeviceSecretVerifierConfig(DeviceSecretVerifierConfigT&& value) {
+    m_deviceSecretVerifierConfigHasBeenSet = true;
+    m_deviceSecretVerifierConfig = std::forward<DeviceSecretVerifierConfigT>(value);
+  }
+  template <typename DeviceSecretVerifierConfigT = DeviceSecretVerifierConfigType>
+  ConfirmDeviceRequest& WithDeviceSecretVerifierConfig(DeviceSecretVerifierConfigT&& value) {
+    SetDeviceSecretVerifierConfig(std::forward<DeviceSecretVerifierConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A friendly name for the device, for example <code>MyMobilePhone</code>.</p>
+   */
+  inline const Aws::String& GetDeviceName() const { return m_deviceName; }
+  inline bool DeviceNameHasBeenSet() const { return m_deviceNameHasBeenSet; }
+  template <typename DeviceNameT = Aws::String>
+  void SetDeviceName(DeviceNameT&& value) {
+    m_deviceNameHasBeenSet = true;
+    m_deviceName = std::forward<DeviceNameT>(value);
+  }
+  template <typename DeviceNameT = Aws::String>
+  ConfirmDeviceRequest& WithDeviceName(DeviceNameT&& value) {
+    SetDeviceName(std::forward<DeviceNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accessToken;
 
+  Aws::String m_deviceKey;
 
-    ///@{
-    /**
-     * <p>A valid access token that Amazon Cognito issued to the user whose device you
-     * want to confirm.</p>
-     */
-    inline const Aws::String& GetAccessToken() const{ return m_accessToken; }
-    inline bool AccessTokenHasBeenSet() const { return m_accessTokenHasBeenSet; }
-    inline void SetAccessToken(const Aws::String& value) { m_accessTokenHasBeenSet = true; m_accessToken = value; }
-    inline void SetAccessToken(Aws::String&& value) { m_accessTokenHasBeenSet = true; m_accessToken = std::move(value); }
-    inline void SetAccessToken(const char* value) { m_accessTokenHasBeenSet = true; m_accessToken.assign(value); }
-    inline ConfirmDeviceRequest& WithAccessToken(const Aws::String& value) { SetAccessToken(value); return *this;}
-    inline ConfirmDeviceRequest& WithAccessToken(Aws::String&& value) { SetAccessToken(std::move(value)); return *this;}
-    inline ConfirmDeviceRequest& WithAccessToken(const char* value) { SetAccessToken(value); return *this;}
-    ///@}
+  DeviceSecretVerifierConfigType m_deviceSecretVerifierConfig;
 
-    ///@{
-    /**
-     * <p>The device key.</p>
-     */
-    inline const Aws::String& GetDeviceKey() const{ return m_deviceKey; }
-    inline bool DeviceKeyHasBeenSet() const { return m_deviceKeyHasBeenSet; }
-    inline void SetDeviceKey(const Aws::String& value) { m_deviceKeyHasBeenSet = true; m_deviceKey = value; }
-    inline void SetDeviceKey(Aws::String&& value) { m_deviceKeyHasBeenSet = true; m_deviceKey = std::move(value); }
-    inline void SetDeviceKey(const char* value) { m_deviceKeyHasBeenSet = true; m_deviceKey.assign(value); }
-    inline ConfirmDeviceRequest& WithDeviceKey(const Aws::String& value) { SetDeviceKey(value); return *this;}
-    inline ConfirmDeviceRequest& WithDeviceKey(Aws::String&& value) { SetDeviceKey(std::move(value)); return *this;}
-    inline ConfirmDeviceRequest& WithDeviceKey(const char* value) { SetDeviceKey(value); return *this;}
-    ///@}
+  Aws::String m_deviceName;
+  bool m_accessTokenHasBeenSet = false;
+  bool m_deviceKeyHasBeenSet = false;
+  bool m_deviceSecretVerifierConfigHasBeenSet = false;
+  bool m_deviceNameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The configuration of the device secret verifier.</p>
-     */
-    inline const DeviceSecretVerifierConfigType& GetDeviceSecretVerifierConfig() const{ return m_deviceSecretVerifierConfig; }
-    inline bool DeviceSecretVerifierConfigHasBeenSet() const { return m_deviceSecretVerifierConfigHasBeenSet; }
-    inline void SetDeviceSecretVerifierConfig(const DeviceSecretVerifierConfigType& value) { m_deviceSecretVerifierConfigHasBeenSet = true; m_deviceSecretVerifierConfig = value; }
-    inline void SetDeviceSecretVerifierConfig(DeviceSecretVerifierConfigType&& value) { m_deviceSecretVerifierConfigHasBeenSet = true; m_deviceSecretVerifierConfig = std::move(value); }
-    inline ConfirmDeviceRequest& WithDeviceSecretVerifierConfig(const DeviceSecretVerifierConfigType& value) { SetDeviceSecretVerifierConfig(value); return *this;}
-    inline ConfirmDeviceRequest& WithDeviceSecretVerifierConfig(DeviceSecretVerifierConfigType&& value) { SetDeviceSecretVerifierConfig(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The device name.</p>
-     */
-    inline const Aws::String& GetDeviceName() const{ return m_deviceName; }
-    inline bool DeviceNameHasBeenSet() const { return m_deviceNameHasBeenSet; }
-    inline void SetDeviceName(const Aws::String& value) { m_deviceNameHasBeenSet = true; m_deviceName = value; }
-    inline void SetDeviceName(Aws::String&& value) { m_deviceNameHasBeenSet = true; m_deviceName = std::move(value); }
-    inline void SetDeviceName(const char* value) { m_deviceNameHasBeenSet = true; m_deviceName.assign(value); }
-    inline ConfirmDeviceRequest& WithDeviceName(const Aws::String& value) { SetDeviceName(value); return *this;}
-    inline ConfirmDeviceRequest& WithDeviceName(Aws::String&& value) { SetDeviceName(std::move(value)); return *this;}
-    inline ConfirmDeviceRequest& WithDeviceName(const char* value) { SetDeviceName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_accessToken;
-    bool m_accessTokenHasBeenSet = false;
-
-    Aws::String m_deviceKey;
-    bool m_deviceKeyHasBeenSet = false;
-
-    DeviceSecretVerifierConfigType m_deviceSecretVerifierConfig;
-    bool m_deviceSecretVerifierConfigHasBeenSet = false;
-
-    Aws::String m_deviceName;
-    bool m_deviceNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

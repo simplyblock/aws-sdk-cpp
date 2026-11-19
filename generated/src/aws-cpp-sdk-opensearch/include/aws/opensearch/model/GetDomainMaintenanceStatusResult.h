@@ -4,140 +4,177 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/opensearch/model/MaintenanceStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/opensearch/model/MaintenanceType.h>
-#include <aws/core/utils/DateTime.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
+/**
+ * <p>The result of a <code>GetDomainMaintenanceStatus</code> request that
+ * information about the requested action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDomainMaintenanceStatusResponse">AWS
+ * API Reference</a></p>
+ */
+class GetDomainMaintenanceStatusResult {
+ public:
+  AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult() = default;
+  AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result of a <code>GetDomainMaintenanceStatus</code> request that
-   * information about the requested action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDomainMaintenanceStatusResponse">AWS
-   * API Reference</a></p>
+   * <p>The status of the maintenance action.</p>
    */
-  class GetDomainMaintenanceStatusResult
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult();
-    AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OPENSEARCHSERVICE_API GetDomainMaintenanceStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline MaintenanceStatus GetStatus() const { return m_status; }
+  inline void SetStatus(MaintenanceStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetDomainMaintenanceStatusResult& WithStatus(MaintenanceStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The status message of the maintenance action.</p>
+   */
+  inline const Aws::String& GetStatusMessage() const { return m_statusMessage; }
+  template <typename StatusMessageT = Aws::String>
+  void SetStatusMessage(StatusMessageT&& value) {
+    m_statusMessageHasBeenSet = true;
+    m_statusMessage = std::forward<StatusMessageT>(value);
+  }
+  template <typename StatusMessageT = Aws::String>
+  GetDomainMaintenanceStatusResult& WithStatusMessage(StatusMessageT&& value) {
+    SetStatusMessage(std::forward<StatusMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the maintenance action.</p>
-     */
-    inline const MaintenanceStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const MaintenanceStatus& value) { m_status = value; }
-    inline void SetStatus(MaintenanceStatus&& value) { m_status = std::move(value); }
-    inline GetDomainMaintenanceStatusResult& WithStatus(const MaintenanceStatus& value) { SetStatus(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithStatus(MaintenanceStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The node ID of the maintenance action.</p>
+   */
+  inline const Aws::String& GetNodeId() const { return m_nodeId; }
+  template <typename NodeIdT = Aws::String>
+  void SetNodeId(NodeIdT&& value) {
+    m_nodeIdHasBeenSet = true;
+    m_nodeId = std::forward<NodeIdT>(value);
+  }
+  template <typename NodeIdT = Aws::String>
+  GetDomainMaintenanceStatusResult& WithNodeId(NodeIdT&& value) {
+    SetNodeId(std::forward<NodeIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status message of the maintenance action.</p>
-     */
-    inline const Aws::String& GetStatusMessage() const{ return m_statusMessage; }
-    inline void SetStatusMessage(const Aws::String& value) { m_statusMessage = value; }
-    inline void SetStatusMessage(Aws::String&& value) { m_statusMessage = std::move(value); }
-    inline void SetStatusMessage(const char* value) { m_statusMessage.assign(value); }
-    inline GetDomainMaintenanceStatusResult& WithStatusMessage(const Aws::String& value) { SetStatusMessage(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithStatusMessage(Aws::String&& value) { SetStatusMessage(std::move(value)); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithStatusMessage(const char* value) { SetStatusMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The action name.</p>
+   */
+  inline MaintenanceType GetAction() const { return m_action; }
+  inline void SetAction(MaintenanceType value) {
+    m_actionHasBeenSet = true;
+    m_action = value;
+  }
+  inline GetDomainMaintenanceStatusResult& WithAction(MaintenanceType value) {
+    SetAction(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The node ID of the maintenance action.</p>
-     */
-    inline const Aws::String& GetNodeId() const{ return m_nodeId; }
-    inline void SetNodeId(const Aws::String& value) { m_nodeId = value; }
-    inline void SetNodeId(Aws::String&& value) { m_nodeId = std::move(value); }
-    inline void SetNodeId(const char* value) { m_nodeId.assign(value); }
-    inline GetDomainMaintenanceStatusResult& WithNodeId(const Aws::String& value) { SetNodeId(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithNodeId(Aws::String&& value) { SetNodeId(std::move(value)); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithNodeId(const char* value) { SetNodeId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the action was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetDomainMaintenanceStatusResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The action name.</p>
-     */
-    inline const MaintenanceType& GetAction() const{ return m_action; }
-    inline void SetAction(const MaintenanceType& value) { m_action = value; }
-    inline void SetAction(MaintenanceType&& value) { m_action = std::move(value); }
-    inline GetDomainMaintenanceStatusResult& WithAction(const MaintenanceType& value) { SetAction(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithAction(MaintenanceType&& value) { SetAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the action was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetDomainMaintenanceStatusResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the action was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetDomainMaintenanceStatusResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The time at which the action was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAt = std::move(value); }
-    inline GetDomainMaintenanceStatusResult& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDomainMaintenanceStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDomainMaintenanceStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDomainMaintenanceStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  MaintenanceStatus m_status{MaintenanceStatus::NOT_SET};
 
-    MaintenanceStatus m_status;
+  Aws::String m_statusMessage;
 
-    Aws::String m_statusMessage;
+  Aws::String m_nodeId;
 
-    Aws::String m_nodeId;
+  MaintenanceType m_action{MaintenanceType::NOT_SET};
 
-    MaintenanceType m_action;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::Utils::DateTime m_createdAt;
+  Aws::Utils::DateTime m_updatedAt{};
 
-    Aws::Utils::DateTime m_updatedAt;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_statusMessageHasBeenSet = false;
+  bool m_nodeIdHasBeenSet = false;
+  bool m_actionHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

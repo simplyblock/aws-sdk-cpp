@@ -3,71 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/waf/model/IPSetUpdate.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/waf/model/IPSetUpdate.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace WAF
-{
-namespace Model
-{
+namespace Aws {
+namespace WAF {
+namespace Model {
 
-IPSetUpdate::IPSetUpdate() : 
-    m_action(ChangeAction::NOT_SET),
-    m_actionHasBeenSet(false),
-    m_iPSetDescriptorHasBeenSet(false)
-{
-}
+IPSetUpdate::IPSetUpdate(JsonView jsonValue) { *this = jsonValue; }
 
-IPSetUpdate::IPSetUpdate(JsonView jsonValue)
-  : IPSetUpdate()
-{
-  *this = jsonValue;
-}
-
-IPSetUpdate& IPSetUpdate::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Action"))
-  {
+IPSetUpdate& IPSetUpdate::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Action")) {
     m_action = ChangeActionMapper::GetChangeActionForName(jsonValue.GetString("Action"));
-
     m_actionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("IPSetDescriptor"))
-  {
+  if (jsonValue.ValueExists("IPSetDescriptor")) {
     m_iPSetDescriptor = jsonValue.GetObject("IPSetDescriptor");
-
     m_iPSetDescriptorHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue IPSetUpdate::Jsonize() const
-{
+JsonValue IPSetUpdate::Jsonize() const {
   JsonValue payload;
 
-  if(m_actionHasBeenSet)
-  {
-   payload.WithString("Action", ChangeActionMapper::GetNameForChangeAction(m_action));
+  if (m_actionHasBeenSet) {
+    payload.WithString("Action", ChangeActionMapper::GetNameForChangeAction(m_action));
   }
 
-  if(m_iPSetDescriptorHasBeenSet)
-  {
-   payload.WithObject("IPSetDescriptor", m_iPSetDescriptor.Jsonize());
-
+  if (m_iPSetDescriptorHasBeenSet) {
+    payload.WithObject("IPSetDescriptor", m_iPSetDescriptor.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace WAF
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAF
+}  // namespace Aws

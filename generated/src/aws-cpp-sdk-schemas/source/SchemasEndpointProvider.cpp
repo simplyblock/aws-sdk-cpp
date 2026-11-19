@@ -4,13 +4,14 @@
  */
 
 #include <aws/schemas/SchemasEndpointProvider.h>
+#include <aws/schemas/internal/SchemasEndpointRules.h>
 
-namespace Aws
-{
-namespace Schemas
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Schemas
-} // namespace Aws
+namespace Aws {
+namespace Schemas {
+namespace Endpoint {
+SchemasEndpointProvider::SchemasEndpointProvider()
+    : SchemasDefaultEpProviderBase(Aws::Schemas::SchemasEndpointRules::GetRulesBlob(), Aws::Schemas::SchemasEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Schemas
+}  // namespace Aws

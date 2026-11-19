@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ivs/IVS_EXPORTS.h>
 #include <aws/ivs/model/PlaybackRestrictionPolicy.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IVS
-{
-namespace Model
-{
-  class CreatePlaybackRestrictionPolicyResult
-  {
-  public:
-    AWS_IVS_API CreatePlaybackRestrictionPolicyResult();
-    AWS_IVS_API CreatePlaybackRestrictionPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IVS_API CreatePlaybackRestrictionPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IVS {
+namespace Model {
+class CreatePlaybackRestrictionPolicyResult {
+ public:
+  AWS_IVS_API CreatePlaybackRestrictionPolicyResult() = default;
+  AWS_IVS_API CreatePlaybackRestrictionPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IVS_API CreatePlaybackRestrictionPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p/>
+   */
+  inline const PlaybackRestrictionPolicy& GetPlaybackRestrictionPolicy() const { return m_playbackRestrictionPolicy; }
+  template <typename PlaybackRestrictionPolicyT = PlaybackRestrictionPolicy>
+  void SetPlaybackRestrictionPolicy(PlaybackRestrictionPolicyT&& value) {
+    m_playbackRestrictionPolicyHasBeenSet = true;
+    m_playbackRestrictionPolicy = std::forward<PlaybackRestrictionPolicyT>(value);
+  }
+  template <typename PlaybackRestrictionPolicyT = PlaybackRestrictionPolicy>
+  CreatePlaybackRestrictionPolicyResult& WithPlaybackRestrictionPolicy(PlaybackRestrictionPolicyT&& value) {
+    SetPlaybackRestrictionPolicy(std::forward<PlaybackRestrictionPolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline const PlaybackRestrictionPolicy& GetPlaybackRestrictionPolicy() const{ return m_playbackRestrictionPolicy; }
-    inline void SetPlaybackRestrictionPolicy(const PlaybackRestrictionPolicy& value) { m_playbackRestrictionPolicy = value; }
-    inline void SetPlaybackRestrictionPolicy(PlaybackRestrictionPolicy&& value) { m_playbackRestrictionPolicy = std::move(value); }
-    inline CreatePlaybackRestrictionPolicyResult& WithPlaybackRestrictionPolicy(const PlaybackRestrictionPolicy& value) { SetPlaybackRestrictionPolicy(value); return *this;}
-    inline CreatePlaybackRestrictionPolicyResult& WithPlaybackRestrictionPolicy(PlaybackRestrictionPolicy&& value) { SetPlaybackRestrictionPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreatePlaybackRestrictionPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreatePlaybackRestrictionPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreatePlaybackRestrictionPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreatePlaybackRestrictionPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PlaybackRestrictionPolicy m_playbackRestrictionPolicy;
+ private:
+  PlaybackRestrictionPolicy m_playbackRestrictionPolicy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_playbackRestrictionPolicyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IVS
-} // namespace Aws
+}  // namespace Model
+}  // namespace IVS
+}  // namespace Aws

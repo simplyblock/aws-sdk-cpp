@@ -12,16 +12,4 @@ using namespace Aws::PrometheusService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeAlertManagerDefinitionRequest::DescribeAlertManagerDefinitionRequest() : 
-    m_workspaceIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeAlertManagerDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeAlertManagerDefinitionRequest::SerializePayload() const { return {}; }

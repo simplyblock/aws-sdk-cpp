@@ -4,63 +4,71 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/SagemakerServicecatalogStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class GetSagemakerServicecatalogPortfolioStatusResult
-  {
-  public:
-    AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult();
-    AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class GetSagemakerServicecatalogPortfolioStatusResult {
+ public:
+  AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult() = default;
+  AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API GetSagemakerServicecatalogPortfolioStatusResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Whether Service Catalog is enabled or disabled in SageMaker.</p>
+   */
+  inline SagemakerServicecatalogStatus GetStatus() const { return m_status; }
+  inline void SetStatus(SagemakerServicecatalogStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetSagemakerServicecatalogPortfolioStatusResult& WithStatus(SagemakerServicecatalogStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether Service Catalog is enabled or disabled in SageMaker.</p>
-     */
-    inline const SagemakerServicecatalogStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const SagemakerServicecatalogStatus& value) { m_status = value; }
-    inline void SetStatus(SagemakerServicecatalogStatus&& value) { m_status = std::move(value); }
-    inline GetSagemakerServicecatalogPortfolioStatusResult& WithStatus(const SagemakerServicecatalogStatus& value) { SetStatus(value); return *this;}
-    inline GetSagemakerServicecatalogPortfolioStatusResult& WithStatus(SagemakerServicecatalogStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSagemakerServicecatalogPortfolioStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSagemakerServicecatalogPortfolioStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSagemakerServicecatalogPortfolioStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSagemakerServicecatalogPortfolioStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SagemakerServicecatalogStatus m_status;
+ private:
+  SagemakerServicecatalogStatus m_status{SagemakerServicecatalogStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

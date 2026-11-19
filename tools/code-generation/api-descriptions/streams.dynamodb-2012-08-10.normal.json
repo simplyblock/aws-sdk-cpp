@@ -5,12 +5,14 @@
     "endpointPrefix":"streams.dynamodb",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon DynamoDB Streams",
     "serviceId":"DynamoDB Streams",
     "signatureVersion":"v4",
     "signingName":"dynamodb",
     "targetPrefix":"DynamoDBStreams_20120810",
-    "uid":"streams-dynamodb-2012-08-10"
+    "uid":"streams-dynamodb-2012-08-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DescribeStream":{
@@ -143,7 +145,8 @@
       "members":{
         "StreamArn":{
           "shape":"StreamArn",
-          "documentation":"<p>The Amazon Resource Name (ARN) for the stream.</p>"
+          "documentation":"<p>The Amazon Resource Name (ARN) for the stream.</p>",
+          "contextParam":{"name":"StreamArn"}
         },
         "Limit":{
           "shape":"PositiveIntegerObject",
@@ -152,6 +155,10 @@
         "ExclusiveStartShardId":{
           "shape":"ShardId",
           "documentation":"<p>The shard ID of the first item that this operation will evaluate. Use the value that was returned for <code>LastEvaluatedShardId</code> in the previous operation. </p>"
+        },
+        "ShardFilter":{
+          "shape":"ShardFilter",
+          "documentation":"<p>This optional field contains the filter definition for the <code>DescribeStream</code> API.</p>"
         }
       },
       "documentation":"<p>Represents the input of a <code>DescribeStream</code> operation.</p>"
@@ -184,7 +191,8 @@
       "members":{
         "ShardIterator":{
           "shape":"ShardIterator",
-          "documentation":"<p>A shard iterator that was retrieved from a previous GetShardIterator operation. This iterator can be used to access the stream records in this shard.</p>"
+          "documentation":"<p>A shard iterator that was retrieved from a previous GetShardIterator operation. This iterator can be used to access the stream records in this shard.</p>",
+          "contextParam":{"name":"ShardIterator"}
         },
         "Limit":{
           "shape":"PositiveIntegerObject",
@@ -217,7 +225,8 @@
       "members":{
         "StreamArn":{
           "shape":"StreamArn",
-          "documentation":"<p>The Amazon Resource Name (ARN) for the stream.</p>"
+          "documentation":"<p>The Amazon Resource Name (ARN) for the stream.</p>",
+          "contextParam":{"name":"StreamArn"}
         },
         "ShardId":{
           "shape":"ShardId",
@@ -225,11 +234,15 @@
         },
         "ShardIteratorType":{
           "shape":"ShardIteratorType",
-          "documentation":"<p>Determines how the shard iterator is used to start reading stream records from the shard:</p> <ul> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the position denoted by a specific sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the position denoted by a specific sequence number.</p> </li> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last (untrimmed) stream record, which is the oldest record in the shard. In DynamoDB Streams, there is a 24 hour limit on data retention. Stream records whose age exceeds this limit are subject to removal (trimming) from the stream.</p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent stream record in the shard, so that you always read the most recent data in the shard.</p> </li> </ul>"
+          "documentation":"<p>Determines how the shard iterator is used to start reading stream records from the shard:</p> <ul> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the position denoted by a specific sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the position denoted by a specific sequence number.</p> </li> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last (untrimmed) stream record, which is the oldest record in the shard. In DynamoDB Streams, there is a 24 hour limit on data retention. Stream records whose age exceeds this limit are subject to removal (trimming) from the stream.</p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent stream record in the shard, so that you always read the most recent data in the shard.</p> </li> <li> <p> <code>AT_TIMESTAMP</code> - Start reading from the position denoted by a specific timestamp, provided in the parameter <code>Timestamp</code>.</p> </li> </ul>"
         },
         "SequenceNumber":{
           "shape":"SequenceNumber",
           "documentation":"<p>The sequence number of a stream record in the shard from which to start reading.</p>"
+        },
+        "Timestamp":{
+          "shape":"Timestamp",
+          "documentation":"<p>The timestamp of the stream record from which to start reading. Used with shard iterator type <code>AT_TIMESTAMP</code>. A timestamp is the Unix epoch date with precision in milliseconds. For example, <code>1791316726.480</code>. The iterator points to the first stream record whose <code>ApproximateCreationDateTime</code> is at or after the specified timestamp. If no record with that exact timestamp exists, the iterator points to the next (later) record. If the timestamp is older than the current trim horizon, the iterator points to the oldest untrimmed stream record (<code>TRIM_HORIZON</code>). If the timestamp is in the future, the request returns a <code>ValidationException</code>.</p>"
         }
       },
       "documentation":"<p>Represents the input of a <code>GetShardIterator</code> operation.</p>"
@@ -273,7 +286,6 @@
     "KeySchema":{
       "type":"list",
       "member":{"shape":"KeySchemaElement"},
-      "max":2,
       "min":1
     },
     "KeySchemaAttributeName":{
@@ -470,6 +482,24 @@
       "type":"list",
       "member":{"shape":"Shard"}
     },
+    "ShardFilter":{
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"ShardFilterType",
+          "documentation":"<p>Contains the type of filter to be applied on the <code>DescribeStream</code> API. Currently, the only value this parameter accepts is <code>CHILD_SHARDS</code>.</p>"
+        },
+        "ShardId":{
+          "shape":"ShardId",
+          "documentation":"<p>Contains the <code>shardId</code> of the parent shard for which you are requesting child shards.</p> <p> <i>Sample request:</i> </p>"
+        }
+      },
+      "documentation":"<p>This optional field contains the filter definition for the <code>DescribeStream</code> API.</p>"
+    },
+    "ShardFilterType":{
+      "type":"string",
+      "enum":["CHILD_SHARDS"]
+    },
     "ShardId":{
       "type":"string",
       "max":65,
@@ -486,7 +516,8 @@
         "TRIM_HORIZON",
         "LATEST",
         "AT_SEQUENCE_NUMBER",
-        "AFTER_SEQUENCE_NUMBER"
+        "AFTER_SEQUENCE_NUMBER",
+        "AT_TIMESTAMP"
       ]
     },
     "Stream":{
@@ -563,7 +594,7 @@
       "members":{
         "ApproximateCreationDateTime":{
           "shape":"Date",
-          "documentation":"<p>The approximate date and time when the stream record was created, in <a href=\"http://www.epochconverter.com/\">UNIX epoch time</a> format and rounded down to the closest second.</p>"
+          "documentation":"<p>The approximate date and time when the stream record was created, in <a href=\"http://www.epochconverter.com/\">UNIX epoch time</a> format and rounded down to the closest second. Some tools and SDKs may convert this value to a different format, such as <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601</a>.</p>"
         },
         "Keys":{
           "shape":"AttributeMap",
@@ -622,6 +653,7 @@
       "min":3,
       "pattern":"[a-zA-Z0-9_.-]+"
     },
+    "Timestamp":{"type":"timestamp"},
     "TrimmedDataAccessException":{
       "type":"structure",
       "members":{

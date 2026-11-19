@@ -4,116 +4,127 @@
  */
 
 #pragma once
-#include <aws/codepipeline/CodePipeline_EXPORTS.h>
 #include <aws/codepipeline/CodePipelineRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/codepipeline/CodePipeline_EXPORTS.h>
 #include <aws/codepipeline/model/StageTransitionType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CodePipeline
-{
-namespace Model
-{
+namespace Aws {
+namespace CodePipeline {
+namespace Model {
 
+/**
+ * <p>Represents the input of a <code>DisableStageTransition</code>
+ * action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/DisableStageTransitionInput">AWS
+ * API Reference</a></p>
+ */
+class DisableStageTransitionRequest : public CodePipelineRequest {
+ public:
+  AWS_CODEPIPELINE_API DisableStageTransitionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DisableStageTransition"; }
+
+  AWS_CODEPIPELINE_API Aws::String SerializePayload() const override;
+
+  AWS_CODEPIPELINE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>Represents the input of a <code>DisableStageTransition</code>
-   * action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/DisableStageTransitionInput">AWS
-   * API Reference</a></p>
+   * <p>The name of the pipeline in which you want to disable the flow of artifacts
+   * from one stage to another.</p>
    */
-  class DisableStageTransitionRequest : public CodePipelineRequest
-  {
-  public:
-    AWS_CODEPIPELINE_API DisableStageTransitionRequest();
+  inline const Aws::String& GetPipelineName() const { return m_pipelineName; }
+  inline bool PipelineNameHasBeenSet() const { return m_pipelineNameHasBeenSet; }
+  template <typename PipelineNameT = Aws::String>
+  void SetPipelineName(PipelineNameT&& value) {
+    m_pipelineNameHasBeenSet = true;
+    m_pipelineName = std::forward<PipelineNameT>(value);
+  }
+  template <typename PipelineNameT = Aws::String>
+  DisableStageTransitionRequest& WithPipelineName(PipelineNameT&& value) {
+    SetPipelineName(std::forward<PipelineNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DisableStageTransition"; }
+  ///@{
+  /**
+   * <p>The name of the stage where you want to disable the inbound or outbound
+   * transition of artifacts.</p>
+   */
+  inline const Aws::String& GetStageName() const { return m_stageName; }
+  inline bool StageNameHasBeenSet() const { return m_stageNameHasBeenSet; }
+  template <typename StageNameT = Aws::String>
+  void SetStageName(StageNameT&& value) {
+    m_stageNameHasBeenSet = true;
+    m_stageName = std::forward<StageNameT>(value);
+  }
+  template <typename StageNameT = Aws::String>
+  DisableStageTransitionRequest& WithStageName(StageNameT&& value) {
+    SetStageName(std::forward<StageNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODEPIPELINE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies whether artifacts are prevented from transitioning into the stage
+   * and being processed by the actions in that stage (inbound), or prevented from
+   * transitioning from the stage after they have been processed by the actions in
+   * that stage (outbound).</p>
+   */
+  inline StageTransitionType GetTransitionType() const { return m_transitionType; }
+  inline bool TransitionTypeHasBeenSet() const { return m_transitionTypeHasBeenSet; }
+  inline void SetTransitionType(StageTransitionType value) {
+    m_transitionTypeHasBeenSet = true;
+    m_transitionType = value;
+  }
+  inline DisableStageTransitionRequest& WithTransitionType(StageTransitionType value) {
+    SetTransitionType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_CODEPIPELINE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The reason given to the user that a stage is disabled, such as waiting for
+   * manual approval or manual tests. This message is displayed in the pipeline
+   * console UI.</p>
+   */
+  inline const Aws::String& GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  template <typename ReasonT = Aws::String>
+  void SetReason(ReasonT&& value) {
+    m_reasonHasBeenSet = true;
+    m_reason = std::forward<ReasonT>(value);
+  }
+  template <typename ReasonT = Aws::String>
+  DisableStageTransitionRequest& WithReason(ReasonT&& value) {
+    SetReason(std::forward<ReasonT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_pipelineName;
 
+  Aws::String m_stageName;
 
-    ///@{
-    /**
-     * <p>The name of the pipeline in which you want to disable the flow of artifacts
-     * from one stage to another.</p>
-     */
-    inline const Aws::String& GetPipelineName() const{ return m_pipelineName; }
-    inline bool PipelineNameHasBeenSet() const { return m_pipelineNameHasBeenSet; }
-    inline void SetPipelineName(const Aws::String& value) { m_pipelineNameHasBeenSet = true; m_pipelineName = value; }
-    inline void SetPipelineName(Aws::String&& value) { m_pipelineNameHasBeenSet = true; m_pipelineName = std::move(value); }
-    inline void SetPipelineName(const char* value) { m_pipelineNameHasBeenSet = true; m_pipelineName.assign(value); }
-    inline DisableStageTransitionRequest& WithPipelineName(const Aws::String& value) { SetPipelineName(value); return *this;}
-    inline DisableStageTransitionRequest& WithPipelineName(Aws::String&& value) { SetPipelineName(std::move(value)); return *this;}
-    inline DisableStageTransitionRequest& WithPipelineName(const char* value) { SetPipelineName(value); return *this;}
-    ///@}
+  StageTransitionType m_transitionType{StageTransitionType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The name of the stage where you want to disable the inbound or outbound
-     * transition of artifacts.</p>
-     */
-    inline const Aws::String& GetStageName() const{ return m_stageName; }
-    inline bool StageNameHasBeenSet() const { return m_stageNameHasBeenSet; }
-    inline void SetStageName(const Aws::String& value) { m_stageNameHasBeenSet = true; m_stageName = value; }
-    inline void SetStageName(Aws::String&& value) { m_stageNameHasBeenSet = true; m_stageName = std::move(value); }
-    inline void SetStageName(const char* value) { m_stageNameHasBeenSet = true; m_stageName.assign(value); }
-    inline DisableStageTransitionRequest& WithStageName(const Aws::String& value) { SetStageName(value); return *this;}
-    inline DisableStageTransitionRequest& WithStageName(Aws::String&& value) { SetStageName(std::move(value)); return *this;}
-    inline DisableStageTransitionRequest& WithStageName(const char* value) { SetStageName(value); return *this;}
-    ///@}
+  Aws::String m_reason;
+  bool m_pipelineNameHasBeenSet = false;
+  bool m_stageNameHasBeenSet = false;
+  bool m_transitionTypeHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Specifies whether artifacts are prevented from transitioning into the stage
-     * and being processed by the actions in that stage (inbound), or prevented from
-     * transitioning from the stage after they have been processed by the actions in
-     * that stage (outbound).</p>
-     */
-    inline const StageTransitionType& GetTransitionType() const{ return m_transitionType; }
-    inline bool TransitionTypeHasBeenSet() const { return m_transitionTypeHasBeenSet; }
-    inline void SetTransitionType(const StageTransitionType& value) { m_transitionTypeHasBeenSet = true; m_transitionType = value; }
-    inline void SetTransitionType(StageTransitionType&& value) { m_transitionTypeHasBeenSet = true; m_transitionType = std::move(value); }
-    inline DisableStageTransitionRequest& WithTransitionType(const StageTransitionType& value) { SetTransitionType(value); return *this;}
-    inline DisableStageTransitionRequest& WithTransitionType(StageTransitionType&& value) { SetTransitionType(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The reason given to the user that a stage is disabled, such as waiting for
-     * manual approval or manual tests. This message is displayed in the pipeline
-     * console UI.</p>
-     */
-    inline const Aws::String& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const Aws::String& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(Aws::String&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline void SetReason(const char* value) { m_reasonHasBeenSet = true; m_reason.assign(value); }
-    inline DisableStageTransitionRequest& WithReason(const Aws::String& value) { SetReason(value); return *this;}
-    inline DisableStageTransitionRequest& WithReason(Aws::String&& value) { SetReason(std::move(value)); return *this;}
-    inline DisableStageTransitionRequest& WithReason(const char* value) { SetReason(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_pipelineName;
-    bool m_pipelineNameHasBeenSet = false;
-
-    Aws::String m_stageName;
-    bool m_stageNameHasBeenSet = false;
-
-    StageTransitionType m_transitionType;
-    bool m_transitionTypeHasBeenSet = false;
-
-    Aws::String m_reason;
-    bool m_reasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodePipeline
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodePipeline
+}  // namespace Aws

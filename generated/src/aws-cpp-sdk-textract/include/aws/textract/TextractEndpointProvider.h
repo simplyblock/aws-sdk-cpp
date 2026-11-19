@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/textract/Textract_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/textract/Textract_EXPORTS.h>
 
-#include <aws/textract/TextractEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Textract
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Textract {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using TextractClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using TextractEndpointProviderBase =
     EndpointProviderBase<TextractClientConfiguration, TextractBuiltInParameters, TextractClientContextParameters>;
 
 using TextractDefaultEpProviderBase =
-    DefaultEndpointProvider<TextractClientConfiguration, TextractBuiltInParameters, TextractClientContextParameters>;
+    BDDEndpointProvider<TextractClientConfiguration, TextractBuiltInParameters, TextractClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_TEXTRACT_API TextractEndpointProvider : public TextractDefaultEpProviderBase
-{
-public:
-    using TextractResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_TEXTRACT_API TextractEndpointProvider : public TextractDefaultEpProviderBase {
+ public:
+  using TextractResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    TextractEndpointProvider()
-      : TextractDefaultEpProviderBase(Aws::Textract::TextractEndpointRules::GetRulesBlob(), Aws::Textract::TextractEndpointRules::RulesBlobSize)
-    {}
+  TextractEndpointProvider();
 
-    ~TextractEndpointProvider()
-    {
-    }
+  ~TextractEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Textract
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Textract
+}  // namespace Aws

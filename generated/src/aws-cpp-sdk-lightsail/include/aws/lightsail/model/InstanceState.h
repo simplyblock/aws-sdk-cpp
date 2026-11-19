@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
 
+/**
+ * <p>Describes the virtual private server (or <i>instance</i>)
+ * status.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/InstanceState">AWS
+ * API Reference</a></p>
+ */
+class InstanceState {
+ public:
+  AWS_LIGHTSAIL_API InstanceState() = default;
+  AWS_LIGHTSAIL_API InstanceState(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LIGHTSAIL_API InstanceState& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LIGHTSAIL_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes the virtual private server (or <i>instance</i>)
-   * status.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/InstanceState">AWS
-   * API Reference</a></p>
+   * <p>The status code for the instance.</p>
    */
-  class InstanceState
-  {
-  public:
-    AWS_LIGHTSAIL_API InstanceState();
-    AWS_LIGHTSAIL_API InstanceState(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LIGHTSAIL_API InstanceState& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LIGHTSAIL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline int GetCode() const { return m_code; }
+  inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
+  inline void SetCode(int value) {
+    m_codeHasBeenSet = true;
+    m_code = value;
+  }
+  inline InstanceState& WithCode(int value) {
+    SetCode(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The state of the instance (<code>running</code> or <code>pending</code>).</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  InstanceState& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  int m_code{0};
 
-    ///@{
-    /**
-     * <p>The status code for the instance.</p>
-     */
-    inline int GetCode() const{ return m_code; }
-    inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
-    inline void SetCode(int value) { m_codeHasBeenSet = true; m_code = value; }
-    inline InstanceState& WithCode(int value) { SetCode(value); return *this;}
-    ///@}
+  Aws::String m_name;
+  bool m_codeHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The state of the instance (<code>running</code> or <code>pending</code>).</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline InstanceState& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline InstanceState& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline InstanceState& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    int m_code;
-    bool m_codeHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

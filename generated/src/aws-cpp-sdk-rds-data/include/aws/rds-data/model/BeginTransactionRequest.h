@@ -4,108 +4,119 @@
  */
 
 #pragma once
-#include <aws/rds-data/RDSDataService_EXPORTS.h>
-#include <aws/rds-data/RDSDataServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/rds-data/RDSDataServiceRequest.h>
+#include <aws/rds-data/RDSDataService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace RDSDataService
-{
-namespace Model
-{
+namespace Aws {
+namespace RDSDataService {
+namespace Model {
 
+/**
+ * <p>The request parameters represent the input of a request to start a SQL
+ * transaction.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/BeginTransactionRequest">AWS
+ * API Reference</a></p>
+ */
+class BeginTransactionRequest : public RDSDataServiceRequest {
+ public:
+  AWS_RDSDATASERVICE_API BeginTransactionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "BeginTransaction"; }
+
+  AWS_RDSDATASERVICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p>The request parameters represent the input of a request to start a SQL
-   * transaction.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/BeginTransactionRequest">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of the Aurora Serverless DB cluster.</p>
    */
-  class BeginTransactionRequest : public RDSDataServiceRequest
-  {
-  public:
-    AWS_RDSDATASERVICE_API BeginTransactionRequest();
+  inline const Aws::String& GetResourceArn() const { return m_resourceArn; }
+  inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
+  template <typename ResourceArnT = Aws::String>
+  void SetResourceArn(ResourceArnT&& value) {
+    m_resourceArnHasBeenSet = true;
+    m_resourceArn = std::forward<ResourceArnT>(value);
+  }
+  template <typename ResourceArnT = Aws::String>
+  BeginTransactionRequest& WithResourceArn(ResourceArnT&& value) {
+    SetResourceArn(std::forward<ResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "BeginTransaction"; }
+  ///@{
+  /**
+   * <p>The name or ARN of the secret that enables access to the DB cluster.</p>
+   */
+  inline const Aws::String& GetSecretArn() const { return m_secretArn; }
+  inline bool SecretArnHasBeenSet() const { return m_secretArnHasBeenSet; }
+  template <typename SecretArnT = Aws::String>
+  void SetSecretArn(SecretArnT&& value) {
+    m_secretArnHasBeenSet = true;
+    m_secretArn = std::forward<SecretArnT>(value);
+  }
+  template <typename SecretArnT = Aws::String>
+  BeginTransactionRequest& WithSecretArn(SecretArnT&& value) {
+    SetSecretArn(std::forward<SecretArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_RDSDATASERVICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the database.</p>
+   */
+  inline const Aws::String& GetDatabase() const { return m_database; }
+  inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
+  template <typename DatabaseT = Aws::String>
+  void SetDatabase(DatabaseT&& value) {
+    m_databaseHasBeenSet = true;
+    m_database = std::forward<DatabaseT>(value);
+  }
+  template <typename DatabaseT = Aws::String>
+  BeginTransactionRequest& WithDatabase(DatabaseT&& value) {
+    SetDatabase(std::forward<DatabaseT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the database schema.</p>
+   */
+  inline const Aws::String& GetSchema() const { return m_schema; }
+  inline bool SchemaHasBeenSet() const { return m_schemaHasBeenSet; }
+  template <typename SchemaT = Aws::String>
+  void SetSchema(SchemaT&& value) {
+    m_schemaHasBeenSet = true;
+    m_schema = std::forward<SchemaT>(value);
+  }
+  template <typename SchemaT = Aws::String>
+  BeginTransactionRequest& WithSchema(SchemaT&& value) {
+    SetSchema(std::forward<SchemaT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_resourceArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the Aurora Serverless DB cluster.</p>
-     */
-    inline const Aws::String& GetResourceArn() const{ return m_resourceArn; }
-    inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
-    inline void SetResourceArn(const Aws::String& value) { m_resourceArnHasBeenSet = true; m_resourceArn = value; }
-    inline void SetResourceArn(Aws::String&& value) { m_resourceArnHasBeenSet = true; m_resourceArn = std::move(value); }
-    inline void SetResourceArn(const char* value) { m_resourceArnHasBeenSet = true; m_resourceArn.assign(value); }
-    inline BeginTransactionRequest& WithResourceArn(const Aws::String& value) { SetResourceArn(value); return *this;}
-    inline BeginTransactionRequest& WithResourceArn(Aws::String&& value) { SetResourceArn(std::move(value)); return *this;}
-    inline BeginTransactionRequest& WithResourceArn(const char* value) { SetResourceArn(value); return *this;}
-    ///@}
+  Aws::String m_secretArn;
 
-    ///@{
-    /**
-     * <p>The name or ARN of the secret that enables access to the DB cluster.</p>
-     */
-    inline const Aws::String& GetSecretArn() const{ return m_secretArn; }
-    inline bool SecretArnHasBeenSet() const { return m_secretArnHasBeenSet; }
-    inline void SetSecretArn(const Aws::String& value) { m_secretArnHasBeenSet = true; m_secretArn = value; }
-    inline void SetSecretArn(Aws::String&& value) { m_secretArnHasBeenSet = true; m_secretArn = std::move(value); }
-    inline void SetSecretArn(const char* value) { m_secretArnHasBeenSet = true; m_secretArn.assign(value); }
-    inline BeginTransactionRequest& WithSecretArn(const Aws::String& value) { SetSecretArn(value); return *this;}
-    inline BeginTransactionRequest& WithSecretArn(Aws::String&& value) { SetSecretArn(std::move(value)); return *this;}
-    inline BeginTransactionRequest& WithSecretArn(const char* value) { SetSecretArn(value); return *this;}
-    ///@}
+  Aws::String m_database;
 
-    ///@{
-    /**
-     * <p>The name of the database.</p>
-     */
-    inline const Aws::String& GetDatabase() const{ return m_database; }
-    inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
-    inline void SetDatabase(const Aws::String& value) { m_databaseHasBeenSet = true; m_database = value; }
-    inline void SetDatabase(Aws::String&& value) { m_databaseHasBeenSet = true; m_database = std::move(value); }
-    inline void SetDatabase(const char* value) { m_databaseHasBeenSet = true; m_database.assign(value); }
-    inline BeginTransactionRequest& WithDatabase(const Aws::String& value) { SetDatabase(value); return *this;}
-    inline BeginTransactionRequest& WithDatabase(Aws::String&& value) { SetDatabase(std::move(value)); return *this;}
-    inline BeginTransactionRequest& WithDatabase(const char* value) { SetDatabase(value); return *this;}
-    ///@}
+  Aws::String m_schema;
+  bool m_resourceArnHasBeenSet = false;
+  bool m_secretArnHasBeenSet = false;
+  bool m_databaseHasBeenSet = false;
+  bool m_schemaHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the database schema.</p>
-     */
-    inline const Aws::String& GetSchema() const{ return m_schema; }
-    inline bool SchemaHasBeenSet() const { return m_schemaHasBeenSet; }
-    inline void SetSchema(const Aws::String& value) { m_schemaHasBeenSet = true; m_schema = value; }
-    inline void SetSchema(Aws::String&& value) { m_schemaHasBeenSet = true; m_schema = std::move(value); }
-    inline void SetSchema(const char* value) { m_schemaHasBeenSet = true; m_schema.assign(value); }
-    inline BeginTransactionRequest& WithSchema(const Aws::String& value) { SetSchema(value); return *this;}
-    inline BeginTransactionRequest& WithSchema(Aws::String&& value) { SetSchema(std::move(value)); return *this;}
-    inline BeginTransactionRequest& WithSchema(const char* value) { SetSchema(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet = false;
-
-    Aws::String m_secretArn;
-    bool m_secretArnHasBeenSet = false;
-
-    Aws::String m_database;
-    bool m_databaseHasBeenSet = false;
-
-    Aws::String m_schema;
-    bool m_schemaHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace RDSDataService
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDSDataService
+}  // namespace Aws

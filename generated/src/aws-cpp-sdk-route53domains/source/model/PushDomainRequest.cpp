@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/model/PushDomainRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Route53Domains::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PushDomainRequest::PushDomainRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_targetHasBeenSet(false)
-{
-}
+Aws::String PushDomainRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String PushDomainRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_domainNameHasBeenSet)
-  {
-   payload.WithString("DomainName", m_domainName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_domainNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_targetHasBeenSet)
-  {
-   payload.WithString("Target", m_target);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_domainNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DomainName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_domainName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_targetHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Target"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_target.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection PushDomainRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PushDomainRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Route53Domains_v20140515.PushDomain"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iam/model/ListInstanceProfilesResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/iam/model/ListInstanceProfilesResult.h>
 
 #include <utility>
 
@@ -17,56 +17,47 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ListInstanceProfilesResult::ListInstanceProfilesResult() : 
-    m_isTruncated(false)
-{
-}
+ListInstanceProfilesResult::ListInstanceProfilesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ListInstanceProfilesResult::ListInstanceProfilesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-  : ListInstanceProfilesResult()
-{
-  *this = result;
-}
-
-ListInstanceProfilesResult& ListInstanceProfilesResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ListInstanceProfilesResult& ListInstanceProfilesResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ListInstanceProfilesResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ListInstanceProfilesResult")) {
     resultNode = rootNode.FirstChild("ListInstanceProfilesResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode instanceProfilesNode = resultNode.FirstChild("InstanceProfiles");
-    if(!instanceProfilesNode.IsNull())
-    {
+    if (!instanceProfilesNode.IsNull()) {
       XmlNode instanceProfilesMember = instanceProfilesNode.FirstChild("member");
-      while(!instanceProfilesMember.IsNull())
-      {
+      m_instanceProfilesHasBeenSet = !instanceProfilesMember.IsNull();
+      while (!instanceProfilesMember.IsNull()) {
         m_instanceProfiles.push_back(instanceProfilesMember);
         instanceProfilesMember = instanceProfilesMember.NextNode("member");
       }
 
+      m_instanceProfilesHasBeenSet = true;
     }
     XmlNode isTruncatedNode = resultNode.FirstChild("IsTruncated");
-    if(!isTruncatedNode.IsNull())
-    {
-      m_isTruncated = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(isTruncatedNode.GetText()).c_str()).c_str());
+    if (!isTruncatedNode.IsNull()) {
+      m_isTruncated =
+          StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(isTruncatedNode.GetText()).c_str()).c_str());
+      m_isTruncatedHasBeenSet = true;
     }
     XmlNode markerNode = resultNode.FirstChild("Marker");
-    if(!markerNode.IsNull())
-    {
+    if (!markerNode.IsNull()) {
       m_marker = Aws::Utils::Xml::DecodeEscapedXmlText(markerNode.GetText());
+      m_markerHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::IAM::Model::ListInstanceProfilesResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::IAM::Model::ListInstanceProfilesResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

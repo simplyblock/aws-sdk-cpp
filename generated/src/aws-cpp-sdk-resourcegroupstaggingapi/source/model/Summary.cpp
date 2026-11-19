@@ -3,128 +3,418 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/resourcegroupstaggingapi/model/Summary.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ResourceGroupsTaggingAPI
-{
-namespace Model
-{
+namespace Aws {
+namespace ResourceGroupsTaggingAPI {
+namespace Model {
 
-Summary::Summary() : 
-    m_lastUpdatedHasBeenSet(false),
-    m_targetIdHasBeenSet(false),
-    m_targetIdType(TargetIdType::NOT_SET),
-    m_targetIdTypeHasBeenSet(false),
-    m_regionHasBeenSet(false),
-    m_resourceTypeHasBeenSet(false),
-    m_nonCompliantResources(0),
-    m_nonCompliantResourcesHasBeenSet(false)
-{
-}
+Summary::Summary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-Summary::Summary(JsonView jsonValue)
-  : Summary()
-{
-  *this = jsonValue;
-}
+Summary& Summary::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-Summary& Summary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("LastUpdated"))
-  {
-    m_lastUpdated = jsonValue.GetString("LastUpdated");
+              if (initialKeyStr == "LastUpdated") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_lastUpdated = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_lastUpdated = ss.str();
+                  }
+                }
+                m_lastUpdatedHasBeenSet = true;
+              }
 
-    m_lastUpdatedHasBeenSet = true;
-  }
+              else if (initialKeyStr == "TargetId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_targetId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_targetId = ss.str();
+                  }
+                }
+                m_targetIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TargetId"))
-  {
-    m_targetId = jsonValue.GetString("TargetId");
+              else if (initialKeyStr == "TargetIdType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_targetIdType = TargetIdTypeMapper::GetTargetIdTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_targetIdTypeHasBeenSet = true;
+              }
 
-    m_targetIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Region") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_region = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_region = ss.str();
+                  }
+                }
+                m_regionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TargetIdType"))
-  {
-    m_targetIdType = TargetIdTypeMapper::GetTargetIdTypeForName(jsonValue.GetString("TargetIdType"));
+              else if (initialKeyStr == "ResourceType") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_resourceType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_resourceType = ss.str();
+                  }
+                }
+                m_resourceTypeHasBeenSet = true;
+              }
 
-    m_targetIdTypeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "NonCompliantResources") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_nonCompliantResources = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_nonCompliantResources = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_nonCompliantResourcesHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("Summary", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Region"))
-  {
-    m_region = jsonValue.GetString("Region");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_regionHasBeenSet = true;
-  }
+            if (initialKeyStr == "LastUpdated") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_lastUpdated = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_lastUpdated = ss.str();
+                }
+              }
+              m_lastUpdatedHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("ResourceType"))
-  {
-    m_resourceType = jsonValue.GetString("ResourceType");
+            else if (initialKeyStr == "TargetId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_targetId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_targetId = ss.str();
+                }
+              }
+              m_targetIdHasBeenSet = true;
+            }
 
-    m_resourceTypeHasBeenSet = true;
-  }
+            else if (initialKeyStr == "TargetIdType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_targetIdType = TargetIdTypeMapper::GetTargetIdTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_targetIdTypeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("NonCompliantResources"))
-  {
-    m_nonCompliantResources = jsonValue.GetInt64("NonCompliantResources");
+            else if (initialKeyStr == "Region") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_region = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_region = ss.str();
+                }
+              }
+              m_regionHasBeenSet = true;
+            }
 
-    m_nonCompliantResourcesHasBeenSet = true;
+            else if (initialKeyStr == "ResourceType") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_resourceType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_resourceType = ss.str();
+                }
+              }
+              m_resourceTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "NonCompliantResources") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_nonCompliantResources = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_nonCompliantResources = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_nonCompliantResourcesHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue Summary::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_lastUpdatedHasBeenSet)
-  {
-   payload.WithString("LastUpdated", m_lastUpdated);
-
+void Summary::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_lastUpdatedHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetIdTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_regionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resourceTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nonCompliantResourcesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_targetIdHasBeenSet)
-  {
-   payload.WithString("TargetId", m_targetId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_lastUpdatedHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LastUpdated"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_lastUpdated.c_str()));
   }
 
-  if(m_targetIdTypeHasBeenSet)
-  {
-   payload.WithString("TargetIdType", TargetIdTypeMapper::GetNameForTargetIdType(m_targetIdType));
+  if (m_targetIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TargetId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_targetId.c_str()));
   }
 
-  if(m_regionHasBeenSet)
-  {
-   payload.WithString("Region", m_region);
-
+  if (m_targetIdTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TargetIdType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TargetIdTypeMapper::GetNameForTargetIdType(m_targetIdType).c_str()));
   }
 
-  if(m_resourceTypeHasBeenSet)
-  {
-   payload.WithString("ResourceType", m_resourceType);
-
+  if (m_regionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Region"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_region.c_str()));
   }
 
-  if(m_nonCompliantResourcesHasBeenSet)
-  {
-   payload.WithInt64("NonCompliantResources", m_nonCompliantResources);
-
+  if (m_resourceTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceType.c_str()));
   }
 
-  return payload;
+  if (m_nonCompliantResourcesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NonCompliantResources"));
+    (m_nonCompliantResources >= 0) ? encoder.WriteUInt(m_nonCompliantResources) : encoder.WriteNegInt(m_nonCompliantResources);
+  }
 }
 
-} // namespace Model
-} // namespace ResourceGroupsTaggingAPI
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResourceGroupsTaggingAPI
+}  // namespace Aws

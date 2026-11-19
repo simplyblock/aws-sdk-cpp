@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/supplychain/model/GetDataLakeDatasetRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/supplychain/model/GetDataLakeDatasetRequest.h>
 
 #include <utility>
 
@@ -12,18 +12,4 @@ using namespace Aws::SupplyChain::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDataLakeDatasetRequest::GetDataLakeDatasetRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_namespaceHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String GetDataLakeDatasetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDataLakeDatasetRequest::SerializePayload() const { return {}; }

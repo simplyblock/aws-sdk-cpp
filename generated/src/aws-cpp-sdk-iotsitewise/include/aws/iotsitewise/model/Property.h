@@ -4,204 +4,243 @@
  */
 
 #pragma once
-#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/iotsitewise/model/PropertyNotification.h>
-#include <aws/iotsitewise/model/PropertyDataType.h>
-#include <aws/iotsitewise/model/PropertyType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/iotsitewise/model/AssetPropertyPathSegment.h>
+#include <aws/iotsitewise/model/PropertyDataType.h>
+#include <aws/iotsitewise/model/PropertyNotification.h>
+#include <aws/iotsitewise/model/PropertyType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoTSiteWise
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTSiteWise {
+namespace Model {
 
+/**
+ * <p>Contains asset property information.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iotsitewise-2019-12-02/Property">AWS
+ * API Reference</a></p>
+ */
+class Property {
+ public:
+  AWS_IOTSITEWISE_API Property() = default;
+  AWS_IOTSITEWISE_API Property(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTSITEWISE_API Property& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOTSITEWISE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains asset property information.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iotsitewise-2019-12-02/Property">AWS
-   * API Reference</a></p>
+   * <p>The ID of the asset property.</p>
    */
-  class Property
-  {
-  public:
-    AWS_IOTSITEWISE_API Property();
-    AWS_IOTSITEWISE_API Property(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTSITEWISE_API Property& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOTSITEWISE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  Property& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The external ID of the asset property. For more information, see <a
+   * href="https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-ids">Using
+   * external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>
+   */
+  inline const Aws::String& GetExternalId() const { return m_externalId; }
+  inline bool ExternalIdHasBeenSet() const { return m_externalIdHasBeenSet; }
+  template <typename ExternalIdT = Aws::String>
+  void SetExternalId(ExternalIdT&& value) {
+    m_externalIdHasBeenSet = true;
+    m_externalId = std::forward<ExternalIdT>(value);
+  }
+  template <typename ExternalIdT = Aws::String>
+  Property& WithExternalId(ExternalIdT&& value) {
+    SetExternalId(std::forward<ExternalIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the asset property.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline Property& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline Property& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline Property& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the property.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Property& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the property.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Property& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Property& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Property& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The alias that identifies the property, such as an OPC-UA server data stream
+   * path (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/iot-sitewise/latest/userguide/connect-data-streams.html">Mapping
+   * industrial data streams to asset properties</a> in the <i>IoT SiteWise User
+   * Guide</i>.</p>
+   */
+  inline const Aws::String& GetAlias() const { return m_alias; }
+  inline bool AliasHasBeenSet() const { return m_aliasHasBeenSet; }
+  template <typename AliasT = Aws::String>
+  void SetAlias(AliasT&& value) {
+    m_aliasHasBeenSet = true;
+    m_alias = std::forward<AliasT>(value);
+  }
+  template <typename AliasT = Aws::String>
+  Property& WithAlias(AliasT&& value) {
+    SetAlias(std::forward<AliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The alias that identifies the property, such as an OPC-UA server data stream
-     * path (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). For
-     * more information, see <a
-     * href="https://docs.aws.amazon.com/iot-sitewise/latest/userguide/connect-data-streams.html">Mapping
-     * industrial data streams to asset properties</a> in the <i>IoT SiteWise User
-     * Guide</i>.</p>
-     */
-    inline const Aws::String& GetAlias() const{ return m_alias; }
-    inline bool AliasHasBeenSet() const { return m_aliasHasBeenSet; }
-    inline void SetAlias(const Aws::String& value) { m_aliasHasBeenSet = true; m_alias = value; }
-    inline void SetAlias(Aws::String&& value) { m_aliasHasBeenSet = true; m_alias = std::move(value); }
-    inline void SetAlias(const char* value) { m_aliasHasBeenSet = true; m_alias.assign(value); }
-    inline Property& WithAlias(const Aws::String& value) { SetAlias(value); return *this;}
-    inline Property& WithAlias(Aws::String&& value) { SetAlias(std::move(value)); return *this;}
-    inline Property& WithAlias(const char* value) { SetAlias(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The asset property's notification topic and state. For more information, see
+   * <a
+   * href="https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html">UpdateAssetProperty</a>.</p>
+   */
+  inline const PropertyNotification& GetNotification() const { return m_notification; }
+  inline bool NotificationHasBeenSet() const { return m_notificationHasBeenSet; }
+  template <typename NotificationT = PropertyNotification>
+  void SetNotification(NotificationT&& value) {
+    m_notificationHasBeenSet = true;
+    m_notification = std::forward<NotificationT>(value);
+  }
+  template <typename NotificationT = PropertyNotification>
+  Property& WithNotification(NotificationT&& value) {
+    SetNotification(std::forward<NotificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The asset property's notification topic and state. For more information, see
-     * <a
-     * href="https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html">UpdateAssetProperty</a>.</p>
-     */
-    inline const PropertyNotification& GetNotification() const{ return m_notification; }
-    inline bool NotificationHasBeenSet() const { return m_notificationHasBeenSet; }
-    inline void SetNotification(const PropertyNotification& value) { m_notificationHasBeenSet = true; m_notification = value; }
-    inline void SetNotification(PropertyNotification&& value) { m_notificationHasBeenSet = true; m_notification = std::move(value); }
-    inline Property& WithNotification(const PropertyNotification& value) { SetNotification(value); return *this;}
-    inline Property& WithNotification(PropertyNotification&& value) { SetNotification(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The property data type.</p>
+   */
+  inline PropertyDataType GetDataType() const { return m_dataType; }
+  inline bool DataTypeHasBeenSet() const { return m_dataTypeHasBeenSet; }
+  inline void SetDataType(PropertyDataType value) {
+    m_dataTypeHasBeenSet = true;
+    m_dataType = value;
+  }
+  inline Property& WithDataType(PropertyDataType value) {
+    SetDataType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The property data type.</p>
-     */
-    inline const PropertyDataType& GetDataType() const{ return m_dataType; }
-    inline bool DataTypeHasBeenSet() const { return m_dataTypeHasBeenSet; }
-    inline void SetDataType(const PropertyDataType& value) { m_dataTypeHasBeenSet = true; m_dataType = value; }
-    inline void SetDataType(PropertyDataType&& value) { m_dataTypeHasBeenSet = true; m_dataType = std::move(value); }
-    inline Property& WithDataType(const PropertyDataType& value) { SetDataType(value); return *this;}
-    inline Property& WithDataType(PropertyDataType&& value) { SetDataType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unit (such as <code>Newtons</code> or <code>RPM</code>) of the asset
+   * property.</p>
+   */
+  inline const Aws::String& GetUnit() const { return m_unit; }
+  inline bool UnitHasBeenSet() const { return m_unitHasBeenSet; }
+  template <typename UnitT = Aws::String>
+  void SetUnit(UnitT&& value) {
+    m_unitHasBeenSet = true;
+    m_unit = std::forward<UnitT>(value);
+  }
+  template <typename UnitT = Aws::String>
+  Property& WithUnit(UnitT&& value) {
+    SetUnit(std::forward<UnitT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unit (such as <code>Newtons</code> or <code>RPM</code>) of the asset
-     * property.</p>
-     */
-    inline const Aws::String& GetUnit() const{ return m_unit; }
-    inline bool UnitHasBeenSet() const { return m_unitHasBeenSet; }
-    inline void SetUnit(const Aws::String& value) { m_unitHasBeenSet = true; m_unit = value; }
-    inline void SetUnit(Aws::String&& value) { m_unitHasBeenSet = true; m_unit = std::move(value); }
-    inline void SetUnit(const char* value) { m_unitHasBeenSet = true; m_unit.assign(value); }
-    inline Property& WithUnit(const Aws::String& value) { SetUnit(value); return *this;}
-    inline Property& WithUnit(Aws::String&& value) { SetUnit(std::move(value)); return *this;}
-    inline Property& WithUnit(const char* value) { SetUnit(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The property type (see <code>PropertyType</code>). A property contains one
+   * type.</p>
+   */
+  inline const PropertyType& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = PropertyType>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = PropertyType>
+  Property& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The property type (see <code>PropertyType</code>). A property contains one
-     * type.</p>
-     */
-    inline const PropertyType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const PropertyType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(PropertyType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline Property& WithType(const PropertyType& value) { SetType(value); return *this;}
-    inline Property& WithType(PropertyType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The structured path to the property from the root of the asset.</p>
+   */
+  inline const Aws::Vector<AssetPropertyPathSegment>& GetPath() const { return m_path; }
+  inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
+  template <typename PathT = Aws::Vector<AssetPropertyPathSegment>>
+  void SetPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path = std::forward<PathT>(value);
+  }
+  template <typename PathT = Aws::Vector<AssetPropertyPathSegment>>
+  Property& WithPath(PathT&& value) {
+    SetPath(std::forward<PathT>(value));
+    return *this;
+  }
+  template <typename PathT = AssetPropertyPathSegment>
+  Property& AddPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path.emplace_back(std::forward<PathT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>The structured path to the property from the root of the asset.</p>
-     */
-    inline const Aws::Vector<AssetPropertyPathSegment>& GetPath() const{ return m_path; }
-    inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
-    inline void SetPath(const Aws::Vector<AssetPropertyPathSegment>& value) { m_pathHasBeenSet = true; m_path = value; }
-    inline void SetPath(Aws::Vector<AssetPropertyPathSegment>&& value) { m_pathHasBeenSet = true; m_path = std::move(value); }
-    inline Property& WithPath(const Aws::Vector<AssetPropertyPathSegment>& value) { SetPath(value); return *this;}
-    inline Property& WithPath(Aws::Vector<AssetPropertyPathSegment>&& value) { SetPath(std::move(value)); return *this;}
-    inline Property& AddPath(const AssetPropertyPathSegment& value) { m_pathHasBeenSet = true; m_path.push_back(value); return *this; }
-    inline Property& AddPath(AssetPropertyPathSegment&& value) { m_pathHasBeenSet = true; m_path.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_externalId;
 
-    ///@{
-    /**
-     * <p>The external ID of the asset property. For more information, see <a
-     * href="https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-ids">Using
-     * external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>
-     */
-    inline const Aws::String& GetExternalId() const{ return m_externalId; }
-    inline bool ExternalIdHasBeenSet() const { return m_externalIdHasBeenSet; }
-    inline void SetExternalId(const Aws::String& value) { m_externalIdHasBeenSet = true; m_externalId = value; }
-    inline void SetExternalId(Aws::String&& value) { m_externalIdHasBeenSet = true; m_externalId = std::move(value); }
-    inline void SetExternalId(const char* value) { m_externalIdHasBeenSet = true; m_externalId.assign(value); }
-    inline Property& WithExternalId(const Aws::String& value) { SetExternalId(value); return *this;}
-    inline Property& WithExternalId(Aws::String&& value) { SetExternalId(std::move(value)); return *this;}
-    inline Property& WithExternalId(const char* value) { SetExternalId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_name;
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  Aws::String m_alias;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  PropertyNotification m_notification;
 
-    Aws::String m_alias;
-    bool m_aliasHasBeenSet = false;
+  PropertyDataType m_dataType{PropertyDataType::NOT_SET};
 
-    PropertyNotification m_notification;
-    bool m_notificationHasBeenSet = false;
+  Aws::String m_unit;
 
-    PropertyDataType m_dataType;
-    bool m_dataTypeHasBeenSet = false;
+  PropertyType m_type;
 
-    Aws::String m_unit;
-    bool m_unitHasBeenSet = false;
+  Aws::Vector<AssetPropertyPathSegment> m_path;
+  bool m_idHasBeenSet = false;
+  bool m_externalIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_aliasHasBeenSet = false;
+  bool m_notificationHasBeenSet = false;
+  bool m_dataTypeHasBeenSet = false;
+  bool m_unitHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_pathHasBeenSet = false;
+};
 
-    PropertyType m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::Vector<AssetPropertyPathSegment> m_path;
-    bool m_pathHasBeenSet = false;
-
-    Aws::String m_externalId;
-    bool m_externalIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

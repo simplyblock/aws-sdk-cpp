@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/route53domains/Route53Domains_EXPORTS.h>
-#include <aws/route53domains/Route53DomainsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/route53domains/Route53DomainsRequest.h>
+#include <aws/route53domains/Route53Domains_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Route53Domains
-{
-namespace Model
-{
+namespace Aws {
+namespace Route53Domains {
+namespace Model {
 
+/**
+ */
+class PushDomainRequest : public Route53DomainsRequest {
+ public:
+  AWS_ROUTE53DOMAINS_API PushDomainRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PushDomain"; }
+
+  AWS_ROUTE53DOMAINS_API Aws::String SerializePayload() const override;
+
+  AWS_ROUTE53DOMAINS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p> Name of the domain. </p>
    */
-  class PushDomainRequest : public Route53DomainsRequest
-  {
-  public:
-    AWS_ROUTE53DOMAINS_API PushDomainRequest();
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  PushDomainRequest& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PushDomain"; }
+  ///@{
+  /**
+   * <p> New IPS tag for the domain. </p>
+   */
+  inline const Aws::String& GetTarget() const { return m_target; }
+  inline bool TargetHasBeenSet() const { return m_targetHasBeenSet; }
+  template <typename TargetT = Aws::String>
+  void SetTarget(TargetT&& value) {
+    m_targetHasBeenSet = true;
+    m_target = std::forward<TargetT>(value);
+  }
+  template <typename TargetT = Aws::String>
+  PushDomainRequest& WithTarget(TargetT&& value) {
+    SetTarget(std::forward<TargetT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainName;
 
-    AWS_ROUTE53DOMAINS_API Aws::String SerializePayload() const override;
+  Aws::String m_target;
+  bool m_domainNameHasBeenSet = false;
+  bool m_targetHasBeenSet = false;
+};
 
-    AWS_ROUTE53DOMAINS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p> Name of the domain. </p>
-     */
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
-    inline void SetDomainName(const Aws::String& value) { m_domainNameHasBeenSet = true; m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainNameHasBeenSet = true; m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainNameHasBeenSet = true; m_domainName.assign(value); }
-    inline PushDomainRequest& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline PushDomainRequest& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline PushDomainRequest& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p> New IPS tag for the domain. </p>
-     */
-    inline const Aws::String& GetTarget() const{ return m_target; }
-    inline bool TargetHasBeenSet() const { return m_targetHasBeenSet; }
-    inline void SetTarget(const Aws::String& value) { m_targetHasBeenSet = true; m_target = value; }
-    inline void SetTarget(Aws::String&& value) { m_targetHasBeenSet = true; m_target = std::move(value); }
-    inline void SetTarget(const char* value) { m_targetHasBeenSet = true; m_target.assign(value); }
-    inline PushDomainRequest& WithTarget(const Aws::String& value) { SetTarget(value); return *this;}
-    inline PushDomainRequest& WithTarget(Aws::String&& value) { SetTarget(std::move(value)); return *this;}
-    inline PushDomainRequest& WithTarget(const char* value) { SetTarget(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainName;
-    bool m_domainNameHasBeenSet = false;
-
-    Aws::String m_target;
-    bool m_targetHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Route53Domains
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53Domains
+}  // namespace Aws

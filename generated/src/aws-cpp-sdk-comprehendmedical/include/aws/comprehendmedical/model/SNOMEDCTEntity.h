@@ -5,210 +5,269 @@
 
 #pragma once
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/comprehendmedical/model/SNOMEDCTAttribute.h>
+#include <aws/comprehendmedical/model/SNOMEDCTConcept.h>
 #include <aws/comprehendmedical/model/SNOMEDCTEntityCategory.h>
 #include <aws/comprehendmedical/model/SNOMEDCTEntityType.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/comprehendmedical/model/SNOMEDCTAttribute.h>
 #include <aws/comprehendmedical/model/SNOMEDCTTrait.h>
-#include <aws/comprehendmedical/model/SNOMEDCTConcept.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ComprehendMedical
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComprehendMedical {
+namespace Model {
 
+/**
+ * <p> The collection of medical entities extracted from the input text and their
+ * associated information. For each entity, the response provides the entity text,
+ * the entity category, where the entity text begins and ends, and the level of
+ * confidence that Amazon Comprehend Medical has in the detection and analysis.
+ * Attributes and traits of the entity are also returned. </p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/comprehendmedical-2018-10-30/SNOMEDCTEntity">AWS
+ * API Reference</a></p>
+ */
+class SNOMEDCTEntity {
+ public:
+  AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity() = default;
+  AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPREHENDMEDICAL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p> The collection of medical entities extracted from the input text and their
-   * associated information. For each entity, the response provides the entity text,
-   * the entity category, where the entity text begins and ends, and the level of
-   * confidence that Amazon Comprehend Medical has in the detection and analysis.
-   * Attributes and traits of the entity are also returned. </p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/comprehendmedical-2018-10-30/SNOMEDCTEntity">AWS
-   * API Reference</a></p>
+   * <p> The numeric identifier for the entity. This is a monotonically increasing id
+   * unique within this response rather than a global unique identifier. </p>
    */
-  class SNOMEDCTEntity
-  {
-  public:
-    AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity();
-    AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPREHENDMEDICAL_API SNOMEDCTEntity& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPREHENDMEDICAL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline int64_t GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  inline void SetId(int64_t value) {
+    m_idHasBeenSet = true;
+    m_id = value;
+  }
+  inline SNOMEDCTEntity& WithId(int64_t value) {
+    SetId(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The segment of input text extracted as this entity. </p>
+   */
+  inline const Aws::String& GetText() const { return m_text; }
+  inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
+  template <typename TextT = Aws::String>
+  void SetText(TextT&& value) {
+    m_textHasBeenSet = true;
+    m_text = std::forward<TextT>(value);
+  }
+  template <typename TextT = Aws::String>
+  SNOMEDCTEntity& WithText(TextT&& value) {
+    SetText(std::forward<TextT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The numeric identifier for the entity. This is a monotonically increasing id
-     * unique within this response rather than a global unique identifier. </p>
-     */
-    inline int GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(int value) { m_idHasBeenSet = true; m_id = value; }
-    inline SNOMEDCTEntity& WithId(int value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The category of the detected entity. Possible categories are
+   * MEDICAL_CONDITION, ANATOMY, or TEST_TREATMENT_PROCEDURE. </p>
+   */
+  inline SNOMEDCTEntityCategory GetCategory() const { return m_category; }
+  inline bool CategoryHasBeenSet() const { return m_categoryHasBeenSet; }
+  inline void SetCategory(SNOMEDCTEntityCategory value) {
+    m_categoryHasBeenSet = true;
+    m_category = value;
+  }
+  inline SNOMEDCTEntity& WithCategory(SNOMEDCTEntityCategory value) {
+    SetCategory(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The segment of input text extracted as this entity. </p>
-     */
-    inline const Aws::String& GetText() const{ return m_text; }
-    inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
-    inline void SetText(const Aws::String& value) { m_textHasBeenSet = true; m_text = value; }
-    inline void SetText(Aws::String&& value) { m_textHasBeenSet = true; m_text = std::move(value); }
-    inline void SetText(const char* value) { m_textHasBeenSet = true; m_text.assign(value); }
-    inline SNOMEDCTEntity& WithText(const Aws::String& value) { SetText(value); return *this;}
-    inline SNOMEDCTEntity& WithText(Aws::String&& value) { SetText(std::move(value)); return *this;}
-    inline SNOMEDCTEntity& WithText(const char* value) { SetText(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Describes the specific type of entity with category of entities. Possible
+   * types include DX_NAME, ACUITY, DIRECTION, SYSTEM_ORGAN_SITE, TEST_NAME,
+   * TEST_VALUE, TEST_UNIT, PROCEDURE_NAME, or TREATMENT_NAME. </p>
+   */
+  inline SNOMEDCTEntityType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(SNOMEDCTEntityType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline SNOMEDCTEntity& WithType(SNOMEDCTEntityType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The category of the detected entity. Possible categories are
-     * MEDICAL_CONDITION, ANATOMY, or TEST_TREATMENT_PROCEDURE. </p>
-     */
-    inline const SNOMEDCTEntityCategory& GetCategory() const{ return m_category; }
-    inline bool CategoryHasBeenSet() const { return m_categoryHasBeenSet; }
-    inline void SetCategory(const SNOMEDCTEntityCategory& value) { m_categoryHasBeenSet = true; m_category = value; }
-    inline void SetCategory(SNOMEDCTEntityCategory&& value) { m_categoryHasBeenSet = true; m_category = std::move(value); }
-    inline SNOMEDCTEntity& WithCategory(const SNOMEDCTEntityCategory& value) { SetCategory(value); return *this;}
-    inline SNOMEDCTEntity& WithCategory(SNOMEDCTEntityCategory&& value) { SetCategory(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The level of confidence that Amazon Comprehend Medical has in the accuracy
+   * of the detected entity. </p>
+   */
+  inline double GetScore() const { return m_score; }
+  inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
+  inline void SetScore(double value) {
+    m_scoreHasBeenSet = true;
+    m_score = value;
+  }
+  inline SNOMEDCTEntity& WithScore(double value) {
+    SetScore(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Describes the specific type of entity with category of entities. Possible
-     * types include DX_NAME, ACUITY, DIRECTION, SYSTEM_ORGAN_SITE, TEST_NAME,
-     * TEST_VALUE, TEST_UNIT, PROCEDURE_NAME, or TREATMENT_NAME. </p>
-     */
-    inline const SNOMEDCTEntityType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const SNOMEDCTEntityType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(SNOMEDCTEntityType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline SNOMEDCTEntity& WithType(const SNOMEDCTEntityType& value) { SetType(value); return *this;}
-    inline SNOMEDCTEntity& WithType(SNOMEDCTEntityType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The 0-based character offset in the input text that shows where the entity
+   * begins. The offset returns the UTF-8 code point in the string. </p>
+   */
+  inline int64_t GetBeginOffset() const { return m_beginOffset; }
+  inline bool BeginOffsetHasBeenSet() const { return m_beginOffsetHasBeenSet; }
+  inline void SetBeginOffset(int64_t value) {
+    m_beginOffsetHasBeenSet = true;
+    m_beginOffset = value;
+  }
+  inline SNOMEDCTEntity& WithBeginOffset(int64_t value) {
+    SetBeginOffset(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The level of confidence that Amazon Comprehend Medical has in the accuracy
-     * of the detected entity. </p>
-     */
-    inline double GetScore() const{ return m_score; }
-    inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
-    inline void SetScore(double value) { m_scoreHasBeenSet = true; m_score = value; }
-    inline SNOMEDCTEntity& WithScore(double value) { SetScore(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The 0-based character offset in the input text that shows where the entity
+   * ends. The offset returns the UTF-8 code point in the string. </p>
+   */
+  inline int64_t GetEndOffset() const { return m_endOffset; }
+  inline bool EndOffsetHasBeenSet() const { return m_endOffsetHasBeenSet; }
+  inline void SetEndOffset(int64_t value) {
+    m_endOffsetHasBeenSet = true;
+    m_endOffset = value;
+  }
+  inline SNOMEDCTEntity& WithEndOffset(int64_t value) {
+    SetEndOffset(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The 0-based character offset in the input text that shows where the entity
-     * begins. The offset returns the UTF-8 code point in the string. </p>
-     */
-    inline int GetBeginOffset() const{ return m_beginOffset; }
-    inline bool BeginOffsetHasBeenSet() const { return m_beginOffsetHasBeenSet; }
-    inline void SetBeginOffset(int value) { m_beginOffsetHasBeenSet = true; m_beginOffset = value; }
-    inline SNOMEDCTEntity& WithBeginOffset(int value) { SetBeginOffset(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> An extracted segment of the text that is an attribute of an entity, or
+   * otherwise related to an entity, such as the dosage of a medication taken. </p>
+   */
+  inline const Aws::Vector<SNOMEDCTAttribute>& GetAttributes() const { return m_attributes; }
+  inline bool AttributesHasBeenSet() const { return m_attributesHasBeenSet; }
+  template <typename AttributesT = Aws::Vector<SNOMEDCTAttribute>>
+  void SetAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes = std::forward<AttributesT>(value);
+  }
+  template <typename AttributesT = Aws::Vector<SNOMEDCTAttribute>>
+  SNOMEDCTEntity& WithAttributes(AttributesT&& value) {
+    SetAttributes(std::forward<AttributesT>(value));
+    return *this;
+  }
+  template <typename AttributesT = SNOMEDCTAttribute>
+  SNOMEDCTEntity& AddAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes.emplace_back(std::forward<AttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The 0-based character offset in the input text that shows where the entity
-     * ends. The offset returns the UTF-8 code point in the string. </p>
-     */
-    inline int GetEndOffset() const{ return m_endOffset; }
-    inline bool EndOffsetHasBeenSet() const { return m_endOffsetHasBeenSet; }
-    inline void SetEndOffset(int value) { m_endOffsetHasBeenSet = true; m_endOffset = value; }
-    inline SNOMEDCTEntity& WithEndOffset(int value) { SetEndOffset(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Contextual information for the entity. </p>
+   */
+  inline const Aws::Vector<SNOMEDCTTrait>& GetTraits() const { return m_traits; }
+  inline bool TraitsHasBeenSet() const { return m_traitsHasBeenSet; }
+  template <typename TraitsT = Aws::Vector<SNOMEDCTTrait>>
+  void SetTraits(TraitsT&& value) {
+    m_traitsHasBeenSet = true;
+    m_traits = std::forward<TraitsT>(value);
+  }
+  template <typename TraitsT = Aws::Vector<SNOMEDCTTrait>>
+  SNOMEDCTEntity& WithTraits(TraitsT&& value) {
+    SetTraits(std::forward<TraitsT>(value));
+    return *this;
+  }
+  template <typename TraitsT = SNOMEDCTTrait>
+  SNOMEDCTEntity& AddTraits(TraitsT&& value) {
+    m_traitsHasBeenSet = true;
+    m_traits.emplace_back(std::forward<TraitsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An extracted segment of the text that is an attribute of an entity, or
-     * otherwise related to an entity, such as the dosage of a medication taken. </p>
-     */
-    inline const Aws::Vector<SNOMEDCTAttribute>& GetAttributes() const{ return m_attributes; }
-    inline bool AttributesHasBeenSet() const { return m_attributesHasBeenSet; }
-    inline void SetAttributes(const Aws::Vector<SNOMEDCTAttribute>& value) { m_attributesHasBeenSet = true; m_attributes = value; }
-    inline void SetAttributes(Aws::Vector<SNOMEDCTAttribute>&& value) { m_attributesHasBeenSet = true; m_attributes = std::move(value); }
-    inline SNOMEDCTEntity& WithAttributes(const Aws::Vector<SNOMEDCTAttribute>& value) { SetAttributes(value); return *this;}
-    inline SNOMEDCTEntity& WithAttributes(Aws::Vector<SNOMEDCTAttribute>&& value) { SetAttributes(std::move(value)); return *this;}
-    inline SNOMEDCTEntity& AddAttributes(const SNOMEDCTAttribute& value) { m_attributesHasBeenSet = true; m_attributes.push_back(value); return *this; }
-    inline SNOMEDCTEntity& AddAttributes(SNOMEDCTAttribute&& value) { m_attributesHasBeenSet = true; m_attributes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The SNOMED concepts that the entity could refer to, along with a score
+   * indicating the likelihood of the match. </p>
+   */
+  inline const Aws::Vector<SNOMEDCTConcept>& GetSNOMEDCTConcepts() const { return m_sNOMEDCTConcepts; }
+  inline bool SNOMEDCTConceptsHasBeenSet() const { return m_sNOMEDCTConceptsHasBeenSet; }
+  template <typename SNOMEDCTConceptsT = Aws::Vector<SNOMEDCTConcept>>
+  void SetSNOMEDCTConcepts(SNOMEDCTConceptsT&& value) {
+    m_sNOMEDCTConceptsHasBeenSet = true;
+    m_sNOMEDCTConcepts = std::forward<SNOMEDCTConceptsT>(value);
+  }
+  template <typename SNOMEDCTConceptsT = Aws::Vector<SNOMEDCTConcept>>
+  SNOMEDCTEntity& WithSNOMEDCTConcepts(SNOMEDCTConceptsT&& value) {
+    SetSNOMEDCTConcepts(std::forward<SNOMEDCTConceptsT>(value));
+    return *this;
+  }
+  template <typename SNOMEDCTConceptsT = SNOMEDCTConcept>
+  SNOMEDCTEntity& AddSNOMEDCTConcepts(SNOMEDCTConceptsT&& value) {
+    m_sNOMEDCTConceptsHasBeenSet = true;
+    m_sNOMEDCTConcepts.emplace_back(std::forward<SNOMEDCTConceptsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  int64_t m_id{0};
 
-    ///@{
-    /**
-     * <p> Contextual information for the entity. </p>
-     */
-    inline const Aws::Vector<SNOMEDCTTrait>& GetTraits() const{ return m_traits; }
-    inline bool TraitsHasBeenSet() const { return m_traitsHasBeenSet; }
-    inline void SetTraits(const Aws::Vector<SNOMEDCTTrait>& value) { m_traitsHasBeenSet = true; m_traits = value; }
-    inline void SetTraits(Aws::Vector<SNOMEDCTTrait>&& value) { m_traitsHasBeenSet = true; m_traits = std::move(value); }
-    inline SNOMEDCTEntity& WithTraits(const Aws::Vector<SNOMEDCTTrait>& value) { SetTraits(value); return *this;}
-    inline SNOMEDCTEntity& WithTraits(Aws::Vector<SNOMEDCTTrait>&& value) { SetTraits(std::move(value)); return *this;}
-    inline SNOMEDCTEntity& AddTraits(const SNOMEDCTTrait& value) { m_traitsHasBeenSet = true; m_traits.push_back(value); return *this; }
-    inline SNOMEDCTEntity& AddTraits(SNOMEDCTTrait&& value) { m_traitsHasBeenSet = true; m_traits.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_text;
 
-    ///@{
-    /**
-     * <p> The SNOMED concepts that the entity could refer to, along with a score
-     * indicating the likelihood of the match. </p>
-     */
-    inline const Aws::Vector<SNOMEDCTConcept>& GetSNOMEDCTConcepts() const{ return m_sNOMEDCTConcepts; }
-    inline bool SNOMEDCTConceptsHasBeenSet() const { return m_sNOMEDCTConceptsHasBeenSet; }
-    inline void SetSNOMEDCTConcepts(const Aws::Vector<SNOMEDCTConcept>& value) { m_sNOMEDCTConceptsHasBeenSet = true; m_sNOMEDCTConcepts = value; }
-    inline void SetSNOMEDCTConcepts(Aws::Vector<SNOMEDCTConcept>&& value) { m_sNOMEDCTConceptsHasBeenSet = true; m_sNOMEDCTConcepts = std::move(value); }
-    inline SNOMEDCTEntity& WithSNOMEDCTConcepts(const Aws::Vector<SNOMEDCTConcept>& value) { SetSNOMEDCTConcepts(value); return *this;}
-    inline SNOMEDCTEntity& WithSNOMEDCTConcepts(Aws::Vector<SNOMEDCTConcept>&& value) { SetSNOMEDCTConcepts(std::move(value)); return *this;}
-    inline SNOMEDCTEntity& AddSNOMEDCTConcepts(const SNOMEDCTConcept& value) { m_sNOMEDCTConceptsHasBeenSet = true; m_sNOMEDCTConcepts.push_back(value); return *this; }
-    inline SNOMEDCTEntity& AddSNOMEDCTConcepts(SNOMEDCTConcept&& value) { m_sNOMEDCTConceptsHasBeenSet = true; m_sNOMEDCTConcepts.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  SNOMEDCTEntityCategory m_category{SNOMEDCTEntityCategory::NOT_SET};
 
-    int m_id;
-    bool m_idHasBeenSet = false;
+  SNOMEDCTEntityType m_type{SNOMEDCTEntityType::NOT_SET};
 
-    Aws::String m_text;
-    bool m_textHasBeenSet = false;
+  double m_score{0.0};
 
-    SNOMEDCTEntityCategory m_category;
-    bool m_categoryHasBeenSet = false;
+  int64_t m_beginOffset{0};
 
-    SNOMEDCTEntityType m_type;
-    bool m_typeHasBeenSet = false;
+  int64_t m_endOffset{0};
 
-    double m_score;
-    bool m_scoreHasBeenSet = false;
+  Aws::Vector<SNOMEDCTAttribute> m_attributes;
 
-    int m_beginOffset;
-    bool m_beginOffsetHasBeenSet = false;
+  Aws::Vector<SNOMEDCTTrait> m_traits;
 
-    int m_endOffset;
-    bool m_endOffsetHasBeenSet = false;
+  Aws::Vector<SNOMEDCTConcept> m_sNOMEDCTConcepts;
+  bool m_idHasBeenSet = false;
+  bool m_textHasBeenSet = false;
+  bool m_categoryHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_scoreHasBeenSet = false;
+  bool m_beginOffsetHasBeenSet = false;
+  bool m_endOffsetHasBeenSet = false;
+  bool m_attributesHasBeenSet = false;
+  bool m_traitsHasBeenSet = false;
+  bool m_sNOMEDCTConceptsHasBeenSet = false;
+};
 
-    Aws::Vector<SNOMEDCTAttribute> m_attributes;
-    bool m_attributesHasBeenSet = false;
-
-    Aws::Vector<SNOMEDCTTrait> m_traits;
-    bool m_traitsHasBeenSet = false;
-
-    Aws::Vector<SNOMEDCTConcept> m_sNOMEDCTConcepts;
-    bool m_sNOMEDCTConceptsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ComprehendMedical
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComprehendMedical
+}  // namespace Aws

@@ -4,153 +4,180 @@
  */
 
 #pragma once
-#include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/voice-id/VoiceID_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
 
+/**
+ * <p>Contains all the information about a watchlist.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/voice-id-2021-09-27/Watchlist">AWS
+ * API Reference</a></p>
+ */
+class Watchlist {
+ public:
+  AWS_VOICEID_API Watchlist() = default;
+  AWS_VOICEID_API Watchlist(Aws::Utils::Json::JsonView jsonValue);
+  AWS_VOICEID_API Watchlist& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_VOICEID_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains all the information about a watchlist.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/voice-id-2021-09-27/Watchlist">AWS
-   * API Reference</a></p>
+   * <p>The timestamp of when the watchlist was created.</p>
    */
-  class Watchlist
-  {
-  public:
-    AWS_VOICEID_API Watchlist();
-    AWS_VOICEID_API Watchlist(Aws::Utils::Json::JsonView jsonValue);
-    AWS_VOICEID_API Watchlist& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_VOICEID_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  Watchlist& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Whether the specified watchlist is the default watchlist of a domain.</p>
+   */
+  inline bool GetDefaultWatchlist() const { return m_defaultWatchlist; }
+  inline bool DefaultWatchlistHasBeenSet() const { return m_defaultWatchlistHasBeenSet; }
+  inline void SetDefaultWatchlist(bool value) {
+    m_defaultWatchlistHasBeenSet = true;
+    m_defaultWatchlist = value;
+  }
+  inline Watchlist& WithDefaultWatchlist(bool value) {
+    SetDefaultWatchlist(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the watchlist was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline Watchlist& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline Watchlist& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the watchlist.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  Watchlist& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether the specified watchlist is the default watchlist of a domain.</p>
-     */
-    inline bool GetDefaultWatchlist() const{ return m_defaultWatchlist; }
-    inline bool DefaultWatchlistHasBeenSet() const { return m_defaultWatchlistHasBeenSet; }
-    inline void SetDefaultWatchlist(bool value) { m_defaultWatchlistHasBeenSet = true; m_defaultWatchlist = value; }
-    inline Watchlist& WithDefaultWatchlist(bool value) { SetDefaultWatchlist(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the domain that contains the watchlist.</p>
+   */
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  Watchlist& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the watchlist.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline Watchlist& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline Watchlist& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline Watchlist& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name for the watchlist.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Watchlist& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the domain that contains the watchlist.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
-    inline void SetDomainId(const Aws::String& value) { m_domainIdHasBeenSet = true; m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainIdHasBeenSet = true; m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainIdHasBeenSet = true; m_domainId.assign(value); }
-    inline Watchlist& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline Watchlist& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline Watchlist& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the watchlist was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  Watchlist& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name for the watchlist.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Watchlist& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Watchlist& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Watchlist& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the watchlist.</p>
+   */
+  inline const Aws::String& GetWatchlistId() const { return m_watchlistId; }
+  inline bool WatchlistIdHasBeenSet() const { return m_watchlistIdHasBeenSet; }
+  template <typename WatchlistIdT = Aws::String>
+  void SetWatchlistId(WatchlistIdT&& value) {
+    m_watchlistIdHasBeenSet = true;
+    m_watchlistId = std::forward<WatchlistIdT>(value);
+  }
+  template <typename WatchlistIdT = Aws::String>
+  Watchlist& WithWatchlistId(WatchlistIdT&& value) {
+    SetWatchlistId(std::forward<WatchlistIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Utils::DateTime m_createdAt{};
 
-    ///@{
-    /**
-     * <p>The timestamp of when the watchlist was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline bool UpdatedAtHasBeenSet() const { return m_updatedAtHasBeenSet; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAtHasBeenSet = true; m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAtHasBeenSet = true; m_updatedAt = std::move(value); }
-    inline Watchlist& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline Watchlist& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  bool m_defaultWatchlist{false};
 
-    ///@{
-    /**
-     * <p>The identifier of the watchlist.</p>
-     */
-    inline const Aws::String& GetWatchlistId() const{ return m_watchlistId; }
-    inline bool WatchlistIdHasBeenSet() const { return m_watchlistIdHasBeenSet; }
-    inline void SetWatchlistId(const Aws::String& value) { m_watchlistIdHasBeenSet = true; m_watchlistId = value; }
-    inline void SetWatchlistId(Aws::String&& value) { m_watchlistIdHasBeenSet = true; m_watchlistId = std::move(value); }
-    inline void SetWatchlistId(const char* value) { m_watchlistIdHasBeenSet = true; m_watchlistId.assign(value); }
-    inline Watchlist& WithWatchlistId(const Aws::String& value) { SetWatchlistId(value); return *this;}
-    inline Watchlist& WithWatchlistId(Aws::String&& value) { SetWatchlistId(std::move(value)); return *this;}
-    inline Watchlist& WithWatchlistId(const char* value) { SetWatchlistId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_description;
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  Aws::String m_domainId;
 
-    bool m_defaultWatchlist;
-    bool m_defaultWatchlistHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::Utils::DateTime m_updatedAt{};
 
-    Aws::String m_domainId;
-    bool m_domainIdHasBeenSet = false;
+  Aws::String m_watchlistId;
+  bool m_createdAtHasBeenSet = false;
+  bool m_defaultWatchlistHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_domainIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_watchlistIdHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Utils::DateTime m_updatedAt;
-    bool m_updatedAtHasBeenSet = false;
-
-    Aws::String m_watchlistId;
-    bool m_watchlistIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

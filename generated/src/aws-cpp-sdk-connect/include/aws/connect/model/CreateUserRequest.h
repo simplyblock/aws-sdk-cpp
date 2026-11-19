@@ -4,231 +4,422 @@
  */
 
 #pragma once
-#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/ConnectRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/connect/Connect_EXPORTS.h>
+#include <aws/connect/model/AfterContactWorkConfigPerChannel.h>
+#include <aws/connect/model/AutoAcceptConfig.h>
+#include <aws/connect/model/PersistentConnectionConfig.h>
+#include <aws/connect/model/PhoneNumberConfig.h>
 #include <aws/connect/model/UserIdentityInfo.h>
 #include <aws/connect/model/UserPhoneConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/connect/model/VoiceEnhancementConfig.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
+/**
+ */
+class CreateUserRequest : public ConnectRequest {
+ public:
+  AWS_CONNECT_API CreateUserRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateUser"; }
+
+  AWS_CONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The user name for the account. For instances not using SAML for identity
+   * management, the user name can include up to 20 characters. If you are using SAML
+   * for identity management, the user name can include up to 64 characters from
+   * [a-zA-Z0-9_-.\@]+.</p> <p>Username can include @ only if used in an email
+   * format. For example:</p> <ul> <li> <p>Correct: testuser</p> </li> <li>
+   * <p>Correct: testuser@example.com</p> </li> <li> <p>Incorrect:
+   * testuser@example</p> </li> </ul>
    */
-  class CreateUserRequest : public ConnectRequest
-  {
-  public:
-    AWS_CONNECT_API CreateUserRequest();
+  inline const Aws::String& GetUsername() const { return m_username; }
+  inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
+  template <typename UsernameT = Aws::String>
+  void SetUsername(UsernameT&& value) {
+    m_usernameHasBeenSet = true;
+    m_username = std::forward<UsernameT>(value);
+  }
+  template <typename UsernameT = Aws::String>
+  CreateUserRequest& WithUsername(UsernameT&& value) {
+    SetUsername(std::forward<UsernameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateUser"; }
+  ///@{
+  /**
+   * <p>The password for the user account. A password is required if you are using
+   * Connect Customer for identity management. Otherwise, it is an error to include a
+   * password.</p>
+   */
+  inline const Aws::String& GetPassword() const { return m_password; }
+  inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
+  template <typename PasswordT = Aws::String>
+  void SetPassword(PasswordT&& value) {
+    m_passwordHasBeenSet = true;
+    m_password = std::forward<PasswordT>(value);
+  }
+  template <typename PasswordT = Aws::String>
+  CreateUserRequest& WithPassword(PasswordT&& value) {
+    SetPassword(std::forward<PasswordT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The information about the identity of the user.</p>
+   */
+  inline const UserIdentityInfo& GetIdentityInfo() const { return m_identityInfo; }
+  inline bool IdentityInfoHasBeenSet() const { return m_identityInfoHasBeenSet; }
+  template <typename IdentityInfoT = UserIdentityInfo>
+  void SetIdentityInfo(IdentityInfoT&& value) {
+    m_identityInfoHasBeenSet = true;
+    m_identityInfo = std::forward<IdentityInfoT>(value);
+  }
+  template <typename IdentityInfoT = UserIdentityInfo>
+  CreateUserRequest& WithIdentityInfo(IdentityInfoT&& value) {
+    SetIdentityInfo(std::forward<IdentityInfoT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The phone settings for the user. This parameter is optional. If not provided,
+   * the user can be configured using channel-specific parameters such as
+   * <code>AutoAcceptConfigs</code>, <code>AfterContactWorkConfigs</code>,
+   * <code>PhoneNumberConfigs</code>, <code>PersistentConnectionConfigs</code>, and
+   * <code>VoiceEnhancementConfigs</code>.</p>
+   */
+  inline const UserPhoneConfig& GetPhoneConfig() const { return m_phoneConfig; }
+  inline bool PhoneConfigHasBeenSet() const { return m_phoneConfigHasBeenSet; }
+  template <typename PhoneConfigT = UserPhoneConfig>
+  void SetPhoneConfig(PhoneConfigT&& value) {
+    m_phoneConfigHasBeenSet = true;
+    m_phoneConfig = std::forward<PhoneConfigT>(value);
+  }
+  template <typename PhoneConfigT = UserPhoneConfig>
+  CreateUserRequest& WithPhoneConfig(PhoneConfigT&& value) {
+    SetPhoneConfig(std::forward<PhoneConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user name for the account. For instances not using SAML for identity
-     * management, the user name can include up to 20 characters. If you are using SAML
-     * for identity management, the user name can include up to 64 characters from
-     * [a-zA-Z0-9_-.\@]+.</p> <p>Username can include @ only if used in an email
-     * format. For example:</p> <ul> <li> <p>Correct: testuser</p> </li> <li>
-     * <p>Correct: testuser@example.com</p> </li> <li> <p>Incorrect:
-     * testuser@example</p> </li> </ul>
-     */
-    inline const Aws::String& GetUsername() const{ return m_username; }
-    inline bool UsernameHasBeenSet() const { return m_usernameHasBeenSet; }
-    inline void SetUsername(const Aws::String& value) { m_usernameHasBeenSet = true; m_username = value; }
-    inline void SetUsername(Aws::String&& value) { m_usernameHasBeenSet = true; m_username = std::move(value); }
-    inline void SetUsername(const char* value) { m_usernameHasBeenSet = true; m_username.assign(value); }
-    inline CreateUserRequest& WithUsername(const Aws::String& value) { SetUsername(value); return *this;}
-    inline CreateUserRequest& WithUsername(Aws::String&& value) { SetUsername(std::move(value)); return *this;}
-    inline CreateUserRequest& WithUsername(const char* value) { SetUsername(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the user account in the directory used for identity
+   * management. If Connect Customer cannot access the directory, you can specify
+   * this identifier to authenticate users. If you include the identifier, we assume
+   * that Connect Customer cannot access the directory. Otherwise, the identity
+   * information is used to authenticate users from your directory.</p> <p>This
+   * parameter is required if you are using an existing directory for identity
+   * management in Connect Customer when Connect Customer cannot access your
+   * directory to authenticate users. If you are using SAML for identity management
+   * and include this parameter, an error is returned.</p>
+   */
+  inline const Aws::String& GetDirectoryUserId() const { return m_directoryUserId; }
+  inline bool DirectoryUserIdHasBeenSet() const { return m_directoryUserIdHasBeenSet; }
+  template <typename DirectoryUserIdT = Aws::String>
+  void SetDirectoryUserId(DirectoryUserIdT&& value) {
+    m_directoryUserIdHasBeenSet = true;
+    m_directoryUserId = std::forward<DirectoryUserIdT>(value);
+  }
+  template <typename DirectoryUserIdT = Aws::String>
+  CreateUserRequest& WithDirectoryUserId(DirectoryUserIdT&& value) {
+    SetDirectoryUserId(std::forward<DirectoryUserIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The password for the user account. A password is required if you are using
-     * Amazon Connect for identity management. Otherwise, it is an error to include a
-     * password.</p>
-     */
-    inline const Aws::String& GetPassword() const{ return m_password; }
-    inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
-    inline void SetPassword(const Aws::String& value) { m_passwordHasBeenSet = true; m_password = value; }
-    inline void SetPassword(Aws::String&& value) { m_passwordHasBeenSet = true; m_password = std::move(value); }
-    inline void SetPassword(const char* value) { m_passwordHasBeenSet = true; m_password.assign(value); }
-    inline CreateUserRequest& WithPassword(const Aws::String& value) { SetPassword(value); return *this;}
-    inline CreateUserRequest& WithPassword(Aws::String&& value) { SetPassword(std::move(value)); return *this;}
-    inline CreateUserRequest& WithPassword(const char* value) { SetPassword(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the security profile for the user.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityProfileIds() const { return m_securityProfileIds; }
+  inline bool SecurityProfileIdsHasBeenSet() const { return m_securityProfileIdsHasBeenSet; }
+  template <typename SecurityProfileIdsT = Aws::Vector<Aws::String>>
+  void SetSecurityProfileIds(SecurityProfileIdsT&& value) {
+    m_securityProfileIdsHasBeenSet = true;
+    m_securityProfileIds = std::forward<SecurityProfileIdsT>(value);
+  }
+  template <typename SecurityProfileIdsT = Aws::Vector<Aws::String>>
+  CreateUserRequest& WithSecurityProfileIds(SecurityProfileIdsT&& value) {
+    SetSecurityProfileIds(std::forward<SecurityProfileIdsT>(value));
+    return *this;
+  }
+  template <typename SecurityProfileIdsT = Aws::String>
+  CreateUserRequest& AddSecurityProfileIds(SecurityProfileIdsT&& value) {
+    m_securityProfileIdsHasBeenSet = true;
+    m_securityProfileIds.emplace_back(std::forward<SecurityProfileIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information about the identity of the user.</p>
-     */
-    inline const UserIdentityInfo& GetIdentityInfo() const{ return m_identityInfo; }
-    inline bool IdentityInfoHasBeenSet() const { return m_identityInfoHasBeenSet; }
-    inline void SetIdentityInfo(const UserIdentityInfo& value) { m_identityInfoHasBeenSet = true; m_identityInfo = value; }
-    inline void SetIdentityInfo(UserIdentityInfo&& value) { m_identityInfoHasBeenSet = true; m_identityInfo = std::move(value); }
-    inline CreateUserRequest& WithIdentityInfo(const UserIdentityInfo& value) { SetIdentityInfo(value); return *this;}
-    inline CreateUserRequest& WithIdentityInfo(UserIdentityInfo&& value) { SetIdentityInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the routing profile for the user.</p>
+   */
+  inline const Aws::String& GetRoutingProfileId() const { return m_routingProfileId; }
+  inline bool RoutingProfileIdHasBeenSet() const { return m_routingProfileIdHasBeenSet; }
+  template <typename RoutingProfileIdT = Aws::String>
+  void SetRoutingProfileId(RoutingProfileIdT&& value) {
+    m_routingProfileIdHasBeenSet = true;
+    m_routingProfileId = std::forward<RoutingProfileIdT>(value);
+  }
+  template <typename RoutingProfileIdT = Aws::String>
+  CreateUserRequest& WithRoutingProfileId(RoutingProfileIdT&& value) {
+    SetRoutingProfileId(std::forward<RoutingProfileIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The phone settings for the user.</p>
-     */
-    inline const UserPhoneConfig& GetPhoneConfig() const{ return m_phoneConfig; }
-    inline bool PhoneConfigHasBeenSet() const { return m_phoneConfigHasBeenSet; }
-    inline void SetPhoneConfig(const UserPhoneConfig& value) { m_phoneConfigHasBeenSet = true; m_phoneConfig = value; }
-    inline void SetPhoneConfig(UserPhoneConfig&& value) { m_phoneConfigHasBeenSet = true; m_phoneConfig = std::move(value); }
-    inline CreateUserRequest& WithPhoneConfig(const UserPhoneConfig& value) { SetPhoneConfig(value); return *this;}
-    inline CreateUserRequest& WithPhoneConfig(UserPhoneConfig&& value) { SetPhoneConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the hierarchy group for the user.</p>
+   */
+  inline const Aws::String& GetHierarchyGroupId() const { return m_hierarchyGroupId; }
+  inline bool HierarchyGroupIdHasBeenSet() const { return m_hierarchyGroupIdHasBeenSet; }
+  template <typename HierarchyGroupIdT = Aws::String>
+  void SetHierarchyGroupId(HierarchyGroupIdT&& value) {
+    m_hierarchyGroupIdHasBeenSet = true;
+    m_hierarchyGroupId = std::forward<HierarchyGroupIdT>(value);
+  }
+  template <typename HierarchyGroupIdT = Aws::String>
+  CreateUserRequest& WithHierarchyGroupId(HierarchyGroupIdT&& value) {
+    SetHierarchyGroupId(std::forward<HierarchyGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the user account in the directory used for identity
-     * management. If Amazon Connect cannot access the directory, you can specify this
-     * identifier to authenticate users. If you include the identifier, we assume that
-     * Amazon Connect cannot access the directory. Otherwise, the identity information
-     * is used to authenticate users from your directory.</p> <p>This parameter is
-     * required if you are using an existing directory for identity management in
-     * Amazon Connect when Amazon Connect cannot access your directory to authenticate
-     * users. If you are using SAML for identity management and include this parameter,
-     * an error is returned.</p>
-     */
-    inline const Aws::String& GetDirectoryUserId() const{ return m_directoryUserId; }
-    inline bool DirectoryUserIdHasBeenSet() const { return m_directoryUserIdHasBeenSet; }
-    inline void SetDirectoryUserId(const Aws::String& value) { m_directoryUserIdHasBeenSet = true; m_directoryUserId = value; }
-    inline void SetDirectoryUserId(Aws::String&& value) { m_directoryUserIdHasBeenSet = true; m_directoryUserId = std::move(value); }
-    inline void SetDirectoryUserId(const char* value) { m_directoryUserIdHasBeenSet = true; m_directoryUserId.assign(value); }
-    inline CreateUserRequest& WithDirectoryUserId(const Aws::String& value) { SetDirectoryUserId(value); return *this;}
-    inline CreateUserRequest& WithDirectoryUserId(Aws::String&& value) { SetDirectoryUserId(std::move(value)); return *this;}
-    inline CreateUserRequest& WithDirectoryUserId(const char* value) { SetDirectoryUserId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the Connect Customer instance. You can <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
+   * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  CreateUserRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the security profile for the user.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityProfileIds() const{ return m_securityProfileIds; }
-    inline bool SecurityProfileIdsHasBeenSet() const { return m_securityProfileIdsHasBeenSet; }
-    inline void SetSecurityProfileIds(const Aws::Vector<Aws::String>& value) { m_securityProfileIdsHasBeenSet = true; m_securityProfileIds = value; }
-    inline void SetSecurityProfileIds(Aws::Vector<Aws::String>&& value) { m_securityProfileIdsHasBeenSet = true; m_securityProfileIds = std::move(value); }
-    inline CreateUserRequest& WithSecurityProfileIds(const Aws::Vector<Aws::String>& value) { SetSecurityProfileIds(value); return *this;}
-    inline CreateUserRequest& WithSecurityProfileIds(Aws::Vector<Aws::String>&& value) { SetSecurityProfileIds(std::move(value)); return *this;}
-    inline CreateUserRequest& AddSecurityProfileIds(const Aws::String& value) { m_securityProfileIdsHasBeenSet = true; m_securityProfileIds.push_back(value); return *this; }
-    inline CreateUserRequest& AddSecurityProfileIds(Aws::String&& value) { m_securityProfileIdsHasBeenSet = true; m_securityProfileIds.push_back(std::move(value)); return *this; }
-    inline CreateUserRequest& AddSecurityProfileIds(const char* value) { m_securityProfileIdsHasBeenSet = true; m_securityProfileIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of auto-accept configuration settings for each channel.</p>
+   */
+  inline const Aws::Vector<AutoAcceptConfig>& GetAutoAcceptConfigs() const { return m_autoAcceptConfigs; }
+  inline bool AutoAcceptConfigsHasBeenSet() const { return m_autoAcceptConfigsHasBeenSet; }
+  template <typename AutoAcceptConfigsT = Aws::Vector<AutoAcceptConfig>>
+  void SetAutoAcceptConfigs(AutoAcceptConfigsT&& value) {
+    m_autoAcceptConfigsHasBeenSet = true;
+    m_autoAcceptConfigs = std::forward<AutoAcceptConfigsT>(value);
+  }
+  template <typename AutoAcceptConfigsT = Aws::Vector<AutoAcceptConfig>>
+  CreateUserRequest& WithAutoAcceptConfigs(AutoAcceptConfigsT&& value) {
+    SetAutoAcceptConfigs(std::forward<AutoAcceptConfigsT>(value));
+    return *this;
+  }
+  template <typename AutoAcceptConfigsT = AutoAcceptConfig>
+  CreateUserRequest& AddAutoAcceptConfigs(AutoAcceptConfigsT&& value) {
+    m_autoAcceptConfigsHasBeenSet = true;
+    m_autoAcceptConfigs.emplace_back(std::forward<AutoAcceptConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the routing profile for the user.</p>
-     */
-    inline const Aws::String& GetRoutingProfileId() const{ return m_routingProfileId; }
-    inline bool RoutingProfileIdHasBeenSet() const { return m_routingProfileIdHasBeenSet; }
-    inline void SetRoutingProfileId(const Aws::String& value) { m_routingProfileIdHasBeenSet = true; m_routingProfileId = value; }
-    inline void SetRoutingProfileId(Aws::String&& value) { m_routingProfileIdHasBeenSet = true; m_routingProfileId = std::move(value); }
-    inline void SetRoutingProfileId(const char* value) { m_routingProfileIdHasBeenSet = true; m_routingProfileId.assign(value); }
-    inline CreateUserRequest& WithRoutingProfileId(const Aws::String& value) { SetRoutingProfileId(value); return *this;}
-    inline CreateUserRequest& WithRoutingProfileId(Aws::String&& value) { SetRoutingProfileId(std::move(value)); return *this;}
-    inline CreateUserRequest& WithRoutingProfileId(const char* value) { SetRoutingProfileId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of after contact work (ACW) timeout configuration settings for each
+   * channel.</p>
+   */
+  inline const Aws::Vector<AfterContactWorkConfigPerChannel>& GetAfterContactWorkConfigs() const { return m_afterContactWorkConfigs; }
+  inline bool AfterContactWorkConfigsHasBeenSet() const { return m_afterContactWorkConfigsHasBeenSet; }
+  template <typename AfterContactWorkConfigsT = Aws::Vector<AfterContactWorkConfigPerChannel>>
+  void SetAfterContactWorkConfigs(AfterContactWorkConfigsT&& value) {
+    m_afterContactWorkConfigsHasBeenSet = true;
+    m_afterContactWorkConfigs = std::forward<AfterContactWorkConfigsT>(value);
+  }
+  template <typename AfterContactWorkConfigsT = Aws::Vector<AfterContactWorkConfigPerChannel>>
+  CreateUserRequest& WithAfterContactWorkConfigs(AfterContactWorkConfigsT&& value) {
+    SetAfterContactWorkConfigs(std::forward<AfterContactWorkConfigsT>(value));
+    return *this;
+  }
+  template <typename AfterContactWorkConfigsT = AfterContactWorkConfigPerChannel>
+  CreateUserRequest& AddAfterContactWorkConfigs(AfterContactWorkConfigsT&& value) {
+    m_afterContactWorkConfigsHasBeenSet = true;
+    m_afterContactWorkConfigs.emplace_back(std::forward<AfterContactWorkConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the hierarchy group for the user.</p>
-     */
-    inline const Aws::String& GetHierarchyGroupId() const{ return m_hierarchyGroupId; }
-    inline bool HierarchyGroupIdHasBeenSet() const { return m_hierarchyGroupIdHasBeenSet; }
-    inline void SetHierarchyGroupId(const Aws::String& value) { m_hierarchyGroupIdHasBeenSet = true; m_hierarchyGroupId = value; }
-    inline void SetHierarchyGroupId(Aws::String&& value) { m_hierarchyGroupIdHasBeenSet = true; m_hierarchyGroupId = std::move(value); }
-    inline void SetHierarchyGroupId(const char* value) { m_hierarchyGroupIdHasBeenSet = true; m_hierarchyGroupId.assign(value); }
-    inline CreateUserRequest& WithHierarchyGroupId(const Aws::String& value) { SetHierarchyGroupId(value); return *this;}
-    inline CreateUserRequest& WithHierarchyGroupId(Aws::String&& value) { SetHierarchyGroupId(std::move(value)); return *this;}
-    inline CreateUserRequest& WithHierarchyGroupId(const char* value) { SetHierarchyGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of phone number configuration settings for each channel.</p>
+   */
+  inline const Aws::Vector<PhoneNumberConfig>& GetPhoneNumberConfigs() const { return m_phoneNumberConfigs; }
+  inline bool PhoneNumberConfigsHasBeenSet() const { return m_phoneNumberConfigsHasBeenSet; }
+  template <typename PhoneNumberConfigsT = Aws::Vector<PhoneNumberConfig>>
+  void SetPhoneNumberConfigs(PhoneNumberConfigsT&& value) {
+    m_phoneNumberConfigsHasBeenSet = true;
+    m_phoneNumberConfigs = std::forward<PhoneNumberConfigsT>(value);
+  }
+  template <typename PhoneNumberConfigsT = Aws::Vector<PhoneNumberConfig>>
+  CreateUserRequest& WithPhoneNumberConfigs(PhoneNumberConfigsT&& value) {
+    SetPhoneNumberConfigs(std::forward<PhoneNumberConfigsT>(value));
+    return *this;
+  }
+  template <typename PhoneNumberConfigsT = PhoneNumberConfig>
+  CreateUserRequest& AddPhoneNumberConfigs(PhoneNumberConfigsT&& value) {
+    m_phoneNumberConfigsHasBeenSet = true;
+    m_phoneNumberConfigs.emplace_back(std::forward<PhoneNumberConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Connect instance. You can <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
-     * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline CreateUserRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline CreateUserRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline CreateUserRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of persistent connection configuration settings for each
+   * channel.</p>
+   */
+  inline const Aws::Vector<PersistentConnectionConfig>& GetPersistentConnectionConfigs() const { return m_persistentConnectionConfigs; }
+  inline bool PersistentConnectionConfigsHasBeenSet() const { return m_persistentConnectionConfigsHasBeenSet; }
+  template <typename PersistentConnectionConfigsT = Aws::Vector<PersistentConnectionConfig>>
+  void SetPersistentConnectionConfigs(PersistentConnectionConfigsT&& value) {
+    m_persistentConnectionConfigsHasBeenSet = true;
+    m_persistentConnectionConfigs = std::forward<PersistentConnectionConfigsT>(value);
+  }
+  template <typename PersistentConnectionConfigsT = Aws::Vector<PersistentConnectionConfig>>
+  CreateUserRequest& WithPersistentConnectionConfigs(PersistentConnectionConfigsT&& value) {
+    SetPersistentConnectionConfigs(std::forward<PersistentConnectionConfigsT>(value));
+    return *this;
+  }
+  template <typename PersistentConnectionConfigsT = PersistentConnectionConfig>
+  CreateUserRequest& AddPersistentConnectionConfigs(PersistentConnectionConfigsT&& value) {
+    m_persistentConnectionConfigsHasBeenSet = true;
+    m_persistentConnectionConfigs.emplace_back(std::forward<PersistentConnectionConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource. For
-     * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateUserRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateUserRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateUserRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateUserRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateUserRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateUserRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateUserRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateUserRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateUserRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The list of voice enhancement configuration settings for each channel.</p>
+   */
+  inline const Aws::Vector<VoiceEnhancementConfig>& GetVoiceEnhancementConfigs() const { return m_voiceEnhancementConfigs; }
+  inline bool VoiceEnhancementConfigsHasBeenSet() const { return m_voiceEnhancementConfigsHasBeenSet; }
+  template <typename VoiceEnhancementConfigsT = Aws::Vector<VoiceEnhancementConfig>>
+  void SetVoiceEnhancementConfigs(VoiceEnhancementConfigsT&& value) {
+    m_voiceEnhancementConfigsHasBeenSet = true;
+    m_voiceEnhancementConfigs = std::forward<VoiceEnhancementConfigsT>(value);
+  }
+  template <typename VoiceEnhancementConfigsT = Aws::Vector<VoiceEnhancementConfig>>
+  CreateUserRequest& WithVoiceEnhancementConfigs(VoiceEnhancementConfigsT&& value) {
+    SetVoiceEnhancementConfigs(std::forward<VoiceEnhancementConfigsT>(value));
+    return *this;
+  }
+  template <typename VoiceEnhancementConfigsT = VoiceEnhancementConfig>
+  CreateUserRequest& AddVoiceEnhancementConfigs(VoiceEnhancementConfigsT&& value) {
+    m_voiceEnhancementConfigsHasBeenSet = true;
+    m_voiceEnhancementConfigs.emplace_back(std::forward<VoiceEnhancementConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_username;
-    bool m_usernameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource. For
+   * example, { "Tags": {"key1":"value1", "key2":"value2"} }.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateUserRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateUserRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_username;
 
-    Aws::String m_password;
-    bool m_passwordHasBeenSet = false;
+  Aws::String m_password;
 
-    UserIdentityInfo m_identityInfo;
-    bool m_identityInfoHasBeenSet = false;
+  UserIdentityInfo m_identityInfo;
 
-    UserPhoneConfig m_phoneConfig;
-    bool m_phoneConfigHasBeenSet = false;
+  UserPhoneConfig m_phoneConfig;
 
-    Aws::String m_directoryUserId;
-    bool m_directoryUserIdHasBeenSet = false;
+  Aws::String m_directoryUserId;
 
-    Aws::Vector<Aws::String> m_securityProfileIds;
-    bool m_securityProfileIdsHasBeenSet = false;
+  Aws::Vector<Aws::String> m_securityProfileIds;
 
-    Aws::String m_routingProfileId;
-    bool m_routingProfileIdHasBeenSet = false;
+  Aws::String m_routingProfileId;
 
-    Aws::String m_hierarchyGroupId;
-    bool m_hierarchyGroupIdHasBeenSet = false;
+  Aws::String m_hierarchyGroupId;
 
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
+  Aws::String m_instanceId;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
+  Aws::Vector<AutoAcceptConfig> m_autoAcceptConfigs;
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+  Aws::Vector<AfterContactWorkConfigPerChannel> m_afterContactWorkConfigs;
+
+  Aws::Vector<PhoneNumberConfig> m_phoneNumberConfigs;
+
+  Aws::Vector<PersistentConnectionConfig> m_persistentConnectionConfigs;
+
+  Aws::Vector<VoiceEnhancementConfig> m_voiceEnhancementConfigs;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_usernameHasBeenSet = false;
+  bool m_passwordHasBeenSet = false;
+  bool m_identityInfoHasBeenSet = false;
+  bool m_phoneConfigHasBeenSet = false;
+  bool m_directoryUserIdHasBeenSet = false;
+  bool m_securityProfileIdsHasBeenSet = false;
+  bool m_routingProfileIdHasBeenSet = false;
+  bool m_hierarchyGroupIdHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_autoAcceptConfigsHasBeenSet = false;
+  bool m_afterContactWorkConfigsHasBeenSet = false;
+  bool m_phoneNumberConfigsHasBeenSet = false;
+  bool m_persistentConnectionConfigsHasBeenSet = false;
+  bool m_voiceEnhancementConfigsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

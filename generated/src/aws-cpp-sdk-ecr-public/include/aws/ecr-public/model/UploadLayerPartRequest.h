@@ -4,136 +4,161 @@
  */
 
 #pragma once
-#include <aws/ecr-public/ECRPublic_EXPORTS.h>
-#include <aws/ecr-public/ECRPublicRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ecr-public/ECRPublicRequest.h>
+#include <aws/ecr-public/ECRPublic_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ECRPublic
-{
-namespace Model
-{
+namespace Aws {
+namespace ECRPublic {
+namespace Model {
 
+/**
+ */
+class UploadLayerPartRequest : public ECRPublicRequest {
+ public:
+  AWS_ECRPUBLIC_API UploadLayerPartRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UploadLayerPart"; }
+
+  AWS_ECRPUBLIC_API Aws::String SerializePayload() const override;
+
+  AWS_ECRPUBLIC_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Web Services account ID, or registry alias, that's associated with
+   * the registry that you're uploading layer parts to. If you do not specify a
+   * registry, the default public registry is assumed.</p>
    */
-  class UploadLayerPartRequest : public ECRPublicRequest
-  {
-  public:
-    AWS_ECRPUBLIC_API UploadLayerPartRequest();
+  inline const Aws::String& GetRegistryId() const { return m_registryId; }
+  inline bool RegistryIdHasBeenSet() const { return m_registryIdHasBeenSet; }
+  template <typename RegistryIdT = Aws::String>
+  void SetRegistryId(RegistryIdT&& value) {
+    m_registryIdHasBeenSet = true;
+    m_registryId = std::forward<RegistryIdT>(value);
+  }
+  template <typename RegistryIdT = Aws::String>
+  UploadLayerPartRequest& WithRegistryId(RegistryIdT&& value) {
+    SetRegistryId(std::forward<RegistryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UploadLayerPart"; }
+  ///@{
+  /**
+   * <p>The name of the repository that you're uploading layer parts to.</p>
+   */
+  inline const Aws::String& GetRepositoryName() const { return m_repositoryName; }
+  inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
+  template <typename RepositoryNameT = Aws::String>
+  void SetRepositoryName(RepositoryNameT&& value) {
+    m_repositoryNameHasBeenSet = true;
+    m_repositoryName = std::forward<RepositoryNameT>(value);
+  }
+  template <typename RepositoryNameT = Aws::String>
+  UploadLayerPartRequest& WithRepositoryName(RepositoryNameT&& value) {
+    SetRepositoryName(std::forward<RepositoryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ECRPUBLIC_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The upload ID from a previous <a>InitiateLayerUpload</a> operation to
+   * associate with the layer part upload.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  UploadLayerPartRequest& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ECRPUBLIC_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The position of the first byte of the layer part witin the overall image
+   * layer.</p>
+   */
+  inline long long GetPartFirstByte() const { return m_partFirstByte; }
+  inline bool PartFirstByteHasBeenSet() const { return m_partFirstByteHasBeenSet; }
+  inline void SetPartFirstByte(long long value) {
+    m_partFirstByteHasBeenSet = true;
+    m_partFirstByte = value;
+  }
+  inline UploadLayerPartRequest& WithPartFirstByte(long long value) {
+    SetPartFirstByte(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The position of the last byte of the layer part within the overall image
+   * layer.</p>
+   */
+  inline long long GetPartLastByte() const { return m_partLastByte; }
+  inline bool PartLastByteHasBeenSet() const { return m_partLastByteHasBeenSet; }
+  inline void SetPartLastByte(long long value) {
+    m_partLastByteHasBeenSet = true;
+    m_partLastByte = value;
+  }
+  inline UploadLayerPartRequest& WithPartLastByte(long long value) {
+    SetPartLastByte(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID, or registry alias, that's associated with
-     * the registry that you're uploading layer parts to. If you do not specify a
-     * registry, the default public registry is assumed.</p>
-     */
-    inline const Aws::String& GetRegistryId() const{ return m_registryId; }
-    inline bool RegistryIdHasBeenSet() const { return m_registryIdHasBeenSet; }
-    inline void SetRegistryId(const Aws::String& value) { m_registryIdHasBeenSet = true; m_registryId = value; }
-    inline void SetRegistryId(Aws::String&& value) { m_registryIdHasBeenSet = true; m_registryId = std::move(value); }
-    inline void SetRegistryId(const char* value) { m_registryIdHasBeenSet = true; m_registryId.assign(value); }
-    inline UploadLayerPartRequest& WithRegistryId(const Aws::String& value) { SetRegistryId(value); return *this;}
-    inline UploadLayerPartRequest& WithRegistryId(Aws::String&& value) { SetRegistryId(std::move(value)); return *this;}
-    inline UploadLayerPartRequest& WithRegistryId(const char* value) { SetRegistryId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The base64-encoded layer part payload.</p>
+   */
+  inline const Aws::Utils::ByteBuffer& GetLayerPartBlob() const { return m_layerPartBlob; }
+  inline bool LayerPartBlobHasBeenSet() const { return m_layerPartBlobHasBeenSet; }
+  template <typename LayerPartBlobT = Aws::Utils::ByteBuffer>
+  void SetLayerPartBlob(LayerPartBlobT&& value) {
+    m_layerPartBlobHasBeenSet = true;
+    m_layerPartBlob = std::forward<LayerPartBlobT>(value);
+  }
+  template <typename LayerPartBlobT = Aws::Utils::ByteBuffer>
+  UploadLayerPartRequest& WithLayerPartBlob(LayerPartBlobT&& value) {
+    SetLayerPartBlob(std::forward<LayerPartBlobT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_registryId;
 
-    ///@{
-    /**
-     * <p>The name of the repository that you're uploading layer parts to.</p>
-     */
-    inline const Aws::String& GetRepositoryName() const{ return m_repositoryName; }
-    inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
-    inline void SetRepositoryName(const Aws::String& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = value; }
-    inline void SetRepositoryName(Aws::String&& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = std::move(value); }
-    inline void SetRepositoryName(const char* value) { m_repositoryNameHasBeenSet = true; m_repositoryName.assign(value); }
-    inline UploadLayerPartRequest& WithRepositoryName(const Aws::String& value) { SetRepositoryName(value); return *this;}
-    inline UploadLayerPartRequest& WithRepositoryName(Aws::String&& value) { SetRepositoryName(std::move(value)); return *this;}
-    inline UploadLayerPartRequest& WithRepositoryName(const char* value) { SetRepositoryName(value); return *this;}
-    ///@}
+  Aws::String m_repositoryName;
 
-    ///@{
-    /**
-     * <p>The upload ID from a previous <a>InitiateLayerUpload</a> operation to
-     * associate with the layer part upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadIdHasBeenSet = true; m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadIdHasBeenSet = true; m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadIdHasBeenSet = true; m_uploadId.assign(value); }
-    inline UploadLayerPartRequest& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline UploadLayerPartRequest& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline UploadLayerPartRequest& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  Aws::String m_uploadId;
 
-    ///@{
-    /**
-     * <p>The position of the first byte of the layer part witin the overall image
-     * layer.</p>
-     */
-    inline long long GetPartFirstByte() const{ return m_partFirstByte; }
-    inline bool PartFirstByteHasBeenSet() const { return m_partFirstByteHasBeenSet; }
-    inline void SetPartFirstByte(long long value) { m_partFirstByteHasBeenSet = true; m_partFirstByte = value; }
-    inline UploadLayerPartRequest& WithPartFirstByte(long long value) { SetPartFirstByte(value); return *this;}
-    ///@}
+  long long m_partFirstByte{0};
 
-    ///@{
-    /**
-     * <p>The position of the last byte of the layer part within the overall image
-     * layer.</p>
-     */
-    inline long long GetPartLastByte() const{ return m_partLastByte; }
-    inline bool PartLastByteHasBeenSet() const { return m_partLastByteHasBeenSet; }
-    inline void SetPartLastByte(long long value) { m_partLastByteHasBeenSet = true; m_partLastByte = value; }
-    inline UploadLayerPartRequest& WithPartLastByte(long long value) { SetPartLastByte(value); return *this;}
-    ///@}
+  long long m_partLastByte{0};
 
-    ///@{
-    /**
-     * <p>The base64-encoded layer part payload.</p>
-     */
-    inline const Aws::Utils::ByteBuffer& GetLayerPartBlob() const{ return m_layerPartBlob; }
-    inline bool LayerPartBlobHasBeenSet() const { return m_layerPartBlobHasBeenSet; }
-    inline void SetLayerPartBlob(const Aws::Utils::ByteBuffer& value) { m_layerPartBlobHasBeenSet = true; m_layerPartBlob = value; }
-    inline void SetLayerPartBlob(Aws::Utils::ByteBuffer&& value) { m_layerPartBlobHasBeenSet = true; m_layerPartBlob = std::move(value); }
-    inline UploadLayerPartRequest& WithLayerPartBlob(const Aws::Utils::ByteBuffer& value) { SetLayerPartBlob(value); return *this;}
-    inline UploadLayerPartRequest& WithLayerPartBlob(Aws::Utils::ByteBuffer&& value) { SetLayerPartBlob(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Utils::ByteBuffer m_layerPartBlob{};
+  bool m_registryIdHasBeenSet = false;
+  bool m_repositoryNameHasBeenSet = false;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_partFirstByteHasBeenSet = false;
+  bool m_partLastByteHasBeenSet = false;
+  bool m_layerPartBlobHasBeenSet = false;
+};
 
-    Aws::String m_registryId;
-    bool m_registryIdHasBeenSet = false;
-
-    Aws::String m_repositoryName;
-    bool m_repositoryNameHasBeenSet = false;
-
-    Aws::String m_uploadId;
-    bool m_uploadIdHasBeenSet = false;
-
-    long long m_partFirstByte;
-    bool m_partFirstByteHasBeenSet = false;
-
-    long long m_partLastByte;
-    bool m_partLastByteHasBeenSet = false;
-
-    Aws::Utils::ByteBuffer m_layerPartBlob;
-    bool m_layerPartBlobHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ECRPublic
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECRPublic
+}  // namespace Aws

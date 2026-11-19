@@ -3,55 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/UpdateBuildRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateBuildRequest::UpdateBuildRequest() : 
-    m_buildIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_versionHasBeenSet(false)
-{
+Aws::String UpdateBuildRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_buildIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_versionHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_buildIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BuildId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_buildId.c_str()));
+  }
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_versionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Version"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_version.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateBuildRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_buildIdHasBeenSet)
-  {
-   payload.WithString("BuildId", m_buildId);
-
-  }
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_versionHasBeenSet)
-  {
-   payload.WithString("Version", m_version);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateBuildRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateBuildRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.UpdateBuild"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

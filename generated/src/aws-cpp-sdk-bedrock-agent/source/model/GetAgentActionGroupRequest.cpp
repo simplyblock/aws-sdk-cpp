@@ -12,18 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAgentActionGroupRequest::GetAgentActionGroupRequest() : 
-    m_actionGroupIdHasBeenSet(false),
-    m_agentIdHasBeenSet(false),
-    m_agentVersionHasBeenSet(false)
-{
-}
-
-Aws::String GetAgentActionGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAgentActionGroupRequest::SerializePayload() const { return {}; }

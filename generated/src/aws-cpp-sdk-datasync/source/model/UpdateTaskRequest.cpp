@@ -3,107 +3,108 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/UpdateTaskRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DataSync::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateTaskRequest::UpdateTaskRequest() : 
-    m_taskArnHasBeenSet(false),
-    m_optionsHasBeenSet(false),
-    m_excludesHasBeenSet(false),
-    m_scheduleHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_cloudWatchLogGroupArnHasBeenSet(false),
-    m_includesHasBeenSet(false),
-    m_manifestConfigHasBeenSet(false),
-    m_taskReportConfigHasBeenSet(false)
-{
+Aws::String UpdateTaskRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_taskArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_optionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_excludesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_scheduleHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cloudWatchLogGroupArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_includesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_manifestConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_taskReportConfigHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_taskArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TaskArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_taskArn.c_str()));
+  }
+
+  if (m_optionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Options"));
+    m_options.CborEncode(encoder);
+  }
+
+  if (m_excludesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Excludes"));
+    encoder.WriteArrayStart(m_excludes.size());
+    for (const auto& item_0 : m_excludes) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_scheduleHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Schedule"));
+    m_schedule.CborEncode(encoder);
+  }
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_cloudWatchLogGroupArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CloudWatchLogGroupArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_cloudWatchLogGroupArn.c_str()));
+  }
+
+  if (m_includesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Includes"));
+    encoder.WriteArrayStart(m_includes.size());
+    for (const auto& item_0 : m_includes) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_manifestConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ManifestConfig"));
+    m_manifestConfig.CborEncode(encoder);
+  }
+
+  if (m_taskReportConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TaskReportConfig"));
+    m_taskReportConfig.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateTaskRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_taskArnHasBeenSet)
-  {
-   payload.WithString("TaskArn", m_taskArn);
-
-  }
-
-  if(m_optionsHasBeenSet)
-  {
-   payload.WithObject("Options", m_options.Jsonize());
-
-  }
-
-  if(m_excludesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> excludesJsonList(m_excludes.size());
-   for(unsigned excludesIndex = 0; excludesIndex < excludesJsonList.GetLength(); ++excludesIndex)
-   {
-     excludesJsonList[excludesIndex].AsObject(m_excludes[excludesIndex].Jsonize());
-   }
-   payload.WithArray("Excludes", std::move(excludesJsonList));
-
-  }
-
-  if(m_scheduleHasBeenSet)
-  {
-   payload.WithObject("Schedule", m_schedule.Jsonize());
-
-  }
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_cloudWatchLogGroupArnHasBeenSet)
-  {
-   payload.WithString("CloudWatchLogGroupArn", m_cloudWatchLogGroupArn);
-
-  }
-
-  if(m_includesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> includesJsonList(m_includes.size());
-   for(unsigned includesIndex = 0; includesIndex < includesJsonList.GetLength(); ++includesIndex)
-   {
-     includesJsonList[includesIndex].AsObject(m_includes[includesIndex].Jsonize());
-   }
-   payload.WithArray("Includes", std::move(includesJsonList));
-
-  }
-
-  if(m_manifestConfigHasBeenSet)
-  {
-   payload.WithObject("ManifestConfig", m_manifestConfig.Jsonize());
-
-  }
-
-  if(m_taskReportConfigHasBeenSet)
-  {
-   payload.WithObject("TaskReportConfig", m_taskReportConfig.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateTaskRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateTaskRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "FmrsService.UpdateTask"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

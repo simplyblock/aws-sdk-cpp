@@ -4,326 +4,427 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/HyperParameterTuningJobConfig.h>
-#include <aws/sagemaker/model/HyperParameterTrainingJobDefinition.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sagemaker/model/HyperParameterTuningJobStatus.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/TrainingJobStatusCounters.h>
-#include <aws/sagemaker/model/ObjectiveStatusCounters.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/HyperParameterTrainingJobDefinition.h>
 #include <aws/sagemaker/model/HyperParameterTrainingJobSummary.h>
-#include <aws/sagemaker/model/HyperParameterTuningJobWarmStartConfig.h>
 #include <aws/sagemaker/model/HyperParameterTuningJobCompletionDetails.h>
+#include <aws/sagemaker/model/HyperParameterTuningJobConfig.h>
 #include <aws/sagemaker/model/HyperParameterTuningJobConsumedResources.h>
+#include <aws/sagemaker/model/HyperParameterTuningJobStatus.h>
+#include <aws/sagemaker/model/HyperParameterTuningJobWarmStartConfig.h>
+#include <aws/sagemaker/model/ObjectiveStatusCounters.h>
 #include <aws/sagemaker/model/Tag.h>
+#include <aws/sagemaker/model/TrainingJobStatusCounters.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>An entity returned by the <a
+ * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchRecord.html">SearchRecord</a>
+ * API containing the properties of a hyperparameter tuning job.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/HyperParameterTuningJobSearchEntity">AWS
+ * API Reference</a></p>
+ */
+class HyperParameterTuningJobSearchEntity {
+ public:
+  AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity() = default;
+  AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An entity returned by the <a
-   * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchRecord.html">SearchRecord</a>
-   * API containing the properties of a hyperparameter tuning job.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/HyperParameterTuningJobSearchEntity">AWS
-   * API Reference</a></p>
+   * <p>The name of a hyperparameter tuning job.</p>
    */
-  class HyperParameterTuningJobSearchEntity
-  {
-  public:
-    AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity();
-    AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API HyperParameterTuningJobSearchEntity& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetHyperParameterTuningJobName() const { return m_hyperParameterTuningJobName; }
+  inline bool HyperParameterTuningJobNameHasBeenSet() const { return m_hyperParameterTuningJobNameHasBeenSet; }
+  template <typename HyperParameterTuningJobNameT = Aws::String>
+  void SetHyperParameterTuningJobName(HyperParameterTuningJobNameT&& value) {
+    m_hyperParameterTuningJobNameHasBeenSet = true;
+    m_hyperParameterTuningJobName = std::forward<HyperParameterTuningJobNameT>(value);
+  }
+  template <typename HyperParameterTuningJobNameT = Aws::String>
+  HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobName(HyperParameterTuningJobNameT&& value) {
+    SetHyperParameterTuningJobName(std::forward<HyperParameterTuningJobNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of a hyperparameter tuning job.</p>
+   */
+  inline const Aws::String& GetHyperParameterTuningJobArn() const { return m_hyperParameterTuningJobArn; }
+  inline bool HyperParameterTuningJobArnHasBeenSet() const { return m_hyperParameterTuningJobArnHasBeenSet; }
+  template <typename HyperParameterTuningJobArnT = Aws::String>
+  void SetHyperParameterTuningJobArn(HyperParameterTuningJobArnT&& value) {
+    m_hyperParameterTuningJobArnHasBeenSet = true;
+    m_hyperParameterTuningJobArn = std::forward<HyperParameterTuningJobArnT>(value);
+  }
+  template <typename HyperParameterTuningJobArnT = Aws::String>
+  HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobArn(HyperParameterTuningJobArnT&& value) {
+    SetHyperParameterTuningJobArn(std::forward<HyperParameterTuningJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of a hyperparameter tuning job.</p>
-     */
-    inline const Aws::String& GetHyperParameterTuningJobName() const{ return m_hyperParameterTuningJobName; }
-    inline bool HyperParameterTuningJobNameHasBeenSet() const { return m_hyperParameterTuningJobNameHasBeenSet; }
-    inline void SetHyperParameterTuningJobName(const Aws::String& value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName = value; }
-    inline void SetHyperParameterTuningJobName(Aws::String&& value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName = std::move(value); }
-    inline void SetHyperParameterTuningJobName(const char* value) { m_hyperParameterTuningJobNameHasBeenSet = true; m_hyperParameterTuningJobName.assign(value); }
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobName(const Aws::String& value) { SetHyperParameterTuningJobName(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobName(Aws::String&& value) { SetHyperParameterTuningJobName(std::move(value)); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobName(const char* value) { SetHyperParameterTuningJobName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of a hyperparameter tuning job.</p>
-     */
-    inline const Aws::String& GetHyperParameterTuningJobArn() const{ return m_hyperParameterTuningJobArn; }
-    inline bool HyperParameterTuningJobArnHasBeenSet() const { return m_hyperParameterTuningJobArnHasBeenSet; }
-    inline void SetHyperParameterTuningJobArn(const Aws::String& value) { m_hyperParameterTuningJobArnHasBeenSet = true; m_hyperParameterTuningJobArn = value; }
-    inline void SetHyperParameterTuningJobArn(Aws::String&& value) { m_hyperParameterTuningJobArnHasBeenSet = true; m_hyperParameterTuningJobArn = std::move(value); }
-    inline void SetHyperParameterTuningJobArn(const char* value) { m_hyperParameterTuningJobArnHasBeenSet = true; m_hyperParameterTuningJobArn.assign(value); }
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobArn(const Aws::String& value) { SetHyperParameterTuningJobArn(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobArn(Aws::String&& value) { SetHyperParameterTuningJobArn(std::move(value)); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobArn(const char* value) { SetHyperParameterTuningJobArn(value); return *this;}
-    ///@}
+  inline const HyperParameterTuningJobConfig& GetHyperParameterTuningJobConfig() const { return m_hyperParameterTuningJobConfig; }
+  inline bool HyperParameterTuningJobConfigHasBeenSet() const { return m_hyperParameterTuningJobConfigHasBeenSet; }
+  template <typename HyperParameterTuningJobConfigT = HyperParameterTuningJobConfig>
+  void SetHyperParameterTuningJobConfig(HyperParameterTuningJobConfigT&& value) {
+    m_hyperParameterTuningJobConfigHasBeenSet = true;
+    m_hyperParameterTuningJobConfig = std::forward<HyperParameterTuningJobConfigT>(value);
+  }
+  template <typename HyperParameterTuningJobConfigT = HyperParameterTuningJobConfig>
+  HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobConfig(HyperParameterTuningJobConfigT&& value) {
+    SetHyperParameterTuningJobConfig(std::forward<HyperParameterTuningJobConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const HyperParameterTuningJobConfig& GetHyperParameterTuningJobConfig() const{ return m_hyperParameterTuningJobConfig; }
-    inline bool HyperParameterTuningJobConfigHasBeenSet() const { return m_hyperParameterTuningJobConfigHasBeenSet; }
-    inline void SetHyperParameterTuningJobConfig(const HyperParameterTuningJobConfig& value) { m_hyperParameterTuningJobConfigHasBeenSet = true; m_hyperParameterTuningJobConfig = value; }
-    inline void SetHyperParameterTuningJobConfig(HyperParameterTuningJobConfig&& value) { m_hyperParameterTuningJobConfigHasBeenSet = true; m_hyperParameterTuningJobConfig = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobConfig(const HyperParameterTuningJobConfig& value) { SetHyperParameterTuningJobConfig(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobConfig(HyperParameterTuningJobConfig&& value) { SetHyperParameterTuningJobConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const HyperParameterTrainingJobDefinition& GetTrainingJobDefinition() const{ return m_trainingJobDefinition; }
-    inline bool TrainingJobDefinitionHasBeenSet() const { return m_trainingJobDefinitionHasBeenSet; }
-    inline void SetTrainingJobDefinition(const HyperParameterTrainingJobDefinition& value) { m_trainingJobDefinitionHasBeenSet = true; m_trainingJobDefinition = value; }
-    inline void SetTrainingJobDefinition(HyperParameterTrainingJobDefinition&& value) { m_trainingJobDefinitionHasBeenSet = true; m_trainingJobDefinition = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobDefinition(const HyperParameterTrainingJobDefinition& value) { SetTrainingJobDefinition(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobDefinition(HyperParameterTrainingJobDefinition&& value) { SetTrainingJobDefinition(std::move(value)); return *this;}
-    ///@}
+  inline const HyperParameterTrainingJobDefinition& GetTrainingJobDefinition() const { return m_trainingJobDefinition; }
+  inline bool TrainingJobDefinitionHasBeenSet() const { return m_trainingJobDefinitionHasBeenSet; }
+  template <typename TrainingJobDefinitionT = HyperParameterTrainingJobDefinition>
+  void SetTrainingJobDefinition(TrainingJobDefinitionT&& value) {
+    m_trainingJobDefinitionHasBeenSet = true;
+    m_trainingJobDefinition = std::forward<TrainingJobDefinitionT>(value);
+  }
+  template <typename TrainingJobDefinitionT = HyperParameterTrainingJobDefinition>
+  HyperParameterTuningJobSearchEntity& WithTrainingJobDefinition(TrainingJobDefinitionT&& value) {
+    SetTrainingJobDefinition(std::forward<TrainingJobDefinitionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The job definitions included in a hyperparameter tuning job.</p>
-     */
-    inline const Aws::Vector<HyperParameterTrainingJobDefinition>& GetTrainingJobDefinitions() const{ return m_trainingJobDefinitions; }
-    inline bool TrainingJobDefinitionsHasBeenSet() const { return m_trainingJobDefinitionsHasBeenSet; }
-    inline void SetTrainingJobDefinitions(const Aws::Vector<HyperParameterTrainingJobDefinition>& value) { m_trainingJobDefinitionsHasBeenSet = true; m_trainingJobDefinitions = value; }
-    inline void SetTrainingJobDefinitions(Aws::Vector<HyperParameterTrainingJobDefinition>&& value) { m_trainingJobDefinitionsHasBeenSet = true; m_trainingJobDefinitions = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobDefinitions(const Aws::Vector<HyperParameterTrainingJobDefinition>& value) { SetTrainingJobDefinitions(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobDefinitions(Aws::Vector<HyperParameterTrainingJobDefinition>&& value) { SetTrainingJobDefinitions(std::move(value)); return *this;}
-    inline HyperParameterTuningJobSearchEntity& AddTrainingJobDefinitions(const HyperParameterTrainingJobDefinition& value) { m_trainingJobDefinitionsHasBeenSet = true; m_trainingJobDefinitions.push_back(value); return *this; }
-    inline HyperParameterTuningJobSearchEntity& AddTrainingJobDefinitions(HyperParameterTrainingJobDefinition&& value) { m_trainingJobDefinitionsHasBeenSet = true; m_trainingJobDefinitions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The job definitions included in a hyperparameter tuning job.</p>
+   */
+  inline const Aws::Vector<HyperParameterTrainingJobDefinition>& GetTrainingJobDefinitions() const { return m_trainingJobDefinitions; }
+  inline bool TrainingJobDefinitionsHasBeenSet() const { return m_trainingJobDefinitionsHasBeenSet; }
+  template <typename TrainingJobDefinitionsT = Aws::Vector<HyperParameterTrainingJobDefinition>>
+  void SetTrainingJobDefinitions(TrainingJobDefinitionsT&& value) {
+    m_trainingJobDefinitionsHasBeenSet = true;
+    m_trainingJobDefinitions = std::forward<TrainingJobDefinitionsT>(value);
+  }
+  template <typename TrainingJobDefinitionsT = Aws::Vector<HyperParameterTrainingJobDefinition>>
+  HyperParameterTuningJobSearchEntity& WithTrainingJobDefinitions(TrainingJobDefinitionsT&& value) {
+    SetTrainingJobDefinitions(std::forward<TrainingJobDefinitionsT>(value));
+    return *this;
+  }
+  template <typename TrainingJobDefinitionsT = HyperParameterTrainingJobDefinition>
+  HyperParameterTuningJobSearchEntity& AddTrainingJobDefinitions(TrainingJobDefinitionsT&& value) {
+    m_trainingJobDefinitionsHasBeenSet = true;
+    m_trainingJobDefinitions.emplace_back(std::forward<TrainingJobDefinitionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of a hyperparameter tuning job.</p>
-     */
-    inline const HyperParameterTuningJobStatus& GetHyperParameterTuningJobStatus() const{ return m_hyperParameterTuningJobStatus; }
-    inline bool HyperParameterTuningJobStatusHasBeenSet() const { return m_hyperParameterTuningJobStatusHasBeenSet; }
-    inline void SetHyperParameterTuningJobStatus(const HyperParameterTuningJobStatus& value) { m_hyperParameterTuningJobStatusHasBeenSet = true; m_hyperParameterTuningJobStatus = value; }
-    inline void SetHyperParameterTuningJobStatus(HyperParameterTuningJobStatus&& value) { m_hyperParameterTuningJobStatusHasBeenSet = true; m_hyperParameterTuningJobStatus = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobStatus(const HyperParameterTuningJobStatus& value) { SetHyperParameterTuningJobStatus(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobStatus(HyperParameterTuningJobStatus&& value) { SetHyperParameterTuningJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of a hyperparameter tuning job.</p>
+   */
+  inline HyperParameterTuningJobStatus GetHyperParameterTuningJobStatus() const { return m_hyperParameterTuningJobStatus; }
+  inline bool HyperParameterTuningJobStatusHasBeenSet() const { return m_hyperParameterTuningJobStatusHasBeenSet; }
+  inline void SetHyperParameterTuningJobStatus(HyperParameterTuningJobStatus value) {
+    m_hyperParameterTuningJobStatusHasBeenSet = true;
+    m_hyperParameterTuningJobStatus = value;
+  }
+  inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningJobStatus(HyperParameterTuningJobStatus value) {
+    SetHyperParameterTuningJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that a hyperparameter tuning job was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that a hyperparameter tuning job was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  HyperParameterTuningJobSearchEntity& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that a hyperparameter tuning job ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetHyperParameterTuningEndTime() const{ return m_hyperParameterTuningEndTime; }
-    inline bool HyperParameterTuningEndTimeHasBeenSet() const { return m_hyperParameterTuningEndTimeHasBeenSet; }
-    inline void SetHyperParameterTuningEndTime(const Aws::Utils::DateTime& value) { m_hyperParameterTuningEndTimeHasBeenSet = true; m_hyperParameterTuningEndTime = value; }
-    inline void SetHyperParameterTuningEndTime(Aws::Utils::DateTime&& value) { m_hyperParameterTuningEndTimeHasBeenSet = true; m_hyperParameterTuningEndTime = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningEndTime(const Aws::Utils::DateTime& value) { SetHyperParameterTuningEndTime(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithHyperParameterTuningEndTime(Aws::Utils::DateTime&& value) { SetHyperParameterTuningEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that a hyperparameter tuning job ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetHyperParameterTuningEndTime() const { return m_hyperParameterTuningEndTime; }
+  inline bool HyperParameterTuningEndTimeHasBeenSet() const { return m_hyperParameterTuningEndTimeHasBeenSet; }
+  template <typename HyperParameterTuningEndTimeT = Aws::Utils::DateTime>
+  void SetHyperParameterTuningEndTime(HyperParameterTuningEndTimeT&& value) {
+    m_hyperParameterTuningEndTimeHasBeenSet = true;
+    m_hyperParameterTuningEndTime = std::forward<HyperParameterTuningEndTimeT>(value);
+  }
+  template <typename HyperParameterTuningEndTimeT = Aws::Utils::DateTime>
+  HyperParameterTuningJobSearchEntity& WithHyperParameterTuningEndTime(HyperParameterTuningEndTimeT&& value) {
+    SetHyperParameterTuningEndTime(std::forward<HyperParameterTuningEndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that a hyperparameter tuning job was last modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that a hyperparameter tuning job was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  HyperParameterTuningJobSearchEntity& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const TrainingJobStatusCounters& GetTrainingJobStatusCounters() const{ return m_trainingJobStatusCounters; }
-    inline bool TrainingJobStatusCountersHasBeenSet() const { return m_trainingJobStatusCountersHasBeenSet; }
-    inline void SetTrainingJobStatusCounters(const TrainingJobStatusCounters& value) { m_trainingJobStatusCountersHasBeenSet = true; m_trainingJobStatusCounters = value; }
-    inline void SetTrainingJobStatusCounters(TrainingJobStatusCounters&& value) { m_trainingJobStatusCountersHasBeenSet = true; m_trainingJobStatusCounters = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobStatusCounters(const TrainingJobStatusCounters& value) { SetTrainingJobStatusCounters(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithTrainingJobStatusCounters(TrainingJobStatusCounters&& value) { SetTrainingJobStatusCounters(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ObjectiveStatusCounters& GetObjectiveStatusCounters() const{ return m_objectiveStatusCounters; }
-    inline bool ObjectiveStatusCountersHasBeenSet() const { return m_objectiveStatusCountersHasBeenSet; }
-    inline void SetObjectiveStatusCounters(const ObjectiveStatusCounters& value) { m_objectiveStatusCountersHasBeenSet = true; m_objectiveStatusCounters = value; }
-    inline void SetObjectiveStatusCounters(ObjectiveStatusCounters&& value) { m_objectiveStatusCountersHasBeenSet = true; m_objectiveStatusCounters = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithObjectiveStatusCounters(const ObjectiveStatusCounters& value) { SetObjectiveStatusCounters(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithObjectiveStatusCounters(ObjectiveStatusCounters&& value) { SetObjectiveStatusCounters(std::move(value)); return *this;}
-    ///@}
+  inline const TrainingJobStatusCounters& GetTrainingJobStatusCounters() const { return m_trainingJobStatusCounters; }
+  inline bool TrainingJobStatusCountersHasBeenSet() const { return m_trainingJobStatusCountersHasBeenSet; }
+  template <typename TrainingJobStatusCountersT = TrainingJobStatusCounters>
+  void SetTrainingJobStatusCounters(TrainingJobStatusCountersT&& value) {
+    m_trainingJobStatusCountersHasBeenSet = true;
+    m_trainingJobStatusCounters = std::forward<TrainingJobStatusCountersT>(value);
+  }
+  template <typename TrainingJobStatusCountersT = TrainingJobStatusCounters>
+  HyperParameterTuningJobSearchEntity& WithTrainingJobStatusCounters(TrainingJobStatusCountersT&& value) {
+    SetTrainingJobStatusCounters(std::forward<TrainingJobStatusCountersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const HyperParameterTrainingJobSummary& GetBestTrainingJob() const{ return m_bestTrainingJob; }
-    inline bool BestTrainingJobHasBeenSet() const { return m_bestTrainingJobHasBeenSet; }
-    inline void SetBestTrainingJob(const HyperParameterTrainingJobSummary& value) { m_bestTrainingJobHasBeenSet = true; m_bestTrainingJob = value; }
-    inline void SetBestTrainingJob(HyperParameterTrainingJobSummary&& value) { m_bestTrainingJobHasBeenSet = true; m_bestTrainingJob = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithBestTrainingJob(const HyperParameterTrainingJobSummary& value) { SetBestTrainingJob(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithBestTrainingJob(HyperParameterTrainingJobSummary&& value) { SetBestTrainingJob(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const HyperParameterTrainingJobSummary& GetOverallBestTrainingJob() const{ return m_overallBestTrainingJob; }
-    inline bool OverallBestTrainingJobHasBeenSet() const { return m_overallBestTrainingJobHasBeenSet; }
-    inline void SetOverallBestTrainingJob(const HyperParameterTrainingJobSummary& value) { m_overallBestTrainingJobHasBeenSet = true; m_overallBestTrainingJob = value; }
-    inline void SetOverallBestTrainingJob(HyperParameterTrainingJobSummary&& value) { m_overallBestTrainingJobHasBeenSet = true; m_overallBestTrainingJob = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithOverallBestTrainingJob(const HyperParameterTrainingJobSummary& value) { SetOverallBestTrainingJob(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithOverallBestTrainingJob(HyperParameterTrainingJobSummary&& value) { SetOverallBestTrainingJob(std::move(value)); return *this;}
-    ///@}
+  inline const ObjectiveStatusCounters& GetObjectiveStatusCounters() const { return m_objectiveStatusCounters; }
+  inline bool ObjectiveStatusCountersHasBeenSet() const { return m_objectiveStatusCountersHasBeenSet; }
+  template <typename ObjectiveStatusCountersT = ObjectiveStatusCounters>
+  void SetObjectiveStatusCounters(ObjectiveStatusCountersT&& value) {
+    m_objectiveStatusCountersHasBeenSet = true;
+    m_objectiveStatusCounters = std::forward<ObjectiveStatusCountersT>(value);
+  }
+  template <typename ObjectiveStatusCountersT = ObjectiveStatusCounters>
+  HyperParameterTuningJobSearchEntity& WithObjectiveStatusCounters(ObjectiveStatusCountersT&& value) {
+    SetObjectiveStatusCounters(std::forward<ObjectiveStatusCountersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const HyperParameterTuningJobWarmStartConfig& GetWarmStartConfig() const{ return m_warmStartConfig; }
-    inline bool WarmStartConfigHasBeenSet() const { return m_warmStartConfigHasBeenSet; }
-    inline void SetWarmStartConfig(const HyperParameterTuningJobWarmStartConfig& value) { m_warmStartConfigHasBeenSet = true; m_warmStartConfig = value; }
-    inline void SetWarmStartConfig(HyperParameterTuningJobWarmStartConfig&& value) { m_warmStartConfigHasBeenSet = true; m_warmStartConfig = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithWarmStartConfig(const HyperParameterTuningJobWarmStartConfig& value) { SetWarmStartConfig(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithWarmStartConfig(HyperParameterTuningJobWarmStartConfig&& value) { SetWarmStartConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The error that was created when a hyperparameter tuning job failed.</p>
-     */
-    inline const Aws::String& GetFailureReason() const{ return m_failureReason; }
-    inline bool FailureReasonHasBeenSet() const { return m_failureReasonHasBeenSet; }
-    inline void SetFailureReason(const Aws::String& value) { m_failureReasonHasBeenSet = true; m_failureReason = value; }
-    inline void SetFailureReason(Aws::String&& value) { m_failureReasonHasBeenSet = true; m_failureReason = std::move(value); }
-    inline void SetFailureReason(const char* value) { m_failureReasonHasBeenSet = true; m_failureReason.assign(value); }
-    inline HyperParameterTuningJobSearchEntity& WithFailureReason(const Aws::String& value) { SetFailureReason(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithFailureReason(Aws::String&& value) { SetFailureReason(std::move(value)); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithFailureReason(const char* value) { SetFailureReason(value); return *this;}
-    ///@}
+  inline const HyperParameterTrainingJobSummary& GetBestTrainingJob() const { return m_bestTrainingJob; }
+  inline bool BestTrainingJobHasBeenSet() const { return m_bestTrainingJobHasBeenSet; }
+  template <typename BestTrainingJobT = HyperParameterTrainingJobSummary>
+  void SetBestTrainingJob(BestTrainingJobT&& value) {
+    m_bestTrainingJobHasBeenSet = true;
+    m_bestTrainingJob = std::forward<BestTrainingJobT>(value);
+  }
+  template <typename BestTrainingJobT = HyperParameterTrainingJobSummary>
+  HyperParameterTuningJobSearchEntity& WithBestTrainingJob(BestTrainingJobT&& value) {
+    SetBestTrainingJob(std::forward<BestTrainingJobT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about either a current or completed hyperparameter tuning
-     * job.</p>
-     */
-    inline const HyperParameterTuningJobCompletionDetails& GetTuningJobCompletionDetails() const{ return m_tuningJobCompletionDetails; }
-    inline bool TuningJobCompletionDetailsHasBeenSet() const { return m_tuningJobCompletionDetailsHasBeenSet; }
-    inline void SetTuningJobCompletionDetails(const HyperParameterTuningJobCompletionDetails& value) { m_tuningJobCompletionDetailsHasBeenSet = true; m_tuningJobCompletionDetails = value; }
-    inline void SetTuningJobCompletionDetails(HyperParameterTuningJobCompletionDetails&& value) { m_tuningJobCompletionDetailsHasBeenSet = true; m_tuningJobCompletionDetails = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithTuningJobCompletionDetails(const HyperParameterTuningJobCompletionDetails& value) { SetTuningJobCompletionDetails(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithTuningJobCompletionDetails(HyperParameterTuningJobCompletionDetails&& value) { SetTuningJobCompletionDetails(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The total amount of resources consumed by a hyperparameter tuning job.</p>
-     */
-    inline const HyperParameterTuningJobConsumedResources& GetConsumedResources() const{ return m_consumedResources; }
-    inline bool ConsumedResourcesHasBeenSet() const { return m_consumedResourcesHasBeenSet; }
-    inline void SetConsumedResources(const HyperParameterTuningJobConsumedResources& value) { m_consumedResourcesHasBeenSet = true; m_consumedResources = value; }
-    inline void SetConsumedResources(HyperParameterTuningJobConsumedResources&& value) { m_consumedResourcesHasBeenSet = true; m_consumedResources = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithConsumedResources(const HyperParameterTuningJobConsumedResources& value) { SetConsumedResources(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithConsumedResources(HyperParameterTuningJobConsumedResources&& value) { SetConsumedResources(std::move(value)); return *this;}
-    ///@}
+  inline const HyperParameterTrainingJobSummary& GetOverallBestTrainingJob() const { return m_overallBestTrainingJob; }
+  inline bool OverallBestTrainingJobHasBeenSet() const { return m_overallBestTrainingJobHasBeenSet; }
+  template <typename OverallBestTrainingJobT = HyperParameterTrainingJobSummary>
+  void SetOverallBestTrainingJob(OverallBestTrainingJobT&& value) {
+    m_overallBestTrainingJobHasBeenSet = true;
+    m_overallBestTrainingJob = std::forward<OverallBestTrainingJobT>(value);
+  }
+  template <typename OverallBestTrainingJobT = HyperParameterTrainingJobSummary>
+  HyperParameterTuningJobSearchEntity& WithOverallBestTrainingJob(OverallBestTrainingJobT&& value) {
+    SetOverallBestTrainingJob(std::forward<OverallBestTrainingJobT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags associated with a hyperparameter tuning job. For more information
-     * see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
-     * Amazon Web Services resources</a>.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline HyperParameterTuningJobSearchEntity& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline HyperParameterTuningJobSearchEntity& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline HyperParameterTuningJobSearchEntity& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline HyperParameterTuningJobSearchEntity& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_hyperParameterTuningJobName;
-    bool m_hyperParameterTuningJobNameHasBeenSet = false;
+  inline const HyperParameterTuningJobWarmStartConfig& GetWarmStartConfig() const { return m_warmStartConfig; }
+  inline bool WarmStartConfigHasBeenSet() const { return m_warmStartConfigHasBeenSet; }
+  template <typename WarmStartConfigT = HyperParameterTuningJobWarmStartConfig>
+  void SetWarmStartConfig(WarmStartConfigT&& value) {
+    m_warmStartConfigHasBeenSet = true;
+    m_warmStartConfig = std::forward<WarmStartConfigT>(value);
+  }
+  template <typename WarmStartConfigT = HyperParameterTuningJobWarmStartConfig>
+  HyperParameterTuningJobSearchEntity& WithWarmStartConfig(WarmStartConfigT&& value) {
+    SetWarmStartConfig(std::forward<WarmStartConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_hyperParameterTuningJobArn;
-    bool m_hyperParameterTuningJobArnHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The error that was created when a hyperparameter tuning job failed.</p>
+   */
+  inline const Aws::String& GetFailureReason() const { return m_failureReason; }
+  inline bool FailureReasonHasBeenSet() const { return m_failureReasonHasBeenSet; }
+  template <typename FailureReasonT = Aws::String>
+  void SetFailureReason(FailureReasonT&& value) {
+    m_failureReasonHasBeenSet = true;
+    m_failureReason = std::forward<FailureReasonT>(value);
+  }
+  template <typename FailureReasonT = Aws::String>
+  HyperParameterTuningJobSearchEntity& WithFailureReason(FailureReasonT&& value) {
+    SetFailureReason(std::forward<FailureReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    HyperParameterTuningJobConfig m_hyperParameterTuningJobConfig;
-    bool m_hyperParameterTuningJobConfigHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Information about either a current or completed hyperparameter tuning
+   * job.</p>
+   */
+  inline const HyperParameterTuningJobCompletionDetails& GetTuningJobCompletionDetails() const { return m_tuningJobCompletionDetails; }
+  inline bool TuningJobCompletionDetailsHasBeenSet() const { return m_tuningJobCompletionDetailsHasBeenSet; }
+  template <typename TuningJobCompletionDetailsT = HyperParameterTuningJobCompletionDetails>
+  void SetTuningJobCompletionDetails(TuningJobCompletionDetailsT&& value) {
+    m_tuningJobCompletionDetailsHasBeenSet = true;
+    m_tuningJobCompletionDetails = std::forward<TuningJobCompletionDetailsT>(value);
+  }
+  template <typename TuningJobCompletionDetailsT = HyperParameterTuningJobCompletionDetails>
+  HyperParameterTuningJobSearchEntity& WithTuningJobCompletionDetails(TuningJobCompletionDetailsT&& value) {
+    SetTuningJobCompletionDetails(std::forward<TuningJobCompletionDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    HyperParameterTrainingJobDefinition m_trainingJobDefinition;
-    bool m_trainingJobDefinitionHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The total amount of resources consumed by a hyperparameter tuning job.</p>
+   */
+  inline const HyperParameterTuningJobConsumedResources& GetConsumedResources() const { return m_consumedResources; }
+  inline bool ConsumedResourcesHasBeenSet() const { return m_consumedResourcesHasBeenSet; }
+  template <typename ConsumedResourcesT = HyperParameterTuningJobConsumedResources>
+  void SetConsumedResources(ConsumedResourcesT&& value) {
+    m_consumedResourcesHasBeenSet = true;
+    m_consumedResources = std::forward<ConsumedResourcesT>(value);
+  }
+  template <typename ConsumedResourcesT = HyperParameterTuningJobConsumedResources>
+  HyperParameterTuningJobSearchEntity& WithConsumedResources(ConsumedResourcesT&& value) {
+    SetConsumedResources(std::forward<ConsumedResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<HyperParameterTrainingJobDefinition> m_trainingJobDefinitions;
-    bool m_trainingJobDefinitionsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The tags associated with a hyperparameter tuning job. For more information
+   * see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
+   * Amazon Web Services resources</a>.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  HyperParameterTuningJobSearchEntity& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  HyperParameterTuningJobSearchEntity& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_hyperParameterTuningJobName;
 
-    HyperParameterTuningJobStatus m_hyperParameterTuningJobStatus;
-    bool m_hyperParameterTuningJobStatusHasBeenSet = false;
+  Aws::String m_hyperParameterTuningJobArn;
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  HyperParameterTuningJobConfig m_hyperParameterTuningJobConfig;
 
-    Aws::Utils::DateTime m_hyperParameterTuningEndTime;
-    bool m_hyperParameterTuningEndTimeHasBeenSet = false;
+  HyperParameterTrainingJobDefinition m_trainingJobDefinition;
 
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
+  Aws::Vector<HyperParameterTrainingJobDefinition> m_trainingJobDefinitions;
 
-    TrainingJobStatusCounters m_trainingJobStatusCounters;
-    bool m_trainingJobStatusCountersHasBeenSet = false;
+  HyperParameterTuningJobStatus m_hyperParameterTuningJobStatus{HyperParameterTuningJobStatus::NOT_SET};
 
-    ObjectiveStatusCounters m_objectiveStatusCounters;
-    bool m_objectiveStatusCountersHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    HyperParameterTrainingJobSummary m_bestTrainingJob;
-    bool m_bestTrainingJobHasBeenSet = false;
+  Aws::Utils::DateTime m_hyperParameterTuningEndTime{};
 
-    HyperParameterTrainingJobSummary m_overallBestTrainingJob;
-    bool m_overallBestTrainingJobHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    HyperParameterTuningJobWarmStartConfig m_warmStartConfig;
-    bool m_warmStartConfigHasBeenSet = false;
+  TrainingJobStatusCounters m_trainingJobStatusCounters;
 
-    Aws::String m_failureReason;
-    bool m_failureReasonHasBeenSet = false;
+  ObjectiveStatusCounters m_objectiveStatusCounters;
 
-    HyperParameterTuningJobCompletionDetails m_tuningJobCompletionDetails;
-    bool m_tuningJobCompletionDetailsHasBeenSet = false;
+  HyperParameterTrainingJobSummary m_bestTrainingJob;
 
-    HyperParameterTuningJobConsumedResources m_consumedResources;
-    bool m_consumedResourcesHasBeenSet = false;
+  HyperParameterTrainingJobSummary m_overallBestTrainingJob;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
+  HyperParameterTuningJobWarmStartConfig m_warmStartConfig;
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+  Aws::String m_failureReason;
+
+  HyperParameterTuningJobCompletionDetails m_tuningJobCompletionDetails;
+
+  HyperParameterTuningJobConsumedResources m_consumedResources;
+
+  Aws::Vector<Tag> m_tags;
+  bool m_hyperParameterTuningJobNameHasBeenSet = false;
+  bool m_hyperParameterTuningJobArnHasBeenSet = false;
+  bool m_hyperParameterTuningJobConfigHasBeenSet = false;
+  bool m_trainingJobDefinitionHasBeenSet = false;
+  bool m_trainingJobDefinitionsHasBeenSet = false;
+  bool m_hyperParameterTuningJobStatusHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_hyperParameterTuningEndTimeHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_trainingJobStatusCountersHasBeenSet = false;
+  bool m_objectiveStatusCountersHasBeenSet = false;
+  bool m_bestTrainingJobHasBeenSet = false;
+  bool m_overallBestTrainingJobHasBeenSet = false;
+  bool m_warmStartConfigHasBeenSet = false;
+  bool m_failureReasonHasBeenSet = false;
+  bool m_tuningJobCompletionDetailsHasBeenSet = false;
+  bool m_consumedResourcesHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

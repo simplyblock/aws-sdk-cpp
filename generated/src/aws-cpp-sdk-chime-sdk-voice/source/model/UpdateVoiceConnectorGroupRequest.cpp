@@ -12,37 +12,25 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateVoiceConnectorGroupRequest::UpdateVoiceConnectorGroupRequest() : 
-    m_voiceConnectorGroupIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_voiceConnectorItemsHasBeenSet(false)
-{
-}
-
-Aws::String UpdateVoiceConnectorGroupRequest::SerializePayload() const
-{
+Aws::String UpdateVoiceConnectorGroupRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_voiceConnectorItemsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> voiceConnectorItemsJsonList(m_voiceConnectorItems.size());
-   for(unsigned voiceConnectorItemsIndex = 0; voiceConnectorItemsIndex < voiceConnectorItemsJsonList.GetLength(); ++voiceConnectorItemsIndex)
-   {
-     voiceConnectorItemsJsonList[voiceConnectorItemsIndex].AsObject(m_voiceConnectorItems[voiceConnectorItemsIndex].Jsonize());
-   }
-   payload.WithArray("VoiceConnectorItems", std::move(voiceConnectorItemsJsonList));
+  if (m_voiceConnectorItemsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> voiceConnectorItemsJsonList(m_voiceConnectorItems.size());
+    for (unsigned voiceConnectorItemsIndex = 0; voiceConnectorItemsIndex < voiceConnectorItemsJsonList.GetLength();
+         ++voiceConnectorItemsIndex) {
+      voiceConnectorItemsJsonList[voiceConnectorItemsIndex].AsObject(m_voiceConnectorItems[voiceConnectorItemsIndex].Jsonize());
+    }
+    payload.WithArray("VoiceConnectorItems", std::move(voiceConnectorItemsJsonList));
+  }
 
+  if (m_callDistributionTypeHasBeenSet) {
+    payload.WithString("CallDistributionType", CallDistributionTypeMapper::GetNameForCallDistributionType(m_callDistributionType));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

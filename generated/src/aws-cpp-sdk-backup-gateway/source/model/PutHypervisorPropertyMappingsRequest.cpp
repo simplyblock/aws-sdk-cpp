@@ -4,59 +4,56 @@
  */
 
 #include <aws/backup-gateway/model/PutHypervisorPropertyMappingsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::BackupGateway::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutHypervisorPropertyMappingsRequest::PutHypervisorPropertyMappingsRequest() : 
-    m_hypervisorArnHasBeenSet(false),
-    m_iamRoleArnHasBeenSet(false),
-    m_vmwareToAwsTagMappingsHasBeenSet(false)
-{
+Aws::String PutHypervisorPropertyMappingsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_hypervisorArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vmwareToAwsTagMappingsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_iamRoleArnHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_hypervisorArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HypervisorArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hypervisorArn.c_str()));
+  }
+
+  if (m_vmwareToAwsTagMappingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VmwareToAwsTagMappings"));
+    encoder.WriteArrayStart(m_vmwareToAwsTagMappings.size());
+    for (const auto& item_0 : m_vmwareToAwsTagMappings) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_iamRoleArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IamRoleArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_iamRoleArn.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String PutHypervisorPropertyMappingsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_hypervisorArnHasBeenSet)
-  {
-   payload.WithString("HypervisorArn", m_hypervisorArn);
-
-  }
-
-  if(m_iamRoleArnHasBeenSet)
-  {
-   payload.WithString("IamRoleArn", m_iamRoleArn);
-
-  }
-
-  if(m_vmwareToAwsTagMappingsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> vmwareToAwsTagMappingsJsonList(m_vmwareToAwsTagMappings.size());
-   for(unsigned vmwareToAwsTagMappingsIndex = 0; vmwareToAwsTagMappingsIndex < vmwareToAwsTagMappingsJsonList.GetLength(); ++vmwareToAwsTagMappingsIndex)
-   {
-     vmwareToAwsTagMappingsJsonList[vmwareToAwsTagMappingsIndex].AsObject(m_vmwareToAwsTagMappings[vmwareToAwsTagMappingsIndex].Jsonize());
-   }
-   payload.WithArray("VmwareToAwsTagMappings", std::move(vmwareToAwsTagMappingsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection PutHypervisorPropertyMappingsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutHypervisorPropertyMappingsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BackupOnPremises_v20210101.PutHypervisorPropertyMappings"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

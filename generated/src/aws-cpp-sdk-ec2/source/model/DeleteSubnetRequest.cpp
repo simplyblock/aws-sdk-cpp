@@ -3,31 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DeleteSubnetRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DeleteSubnetRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DeleteSubnetRequest::DeleteSubnetRequest() : 
-    m_subnetIdHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String DeleteSubnetRequest::SerializePayload() const
-{
+Aws::String DeleteSubnetRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteSubnet&";
-  if(m_subnetIdHasBeenSet)
-  {
+  if (m_subnetIdHasBeenSet) {
     ss << "SubnetId=" << StringUtils::URLEncode(m_subnetId.c_str()) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -35,8 +25,4 @@ Aws::String DeleteSubnetRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteSubnetRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteSubnetRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

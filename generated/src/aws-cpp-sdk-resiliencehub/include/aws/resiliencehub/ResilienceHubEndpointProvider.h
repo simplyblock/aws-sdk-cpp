@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 
-#include <aws/resiliencehub/ResilienceHubEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ResilienceHub
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ResilienceHub {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ResilienceHubClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using ResilienceHubEndpointProviderBase =
     EndpointProviderBase<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
 
 using ResilienceHubDefaultEpProviderBase =
-    DefaultEndpointProvider<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
+    BDDEndpointProvider<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_RESILIENCEHUB_API ResilienceHubEndpointProvider : public ResilienceHubDefaultEpProviderBase
-{
-public:
-    using ResilienceHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_RESILIENCEHUB_API ResilienceHubEndpointProvider : public ResilienceHubDefaultEpProviderBase {
+ public:
+  using ResilienceHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ResilienceHubEndpointProvider()
-      : ResilienceHubDefaultEpProviderBase(Aws::ResilienceHub::ResilienceHubEndpointRules::GetRulesBlob(), Aws::ResilienceHub::ResilienceHubEndpointRules::RulesBlobSize)
-    {}
+  ResilienceHubEndpointProvider();
 
-    ~ResilienceHubEndpointProvider()
-    {
-    }
+  ~ResilienceHubEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ResilienceHub
+}  // namespace Aws

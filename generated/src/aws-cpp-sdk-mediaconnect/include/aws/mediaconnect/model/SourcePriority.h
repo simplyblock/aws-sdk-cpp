@@ -4,59 +4,57 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
 
+/**
+ * <p> The priority you want to assign to a source. You can have a primary stream
+ * and a backup stream or two equally prioritized streams. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/SourcePriority">AWS
+ * API Reference</a></p>
+ */
+class SourcePriority {
+ public:
+  AWS_MEDIACONNECT_API SourcePriority() = default;
+  AWS_MEDIACONNECT_API SourcePriority(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API SourcePriority& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * The priority you want to assign to a source. You can have a primary stream and a
-   * backup stream or two equally prioritized streams.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/SourcePriority">AWS
-   * API Reference</a></p>
+   * <p> The name of the source you choose as the primary source for this flow.</p>
    */
-  class SourcePriority
-  {
-  public:
-    AWS_MEDIACONNECT_API SourcePriority();
-    AWS_MEDIACONNECT_API SourcePriority(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API SourcePriority& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPrimarySource() const { return m_primarySource; }
+  inline bool PrimarySourceHasBeenSet() const { return m_primarySourceHasBeenSet; }
+  template <typename PrimarySourceT = Aws::String>
+  void SetPrimarySource(PrimarySourceT&& value) {
+    m_primarySourceHasBeenSet = true;
+    m_primarySource = std::forward<PrimarySourceT>(value);
+  }
+  template <typename PrimarySourceT = Aws::String>
+  SourcePriority& WithPrimarySource(PrimarySourceT&& value) {
+    SetPrimarySource(std::forward<PrimarySourceT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_primarySource;
+  bool m_primarySourceHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * The name of the source you choose as the primary source for this flow.
-     */
-    inline const Aws::String& GetPrimarySource() const{ return m_primarySource; }
-    inline bool PrimarySourceHasBeenSet() const { return m_primarySourceHasBeenSet; }
-    inline void SetPrimarySource(const Aws::String& value) { m_primarySourceHasBeenSet = true; m_primarySource = value; }
-    inline void SetPrimarySource(Aws::String&& value) { m_primarySourceHasBeenSet = true; m_primarySource = std::move(value); }
-    inline void SetPrimarySource(const char* value) { m_primarySourceHasBeenSet = true; m_primarySource.assign(value); }
-    inline SourcePriority& WithPrimarySource(const Aws::String& value) { SetPrimarySource(value); return *this;}
-    inline SourcePriority& WithPrimarySource(Aws::String&& value) { SetPrimarySource(std::move(value)); return *this;}
-    inline SourcePriority& WithPrimarySource(const char* value) { SetPrimarySource(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_primarySource;
-    bool m_primarySourceHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

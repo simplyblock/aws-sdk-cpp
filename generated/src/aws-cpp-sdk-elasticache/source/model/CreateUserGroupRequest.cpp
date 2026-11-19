@@ -3,65 +3,43 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/CreateUserGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticache/model/CreateUserGroupRequest.h>
 
 using namespace Aws::ElastiCache::Model;
 using namespace Aws::Utils;
 
-CreateUserGroupRequest::CreateUserGroupRequest() : 
-    m_userGroupIdHasBeenSet(false),
-    m_engineHasBeenSet(false),
-    m_userIdsHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateUserGroupRequest::SerializePayload() const
-{
+Aws::String CreateUserGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateUserGroup&";
-  if(m_userGroupIdHasBeenSet)
-  {
+  if (m_userGroupIdHasBeenSet) {
     ss << "UserGroupId=" << StringUtils::URLEncode(m_userGroupId.c_str()) << "&";
   }
 
-  if(m_engineHasBeenSet)
-  {
+  if (m_engineHasBeenSet) {
     ss << "Engine=" << StringUtils::URLEncode(m_engine.c_str()) << "&";
   }
 
-  if(m_userIdsHasBeenSet)
-  {
-    if (m_userIds.empty())
-    {
+  if (m_userIdsHasBeenSet) {
+    if (m_userIds.empty()) {
       ss << "UserIds=&";
-    }
-    else
-    {
+    } else {
       unsigned userIdsCount = 1;
-      for(auto& item : m_userIds)
-      {
-        ss << "UserIds.member." << userIdsCount << "="
-            << StringUtils::URLEncode(item.c_str()) << "&";
+      for (auto& item : m_userIds) {
+        ss << "UserIds.member." << userIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
         userIdsCount++;
       }
     }
   }
 
-  if(m_tagsHasBeenSet)
-  {
-    if (m_tags.empty())
-    {
+  if (m_tagsHasBeenSet) {
+    if (m_tags.empty()) {
       ss << "Tags=&";
-    }
-    else
-    {
+    } else {
       unsigned tagsCount = 1;
-      for(auto& item : m_tags)
-      {
-        item.OutputToStream(ss, "Tags.member.", tagsCount, "");
+      for (auto& item : m_tags) {
+        item.OutputToStream(ss, "Tags.Tag.", tagsCount, "");
         tagsCount++;
       }
     }
@@ -71,8 +49,4 @@ Aws::String CreateUserGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CreateUserGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateUserGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

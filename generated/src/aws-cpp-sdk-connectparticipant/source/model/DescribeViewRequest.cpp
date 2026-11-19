@@ -13,32 +13,16 @@ using namespace Aws::ConnectParticipant::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeViewRequest::DescribeViewRequest() : 
-    m_viewTokenHasBeenSet(false),
-    m_connectionTokenHasBeenSet(false)
-{
-}
+Aws::String DescribeViewRequest::SerializePayload() const { return {}; }
 
-Aws::String DescribeViewRequest::SerializePayload() const
-{
-  return {};
-}
-
-Aws::Http::HeaderValueCollection DescribeViewRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeViewRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   Aws::StringStream ss;
-  if(m_connectionTokenHasBeenSet)
-  {
+  if (m_connectionTokenHasBeenSet) {
     ss << m_connectionToken;
-    headers.emplace("x-amz-bearer",  ss.str());
+    headers.emplace("x-amz-bearer", ss.str());
     ss.str("");
   }
 
   return headers;
-
 }
-
-
-
-

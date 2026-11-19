@@ -4,13 +4,14 @@
  */
 
 #include <aws/chime/ChimeEndpointProvider.h>
+#include <aws/chime/internal/ChimeEndpointRules.h>
 
-namespace Aws
-{
-namespace Chime
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Chime
-} // namespace Aws
+namespace Aws {
+namespace Chime {
+namespace Endpoint {
+ChimeEndpointProvider::ChimeEndpointProvider()
+    : ChimeDefaultEpProviderBase(Aws::Chime::ChimeEndpointRules::GetRulesBlob(), Aws::Chime::ChimeEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Chime
+}  // namespace Aws

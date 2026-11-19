@@ -12,17 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAgentAliasRequest::DeleteAgentAliasRequest() : 
-    m_agentAliasIdHasBeenSet(false),
-    m_agentIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAgentAliasRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAgentAliasRequest::SerializePayload() const { return {}; }

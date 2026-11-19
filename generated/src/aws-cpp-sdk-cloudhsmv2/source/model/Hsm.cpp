@@ -4,154 +4,712 @@
  */
 
 #include <aws/cloudhsmv2/model/Hsm.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CloudHSMV2
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudHSMV2 {
+namespace Model {
 
-Hsm::Hsm() : 
-    m_availabilityZoneHasBeenSet(false),
-    m_clusterIdHasBeenSet(false),
-    m_subnetIdHasBeenSet(false),
-    m_eniIdHasBeenSet(false),
-    m_eniIpHasBeenSet(false),
-    m_hsmIdHasBeenSet(false),
-    m_state(HsmState::NOT_SET),
-    m_stateHasBeenSet(false),
-    m_stateMessageHasBeenSet(false)
-{
-}
+Hsm::Hsm(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-Hsm::Hsm(JsonView jsonValue)
-  : Hsm()
-{
-  *this = jsonValue;
-}
+Hsm& Hsm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-Hsm& Hsm::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AvailabilityZone"))
-  {
-    m_availabilityZone = jsonValue.GetString("AvailabilityZone");
+              if (initialKeyStr == "AvailabilityZone") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_availabilityZone = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_availabilityZone = ss.str();
+                  }
+                }
+                m_availabilityZoneHasBeenSet = true;
+              }
 
-    m_availabilityZoneHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ClusterId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_clusterId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_clusterId = ss.str();
+                  }
+                }
+                m_clusterIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ClusterId"))
-  {
-    m_clusterId = jsonValue.GetString("ClusterId");
+              else if (initialKeyStr == "SubnetId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_subnetId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_subnetId = ss.str();
+                  }
+                }
+                m_subnetIdHasBeenSet = true;
+              }
 
-    m_clusterIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EniId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_eniId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_eniId = ss.str();
+                  }
+                }
+                m_eniIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("SubnetId"))
-  {
-    m_subnetId = jsonValue.GetString("SubnetId");
+              else if (initialKeyStr == "EniIp") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_eniIp = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_eniIp = ss.str();
+                  }
+                }
+                m_eniIpHasBeenSet = true;
+              }
 
-    m_subnetIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EniIpV6") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_eniIpV6 = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_eniIpV6 = ss.str();
+                  }
+                }
+                m_eniIpV6HasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EniId"))
-  {
-    m_eniId = jsonValue.GetString("EniId");
+              else if (initialKeyStr == "HsmId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_hsmId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_hsmId = ss.str();
+                  }
+                }
+                m_hsmIdHasBeenSet = true;
+              }
 
-    m_eniIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "HsmType") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_hsmType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_hsmType = ss.str();
+                  }
+                }
+                m_hsmTypeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EniIp"))
-  {
-    m_eniIp = jsonValue.GetString("EniIp");
+              else if (initialKeyStr == "State") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_state =
+                      HsmStateMapper::GetHsmStateForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_stateHasBeenSet = true;
+              }
 
-    m_eniIpHasBeenSet = true;
-  }
+              else if (initialKeyStr == "StateMessage") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_stateMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_stateMessage = ss.str();
+                  }
+                }
+                m_stateMessageHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("Hsm", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("HsmId"))
-  {
-    m_hsmId = jsonValue.GetString("HsmId");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_hsmIdHasBeenSet = true;
-  }
+            if (initialKeyStr == "AvailabilityZone") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_availabilityZone = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_availabilityZone = ss.str();
+                }
+              }
+              m_availabilityZoneHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("State"))
-  {
-    m_state = HsmStateMapper::GetHsmStateForName(jsonValue.GetString("State"));
+            else if (initialKeyStr == "ClusterId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_clusterId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_clusterId = ss.str();
+                }
+              }
+              m_clusterIdHasBeenSet = true;
+            }
 
-    m_stateHasBeenSet = true;
-  }
+            else if (initialKeyStr == "SubnetId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_subnetId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_subnetId = ss.str();
+                }
+              }
+              m_subnetIdHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("StateMessage"))
-  {
-    m_stateMessage = jsonValue.GetString("StateMessage");
+            else if (initialKeyStr == "EniId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_eniId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_eniId = ss.str();
+                }
+              }
+              m_eniIdHasBeenSet = true;
+            }
 
-    m_stateMessageHasBeenSet = true;
+            else if (initialKeyStr == "EniIp") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_eniIp = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_eniIp = ss.str();
+                }
+              }
+              m_eniIpHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "EniIpV6") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_eniIpV6 = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_eniIpV6 = ss.str();
+                }
+              }
+              m_eniIpV6HasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "HsmId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_hsmId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_hsmId = ss.str();
+                }
+              }
+              m_hsmIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "HsmType") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_hsmType = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_hsmType = ss.str();
+                }
+              }
+              m_hsmTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "State") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_state = HsmStateMapper::GetHsmStateForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_stateHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "StateMessage") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_stateMessage = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_stateMessage = ss.str();
+                }
+              }
+              m_stateMessageHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue Hsm::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_availabilityZoneHasBeenSet)
-  {
-   payload.WithString("AvailabilityZone", m_availabilityZone);
-
+void Hsm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_availabilityZoneHasBeenSet) {
+    mapSize++;
+  }
+  if (m_clusterIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subnetIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eniIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eniIpHasBeenSet) {
+    mapSize++;
+  }
+  if (m_eniIpV6HasBeenSet) {
+    mapSize++;
+  }
+  if (m_hsmIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_hsmTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stateHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stateMessageHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_clusterIdHasBeenSet)
-  {
-   payload.WithString("ClusterId", m_clusterId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_availabilityZoneHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AvailabilityZone"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_availabilityZone.c_str()));
   }
 
-  if(m_subnetIdHasBeenSet)
-  {
-   payload.WithString("SubnetId", m_subnetId);
-
+  if (m_clusterIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ClusterId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_clusterId.c_str()));
   }
 
-  if(m_eniIdHasBeenSet)
-  {
-   payload.WithString("EniId", m_eniId);
-
+  if (m_subnetIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubnetId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_subnetId.c_str()));
   }
 
-  if(m_eniIpHasBeenSet)
-  {
-   payload.WithString("EniIp", m_eniIp);
-
+  if (m_eniIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EniId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_eniId.c_str()));
   }
 
-  if(m_hsmIdHasBeenSet)
-  {
-   payload.WithString("HsmId", m_hsmId);
-
+  if (m_eniIpHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EniIp"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_eniIp.c_str()));
   }
 
-  if(m_stateHasBeenSet)
-  {
-   payload.WithString("State", HsmStateMapper::GetNameForHsmState(m_state));
+  if (m_eniIpV6HasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EniIpV6"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_eniIpV6.c_str()));
   }
 
-  if(m_stateMessageHasBeenSet)
-  {
-   payload.WithString("StateMessage", m_stateMessage);
-
+  if (m_hsmIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HsmId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hsmId.c_str()));
   }
 
-  return payload;
+  if (m_hsmTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HsmType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hsmType.c_str()));
+  }
+
+  if (m_stateHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("State"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(HsmStateMapper::GetNameForHsmState(m_state).c_str()));
+  }
+
+  if (m_stateMessageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("StateMessage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_stateMessage.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace CloudHSMV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudHSMV2
+}  // namespace Aws

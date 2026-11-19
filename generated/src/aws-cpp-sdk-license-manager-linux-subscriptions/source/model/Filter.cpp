@@ -3,93 +3,61 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/license-manager-linux-subscriptions/model/Filter.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/license-manager-linux-subscriptions/model/Filter.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace LicenseManagerLinuxSubscriptions
-{
-namespace Model
-{
+namespace Aws {
+namespace LicenseManagerLinuxSubscriptions {
+namespace Model {
 
-Filter::Filter() : 
-    m_nameHasBeenSet(false),
-    m_operator(Operator::NOT_SET),
-    m_operatorHasBeenSet(false),
-    m_valuesHasBeenSet(false)
-{
-}
+Filter::Filter(JsonView jsonValue) { *this = jsonValue; }
 
-Filter::Filter(JsonView jsonValue)
-  : Filter()
-{
-  *this = jsonValue;
-}
-
-Filter& Filter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Name"))
-  {
+Filter& Filter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Operator"))
-  {
+  if (jsonValue.ValueExists("Operator")) {
     m_operator = OperatorMapper::GetOperatorForName(jsonValue.GetString("Operator"));
-
     m_operatorHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Values"))
-  {
+  if (jsonValue.ValueExists("Values")) {
     Aws::Utils::Array<JsonView> valuesJsonList = jsonValue.GetArray("Values");
-    for(unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex)
-    {
+    for (unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex) {
       m_values.push_back(valuesJsonList[valuesIndex].AsString());
     }
     m_valuesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue Filter::Jsonize() const
-{
+JsonValue Filter::Jsonize() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_operatorHasBeenSet)
-  {
-   payload.WithString("Operator", OperatorMapper::GetNameForOperator(m_operator));
+  if (m_operatorHasBeenSet) {
+    payload.WithString("Operator", OperatorMapper::GetNameForOperator(m_operator));
   }
 
-  if(m_valuesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> valuesJsonList(m_values.size());
-   for(unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex)
-   {
-     valuesJsonList[valuesIndex].AsString(m_values[valuesIndex]);
-   }
-   payload.WithArray("Values", std::move(valuesJsonList));
-
+  if (m_valuesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> valuesJsonList(m_values.size());
+    for (unsigned valuesIndex = 0; valuesIndex < valuesJsonList.GetLength(); ++valuesIndex) {
+      valuesJsonList[valuesIndex].AsString(m_values[valuesIndex]);
+    }
+    payload.WithArray("Values", std::move(valuesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace LicenseManagerLinuxSubscriptions
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManagerLinuxSubscriptions
+}  // namespace Aws

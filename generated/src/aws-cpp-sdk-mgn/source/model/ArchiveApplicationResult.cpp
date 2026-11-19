@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mgn/model/ArchiveApplicationResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/mgn/model/ArchiveApplicationResult.h>
 
 #include <utility>
 
@@ -17,91 +17,61 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ArchiveApplicationResult::ArchiveApplicationResult() : 
-    m_isArchived(false)
-{
-}
+ArchiveApplicationResult::ArchiveApplicationResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-ArchiveApplicationResult::ArchiveApplicationResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : ArchiveApplicationResult()
-{
-  *this = result;
-}
-
-ArchiveApplicationResult& ArchiveApplicationResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+ArchiveApplicationResult& ArchiveApplicationResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("applicationAggregatedStatus"))
-  {
-    m_applicationAggregatedStatus = jsonValue.GetObject("applicationAggregatedStatus");
-
-  }
-
-  if(jsonValue.ValueExists("applicationID"))
-  {
+  if (jsonValue.ValueExists("applicationID")) {
     m_applicationID = jsonValue.GetString("applicationID");
-
+    m_applicationIDHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("arn"))
-  {
+  if (jsonValue.ValueExists("arn")) {
     m_arn = jsonValue.GetString("arn");
-
+    m_arnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("creationDateTime"))
-  {
-    m_creationDateTime = jsonValue.GetString("creationDateTime");
-
-  }
-
-  if(jsonValue.ValueExists("description"))
-  {
-    m_description = jsonValue.GetString("description");
-
-  }
-
-  if(jsonValue.ValueExists("isArchived"))
-  {
-    m_isArchived = jsonValue.GetBool("isArchived");
-
-  }
-
-  if(jsonValue.ValueExists("lastModifiedDateTime"))
-  {
-    m_lastModifiedDateTime = jsonValue.GetString("lastModifiedDateTime");
-
-  }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
+    m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("tags"))
-  {
+  if (jsonValue.ValueExists("description")) {
+    m_description = jsonValue.GetString("description");
+    m_descriptionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("isArchived")) {
+    m_isArchived = jsonValue.GetBool("isArchived");
+    m_isArchivedHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("applicationAggregatedStatus")) {
+    m_applicationAggregatedStatus = jsonValue.GetObject("applicationAggregatedStatus");
+    m_applicationAggregatedStatusHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("creationDateTime")) {
+    m_creationDateTime = jsonValue.GetString("creationDateTime");
+    m_creationDateTimeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("lastModifiedDateTime")) {
+    m_lastModifiedDateTime = jsonValue.GetString("lastModifiedDateTime");
+    m_lastModifiedDateTimeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("tags")) {
     Aws::Map<Aws::String, JsonView> tagsJsonMap = jsonValue.GetObject("tags").GetAllObjects();
-    for(auto& tagsItem : tagsJsonMap)
-    {
+    for (auto& tagsItem : tagsJsonMap) {
       m_tags[tagsItem.first] = tagsItem.second.AsString();
     }
+    m_tagsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("waveID"))
-  {
+  if (jsonValue.ValueExists("waveID")) {
     m_waveID = jsonValue.GetString("waveID");
-
+    m_waveIDHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

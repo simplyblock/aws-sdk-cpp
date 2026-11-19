@@ -4,100 +4,111 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
-#include <aws/mediaconnect/MediaConnectRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediaconnect/MediaConnectRequest.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace MediaConnect {
+namespace Model {
 
+/**
+ */
+class ListBridgesRequest : public MediaConnectRequest {
+ public:
+  AWS_MEDIACONNECT_API ListBridgesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListBridges"; }
+
+  AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+
+  AWS_MEDIACONNECT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p> Filter the list results to display only the bridges associated with the
+   * selected ARN.</p>
    */
-  class ListBridgesRequest : public MediaConnectRequest
-  {
-  public:
-    AWS_MEDIACONNECT_API ListBridgesRequest();
+  inline const Aws::String& GetFilterArn() const { return m_filterArn; }
+  inline bool FilterArnHasBeenSet() const { return m_filterArnHasBeenSet; }
+  template <typename FilterArnT = Aws::String>
+  void SetFilterArn(FilterArnT&& value) {
+    m_filterArnHasBeenSet = true;
+    m_filterArn = std::forward<FilterArnT>(value);
+  }
+  template <typename FilterArnT = Aws::String>
+  ListBridgesRequest& WithFilterArn(FilterArnT&& value) {
+    SetFilterArn(std::forward<FilterArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListBridges"; }
+  ///@{
+  /**
+   * <p> The maximum number of results to return per API request. </p> <p>For
+   * example, you submit a <code>ListBridges</code> request with
+   * <code>MaxResults</code> set at 5. Although 20 items match your request, the
+   * service returns no more than the first 5 items. (The service also returns a
+   * <code>NextToken</code> value that you can use to fetch the next batch of
+   * results.) </p> <p>The service might return fewer results than the
+   * <code>MaxResults</code> value. If <code>MaxResults</code> is not included in the
+   * request, the service defaults to pagination with a maximum of 10 results per
+   * page.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListBridgesRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The token that identifies the batch of results that you want to see. </p>
+   * <p>For example, you submit a <code>ListBridges</code> request with
+   * <code>MaxResults</code> set at 5. The service returns the first batch of results
+   * (up to 5) and a <code>NextToken</code> value. To see the next batch of results,
+   * you can submit the <code>ListBridges</code> request a second time and specify
+   * the <code>NextToken</code> value.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListBridgesRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_filterArn;
 
-    AWS_MEDIACONNECT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  int m_maxResults{0};
 
+  Aws::String m_nextToken;
+  bool m_filterArnHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * Filter the list results to display only the bridges associated with the selected
-     * Amazon Resource Name (ARN).
-     */
-    inline const Aws::String& GetFilterArn() const{ return m_filterArn; }
-    inline bool FilterArnHasBeenSet() const { return m_filterArnHasBeenSet; }
-    inline void SetFilterArn(const Aws::String& value) { m_filterArnHasBeenSet = true; m_filterArn = value; }
-    inline void SetFilterArn(Aws::String&& value) { m_filterArnHasBeenSet = true; m_filterArn = std::move(value); }
-    inline void SetFilterArn(const char* value) { m_filterArnHasBeenSet = true; m_filterArn.assign(value); }
-    inline ListBridgesRequest& WithFilterArn(const Aws::String& value) { SetFilterArn(value); return *this;}
-    inline ListBridgesRequest& WithFilterArn(Aws::String&& value) { SetFilterArn(std::move(value)); return *this;}
-    inline ListBridgesRequest& WithFilterArn(const char* value) { SetFilterArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * The maximum number of results to return per API request. For example, you submit
-     * a ListBridges request with MaxResults set at 5. Although 20 items match your
-     * request, the service returns no more than the first 5 items. (The service also
-     * returns a NextToken value that you can use to fetch the next batch of results.)
-     * The service might return fewer results than the MaxResults value. If MaxResults
-     * is not included in the request, the service defaults to pagination with a
-     * maximum of 10 results per page.
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListBridgesRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * The token that identifies which batch of results that you want to see. For
-     * example, you submit a ListBridges request with MaxResults set at 5. The service
-     * returns the first batch of results (up to 5) and a NextToken value. To see the
-     * next batch of results, you can submit the ListBridges request a second time and
-     * specify the NextToken value.
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListBridgesRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListBridgesRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListBridgesRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_filterArn;
-    bool m_filterArnHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

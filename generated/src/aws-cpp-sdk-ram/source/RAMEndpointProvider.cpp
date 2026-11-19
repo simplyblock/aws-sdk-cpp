@@ -4,13 +4,14 @@
  */
 
 #include <aws/ram/RAMEndpointProvider.h>
+#include <aws/ram/internal/RAMEndpointRules.h>
 
-namespace Aws
-{
-namespace RAM
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace RAM
-} // namespace Aws
+namespace Aws {
+namespace RAM {
+namespace Endpoint {
+RAMEndpointProvider::RAMEndpointProvider()
+    : RAMDefaultEpProviderBase(Aws::RAM::RAMEndpointRules::GetRulesBlob(), Aws::RAM::RAMEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace RAM
+}  // namespace Aws

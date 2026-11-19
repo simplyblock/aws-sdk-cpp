@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/eks/EKS_EXPORTS.h>
 #include <aws/eks/model/AccessEntry.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EKS
-{
-namespace Model
-{
-  class CreateAccessEntryResult
-  {
-  public:
-    AWS_EKS_API CreateAccessEntryResult();
-    AWS_EKS_API CreateAccessEntryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EKS_API CreateAccessEntryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EKS {
+namespace Model {
+class CreateAccessEntryResult {
+ public:
+  AWS_EKS_API CreateAccessEntryResult() = default;
+  AWS_EKS_API CreateAccessEntryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EKS_API CreateAccessEntryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const AccessEntry& GetAccessEntry() const{ return m_accessEntry; }
-    inline void SetAccessEntry(const AccessEntry& value) { m_accessEntry = value; }
-    inline void SetAccessEntry(AccessEntry&& value) { m_accessEntry = std::move(value); }
-    inline CreateAccessEntryResult& WithAccessEntry(const AccessEntry& value) { SetAccessEntry(value); return *this;}
-    inline CreateAccessEntryResult& WithAccessEntry(AccessEntry&& value) { SetAccessEntry(std::move(value)); return *this;}
-    ///@}
+  inline const AccessEntry& GetAccessEntry() const { return m_accessEntry; }
+  template <typename AccessEntryT = AccessEntry>
+  void SetAccessEntry(AccessEntryT&& value) {
+    m_accessEntryHasBeenSet = true;
+    m_accessEntry = std::forward<AccessEntryT>(value);
+  }
+  template <typename AccessEntryT = AccessEntry>
+  CreateAccessEntryResult& WithAccessEntry(AccessEntryT&& value) {
+    SetAccessEntry(std::forward<AccessEntryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAccessEntryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAccessEntryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAccessEntryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    AccessEntry m_accessEntry;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAccessEntryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  AccessEntry m_accessEntry;
 
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessEntryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

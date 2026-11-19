@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/ModifyReplicationGroupResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticache/model/ModifyReplicationGroupResult.h>
 
 #include <utility>
 
@@ -17,38 +17,31 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ModifyReplicationGroupResult::ModifyReplicationGroupResult()
-{
-}
+ModifyReplicationGroupResult::ModifyReplicationGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ModifyReplicationGroupResult::ModifyReplicationGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ModifyReplicationGroupResult& ModifyReplicationGroupResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifyReplicationGroupResult& ModifyReplicationGroupResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyReplicationGroupResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyReplicationGroupResult")) {
     resultNode = rootNode.FirstChild("ModifyReplicationGroupResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode replicationGroupNode = resultNode.FirstChild("ReplicationGroup");
-    if(!replicationGroupNode.IsNull())
-    {
+    if (!replicationGroupNode.IsNull()) {
       m_replicationGroup = replicationGroupNode;
+      m_replicationGroupHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::ModifyReplicationGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::ModifyReplicationGroupResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

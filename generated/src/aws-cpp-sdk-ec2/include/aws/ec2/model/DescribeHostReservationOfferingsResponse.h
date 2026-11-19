@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/HostOffering.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeHostReservationOfferingsResponse
-  {
-  public:
-    AWS_EC2_API DescribeHostReservationOfferingsResponse();
-    AWS_EC2_API DescribeHostReservationOfferingsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeHostReservationOfferingsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeHostReservationOfferingsResponse {
+ public:
+  AWS_EC2_API DescribeHostReservationOfferingsResponse() = default;
+  AWS_EC2_API DescribeHostReservationOfferingsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeHostReservationOfferingsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeHostReservationOfferingsResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeHostReservationOfferingsResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeHostReservationOfferingsResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeHostReservationOfferingsResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the offerings.</p>
+   */
+  inline const Aws::Vector<HostOffering>& GetOfferingSet() const { return m_offeringSet; }
+  template <typename OfferingSetT = Aws::Vector<HostOffering>>
+  void SetOfferingSet(OfferingSetT&& value) {
+    m_offeringSetHasBeenSet = true;
+    m_offeringSet = std::forward<OfferingSetT>(value);
+  }
+  template <typename OfferingSetT = Aws::Vector<HostOffering>>
+  DescribeHostReservationOfferingsResponse& WithOfferingSet(OfferingSetT&& value) {
+    SetOfferingSet(std::forward<OfferingSetT>(value));
+    return *this;
+  }
+  template <typename OfferingSetT = HostOffering>
+  DescribeHostReservationOfferingsResponse& AddOfferingSet(OfferingSetT&& value) {
+    m_offeringSetHasBeenSet = true;
+    m_offeringSet.emplace_back(std::forward<OfferingSetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the offerings.</p>
-     */
-    inline const Aws::Vector<HostOffering>& GetOfferingSet() const{ return m_offeringSet; }
-    inline void SetOfferingSet(const Aws::Vector<HostOffering>& value) { m_offeringSet = value; }
-    inline void SetOfferingSet(Aws::Vector<HostOffering>&& value) { m_offeringSet = std::move(value); }
-    inline DescribeHostReservationOfferingsResponse& WithOfferingSet(const Aws::Vector<HostOffering>& value) { SetOfferingSet(value); return *this;}
-    inline DescribeHostReservationOfferingsResponse& WithOfferingSet(Aws::Vector<HostOffering>&& value) { SetOfferingSet(std::move(value)); return *this;}
-    inline DescribeHostReservationOfferingsResponse& AddOfferingSet(const HostOffering& value) { m_offeringSet.push_back(value); return *this; }
-    inline DescribeHostReservationOfferingsResponse& AddOfferingSet(HostOffering&& value) { m_offeringSet.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeHostReservationOfferingsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeHostReservationOfferingsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeHostReservationOfferingsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<HostOffering> m_offeringSet;
+  Aws::Vector<HostOffering> m_offeringSet;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_offeringSetHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

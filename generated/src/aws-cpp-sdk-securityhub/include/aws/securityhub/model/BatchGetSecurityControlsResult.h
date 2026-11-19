@@ -4,87 +4,111 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/securityhub/model/SecurityControl.h>
 #include <aws/securityhub/model/UnprocessedSecurityControl.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
-  class BatchGetSecurityControlsResult
-  {
-  public:
-    AWS_SECURITYHUB_API BatchGetSecurityControlsResult();
-    AWS_SECURITYHUB_API BatchGetSecurityControlsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYHUB_API BatchGetSecurityControlsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
+class BatchGetSecurityControlsResult {
+ public:
+  AWS_SECURITYHUB_API BatchGetSecurityControlsResult() = default;
+  AWS_SECURITYHUB_API BatchGetSecurityControlsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYHUB_API BatchGetSecurityControlsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> An array that returns the identifier, Amazon Resource Name (ARN), and other
+   * details about a security control. The same information is returned whether the
+   * request includes <code>SecurityControlId</code> or
+   * <code>SecurityControlArn</code>. </p>
+   */
+  inline const Aws::Vector<SecurityControl>& GetSecurityControls() const { return m_securityControls; }
+  template <typename SecurityControlsT = Aws::Vector<SecurityControl>>
+  void SetSecurityControls(SecurityControlsT&& value) {
+    m_securityControlsHasBeenSet = true;
+    m_securityControls = std::forward<SecurityControlsT>(value);
+  }
+  template <typename SecurityControlsT = Aws::Vector<SecurityControl>>
+  BatchGetSecurityControlsResult& WithSecurityControls(SecurityControlsT&& value) {
+    SetSecurityControls(std::forward<SecurityControlsT>(value));
+    return *this;
+  }
+  template <typename SecurityControlsT = SecurityControl>
+  BatchGetSecurityControlsResult& AddSecurityControls(SecurityControlsT&& value) {
+    m_securityControlsHasBeenSet = true;
+    m_securityControls.emplace_back(std::forward<SecurityControlsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An array that returns the identifier, Amazon Resource Name (ARN), and other
-     * details about a security control. The same information is returned whether the
-     * request includes <code>SecurityControlId</code> or
-     * <code>SecurityControlArn</code>. </p>
-     */
-    inline const Aws::Vector<SecurityControl>& GetSecurityControls() const{ return m_securityControls; }
-    inline void SetSecurityControls(const Aws::Vector<SecurityControl>& value) { m_securityControls = value; }
-    inline void SetSecurityControls(Aws::Vector<SecurityControl>&& value) { m_securityControls = std::move(value); }
-    inline BatchGetSecurityControlsResult& WithSecurityControls(const Aws::Vector<SecurityControl>& value) { SetSecurityControls(value); return *this;}
-    inline BatchGetSecurityControlsResult& WithSecurityControls(Aws::Vector<SecurityControl>&& value) { SetSecurityControls(std::move(value)); return *this;}
-    inline BatchGetSecurityControlsResult& AddSecurityControls(const SecurityControl& value) { m_securityControls.push_back(value); return *this; }
-    inline BatchGetSecurityControlsResult& AddSecurityControls(SecurityControl&& value) { m_securityControls.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> A security control (identified with <code>SecurityControlId</code>,
+   * <code>SecurityControlArn</code>, or a mix of both parameters) for which details
+   * cannot be returned. </p>
+   */
+  inline const Aws::Vector<UnprocessedSecurityControl>& GetUnprocessedIds() const { return m_unprocessedIds; }
+  template <typename UnprocessedIdsT = Aws::Vector<UnprocessedSecurityControl>>
+  void SetUnprocessedIds(UnprocessedIdsT&& value) {
+    m_unprocessedIdsHasBeenSet = true;
+    m_unprocessedIds = std::forward<UnprocessedIdsT>(value);
+  }
+  template <typename UnprocessedIdsT = Aws::Vector<UnprocessedSecurityControl>>
+  BatchGetSecurityControlsResult& WithUnprocessedIds(UnprocessedIdsT&& value) {
+    SetUnprocessedIds(std::forward<UnprocessedIdsT>(value));
+    return *this;
+  }
+  template <typename UnprocessedIdsT = UnprocessedSecurityControl>
+  BatchGetSecurityControlsResult& AddUnprocessedIds(UnprocessedIdsT&& value) {
+    m_unprocessedIdsHasBeenSet = true;
+    m_unprocessedIds.emplace_back(std::forward<UnprocessedIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A security control (identified with <code>SecurityControlId</code>,
-     * <code>SecurityControlArn</code>, or a mix of both parameters) for which details
-     * cannot be returned. </p>
-     */
-    inline const Aws::Vector<UnprocessedSecurityControl>& GetUnprocessedIds() const{ return m_unprocessedIds; }
-    inline void SetUnprocessedIds(const Aws::Vector<UnprocessedSecurityControl>& value) { m_unprocessedIds = value; }
-    inline void SetUnprocessedIds(Aws::Vector<UnprocessedSecurityControl>&& value) { m_unprocessedIds = std::move(value); }
-    inline BatchGetSecurityControlsResult& WithUnprocessedIds(const Aws::Vector<UnprocessedSecurityControl>& value) { SetUnprocessedIds(value); return *this;}
-    inline BatchGetSecurityControlsResult& WithUnprocessedIds(Aws::Vector<UnprocessedSecurityControl>&& value) { SetUnprocessedIds(std::move(value)); return *this;}
-    inline BatchGetSecurityControlsResult& AddUnprocessedIds(const UnprocessedSecurityControl& value) { m_unprocessedIds.push_back(value); return *this; }
-    inline BatchGetSecurityControlsResult& AddUnprocessedIds(UnprocessedSecurityControl&& value) { m_unprocessedIds.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetSecurityControlsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetSecurityControlsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetSecurityControlsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetSecurityControlsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SecurityControl> m_securityControls;
+ private:
+  Aws::Vector<SecurityControl> m_securityControls;
 
-    Aws::Vector<UnprocessedSecurityControl> m_unprocessedIds;
+  Aws::Vector<UnprocessedSecurityControl> m_unprocessedIds;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_securityControlsHasBeenSet = false;
+  bool m_unprocessedIdsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Appflow {
+namespace Model {
 
-ServiceNowSourceProperties::ServiceNowSourceProperties() : 
-    m_objectHasBeenSet(false)
-{
-}
+ServiceNowSourceProperties::ServiceNowSourceProperties(JsonView jsonValue) { *this = jsonValue; }
 
-ServiceNowSourceProperties::ServiceNowSourceProperties(JsonView jsonValue)
-  : ServiceNowSourceProperties()
-{
-  *this = jsonValue;
-}
-
-ServiceNowSourceProperties& ServiceNowSourceProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("object"))
-  {
+ServiceNowSourceProperties& ServiceNowSourceProperties::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("object")) {
     m_object = jsonValue.GetString("object");
-
     m_objectHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ServiceNowSourceProperties::Jsonize() const
-{
+JsonValue ServiceNowSourceProperties::Jsonize() const {
   JsonValue payload;
 
-  if(m_objectHasBeenSet)
-  {
-   payload.WithString("object", m_object);
-
+  if (m_objectHasBeenSet) {
+    payload.WithString("object", m_object);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

@@ -12,46 +12,26 @@ using namespace Aws::CognitoIdentityProvider::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ChangePasswordRequest::ChangePasswordRequest() : 
-    m_previousPasswordHasBeenSet(false),
-    m_proposedPasswordHasBeenSet(false),
-    m_accessTokenHasBeenSet(false)
-{
-}
-
-Aws::String ChangePasswordRequest::SerializePayload() const
-{
+Aws::String ChangePasswordRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_previousPasswordHasBeenSet)
-  {
-   payload.WithString("PreviousPassword", m_previousPassword);
-
+  if (m_previousPasswordHasBeenSet) {
+    payload.WithString("PreviousPassword", m_previousPassword);
   }
 
-  if(m_proposedPasswordHasBeenSet)
-  {
-   payload.WithString("ProposedPassword", m_proposedPassword);
-
+  if (m_proposedPasswordHasBeenSet) {
+    payload.WithString("ProposedPassword", m_proposedPassword);
   }
 
-  if(m_accessTokenHasBeenSet)
-  {
-   payload.WithString("AccessToken", m_accessToken);
-
+  if (m_accessTokenHasBeenSet) {
+    payload.WithString("AccessToken", m_accessToken);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection ChangePasswordRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ChangePasswordRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSCognitoIdentityProviderService.ChangePassword"));
   return headers;
-
 }
-
-
-
-

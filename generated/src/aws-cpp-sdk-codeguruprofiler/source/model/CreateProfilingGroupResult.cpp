@@ -4,10 +4,10 @@
  */
 
 #include <aws/codeguruprofiler/model/CreateProfilingGroupResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
@@ -17,27 +17,20 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateProfilingGroupResult::CreateProfilingGroupResult()
-{
-}
+CreateProfilingGroupResult::CreateProfilingGroupResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-CreateProfilingGroupResult::CreateProfilingGroupResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-CreateProfilingGroupResult& CreateProfilingGroupResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+CreateProfilingGroupResult& CreateProfilingGroupResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
   m_profilingGroup = jsonValue;
+  m_profilingGroupHasBeenSet = true;
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

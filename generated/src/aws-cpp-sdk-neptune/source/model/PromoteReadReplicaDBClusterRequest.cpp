@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/neptune/model/PromoteReadReplicaDBClusterRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/neptune/model/PromoteReadReplicaDBClusterRequest.h>
 
 using namespace Aws::Neptune::Model;
 using namespace Aws::Utils;
 
-PromoteReadReplicaDBClusterRequest::PromoteReadReplicaDBClusterRequest() : 
-    m_dBClusterIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String PromoteReadReplicaDBClusterRequest::SerializePayload() const
-{
+Aws::String PromoteReadReplicaDBClusterRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=PromoteReadReplicaDBCluster&";
-  if(m_dBClusterIdentifierHasBeenSet)
-  {
+  if (m_dBClusterIdentifierHasBeenSet) {
     ss << "DBClusterIdentifier=" << StringUtils::URLEncode(m_dBClusterIdentifier.c_str()) << "&";
   }
 
@@ -28,8 +21,4 @@ Aws::String PromoteReadReplicaDBClusterRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  PromoteReadReplicaDBClusterRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void PromoteReadReplicaDBClusterRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

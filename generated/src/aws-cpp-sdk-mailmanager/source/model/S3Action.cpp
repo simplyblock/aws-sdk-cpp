@@ -3,113 +3,375 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/S3Action.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MailManager
-{
-namespace Model
-{
+namespace Aws {
+namespace MailManager {
+namespace Model {
 
-S3Action::S3Action() : 
-    m_actionFailurePolicy(ActionFailurePolicy::NOT_SET),
-    m_actionFailurePolicyHasBeenSet(false),
-    m_roleArnHasBeenSet(false),
-    m_s3BucketHasBeenSet(false),
-    m_s3PrefixHasBeenSet(false),
-    m_s3SseKmsKeyIdHasBeenSet(false)
-{
-}
+S3Action::S3Action(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-S3Action::S3Action(JsonView jsonValue)
-  : S3Action()
-{
-  *this = jsonValue;
-}
+S3Action& S3Action::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-S3Action& S3Action::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ActionFailurePolicy"))
-  {
-    m_actionFailurePolicy = ActionFailurePolicyMapper::GetActionFailurePolicyForName(jsonValue.GetString("ActionFailurePolicy"));
+              if (initialKeyStr == "ActionFailurePolicy") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_actionFailurePolicy = ActionFailurePolicyMapper::GetActionFailurePolicyForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_actionFailurePolicyHasBeenSet = true;
+              }
 
-    m_actionFailurePolicyHasBeenSet = true;
-  }
+              else if (initialKeyStr == "RoleArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_roleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_roleArn = ss.str();
+                  }
+                }
+                m_roleArnHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("RoleArn"))
-  {
-    m_roleArn = jsonValue.GetString("RoleArn");
+              else if (initialKeyStr == "S3Bucket") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3Bucket = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3Bucket = ss.str();
+                  }
+                }
+                m_s3BucketHasBeenSet = true;
+              }
 
-    m_roleArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "S3Prefix") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3Prefix = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3Prefix = ss.str();
+                  }
+                }
+                m_s3PrefixHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("S3Bucket"))
-  {
-    m_s3Bucket = jsonValue.GetString("S3Bucket");
+              else if (initialKeyStr == "S3SseKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3SseKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3SseKmsKeyId = ss.str();
+                  }
+                }
+                m_s3SseKmsKeyIdHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("S3Action", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_s3BucketHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("S3Prefix"))
-  {
-    m_s3Prefix = jsonValue.GetString("S3Prefix");
+            if (initialKeyStr == "ActionFailurePolicy") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_actionFailurePolicy = ActionFailurePolicyMapper::GetActionFailurePolicyForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_actionFailurePolicyHasBeenSet = true;
+            }
 
-    m_s3PrefixHasBeenSet = true;
-  }
+            else if (initialKeyStr == "RoleArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_roleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_roleArn = ss.str();
+                }
+              }
+              m_roleArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("S3SseKmsKeyId"))
-  {
-    m_s3SseKmsKeyId = jsonValue.GetString("S3SseKmsKeyId");
+            else if (initialKeyStr == "S3Bucket") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3Bucket = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3Bucket = ss.str();
+                }
+              }
+              m_s3BucketHasBeenSet = true;
+            }
 
-    m_s3SseKmsKeyIdHasBeenSet = true;
+            else if (initialKeyStr == "S3Prefix") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3Prefix = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3Prefix = ss.str();
+                }
+              }
+              m_s3PrefixHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "S3SseKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3SseKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3SseKmsKeyId = ss.str();
+                }
+              }
+              m_s3SseKmsKeyIdHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue S3Action::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_actionFailurePolicyHasBeenSet)
-  {
-   payload.WithString("ActionFailurePolicy", ActionFailurePolicyMapper::GetNameForActionFailurePolicy(m_actionFailurePolicy));
+void S3Action::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_actionFailurePolicyHasBeenSet) {
+    mapSize++;
+  }
+  if (m_roleArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3BucketHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3PrefixHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3SseKmsKeyIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_roleArnHasBeenSet)
-  {
-   payload.WithString("RoleArn", m_roleArn);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_actionFailurePolicyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActionFailurePolicy"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(ActionFailurePolicyMapper::GetNameForActionFailurePolicy(m_actionFailurePolicy).c_str()));
   }
 
-  if(m_s3BucketHasBeenSet)
-  {
-   payload.WithString("S3Bucket", m_s3Bucket);
-
+  if (m_roleArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RoleArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_roleArn.c_str()));
   }
 
-  if(m_s3PrefixHasBeenSet)
-  {
-   payload.WithString("S3Prefix", m_s3Prefix);
-
+  if (m_s3BucketHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("S3Bucket"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3Bucket.c_str()));
   }
 
-  if(m_s3SseKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("S3SseKmsKeyId", m_s3SseKmsKeyId);
-
+  if (m_s3PrefixHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("S3Prefix"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3Prefix.c_str()));
   }
 
-  return payload;
+  if (m_s3SseKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("S3SseKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3SseKmsKeyId.c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

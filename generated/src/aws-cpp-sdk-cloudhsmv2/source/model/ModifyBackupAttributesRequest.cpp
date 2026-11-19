@@ -4,48 +4,45 @@
  */
 
 #include <aws/cloudhsmv2/model/ModifyBackupAttributesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CloudHSMV2::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ModifyBackupAttributesRequest::ModifyBackupAttributesRequest() : 
-    m_backupIdHasBeenSet(false),
-    m_neverExpires(false),
-    m_neverExpiresHasBeenSet(false)
-{
-}
+Aws::String ModifyBackupAttributesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String ModifyBackupAttributesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_backupIdHasBeenSet)
-  {
-   payload.WithString("BackupId", m_backupId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_backupIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_neverExpiresHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_neverExpiresHasBeenSet)
-  {
-   payload.WithBool("NeverExpires", m_neverExpires);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_backupIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BackupId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_backupId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_neverExpiresHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NeverExpires"));
+    encoder.WriteBool(m_neverExpires);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection ModifyBackupAttributesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ModifyBackupAttributesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BaldrApiService.ModifyBackupAttributes"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

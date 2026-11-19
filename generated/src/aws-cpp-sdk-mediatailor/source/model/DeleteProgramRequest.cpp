@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediatailor/model/DeleteProgramRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediatailor/model/DeleteProgramRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::MediaTailor::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteProgramRequest::DeleteProgramRequest() : 
-    m_channelNameHasBeenSet(false),
-    m_programNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteProgramRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteProgramRequest::SerializePayload() const { return {}; }

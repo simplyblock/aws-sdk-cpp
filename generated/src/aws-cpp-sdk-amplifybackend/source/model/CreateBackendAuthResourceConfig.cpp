@@ -11,91 +11,54 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AmplifyBackend
-{
-namespace Model
-{
+namespace Aws {
+namespace AmplifyBackend {
+namespace Model {
 
-CreateBackendAuthResourceConfig::CreateBackendAuthResourceConfig() : 
-    m_authResources(AuthResources::NOT_SET),
-    m_authResourcesHasBeenSet(false),
-    m_identityPoolConfigsHasBeenSet(false),
-    m_service(Service::NOT_SET),
-    m_serviceHasBeenSet(false),
-    m_userPoolConfigsHasBeenSet(false)
-{
-}
+CreateBackendAuthResourceConfig::CreateBackendAuthResourceConfig(JsonView jsonValue) { *this = jsonValue; }
 
-CreateBackendAuthResourceConfig::CreateBackendAuthResourceConfig(JsonView jsonValue)
-  : CreateBackendAuthResourceConfig()
-{
-  *this = jsonValue;
-}
-
-CreateBackendAuthResourceConfig& CreateBackendAuthResourceConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("authResources"))
-  {
+CreateBackendAuthResourceConfig& CreateBackendAuthResourceConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("authResources")) {
     m_authResources = AuthResourcesMapper::GetAuthResourcesForName(jsonValue.GetString("authResources"));
-
     m_authResourcesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("identityPoolConfigs"))
-  {
+  if (jsonValue.ValueExists("identityPoolConfigs")) {
     m_identityPoolConfigs = jsonValue.GetObject("identityPoolConfigs");
-
     m_identityPoolConfigsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("service"))
-  {
+  if (jsonValue.ValueExists("service")) {
     m_service = ServiceMapper::GetServiceForName(jsonValue.GetString("service"));
-
     m_serviceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("userPoolConfigs"))
-  {
+  if (jsonValue.ValueExists("userPoolConfigs")) {
     m_userPoolConfigs = jsonValue.GetObject("userPoolConfigs");
-
     m_userPoolConfigsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CreateBackendAuthResourceConfig::Jsonize() const
-{
+JsonValue CreateBackendAuthResourceConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_authResourcesHasBeenSet)
-  {
-   payload.WithString("authResources", AuthResourcesMapper::GetNameForAuthResources(m_authResources));
+  if (m_authResourcesHasBeenSet) {
+    payload.WithString("authResources", AuthResourcesMapper::GetNameForAuthResources(m_authResources));
   }
 
-  if(m_identityPoolConfigsHasBeenSet)
-  {
-   payload.WithObject("identityPoolConfigs", m_identityPoolConfigs.Jsonize());
-
+  if (m_identityPoolConfigsHasBeenSet) {
+    payload.WithObject("identityPoolConfigs", m_identityPoolConfigs.Jsonize());
   }
 
-  if(m_serviceHasBeenSet)
-  {
-   payload.WithString("service", ServiceMapper::GetNameForService(m_service));
+  if (m_serviceHasBeenSet) {
+    payload.WithString("service", ServiceMapper::GetNameForService(m_service));
   }
 
-  if(m_userPoolConfigsHasBeenSet)
-  {
-   payload.WithObject("userPoolConfigs", m_userPoolConfigs.Jsonize());
-
+  if (m_userPoolConfigsHasBeenSet) {
+    payload.WithObject("userPoolConfigs", m_userPoolConfigs.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AmplifyBackend
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyBackend
+}  // namespace Aws

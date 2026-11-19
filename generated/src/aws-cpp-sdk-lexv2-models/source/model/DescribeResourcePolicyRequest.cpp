@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lexv2-models/model/DescribeResourcePolicyRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lexv2-models/model/DescribeResourcePolicyRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::LexModelsV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeResourcePolicyRequest::DescribeResourcePolicyRequest() : 
-    m_resourceArnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeResourcePolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeResourcePolicyRequest::SerializePayload() const { return {}; }

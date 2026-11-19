@@ -4,103 +4,120 @@
  */
 
 #pragma once
-#include <aws/textract/Textract_EXPORTS.h>
-#include <aws/textract/TextractRequest.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/textract/TextractRequest.h>
+#include <aws/textract/Textract_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Textract
-{
-namespace Model
-{
+namespace Aws {
+namespace Textract {
+namespace Model {
 
+/**
+ */
+class ListAdaptersRequest : public TextractRequest {
+ public:
+  AWS_TEXTRACT_API ListAdaptersRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListAdapters"; }
+
+  AWS_TEXTRACT_API Aws::String SerializePayload() const override;
+
+  AWS_TEXTRACT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Specifies the lower bound for the ListAdapters operation. Ensures
+   * ListAdapters returns only adapters created after the specified creation
+   * time.</p>
    */
-  class ListAdaptersRequest : public TextractRequest
-  {
-  public:
-    AWS_TEXTRACT_API ListAdaptersRequest();
+  inline const Aws::Utils::DateTime& GetAfterCreationTime() const { return m_afterCreationTime; }
+  inline bool AfterCreationTimeHasBeenSet() const { return m_afterCreationTimeHasBeenSet; }
+  template <typename AfterCreationTimeT = Aws::Utils::DateTime>
+  void SetAfterCreationTime(AfterCreationTimeT&& value) {
+    m_afterCreationTimeHasBeenSet = true;
+    m_afterCreationTime = std::forward<AfterCreationTimeT>(value);
+  }
+  template <typename AfterCreationTimeT = Aws::Utils::DateTime>
+  ListAdaptersRequest& WithAfterCreationTime(AfterCreationTimeT&& value) {
+    SetAfterCreationTime(std::forward<AfterCreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListAdapters"; }
+  ///@{
+  /**
+   * <p>Specifies the upper bound for the ListAdapters operation. Ensures
+   * ListAdapters returns only adapters created before the specified creation
+   * time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetBeforeCreationTime() const { return m_beforeCreationTime; }
+  inline bool BeforeCreationTimeHasBeenSet() const { return m_beforeCreationTimeHasBeenSet; }
+  template <typename BeforeCreationTimeT = Aws::Utils::DateTime>
+  void SetBeforeCreationTime(BeforeCreationTimeT&& value) {
+    m_beforeCreationTimeHasBeenSet = true;
+    m_beforeCreationTime = std::forward<BeforeCreationTimeT>(value);
+  }
+  template <typename BeforeCreationTimeT = Aws::Utils::DateTime>
+  ListAdaptersRequest& WithBeforeCreationTime(BeforeCreationTimeT&& value) {
+    SetBeforeCreationTime(std::forward<BeforeCreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TEXTRACT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of results to return when listing adapters.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListAdaptersRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_TEXTRACT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Identifies the next page of results to return when listing adapters.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAdaptersRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Utils::DateTime m_afterCreationTime{};
 
+  Aws::Utils::DateTime m_beforeCreationTime{};
 
-    ///@{
-    /**
-     * <p>Specifies the lower bound for the ListAdapters operation. Ensures
-     * ListAdapters returns only adapters created after the specified creation
-     * time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetAfterCreationTime() const{ return m_afterCreationTime; }
-    inline bool AfterCreationTimeHasBeenSet() const { return m_afterCreationTimeHasBeenSet; }
-    inline void SetAfterCreationTime(const Aws::Utils::DateTime& value) { m_afterCreationTimeHasBeenSet = true; m_afterCreationTime = value; }
-    inline void SetAfterCreationTime(Aws::Utils::DateTime&& value) { m_afterCreationTimeHasBeenSet = true; m_afterCreationTime = std::move(value); }
-    inline ListAdaptersRequest& WithAfterCreationTime(const Aws::Utils::DateTime& value) { SetAfterCreationTime(value); return *this;}
-    inline ListAdaptersRequest& WithAfterCreationTime(Aws::Utils::DateTime&& value) { SetAfterCreationTime(std::move(value)); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>Specifies the upper bound for the ListAdapters operation. Ensures
-     * ListAdapters returns only adapters created before the specified creation
-     * time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetBeforeCreationTime() const{ return m_beforeCreationTime; }
-    inline bool BeforeCreationTimeHasBeenSet() const { return m_beforeCreationTimeHasBeenSet; }
-    inline void SetBeforeCreationTime(const Aws::Utils::DateTime& value) { m_beforeCreationTimeHasBeenSet = true; m_beforeCreationTime = value; }
-    inline void SetBeforeCreationTime(Aws::Utils::DateTime&& value) { m_beforeCreationTimeHasBeenSet = true; m_beforeCreationTime = std::move(value); }
-    inline ListAdaptersRequest& WithBeforeCreationTime(const Aws::Utils::DateTime& value) { SetBeforeCreationTime(value); return *this;}
-    inline ListAdaptersRequest& WithBeforeCreationTime(Aws::Utils::DateTime&& value) { SetBeforeCreationTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_nextToken;
+  bool m_afterCreationTimeHasBeenSet = false;
+  bool m_beforeCreationTimeHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The maximum number of results to return when listing adapters.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListAdaptersRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Identifies the next page of results to return when listing adapters.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListAdaptersRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAdaptersRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAdaptersRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Utils::DateTime m_afterCreationTime;
-    bool m_afterCreationTimeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_beforeCreationTime;
-    bool m_beforeCreationTimeHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Textract
-} // namespace Aws
+}  // namespace Model
+}  // namespace Textract
+}  // namespace Aws

@@ -4,68 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mgn/Mgn_EXPORTS.h>
 #include <aws/mgn/model/ExportTask.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mgn
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mgn {
+namespace Model {
+/**
+ * <p>Start export response.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mgn-2020-02-26/StartExportResponse">AWS
+ * API Reference</a></p>
+ */
+class StartExportResult {
+ public:
+  AWS_MGN_API StartExportResult() = default;
+  AWS_MGN_API StartExportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MGN_API StartExportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Start export response.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mgn-2020-02-26/StartExportResponse">AWS
-   * API Reference</a></p>
+   * <p>Start export response export task.</p>
    */
-  class StartExportResult
-  {
-  public:
-    AWS_MGN_API StartExportResult();
-    AWS_MGN_API StartExportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MGN_API StartExportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const ExportTask& GetExportTask() const { return m_exportTask; }
+  template <typename ExportTaskT = ExportTask>
+  void SetExportTask(ExportTaskT&& value) {
+    m_exportTaskHasBeenSet = true;
+    m_exportTask = std::forward<ExportTaskT>(value);
+  }
+  template <typename ExportTaskT = ExportTask>
+  StartExportResult& WithExportTask(ExportTaskT&& value) {
+    SetExportTask(std::forward<ExportTaskT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Start export response export task.</p>
-     */
-    inline const ExportTask& GetExportTask() const{ return m_exportTask; }
-    inline void SetExportTask(const ExportTask& value) { m_exportTask = value; }
-    inline void SetExportTask(ExportTask&& value) { m_exportTask = std::move(value); }
-    inline StartExportResult& WithExportTask(const ExportTask& value) { SetExportTask(value); return *this;}
-    inline StartExportResult& WithExportTask(ExportTask&& value) { SetExportTask(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartExportResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartExportResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartExportResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartExportResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  ExportTask m_exportTask;
 
-    ExportTask m_exportTask;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_exportTaskHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace mgn
-} // namespace Aws
+}  // namespace Model
+}  // namespace mgn
+}  // namespace Aws

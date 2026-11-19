@@ -3,49 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/DeletePolicyRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::FMS::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeletePolicyRequest::DeletePolicyRequest() : 
-    m_policyIdHasBeenSet(false),
-    m_deleteAllPolicyResources(false),
-    m_deleteAllPolicyResourcesHasBeenSet(false)
-{
-}
+Aws::String DeletePolicyRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeletePolicyRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_policyIdHasBeenSet)
-  {
-   payload.WithString("PolicyId", m_policyId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_policyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deleteAllPolicyResourcesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_deleteAllPolicyResourcesHasBeenSet)
-  {
-   payload.WithBool("DeleteAllPolicyResources", m_deleteAllPolicyResources);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_policyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PolicyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_policyId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_deleteAllPolicyResourcesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeleteAllPolicyResources"));
+    encoder.WriteBool(m_deleteAllPolicyResources);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeletePolicyRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeletePolicyRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSFMS_20180101.DeletePolicy"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

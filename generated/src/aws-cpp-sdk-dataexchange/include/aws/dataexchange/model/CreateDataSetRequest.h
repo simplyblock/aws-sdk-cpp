@@ -4,113 +4,125 @@
  */
 
 #pragma once
-#include <aws/dataexchange/DataExchange_EXPORTS.h>
-#include <aws/dataexchange/DataExchangeRequest.h>
-#include <aws/dataexchange/model/AssetType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/dataexchange/DataExchangeRequest.h>
+#include <aws/dataexchange/DataExchange_EXPORTS.h>
+#include <aws/dataexchange/model/AssetType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DataExchange
-{
-namespace Model
-{
+namespace Aws {
+namespace DataExchange {
+namespace Model {
 
+/**
+ */
+class CreateDataSetRequest : public DataExchangeRequest {
+ public:
+  AWS_DATAEXCHANGE_API CreateDataSetRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDataSet"; }
+
+  AWS_DATAEXCHANGE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The type of asset that is added to a data set.</p>
    */
-  class CreateDataSetRequest : public DataExchangeRequest
-  {
-  public:
-    AWS_DATAEXCHANGE_API CreateDataSetRequest();
+  inline AssetType GetAssetType() const { return m_assetType; }
+  inline bool AssetTypeHasBeenSet() const { return m_assetTypeHasBeenSet; }
+  inline void SetAssetType(AssetType value) {
+    m_assetTypeHasBeenSet = true;
+    m_assetType = value;
+  }
+  inline CreateDataSetRequest& WithAssetType(AssetType value) {
+    SetAssetType(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDataSet"; }
+  ///@{
+  /**
+   * <p>A description for the data set. This value can be up to 16,348 characters
+   * long.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateDataSetRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DATAEXCHANGE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the data set.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateDataSetRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A data set tag is an optional label that you can assign to a data set when
+   * you create it. Each tag consists of a key and an optional value, both of which
+   * you define. When you use tagging, you can also use tag-based access control in
+   * IAM policies to control access to these data sets and revisions.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateDataSetRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateDataSetRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  AssetType m_assetType{AssetType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The type of asset that is added to a data set.</p>
-     */
-    inline const AssetType& GetAssetType() const{ return m_assetType; }
-    inline bool AssetTypeHasBeenSet() const { return m_assetTypeHasBeenSet; }
-    inline void SetAssetType(const AssetType& value) { m_assetTypeHasBeenSet = true; m_assetType = value; }
-    inline void SetAssetType(AssetType&& value) { m_assetTypeHasBeenSet = true; m_assetType = std::move(value); }
-    inline CreateDataSetRequest& WithAssetType(const AssetType& value) { SetAssetType(value); return *this;}
-    inline CreateDataSetRequest& WithAssetType(AssetType&& value) { SetAssetType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>A description for the data set. This value can be up to 16,348 characters
-     * long.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateDataSetRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateDataSetRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateDataSetRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the data set.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateDataSetRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateDataSetRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateDataSetRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_assetTypeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A data set tag is an optional label that you can assign to a data set when
-     * you create it. Each tag consists of a key and an optional value, both of which
-     * you define. When you use tagging, you can also use tag-based access control in
-     * IAM policies to control access to these data sets and revisions.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateDataSetRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateDataSetRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateDataSetRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateDataSetRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateDataSetRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateDataSetRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateDataSetRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateDataSetRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateDataSetRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    AssetType m_assetType;
-    bool m_assetTypeHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataExchange
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataExchange
+}  // namespace Aws

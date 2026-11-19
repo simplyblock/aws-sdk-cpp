@@ -4,95 +4,118 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/DimensionField.h>
 #include <aws/quicksight/model/MeasureField.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
 
+/**
+ * <p>The field well configuration of a sankey diagram.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SankeyDiagramAggregatedFieldWells">AWS
+ * API Reference</a></p>
+ */
+class SankeyDiagramAggregatedFieldWells {
+ public:
+  AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells() = default;
+  AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The field well configuration of a sankey diagram.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SankeyDiagramAggregatedFieldWells">AWS
-   * API Reference</a></p>
+   * <p>The source field wells of a sankey diagram.</p>
    */
-  class SankeyDiagramAggregatedFieldWells
-  {
-  public:
-    AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells();
-    AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API SankeyDiagramAggregatedFieldWells& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<DimensionField>& GetSource() const { return m_source; }
+  inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
+  template <typename SourceT = Aws::Vector<DimensionField>>
+  void SetSource(SourceT&& value) {
+    m_sourceHasBeenSet = true;
+    m_source = std::forward<SourceT>(value);
+  }
+  template <typename SourceT = Aws::Vector<DimensionField>>
+  SankeyDiagramAggregatedFieldWells& WithSource(SourceT&& value) {
+    SetSource(std::forward<SourceT>(value));
+    return *this;
+  }
+  template <typename SourceT = DimensionField>
+  SankeyDiagramAggregatedFieldWells& AddSource(SourceT&& value) {
+    m_sourceHasBeenSet = true;
+    m_source.emplace_back(std::forward<SourceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The destination field wells of a sankey diagram.</p>
+   */
+  inline const Aws::Vector<DimensionField>& GetDestination() const { return m_destination; }
+  inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
+  template <typename DestinationT = Aws::Vector<DimensionField>>
+  void SetDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination = std::forward<DestinationT>(value);
+  }
+  template <typename DestinationT = Aws::Vector<DimensionField>>
+  SankeyDiagramAggregatedFieldWells& WithDestination(DestinationT&& value) {
+    SetDestination(std::forward<DestinationT>(value));
+    return *this;
+  }
+  template <typename DestinationT = DimensionField>
+  SankeyDiagramAggregatedFieldWells& AddDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination.emplace_back(std::forward<DestinationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The source field wells of a sankey diagram.</p>
-     */
-    inline const Aws::Vector<DimensionField>& GetSource() const{ return m_source; }
-    inline bool SourceHasBeenSet() const { return m_sourceHasBeenSet; }
-    inline void SetSource(const Aws::Vector<DimensionField>& value) { m_sourceHasBeenSet = true; m_source = value; }
-    inline void SetSource(Aws::Vector<DimensionField>&& value) { m_sourceHasBeenSet = true; m_source = std::move(value); }
-    inline SankeyDiagramAggregatedFieldWells& WithSource(const Aws::Vector<DimensionField>& value) { SetSource(value); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& WithSource(Aws::Vector<DimensionField>&& value) { SetSource(std::move(value)); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& AddSource(const DimensionField& value) { m_sourceHasBeenSet = true; m_source.push_back(value); return *this; }
-    inline SankeyDiagramAggregatedFieldWells& AddSource(DimensionField&& value) { m_sourceHasBeenSet = true; m_source.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The weight field wells of a sankey diagram.</p>
+   */
+  inline const Aws::Vector<MeasureField>& GetWeight() const { return m_weight; }
+  inline bool WeightHasBeenSet() const { return m_weightHasBeenSet; }
+  template <typename WeightT = Aws::Vector<MeasureField>>
+  void SetWeight(WeightT&& value) {
+    m_weightHasBeenSet = true;
+    m_weight = std::forward<WeightT>(value);
+  }
+  template <typename WeightT = Aws::Vector<MeasureField>>
+  SankeyDiagramAggregatedFieldWells& WithWeight(WeightT&& value) {
+    SetWeight(std::forward<WeightT>(value));
+    return *this;
+  }
+  template <typename WeightT = MeasureField>
+  SankeyDiagramAggregatedFieldWells& AddWeight(WeightT&& value) {
+    m_weightHasBeenSet = true;
+    m_weight.emplace_back(std::forward<WeightT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<DimensionField> m_source;
 
-    ///@{
-    /**
-     * <p>The destination field wells of a sankey diagram.</p>
-     */
-    inline const Aws::Vector<DimensionField>& GetDestination() const{ return m_destination; }
-    inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
-    inline void SetDestination(const Aws::Vector<DimensionField>& value) { m_destinationHasBeenSet = true; m_destination = value; }
-    inline void SetDestination(Aws::Vector<DimensionField>&& value) { m_destinationHasBeenSet = true; m_destination = std::move(value); }
-    inline SankeyDiagramAggregatedFieldWells& WithDestination(const Aws::Vector<DimensionField>& value) { SetDestination(value); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& WithDestination(Aws::Vector<DimensionField>&& value) { SetDestination(std::move(value)); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& AddDestination(const DimensionField& value) { m_destinationHasBeenSet = true; m_destination.push_back(value); return *this; }
-    inline SankeyDiagramAggregatedFieldWells& AddDestination(DimensionField&& value) { m_destinationHasBeenSet = true; m_destination.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<DimensionField> m_destination;
 
-    ///@{
-    /**
-     * <p>The weight field wells of a sankey diagram.</p>
-     */
-    inline const Aws::Vector<MeasureField>& GetWeight() const{ return m_weight; }
-    inline bool WeightHasBeenSet() const { return m_weightHasBeenSet; }
-    inline void SetWeight(const Aws::Vector<MeasureField>& value) { m_weightHasBeenSet = true; m_weight = value; }
-    inline void SetWeight(Aws::Vector<MeasureField>&& value) { m_weightHasBeenSet = true; m_weight = std::move(value); }
-    inline SankeyDiagramAggregatedFieldWells& WithWeight(const Aws::Vector<MeasureField>& value) { SetWeight(value); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& WithWeight(Aws::Vector<MeasureField>&& value) { SetWeight(std::move(value)); return *this;}
-    inline SankeyDiagramAggregatedFieldWells& AddWeight(const MeasureField& value) { m_weightHasBeenSet = true; m_weight.push_back(value); return *this; }
-    inline SankeyDiagramAggregatedFieldWells& AddWeight(MeasureField&& value) { m_weightHasBeenSet = true; m_weight.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<MeasureField> m_weight;
+  bool m_sourceHasBeenSet = false;
+  bool m_destinationHasBeenSet = false;
+  bool m_weightHasBeenSet = false;
+};
 
-    Aws::Vector<DimensionField> m_source;
-    bool m_sourceHasBeenSet = false;
-
-    Aws::Vector<DimensionField> m_destination;
-    bool m_destinationHasBeenSet = false;
-
-    Aws::Vector<MeasureField> m_weight;
-    bool m_weightHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

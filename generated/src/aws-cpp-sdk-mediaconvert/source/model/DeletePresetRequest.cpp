@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediaconvert/model/DeletePresetRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediaconvert/model/DeletePresetRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::MediaConvert::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeletePresetRequest::DeletePresetRequest() : 
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DeletePresetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeletePresetRequest::SerializePayload() const { return {}; }

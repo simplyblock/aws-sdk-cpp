@@ -4,34 +4,39 @@
  */
 
 #include <aws/timestream-write/TimestreamWriteEndpointProvider.h>
+#include <aws/timestream-write/internal/TimestreamWriteEndpointRules.h>
 
-namespace Aws
-{
-#ifndef AWS_TIMESTREAMWRITE_EXPORTS // Except for Windows DLL
-namespace Endpoint
-{
+namespace Aws {
+#ifndef AWS_TIMESTREAMWRITE_EXPORTS  // Except for Windows DLL
+namespace Endpoint {
 /**
  * Instantiate endpoint providers
  */
 template class Aws::Endpoint::EndpointProviderBase<TimestreamWrite::Endpoint::TimestreamWriteClientConfiguration,
-    TimestreamWrite::Endpoint::TimestreamWriteBuiltInParameters,
-    TimestreamWrite::Endpoint::TimestreamWriteClientContextParameters>;
+                                                   TimestreamWrite::Endpoint::TimestreamWriteBuiltInParameters,
+                                                   TimestreamWrite::Endpoint::TimestreamWriteClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<TimestreamWrite::Endpoint::TimestreamWriteClientConfiguration,
-    TimestreamWrite::Endpoint::TimestreamWriteBuiltInParameters,
-    TimestreamWrite::Endpoint::TimestreamWriteClientContextParameters>;
-} // namespace Endpoint
+template class Aws::Endpoint::BDDEndpointProvider<TimestreamWrite::Endpoint::TimestreamWriteClientConfiguration,
+                                                  TimestreamWrite::Endpoint::TimestreamWriteBuiltInParameters,
+                                                  TimestreamWrite::Endpoint::TimestreamWriteClientContextParameters>;
+}  // namespace Endpoint
 #endif
 
-namespace TimestreamWrite
-{
-namespace Endpoint
-{
-  void TimestreamWriteBuiltInParameters::SetFromClientConfiguration(const TimestreamWriteClientConfiguration& config)
-  {
-    SetFromClientConfiguration(static_cast<const TimestreamWriteClientConfiguration::BaseClientConfigClass&>(config));
+namespace TimestreamWrite {
+namespace Endpoint {
+TimestreamWriteEndpointProvider::TimestreamWriteEndpointProvider()
+    : TimestreamWriteDefaultEpProviderBase(Aws::TimestreamWrite::TimestreamWriteEndpointRules::GetRulesBlob(),
+                                           Aws::TimestreamWrite::TimestreamWriteEndpointRules::RulesBlobSize) {}
 
-  }
-} // namespace Endpoint
-} // namespace TimestreamWrite
-} // namespace Aws
+void TimestreamWriteBuiltInParameters::SetFromClientConfiguration(const TimestreamWriteClientConfiguration& config) {
+  SetFromClientConfiguration(static_cast<const TimestreamWriteClientConfiguration::BaseClientConfigClass&>(config));
+}
+
+void TimestreamWriteBuiltInParameters::SetFromClientConfiguration(const TimestreamWriteClientConfiguration& config,
+                                                                  const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const TimestreamWriteClientConfiguration::BaseClientConfigClass&>(config), serviceName);
+}
+
+}  // namespace Endpoint
+}  // namespace TimestreamWrite
+}  // namespace Aws

@@ -4,134 +4,167 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
 #include <aws/lexv2-models/model/SlotTypeSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LexModelsV2
-{
-namespace Model
-{
-  class ListSlotTypesResult
-  {
-  public:
-    AWS_LEXMODELSV2_API ListSlotTypesResult();
-    AWS_LEXMODELSV2_API ListSlotTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LEXMODELSV2_API ListSlotTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LexModelsV2 {
+namespace Model {
+class ListSlotTypesResult {
+ public:
+  AWS_LEXMODELSV2_API ListSlotTypesResult() = default;
+  AWS_LEXMODELSV2_API ListSlotTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LEXMODELSV2_API ListSlotTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the bot that contains the slot types.</p>
+   */
+  inline const Aws::String& GetBotId() const { return m_botId; }
+  template <typename BotIdT = Aws::String>
+  void SetBotId(BotIdT&& value) {
+    m_botIdHasBeenSet = true;
+    m_botId = std::forward<BotIdT>(value);
+  }
+  template <typename BotIdT = Aws::String>
+  ListSlotTypesResult& WithBotId(BotIdT&& value) {
+    SetBotId(std::forward<BotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the bot that contains the slot types.</p>
-     */
-    inline const Aws::String& GetBotId() const{ return m_botId; }
-    inline void SetBotId(const Aws::String& value) { m_botId = value; }
-    inline void SetBotId(Aws::String&& value) { m_botId = std::move(value); }
-    inline void SetBotId(const char* value) { m_botId.assign(value); }
-    inline ListSlotTypesResult& WithBotId(const Aws::String& value) { SetBotId(value); return *this;}
-    inline ListSlotTypesResult& WithBotId(Aws::String&& value) { SetBotId(std::move(value)); return *this;}
-    inline ListSlotTypesResult& WithBotId(const char* value) { SetBotId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the bot that contains the slot types.</p>
+   */
+  inline const Aws::String& GetBotVersion() const { return m_botVersion; }
+  template <typename BotVersionT = Aws::String>
+  void SetBotVersion(BotVersionT&& value) {
+    m_botVersionHasBeenSet = true;
+    m_botVersion = std::forward<BotVersionT>(value);
+  }
+  template <typename BotVersionT = Aws::String>
+  ListSlotTypesResult& WithBotVersion(BotVersionT&& value) {
+    SetBotVersion(std::forward<BotVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the bot that contains the slot types.</p>
-     */
-    inline const Aws::String& GetBotVersion() const{ return m_botVersion; }
-    inline void SetBotVersion(const Aws::String& value) { m_botVersion = value; }
-    inline void SetBotVersion(Aws::String&& value) { m_botVersion = std::move(value); }
-    inline void SetBotVersion(const char* value) { m_botVersion.assign(value); }
-    inline ListSlotTypesResult& WithBotVersion(const Aws::String& value) { SetBotVersion(value); return *this;}
-    inline ListSlotTypesResult& WithBotVersion(Aws::String&& value) { SetBotVersion(std::move(value)); return *this;}
-    inline ListSlotTypesResult& WithBotVersion(const char* value) { SetBotVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The language and local of the slot types in the list.</p>
+   */
+  inline const Aws::String& GetLocaleId() const { return m_localeId; }
+  template <typename LocaleIdT = Aws::String>
+  void SetLocaleId(LocaleIdT&& value) {
+    m_localeIdHasBeenSet = true;
+    m_localeId = std::forward<LocaleIdT>(value);
+  }
+  template <typename LocaleIdT = Aws::String>
+  ListSlotTypesResult& WithLocaleId(LocaleIdT&& value) {
+    SetLocaleId(std::forward<LocaleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The language and local of the slot types in the list.</p>
-     */
-    inline const Aws::String& GetLocaleId() const{ return m_localeId; }
-    inline void SetLocaleId(const Aws::String& value) { m_localeId = value; }
-    inline void SetLocaleId(Aws::String&& value) { m_localeId = std::move(value); }
-    inline void SetLocaleId(const char* value) { m_localeId.assign(value); }
-    inline ListSlotTypesResult& WithLocaleId(const Aws::String& value) { SetLocaleId(value); return *this;}
-    inline ListSlotTypesResult& WithLocaleId(Aws::String&& value) { SetLocaleId(std::move(value)); return *this;}
-    inline ListSlotTypesResult& WithLocaleId(const char* value) { SetLocaleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Summary information for the slot types that meet the filter criteria
+   * specified in the request. The length of the list is specified in the
+   * <code>maxResults</code> parameter of the request. If there are more slot types
+   * available, the <code>nextToken</code> field contains a token to get the next
+   * page of results.</p>
+   */
+  inline const Aws::Vector<SlotTypeSummary>& GetSlotTypeSummaries() const { return m_slotTypeSummaries; }
+  template <typename SlotTypeSummariesT = Aws::Vector<SlotTypeSummary>>
+  void SetSlotTypeSummaries(SlotTypeSummariesT&& value) {
+    m_slotTypeSummariesHasBeenSet = true;
+    m_slotTypeSummaries = std::forward<SlotTypeSummariesT>(value);
+  }
+  template <typename SlotTypeSummariesT = Aws::Vector<SlotTypeSummary>>
+  ListSlotTypesResult& WithSlotTypeSummaries(SlotTypeSummariesT&& value) {
+    SetSlotTypeSummaries(std::forward<SlotTypeSummariesT>(value));
+    return *this;
+  }
+  template <typename SlotTypeSummariesT = SlotTypeSummary>
+  ListSlotTypesResult& AddSlotTypeSummaries(SlotTypeSummariesT&& value) {
+    m_slotTypeSummariesHasBeenSet = true;
+    m_slotTypeSummaries.emplace_back(std::forward<SlotTypeSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Summary information for the slot types that meet the filter criteria
-     * specified in the request. The length of the list is specified in the
-     * <code>maxResults</code> parameter of the request. If there are more slot types
-     * available, the <code>nextToken</code> field contains a token to get the next
-     * page of results.</p>
-     */
-    inline const Aws::Vector<SlotTypeSummary>& GetSlotTypeSummaries() const{ return m_slotTypeSummaries; }
-    inline void SetSlotTypeSummaries(const Aws::Vector<SlotTypeSummary>& value) { m_slotTypeSummaries = value; }
-    inline void SetSlotTypeSummaries(Aws::Vector<SlotTypeSummary>&& value) { m_slotTypeSummaries = std::move(value); }
-    inline ListSlotTypesResult& WithSlotTypeSummaries(const Aws::Vector<SlotTypeSummary>& value) { SetSlotTypeSummaries(value); return *this;}
-    inline ListSlotTypesResult& WithSlotTypeSummaries(Aws::Vector<SlotTypeSummary>&& value) { SetSlotTypeSummaries(std::move(value)); return *this;}
-    inline ListSlotTypesResult& AddSlotTypeSummaries(const SlotTypeSummary& value) { m_slotTypeSummaries.push_back(value); return *this; }
-    inline ListSlotTypesResult& AddSlotTypeSummaries(SlotTypeSummary&& value) { m_slotTypeSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that indicates whether there are more results to return in a response
+   * to the <code>ListSlotTypes</code> operation. If the <code>nextToken</code> field
+   * is present, you send the contents as the <code>nextToken</code> parameter of a
+   * <code>ListSlotTypes</code> operation request to get the next page of
+   * results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSlotTypesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that indicates whether there are more results to return in a response
-     * to the <code>ListSlotTypes</code> operation. If the <code>nextToken</code> field
-     * is present, you send the contents as the <code>nextToken</code> parameter of a
-     * <code>ListSlotTypes</code> operation request to get the next page of
-     * results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSlotTypesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSlotTypesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSlotTypesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSlotTypesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSlotTypesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSlotTypesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSlotTypesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_botId;
+ private:
+  Aws::String m_botId;
 
-    Aws::String m_botVersion;
+  Aws::String m_botVersion;
 
-    Aws::String m_localeId;
+  Aws::String m_localeId;
 
-    Aws::Vector<SlotTypeSummary> m_slotTypeSummaries;
+  Aws::Vector<SlotTypeSummary> m_slotTypeSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_botIdHasBeenSet = false;
+  bool m_botVersionHasBeenSet = false;
+  bool m_localeIdHasBeenSet = false;
+  bool m_slotTypeSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

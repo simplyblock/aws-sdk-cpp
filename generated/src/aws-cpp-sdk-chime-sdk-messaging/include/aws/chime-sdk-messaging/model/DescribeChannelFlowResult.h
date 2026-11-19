@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/chime-sdk-messaging/ChimeSDKMessaging_EXPORTS.h>
 #include <aws/chime-sdk-messaging/model/ChannelFlow.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMessaging
-{
-namespace Model
-{
-  class DescribeChannelFlowResult
-  {
-  public:
-    AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult();
-    AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMessaging {
+namespace Model {
+class DescribeChannelFlowResult {
+ public:
+  AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult() = default;
+  AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKMESSAGING_API DescribeChannelFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The channel flow details.</p>
+   */
+  inline const ChannelFlow& GetChannelFlow() const { return m_channelFlow; }
+  template <typename ChannelFlowT = ChannelFlow>
+  void SetChannelFlow(ChannelFlowT&& value) {
+    m_channelFlowHasBeenSet = true;
+    m_channelFlow = std::forward<ChannelFlowT>(value);
+  }
+  template <typename ChannelFlowT = ChannelFlow>
+  DescribeChannelFlowResult& WithChannelFlow(ChannelFlowT&& value) {
+    SetChannelFlow(std::forward<ChannelFlowT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The channel flow details.</p>
-     */
-    inline const ChannelFlow& GetChannelFlow() const{ return m_channelFlow; }
-    inline void SetChannelFlow(const ChannelFlow& value) { m_channelFlow = value; }
-    inline void SetChannelFlow(ChannelFlow&& value) { m_channelFlow = std::move(value); }
-    inline DescribeChannelFlowResult& WithChannelFlow(const ChannelFlow& value) { SetChannelFlow(value); return *this;}
-    inline DescribeChannelFlowResult& WithChannelFlow(ChannelFlow&& value) { SetChannelFlow(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeChannelFlowResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeChannelFlowResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeChannelFlowResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeChannelFlowResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ChannelFlow m_channelFlow;
+ private:
+  ChannelFlow m_channelFlow;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelFlowHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKMessaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMessaging
+}  // namespace Aws

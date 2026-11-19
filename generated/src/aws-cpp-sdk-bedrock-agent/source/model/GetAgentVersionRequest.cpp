@@ -12,17 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAgentVersionRequest::GetAgentVersionRequest() : 
-    m_agentIdHasBeenSet(false),
-    m_agentVersionHasBeenSet(false)
-{
-}
-
-Aws::String GetAgentVersionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAgentVersionRequest::SerializePayload() const { return {}; }

@@ -10,23 +10,14 @@
 using namespace Aws::CloudSearch::Model;
 using namespace Aws::Utils;
 
-DefineSuggesterRequest::DefineSuggesterRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_suggesterHasBeenSet(false)
-{
-}
-
-Aws::String DefineSuggesterRequest::SerializePayload() const
-{
+Aws::String DefineSuggesterRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DefineSuggester&";
-  if(m_domainNameHasBeenSet)
-  {
+  if (m_domainNameHasBeenSet) {
     ss << "DomainName=" << StringUtils::URLEncode(m_domainName.c_str()) << "&";
   }
 
-  if(m_suggesterHasBeenSet)
-  {
+  if (m_suggesterHasBeenSet) {
     m_suggester.OutputToStream(ss, "Suggester");
   }
 
@@ -34,8 +25,4 @@ Aws::String DefineSuggesterRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DefineSuggesterRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DefineSuggesterRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

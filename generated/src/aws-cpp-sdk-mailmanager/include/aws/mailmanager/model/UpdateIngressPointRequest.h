@@ -4,141 +4,184 @@
  */
 
 #pragma once
-#include <aws/mailmanager/MailManager_EXPORTS.h>
-#include <aws/mailmanager/MailManagerRequest.h>
-#include <aws/mailmanager/model/IngressPointConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mailmanager/MailManagerRequest.h>
+#include <aws/mailmanager/MailManager_EXPORTS.h>
+#include <aws/mailmanager/model/IngressPointConfiguration.h>
 #include <aws/mailmanager/model/IngressPointStatusToUpdate.h>
+#include <aws/mailmanager/model/TlsPolicy.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MailManager
-{
-namespace Model
-{
+namespace Aws {
+namespace MailManager {
+namespace Model {
 
+/**
+ */
+class UpdateIngressPointRequest : public MailManagerRequest {
+ public:
+  AWS_MAILMANAGER_API UpdateIngressPointRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateIngressPoint"; }
+
+  AWS_MAILMANAGER_API Aws::String SerializePayload() const override;
+
+  AWS_MAILMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The identifier for the ingress endpoint you want to update.</p>
    */
-  class UpdateIngressPointRequest : public MailManagerRequest
-  {
-  public:
-    AWS_MAILMANAGER_API UpdateIngressPointRequest();
+  inline const Aws::String& GetIngressPointId() const { return m_ingressPointId; }
+  inline bool IngressPointIdHasBeenSet() const { return m_ingressPointIdHasBeenSet; }
+  template <typename IngressPointIdT = Aws::String>
+  void SetIngressPointId(IngressPointIdT&& value) {
+    m_ingressPointIdHasBeenSet = true;
+    m_ingressPointId = std::forward<IngressPointIdT>(value);
+  }
+  template <typename IngressPointIdT = Aws::String>
+  UpdateIngressPointRequest& WithIngressPointId(IngressPointIdT&& value) {
+    SetIngressPointId(std::forward<IngressPointIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateIngressPoint"; }
+  ///@{
+  /**
+   * <p>A user friendly name for the ingress endpoint resource.</p>
+   */
+  inline const Aws::String& GetIngressPointName() const { return m_ingressPointName; }
+  inline bool IngressPointNameHasBeenSet() const { return m_ingressPointNameHasBeenSet; }
+  template <typename IngressPointNameT = Aws::String>
+  void SetIngressPointName(IngressPointNameT&& value) {
+    m_ingressPointNameHasBeenSet = true;
+    m_ingressPointName = std::forward<IngressPointNameT>(value);
+  }
+  template <typename IngressPointNameT = Aws::String>
+  UpdateIngressPointRequest& WithIngressPointName(IngressPointNameT&& value) {
+    SetIngressPointName(std::forward<IngressPointNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MAILMANAGER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The update status of an ingress endpoint.</p>
+   */
+  inline IngressPointStatusToUpdate GetStatusToUpdate() const { return m_statusToUpdate; }
+  inline bool StatusToUpdateHasBeenSet() const { return m_statusToUpdateHasBeenSet; }
+  inline void SetStatusToUpdate(IngressPointStatusToUpdate value) {
+    m_statusToUpdateHasBeenSet = true;
+    m_statusToUpdate = value;
+  }
+  inline UpdateIngressPointRequest& WithStatusToUpdate(IngressPointStatusToUpdate value) {
+    SetStatusToUpdate(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_MAILMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The identifier of an existing rule set that you attach to an ingress endpoint
+   * resource.</p>
+   */
+  inline const Aws::String& GetRuleSetId() const { return m_ruleSetId; }
+  inline bool RuleSetIdHasBeenSet() const { return m_ruleSetIdHasBeenSet; }
+  template <typename RuleSetIdT = Aws::String>
+  void SetRuleSetId(RuleSetIdT&& value) {
+    m_ruleSetIdHasBeenSet = true;
+    m_ruleSetId = std::forward<RuleSetIdT>(value);
+  }
+  template <typename RuleSetIdT = Aws::String>
+  UpdateIngressPointRequest& WithRuleSetId(RuleSetIdT&& value) {
+    SetRuleSetId(std::forward<RuleSetIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifier of an existing traffic policy that you attach to an ingress
+   * endpoint resource.</p>
+   */
+  inline const Aws::String& GetTrafficPolicyId() const { return m_trafficPolicyId; }
+  inline bool TrafficPolicyIdHasBeenSet() const { return m_trafficPolicyIdHasBeenSet; }
+  template <typename TrafficPolicyIdT = Aws::String>
+  void SetTrafficPolicyId(TrafficPolicyIdT&& value) {
+    m_trafficPolicyIdHasBeenSet = true;
+    m_trafficPolicyId = std::forward<TrafficPolicyIdT>(value);
+  }
+  template <typename TrafficPolicyIdT = Aws::String>
+  UpdateIngressPointRequest& WithTrafficPolicyId(TrafficPolicyIdT&& value) {
+    SetTrafficPolicyId(std::forward<TrafficPolicyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If you choose an Authenticated ingress endpoint, you must configure either an
-     * SMTP password or a secret ARN.</p>
-     */
-    inline const IngressPointConfiguration& GetIngressPointConfiguration() const{ return m_ingressPointConfiguration; }
-    inline bool IngressPointConfigurationHasBeenSet() const { return m_ingressPointConfigurationHasBeenSet; }
-    inline void SetIngressPointConfiguration(const IngressPointConfiguration& value) { m_ingressPointConfigurationHasBeenSet = true; m_ingressPointConfiguration = value; }
-    inline void SetIngressPointConfiguration(IngressPointConfiguration&& value) { m_ingressPointConfigurationHasBeenSet = true; m_ingressPointConfiguration = std::move(value); }
-    inline UpdateIngressPointRequest& WithIngressPointConfiguration(const IngressPointConfiguration& value) { SetIngressPointConfiguration(value); return *this;}
-    inline UpdateIngressPointRequest& WithIngressPointConfiguration(IngressPointConfiguration&& value) { SetIngressPointConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If you choose an Authenticated ingress endpoint, you must configure either an
+   * SMTP password or a secret ARN.</p>
+   */
+  inline const IngressPointConfiguration& GetIngressPointConfiguration() const { return m_ingressPointConfiguration; }
+  inline bool IngressPointConfigurationHasBeenSet() const { return m_ingressPointConfigurationHasBeenSet; }
+  template <typename IngressPointConfigurationT = IngressPointConfiguration>
+  void SetIngressPointConfiguration(IngressPointConfigurationT&& value) {
+    m_ingressPointConfigurationHasBeenSet = true;
+    m_ingressPointConfiguration = std::forward<IngressPointConfigurationT>(value);
+  }
+  template <typename IngressPointConfigurationT = IngressPointConfiguration>
+  UpdateIngressPointRequest& WithIngressPointConfiguration(IngressPointConfigurationT&& value) {
+    SetIngressPointConfiguration(std::forward<IngressPointConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier for the ingress endpoint you want to update.</p>
-     */
-    inline const Aws::String& GetIngressPointId() const{ return m_ingressPointId; }
-    inline bool IngressPointIdHasBeenSet() const { return m_ingressPointIdHasBeenSet; }
-    inline void SetIngressPointId(const Aws::String& value) { m_ingressPointIdHasBeenSet = true; m_ingressPointId = value; }
-    inline void SetIngressPointId(Aws::String&& value) { m_ingressPointIdHasBeenSet = true; m_ingressPointId = std::move(value); }
-    inline void SetIngressPointId(const char* value) { m_ingressPointIdHasBeenSet = true; m_ingressPointId.assign(value); }
-    inline UpdateIngressPointRequest& WithIngressPointId(const Aws::String& value) { SetIngressPointId(value); return *this;}
-    inline UpdateIngressPointRequest& WithIngressPointId(Aws::String&& value) { SetIngressPointId(std::move(value)); return *this;}
-    inline UpdateIngressPointRequest& WithIngressPointId(const char* value) { SetIngressPointId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Transport Layer Security (TLS) policy for the ingress point. Valid values
+   * are REQUIRED, OPTIONAL. Only ingress endpoints using REQUIRED or OPTIONAL as
+   * TlsPolicy can be updated.</p>
+   */
+  inline TlsPolicy GetTlsPolicy() const { return m_tlsPolicy; }
+  inline bool TlsPolicyHasBeenSet() const { return m_tlsPolicyHasBeenSet; }
+  inline void SetTlsPolicy(TlsPolicy value) {
+    m_tlsPolicyHasBeenSet = true;
+    m_tlsPolicy = value;
+  }
+  inline UpdateIngressPointRequest& WithTlsPolicy(TlsPolicy value) {
+    SetTlsPolicy(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_ingressPointId;
 
-    ///@{
-    /**
-     * <p>A user friendly name for the ingress endpoint resource.</p>
-     */
-    inline const Aws::String& GetIngressPointName() const{ return m_ingressPointName; }
-    inline bool IngressPointNameHasBeenSet() const { return m_ingressPointNameHasBeenSet; }
-    inline void SetIngressPointName(const Aws::String& value) { m_ingressPointNameHasBeenSet = true; m_ingressPointName = value; }
-    inline void SetIngressPointName(Aws::String&& value) { m_ingressPointNameHasBeenSet = true; m_ingressPointName = std::move(value); }
-    inline void SetIngressPointName(const char* value) { m_ingressPointNameHasBeenSet = true; m_ingressPointName.assign(value); }
-    inline UpdateIngressPointRequest& WithIngressPointName(const Aws::String& value) { SetIngressPointName(value); return *this;}
-    inline UpdateIngressPointRequest& WithIngressPointName(Aws::String&& value) { SetIngressPointName(std::move(value)); return *this;}
-    inline UpdateIngressPointRequest& WithIngressPointName(const char* value) { SetIngressPointName(value); return *this;}
-    ///@}
+  Aws::String m_ingressPointName;
 
-    ///@{
-    /**
-     * <p>The identifier of an existing rule set that you attach to an ingress endpoint
-     * resource.</p>
-     */
-    inline const Aws::String& GetRuleSetId() const{ return m_ruleSetId; }
-    inline bool RuleSetIdHasBeenSet() const { return m_ruleSetIdHasBeenSet; }
-    inline void SetRuleSetId(const Aws::String& value) { m_ruleSetIdHasBeenSet = true; m_ruleSetId = value; }
-    inline void SetRuleSetId(Aws::String&& value) { m_ruleSetIdHasBeenSet = true; m_ruleSetId = std::move(value); }
-    inline void SetRuleSetId(const char* value) { m_ruleSetIdHasBeenSet = true; m_ruleSetId.assign(value); }
-    inline UpdateIngressPointRequest& WithRuleSetId(const Aws::String& value) { SetRuleSetId(value); return *this;}
-    inline UpdateIngressPointRequest& WithRuleSetId(Aws::String&& value) { SetRuleSetId(std::move(value)); return *this;}
-    inline UpdateIngressPointRequest& WithRuleSetId(const char* value) { SetRuleSetId(value); return *this;}
-    ///@}
+  IngressPointStatusToUpdate m_statusToUpdate{IngressPointStatusToUpdate::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The update status of an ingress endpoint.</p>
-     */
-    inline const IngressPointStatusToUpdate& GetStatusToUpdate() const{ return m_statusToUpdate; }
-    inline bool StatusToUpdateHasBeenSet() const { return m_statusToUpdateHasBeenSet; }
-    inline void SetStatusToUpdate(const IngressPointStatusToUpdate& value) { m_statusToUpdateHasBeenSet = true; m_statusToUpdate = value; }
-    inline void SetStatusToUpdate(IngressPointStatusToUpdate&& value) { m_statusToUpdateHasBeenSet = true; m_statusToUpdate = std::move(value); }
-    inline UpdateIngressPointRequest& WithStatusToUpdate(const IngressPointStatusToUpdate& value) { SetStatusToUpdate(value); return *this;}
-    inline UpdateIngressPointRequest& WithStatusToUpdate(IngressPointStatusToUpdate&& value) { SetStatusToUpdate(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_ruleSetId;
 
-    ///@{
-    /**
-     * <p>The identifier of an existing traffic policy that you attach to an ingress
-     * endpoint resource.</p>
-     */
-    inline const Aws::String& GetTrafficPolicyId() const{ return m_trafficPolicyId; }
-    inline bool TrafficPolicyIdHasBeenSet() const { return m_trafficPolicyIdHasBeenSet; }
-    inline void SetTrafficPolicyId(const Aws::String& value) { m_trafficPolicyIdHasBeenSet = true; m_trafficPolicyId = value; }
-    inline void SetTrafficPolicyId(Aws::String&& value) { m_trafficPolicyIdHasBeenSet = true; m_trafficPolicyId = std::move(value); }
-    inline void SetTrafficPolicyId(const char* value) { m_trafficPolicyIdHasBeenSet = true; m_trafficPolicyId.assign(value); }
-    inline UpdateIngressPointRequest& WithTrafficPolicyId(const Aws::String& value) { SetTrafficPolicyId(value); return *this;}
-    inline UpdateIngressPointRequest& WithTrafficPolicyId(Aws::String&& value) { SetTrafficPolicyId(std::move(value)); return *this;}
-    inline UpdateIngressPointRequest& WithTrafficPolicyId(const char* value) { SetTrafficPolicyId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_trafficPolicyId;
 
-    IngressPointConfiguration m_ingressPointConfiguration;
-    bool m_ingressPointConfigurationHasBeenSet = false;
+  IngressPointConfiguration m_ingressPointConfiguration;
 
-    Aws::String m_ingressPointId;
-    bool m_ingressPointIdHasBeenSet = false;
+  TlsPolicy m_tlsPolicy{TlsPolicy::NOT_SET};
+  bool m_ingressPointIdHasBeenSet = false;
+  bool m_ingressPointNameHasBeenSet = false;
+  bool m_statusToUpdateHasBeenSet = false;
+  bool m_ruleSetIdHasBeenSet = false;
+  bool m_trafficPolicyIdHasBeenSet = false;
+  bool m_ingressPointConfigurationHasBeenSet = false;
+  bool m_tlsPolicyHasBeenSet = false;
+};
 
-    Aws::String m_ingressPointName;
-    bool m_ingressPointNameHasBeenSet = false;
-
-    Aws::String m_ruleSetId;
-    bool m_ruleSetIdHasBeenSet = false;
-
-    IngressPointStatusToUpdate m_statusToUpdate;
-    bool m_statusToUpdateHasBeenSet = false;
-
-    Aws::String m_trafficPolicyId;
-    bool m_trafficPolicyIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

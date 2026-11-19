@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/grafana/ManagedGrafana_EXPORTS.h>
 #include <aws/grafana/model/WorkspaceDescription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ManagedGrafana
-{
-namespace Model
-{
-  class AssociateLicenseResult
-  {
-  public:
-    AWS_MANAGEDGRAFANA_API AssociateLicenseResult();
-    AWS_MANAGEDGRAFANA_API AssociateLicenseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MANAGEDGRAFANA_API AssociateLicenseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ManagedGrafana {
+namespace Model {
+class AssociateLicenseResult {
+ public:
+  AWS_MANAGEDGRAFANA_API AssociateLicenseResult() = default;
+  AWS_MANAGEDGRAFANA_API AssociateLicenseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MANAGEDGRAFANA_API AssociateLicenseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure containing data about the workspace.</p>
+   */
+  inline const WorkspaceDescription& GetWorkspace() const { return m_workspace; }
+  template <typename WorkspaceT = WorkspaceDescription>
+  void SetWorkspace(WorkspaceT&& value) {
+    m_workspaceHasBeenSet = true;
+    m_workspace = std::forward<WorkspaceT>(value);
+  }
+  template <typename WorkspaceT = WorkspaceDescription>
+  AssociateLicenseResult& WithWorkspace(WorkspaceT&& value) {
+    SetWorkspace(std::forward<WorkspaceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure containing data about the workspace.</p>
-     */
-    inline const WorkspaceDescription& GetWorkspace() const{ return m_workspace; }
-    inline void SetWorkspace(const WorkspaceDescription& value) { m_workspace = value; }
-    inline void SetWorkspace(WorkspaceDescription&& value) { m_workspace = std::move(value); }
-    inline AssociateLicenseResult& WithWorkspace(const WorkspaceDescription& value) { SetWorkspace(value); return *this;}
-    inline AssociateLicenseResult& WithWorkspace(WorkspaceDescription&& value) { SetWorkspace(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateLicenseResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateLicenseResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateLicenseResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateLicenseResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    WorkspaceDescription m_workspace;
+ private:
+  WorkspaceDescription m_workspace;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workspaceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ManagedGrafana
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedGrafana
+}  // namespace Aws

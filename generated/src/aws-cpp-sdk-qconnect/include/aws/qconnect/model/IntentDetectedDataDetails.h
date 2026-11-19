@@ -4,75 +4,96 @@
  */
 
 #pragma once
-#include <aws/qconnect/QConnect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/qconnect/QConnect_EXPORTS.h>
+#include <aws/qconnect/model/RelevanceLevel.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QConnect {
+namespace Model {
 
+/**
+ * <p>Details about the detected intent.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/IntentDetectedDataDetails">AWS
+ * API Reference</a></p>
+ */
+class IntentDetectedDataDetails {
+ public:
+  AWS_QCONNECT_API IntentDetectedDataDetails() = default;
+  AWS_QCONNECT_API IntentDetectedDataDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QCONNECT_API IntentDetectedDataDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QCONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details about the detected intent.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/IntentDetectedDataDetails">AWS
-   * API Reference</a></p>
+   * <p>The detected intent.</p>
    */
-  class IntentDetectedDataDetails
-  {
-  public:
-    AWS_QCONNECT_API IntentDetectedDataDetails();
-    AWS_QCONNECT_API IntentDetectedDataDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QCONNECT_API IntentDetectedDataDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QCONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetIntent() const { return m_intent; }
+  inline bool IntentHasBeenSet() const { return m_intentHasBeenSet; }
+  template <typename IntentT = Aws::String>
+  void SetIntent(IntentT&& value) {
+    m_intentHasBeenSet = true;
+    m_intent = std::forward<IntentT>(value);
+  }
+  template <typename IntentT = Aws::String>
+  IntentDetectedDataDetails& WithIntent(IntentT&& value) {
+    SetIntent(std::forward<IntentT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifier of the detected intent.</p>
+   */
+  inline const Aws::String& GetIntentId() const { return m_intentId; }
+  inline bool IntentIdHasBeenSet() const { return m_intentIdHasBeenSet; }
+  template <typename IntentIdT = Aws::String>
+  void SetIntentId(IntentIdT&& value) {
+    m_intentIdHasBeenSet = true;
+    m_intentId = std::forward<IntentIdT>(value);
+  }
+  template <typename IntentIdT = Aws::String>
+  IntentDetectedDataDetails& WithIntentId(IntentIdT&& value) {
+    SetIntentId(std::forward<IntentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The detected intent.</p>
-     */
-    inline const Aws::String& GetIntent() const{ return m_intent; }
-    inline bool IntentHasBeenSet() const { return m_intentHasBeenSet; }
-    inline void SetIntent(const Aws::String& value) { m_intentHasBeenSet = true; m_intent = value; }
-    inline void SetIntent(Aws::String&& value) { m_intentHasBeenSet = true; m_intent = std::move(value); }
-    inline void SetIntent(const char* value) { m_intentHasBeenSet = true; m_intent.assign(value); }
-    inline IntentDetectedDataDetails& WithIntent(const Aws::String& value) { SetIntent(value); return *this;}
-    inline IntentDetectedDataDetails& WithIntent(Aws::String&& value) { SetIntent(std::move(value)); return *this;}
-    inline IntentDetectedDataDetails& WithIntent(const char* value) { SetIntent(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The relevance level of the detected intent.</p>
+   */
+  inline RelevanceLevel GetRelevanceLevel() const { return m_relevanceLevel; }
+  inline bool RelevanceLevelHasBeenSet() const { return m_relevanceLevelHasBeenSet; }
+  inline void SetRelevanceLevel(RelevanceLevel value) {
+    m_relevanceLevelHasBeenSet = true;
+    m_relevanceLevel = value;
+  }
+  inline IntentDetectedDataDetails& WithRelevanceLevel(RelevanceLevel value) {
+    SetRelevanceLevel(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_intent;
 
-    ///@{
-    /**
-     * <p>The identifier of the detected intent.</p>
-     */
-    inline const Aws::String& GetIntentId() const{ return m_intentId; }
-    inline bool IntentIdHasBeenSet() const { return m_intentIdHasBeenSet; }
-    inline void SetIntentId(const Aws::String& value) { m_intentIdHasBeenSet = true; m_intentId = value; }
-    inline void SetIntentId(Aws::String&& value) { m_intentIdHasBeenSet = true; m_intentId = std::move(value); }
-    inline void SetIntentId(const char* value) { m_intentIdHasBeenSet = true; m_intentId.assign(value); }
-    inline IntentDetectedDataDetails& WithIntentId(const Aws::String& value) { SetIntentId(value); return *this;}
-    inline IntentDetectedDataDetails& WithIntentId(Aws::String&& value) { SetIntentId(std::move(value)); return *this;}
-    inline IntentDetectedDataDetails& WithIntentId(const char* value) { SetIntentId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_intentId;
 
-    Aws::String m_intent;
-    bool m_intentHasBeenSet = false;
+  RelevanceLevel m_relevanceLevel{RelevanceLevel::NOT_SET};
+  bool m_intentHasBeenSet = false;
+  bool m_intentIdHasBeenSet = false;
+  bool m_relevanceLevelHasBeenSet = false;
+};
 
-    Aws::String m_intentId;
-    bool m_intentIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

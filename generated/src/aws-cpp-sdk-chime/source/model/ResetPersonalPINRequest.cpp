@@ -12,17 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ResetPersonalPINRequest::ResetPersonalPINRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_userIdHasBeenSet(false)
-{
-}
-
-Aws::String ResetPersonalPINRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String ResetPersonalPINRequest::SerializePayload() const { return {}; }

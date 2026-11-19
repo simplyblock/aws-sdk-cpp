@@ -4,167 +4,418 @@
  */
 
 #include <aws/comprehendmedical/model/RxNormAttribute.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComprehendMedical
-{
-namespace Model
-{
+namespace Aws {
+namespace ComprehendMedical {
+namespace Model {
 
-RxNormAttribute::RxNormAttribute() : 
-    m_type(RxNormAttributeType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_score(0.0),
-    m_scoreHasBeenSet(false),
-    m_relationshipScore(0.0),
-    m_relationshipScoreHasBeenSet(false),
-    m_id(0),
-    m_idHasBeenSet(false),
-    m_beginOffset(0),
-    m_beginOffsetHasBeenSet(false),
-    m_endOffset(0),
-    m_endOffsetHasBeenSet(false),
-    m_textHasBeenSet(false),
-    m_traitsHasBeenSet(false)
-{
-}
+RxNormAttribute::RxNormAttribute(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RxNormAttribute::RxNormAttribute(JsonView jsonValue)
-  : RxNormAttribute()
-{
-  *this = jsonValue;
-}
+RxNormAttribute& RxNormAttribute::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RxNormAttribute& RxNormAttribute::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Type"))
-  {
-    m_type = RxNormAttributeTypeMapper::GetRxNormAttributeTypeForName(jsonValue.GetString("Type"));
+              if (initialKeyStr == "Type") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_type = RxNormAttributeTypeMapper::GetRxNormAttributeTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_typeHasBeenSet = true;
+              }
 
-    m_typeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Score") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_score = val.value();
+                }
+                m_scoreHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Score"))
-  {
-    m_score = jsonValue.GetDouble("Score");
+              else if (initialKeyStr == "RelationshipScore") {
+                auto val = decoder->PopNextFloatVal();
+                if (val.has_value()) {
+                  m_relationshipScore = val.value();
+                }
+                m_relationshipScoreHasBeenSet = true;
+              }
 
-    m_scoreHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Id") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_id = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_id = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_idHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("RelationshipScore"))
-  {
-    m_relationshipScore = jsonValue.GetDouble("RelationshipScore");
+              else if (initialKeyStr == "BeginOffset") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_beginOffset = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_beginOffset = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_beginOffsetHasBeenSet = true;
+              }
 
-    m_relationshipScoreHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EndOffset") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_endOffset = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_endOffset = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_endOffsetHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Id"))
-  {
-    m_id = jsonValue.GetInteger("Id");
+              else if (initialKeyStr == "Text") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_text = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_text = ss.str();
+                  }
+                }
+                m_textHasBeenSet = true;
+              }
 
-    m_idHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Traits") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_traits.push_back(RxNormTrait(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_traits.push_back(RxNormTrait(decoder));
+                    }
+                  }
+                }
+                m_traitsHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RxNormAttribute", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("BeginOffset"))
-  {
-    m_beginOffset = jsonValue.GetInteger("BeginOffset");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_beginOffsetHasBeenSet = true;
-  }
+            if (initialKeyStr == "Type") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_type = RxNormAttributeTypeMapper::GetRxNormAttributeTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_typeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("EndOffset"))
-  {
-    m_endOffset = jsonValue.GetInteger("EndOffset");
+            else if (initialKeyStr == "Score") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_score = val.value();
+              }
+              m_scoreHasBeenSet = true;
+            }
 
-    m_endOffsetHasBeenSet = true;
-  }
+            else if (initialKeyStr == "RelationshipScore") {
+              auto val = decoder->PopNextFloatVal();
+              if (val.has_value()) {
+                m_relationshipScore = val.value();
+              }
+              m_relationshipScoreHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("Text"))
-  {
-    m_text = jsonValue.GetString("Text");
+            else if (initialKeyStr == "Id") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_id = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_id = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_idHasBeenSet = true;
+            }
 
-    m_textHasBeenSet = true;
-  }
+            else if (initialKeyStr == "BeginOffset") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_beginOffset = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_beginOffset = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_beginOffsetHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("Traits"))
-  {
-    Aws::Utils::Array<JsonView> traitsJsonList = jsonValue.GetArray("Traits");
-    for(unsigned traitsIndex = 0; traitsIndex < traitsJsonList.GetLength(); ++traitsIndex)
-    {
-      m_traits.push_back(traitsJsonList[traitsIndex].AsObject());
+            else if (initialKeyStr == "EndOffset") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_endOffset = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_endOffset = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_endOffsetHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Text") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_text = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_text = ss.str();
+                }
+              }
+              m_textHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Traits") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_traits.push_back(RxNormTrait(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_traits.push_back(RxNormTrait(decoder));
+                  }
+                }
+              }
+              m_traitsHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_traitsHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue RxNormAttribute::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", RxNormAttributeTypeMapper::GetNameForRxNormAttributeType(m_type));
+void RxNormAttribute::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_typeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_scoreHasBeenSet) {
+    mapSize++;
+  }
+  if (m_relationshipScoreHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idHasBeenSet) {
+    mapSize++;
+  }
+  if (m_beginOffsetHasBeenSet) {
+    mapSize++;
+  }
+  if (m_endOffsetHasBeenSet) {
+    mapSize++;
+  }
+  if (m_textHasBeenSet) {
+    mapSize++;
+  }
+  if (m_traitsHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_scoreHasBeenSet)
-  {
-   payload.WithDouble("Score", m_score);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_typeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Type"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(RxNormAttributeTypeMapper::GetNameForRxNormAttributeType(m_type).c_str()));
   }
 
-  if(m_relationshipScoreHasBeenSet)
-  {
-   payload.WithDouble("RelationshipScore", m_relationshipScore);
-
+  if (m_scoreHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Score"));
+    encoder.WriteFloat(m_score);
   }
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithInteger("Id", m_id);
-
+  if (m_relationshipScoreHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RelationshipScore"));
+    encoder.WriteFloat(m_relationshipScore);
   }
 
-  if(m_beginOffsetHasBeenSet)
-  {
-   payload.WithInteger("BeginOffset", m_beginOffset);
-
+  if (m_idHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Id"));
+    (m_id >= 0) ? encoder.WriteUInt(m_id) : encoder.WriteNegInt(m_id);
   }
 
-  if(m_endOffsetHasBeenSet)
-  {
-   payload.WithInteger("EndOffset", m_endOffset);
-
+  if (m_beginOffsetHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BeginOffset"));
+    (m_beginOffset >= 0) ? encoder.WriteUInt(m_beginOffset) : encoder.WriteNegInt(m_beginOffset);
   }
 
-  if(m_textHasBeenSet)
-  {
-   payload.WithString("Text", m_text);
-
+  if (m_endOffsetHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EndOffset"));
+    (m_endOffset >= 0) ? encoder.WriteUInt(m_endOffset) : encoder.WriteNegInt(m_endOffset);
   }
 
-  if(m_traitsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> traitsJsonList(m_traits.size());
-   for(unsigned traitsIndex = 0; traitsIndex < traitsJsonList.GetLength(); ++traitsIndex)
-   {
-     traitsJsonList[traitsIndex].AsObject(m_traits[traitsIndex].Jsonize());
-   }
-   payload.WithArray("Traits", std::move(traitsJsonList));
-
+  if (m_textHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Text"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_text.c_str()));
   }
 
-  return payload;
+  if (m_traitsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Traits"));
+    encoder.WriteArrayStart(m_traits.size());
+    for (const auto& item_0 : m_traits) {
+      item_0.CborEncode(encoder);
+    }
+  }
 }
 
-} // namespace Model
-} // namespace ComprehendMedical
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComprehendMedical
+}  // namespace Aws

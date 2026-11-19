@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/email/SES_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/email/SES_EXPORTS.h>
 
-#include <aws/email/SESEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SES
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SES {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SESClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -34,28 +28,21 @@ using SESBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * Inherit from this Base class / "Interface" should you want to provide a custom endpoint provider.
  * The SDK must use service-specific type for each service per specification.
  */
-using SESEndpointProviderBase =
-    EndpointProviderBase<SESClientConfiguration, SESBuiltInParameters, SESClientContextParameters>;
+using SESEndpointProviderBase = EndpointProviderBase<SESClientConfiguration, SESBuiltInParameters, SESClientContextParameters>;
 
-using SESDefaultEpProviderBase =
-    DefaultEndpointProvider<SESClientConfiguration, SESBuiltInParameters, SESClientContextParameters>;
+using SESDefaultEpProviderBase = BDDEndpointProvider<SESClientConfiguration, SESBuiltInParameters, SESClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SES_API SESEndpointProvider : public SESDefaultEpProviderBase
-{
-public:
-    using SESResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SES_API SESEndpointProvider : public SESDefaultEpProviderBase {
+ public:
+  using SESResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SESEndpointProvider()
-      : SESDefaultEpProviderBase(Aws::SES::SESEndpointRules::GetRulesBlob(), Aws::SES::SESEndpointRules::RulesBlobSize)
-    {}
+  SESEndpointProvider();
 
-    ~SESEndpointProvider()
-    {
-    }
+  ~SESEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SES
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SES
+}  // namespace Aws

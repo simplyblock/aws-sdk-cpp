@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/inspector/Inspector_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/inspector/Inspector_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Inspector
-{
-namespace Model
-{
-  class CreateAssessmentTargetResult
-  {
-  public:
-    AWS_INSPECTOR_API CreateAssessmentTargetResult();
-    AWS_INSPECTOR_API CreateAssessmentTargetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_INSPECTOR_API CreateAssessmentTargetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Inspector {
+namespace Model {
+class CreateAssessmentTargetResult {
+ public:
+  AWS_INSPECTOR_API CreateAssessmentTargetResult() = default;
+  AWS_INSPECTOR_API CreateAssessmentTargetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_INSPECTOR_API CreateAssessmentTargetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN that specifies the assessment target that is created.</p>
+   */
+  inline const Aws::String& GetAssessmentTargetArn() const { return m_assessmentTargetArn; }
+  template <typename AssessmentTargetArnT = Aws::String>
+  void SetAssessmentTargetArn(AssessmentTargetArnT&& value) {
+    m_assessmentTargetArnHasBeenSet = true;
+    m_assessmentTargetArn = std::forward<AssessmentTargetArnT>(value);
+  }
+  template <typename AssessmentTargetArnT = Aws::String>
+  CreateAssessmentTargetResult& WithAssessmentTargetArn(AssessmentTargetArnT&& value) {
+    SetAssessmentTargetArn(std::forward<AssessmentTargetArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN that specifies the assessment target that is created.</p>
-     */
-    inline const Aws::String& GetAssessmentTargetArn() const{ return m_assessmentTargetArn; }
-    inline void SetAssessmentTargetArn(const Aws::String& value) { m_assessmentTargetArn = value; }
-    inline void SetAssessmentTargetArn(Aws::String&& value) { m_assessmentTargetArn = std::move(value); }
-    inline void SetAssessmentTargetArn(const char* value) { m_assessmentTargetArn.assign(value); }
-    inline CreateAssessmentTargetResult& WithAssessmentTargetArn(const Aws::String& value) { SetAssessmentTargetArn(value); return *this;}
-    inline CreateAssessmentTargetResult& WithAssessmentTargetArn(Aws::String&& value) { SetAssessmentTargetArn(std::move(value)); return *this;}
-    inline CreateAssessmentTargetResult& WithAssessmentTargetArn(const char* value) { SetAssessmentTargetArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAssessmentTargetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAssessmentTargetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAssessmentTargetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAssessmentTargetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_assessmentTargetArn;
+ private:
+  Aws::String m_assessmentTargetArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_assessmentTargetArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Inspector
-} // namespace Aws
+}  // namespace Model
+}  // namespace Inspector
+}  // namespace Aws

@@ -4,78 +4,89 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>Identifies the log types to enable and disable.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsRdsPendingCloudWatchLogsExports">AWS
+ * API Reference</a></p>
+ */
+class AwsRdsPendingCloudWatchLogsExports {
+ public:
+  AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports() = default;
+  AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Identifies the log types to enable and disable.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsRdsPendingCloudWatchLogsExports">AWS
-   * API Reference</a></p>
+   * <p>A list of log types that are being enabled.</p>
    */
-  class AwsRdsPendingCloudWatchLogsExports
-  {
-  public:
-    AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports();
-    AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API AwsRdsPendingCloudWatchLogsExports& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetLogTypesToEnable() const { return m_logTypesToEnable; }
+  inline bool LogTypesToEnableHasBeenSet() const { return m_logTypesToEnableHasBeenSet; }
+  template <typename LogTypesToEnableT = Aws::Vector<Aws::String>>
+  void SetLogTypesToEnable(LogTypesToEnableT&& value) {
+    m_logTypesToEnableHasBeenSet = true;
+    m_logTypesToEnable = std::forward<LogTypesToEnableT>(value);
+  }
+  template <typename LogTypesToEnableT = Aws::Vector<Aws::String>>
+  AwsRdsPendingCloudWatchLogsExports& WithLogTypesToEnable(LogTypesToEnableT&& value) {
+    SetLogTypesToEnable(std::forward<LogTypesToEnableT>(value));
+    return *this;
+  }
+  template <typename LogTypesToEnableT = Aws::String>
+  AwsRdsPendingCloudWatchLogsExports& AddLogTypesToEnable(LogTypesToEnableT&& value) {
+    m_logTypesToEnableHasBeenSet = true;
+    m_logTypesToEnable.emplace_back(std::forward<LogTypesToEnableT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of log types that are being disabled.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetLogTypesToDisable() const { return m_logTypesToDisable; }
+  inline bool LogTypesToDisableHasBeenSet() const { return m_logTypesToDisableHasBeenSet; }
+  template <typename LogTypesToDisableT = Aws::Vector<Aws::String>>
+  void SetLogTypesToDisable(LogTypesToDisableT&& value) {
+    m_logTypesToDisableHasBeenSet = true;
+    m_logTypesToDisable = std::forward<LogTypesToDisableT>(value);
+  }
+  template <typename LogTypesToDisableT = Aws::Vector<Aws::String>>
+  AwsRdsPendingCloudWatchLogsExports& WithLogTypesToDisable(LogTypesToDisableT&& value) {
+    SetLogTypesToDisable(std::forward<LogTypesToDisableT>(value));
+    return *this;
+  }
+  template <typename LogTypesToDisableT = Aws::String>
+  AwsRdsPendingCloudWatchLogsExports& AddLogTypesToDisable(LogTypesToDisableT&& value) {
+    m_logTypesToDisableHasBeenSet = true;
+    m_logTypesToDisable.emplace_back(std::forward<LogTypesToDisableT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_logTypesToEnable;
 
-    ///@{
-    /**
-     * <p>A list of log types that are being enabled.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetLogTypesToEnable() const{ return m_logTypesToEnable; }
-    inline bool LogTypesToEnableHasBeenSet() const { return m_logTypesToEnableHasBeenSet; }
-    inline void SetLogTypesToEnable(const Aws::Vector<Aws::String>& value) { m_logTypesToEnableHasBeenSet = true; m_logTypesToEnable = value; }
-    inline void SetLogTypesToEnable(Aws::Vector<Aws::String>&& value) { m_logTypesToEnableHasBeenSet = true; m_logTypesToEnable = std::move(value); }
-    inline AwsRdsPendingCloudWatchLogsExports& WithLogTypesToEnable(const Aws::Vector<Aws::String>& value) { SetLogTypesToEnable(value); return *this;}
-    inline AwsRdsPendingCloudWatchLogsExports& WithLogTypesToEnable(Aws::Vector<Aws::String>&& value) { SetLogTypesToEnable(std::move(value)); return *this;}
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToEnable(const Aws::String& value) { m_logTypesToEnableHasBeenSet = true; m_logTypesToEnable.push_back(value); return *this; }
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToEnable(Aws::String&& value) { m_logTypesToEnableHasBeenSet = true; m_logTypesToEnable.push_back(std::move(value)); return *this; }
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToEnable(const char* value) { m_logTypesToEnableHasBeenSet = true; m_logTypesToEnable.push_back(value); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_logTypesToDisable;
+  bool m_logTypesToEnableHasBeenSet = false;
+  bool m_logTypesToDisableHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A list of log types that are being disabled.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetLogTypesToDisable() const{ return m_logTypesToDisable; }
-    inline bool LogTypesToDisableHasBeenSet() const { return m_logTypesToDisableHasBeenSet; }
-    inline void SetLogTypesToDisable(const Aws::Vector<Aws::String>& value) { m_logTypesToDisableHasBeenSet = true; m_logTypesToDisable = value; }
-    inline void SetLogTypesToDisable(Aws::Vector<Aws::String>&& value) { m_logTypesToDisableHasBeenSet = true; m_logTypesToDisable = std::move(value); }
-    inline AwsRdsPendingCloudWatchLogsExports& WithLogTypesToDisable(const Aws::Vector<Aws::String>& value) { SetLogTypesToDisable(value); return *this;}
-    inline AwsRdsPendingCloudWatchLogsExports& WithLogTypesToDisable(Aws::Vector<Aws::String>&& value) { SetLogTypesToDisable(std::move(value)); return *this;}
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToDisable(const Aws::String& value) { m_logTypesToDisableHasBeenSet = true; m_logTypesToDisable.push_back(value); return *this; }
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToDisable(Aws::String&& value) { m_logTypesToDisableHasBeenSet = true; m_logTypesToDisable.push_back(std::move(value)); return *this; }
-    inline AwsRdsPendingCloudWatchLogsExports& AddLogTypesToDisable(const char* value) { m_logTypesToDisableHasBeenSet = true; m_logTypesToDisable.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_logTypesToEnable;
-    bool m_logTypesToEnableHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_logTypesToDisable;
-    bool m_logTypesToDisableHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

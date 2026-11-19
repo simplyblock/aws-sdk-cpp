@@ -12,19 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetMethodResponseRequest::GetMethodResponseRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_resourceIdHasBeenSet(false),
-    m_httpMethodHasBeenSet(false),
-    m_statusCodeHasBeenSet(false)
-{
-}
-
-Aws::String GetMethodResponseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetMethodResponseRequest::SerializePayload() const { return {}; }

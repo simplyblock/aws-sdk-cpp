@@ -5,164 +5,200 @@
 
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/config/model/OrganizationManagedRuleMetadata.h>
-#include <aws/config/model/OrganizationCustomRuleMetadata.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
 #include <aws/config/model/OrganizationCustomPolicyRuleMetadataNoPolicy.h>
+#include <aws/config/model/OrganizationCustomRuleMetadata.h>
+#include <aws/config/model/OrganizationManagedRuleMetadata.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
 
+/**
+ * <p>An organization Config rule that has information about Config rules that
+ * Config creates in member accounts.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/OrganizationConfigRule">AWS
+ * API Reference</a></p>
+ */
+class OrganizationConfigRule {
+ public:
+  AWS_CONFIGSERVICE_API OrganizationConfigRule() = default;
+  AWS_CONFIGSERVICE_API OrganizationConfigRule(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONFIGSERVICE_API OrganizationConfigRule& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONFIGSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An organization Config rule that has information about Config rules that
-   * Config creates in member accounts.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/OrganizationConfigRule">AWS
-   * API Reference</a></p>
+   * <p>The name that you assign to organization Config rule.</p>
    */
-  class OrganizationConfigRule
-  {
-  public:
-    AWS_CONFIGSERVICE_API OrganizationConfigRule();
-    AWS_CONFIGSERVICE_API OrganizationConfigRule(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONFIGSERVICE_API OrganizationConfigRule& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONFIGSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetOrganizationConfigRuleName() const { return m_organizationConfigRuleName; }
+  inline bool OrganizationConfigRuleNameHasBeenSet() const { return m_organizationConfigRuleNameHasBeenSet; }
+  template <typename OrganizationConfigRuleNameT = Aws::String>
+  void SetOrganizationConfigRuleName(OrganizationConfigRuleNameT&& value) {
+    m_organizationConfigRuleNameHasBeenSet = true;
+    m_organizationConfigRuleName = std::forward<OrganizationConfigRuleNameT>(value);
+  }
+  template <typename OrganizationConfigRuleNameT = Aws::String>
+  OrganizationConfigRule& WithOrganizationConfigRuleName(OrganizationConfigRuleNameT&& value) {
+    SetOrganizationConfigRuleName(std::forward<OrganizationConfigRuleNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of organization Config rule.</p>
+   */
+  inline const Aws::String& GetOrganizationConfigRuleArn() const { return m_organizationConfigRuleArn; }
+  inline bool OrganizationConfigRuleArnHasBeenSet() const { return m_organizationConfigRuleArnHasBeenSet; }
+  template <typename OrganizationConfigRuleArnT = Aws::String>
+  void SetOrganizationConfigRuleArn(OrganizationConfigRuleArnT&& value) {
+    m_organizationConfigRuleArnHasBeenSet = true;
+    m_organizationConfigRuleArn = std::forward<OrganizationConfigRuleArnT>(value);
+  }
+  template <typename OrganizationConfigRuleArnT = Aws::String>
+  OrganizationConfigRule& WithOrganizationConfigRuleArn(OrganizationConfigRuleArnT&& value) {
+    SetOrganizationConfigRuleArn(std::forward<OrganizationConfigRuleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name that you assign to organization Config rule.</p>
-     */
-    inline const Aws::String& GetOrganizationConfigRuleName() const{ return m_organizationConfigRuleName; }
-    inline bool OrganizationConfigRuleNameHasBeenSet() const { return m_organizationConfigRuleNameHasBeenSet; }
-    inline void SetOrganizationConfigRuleName(const Aws::String& value) { m_organizationConfigRuleNameHasBeenSet = true; m_organizationConfigRuleName = value; }
-    inline void SetOrganizationConfigRuleName(Aws::String&& value) { m_organizationConfigRuleNameHasBeenSet = true; m_organizationConfigRuleName = std::move(value); }
-    inline void SetOrganizationConfigRuleName(const char* value) { m_organizationConfigRuleNameHasBeenSet = true; m_organizationConfigRuleName.assign(value); }
-    inline OrganizationConfigRule& WithOrganizationConfigRuleName(const Aws::String& value) { SetOrganizationConfigRuleName(value); return *this;}
-    inline OrganizationConfigRule& WithOrganizationConfigRuleName(Aws::String&& value) { SetOrganizationConfigRuleName(std::move(value)); return *this;}
-    inline OrganizationConfigRule& WithOrganizationConfigRuleName(const char* value) { SetOrganizationConfigRuleName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An <code>OrganizationManagedRuleMetadata</code> object.</p>
+   */
+  inline const OrganizationManagedRuleMetadata& GetOrganizationManagedRuleMetadata() const { return m_organizationManagedRuleMetadata; }
+  inline bool OrganizationManagedRuleMetadataHasBeenSet() const { return m_organizationManagedRuleMetadataHasBeenSet; }
+  template <typename OrganizationManagedRuleMetadataT = OrganizationManagedRuleMetadata>
+  void SetOrganizationManagedRuleMetadata(OrganizationManagedRuleMetadataT&& value) {
+    m_organizationManagedRuleMetadataHasBeenSet = true;
+    m_organizationManagedRuleMetadata = std::forward<OrganizationManagedRuleMetadataT>(value);
+  }
+  template <typename OrganizationManagedRuleMetadataT = OrganizationManagedRuleMetadata>
+  OrganizationConfigRule& WithOrganizationManagedRuleMetadata(OrganizationManagedRuleMetadataT&& value) {
+    SetOrganizationManagedRuleMetadata(std::forward<OrganizationManagedRuleMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of organization Config rule.</p>
-     */
-    inline const Aws::String& GetOrganizationConfigRuleArn() const{ return m_organizationConfigRuleArn; }
-    inline bool OrganizationConfigRuleArnHasBeenSet() const { return m_organizationConfigRuleArnHasBeenSet; }
-    inline void SetOrganizationConfigRuleArn(const Aws::String& value) { m_organizationConfigRuleArnHasBeenSet = true; m_organizationConfigRuleArn = value; }
-    inline void SetOrganizationConfigRuleArn(Aws::String&& value) { m_organizationConfigRuleArnHasBeenSet = true; m_organizationConfigRuleArn = std::move(value); }
-    inline void SetOrganizationConfigRuleArn(const char* value) { m_organizationConfigRuleArnHasBeenSet = true; m_organizationConfigRuleArn.assign(value); }
-    inline OrganizationConfigRule& WithOrganizationConfigRuleArn(const Aws::String& value) { SetOrganizationConfigRuleArn(value); return *this;}
-    inline OrganizationConfigRule& WithOrganizationConfigRuleArn(Aws::String&& value) { SetOrganizationConfigRuleArn(std::move(value)); return *this;}
-    inline OrganizationConfigRule& WithOrganizationConfigRuleArn(const char* value) { SetOrganizationConfigRuleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An <code>OrganizationCustomRuleMetadata</code> object.</p>
+   */
+  inline const OrganizationCustomRuleMetadata& GetOrganizationCustomRuleMetadata() const { return m_organizationCustomRuleMetadata; }
+  inline bool OrganizationCustomRuleMetadataHasBeenSet() const { return m_organizationCustomRuleMetadataHasBeenSet; }
+  template <typename OrganizationCustomRuleMetadataT = OrganizationCustomRuleMetadata>
+  void SetOrganizationCustomRuleMetadata(OrganizationCustomRuleMetadataT&& value) {
+    m_organizationCustomRuleMetadataHasBeenSet = true;
+    m_organizationCustomRuleMetadata = std::forward<OrganizationCustomRuleMetadataT>(value);
+  }
+  template <typename OrganizationCustomRuleMetadataT = OrganizationCustomRuleMetadata>
+  OrganizationConfigRule& WithOrganizationCustomRuleMetadata(OrganizationCustomRuleMetadataT&& value) {
+    SetOrganizationCustomRuleMetadata(std::forward<OrganizationCustomRuleMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An <code>OrganizationManagedRuleMetadata</code> object.</p>
-     */
-    inline const OrganizationManagedRuleMetadata& GetOrganizationManagedRuleMetadata() const{ return m_organizationManagedRuleMetadata; }
-    inline bool OrganizationManagedRuleMetadataHasBeenSet() const { return m_organizationManagedRuleMetadataHasBeenSet; }
-    inline void SetOrganizationManagedRuleMetadata(const OrganizationManagedRuleMetadata& value) { m_organizationManagedRuleMetadataHasBeenSet = true; m_organizationManagedRuleMetadata = value; }
-    inline void SetOrganizationManagedRuleMetadata(OrganizationManagedRuleMetadata&& value) { m_organizationManagedRuleMetadataHasBeenSet = true; m_organizationManagedRuleMetadata = std::move(value); }
-    inline OrganizationConfigRule& WithOrganizationManagedRuleMetadata(const OrganizationManagedRuleMetadata& value) { SetOrganizationManagedRuleMetadata(value); return *this;}
-    inline OrganizationConfigRule& WithOrganizationManagedRuleMetadata(OrganizationManagedRuleMetadata&& value) { SetOrganizationManagedRuleMetadata(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A comma-separated list of accounts excluded from organization Config
+   * rule.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetExcludedAccounts() const { return m_excludedAccounts; }
+  inline bool ExcludedAccountsHasBeenSet() const { return m_excludedAccountsHasBeenSet; }
+  template <typename ExcludedAccountsT = Aws::Vector<Aws::String>>
+  void SetExcludedAccounts(ExcludedAccountsT&& value) {
+    m_excludedAccountsHasBeenSet = true;
+    m_excludedAccounts = std::forward<ExcludedAccountsT>(value);
+  }
+  template <typename ExcludedAccountsT = Aws::Vector<Aws::String>>
+  OrganizationConfigRule& WithExcludedAccounts(ExcludedAccountsT&& value) {
+    SetExcludedAccounts(std::forward<ExcludedAccountsT>(value));
+    return *this;
+  }
+  template <typename ExcludedAccountsT = Aws::String>
+  OrganizationConfigRule& AddExcludedAccounts(ExcludedAccountsT&& value) {
+    m_excludedAccountsHasBeenSet = true;
+    m_excludedAccounts.emplace_back(std::forward<ExcludedAccountsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An <code>OrganizationCustomRuleMetadata</code> object.</p>
-     */
-    inline const OrganizationCustomRuleMetadata& GetOrganizationCustomRuleMetadata() const{ return m_organizationCustomRuleMetadata; }
-    inline bool OrganizationCustomRuleMetadataHasBeenSet() const { return m_organizationCustomRuleMetadataHasBeenSet; }
-    inline void SetOrganizationCustomRuleMetadata(const OrganizationCustomRuleMetadata& value) { m_organizationCustomRuleMetadataHasBeenSet = true; m_organizationCustomRuleMetadata = value; }
-    inline void SetOrganizationCustomRuleMetadata(OrganizationCustomRuleMetadata&& value) { m_organizationCustomRuleMetadataHasBeenSet = true; m_organizationCustomRuleMetadata = std::move(value); }
-    inline OrganizationConfigRule& WithOrganizationCustomRuleMetadata(const OrganizationCustomRuleMetadata& value) { SetOrganizationCustomRuleMetadata(value); return *this;}
-    inline OrganizationConfigRule& WithOrganizationCustomRuleMetadata(OrganizationCustomRuleMetadata&& value) { SetOrganizationCustomRuleMetadata(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of the last update.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdateTime() const { return m_lastUpdateTime; }
+  inline bool LastUpdateTimeHasBeenSet() const { return m_lastUpdateTimeHasBeenSet; }
+  template <typename LastUpdateTimeT = Aws::Utils::DateTime>
+  void SetLastUpdateTime(LastUpdateTimeT&& value) {
+    m_lastUpdateTimeHasBeenSet = true;
+    m_lastUpdateTime = std::forward<LastUpdateTimeT>(value);
+  }
+  template <typename LastUpdateTimeT = Aws::Utils::DateTime>
+  OrganizationConfigRule& WithLastUpdateTime(LastUpdateTimeT&& value) {
+    SetLastUpdateTime(std::forward<LastUpdateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A comma-separated list of accounts excluded from organization Config
-     * rule.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetExcludedAccounts() const{ return m_excludedAccounts; }
-    inline bool ExcludedAccountsHasBeenSet() const { return m_excludedAccountsHasBeenSet; }
-    inline void SetExcludedAccounts(const Aws::Vector<Aws::String>& value) { m_excludedAccountsHasBeenSet = true; m_excludedAccounts = value; }
-    inline void SetExcludedAccounts(Aws::Vector<Aws::String>&& value) { m_excludedAccountsHasBeenSet = true; m_excludedAccounts = std::move(value); }
-    inline OrganizationConfigRule& WithExcludedAccounts(const Aws::Vector<Aws::String>& value) { SetExcludedAccounts(value); return *this;}
-    inline OrganizationConfigRule& WithExcludedAccounts(Aws::Vector<Aws::String>&& value) { SetExcludedAccounts(std::move(value)); return *this;}
-    inline OrganizationConfigRule& AddExcludedAccounts(const Aws::String& value) { m_excludedAccountsHasBeenSet = true; m_excludedAccounts.push_back(value); return *this; }
-    inline OrganizationConfigRule& AddExcludedAccounts(Aws::String&& value) { m_excludedAccountsHasBeenSet = true; m_excludedAccounts.push_back(std::move(value)); return *this; }
-    inline OrganizationConfigRule& AddExcludedAccounts(const char* value) { m_excludedAccountsHasBeenSet = true; m_excludedAccounts.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An object that specifies metadata for your organization's Config Custom
+   * Policy rule. The metadata includes the runtime system in use, which accounts
+   * have debug logging enabled, and other custom rule metadata, such as resource
+   * type, resource ID of Amazon Web Services resource, and organization trigger
+   * types that initiate Config to evaluate Amazon Web Services resources against a
+   * rule.</p>
+   */
+  inline const OrganizationCustomPolicyRuleMetadataNoPolicy& GetOrganizationCustomPolicyRuleMetadata() const {
+    return m_organizationCustomPolicyRuleMetadata;
+  }
+  inline bool OrganizationCustomPolicyRuleMetadataHasBeenSet() const { return m_organizationCustomPolicyRuleMetadataHasBeenSet; }
+  template <typename OrganizationCustomPolicyRuleMetadataT = OrganizationCustomPolicyRuleMetadataNoPolicy>
+  void SetOrganizationCustomPolicyRuleMetadata(OrganizationCustomPolicyRuleMetadataT&& value) {
+    m_organizationCustomPolicyRuleMetadataHasBeenSet = true;
+    m_organizationCustomPolicyRuleMetadata = std::forward<OrganizationCustomPolicyRuleMetadataT>(value);
+  }
+  template <typename OrganizationCustomPolicyRuleMetadataT = OrganizationCustomPolicyRuleMetadataNoPolicy>
+  OrganizationConfigRule& WithOrganizationCustomPolicyRuleMetadata(OrganizationCustomPolicyRuleMetadataT&& value) {
+    SetOrganizationCustomPolicyRuleMetadata(std::forward<OrganizationCustomPolicyRuleMetadataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_organizationConfigRuleName;
 
-    ///@{
-    /**
-     * <p>The timestamp of the last update.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdateTime() const{ return m_lastUpdateTime; }
-    inline bool LastUpdateTimeHasBeenSet() const { return m_lastUpdateTimeHasBeenSet; }
-    inline void SetLastUpdateTime(const Aws::Utils::DateTime& value) { m_lastUpdateTimeHasBeenSet = true; m_lastUpdateTime = value; }
-    inline void SetLastUpdateTime(Aws::Utils::DateTime&& value) { m_lastUpdateTimeHasBeenSet = true; m_lastUpdateTime = std::move(value); }
-    inline OrganizationConfigRule& WithLastUpdateTime(const Aws::Utils::DateTime& value) { SetLastUpdateTime(value); return *this;}
-    inline OrganizationConfigRule& WithLastUpdateTime(Aws::Utils::DateTime&& value) { SetLastUpdateTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_organizationConfigRuleArn;
 
-    ///@{
-    /**
-     * <p>An object that specifies metadata for your organization's Config Custom
-     * Policy rule. The metadata includes the runtime system in use, which accounts
-     * have debug logging enabled, and other custom rule metadata, such as resource
-     * type, resource ID of Amazon Web Services resource, and organization trigger
-     * types that initiate Config to evaluate Amazon Web Services resources against a
-     * rule.</p>
-     */
-    inline const OrganizationCustomPolicyRuleMetadataNoPolicy& GetOrganizationCustomPolicyRuleMetadata() const{ return m_organizationCustomPolicyRuleMetadata; }
-    inline bool OrganizationCustomPolicyRuleMetadataHasBeenSet() const { return m_organizationCustomPolicyRuleMetadataHasBeenSet; }
-    inline void SetOrganizationCustomPolicyRuleMetadata(const OrganizationCustomPolicyRuleMetadataNoPolicy& value) { m_organizationCustomPolicyRuleMetadataHasBeenSet = true; m_organizationCustomPolicyRuleMetadata = value; }
-    inline void SetOrganizationCustomPolicyRuleMetadata(OrganizationCustomPolicyRuleMetadataNoPolicy&& value) { m_organizationCustomPolicyRuleMetadataHasBeenSet = true; m_organizationCustomPolicyRuleMetadata = std::move(value); }
-    inline OrganizationConfigRule& WithOrganizationCustomPolicyRuleMetadata(const OrganizationCustomPolicyRuleMetadataNoPolicy& value) { SetOrganizationCustomPolicyRuleMetadata(value); return *this;}
-    inline OrganizationConfigRule& WithOrganizationCustomPolicyRuleMetadata(OrganizationCustomPolicyRuleMetadataNoPolicy&& value) { SetOrganizationCustomPolicyRuleMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  OrganizationManagedRuleMetadata m_organizationManagedRuleMetadata;
 
-    Aws::String m_organizationConfigRuleName;
-    bool m_organizationConfigRuleNameHasBeenSet = false;
+  OrganizationCustomRuleMetadata m_organizationCustomRuleMetadata;
 
-    Aws::String m_organizationConfigRuleArn;
-    bool m_organizationConfigRuleArnHasBeenSet = false;
+  Aws::Vector<Aws::String> m_excludedAccounts;
 
-    OrganizationManagedRuleMetadata m_organizationManagedRuleMetadata;
-    bool m_organizationManagedRuleMetadataHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdateTime{};
 
-    OrganizationCustomRuleMetadata m_organizationCustomRuleMetadata;
-    bool m_organizationCustomRuleMetadataHasBeenSet = false;
+  OrganizationCustomPolicyRuleMetadataNoPolicy m_organizationCustomPolicyRuleMetadata;
+  bool m_organizationConfigRuleNameHasBeenSet = false;
+  bool m_organizationConfigRuleArnHasBeenSet = false;
+  bool m_organizationManagedRuleMetadataHasBeenSet = false;
+  bool m_organizationCustomRuleMetadataHasBeenSet = false;
+  bool m_excludedAccountsHasBeenSet = false;
+  bool m_lastUpdateTimeHasBeenSet = false;
+  bool m_organizationCustomPolicyRuleMetadataHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_excludedAccounts;
-    bool m_excludedAccountsHasBeenSet = false;
-
-    Aws::Utils::DateTime m_lastUpdateTime;
-    bool m_lastUpdateTimeHasBeenSet = false;
-
-    OrganizationCustomPolicyRuleMetadataNoPolicy m_organizationCustomPolicyRuleMetadata;
-    bool m_organizationCustomPolicyRuleMetadataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

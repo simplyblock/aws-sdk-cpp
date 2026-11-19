@@ -4,175 +4,238 @@
  */
 
 #pragma once
-#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
+#include <aws/ssm-incidents/model/Action.h>
 #include <aws/ssm-incidents/model/ChatChannel.h>
 #include <aws/ssm-incidents/model/IncidentTemplate.h>
-#include <aws/ssm-incidents/model/Action.h>
 #include <aws/ssm-incidents/model/Integration.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSMIncidents
-{
-namespace Model
-{
-  class GetResponsePlanResult
-  {
-  public:
-    AWS_SSMINCIDENTS_API GetResponsePlanResult();
-    AWS_SSMINCIDENTS_API GetResponsePlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMINCIDENTS_API GetResponsePlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSMIncidents {
+namespace Model {
+class GetResponsePlanResult {
+ public:
+  AWS_SSMINCIDENTS_API GetResponsePlanResult() = default;
+  AWS_SSMINCIDENTS_API GetResponsePlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMINCIDENTS_API GetResponsePlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The actions that this response plan takes at the beginning of the
+   * incident.</p>
+   */
+  inline const Aws::Vector<Action>& GetActions() const { return m_actions; }
+  template <typename ActionsT = Aws::Vector<Action>>
+  void SetActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions = std::forward<ActionsT>(value);
+  }
+  template <typename ActionsT = Aws::Vector<Action>>
+  GetResponsePlanResult& WithActions(ActionsT&& value) {
+    SetActions(std::forward<ActionsT>(value));
+    return *this;
+  }
+  template <typename ActionsT = Action>
+  GetResponsePlanResult& AddActions(ActionsT&& value) {
+    m_actionsHasBeenSet = true;
+    m_actions.emplace_back(std::forward<ActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The actions that this response plan takes at the beginning of the
-     * incident.</p>
-     */
-    inline const Aws::Vector<Action>& GetActions() const{ return m_actions; }
-    inline void SetActions(const Aws::Vector<Action>& value) { m_actions = value; }
-    inline void SetActions(Aws::Vector<Action>&& value) { m_actions = std::move(value); }
-    inline GetResponsePlanResult& WithActions(const Aws::Vector<Action>& value) { SetActions(value); return *this;}
-    inline GetResponsePlanResult& WithActions(Aws::Vector<Action>&& value) { SetActions(std::move(value)); return *this;}
-    inline GetResponsePlanResult& AddActions(const Action& value) { m_actions.push_back(value); return *this; }
-    inline GetResponsePlanResult& AddActions(Action&& value) { m_actions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the response plan.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetResponsePlanResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the response plan.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline GetResponsePlanResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetResponsePlanResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetResponsePlanResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Chatbot chat channel used for collaboration during an incident.</p>
+   */
+  inline const ChatChannel& GetChatChannel() const { return m_chatChannel; }
+  template <typename ChatChannelT = ChatChannel>
+  void SetChatChannel(ChatChannelT&& value) {
+    m_chatChannelHasBeenSet = true;
+    m_chatChannel = std::forward<ChatChannelT>(value);
+  }
+  template <typename ChatChannelT = ChatChannel>
+  GetResponsePlanResult& WithChatChannel(ChatChannelT&& value) {
+    SetChatChannel(std::forward<ChatChannelT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Chatbot chat channel used for collaboration during an incident.</p>
-     */
-    inline const ChatChannel& GetChatChannel() const{ return m_chatChannel; }
-    inline void SetChatChannel(const ChatChannel& value) { m_chatChannel = value; }
-    inline void SetChatChannel(ChatChannel&& value) { m_chatChannel = std::move(value); }
-    inline GetResponsePlanResult& WithChatChannel(const ChatChannel& value) { SetChatChannel(value); return *this;}
-    inline GetResponsePlanResult& WithChatChannel(ChatChannel&& value) { SetChatChannel(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The long format name of the response plan. Can contain spaces.</p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  GetResponsePlanResult& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The long format name of the response plan. Can contain spaces.</p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayName.assign(value); }
-    inline GetResponsePlanResult& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline GetResponsePlanResult& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline GetResponsePlanResult& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the contacts and escalation plans that the
+   * response plan engages during an incident.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetEngagements() const { return m_engagements; }
+  template <typename EngagementsT = Aws::Vector<Aws::String>>
+  void SetEngagements(EngagementsT&& value) {
+    m_engagementsHasBeenSet = true;
+    m_engagements = std::forward<EngagementsT>(value);
+  }
+  template <typename EngagementsT = Aws::Vector<Aws::String>>
+  GetResponsePlanResult& WithEngagements(EngagementsT&& value) {
+    SetEngagements(std::forward<EngagementsT>(value));
+    return *this;
+  }
+  template <typename EngagementsT = Aws::String>
+  GetResponsePlanResult& AddEngagements(EngagementsT&& value) {
+    m_engagementsHasBeenSet = true;
+    m_engagements.emplace_back(std::forward<EngagementsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the contacts and escalation plans that the
-     * response plan engages during an incident.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetEngagements() const{ return m_engagements; }
-    inline void SetEngagements(const Aws::Vector<Aws::String>& value) { m_engagements = value; }
-    inline void SetEngagements(Aws::Vector<Aws::String>&& value) { m_engagements = std::move(value); }
-    inline GetResponsePlanResult& WithEngagements(const Aws::Vector<Aws::String>& value) { SetEngagements(value); return *this;}
-    inline GetResponsePlanResult& WithEngagements(Aws::Vector<Aws::String>&& value) { SetEngagements(std::move(value)); return *this;}
-    inline GetResponsePlanResult& AddEngagements(const Aws::String& value) { m_engagements.push_back(value); return *this; }
-    inline GetResponsePlanResult& AddEngagements(Aws::String&& value) { m_engagements.push_back(std::move(value)); return *this; }
-    inline GetResponsePlanResult& AddEngagements(const char* value) { m_engagements.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Details used to create the incident when using this response plan.</p>
+   */
+  inline const IncidentTemplate& GetIncidentTemplate() const { return m_incidentTemplate; }
+  template <typename IncidentTemplateT = IncidentTemplate>
+  void SetIncidentTemplate(IncidentTemplateT&& value) {
+    m_incidentTemplateHasBeenSet = true;
+    m_incidentTemplate = std::forward<IncidentTemplateT>(value);
+  }
+  template <typename IncidentTemplateT = IncidentTemplate>
+  GetResponsePlanResult& WithIncidentTemplate(IncidentTemplateT&& value) {
+    SetIncidentTemplate(std::forward<IncidentTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details used to create the incident when using this response plan.</p>
-     */
-    inline const IncidentTemplate& GetIncidentTemplate() const{ return m_incidentTemplate; }
-    inline void SetIncidentTemplate(const IncidentTemplate& value) { m_incidentTemplate = value; }
-    inline void SetIncidentTemplate(IncidentTemplate&& value) { m_incidentTemplate = std::move(value); }
-    inline GetResponsePlanResult& WithIncidentTemplate(const IncidentTemplate& value) { SetIncidentTemplate(value); return *this;}
-    inline GetResponsePlanResult& WithIncidentTemplate(IncidentTemplate&& value) { SetIncidentTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about third-party services integrated into the Incident Manager
+   * response plan.</p>
+   */
+  inline const Aws::Vector<Integration>& GetIntegrations() const { return m_integrations; }
+  template <typename IntegrationsT = Aws::Vector<Integration>>
+  void SetIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations = std::forward<IntegrationsT>(value);
+  }
+  template <typename IntegrationsT = Aws::Vector<Integration>>
+  GetResponsePlanResult& WithIntegrations(IntegrationsT&& value) {
+    SetIntegrations(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  template <typename IntegrationsT = Integration>
+  GetResponsePlanResult& AddIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations.emplace_back(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about third-party services integrated into the Incident Manager
-     * response plan.</p>
-     */
-    inline const Aws::Vector<Integration>& GetIntegrations() const{ return m_integrations; }
-    inline void SetIntegrations(const Aws::Vector<Integration>& value) { m_integrations = value; }
-    inline void SetIntegrations(Aws::Vector<Integration>&& value) { m_integrations = std::move(value); }
-    inline GetResponsePlanResult& WithIntegrations(const Aws::Vector<Integration>& value) { SetIntegrations(value); return *this;}
-    inline GetResponsePlanResult& WithIntegrations(Aws::Vector<Integration>&& value) { SetIntegrations(std::move(value)); return *this;}
-    inline GetResponsePlanResult& AddIntegrations(const Integration& value) { m_integrations.push_back(value); return *this; }
-    inline GetResponsePlanResult& AddIntegrations(Integration&& value) { m_integrations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The short format name of the response plan. The name can't contain
+   * spaces.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetResponsePlanResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The short format name of the response plan. The name can't contain
-     * spaces.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline GetResponsePlanResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetResponsePlanResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetResponsePlanResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetResponsePlanResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetResponsePlanResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetResponsePlanResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetResponsePlanResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Action> m_actions;
+ private:
+  Aws::Vector<Action> m_actions;
 
-    Aws::String m_arn;
+  Aws::String m_arn;
 
-    ChatChannel m_chatChannel;
+  ChatChannel m_chatChannel;
 
-    Aws::String m_displayName;
+  Aws::String m_displayName;
 
-    Aws::Vector<Aws::String> m_engagements;
+  Aws::Vector<Aws::String> m_engagements;
 
-    IncidentTemplate m_incidentTemplate;
+  IncidentTemplate m_incidentTemplate;
 
-    Aws::Vector<Integration> m_integrations;
+  Aws::Vector<Integration> m_integrations;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_actionsHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_chatChannelHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_engagementsHasBeenSet = false;
+  bool m_incidentTemplateHasBeenSet = false;
+  bool m_integrationsHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSMIncidents
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSMIncidents
+}  // namespace Aws

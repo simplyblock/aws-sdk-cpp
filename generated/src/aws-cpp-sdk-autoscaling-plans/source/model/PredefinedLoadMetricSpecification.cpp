@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AutoScalingPlans
-{
-namespace Model
-{
+namespace Aws {
+namespace AutoScalingPlans {
+namespace Model {
 
-PredefinedLoadMetricSpecification::PredefinedLoadMetricSpecification() : 
-    m_predefinedLoadMetricType(LoadMetricType::NOT_SET),
-    m_predefinedLoadMetricTypeHasBeenSet(false),
-    m_resourceLabelHasBeenSet(false)
-{
-}
+PredefinedLoadMetricSpecification::PredefinedLoadMetricSpecification(JsonView jsonValue) { *this = jsonValue; }
 
-PredefinedLoadMetricSpecification::PredefinedLoadMetricSpecification(JsonView jsonValue)
-  : PredefinedLoadMetricSpecification()
-{
-  *this = jsonValue;
-}
-
-PredefinedLoadMetricSpecification& PredefinedLoadMetricSpecification::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("PredefinedLoadMetricType"))
-  {
+PredefinedLoadMetricSpecification& PredefinedLoadMetricSpecification::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("PredefinedLoadMetricType")) {
     m_predefinedLoadMetricType = LoadMetricTypeMapper::GetLoadMetricTypeForName(jsonValue.GetString("PredefinedLoadMetricType"));
-
     m_predefinedLoadMetricTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ResourceLabel"))
-  {
+  if (jsonValue.ValueExists("ResourceLabel")) {
     m_resourceLabel = jsonValue.GetString("ResourceLabel");
-
     m_resourceLabelHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PredefinedLoadMetricSpecification::Jsonize() const
-{
+JsonValue PredefinedLoadMetricSpecification::Jsonize() const {
   JsonValue payload;
 
-  if(m_predefinedLoadMetricTypeHasBeenSet)
-  {
-   payload.WithString("PredefinedLoadMetricType", LoadMetricTypeMapper::GetNameForLoadMetricType(m_predefinedLoadMetricType));
+  if (m_predefinedLoadMetricTypeHasBeenSet) {
+    payload.WithString("PredefinedLoadMetricType", LoadMetricTypeMapper::GetNameForLoadMetricType(m_predefinedLoadMetricType));
   }
 
-  if(m_resourceLabelHasBeenSet)
-  {
-   payload.WithString("ResourceLabel", m_resourceLabel);
-
+  if (m_resourceLabelHasBeenSet) {
+    payload.WithString("ResourceLabel", m_resourceLabel);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AutoScalingPlans
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScalingPlans
+}  // namespace Aws

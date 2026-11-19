@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/managedblockchain-query/ManagedBlockchainQuery_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/managedblockchain-query/ManagedBlockchainQuery_EXPORTS.h>
 
-#include <aws/managedblockchain-query/ManagedBlockchainQueryEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ManagedBlockchainQuery
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ManagedBlockchainQuery {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ManagedBlockchainQueryClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using ManagedBlockchainQueryBuiltInParameters = Aws::Endpoint::BuiltInParameters
  * The SDK must use service-specific type for each service per specification.
  */
 using ManagedBlockchainQueryEndpointProviderBase =
-    EndpointProviderBase<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters, ManagedBlockchainQueryClientContextParameters>;
+    EndpointProviderBase<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters,
+                         ManagedBlockchainQueryClientContextParameters>;
 
 using ManagedBlockchainQueryDefaultEpProviderBase =
-    DefaultEndpointProvider<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters, ManagedBlockchainQueryClientContextParameters>;
+    BDDEndpointProvider<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters,
+                        ManagedBlockchainQueryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_MANAGEDBLOCKCHAINQUERY_API ManagedBlockchainQueryEndpointProvider : public ManagedBlockchainQueryDefaultEpProviderBase
-{
-public:
-    using ManagedBlockchainQueryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_MANAGEDBLOCKCHAINQUERY_API ManagedBlockchainQueryEndpointProvider : public ManagedBlockchainQueryDefaultEpProviderBase {
+ public:
+  using ManagedBlockchainQueryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ManagedBlockchainQueryEndpointProvider()
-      : ManagedBlockchainQueryDefaultEpProviderBase(Aws::ManagedBlockchainQuery::ManagedBlockchainQueryEndpointRules::GetRulesBlob(), Aws::ManagedBlockchainQuery::ManagedBlockchainQueryEndpointRules::RulesBlobSize)
-    {}
+  ManagedBlockchainQueryEndpointProvider();
 
-    ~ManagedBlockchainQueryEndpointProvider()
-    {
-    }
+  ~ManagedBlockchainQueryEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ManagedBlockchainQuery
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ManagedBlockchainQuery
+}  // namespace Aws

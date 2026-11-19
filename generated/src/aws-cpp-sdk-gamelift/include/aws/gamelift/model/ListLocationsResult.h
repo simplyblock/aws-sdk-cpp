@@ -4,83 +4,103 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/LocationModel.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class ListLocationsResult
-  {
-  public:
-    AWS_GAMELIFT_API ListLocationsResult();
-    AWS_GAMELIFT_API ListLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API ListLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class ListLocationsResult {
+ public:
+  AWS_GAMELIFT_API ListLocationsResult() = default;
+  AWS_GAMELIFT_API ListLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API ListLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A collection of locations, including both Amazon Web Services and custom
+   * locations. Each location includes a name and ping beacon information that can be
+   * used to measure network latency between player devices and the location.</p>
+   */
+  inline const Aws::Vector<LocationModel>& GetLocations() const { return m_locations; }
+  template <typename LocationsT = Aws::Vector<LocationModel>>
+  void SetLocations(LocationsT&& value) {
+    m_locationsHasBeenSet = true;
+    m_locations = std::forward<LocationsT>(value);
+  }
+  template <typename LocationsT = Aws::Vector<LocationModel>>
+  ListLocationsResult& WithLocations(LocationsT&& value) {
+    SetLocations(std::forward<LocationsT>(value));
+    return *this;
+  }
+  template <typename LocationsT = LocationModel>
+  ListLocationsResult& AddLocations(LocationsT&& value) {
+    m_locationsHasBeenSet = true;
+    m_locations.emplace_back(std::forward<LocationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A collection of locations.</p>
-     */
-    inline const Aws::Vector<LocationModel>& GetLocations() const{ return m_locations; }
-    inline void SetLocations(const Aws::Vector<LocationModel>& value) { m_locations = value; }
-    inline void SetLocations(Aws::Vector<LocationModel>&& value) { m_locations = std::move(value); }
-    inline ListLocationsResult& WithLocations(const Aws::Vector<LocationModel>& value) { SetLocations(value); return *this;}
-    inline ListLocationsResult& WithLocations(Aws::Vector<LocationModel>&& value) { SetLocations(std::move(value)); return *this;}
-    inline ListLocationsResult& AddLocations(const LocationModel& value) { m_locations.push_back(value); return *this; }
-    inline ListLocationsResult& AddLocations(LocationModel&& value) { m_locations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that indicates where to resume retrieving results on the next call to
+   * this operation. If no token is returned, these results represent the end of the
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListLocationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that indicates where to resume retrieving results on the next call to
-     * this operation. If no token is returned, these results represent the end of the
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListLocationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListLocationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListLocationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListLocationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListLocationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListLocationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListLocationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<LocationModel> m_locations;
+ private:
+  Aws::Vector<LocationModel> m_locations;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_locationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

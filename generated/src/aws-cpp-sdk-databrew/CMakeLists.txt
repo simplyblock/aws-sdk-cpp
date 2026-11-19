@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-databrew "C++ SDK for the AWS databrew service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-databrew "C++ SDK for AWS Glue DataBrew" aws-cpp-sdk-core)
 
 file(GLOB AWS_DATABREW_HEADERS
     "include/aws/databrew/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DATABREW_HEADERS
 
 file(GLOB AWS_DATABREW_MODEL_HEADERS
     "include/aws/databrew/model/*.h"
+)
+
+file(GLOB AWS_DATABREW_INTERNAL_HEADERS
+    "include/aws/databrew/internal/*.h"
 )
 
 file(GLOB AWS_DATABREW_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DATABREW_MODEL_SOURCE
 
 file(GLOB DATABREW_UNIFIED_HEADERS
     ${AWS_DATABREW_HEADERS}
+    ${AWS_DATABREW_INTERNAL_HEADERS}
     ${AWS_DATABREW_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\databrew" FILES ${AWS_DATABREW_HEADERS})
+        source_group("Header Files\\aws\\databrew\\internal" FILES ${AWS_DATABREW_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\databrew\\model" FILES ${AWS_DATABREW_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DATABREW_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DATABREW_MODEL_SOURCE})

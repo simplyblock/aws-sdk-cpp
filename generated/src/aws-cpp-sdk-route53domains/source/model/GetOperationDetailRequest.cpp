@@ -3,41 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/model/GetOperationDetailRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Route53Domains::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetOperationDetailRequest::GetOperationDetailRequest() : 
-    m_operationIdHasBeenSet(false)
-{
-}
+Aws::String GetOperationDetailRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String GetOperationDetailRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_operationIdHasBeenSet)
-  {
-   payload.WithString("OperationId", m_operationId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_operationIdHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_operationIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OperationId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_operationId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection GetOperationDetailRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetOperationDetailRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Route53Domains_v20140515.GetOperationDetail"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

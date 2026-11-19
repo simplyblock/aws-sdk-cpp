@@ -4,211 +4,258 @@
  */
 
 #pragma once
-#include <aws/kinesisanalytics/KinesisAnalytics_EXPORTS.h>
-#include <aws/kinesisanalytics/KinesisAnalyticsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kinesisanalytics/KinesisAnalyticsRequest.h>
+#include <aws/kinesisanalytics/KinesisAnalytics_EXPORTS.h>
+#include <aws/kinesisanalytics/model/CloudWatchLoggingOption.h>
 #include <aws/kinesisanalytics/model/Input.h>
 #include <aws/kinesisanalytics/model/Output.h>
-#include <aws/kinesisanalytics/model/CloudWatchLoggingOption.h>
 #include <aws/kinesisanalytics/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace KinesisAnalytics
-{
-namespace Model
-{
+namespace Aws {
+namespace KinesisAnalytics {
+namespace Model {
 
+/**
+ * <p>TBD</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalytics-2015-08-14/CreateApplicationRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateApplicationRequest : public KinesisAnalyticsRequest {
+ public:
+  AWS_KINESISANALYTICS_API CreateApplicationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateApplication"; }
+
+  AWS_KINESISANALYTICS_API Aws::String SerializePayload() const override;
+
+  AWS_KINESISANALYTICS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>TBD</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalytics-2015-08-14/CreateApplicationRequest">AWS
-   * API Reference</a></p>
+   * <p>Name of your Amazon Kinesis Analytics application (for example,
+   * <code>sample-app</code>).</p>
    */
-  class CreateApplicationRequest : public KinesisAnalyticsRequest
-  {
-  public:
-    AWS_KINESISANALYTICS_API CreateApplicationRequest();
+  inline const Aws::String& GetApplicationName() const { return m_applicationName; }
+  inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
+  template <typename ApplicationNameT = Aws::String>
+  void SetApplicationName(ApplicationNameT&& value) {
+    m_applicationNameHasBeenSet = true;
+    m_applicationName = std::forward<ApplicationNameT>(value);
+  }
+  template <typename ApplicationNameT = Aws::String>
+  CreateApplicationRequest& WithApplicationName(ApplicationNameT&& value) {
+    SetApplicationName(std::forward<ApplicationNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateApplication"; }
+  ///@{
+  /**
+   * <p>Summary description of the application.</p>
+   */
+  inline const Aws::String& GetApplicationDescription() const { return m_applicationDescription; }
+  inline bool ApplicationDescriptionHasBeenSet() const { return m_applicationDescriptionHasBeenSet; }
+  template <typename ApplicationDescriptionT = Aws::String>
+  void SetApplicationDescription(ApplicationDescriptionT&& value) {
+    m_applicationDescriptionHasBeenSet = true;
+    m_applicationDescription = std::forward<ApplicationDescriptionT>(value);
+  }
+  template <typename ApplicationDescriptionT = Aws::String>
+  CreateApplicationRequest& WithApplicationDescription(ApplicationDescriptionT&& value) {
+    SetApplicationDescription(std::forward<ApplicationDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KINESISANALYTICS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Use this parameter to configure the application input.</p> <p>You can
+   * configure your application to receive input from a single streaming source. In
+   * this configuration, you map this streaming source to an in-application stream
+   * that is created. Your application code can then query the in-application stream
+   * like a table (you can think of it as a constantly updating table).</p> <p>For
+   * the streaming source, you provide its Amazon Resource Name (ARN) and format of
+   * data on the stream (for example, JSON, CSV, etc.). You also must provide an IAM
+   * role that Amazon Kinesis Analytics can assume to read this stream on your
+   * behalf.</p> <p>To create the in-application stream, you need to specify a schema
+   * to transform your data into a schematized version used in SQL. In the schema,
+   * you provide the necessary mapping of the data elements in the streaming source
+   * to record columns in the in-app stream.</p>
+   */
+  inline const Aws::Vector<Input>& GetInputs() const { return m_inputs; }
+  inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
+  template <typename InputsT = Aws::Vector<Input>>
+  void SetInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs = std::forward<InputsT>(value);
+  }
+  template <typename InputsT = Aws::Vector<Input>>
+  CreateApplicationRequest& WithInputs(InputsT&& value) {
+    SetInputs(std::forward<InputsT>(value));
+    return *this;
+  }
+  template <typename InputsT = Input>
+  CreateApplicationRequest& AddInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs.emplace_back(std::forward<InputsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KINESISANALYTICS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>You can configure application output to write data from any of the
+   * in-application streams to up to three destinations.</p> <p>These destinations
+   * can be Amazon Kinesis streams, Amazon Kinesis Firehose delivery streams, AWS
+   * Lambda destinations, or any combination of the three.</p> <p>In the
+   * configuration, you specify the in-application stream name, the destination
+   * stream or Lambda function Amazon Resource Name (ARN), and the format to use when
+   * writing data. You must also provide an IAM role that Amazon Kinesis Analytics
+   * can assume to write to the destination stream or Lambda function on your
+   * behalf.</p> <p>In the output configuration, you also provide the output stream
+   * or Lambda function ARN. For stream destinations, you provide the format of data
+   * in the stream (for example, JSON, CSV). You also must provide an IAM role that
+   * Amazon Kinesis Analytics can assume to write to the stream or Lambda function on
+   * your behalf.</p>
+   */
+  inline const Aws::Vector<Output>& GetOutputs() const { return m_outputs; }
+  inline bool OutputsHasBeenSet() const { return m_outputsHasBeenSet; }
+  template <typename OutputsT = Aws::Vector<Output>>
+  void SetOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs = std::forward<OutputsT>(value);
+  }
+  template <typename OutputsT = Aws::Vector<Output>>
+  CreateApplicationRequest& WithOutputs(OutputsT&& value) {
+    SetOutputs(std::forward<OutputsT>(value));
+    return *this;
+  }
+  template <typename OutputsT = Output>
+  CreateApplicationRequest& AddOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs.emplace_back(std::forward<OutputsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Use this parameter to configure a CloudWatch log stream to monitor
+   * application configuration errors. For more information, see <a
+   * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/cloudwatch-logs.html">Working
+   * with Amazon CloudWatch Logs</a>.</p>
+   */
+  inline const Aws::Vector<CloudWatchLoggingOption>& GetCloudWatchLoggingOptions() const { return m_cloudWatchLoggingOptions; }
+  inline bool CloudWatchLoggingOptionsHasBeenSet() const { return m_cloudWatchLoggingOptionsHasBeenSet; }
+  template <typename CloudWatchLoggingOptionsT = Aws::Vector<CloudWatchLoggingOption>>
+  void SetCloudWatchLoggingOptions(CloudWatchLoggingOptionsT&& value) {
+    m_cloudWatchLoggingOptionsHasBeenSet = true;
+    m_cloudWatchLoggingOptions = std::forward<CloudWatchLoggingOptionsT>(value);
+  }
+  template <typename CloudWatchLoggingOptionsT = Aws::Vector<CloudWatchLoggingOption>>
+  CreateApplicationRequest& WithCloudWatchLoggingOptions(CloudWatchLoggingOptionsT&& value) {
+    SetCloudWatchLoggingOptions(std::forward<CloudWatchLoggingOptionsT>(value));
+    return *this;
+  }
+  template <typename CloudWatchLoggingOptionsT = CloudWatchLoggingOption>
+  CreateApplicationRequest& AddCloudWatchLoggingOptions(CloudWatchLoggingOptionsT&& value) {
+    m_cloudWatchLoggingOptionsHasBeenSet = true;
+    m_cloudWatchLoggingOptions.emplace_back(std::forward<CloudWatchLoggingOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of your Amazon Kinesis Analytics application (for example,
-     * <code>sample-app</code>).</p>
-     */
-    inline const Aws::String& GetApplicationName() const{ return m_applicationName; }
-    inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
-    inline void SetApplicationName(const Aws::String& value) { m_applicationNameHasBeenSet = true; m_applicationName = value; }
-    inline void SetApplicationName(Aws::String&& value) { m_applicationNameHasBeenSet = true; m_applicationName = std::move(value); }
-    inline void SetApplicationName(const char* value) { m_applicationNameHasBeenSet = true; m_applicationName.assign(value); }
-    inline CreateApplicationRequest& WithApplicationName(const Aws::String& value) { SetApplicationName(value); return *this;}
-    inline CreateApplicationRequest& WithApplicationName(Aws::String&& value) { SetApplicationName(std::move(value)); return *this;}
-    inline CreateApplicationRequest& WithApplicationName(const char* value) { SetApplicationName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>One or more SQL statements that read input data, transform it, and generate
+   * output. For example, you can write a SQL statement that reads data from one
+   * in-application stream, generates a running average of the number of
+   * advertisement clicks by vendor, and insert resulting rows in another
+   * in-application stream using pumps. For more information about the typical
+   * pattern, see <a
+   * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-app-code.html">Application
+   * Code</a>. </p> <p>You can provide such series of SQL statements, where output of
+   * one statement can be used as the input for the next statement. You store
+   * intermediate results by creating in-application streams and pumps.</p> <p>Note
+   * that the application code must create the streams with names specified in the
+   * <code>Outputs</code>. For example, if your <code>Outputs</code> defines output
+   * streams named <code>ExampleOutputStream1</code> and
+   * <code>ExampleOutputStream2</code>, then your application code must create these
+   * streams. </p>
+   */
+  inline const Aws::String& GetApplicationCode() const { return m_applicationCode; }
+  inline bool ApplicationCodeHasBeenSet() const { return m_applicationCodeHasBeenSet; }
+  template <typename ApplicationCodeT = Aws::String>
+  void SetApplicationCode(ApplicationCodeT&& value) {
+    m_applicationCodeHasBeenSet = true;
+    m_applicationCode = std::forward<ApplicationCodeT>(value);
+  }
+  template <typename ApplicationCodeT = Aws::String>
+  CreateApplicationRequest& WithApplicationCode(ApplicationCodeT&& value) {
+    SetApplicationCode(std::forward<ApplicationCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Summary description of the application.</p>
-     */
-    inline const Aws::String& GetApplicationDescription() const{ return m_applicationDescription; }
-    inline bool ApplicationDescriptionHasBeenSet() const { return m_applicationDescriptionHasBeenSet; }
-    inline void SetApplicationDescription(const Aws::String& value) { m_applicationDescriptionHasBeenSet = true; m_applicationDescription = value; }
-    inline void SetApplicationDescription(Aws::String&& value) { m_applicationDescriptionHasBeenSet = true; m_applicationDescription = std::move(value); }
-    inline void SetApplicationDescription(const char* value) { m_applicationDescriptionHasBeenSet = true; m_applicationDescription.assign(value); }
-    inline CreateApplicationRequest& WithApplicationDescription(const Aws::String& value) { SetApplicationDescription(value); return *this;}
-    inline CreateApplicationRequest& WithApplicationDescription(Aws::String&& value) { SetApplicationDescription(std::move(value)); return *this;}
-    inline CreateApplicationRequest& WithApplicationDescription(const char* value) { SetApplicationDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of one or more tags to assign to the application. A tag is a key-value
+   * pair that identifies an application. Note that the maximum number of application
+   * tags includes system tags. The maximum number of user-defined application tags
+   * is 50. For more information, see <a
+   * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-tagging.html">Using
+   * Tagging</a>.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateApplicationRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateApplicationRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationName;
 
-    ///@{
-    /**
-     * <p>Use this parameter to configure the application input.</p> <p>You can
-     * configure your application to receive input from a single streaming source. In
-     * this configuration, you map this streaming source to an in-application stream
-     * that is created. Your application code can then query the in-application stream
-     * like a table (you can think of it as a constantly updating table).</p> <p>For
-     * the streaming source, you provide its Amazon Resource Name (ARN) and format of
-     * data on the stream (for example, JSON, CSV, etc.). You also must provide an IAM
-     * role that Amazon Kinesis Analytics can assume to read this stream on your
-     * behalf.</p> <p>To create the in-application stream, you need to specify a schema
-     * to transform your data into a schematized version used in SQL. In the schema,
-     * you provide the necessary mapping of the data elements in the streaming source
-     * to record columns in the in-app stream.</p>
-     */
-    inline const Aws::Vector<Input>& GetInputs() const{ return m_inputs; }
-    inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
-    inline void SetInputs(const Aws::Vector<Input>& value) { m_inputsHasBeenSet = true; m_inputs = value; }
-    inline void SetInputs(Aws::Vector<Input>&& value) { m_inputsHasBeenSet = true; m_inputs = std::move(value); }
-    inline CreateApplicationRequest& WithInputs(const Aws::Vector<Input>& value) { SetInputs(value); return *this;}
-    inline CreateApplicationRequest& WithInputs(Aws::Vector<Input>&& value) { SetInputs(std::move(value)); return *this;}
-    inline CreateApplicationRequest& AddInputs(const Input& value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    inline CreateApplicationRequest& AddInputs(Input&& value) { m_inputsHasBeenSet = true; m_inputs.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_applicationDescription;
 
-    ///@{
-    /**
-     * <p>You can configure application output to write data from any of the
-     * in-application streams to up to three destinations.</p> <p>These destinations
-     * can be Amazon Kinesis streams, Amazon Kinesis Firehose delivery streams, AWS
-     * Lambda destinations, or any combination of the three.</p> <p>In the
-     * configuration, you specify the in-application stream name, the destination
-     * stream or Lambda function Amazon Resource Name (ARN), and the format to use when
-     * writing data. You must also provide an IAM role that Amazon Kinesis Analytics
-     * can assume to write to the destination stream or Lambda function on your
-     * behalf.</p> <p>In the output configuration, you also provide the output stream
-     * or Lambda function ARN. For stream destinations, you provide the format of data
-     * in the stream (for example, JSON, CSV). You also must provide an IAM role that
-     * Amazon Kinesis Analytics can assume to write to the stream or Lambda function on
-     * your behalf.</p>
-     */
-    inline const Aws::Vector<Output>& GetOutputs() const{ return m_outputs; }
-    inline bool OutputsHasBeenSet() const { return m_outputsHasBeenSet; }
-    inline void SetOutputs(const Aws::Vector<Output>& value) { m_outputsHasBeenSet = true; m_outputs = value; }
-    inline void SetOutputs(Aws::Vector<Output>&& value) { m_outputsHasBeenSet = true; m_outputs = std::move(value); }
-    inline CreateApplicationRequest& WithOutputs(const Aws::Vector<Output>& value) { SetOutputs(value); return *this;}
-    inline CreateApplicationRequest& WithOutputs(Aws::Vector<Output>&& value) { SetOutputs(std::move(value)); return *this;}
-    inline CreateApplicationRequest& AddOutputs(const Output& value) { m_outputsHasBeenSet = true; m_outputs.push_back(value); return *this; }
-    inline CreateApplicationRequest& AddOutputs(Output&& value) { m_outputsHasBeenSet = true; m_outputs.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Input> m_inputs;
 
-    ///@{
-    /**
-     * <p>Use this parameter to configure a CloudWatch log stream to monitor
-     * application configuration errors. For more information, see <a
-     * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/cloudwatch-logs.html">Working
-     * with Amazon CloudWatch Logs</a>.</p>
-     */
-    inline const Aws::Vector<CloudWatchLoggingOption>& GetCloudWatchLoggingOptions() const{ return m_cloudWatchLoggingOptions; }
-    inline bool CloudWatchLoggingOptionsHasBeenSet() const { return m_cloudWatchLoggingOptionsHasBeenSet; }
-    inline void SetCloudWatchLoggingOptions(const Aws::Vector<CloudWatchLoggingOption>& value) { m_cloudWatchLoggingOptionsHasBeenSet = true; m_cloudWatchLoggingOptions = value; }
-    inline void SetCloudWatchLoggingOptions(Aws::Vector<CloudWatchLoggingOption>&& value) { m_cloudWatchLoggingOptionsHasBeenSet = true; m_cloudWatchLoggingOptions = std::move(value); }
-    inline CreateApplicationRequest& WithCloudWatchLoggingOptions(const Aws::Vector<CloudWatchLoggingOption>& value) { SetCloudWatchLoggingOptions(value); return *this;}
-    inline CreateApplicationRequest& WithCloudWatchLoggingOptions(Aws::Vector<CloudWatchLoggingOption>&& value) { SetCloudWatchLoggingOptions(std::move(value)); return *this;}
-    inline CreateApplicationRequest& AddCloudWatchLoggingOptions(const CloudWatchLoggingOption& value) { m_cloudWatchLoggingOptionsHasBeenSet = true; m_cloudWatchLoggingOptions.push_back(value); return *this; }
-    inline CreateApplicationRequest& AddCloudWatchLoggingOptions(CloudWatchLoggingOption&& value) { m_cloudWatchLoggingOptionsHasBeenSet = true; m_cloudWatchLoggingOptions.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Output> m_outputs;
 
-    ///@{
-    /**
-     * <p>One or more SQL statements that read input data, transform it, and generate
-     * output. For example, you can write a SQL statement that reads data from one
-     * in-application stream, generates a running average of the number of
-     * advertisement clicks by vendor, and insert resulting rows in another
-     * in-application stream using pumps. For more information about the typical
-     * pattern, see <a
-     * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-app-code.html">Application
-     * Code</a>. </p> <p>You can provide such series of SQL statements, where output of
-     * one statement can be used as the input for the next statement. You store
-     * intermediate results by creating in-application streams and pumps.</p> <p>Note
-     * that the application code must create the streams with names specified in the
-     * <code>Outputs</code>. For example, if your <code>Outputs</code> defines output
-     * streams named <code>ExampleOutputStream1</code> and
-     * <code>ExampleOutputStream2</code>, then your application code must create these
-     * streams. </p>
-     */
-    inline const Aws::String& GetApplicationCode() const{ return m_applicationCode; }
-    inline bool ApplicationCodeHasBeenSet() const { return m_applicationCodeHasBeenSet; }
-    inline void SetApplicationCode(const Aws::String& value) { m_applicationCodeHasBeenSet = true; m_applicationCode = value; }
-    inline void SetApplicationCode(Aws::String&& value) { m_applicationCodeHasBeenSet = true; m_applicationCode = std::move(value); }
-    inline void SetApplicationCode(const char* value) { m_applicationCodeHasBeenSet = true; m_applicationCode.assign(value); }
-    inline CreateApplicationRequest& WithApplicationCode(const Aws::String& value) { SetApplicationCode(value); return *this;}
-    inline CreateApplicationRequest& WithApplicationCode(Aws::String&& value) { SetApplicationCode(std::move(value)); return *this;}
-    inline CreateApplicationRequest& WithApplicationCode(const char* value) { SetApplicationCode(value); return *this;}
-    ///@}
+  Aws::Vector<CloudWatchLoggingOption> m_cloudWatchLoggingOptions;
 
-    ///@{
-    /**
-     * <p>A list of one or more tags to assign to the application. A tag is a key-value
-     * pair that identifies an application. Note that the maximum number of application
-     * tags includes system tags. The maximum number of user-defined application tags
-     * is 50. For more information, see <a
-     * href="https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-tagging.html">Using
-     * Tagging</a>.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateApplicationRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateApplicationRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateApplicationRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateApplicationRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_applicationCode;
 
-    Aws::String m_applicationName;
-    bool m_applicationNameHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
+  bool m_applicationNameHasBeenSet = false;
+  bool m_applicationDescriptionHasBeenSet = false;
+  bool m_inputsHasBeenSet = false;
+  bool m_outputsHasBeenSet = false;
+  bool m_cloudWatchLoggingOptionsHasBeenSet = false;
+  bool m_applicationCodeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_applicationDescription;
-    bool m_applicationDescriptionHasBeenSet = false;
-
-    Aws::Vector<Input> m_inputs;
-    bool m_inputsHasBeenSet = false;
-
-    Aws::Vector<Output> m_outputs;
-    bool m_outputsHasBeenSet = false;
-
-    Aws::Vector<CloudWatchLoggingOption> m_cloudWatchLoggingOptions;
-    bool m_cloudWatchLoggingOptionsHasBeenSet = false;
-
-    Aws::String m_applicationCode;
-    bool m_applicationCodeHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace KinesisAnalytics
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisAnalytics
+}  // namespace Aws

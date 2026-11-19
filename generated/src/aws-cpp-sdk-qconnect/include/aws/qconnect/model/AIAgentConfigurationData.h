@@ -4,60 +4,81 @@
  */
 
 #pragma once
-#include <aws/qconnect/QConnect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/qconnect/QConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QConnect {
+namespace Model {
 
+/**
+ * <p>A type that specifies the AI Agent ID configuration data when mapping an AI
+ * Agents to be used for an AI Agent type on a session or assistant.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIAgentConfigurationData">AWS
+ * API Reference</a></p>
+ */
+class AIAgentConfigurationData {
+ public:
+  AWS_QCONNECT_API AIAgentConfigurationData() = default;
+  AWS_QCONNECT_API AIAgentConfigurationData(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QCONNECT_API AIAgentConfigurationData& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QCONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A type that specifies the AI Agent ID configuration data when mapping an AI
-   * Agents to be used for an AI Agent type on a session or assistant.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIAgentConfigurationData">AWS
-   * API Reference</a></p>
+   * <p>The ID of the AI Agent to be configured.</p>
    */
-  class AIAgentConfigurationData
-  {
-  public:
-    AWS_QCONNECT_API AIAgentConfigurationData();
-    AWS_QCONNECT_API AIAgentConfigurationData(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QCONNECT_API AIAgentConfigurationData& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QCONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAiAgentId() const { return m_aiAgentId; }
+  inline bool AiAgentIdHasBeenSet() const { return m_aiAgentIdHasBeenSet; }
+  template <typename AiAgentIdT = Aws::String>
+  void SetAiAgentId(AiAgentIdT&& value) {
+    m_aiAgentIdHasBeenSet = true;
+    m_aiAgentId = std::forward<AiAgentIdT>(value);
+  }
+  template <typename AiAgentIdT = Aws::String>
+  AIAgentConfigurationData& WithAiAgentId(AiAgentIdT&& value) {
+    SetAiAgentId(std::forward<AiAgentIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Indicates whether the AI Agent configured for this AI Agent type is enabled.
+   * When this value is omitted or set to true, the configured AI Agent runs; when
+   * set to false, the AI Agent ID is retained but no AI Agent runs for the AI Agent
+   * type. Setting this value to false is currently supported only for the
+   * <code>ANSWER_RECOMMENDATION</code> AI Agent type; other requests to set it to
+   * false are rejected with a validation error.</p>
+   */
+  inline bool GetEnabled() const { return m_enabled; }
+  inline bool EnabledHasBeenSet() const { return m_enabledHasBeenSet; }
+  inline void SetEnabled(bool value) {
+    m_enabledHasBeenSet = true;
+    m_enabled = value;
+  }
+  inline AIAgentConfigurationData& WithEnabled(bool value) {
+    SetEnabled(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_aiAgentId;
 
-    ///@{
-    /**
-     * <p>The ID of the AI Agent to be configured.</p>
-     */
-    inline const Aws::String& GetAiAgentId() const{ return m_aiAgentId; }
-    inline bool AiAgentIdHasBeenSet() const { return m_aiAgentIdHasBeenSet; }
-    inline void SetAiAgentId(const Aws::String& value) { m_aiAgentIdHasBeenSet = true; m_aiAgentId = value; }
-    inline void SetAiAgentId(Aws::String&& value) { m_aiAgentIdHasBeenSet = true; m_aiAgentId = std::move(value); }
-    inline void SetAiAgentId(const char* value) { m_aiAgentIdHasBeenSet = true; m_aiAgentId.assign(value); }
-    inline AIAgentConfigurationData& WithAiAgentId(const Aws::String& value) { SetAiAgentId(value); return *this;}
-    inline AIAgentConfigurationData& WithAiAgentId(Aws::String&& value) { SetAiAgentId(std::move(value)); return *this;}
-    inline AIAgentConfigurationData& WithAiAgentId(const char* value) { SetAiAgentId(value); return *this;}
-    ///@}
-  private:
+  bool m_enabled{false};
+  bool m_aiAgentIdHasBeenSet = false;
+  bool m_enabledHasBeenSet = false;
+};
 
-    Aws::String m_aiAgentId;
-    bool m_aiAgentIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

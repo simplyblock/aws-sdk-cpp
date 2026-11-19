@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 #include <aws/imagebuilder/model/LifecycleExecution.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
-  class GetLifecycleExecutionResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API GetLifecycleExecutionResult();
-    AWS_IMAGEBUILDER_API GetLifecycleExecutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API GetLifecycleExecutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+class GetLifecycleExecutionResult {
+ public:
+  AWS_IMAGEBUILDER_API GetLifecycleExecutionResult() = default;
+  AWS_IMAGEBUILDER_API GetLifecycleExecutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API GetLifecycleExecutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Runtime details for the specified runtime instance of the lifecycle
+   * policy.</p>
+   */
+  inline const LifecycleExecution& GetLifecycleExecution() const { return m_lifecycleExecution; }
+  template <typename LifecycleExecutionT = LifecycleExecution>
+  void SetLifecycleExecution(LifecycleExecutionT&& value) {
+    m_lifecycleExecutionHasBeenSet = true;
+    m_lifecycleExecution = std::forward<LifecycleExecutionT>(value);
+  }
+  template <typename LifecycleExecutionT = LifecycleExecution>
+  GetLifecycleExecutionResult& WithLifecycleExecution(LifecycleExecutionT&& value) {
+    SetLifecycleExecution(std::forward<LifecycleExecutionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Runtime details for the specified runtime instance of the lifecycle
-     * policy.</p>
-     */
-    inline const LifecycleExecution& GetLifecycleExecution() const{ return m_lifecycleExecution; }
-    inline void SetLifecycleExecution(const LifecycleExecution& value) { m_lifecycleExecution = value; }
-    inline void SetLifecycleExecution(LifecycleExecution&& value) { m_lifecycleExecution = std::move(value); }
-    inline GetLifecycleExecutionResult& WithLifecycleExecution(const LifecycleExecution& value) { SetLifecycleExecution(value); return *this;}
-    inline GetLifecycleExecutionResult& WithLifecycleExecution(LifecycleExecution&& value) { SetLifecycleExecution(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLifecycleExecutionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLifecycleExecutionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLifecycleExecutionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLifecycleExecutionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    LifecycleExecution m_lifecycleExecution;
+ private:
+  LifecycleExecution m_lifecycleExecution;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_lifecycleExecutionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

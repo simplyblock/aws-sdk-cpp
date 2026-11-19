@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/ContactFlow.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class DescribeContactFlowResult
-  {
-  public:
-    AWS_CONNECT_API DescribeContactFlowResult();
-    AWS_CONNECT_API DescribeContactFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API DescribeContactFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class DescribeContactFlowResult {
+ public:
+  AWS_CONNECT_API DescribeContactFlowResult() = default;
+  AWS_CONNECT_API DescribeContactFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API DescribeContactFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the flow.</p>
+   */
+  inline const ContactFlow& GetContactFlow() const { return m_contactFlow; }
+  template <typename ContactFlowT = ContactFlow>
+  void SetContactFlow(ContactFlowT&& value) {
+    m_contactFlowHasBeenSet = true;
+    m_contactFlow = std::forward<ContactFlowT>(value);
+  }
+  template <typename ContactFlowT = ContactFlow>
+  DescribeContactFlowResult& WithContactFlow(ContactFlowT&& value) {
+    SetContactFlow(std::forward<ContactFlowT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the flow.</p>
-     */
-    inline const ContactFlow& GetContactFlow() const{ return m_contactFlow; }
-    inline void SetContactFlow(const ContactFlow& value) { m_contactFlow = value; }
-    inline void SetContactFlow(ContactFlow&& value) { m_contactFlow = std::move(value); }
-    inline DescribeContactFlowResult& WithContactFlow(const ContactFlow& value) { SetContactFlow(value); return *this;}
-    inline DescribeContactFlowResult& WithContactFlow(ContactFlow&& value) { SetContactFlow(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeContactFlowResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeContactFlowResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeContactFlowResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeContactFlowResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContactFlow m_contactFlow;
+ private:
+  ContactFlow m_contactFlow;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contactFlowHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

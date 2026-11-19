@@ -4,13 +4,14 @@
  */
 
 #include <aws/sso-oidc/SSOOIDCEndpointProvider.h>
+#include <aws/sso-oidc/internal/SSOOIDCEndpointRules.h>
 
-namespace Aws
-{
-namespace SSOOIDC
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace SSOOIDC
-} // namespace Aws
+namespace Aws {
+namespace SSOOIDC {
+namespace Endpoint {
+SSOOIDCEndpointProvider::SSOOIDCEndpointProvider()
+    : SSOOIDCDefaultEpProviderBase(Aws::SSOOIDC::SSOOIDCEndpointRules::GetRulesBlob(), Aws::SSOOIDC::SSOOIDCEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace SSOOIDC
+}  // namespace Aws

@@ -11,49 +11,40 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-EvaluationFormSingleSelectQuestionAutomationOption::EvaluationFormSingleSelectQuestionAutomationOption() : 
-    m_ruleCategoryHasBeenSet(false)
-{
-}
-
-EvaluationFormSingleSelectQuestionAutomationOption::EvaluationFormSingleSelectQuestionAutomationOption(JsonView jsonValue)
-  : EvaluationFormSingleSelectQuestionAutomationOption()
-{
+EvaluationFormSingleSelectQuestionAutomationOption::EvaluationFormSingleSelectQuestionAutomationOption(JsonView jsonValue) {
   *this = jsonValue;
 }
 
-EvaluationFormSingleSelectQuestionAutomationOption& EvaluationFormSingleSelectQuestionAutomationOption::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RuleCategory"))
-  {
+EvaluationFormSingleSelectQuestionAutomationOption& EvaluationFormSingleSelectQuestionAutomationOption::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("RuleCategory")) {
     m_ruleCategory = jsonValue.GetObject("RuleCategory");
-
     m_ruleCategoryHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("AutomationRule")) {
+    m_automationRule = jsonValue.GetObject("AutomationRule");
+    m_automationRuleHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue EvaluationFormSingleSelectQuestionAutomationOption::Jsonize() const
-{
+JsonValue EvaluationFormSingleSelectQuestionAutomationOption::Jsonize() const {
   JsonValue payload;
 
-  if(m_ruleCategoryHasBeenSet)
-  {
-   payload.WithObject("RuleCategory", m_ruleCategory.Jsonize());
+  if (m_ruleCategoryHasBeenSet) {
+    payload.WithObject("RuleCategory", m_ruleCategory.Jsonize());
+  }
 
+  if (m_automationRuleHasBeenSet) {
+    payload.WithObject("AutomationRule", m_automationRule.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

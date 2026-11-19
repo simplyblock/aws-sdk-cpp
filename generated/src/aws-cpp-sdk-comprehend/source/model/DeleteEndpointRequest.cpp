@@ -4,40 +4,37 @@
  */
 
 #include <aws/comprehend/model/DeleteEndpointRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::Comprehend::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteEndpointRequest::DeleteEndpointRequest() : 
-    m_endpointArnHasBeenSet(false)
-{
-}
+Aws::String DeleteEndpointRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteEndpointRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_endpointArnHasBeenSet)
-  {
-   payload.WithString("EndpointArn", m_endpointArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_endpointArnHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_endpointArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EndpointArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_endpointArn.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteEndpointRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteEndpointRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.DeleteEndpoint"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

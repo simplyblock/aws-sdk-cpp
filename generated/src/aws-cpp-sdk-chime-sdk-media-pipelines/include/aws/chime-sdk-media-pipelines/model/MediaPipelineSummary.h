@@ -6,73 +6,74 @@
 #pragma once
 #include <aws/chime-sdk-media-pipelines/ChimeSDKMediaPipelines_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMediaPipelines
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMediaPipelines {
+namespace Model {
 
+/**
+ * <p>The summary of the media pipeline.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-media-pipelines-2021-07-15/MediaPipelineSummary">AWS
+ * API Reference</a></p>
+ */
+class MediaPipelineSummary {
+ public:
+  AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary() = default;
+  AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKMEDIAPIPELINES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The summary of the media pipeline.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-media-pipelines-2021-07-15/MediaPipelineSummary">AWS
-   * API Reference</a></p>
+   * <p>The ID of the media pipeline in the summary.</p>
    */
-  class MediaPipelineSummary
-  {
-  public:
-    AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary();
-    AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKMEDIAPIPELINES_API MediaPipelineSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKMEDIAPIPELINES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetMediaPipelineId() const { return m_mediaPipelineId; }
+  inline bool MediaPipelineIdHasBeenSet() const { return m_mediaPipelineIdHasBeenSet; }
+  template <typename MediaPipelineIdT = Aws::String>
+  void SetMediaPipelineId(MediaPipelineIdT&& value) {
+    m_mediaPipelineIdHasBeenSet = true;
+    m_mediaPipelineId = std::forward<MediaPipelineIdT>(value);
+  }
+  template <typename MediaPipelineIdT = Aws::String>
+  MediaPipelineSummary& WithMediaPipelineId(MediaPipelineIdT&& value) {
+    SetMediaPipelineId(std::forward<MediaPipelineIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the media pipeline in the summary.</p>
+   */
+  inline const Aws::String& GetMediaPipelineArn() const { return m_mediaPipelineArn; }
+  inline bool MediaPipelineArnHasBeenSet() const { return m_mediaPipelineArnHasBeenSet; }
+  template <typename MediaPipelineArnT = Aws::String>
+  void SetMediaPipelineArn(MediaPipelineArnT&& value) {
+    m_mediaPipelineArnHasBeenSet = true;
+    m_mediaPipelineArn = std::forward<MediaPipelineArnT>(value);
+  }
+  template <typename MediaPipelineArnT = Aws::String>
+  MediaPipelineSummary& WithMediaPipelineArn(MediaPipelineArnT&& value) {
+    SetMediaPipelineArn(std::forward<MediaPipelineArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_mediaPipelineId;
 
-    ///@{
-    /**
-     * <p>The ID of the media pipeline in the summary.</p>
-     */
-    inline const Aws::String& GetMediaPipelineId() const{ return m_mediaPipelineId; }
-    inline bool MediaPipelineIdHasBeenSet() const { return m_mediaPipelineIdHasBeenSet; }
-    inline void SetMediaPipelineId(const Aws::String& value) { m_mediaPipelineIdHasBeenSet = true; m_mediaPipelineId = value; }
-    inline void SetMediaPipelineId(Aws::String&& value) { m_mediaPipelineIdHasBeenSet = true; m_mediaPipelineId = std::move(value); }
-    inline void SetMediaPipelineId(const char* value) { m_mediaPipelineIdHasBeenSet = true; m_mediaPipelineId.assign(value); }
-    inline MediaPipelineSummary& WithMediaPipelineId(const Aws::String& value) { SetMediaPipelineId(value); return *this;}
-    inline MediaPipelineSummary& WithMediaPipelineId(Aws::String&& value) { SetMediaPipelineId(std::move(value)); return *this;}
-    inline MediaPipelineSummary& WithMediaPipelineId(const char* value) { SetMediaPipelineId(value); return *this;}
-    ///@}
+  Aws::String m_mediaPipelineArn;
+  bool m_mediaPipelineIdHasBeenSet = false;
+  bool m_mediaPipelineArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ARN of the media pipeline in the summary.</p>
-     */
-    inline const Aws::String& GetMediaPipelineArn() const{ return m_mediaPipelineArn; }
-    inline bool MediaPipelineArnHasBeenSet() const { return m_mediaPipelineArnHasBeenSet; }
-    inline void SetMediaPipelineArn(const Aws::String& value) { m_mediaPipelineArnHasBeenSet = true; m_mediaPipelineArn = value; }
-    inline void SetMediaPipelineArn(Aws::String&& value) { m_mediaPipelineArnHasBeenSet = true; m_mediaPipelineArn = std::move(value); }
-    inline void SetMediaPipelineArn(const char* value) { m_mediaPipelineArnHasBeenSet = true; m_mediaPipelineArn.assign(value); }
-    inline MediaPipelineSummary& WithMediaPipelineArn(const Aws::String& value) { SetMediaPipelineArn(value); return *this;}
-    inline MediaPipelineSummary& WithMediaPipelineArn(Aws::String&& value) { SetMediaPipelineArn(std::move(value)); return *this;}
-    inline MediaPipelineSummary& WithMediaPipelineArn(const char* value) { SetMediaPipelineArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_mediaPipelineId;
-    bool m_mediaPipelineIdHasBeenSet = false;
-
-    Aws::String m_mediaPipelineArn;
-    bool m_mediaPipelineArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKMediaPipelines
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMediaPipelines
+}  // namespace Aws

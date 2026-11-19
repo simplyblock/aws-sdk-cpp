@@ -4,73 +4,94 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/Flow.h>
 #include <aws/mediaconnect/model/Messages.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
-  class DescribeFlowResult
-  {
-  public:
-    AWS_MEDIACONNECT_API DescribeFlowResult();
-    AWS_MEDIACONNECT_API DescribeFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONNECT_API DescribeFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
+class DescribeFlowResult {
+ public:
+  AWS_MEDIACONNECT_API DescribeFlowResult() = default;
+  AWS_MEDIACONNECT_API DescribeFlowResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONNECT_API DescribeFlowResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The flow that you requested a description of. </p>
+   */
+  inline const Flow& GetFlow() const { return m_flow; }
+  template <typename FlowT = Flow>
+  void SetFlow(FlowT&& value) {
+    m_flowHasBeenSet = true;
+    m_flow = std::forward<FlowT>(value);
+  }
+  template <typename FlowT = Flow>
+  DescribeFlowResult& WithFlow(FlowT&& value) {
+    SetFlow(std::forward<FlowT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Flow& GetFlow() const{ return m_flow; }
-    inline void SetFlow(const Flow& value) { m_flow = value; }
-    inline void SetFlow(Flow&& value) { m_flow = std::move(value); }
-    inline DescribeFlowResult& WithFlow(const Flow& value) { SetFlow(value); return *this;}
-    inline DescribeFlowResult& WithFlow(Flow&& value) { SetFlow(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Any errors that apply currently to the flow. If there are no errors,
+   * MediaConnect will not include this field in the response. </p>
+   */
+  inline const Messages& GetMessages() const { return m_messages; }
+  template <typename MessagesT = Messages>
+  void SetMessages(MessagesT&& value) {
+    m_messagesHasBeenSet = true;
+    m_messages = std::forward<MessagesT>(value);
+  }
+  template <typename MessagesT = Messages>
+  DescribeFlowResult& WithMessages(MessagesT&& value) {
+    SetMessages(std::forward<MessagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Messages& GetMessages() const{ return m_messages; }
-    inline void SetMessages(const Messages& value) { m_messages = value; }
-    inline void SetMessages(Messages&& value) { m_messages = std::move(value); }
-    inline DescribeFlowResult& WithMessages(const Messages& value) { SetMessages(value); return *this;}
-    inline DescribeFlowResult& WithMessages(Messages&& value) { SetMessages(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeFlowResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeFlowResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeFlowResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeFlowResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Flow m_flow;
+ private:
+  Flow m_flow;
 
-    Messages m_messages;
+  Messages m_messages;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_flowHasBeenSet = false;
+  bool m_messagesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

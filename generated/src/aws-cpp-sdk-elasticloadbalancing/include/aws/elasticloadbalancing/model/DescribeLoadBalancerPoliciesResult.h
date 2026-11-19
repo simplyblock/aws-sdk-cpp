@@ -4,70 +4,86 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/elasticloadbalancing/model/PolicyDescription.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the output of DescribeLoadBalancerPolicies.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeLoadBalancerPoliciesOutput">AWS
+ * API Reference</a></p>
+ */
+class DescribeLoadBalancerPoliciesResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult() = default;
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of DescribeLoadBalancerPolicies.</p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeLoadBalancerPoliciesOutput">AWS
-   * API Reference</a></p>
+   * <p>Information about the policies.</p>
    */
-  class DescribeLoadBalancerPoliciesResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult();
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancerPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<PolicyDescription>& GetPolicyDescriptions() const { return m_policyDescriptions; }
+  template <typename PolicyDescriptionsT = Aws::Vector<PolicyDescription>>
+  void SetPolicyDescriptions(PolicyDescriptionsT&& value) {
+    m_policyDescriptionsHasBeenSet = true;
+    m_policyDescriptions = std::forward<PolicyDescriptionsT>(value);
+  }
+  template <typename PolicyDescriptionsT = Aws::Vector<PolicyDescription>>
+  DescribeLoadBalancerPoliciesResult& WithPolicyDescriptions(PolicyDescriptionsT&& value) {
+    SetPolicyDescriptions(std::forward<PolicyDescriptionsT>(value));
+    return *this;
+  }
+  template <typename PolicyDescriptionsT = PolicyDescription>
+  DescribeLoadBalancerPoliciesResult& AddPolicyDescriptions(PolicyDescriptionsT&& value) {
+    m_policyDescriptionsHasBeenSet = true;
+    m_policyDescriptions.emplace_back(std::forward<PolicyDescriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the policies.</p>
-     */
-    inline const Aws::Vector<PolicyDescription>& GetPolicyDescriptions() const{ return m_policyDescriptions; }
-    inline void SetPolicyDescriptions(const Aws::Vector<PolicyDescription>& value) { m_policyDescriptions = value; }
-    inline void SetPolicyDescriptions(Aws::Vector<PolicyDescription>&& value) { m_policyDescriptions = std::move(value); }
-    inline DescribeLoadBalancerPoliciesResult& WithPolicyDescriptions(const Aws::Vector<PolicyDescription>& value) { SetPolicyDescriptions(value); return *this;}
-    inline DescribeLoadBalancerPoliciesResult& WithPolicyDescriptions(Aws::Vector<PolicyDescription>&& value) { SetPolicyDescriptions(std::move(value)); return *this;}
-    inline DescribeLoadBalancerPoliciesResult& AddPolicyDescriptions(const PolicyDescription& value) { m_policyDescriptions.push_back(value); return *this; }
-    inline DescribeLoadBalancerPoliciesResult& AddPolicyDescriptions(PolicyDescription&& value) { m_policyDescriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeLoadBalancerPoliciesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeLoadBalancerPoliciesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeLoadBalancerPoliciesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<PolicyDescription> m_policyDescriptions;
 
-    Aws::Vector<PolicyDescription> m_policyDescriptions;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyDescriptionsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

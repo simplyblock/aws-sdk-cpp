@@ -4,65 +4,69 @@
  */
 
 #pragma once
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/FMS_EXPORTS.h>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace FMS {
+namespace Model {
 
+/**
+ * <p>ICMP protocol: The ICMP type and code.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/fms-2018-01-01/NetworkAclIcmpTypeCode">AWS
+ * API Reference</a></p>
+ */
+class NetworkAclIcmpTypeCode {
+ public:
+  AWS_FMS_API NetworkAclIcmpTypeCode() = default;
+  AWS_FMS_API NetworkAclIcmpTypeCode(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_FMS_API NetworkAclIcmpTypeCode& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_FMS_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>ICMP protocol: The ICMP type and code.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/fms-2018-01-01/NetworkAclIcmpTypeCode">AWS
-   * API Reference</a></p>
+   * <p>ICMP code. </p>
    */
-  class NetworkAclIcmpTypeCode
-  {
-  public:
-    AWS_FMS_API NetworkAclIcmpTypeCode();
-    AWS_FMS_API NetworkAclIcmpTypeCode(Aws::Utils::Json::JsonView jsonValue);
-    AWS_FMS_API NetworkAclIcmpTypeCode& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_FMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline int64_t GetCode() const { return m_code; }
+  inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
+  inline void SetCode(int64_t value) {
+    m_codeHasBeenSet = true;
+    m_code = value;
+  }
+  inline NetworkAclIcmpTypeCode& WithCode(int64_t value) {
+    SetCode(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>ICMP type. </p>
+   */
+  inline int64_t GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(int64_t value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline NetworkAclIcmpTypeCode& WithType(int64_t value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  int64_t m_code{0};
 
-    ///@{
-    /**
-     * <p>ICMP code. </p>
-     */
-    inline int GetCode() const{ return m_code; }
-    inline bool CodeHasBeenSet() const { return m_codeHasBeenSet; }
-    inline void SetCode(int value) { m_codeHasBeenSet = true; m_code = value; }
-    inline NetworkAclIcmpTypeCode& WithCode(int value) { SetCode(value); return *this;}
-    ///@}
+  int64_t m_type{0};
+  bool m_codeHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>ICMP type. </p>
-     */
-    inline int GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(int value) { m_typeHasBeenSet = true; m_type = value; }
-    inline NetworkAclIcmpTypeCode& WithType(int value) { SetType(value); return *this;}
-    ///@}
-  private:
-
-    int m_code;
-    bool m_codeHasBeenSet = false;
-
-    int m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSipRuleRequest::GetSipRuleRequest() : 
-    m_sipRuleIdHasBeenSet(false)
-{
-}
-
-Aws::String GetSipRuleRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSipRuleRequest::SerializePayload() const { return {}; }

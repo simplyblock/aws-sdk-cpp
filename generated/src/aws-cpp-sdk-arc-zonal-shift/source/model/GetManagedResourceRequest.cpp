@@ -12,16 +12,4 @@ using namespace Aws::ARCZonalShift::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetManagedResourceRequest::GetManagedResourceRequest() : 
-    m_resourceIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetManagedResourceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetManagedResourceRequest::SerializePayload() const { return {}; }

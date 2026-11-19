@@ -4,65 +4,75 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/RecommendationTemplate.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class CreateRecommendationTemplateResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult();
-    AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class CreateRecommendationTemplateResult {
+ public:
+  AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult() = default;
+  AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API CreateRecommendationTemplateResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The newly created recommendation template, returned as an object. This object
+   * includes the template's name, format, status, tags, Amazon S3 bucket location,
+   * and more.</p>
+   */
+  inline const RecommendationTemplate& GetRecommendationTemplate() const { return m_recommendationTemplate; }
+  template <typename RecommendationTemplateT = RecommendationTemplate>
+  void SetRecommendationTemplate(RecommendationTemplateT&& value) {
+    m_recommendationTemplateHasBeenSet = true;
+    m_recommendationTemplate = std::forward<RecommendationTemplateT>(value);
+  }
+  template <typename RecommendationTemplateT = RecommendationTemplate>
+  CreateRecommendationTemplateResult& WithRecommendationTemplate(RecommendationTemplateT&& value) {
+    SetRecommendationTemplate(std::forward<RecommendationTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The newly created recommendation template, returned as an object. This object
-     * includes the template's name, format, status, tags, Amazon S3 bucket location,
-     * and more.</p>
-     */
-    inline const RecommendationTemplate& GetRecommendationTemplate() const{ return m_recommendationTemplate; }
-    inline void SetRecommendationTemplate(const RecommendationTemplate& value) { m_recommendationTemplate = value; }
-    inline void SetRecommendationTemplate(RecommendationTemplate&& value) { m_recommendationTemplate = std::move(value); }
-    inline CreateRecommendationTemplateResult& WithRecommendationTemplate(const RecommendationTemplate& value) { SetRecommendationTemplate(value); return *this;}
-    inline CreateRecommendationTemplateResult& WithRecommendationTemplate(RecommendationTemplate&& value) { SetRecommendationTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateRecommendationTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateRecommendationTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateRecommendationTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateRecommendationTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RecommendationTemplate m_recommendationTemplate;
+ private:
+  RecommendationTemplate m_recommendationTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_recommendationTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

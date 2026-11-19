@@ -12,16 +12,4 @@ using namespace Aws::ApplicationCostProfiler::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteReportDefinitionRequest::DeleteReportDefinitionRequest() : 
-    m_reportIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteReportDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteReportDefinitionRequest::SerializePayload() const { return {}; }

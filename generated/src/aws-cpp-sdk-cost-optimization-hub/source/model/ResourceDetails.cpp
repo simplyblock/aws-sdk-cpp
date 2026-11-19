@@ -3,253 +3,230 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/cost-optimization-hub/model/ResourceDetails.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/cost-optimization-hub/model/ResourceDetails.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CostOptimizationHub
-{
-namespace Model
-{
+namespace Aws {
+namespace CostOptimizationHub {
+namespace Model {
 
-ResourceDetails::ResourceDetails() : 
-    m_lambdaFunctionHasBeenSet(false),
-    m_ecsServiceHasBeenSet(false),
-    m_ec2InstanceHasBeenSet(false),
-    m_ebsVolumeHasBeenSet(false),
-    m_ec2AutoScalingGroupHasBeenSet(false),
-    m_ec2ReservedInstancesHasBeenSet(false),
-    m_rdsReservedInstancesHasBeenSet(false),
-    m_elastiCacheReservedInstancesHasBeenSet(false),
-    m_openSearchReservedInstancesHasBeenSet(false),
-    m_redshiftReservedInstancesHasBeenSet(false),
-    m_ec2InstanceSavingsPlansHasBeenSet(false),
-    m_computeSavingsPlansHasBeenSet(false),
-    m_sageMakerSavingsPlansHasBeenSet(false),
-    m_rdsDbInstanceHasBeenSet(false),
-    m_rdsDbInstanceStorageHasBeenSet(false)
-{
-}
+ResourceDetails::ResourceDetails(JsonView jsonValue) { *this = jsonValue; }
 
-ResourceDetails::ResourceDetails(JsonView jsonValue)
-  : ResourceDetails()
-{
-  *this = jsonValue;
-}
-
-ResourceDetails& ResourceDetails::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("lambdaFunction"))
-  {
+ResourceDetails& ResourceDetails::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("lambdaFunction")) {
     m_lambdaFunction = jsonValue.GetObject("lambdaFunction");
-
     m_lambdaFunctionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ecsService"))
-  {
+  if (jsonValue.ValueExists("ecsService")) {
     m_ecsService = jsonValue.GetObject("ecsService");
-
     m_ecsServiceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ec2Instance"))
-  {
+  if (jsonValue.ValueExists("ec2Instance")) {
     m_ec2Instance = jsonValue.GetObject("ec2Instance");
-
     m_ec2InstanceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ebsVolume"))
-  {
+  if (jsonValue.ValueExists("ebsVolume")) {
     m_ebsVolume = jsonValue.GetObject("ebsVolume");
-
     m_ebsVolumeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ec2AutoScalingGroup"))
-  {
+  if (jsonValue.ValueExists("ec2AutoScalingGroup")) {
     m_ec2AutoScalingGroup = jsonValue.GetObject("ec2AutoScalingGroup");
-
     m_ec2AutoScalingGroupHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ec2ReservedInstances"))
-  {
+  if (jsonValue.ValueExists("ec2ReservedInstances")) {
     m_ec2ReservedInstances = jsonValue.GetObject("ec2ReservedInstances");
-
     m_ec2ReservedInstancesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("rdsReservedInstances"))
-  {
+  if (jsonValue.ValueExists("rdsReservedInstances")) {
     m_rdsReservedInstances = jsonValue.GetObject("rdsReservedInstances");
-
     m_rdsReservedInstancesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("elastiCacheReservedInstances"))
-  {
+  if (jsonValue.ValueExists("elastiCacheReservedInstances")) {
     m_elastiCacheReservedInstances = jsonValue.GetObject("elastiCacheReservedInstances");
-
     m_elastiCacheReservedInstancesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("openSearchReservedInstances"))
-  {
+  if (jsonValue.ValueExists("openSearchReservedInstances")) {
     m_openSearchReservedInstances = jsonValue.GetObject("openSearchReservedInstances");
-
     m_openSearchReservedInstancesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("redshiftReservedInstances"))
-  {
+  if (jsonValue.ValueExists("redshiftReservedInstances")) {
     m_redshiftReservedInstances = jsonValue.GetObject("redshiftReservedInstances");
-
     m_redshiftReservedInstancesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ec2InstanceSavingsPlans"))
-  {
+  if (jsonValue.ValueExists("ec2InstanceSavingsPlans")) {
     m_ec2InstanceSavingsPlans = jsonValue.GetObject("ec2InstanceSavingsPlans");
-
     m_ec2InstanceSavingsPlansHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("computeSavingsPlans"))
-  {
+  if (jsonValue.ValueExists("computeSavingsPlans")) {
     m_computeSavingsPlans = jsonValue.GetObject("computeSavingsPlans");
-
     m_computeSavingsPlansHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("sageMakerSavingsPlans"))
-  {
+  if (jsonValue.ValueExists("sageMakerSavingsPlans")) {
     m_sageMakerSavingsPlans = jsonValue.GetObject("sageMakerSavingsPlans");
-
     m_sageMakerSavingsPlansHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("rdsDbInstance"))
-  {
+  if (jsonValue.ValueExists("rdsDbInstance")) {
     m_rdsDbInstance = jsonValue.GetObject("rdsDbInstance");
-
     m_rdsDbInstanceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("rdsDbInstanceStorage"))
-  {
+  if (jsonValue.ValueExists("rdsDbInstanceStorage")) {
     m_rdsDbInstanceStorage = jsonValue.GetObject("rdsDbInstanceStorage");
-
     m_rdsDbInstanceStorageHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("auroraDbClusterStorage")) {
+    m_auroraDbClusterStorage = jsonValue.GetObject("auroraDbClusterStorage");
+    m_auroraDbClusterStorageHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("dynamoDbReservedCapacity")) {
+    m_dynamoDbReservedCapacity = jsonValue.GetObject("dynamoDbReservedCapacity");
+    m_dynamoDbReservedCapacityHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("memoryDbReservedInstances")) {
+    m_memoryDbReservedInstances = jsonValue.GetObject("memoryDbReservedInstances");
+    m_memoryDbReservedInstancesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("natGateway")) {
+    m_natGateway = jsonValue.GetObject("natGateway");
+    m_natGatewayHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("dynamoDbTable")) {
+    m_dynamoDbTable = jsonValue.GetObject("dynamoDbTable");
+    m_dynamoDbTableHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("elastiCacheCluster")) {
+    m_elastiCacheCluster = jsonValue.GetObject("elastiCacheCluster");
+    m_elastiCacheClusterHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("memoryDbCluster")) {
+    m_memoryDbCluster = jsonValue.GetObject("memoryDbCluster");
+    m_memoryDbClusterHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("documentDbCluster")) {
+    m_documentDbCluster = jsonValue.GetObject("documentDbCluster");
+    m_documentDbClusterHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("workSpaces")) {
+    m_workSpaces = jsonValue.GetObject("workSpaces");
+    m_workSpacesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("sageMakerEndpoint")) {
+    m_sageMakerEndpoint = jsonValue.GetObject("sageMakerEndpoint");
+    m_sageMakerEndpointHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ResourceDetails::Jsonize() const
-{
+JsonValue ResourceDetails::Jsonize() const {
   JsonValue payload;
 
-  if(m_lambdaFunctionHasBeenSet)
-  {
-   payload.WithObject("lambdaFunction", m_lambdaFunction.Jsonize());
-
+  if (m_lambdaFunctionHasBeenSet) {
+    payload.WithObject("lambdaFunction", m_lambdaFunction.Jsonize());
   }
 
-  if(m_ecsServiceHasBeenSet)
-  {
-   payload.WithObject("ecsService", m_ecsService.Jsonize());
-
+  if (m_ecsServiceHasBeenSet) {
+    payload.WithObject("ecsService", m_ecsService.Jsonize());
   }
 
-  if(m_ec2InstanceHasBeenSet)
-  {
-   payload.WithObject("ec2Instance", m_ec2Instance.Jsonize());
-
+  if (m_ec2InstanceHasBeenSet) {
+    payload.WithObject("ec2Instance", m_ec2Instance.Jsonize());
   }
 
-  if(m_ebsVolumeHasBeenSet)
-  {
-   payload.WithObject("ebsVolume", m_ebsVolume.Jsonize());
-
+  if (m_ebsVolumeHasBeenSet) {
+    payload.WithObject("ebsVolume", m_ebsVolume.Jsonize());
   }
 
-  if(m_ec2AutoScalingGroupHasBeenSet)
-  {
-   payload.WithObject("ec2AutoScalingGroup", m_ec2AutoScalingGroup.Jsonize());
-
+  if (m_ec2AutoScalingGroupHasBeenSet) {
+    payload.WithObject("ec2AutoScalingGroup", m_ec2AutoScalingGroup.Jsonize());
   }
 
-  if(m_ec2ReservedInstancesHasBeenSet)
-  {
-   payload.WithObject("ec2ReservedInstances", m_ec2ReservedInstances.Jsonize());
-
+  if (m_ec2ReservedInstancesHasBeenSet) {
+    payload.WithObject("ec2ReservedInstances", m_ec2ReservedInstances.Jsonize());
   }
 
-  if(m_rdsReservedInstancesHasBeenSet)
-  {
-   payload.WithObject("rdsReservedInstances", m_rdsReservedInstances.Jsonize());
-
+  if (m_rdsReservedInstancesHasBeenSet) {
+    payload.WithObject("rdsReservedInstances", m_rdsReservedInstances.Jsonize());
   }
 
-  if(m_elastiCacheReservedInstancesHasBeenSet)
-  {
-   payload.WithObject("elastiCacheReservedInstances", m_elastiCacheReservedInstances.Jsonize());
-
+  if (m_elastiCacheReservedInstancesHasBeenSet) {
+    payload.WithObject("elastiCacheReservedInstances", m_elastiCacheReservedInstances.Jsonize());
   }
 
-  if(m_openSearchReservedInstancesHasBeenSet)
-  {
-   payload.WithObject("openSearchReservedInstances", m_openSearchReservedInstances.Jsonize());
-
+  if (m_openSearchReservedInstancesHasBeenSet) {
+    payload.WithObject("openSearchReservedInstances", m_openSearchReservedInstances.Jsonize());
   }
 
-  if(m_redshiftReservedInstancesHasBeenSet)
-  {
-   payload.WithObject("redshiftReservedInstances", m_redshiftReservedInstances.Jsonize());
-
+  if (m_redshiftReservedInstancesHasBeenSet) {
+    payload.WithObject("redshiftReservedInstances", m_redshiftReservedInstances.Jsonize());
   }
 
-  if(m_ec2InstanceSavingsPlansHasBeenSet)
-  {
-   payload.WithObject("ec2InstanceSavingsPlans", m_ec2InstanceSavingsPlans.Jsonize());
-
+  if (m_ec2InstanceSavingsPlansHasBeenSet) {
+    payload.WithObject("ec2InstanceSavingsPlans", m_ec2InstanceSavingsPlans.Jsonize());
   }
 
-  if(m_computeSavingsPlansHasBeenSet)
-  {
-   payload.WithObject("computeSavingsPlans", m_computeSavingsPlans.Jsonize());
-
+  if (m_computeSavingsPlansHasBeenSet) {
+    payload.WithObject("computeSavingsPlans", m_computeSavingsPlans.Jsonize());
   }
 
-  if(m_sageMakerSavingsPlansHasBeenSet)
-  {
-   payload.WithObject("sageMakerSavingsPlans", m_sageMakerSavingsPlans.Jsonize());
-
+  if (m_sageMakerSavingsPlansHasBeenSet) {
+    payload.WithObject("sageMakerSavingsPlans", m_sageMakerSavingsPlans.Jsonize());
   }
 
-  if(m_rdsDbInstanceHasBeenSet)
-  {
-   payload.WithObject("rdsDbInstance", m_rdsDbInstance.Jsonize());
-
+  if (m_rdsDbInstanceHasBeenSet) {
+    payload.WithObject("rdsDbInstance", m_rdsDbInstance.Jsonize());
   }
 
-  if(m_rdsDbInstanceStorageHasBeenSet)
-  {
-   payload.WithObject("rdsDbInstanceStorage", m_rdsDbInstanceStorage.Jsonize());
+  if (m_rdsDbInstanceStorageHasBeenSet) {
+    payload.WithObject("rdsDbInstanceStorage", m_rdsDbInstanceStorage.Jsonize());
+  }
 
+  if (m_auroraDbClusterStorageHasBeenSet) {
+    payload.WithObject("auroraDbClusterStorage", m_auroraDbClusterStorage.Jsonize());
+  }
+
+  if (m_dynamoDbReservedCapacityHasBeenSet) {
+    payload.WithObject("dynamoDbReservedCapacity", m_dynamoDbReservedCapacity.Jsonize());
+  }
+
+  if (m_memoryDbReservedInstancesHasBeenSet) {
+    payload.WithObject("memoryDbReservedInstances", m_memoryDbReservedInstances.Jsonize());
+  }
+
+  if (m_natGatewayHasBeenSet) {
+    payload.WithObject("natGateway", m_natGateway.Jsonize());
+  }
+
+  if (m_dynamoDbTableHasBeenSet) {
+    payload.WithObject("dynamoDbTable", m_dynamoDbTable.Jsonize());
+  }
+
+  if (m_elastiCacheClusterHasBeenSet) {
+    payload.WithObject("elastiCacheCluster", m_elastiCacheCluster.Jsonize());
+  }
+
+  if (m_memoryDbClusterHasBeenSet) {
+    payload.WithObject("memoryDbCluster", m_memoryDbCluster.Jsonize());
+  }
+
+  if (m_documentDbClusterHasBeenSet) {
+    payload.WithObject("documentDbCluster", m_documentDbCluster.Jsonize());
+  }
+
+  if (m_workSpacesHasBeenSet) {
+    payload.WithObject("workSpaces", m_workSpaces.Jsonize());
+  }
+
+  if (m_sageMakerEndpointHasBeenSet) {
+    payload.WithObject("sageMakerEndpoint", m_sageMakerEndpoint.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CostOptimizationHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostOptimizationHub
+}  // namespace Aws

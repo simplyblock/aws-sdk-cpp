@@ -3,39 +3,26 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticloadbalancingv2/model/ModifyTargetGroupAttributesRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticloadbalancingv2/model/ModifyTargetGroupAttributesRequest.h>
 
 using namespace Aws::ElasticLoadBalancingv2::Model;
 using namespace Aws::Utils;
 
-ModifyTargetGroupAttributesRequest::ModifyTargetGroupAttributesRequest() : 
-    m_targetGroupArnHasBeenSet(false),
-    m_attributesHasBeenSet(false)
-{
-}
-
-Aws::String ModifyTargetGroupAttributesRequest::SerializePayload() const
-{
+Aws::String ModifyTargetGroupAttributesRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ModifyTargetGroupAttributes&";
-  if(m_targetGroupArnHasBeenSet)
-  {
+  if (m_targetGroupArnHasBeenSet) {
     ss << "TargetGroupArn=" << StringUtils::URLEncode(m_targetGroupArn.c_str()) << "&";
   }
 
-  if(m_attributesHasBeenSet)
-  {
-    if (m_attributes.empty())
-    {
+  if (m_attributesHasBeenSet) {
+    if (m_attributes.empty()) {
       ss << "Attributes=&";
-    }
-    else
-    {
+    } else {
       unsigned attributesCount = 1;
-      for(auto& item : m_attributes)
-      {
+      for (auto& item : m_attributes) {
         item.OutputToStream(ss, "Attributes.member.", attributesCount, "");
         attributesCount++;
       }
@@ -46,8 +33,4 @@ Aws::String ModifyTargetGroupAttributesRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ModifyTargetGroupAttributesRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ModifyTargetGroupAttributesRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

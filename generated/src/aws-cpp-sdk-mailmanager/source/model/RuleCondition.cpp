@@ -3,127 +3,184 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/RuleCondition.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MailManager
-{
-namespace Model
-{
+namespace Aws {
+namespace MailManager {
+namespace Model {
 
-RuleCondition::RuleCondition() : 
-    m_booleanExpressionHasBeenSet(false),
-    m_dmarcExpressionHasBeenSet(false),
-    m_ipExpressionHasBeenSet(false),
-    m_numberExpressionHasBeenSet(false),
-    m_stringExpressionHasBeenSet(false),
-    m_verdictExpressionHasBeenSet(false)
-{
-}
+RuleCondition::RuleCondition(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RuleCondition::RuleCondition(JsonView jsonValue)
-  : RuleCondition()
-{
-  *this = jsonValue;
-}
+RuleCondition& RuleCondition::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RuleCondition& RuleCondition::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("BooleanExpression"))
-  {
-    m_booleanExpression = jsonValue.GetObject("BooleanExpression");
+              if (initialKeyStr == "BooleanExpression") {
+                m_booleanExpression = RuleBooleanExpression(decoder);
+                m_booleanExpressionHasBeenSet = true;
+              }
 
-    m_booleanExpressionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "StringExpression") {
+                m_stringExpression = RuleStringExpression(decoder);
+                m_stringExpressionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("DmarcExpression"))
-  {
-    m_dmarcExpression = jsonValue.GetObject("DmarcExpression");
+              else if (initialKeyStr == "NumberExpression") {
+                m_numberExpression = RuleNumberExpression(decoder);
+                m_numberExpressionHasBeenSet = true;
+              }
 
-    m_dmarcExpressionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "IpExpression") {
+                m_ipExpression = RuleIpExpression(decoder);
+                m_ipExpressionHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("IpExpression"))
-  {
-    m_ipExpression = jsonValue.GetObject("IpExpression");
+              else if (initialKeyStr == "VerdictExpression") {
+                m_verdictExpression = RuleVerdictExpression(decoder);
+                m_verdictExpressionHasBeenSet = true;
+              }
 
-    m_ipExpressionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DmarcExpression") {
+                m_dmarcExpression = RuleDmarcExpression(decoder);
+                m_dmarcExpressionHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RuleCondition", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("NumberExpression"))
-  {
-    m_numberExpression = jsonValue.GetObject("NumberExpression");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_numberExpressionHasBeenSet = true;
-  }
+            if (initialKeyStr == "BooleanExpression") {
+              m_booleanExpression = RuleBooleanExpression(decoder);
+              m_booleanExpressionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("StringExpression"))
-  {
-    m_stringExpression = jsonValue.GetObject("StringExpression");
+            else if (initialKeyStr == "StringExpression") {
+              m_stringExpression = RuleStringExpression(decoder);
+              m_stringExpressionHasBeenSet = true;
+            }
 
-    m_stringExpressionHasBeenSet = true;
-  }
+            else if (initialKeyStr == "NumberExpression") {
+              m_numberExpression = RuleNumberExpression(decoder);
+              m_numberExpressionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VerdictExpression"))
-  {
-    m_verdictExpression = jsonValue.GetObject("VerdictExpression");
+            else if (initialKeyStr == "IpExpression") {
+              m_ipExpression = RuleIpExpression(decoder);
+              m_ipExpressionHasBeenSet = true;
+            }
 
-    m_verdictExpressionHasBeenSet = true;
+            else if (initialKeyStr == "VerdictExpression") {
+              m_verdictExpression = RuleVerdictExpression(decoder);
+              m_verdictExpressionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DmarcExpression") {
+              m_dmarcExpression = RuleDmarcExpression(decoder);
+              m_dmarcExpressionHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue RuleCondition::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_booleanExpressionHasBeenSet)
-  {
-   payload.WithObject("BooleanExpression", m_booleanExpression.Jsonize());
-
+void RuleCondition::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_booleanExpressionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stringExpressionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_numberExpressionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ipExpressionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_verdictExpressionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dmarcExpressionHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_dmarcExpressionHasBeenSet)
-  {
-   payload.WithObject("DmarcExpression", m_dmarcExpression.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_booleanExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BooleanExpression"));
+    m_booleanExpression.CborEncode(encoder);
   }
 
-  if(m_ipExpressionHasBeenSet)
-  {
-   payload.WithObject("IpExpression", m_ipExpression.Jsonize());
-
+  if (m_stringExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("StringExpression"));
+    m_stringExpression.CborEncode(encoder);
   }
 
-  if(m_numberExpressionHasBeenSet)
-  {
-   payload.WithObject("NumberExpression", m_numberExpression.Jsonize());
-
+  if (m_numberExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NumberExpression"));
+    m_numberExpression.CborEncode(encoder);
   }
 
-  if(m_stringExpressionHasBeenSet)
-  {
-   payload.WithObject("StringExpression", m_stringExpression.Jsonize());
-
+  if (m_ipExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IpExpression"));
+    m_ipExpression.CborEncode(encoder);
   }
 
-  if(m_verdictExpressionHasBeenSet)
-  {
-   payload.WithObject("VerdictExpression", m_verdictExpression.Jsonize());
-
+  if (m_verdictExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VerdictExpression"));
+    m_verdictExpression.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_dmarcExpressionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DmarcExpression"));
+    m_dmarcExpression.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

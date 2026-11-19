@@ -12,17 +12,4 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetLayoutRequest::GetLayoutRequest() : 
-    m_domainIdHasBeenSet(false),
-    m_layoutIdHasBeenSet(false)
-{
-}
-
-Aws::String GetLayoutRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetLayoutRequest::SerializePayload() const { return {}; }

@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteMemberRequest::DeleteMemberRequest() : 
-    m_collaborationIdentifierHasBeenSet(false),
-    m_accountIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteMemberRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteMemberRequest::SerializePayload() const { return {}; }

@@ -4,80 +4,91 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a resource statement.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ResourceStatementRequest">AWS
+ * API Reference</a></p>
+ */
+class ResourceStatementRequest {
+ public:
+  AWS_EC2_API ResourceStatementRequest() = default;
+  AWS_EC2_API ResourceStatementRequest(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API ResourceStatementRequest& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a resource statement.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ResourceStatementRequest">AWS
-   * API Reference</a></p>
+   * <p>The resources.</p>
    */
-  class ResourceStatementRequest
-  {
-  public:
-    AWS_EC2_API ResourceStatementRequest();
-    AWS_EC2_API ResourceStatementRequest(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API ResourceStatementRequest& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::Vector<Aws::String>& GetResources() const { return m_resources; }
+  inline bool ResourcesHasBeenSet() const { return m_resourcesHasBeenSet; }
+  template <typename ResourcesT = Aws::Vector<Aws::String>>
+  void SetResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources = std::forward<ResourcesT>(value);
+  }
+  template <typename ResourcesT = Aws::Vector<Aws::String>>
+  ResourceStatementRequest& WithResources(ResourcesT&& value) {
+    SetResources(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  template <typename ResourcesT = Aws::String>
+  ResourceStatementRequest& AddResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources.emplace_back(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The resource types.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetResourceTypes() const { return m_resourceTypes; }
+  inline bool ResourceTypesHasBeenSet() const { return m_resourceTypesHasBeenSet; }
+  template <typename ResourceTypesT = Aws::Vector<Aws::String>>
+  void SetResourceTypes(ResourceTypesT&& value) {
+    m_resourceTypesHasBeenSet = true;
+    m_resourceTypes = std::forward<ResourceTypesT>(value);
+  }
+  template <typename ResourceTypesT = Aws::Vector<Aws::String>>
+  ResourceStatementRequest& WithResourceTypes(ResourceTypesT&& value) {
+    SetResourceTypes(std::forward<ResourceTypesT>(value));
+    return *this;
+  }
+  template <typename ResourceTypesT = Aws::String>
+  ResourceStatementRequest& AddResourceTypes(ResourceTypesT&& value) {
+    m_resourceTypesHasBeenSet = true;
+    m_resourceTypes.emplace_back(std::forward<ResourceTypesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_resources;
 
+  Aws::Vector<Aws::String> m_resourceTypes;
+  bool m_resourcesHasBeenSet = false;
+  bool m_resourceTypesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The resources.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetResources() const{ return m_resources; }
-    inline bool ResourcesHasBeenSet() const { return m_resourcesHasBeenSet; }
-    inline void SetResources(const Aws::Vector<Aws::String>& value) { m_resourcesHasBeenSet = true; m_resources = value; }
-    inline void SetResources(Aws::Vector<Aws::String>&& value) { m_resourcesHasBeenSet = true; m_resources = std::move(value); }
-    inline ResourceStatementRequest& WithResources(const Aws::Vector<Aws::String>& value) { SetResources(value); return *this;}
-    inline ResourceStatementRequest& WithResources(Aws::Vector<Aws::String>&& value) { SetResources(std::move(value)); return *this;}
-    inline ResourceStatementRequest& AddResources(const Aws::String& value) { m_resourcesHasBeenSet = true; m_resources.push_back(value); return *this; }
-    inline ResourceStatementRequest& AddResources(Aws::String&& value) { m_resourcesHasBeenSet = true; m_resources.push_back(std::move(value)); return *this; }
-    inline ResourceStatementRequest& AddResources(const char* value) { m_resourcesHasBeenSet = true; m_resources.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The resource types.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetResourceTypes() const{ return m_resourceTypes; }
-    inline bool ResourceTypesHasBeenSet() const { return m_resourceTypesHasBeenSet; }
-    inline void SetResourceTypes(const Aws::Vector<Aws::String>& value) { m_resourceTypesHasBeenSet = true; m_resourceTypes = value; }
-    inline void SetResourceTypes(Aws::Vector<Aws::String>&& value) { m_resourceTypesHasBeenSet = true; m_resourceTypes = std::move(value); }
-    inline ResourceStatementRequest& WithResourceTypes(const Aws::Vector<Aws::String>& value) { SetResourceTypes(value); return *this;}
-    inline ResourceStatementRequest& WithResourceTypes(Aws::Vector<Aws::String>&& value) { SetResourceTypes(std::move(value)); return *this;}
-    inline ResourceStatementRequest& AddResourceTypes(const Aws::String& value) { m_resourceTypesHasBeenSet = true; m_resourceTypes.push_back(value); return *this; }
-    inline ResourceStatementRequest& AddResourceTypes(Aws::String&& value) { m_resourceTypesHasBeenSet = true; m_resourceTypes.push_back(std::move(value)); return *this; }
-    inline ResourceStatementRequest& AddResourceTypes(const char* value) { m_resourceTypesHasBeenSet = true; m_resourceTypes.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_resources;
-    bool m_resourcesHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_resourceTypes;
-    bool m_resourceTypesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

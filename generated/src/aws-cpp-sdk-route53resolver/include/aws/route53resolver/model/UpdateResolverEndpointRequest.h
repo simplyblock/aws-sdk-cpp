@@ -4,143 +4,277 @@
  */
 
 #pragma once
-#include <aws/route53resolver/Route53Resolver_EXPORTS.h>
-#include <aws/route53resolver/Route53ResolverRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/route53resolver/model/ResolverEndpointType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/route53resolver/model/UpdateIpAddress.h>
+#include <aws/route53resolver/Route53ResolverRequest.h>
+#include <aws/route53resolver/Route53Resolver_EXPORTS.h>
 #include <aws/route53resolver/model/Protocol.h>
+#include <aws/route53resolver/model/ResolverEndpointType.h>
+#include <aws/route53resolver/model/UpdateIpAddress.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Route53Resolver
-{
-namespace Model
-{
+namespace Aws {
+namespace Route53Resolver {
+namespace Model {
 
+/**
+ */
+class UpdateResolverEndpointRequest : public Route53ResolverRequest {
+ public:
+  AWS_ROUTE53RESOLVER_API UpdateResolverEndpointRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateResolverEndpoint"; }
+
+  AWS_ROUTE53RESOLVER_API Aws::String SerializePayload() const override;
+
+  AWS_ROUTE53RESOLVER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the Resolver endpoint that you want to update.</p>
    */
-  class UpdateResolverEndpointRequest : public Route53ResolverRequest
-  {
-  public:
-    AWS_ROUTE53RESOLVER_API UpdateResolverEndpointRequest();
+  inline const Aws::String& GetResolverEndpointId() const { return m_resolverEndpointId; }
+  inline bool ResolverEndpointIdHasBeenSet() const { return m_resolverEndpointIdHasBeenSet; }
+  template <typename ResolverEndpointIdT = Aws::String>
+  void SetResolverEndpointId(ResolverEndpointIdT&& value) {
+    m_resolverEndpointIdHasBeenSet = true;
+    m_resolverEndpointId = std::forward<ResolverEndpointIdT>(value);
+  }
+  template <typename ResolverEndpointIdT = Aws::String>
+  UpdateResolverEndpointRequest& WithResolverEndpointId(ResolverEndpointIdT&& value) {
+    SetResolverEndpointId(std::forward<ResolverEndpointIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateResolverEndpoint"; }
+  ///@{
+  /**
+   * <p>The name of the Resolver endpoint that you want to update.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateResolverEndpointRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ROUTE53RESOLVER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> Specifies the endpoint type for what type of IP address the endpoint uses to
+   * forward DNS queries. </p> <p>Updating to <code>IPV6</code> type isn't currently
+   * supported.</p>
+   */
+  inline ResolverEndpointType GetResolverEndpointType() const { return m_resolverEndpointType; }
+  inline bool ResolverEndpointTypeHasBeenSet() const { return m_resolverEndpointTypeHasBeenSet; }
+  inline void SetResolverEndpointType(ResolverEndpointType value) {
+    m_resolverEndpointTypeHasBeenSet = true;
+    m_resolverEndpointType = value;
+  }
+  inline UpdateResolverEndpointRequest& WithResolverEndpointType(ResolverEndpointType value) {
+    SetResolverEndpointType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_ROUTE53RESOLVER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p> Specifies the IPv6 address when you update the Resolver endpoint from IPv4
+   * to dual-stack. If you don't specify an IPv6 address, one will be automatically
+   * chosen from your subnet. </p>
+   */
+  inline const Aws::Vector<UpdateIpAddress>& GetUpdateIpAddresses() const { return m_updateIpAddresses; }
+  inline bool UpdateIpAddressesHasBeenSet() const { return m_updateIpAddressesHasBeenSet; }
+  template <typename UpdateIpAddressesT = Aws::Vector<UpdateIpAddress>>
+  void SetUpdateIpAddresses(UpdateIpAddressesT&& value) {
+    m_updateIpAddressesHasBeenSet = true;
+    m_updateIpAddresses = std::forward<UpdateIpAddressesT>(value);
+  }
+  template <typename UpdateIpAddressesT = Aws::Vector<UpdateIpAddress>>
+  UpdateResolverEndpointRequest& WithUpdateIpAddresses(UpdateIpAddressesT&& value) {
+    SetUpdateIpAddresses(std::forward<UpdateIpAddressesT>(value));
+    return *this;
+  }
+  template <typename UpdateIpAddressesT = UpdateIpAddress>
+  UpdateResolverEndpointRequest& AddUpdateIpAddresses(UpdateIpAddressesT&& value) {
+    m_updateIpAddressesHasBeenSet = true;
+    m_updateIpAddresses.emplace_back(std::forward<UpdateIpAddressesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The protocols you want to use for the endpoint. DoH-FIPS is applicable for
+   * default inbound endpoints only. </p> <p>For a default inbound endpoint you can
+   * apply the protocols as follows:</p> <ul> <li> <p> Do53 and DoH in
+   * combination.</p> </li> <li> <p>Do53 and DoH-FIPS in combination.</p> </li> <li>
+   * <p>Do53 alone.</p> </li> <li> <p>DoH alone.</p> </li> <li> <p>DoH-FIPS
+   * alone.</p> </li> <li> <p>None, which is treated as Do53.</p> </li> </ul> <p>For
+   * a delegation inbound endpoint you can use Do53 only.</p> <p>For an outbound
+   * endpoint you can apply the protocols as follows:</p> <ul> <li> <p> Do53 and DoH
+   * in combination.</p> </li> <li> <p>Do53 alone.</p> </li> <li> <p>DoH alone.</p>
+   * </li> <li> <p>None, which is treated as Do53.</p> </li> </ul>  <p>
+   * You can't change the protocol of an inbound endpoint directly from only Do53 to
+   * only DoH, or DoH-FIPS. This is to prevent a sudden disruption to incoming
+   * traffic that relies on Do53. To change the protocol from Do53 to DoH, or
+   * DoH-FIPS, you must first enable both Do53 and DoH, or Do53 and DoH-FIPS, to make
+   * sure that all incoming traffic has transferred to using the DoH protocol, or
+   * DoH-FIPS, and then remove the Do53.</p>
+   */
+  inline const Aws::Vector<Protocol>& GetProtocols() const { return m_protocols; }
+  inline bool ProtocolsHasBeenSet() const { return m_protocolsHasBeenSet; }
+  template <typename ProtocolsT = Aws::Vector<Protocol>>
+  void SetProtocols(ProtocolsT&& value) {
+    m_protocolsHasBeenSet = true;
+    m_protocols = std::forward<ProtocolsT>(value);
+  }
+  template <typename ProtocolsT = Aws::Vector<Protocol>>
+  UpdateResolverEndpointRequest& WithProtocols(ProtocolsT&& value) {
+    SetProtocols(std::forward<ProtocolsT>(value));
+    return *this;
+  }
+  inline UpdateResolverEndpointRequest& AddProtocols(Protocol value) {
+    m_protocolsHasBeenSet = true;
+    m_protocols.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Resolver endpoint that you want to update.</p>
-     */
-    inline const Aws::String& GetResolverEndpointId() const{ return m_resolverEndpointId; }
-    inline bool ResolverEndpointIdHasBeenSet() const { return m_resolverEndpointIdHasBeenSet; }
-    inline void SetResolverEndpointId(const Aws::String& value) { m_resolverEndpointIdHasBeenSet = true; m_resolverEndpointId = value; }
-    inline void SetResolverEndpointId(Aws::String&& value) { m_resolverEndpointIdHasBeenSet = true; m_resolverEndpointId = std::move(value); }
-    inline void SetResolverEndpointId(const char* value) { m_resolverEndpointIdHasBeenSet = true; m_resolverEndpointId.assign(value); }
-    inline UpdateResolverEndpointRequest& WithResolverEndpointId(const Aws::String& value) { SetResolverEndpointId(value); return *this;}
-    inline UpdateResolverEndpointRequest& WithResolverEndpointId(Aws::String&& value) { SetResolverEndpointId(std::move(value)); return *this;}
-    inline UpdateResolverEndpointRequest& WithResolverEndpointId(const char* value) { SetResolverEndpointId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updates whether RNI enhanced metrics are enabled for the Resolver endpoints.
+   * When set to true, one-minute granular metrics are published in CloudWatch for
+   * each RNI associated with this endpoint. When set to false, metrics are not
+   * published.</p>  <p>Standard CloudWatch pricing and charges are applied for
+   * using the Route 53 Resolver endpoint RNI enhanced metrics. For more information,
+   * see <a
+   * href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-resolver-with-cloudwatch.html">Detailed
+   * metrics</a>.</p>
+   */
+  inline bool GetRniEnhancedMetricsEnabled() const { return m_rniEnhancedMetricsEnabled; }
+  inline bool RniEnhancedMetricsEnabledHasBeenSet() const { return m_rniEnhancedMetricsEnabledHasBeenSet; }
+  inline void SetRniEnhancedMetricsEnabled(bool value) {
+    m_rniEnhancedMetricsEnabledHasBeenSet = true;
+    m_rniEnhancedMetricsEnabled = value;
+  }
+  inline UpdateResolverEndpointRequest& WithRniEnhancedMetricsEnabled(bool value) {
+    SetRniEnhancedMetricsEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the Resolver endpoint that you want to update.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateResolverEndpointRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateResolverEndpointRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateResolverEndpointRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updates whether target name server metrics are enabled for the outbound
+   * Resolver endpoints. When set to true, one-minute granular metrics are published
+   * in CloudWatch for each target name server associated with this endpoint. When
+   * set to false, metrics are not published. This setting is not supported for
+   * inbound Resolver endpoints.</p>  <p>Standard CloudWatch pricing and
+   * charges are applied for using the Route 53 Resolver endpoint target name server
+   * metrics. For more information, see <a
+   * href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-resolver-with-cloudwatch.html">Detailed
+   * metrics</a>.</p>
+   */
+  inline bool GetTargetNameServerMetricsEnabled() const { return m_targetNameServerMetricsEnabled; }
+  inline bool TargetNameServerMetricsEnabledHasBeenSet() const { return m_targetNameServerMetricsEnabledHasBeenSet; }
+  inline void SetTargetNameServerMetricsEnabled(bool value) {
+    m_targetNameServerMetricsEnabledHasBeenSet = true;
+    m_targetNameServerMetricsEnabled = value;
+  }
+  inline UpdateResolverEndpointRequest& WithTargetNameServerMetricsEnabled(bool value) {
+    SetTargetNameServerMetricsEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Specifies the endpoint type for what type of IP address the endpoint uses to
-     * forward DNS queries. </p> <p>Updating to <code>IPV6</code> type isn't currently
-     * supported.</p>
-     */
-    inline const ResolverEndpointType& GetResolverEndpointType() const{ return m_resolverEndpointType; }
-    inline bool ResolverEndpointTypeHasBeenSet() const { return m_resolverEndpointTypeHasBeenSet; }
-    inline void SetResolverEndpointType(const ResolverEndpointType& value) { m_resolverEndpointTypeHasBeenSet = true; m_resolverEndpointType = value; }
-    inline void SetResolverEndpointType(ResolverEndpointType&& value) { m_resolverEndpointTypeHasBeenSet = true; m_resolverEndpointType = std::move(value); }
-    inline UpdateResolverEndpointRequest& WithResolverEndpointType(const ResolverEndpointType& value) { SetResolverEndpointType(value); return *this;}
-    inline UpdateResolverEndpointRequest& WithResolverEndpointType(ResolverEndpointType&& value) { SetResolverEndpointType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether DNS64 is enabled for the inbound Resolver endpoint. When
+   * set to <code>true</code>, Route 53 Resolver synthesizes AAAA (IPv6) records for
+   * IPv4-only services by prepending the <code>64:ff9b::/96</code> prefix to the
+   * IPv4 address. This enables IPv6-only clients that send queries through the
+   * inbound endpoint to reach IPv4-only services. DNS64 works with NAT64 to provide
+   * complete IPv6-to-IPv4 translation.</p>
+   */
+  inline bool GetDns64Enabled() const { return m_dns64Enabled; }
+  inline bool Dns64EnabledHasBeenSet() const { return m_dns64EnabledHasBeenSet; }
+  inline void SetDns64Enabled(bool value) {
+    m_dns64EnabledHasBeenSet = true;
+    m_dns64Enabled = value;
+  }
+  inline UpdateResolverEndpointRequest& WithDns64Enabled(bool value) {
+    SetDns64Enabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Specifies the IPv6 address when you update the Resolver endpoint from IPv4
-     * to dual-stack. If you don't specify an IPv6 address, one will be automatically
-     * chosen from your subnet. </p>
-     */
-    inline const Aws::Vector<UpdateIpAddress>& GetUpdateIpAddresses() const{ return m_updateIpAddresses; }
-    inline bool UpdateIpAddressesHasBeenSet() const { return m_updateIpAddressesHasBeenSet; }
-    inline void SetUpdateIpAddresses(const Aws::Vector<UpdateIpAddress>& value) { m_updateIpAddressesHasBeenSet = true; m_updateIpAddresses = value; }
-    inline void SetUpdateIpAddresses(Aws::Vector<UpdateIpAddress>&& value) { m_updateIpAddressesHasBeenSet = true; m_updateIpAddresses = std::move(value); }
-    inline UpdateResolverEndpointRequest& WithUpdateIpAddresses(const Aws::Vector<UpdateIpAddress>& value) { SetUpdateIpAddresses(value); return *this;}
-    inline UpdateResolverEndpointRequest& WithUpdateIpAddresses(Aws::Vector<UpdateIpAddress>&& value) { SetUpdateIpAddresses(std::move(value)); return *this;}
-    inline UpdateResolverEndpointRequest& AddUpdateIpAddresses(const UpdateIpAddress& value) { m_updateIpAddressesHasBeenSet = true; m_updateIpAddresses.push_back(value); return *this; }
-    inline UpdateResolverEndpointRequest& AddUpdateIpAddresses(UpdateIpAddress&& value) { m_updateIpAddressesHasBeenSet = true; m_updateIpAddresses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether IPv6 internet access is enabled for the outbound Resolver
+   * endpoint. When set to <code>true</code>, the endpoint elastic network interfaces
+   * (ENIs) can forward DNS queries to public IPv6 targets through an internet
+   * gateway.</p>  <p>When you enable IPv6 internet access, use network
+   * controls like security groups, NACLs, or egress-only internet gateways to
+   * protect the endpoint ENIs from unsolicited ingress traffic. Be aware that some
+   * network controls can affect DNS query throughput due to connection tracking. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/ec2/latest/userguide/security-group-connection-tracking.html">Amazon
+   * EC2 security group connection tracking</a> and <a
+   * href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/best-practices-resolver-endpoint-scaling.html">Resolver
+   * endpoint scaling</a>.</p>
+   */
+  inline bool GetIpv6InternetAccessEnabled() const { return m_ipv6InternetAccessEnabled; }
+  inline bool Ipv6InternetAccessEnabledHasBeenSet() const { return m_ipv6InternetAccessEnabledHasBeenSet; }
+  inline void SetIpv6InternetAccessEnabled(bool value) {
+    m_ipv6InternetAccessEnabledHasBeenSet = true;
+    m_ipv6InternetAccessEnabled = value;
+  }
+  inline UpdateResolverEndpointRequest& WithIpv6InternetAccessEnabled(bool value) {
+    SetIpv6InternetAccessEnabled(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_resolverEndpointId;
 
-    ///@{
-    /**
-     * <p> The protocols you want to use for the endpoint. DoH-FIPS is applicable for
-     * inbound endpoints only. </p> <p>For an inbound endpoint you can apply the
-     * protocols as follows:</p> <ul> <li> <p> Do53 and DoH in combination.</p> </li>
-     * <li> <p>Do53 and DoH-FIPS in combination.</p> </li> <li> <p>Do53 alone.</p>
-     * </li> <li> <p>DoH alone.</p> </li> <li> <p>DoH-FIPS alone.</p> </li> <li>
-     * <p>None, which is treated as Do53.</p> </li> </ul> <p>For an outbound endpoint
-     * you can apply the protocols as follows:</p> <ul> <li> <p> Do53 and DoH in
-     * combination.</p> </li> <li> <p>Do53 alone.</p> </li> <li> <p>DoH alone.</p>
-     * </li> <li> <p>None, which is treated as Do53.</p> </li> </ul>  <p>
-     * You can't change the protocol of an inbound endpoint directly from only Do53 to
-     * only DoH, or DoH-FIPS. This is to prevent a sudden disruption to incoming
-     * traffic that relies on Do53. To change the protocol from Do53 to DoH, or
-     * DoH-FIPS, you must first enable both Do53 and DoH, or Do53 and DoH-FIPS, to make
-     * sure that all incoming traffic has transferred to using the DoH protocol, or
-     * DoH-FIPS, and then remove the Do53.</p> 
-     */
-    inline const Aws::Vector<Protocol>& GetProtocols() const{ return m_protocols; }
-    inline bool ProtocolsHasBeenSet() const { return m_protocolsHasBeenSet; }
-    inline void SetProtocols(const Aws::Vector<Protocol>& value) { m_protocolsHasBeenSet = true; m_protocols = value; }
-    inline void SetProtocols(Aws::Vector<Protocol>&& value) { m_protocolsHasBeenSet = true; m_protocols = std::move(value); }
-    inline UpdateResolverEndpointRequest& WithProtocols(const Aws::Vector<Protocol>& value) { SetProtocols(value); return *this;}
-    inline UpdateResolverEndpointRequest& WithProtocols(Aws::Vector<Protocol>&& value) { SetProtocols(std::move(value)); return *this;}
-    inline UpdateResolverEndpointRequest& AddProtocols(const Protocol& value) { m_protocolsHasBeenSet = true; m_protocols.push_back(value); return *this; }
-    inline UpdateResolverEndpointRequest& AddProtocols(Protocol&& value) { m_protocolsHasBeenSet = true; m_protocols.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_name;
 
-    Aws::String m_resolverEndpointId;
-    bool m_resolverEndpointIdHasBeenSet = false;
+  ResolverEndpointType m_resolverEndpointType{ResolverEndpointType::NOT_SET};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<UpdateIpAddress> m_updateIpAddresses;
 
-    ResolverEndpointType m_resolverEndpointType;
-    bool m_resolverEndpointTypeHasBeenSet = false;
+  Aws::Vector<Protocol> m_protocols;
 
-    Aws::Vector<UpdateIpAddress> m_updateIpAddresses;
-    bool m_updateIpAddressesHasBeenSet = false;
+  bool m_rniEnhancedMetricsEnabled{false};
 
-    Aws::Vector<Protocol> m_protocols;
-    bool m_protocolsHasBeenSet = false;
-  };
+  bool m_targetNameServerMetricsEnabled{false};
 
-} // namespace Model
-} // namespace Route53Resolver
-} // namespace Aws
+  bool m_dns64Enabled{false};
+
+  bool m_ipv6InternetAccessEnabled{false};
+  bool m_resolverEndpointIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_resolverEndpointTypeHasBeenSet = false;
+  bool m_updateIpAddressesHasBeenSet = false;
+  bool m_protocolsHasBeenSet = false;
+  bool m_rniEnhancedMetricsEnabledHasBeenSet = false;
+  bool m_targetNameServerMetricsEnabledHasBeenSet = false;
+  bool m_dns64EnabledHasBeenSet = false;
+  bool m_ipv6InternetAccessEnabledHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Route53Resolver
+}  // namespace Aws

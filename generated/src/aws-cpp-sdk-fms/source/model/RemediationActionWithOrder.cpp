@@ -3,72 +3,138 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/RemediationActionWithOrder.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace FMS {
+namespace Model {
 
-RemediationActionWithOrder::RemediationActionWithOrder() : 
-    m_remediationActionHasBeenSet(false),
-    m_order(0),
-    m_orderHasBeenSet(false)
-{
-}
+RemediationActionWithOrder::RemediationActionWithOrder(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RemediationActionWithOrder::RemediationActionWithOrder(JsonView jsonValue)
-  : RemediationActionWithOrder()
-{
-  *this = jsonValue;
-}
+RemediationActionWithOrder& RemediationActionWithOrder::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RemediationActionWithOrder& RemediationActionWithOrder::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RemediationAction"))
-  {
-    m_remediationAction = jsonValue.GetObject("RemediationAction");
+              if (initialKeyStr == "RemediationAction") {
+                m_remediationAction = RemediationAction(decoder);
+                m_remediationActionHasBeenSet = true;
+              }
 
-    m_remediationActionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Order") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_order = static_cast<int64_t>(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextNegativeIntVal();
+                    if (val.has_value()) {
+                      m_order = static_cast<int64_t>(1 - val.value());
+                    }
+                  }
+                }
+                m_orderHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RemediationActionWithOrder", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("Order"))
-  {
-    m_order = jsonValue.GetInteger("Order");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_orderHasBeenSet = true;
+            if (initialKeyStr == "RemediationAction") {
+              m_remediationAction = RemediationAction(decoder);
+              m_remediationActionHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Order") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::UInt) {
+                  auto val = decoder->PopNextUnsignedIntVal();
+                  if (val.has_value()) {
+                    m_order = static_cast<int64_t>(val.value());
+                  }
+                } else {
+                  auto val = decoder->PopNextNegativeIntVal();
+                  if (val.has_value()) {
+                    m_order = static_cast<int64_t>(1 - val.value());
+                  }
+                }
+              }
+              m_orderHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue RemediationActionWithOrder::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_remediationActionHasBeenSet)
-  {
-   payload.WithObject("RemediationAction", m_remediationAction.Jsonize());
-
+void RemediationActionWithOrder::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_remediationActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_orderHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_orderHasBeenSet)
-  {
-   payload.WithInteger("Order", m_order);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_remediationActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RemediationAction"));
+    m_remediationAction.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_orderHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Order"));
+    (m_order >= 0) ? encoder.WriteUInt(m_order) : encoder.WriteNegInt(m_order);
+  }
 }
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

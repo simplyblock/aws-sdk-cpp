@@ -12,15 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSupportedResourceTypesRequest::GetSupportedResourceTypesRequest()
-{
-}
-
-Aws::String GetSupportedResourceTypesRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSupportedResourceTypesRequest::SerializePayload() const { return {}; }

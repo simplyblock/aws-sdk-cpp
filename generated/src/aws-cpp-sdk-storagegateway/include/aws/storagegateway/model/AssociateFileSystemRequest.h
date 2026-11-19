@@ -4,195 +4,236 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
-#include <aws/storagegateway/StorageGatewayRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/storagegateway/StorageGatewayRequest.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
 #include <aws/storagegateway/model/CacheAttributes.h>
 #include <aws/storagegateway/model/EndpointNetworkConfiguration.h>
 #include <aws/storagegateway/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace StorageGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace StorageGateway {
+namespace Model {
 
+/**
+ */
+class AssociateFileSystemRequest : public StorageGatewayRequest {
+ public:
+  AWS_STORAGEGATEWAY_API AssociateFileSystemRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AssociateFileSystem"; }
+
+  AWS_STORAGEGATEWAY_API Aws::String SerializePayload() const override;
+
+  AWS_STORAGEGATEWAY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The user name of the user credential that has permission to access the root
+   * share D$ of the Amazon FSx file system. The user account must belong to the
+   * Amazon FSx delegated admin user group.</p>
    */
-  class AssociateFileSystemRequest : public StorageGatewayRequest
-  {
-  public:
-    AWS_STORAGEGATEWAY_API AssociateFileSystemRequest();
+  inline const Aws::String& GetUserName() const { return m_userName; }
+  inline bool UserNameHasBeenSet() const { return m_userNameHasBeenSet; }
+  template <typename UserNameT = Aws::String>
+  void SetUserName(UserNameT&& value) {
+    m_userNameHasBeenSet = true;
+    m_userName = std::forward<UserNameT>(value);
+  }
+  template <typename UserNameT = Aws::String>
+  AssociateFileSystemRequest& WithUserName(UserNameT&& value) {
+    SetUserName(std::forward<UserNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AssociateFileSystem"; }
+  ///@{
+  /**
+   * <p>The password of the user credential.</p>
+   */
+  inline const Aws::String& GetPassword() const { return m_password; }
+  inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
+  template <typename PasswordT = Aws::String>
+  void SetPassword(PasswordT&& value) {
+    m_passwordHasBeenSet = true;
+    m_password = std::forward<PasswordT>(value);
+  }
+  template <typename PasswordT = Aws::String>
+  AssociateFileSystemRequest& WithPassword(PasswordT&& value) {
+    SetPassword(std::forward<PasswordT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_STORAGEGATEWAY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A unique string value that you supply that is used by the FSx File Gateway to
+   * ensure idempotent file system association creation.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  AssociateFileSystemRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_STORAGEGATEWAY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
 
+  inline const Aws::String& GetGatewayARN() const { return m_gatewayARN; }
+  inline bool GatewayARNHasBeenSet() const { return m_gatewayARNHasBeenSet; }
+  template <typename GatewayARNT = Aws::String>
+  void SetGatewayARN(GatewayARNT&& value) {
+    m_gatewayARNHasBeenSet = true;
+    m_gatewayARN = std::forward<GatewayARNT>(value);
+  }
+  template <typename GatewayARNT = Aws::String>
+  AssociateFileSystemRequest& WithGatewayARN(GatewayARNT&& value) {
+    SetGatewayARN(std::forward<GatewayARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user name of the user credential that has permission to access the root
-     * share D$ of the Amazon FSx file system. The user account must belong to the
-     * Amazon FSx delegated admin user group.</p>
-     */
-    inline const Aws::String& GetUserName() const{ return m_userName; }
-    inline bool UserNameHasBeenSet() const { return m_userNameHasBeenSet; }
-    inline void SetUserName(const Aws::String& value) { m_userNameHasBeenSet = true; m_userName = value; }
-    inline void SetUserName(Aws::String&& value) { m_userNameHasBeenSet = true; m_userName = std::move(value); }
-    inline void SetUserName(const char* value) { m_userNameHasBeenSet = true; m_userName.assign(value); }
-    inline AssociateFileSystemRequest& WithUserName(const Aws::String& value) { SetUserName(value); return *this;}
-    inline AssociateFileSystemRequest& WithUserName(Aws::String&& value) { SetUserName(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithUserName(const char* value) { SetUserName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the Amazon FSx file system to associate
+   * with the FSx File Gateway.</p>
+   */
+  inline const Aws::String& GetLocationARN() const { return m_locationARN; }
+  inline bool LocationARNHasBeenSet() const { return m_locationARNHasBeenSet; }
+  template <typename LocationARNT = Aws::String>
+  void SetLocationARN(LocationARNT&& value) {
+    m_locationARNHasBeenSet = true;
+    m_locationARN = std::forward<LocationARNT>(value);
+  }
+  template <typename LocationARNT = Aws::String>
+  AssociateFileSystemRequest& WithLocationARN(LocationARNT&& value) {
+    SetLocationARN(std::forward<LocationARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The password of the user credential.</p>
-     */
-    inline const Aws::String& GetPassword() const{ return m_password; }
-    inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
-    inline void SetPassword(const Aws::String& value) { m_passwordHasBeenSet = true; m_password = value; }
-    inline void SetPassword(Aws::String&& value) { m_passwordHasBeenSet = true; m_password = std::move(value); }
-    inline void SetPassword(const char* value) { m_passwordHasBeenSet = true; m_password.assign(value); }
-    inline AssociateFileSystemRequest& WithPassword(const Aws::String& value) { SetPassword(value); return *this;}
-    inline AssociateFileSystemRequest& WithPassword(Aws::String&& value) { SetPassword(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithPassword(const char* value) { SetPassword(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of up to 50 tags that can be assigned to the file system association.
+   * Each tag is a key-value pair.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  AssociateFileSystemRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  AssociateFileSystemRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique string value that you supply that is used by the FSx File Gateway to
-     * ensure idempotent file system association creation.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline AssociateFileSystemRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline AssociateFileSystemRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the storage used for the audit logs.</p>
+   */
+  inline const Aws::String& GetAuditDestinationARN() const { return m_auditDestinationARN; }
+  inline bool AuditDestinationARNHasBeenSet() const { return m_auditDestinationARNHasBeenSet; }
+  template <typename AuditDestinationARNT = Aws::String>
+  void SetAuditDestinationARN(AuditDestinationARNT&& value) {
+    m_auditDestinationARNHasBeenSet = true;
+    m_auditDestinationARN = std::forward<AuditDestinationARNT>(value);
+  }
+  template <typename AuditDestinationARNT = Aws::String>
+  AssociateFileSystemRequest& WithAuditDestinationARN(AuditDestinationARNT&& value) {
+    SetAuditDestinationARN(std::forward<AuditDestinationARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetGatewayARN() const{ return m_gatewayARN; }
-    inline bool GatewayARNHasBeenSet() const { return m_gatewayARNHasBeenSet; }
-    inline void SetGatewayARN(const Aws::String& value) { m_gatewayARNHasBeenSet = true; m_gatewayARN = value; }
-    inline void SetGatewayARN(Aws::String&& value) { m_gatewayARNHasBeenSet = true; m_gatewayARN = std::move(value); }
-    inline void SetGatewayARN(const char* value) { m_gatewayARNHasBeenSet = true; m_gatewayARN.assign(value); }
-    inline AssociateFileSystemRequest& WithGatewayARN(const Aws::String& value) { SetGatewayARN(value); return *this;}
-    inline AssociateFileSystemRequest& WithGatewayARN(Aws::String&& value) { SetGatewayARN(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithGatewayARN(const char* value) { SetGatewayARN(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the Amazon FSx file system to associate
-     * with the FSx File Gateway.</p>
-     */
-    inline const Aws::String& GetLocationARN() const{ return m_locationARN; }
-    inline bool LocationARNHasBeenSet() const { return m_locationARNHasBeenSet; }
-    inline void SetLocationARN(const Aws::String& value) { m_locationARNHasBeenSet = true; m_locationARN = value; }
-    inline void SetLocationARN(Aws::String&& value) { m_locationARNHasBeenSet = true; m_locationARN = std::move(value); }
-    inline void SetLocationARN(const char* value) { m_locationARNHasBeenSet = true; m_locationARN.assign(value); }
-    inline AssociateFileSystemRequest& WithLocationARN(const Aws::String& value) { SetLocationARN(value); return *this;}
-    inline AssociateFileSystemRequest& WithLocationARN(Aws::String&& value) { SetLocationARN(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithLocationARN(const char* value) { SetLocationARN(value); return *this;}
-    ///@}
+  inline const CacheAttributes& GetCacheAttributes() const { return m_cacheAttributes; }
+  inline bool CacheAttributesHasBeenSet() const { return m_cacheAttributesHasBeenSet; }
+  template <typename CacheAttributesT = CacheAttributes>
+  void SetCacheAttributes(CacheAttributesT&& value) {
+    m_cacheAttributesHasBeenSet = true;
+    m_cacheAttributes = std::forward<CacheAttributesT>(value);
+  }
+  template <typename CacheAttributesT = CacheAttributes>
+  AssociateFileSystemRequest& WithCacheAttributes(CacheAttributesT&& value) {
+    SetCacheAttributes(std::forward<CacheAttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of up to 50 tags that can be assigned to the file system association.
-     * Each tag is a key-value pair.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline AssociateFileSystemRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline AssociateFileSystemRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline AssociateFileSystemRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the network configuration information for the gateway associated
+   * with the Amazon FSx file system.</p>  <p>If multiple file systems are
+   * associated with this gateway, this parameter's <code>IpAddresses</code> field is
+   * required.</p>
+   */
+  inline const EndpointNetworkConfiguration& GetEndpointNetworkConfiguration() const { return m_endpointNetworkConfiguration; }
+  inline bool EndpointNetworkConfigurationHasBeenSet() const { return m_endpointNetworkConfigurationHasBeenSet; }
+  template <typename EndpointNetworkConfigurationT = EndpointNetworkConfiguration>
+  void SetEndpointNetworkConfiguration(EndpointNetworkConfigurationT&& value) {
+    m_endpointNetworkConfigurationHasBeenSet = true;
+    m_endpointNetworkConfiguration = std::forward<EndpointNetworkConfigurationT>(value);
+  }
+  template <typename EndpointNetworkConfigurationT = EndpointNetworkConfiguration>
+  AssociateFileSystemRequest& WithEndpointNetworkConfiguration(EndpointNetworkConfigurationT&& value) {
+    SetEndpointNetworkConfiguration(std::forward<EndpointNetworkConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_userName;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the storage used for the audit logs.</p>
-     */
-    inline const Aws::String& GetAuditDestinationARN() const{ return m_auditDestinationARN; }
-    inline bool AuditDestinationARNHasBeenSet() const { return m_auditDestinationARNHasBeenSet; }
-    inline void SetAuditDestinationARN(const Aws::String& value) { m_auditDestinationARNHasBeenSet = true; m_auditDestinationARN = value; }
-    inline void SetAuditDestinationARN(Aws::String&& value) { m_auditDestinationARNHasBeenSet = true; m_auditDestinationARN = std::move(value); }
-    inline void SetAuditDestinationARN(const char* value) { m_auditDestinationARNHasBeenSet = true; m_auditDestinationARN.assign(value); }
-    inline AssociateFileSystemRequest& WithAuditDestinationARN(const Aws::String& value) { SetAuditDestinationARN(value); return *this;}
-    inline AssociateFileSystemRequest& WithAuditDestinationARN(Aws::String&& value) { SetAuditDestinationARN(std::move(value)); return *this;}
-    inline AssociateFileSystemRequest& WithAuditDestinationARN(const char* value) { SetAuditDestinationARN(value); return *this;}
-    ///@}
+  Aws::String m_password;
 
-    ///@{
-    
-    inline const CacheAttributes& GetCacheAttributes() const{ return m_cacheAttributes; }
-    inline bool CacheAttributesHasBeenSet() const { return m_cacheAttributesHasBeenSet; }
-    inline void SetCacheAttributes(const CacheAttributes& value) { m_cacheAttributesHasBeenSet = true; m_cacheAttributes = value; }
-    inline void SetCacheAttributes(CacheAttributes&& value) { m_cacheAttributesHasBeenSet = true; m_cacheAttributes = std::move(value); }
-    inline AssociateFileSystemRequest& WithCacheAttributes(const CacheAttributes& value) { SetCacheAttributes(value); return *this;}
-    inline AssociateFileSystemRequest& WithCacheAttributes(CacheAttributes&& value) { SetCacheAttributes(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_clientToken;
 
-    ///@{
-    /**
-     * <p>Specifies the network configuration information for the gateway associated
-     * with the Amazon FSx file system.</p>  <p>If multiple file systems are
-     * associated with this gateway, this parameter's <code>IpAddresses</code> field is
-     * required.</p> 
-     */
-    inline const EndpointNetworkConfiguration& GetEndpointNetworkConfiguration() const{ return m_endpointNetworkConfiguration; }
-    inline bool EndpointNetworkConfigurationHasBeenSet() const { return m_endpointNetworkConfigurationHasBeenSet; }
-    inline void SetEndpointNetworkConfiguration(const EndpointNetworkConfiguration& value) { m_endpointNetworkConfigurationHasBeenSet = true; m_endpointNetworkConfiguration = value; }
-    inline void SetEndpointNetworkConfiguration(EndpointNetworkConfiguration&& value) { m_endpointNetworkConfigurationHasBeenSet = true; m_endpointNetworkConfiguration = std::move(value); }
-    inline AssociateFileSystemRequest& WithEndpointNetworkConfiguration(const EndpointNetworkConfiguration& value) { SetEndpointNetworkConfiguration(value); return *this;}
-    inline AssociateFileSystemRequest& WithEndpointNetworkConfiguration(EndpointNetworkConfiguration&& value) { SetEndpointNetworkConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_gatewayARN;
 
-    Aws::String m_userName;
-    bool m_userNameHasBeenSet = false;
+  Aws::String m_locationARN;
 
-    Aws::String m_password;
-    bool m_passwordHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::String m_auditDestinationARN;
 
-    Aws::String m_gatewayARN;
-    bool m_gatewayARNHasBeenSet = false;
+  CacheAttributes m_cacheAttributes;
 
-    Aws::String m_locationARN;
-    bool m_locationARNHasBeenSet = false;
+  EndpointNetworkConfiguration m_endpointNetworkConfiguration;
+  bool m_userNameHasBeenSet = false;
+  bool m_passwordHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+  bool m_gatewayARNHasBeenSet = false;
+  bool m_locationARNHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_auditDestinationARNHasBeenSet = false;
+  bool m_cacheAttributesHasBeenSet = false;
+  bool m_endpointNetworkConfigurationHasBeenSet = false;
+};
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_auditDestinationARN;
-    bool m_auditDestinationARNHasBeenSet = false;
-
-    CacheAttributes m_cacheAttributes;
-    bool m_cacheAttributesHasBeenSet = false;
-
-    EndpointNetworkConfiguration m_endpointNetworkConfiguration;
-    bool m_endpointNetworkConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace StorageGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace StorageGateway
+}  // namespace Aws

@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/m2/MainframeModernization_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/m2/MainframeModernization_EXPORTS.h>
 #include <aws/m2/model/ApplicationSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MainframeModernization
-{
-namespace Model
-{
-  class ListApplicationsResult
-  {
-  public:
-    AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult();
-    AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MainframeModernization {
+namespace Model {
+class ListApplicationsResult {
+ public:
+  AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult() = default;
+  AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAINFRAMEMODERNIZATION_API ListApplicationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns a list of summary details for all the applications in a runtime
+   * environment.</p>
+   */
+  inline const Aws::Vector<ApplicationSummary>& GetApplications() const { return m_applications; }
+  template <typename ApplicationsT = Aws::Vector<ApplicationSummary>>
+  void SetApplications(ApplicationsT&& value) {
+    m_applicationsHasBeenSet = true;
+    m_applications = std::forward<ApplicationsT>(value);
+  }
+  template <typename ApplicationsT = Aws::Vector<ApplicationSummary>>
+  ListApplicationsResult& WithApplications(ApplicationsT&& value) {
+    SetApplications(std::forward<ApplicationsT>(value));
+    return *this;
+  }
+  template <typename ApplicationsT = ApplicationSummary>
+  ListApplicationsResult& AddApplications(ApplicationsT&& value) {
+    m_applicationsHasBeenSet = true;
+    m_applications.emplace_back(std::forward<ApplicationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns a list of summary details for all the applications in a runtime
-     * environment.</p>
-     */
-    inline const Aws::Vector<ApplicationSummary>& GetApplications() const{ return m_applications; }
-    inline void SetApplications(const Aws::Vector<ApplicationSummary>& value) { m_applications = value; }
-    inline void SetApplications(Aws::Vector<ApplicationSummary>&& value) { m_applications = std::move(value); }
-    inline ListApplicationsResult& WithApplications(const Aws::Vector<ApplicationSummary>& value) { SetApplications(value); return *this;}
-    inline ListApplicationsResult& WithApplications(Aws::Vector<ApplicationSummary>&& value) { SetApplications(std::move(value)); return *this;}
-    inline ListApplicationsResult& AddApplications(const ApplicationSummary& value) { m_applications.push_back(value); return *this; }
-    inline ListApplicationsResult& AddApplications(ApplicationSummary&& value) { m_applications.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A pagination token that's returned when the response doesn't contain all
+   * applications.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListApplicationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A pagination token that's returned when the response doesn't contain all
-     * applications.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListApplicationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListApplicationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListApplicationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListApplicationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListApplicationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListApplicationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListApplicationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ApplicationSummary> m_applications;
+ private:
+  Aws::Vector<ApplicationSummary> m_applications;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MainframeModernization
-} // namespace Aws
+}  // namespace Model
+}  // namespace MainframeModernization
+}  // namespace Aws

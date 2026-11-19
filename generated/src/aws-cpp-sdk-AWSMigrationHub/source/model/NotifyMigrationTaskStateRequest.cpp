@@ -12,68 +12,38 @@ using namespace Aws::MigrationHub::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-NotifyMigrationTaskStateRequest::NotifyMigrationTaskStateRequest() : 
-    m_progressUpdateStreamHasBeenSet(false),
-    m_migrationTaskNameHasBeenSet(false),
-    m_taskHasBeenSet(false),
-    m_updateDateTimeHasBeenSet(false),
-    m_nextUpdateSeconds(0),
-    m_nextUpdateSecondsHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String NotifyMigrationTaskStateRequest::SerializePayload() const
-{
+Aws::String NotifyMigrationTaskStateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_progressUpdateStreamHasBeenSet)
-  {
-   payload.WithString("ProgressUpdateStream", m_progressUpdateStream);
-
+  if (m_progressUpdateStreamHasBeenSet) {
+    payload.WithString("ProgressUpdateStream", m_progressUpdateStream);
   }
 
-  if(m_migrationTaskNameHasBeenSet)
-  {
-   payload.WithString("MigrationTaskName", m_migrationTaskName);
-
+  if (m_migrationTaskNameHasBeenSet) {
+    payload.WithString("MigrationTaskName", m_migrationTaskName);
   }
 
-  if(m_taskHasBeenSet)
-  {
-   payload.WithObject("Task", m_task.Jsonize());
-
+  if (m_taskHasBeenSet) {
+    payload.WithObject("Task", m_task.Jsonize());
   }
 
-  if(m_updateDateTimeHasBeenSet)
-  {
-   payload.WithDouble("UpdateDateTime", m_updateDateTime.SecondsWithMSPrecision());
+  if (m_updateDateTimeHasBeenSet) {
+    payload.WithDouble("UpdateDateTime", m_updateDateTime.SecondsWithMSPrecision());
   }
 
-  if(m_nextUpdateSecondsHasBeenSet)
-  {
-   payload.WithInteger("NextUpdateSeconds", m_nextUpdateSeconds);
-
+  if (m_nextUpdateSecondsHasBeenSet) {
+    payload.WithInteger("NextUpdateSeconds", m_nextUpdateSeconds);
   }
 
-  if(m_dryRunHasBeenSet)
-  {
-   payload.WithBool("DryRun", m_dryRun);
-
+  if (m_dryRunHasBeenSet) {
+    payload.WithBool("DryRun", m_dryRun);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection NotifyMigrationTaskStateRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection NotifyMigrationTaskStateRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSMigrationHub.NotifyMigrationTaskState"));
   return headers;
-
 }
-
-
-
-

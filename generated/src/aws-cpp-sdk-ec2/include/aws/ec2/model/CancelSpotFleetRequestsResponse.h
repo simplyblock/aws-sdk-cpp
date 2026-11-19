@@ -4,86 +4,112 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
-#include <aws/ec2/model/CancelSpotFleetRequestsSuccessItem.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/CancelSpotFleetRequestsErrorItem.h>
+#include <aws/ec2/model/CancelSpotFleetRequestsSuccessItem.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of CancelSpotFleetRequests.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelSpotFleetRequestsResponse">AWS
+ * API Reference</a></p>
+ */
+class CancelSpotFleetRequestsResponse {
+ public:
+  AWS_EC2_API CancelSpotFleetRequestsResponse() = default;
+  AWS_EC2_API CancelSpotFleetRequestsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CancelSpotFleetRequestsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of CancelSpotFleetRequests.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelSpotFleetRequestsResponse">AWS
-   * API Reference</a></p>
+   * <p>Information about the Spot Fleet requests that are successfully canceled.</p>
    */
-  class CancelSpotFleetRequestsResponse
-  {
-  public:
-    AWS_EC2_API CancelSpotFleetRequestsResponse();
-    AWS_EC2_API CancelSpotFleetRequestsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CancelSpotFleetRequestsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<CancelSpotFleetRequestsSuccessItem>& GetSuccessfulFleetRequests() const { return m_successfulFleetRequests; }
+  template <typename SuccessfulFleetRequestsT = Aws::Vector<CancelSpotFleetRequestsSuccessItem>>
+  void SetSuccessfulFleetRequests(SuccessfulFleetRequestsT&& value) {
+    m_successfulFleetRequestsHasBeenSet = true;
+    m_successfulFleetRequests = std::forward<SuccessfulFleetRequestsT>(value);
+  }
+  template <typename SuccessfulFleetRequestsT = Aws::Vector<CancelSpotFleetRequestsSuccessItem>>
+  CancelSpotFleetRequestsResponse& WithSuccessfulFleetRequests(SuccessfulFleetRequestsT&& value) {
+    SetSuccessfulFleetRequests(std::forward<SuccessfulFleetRequestsT>(value));
+    return *this;
+  }
+  template <typename SuccessfulFleetRequestsT = CancelSpotFleetRequestsSuccessItem>
+  CancelSpotFleetRequestsResponse& AddSuccessfulFleetRequests(SuccessfulFleetRequestsT&& value) {
+    m_successfulFleetRequestsHasBeenSet = true;
+    m_successfulFleetRequests.emplace_back(std::forward<SuccessfulFleetRequestsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Information about the Spot Fleet requests that are not successfully
+   * canceled.</p>
+   */
+  inline const Aws::Vector<CancelSpotFleetRequestsErrorItem>& GetUnsuccessfulFleetRequests() const { return m_unsuccessfulFleetRequests; }
+  template <typename UnsuccessfulFleetRequestsT = Aws::Vector<CancelSpotFleetRequestsErrorItem>>
+  void SetUnsuccessfulFleetRequests(UnsuccessfulFleetRequestsT&& value) {
+    m_unsuccessfulFleetRequestsHasBeenSet = true;
+    m_unsuccessfulFleetRequests = std::forward<UnsuccessfulFleetRequestsT>(value);
+  }
+  template <typename UnsuccessfulFleetRequestsT = Aws::Vector<CancelSpotFleetRequestsErrorItem>>
+  CancelSpotFleetRequestsResponse& WithUnsuccessfulFleetRequests(UnsuccessfulFleetRequestsT&& value) {
+    SetUnsuccessfulFleetRequests(std::forward<UnsuccessfulFleetRequestsT>(value));
+    return *this;
+  }
+  template <typename UnsuccessfulFleetRequestsT = CancelSpotFleetRequestsErrorItem>
+  CancelSpotFleetRequestsResponse& AddUnsuccessfulFleetRequests(UnsuccessfulFleetRequestsT&& value) {
+    m_unsuccessfulFleetRequestsHasBeenSet = true;
+    m_unsuccessfulFleetRequests.emplace_back(std::forward<UnsuccessfulFleetRequestsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the Spot Fleet requests that are successfully canceled.</p>
-     */
-    inline const Aws::Vector<CancelSpotFleetRequestsSuccessItem>& GetSuccessfulFleetRequests() const{ return m_successfulFleetRequests; }
-    inline void SetSuccessfulFleetRequests(const Aws::Vector<CancelSpotFleetRequestsSuccessItem>& value) { m_successfulFleetRequests = value; }
-    inline void SetSuccessfulFleetRequests(Aws::Vector<CancelSpotFleetRequestsSuccessItem>&& value) { m_successfulFleetRequests = std::move(value); }
-    inline CancelSpotFleetRequestsResponse& WithSuccessfulFleetRequests(const Aws::Vector<CancelSpotFleetRequestsSuccessItem>& value) { SetSuccessfulFleetRequests(value); return *this;}
-    inline CancelSpotFleetRequestsResponse& WithSuccessfulFleetRequests(Aws::Vector<CancelSpotFleetRequestsSuccessItem>&& value) { SetSuccessfulFleetRequests(std::move(value)); return *this;}
-    inline CancelSpotFleetRequestsResponse& AddSuccessfulFleetRequests(const CancelSpotFleetRequestsSuccessItem& value) { m_successfulFleetRequests.push_back(value); return *this; }
-    inline CancelSpotFleetRequestsResponse& AddSuccessfulFleetRequests(CancelSpotFleetRequestsSuccessItem&& value) { m_successfulFleetRequests.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the Spot Fleet requests that are not successfully
-     * canceled.</p>
-     */
-    inline const Aws::Vector<CancelSpotFleetRequestsErrorItem>& GetUnsuccessfulFleetRequests() const{ return m_unsuccessfulFleetRequests; }
-    inline void SetUnsuccessfulFleetRequests(const Aws::Vector<CancelSpotFleetRequestsErrorItem>& value) { m_unsuccessfulFleetRequests = value; }
-    inline void SetUnsuccessfulFleetRequests(Aws::Vector<CancelSpotFleetRequestsErrorItem>&& value) { m_unsuccessfulFleetRequests = std::move(value); }
-    inline CancelSpotFleetRequestsResponse& WithUnsuccessfulFleetRequests(const Aws::Vector<CancelSpotFleetRequestsErrorItem>& value) { SetUnsuccessfulFleetRequests(value); return *this;}
-    inline CancelSpotFleetRequestsResponse& WithUnsuccessfulFleetRequests(Aws::Vector<CancelSpotFleetRequestsErrorItem>&& value) { SetUnsuccessfulFleetRequests(std::move(value)); return *this;}
-    inline CancelSpotFleetRequestsResponse& AddUnsuccessfulFleetRequests(const CancelSpotFleetRequestsErrorItem& value) { m_unsuccessfulFleetRequests.push_back(value); return *this; }
-    inline CancelSpotFleetRequestsResponse& AddUnsuccessfulFleetRequests(CancelSpotFleetRequestsErrorItem&& value) { m_unsuccessfulFleetRequests.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CancelSpotFleetRequestsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CancelSpotFleetRequestsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CancelSpotFleetRequestsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<CancelSpotFleetRequestsSuccessItem> m_successfulFleetRequests;
 
-    Aws::Vector<CancelSpotFleetRequestsSuccessItem> m_successfulFleetRequests;
+  Aws::Vector<CancelSpotFleetRequestsErrorItem> m_unsuccessfulFleetRequests;
 
-    Aws::Vector<CancelSpotFleetRequestsErrorItem> m_unsuccessfulFleetRequests;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_successfulFleetRequestsHasBeenSet = false;
+  bool m_unsuccessfulFleetRequestsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

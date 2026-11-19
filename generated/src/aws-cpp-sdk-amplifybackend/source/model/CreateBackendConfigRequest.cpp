@@ -12,25 +12,12 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateBackendConfigRequest::CreateBackendConfigRequest() : 
-    m_appIdHasBeenSet(false),
-    m_backendManagerAppIdHasBeenSet(false)
-{
-}
-
-Aws::String CreateBackendConfigRequest::SerializePayload() const
-{
+Aws::String CreateBackendConfigRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_backendManagerAppIdHasBeenSet)
-  {
-   payload.WithString("backendManagerAppId", m_backendManagerAppId);
-
+  if (m_backendManagerAppIdHasBeenSet) {
+    payload.WithString("backendManagerAppId", m_backendManagerAppId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

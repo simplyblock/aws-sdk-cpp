@@ -4,133 +4,156 @@
  */
 
 #pragma once
-#include <aws/snow-device-management/SnowDeviceManagement_EXPORTS.h>
-#include <aws/snow-device-management/SnowDeviceManagementRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/snow-device-management/model/Command.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/snow-device-management/SnowDeviceManagementRequest.h>
+#include <aws/snow-device-management/SnowDeviceManagement_EXPORTS.h>
+#include <aws/snow-device-management/model/Command.h>
 
-namespace Aws
-{
-namespace SnowDeviceManagement
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace SnowDeviceManagement {
+namespace Model {
+
+/**
+ */
+class CreateTaskRequest : public SnowDeviceManagementRequest {
+ public:
+  AWS_SNOWDEVICEMANAGEMENT_API CreateTaskRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateTask"; }
+
+  AWS_SNOWDEVICEMANAGEMENT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A token ensuring that the action is called only once with the specified
+   * details.</p>
    */
-  class CreateTaskRequest : public SnowDeviceManagementRequest
-  {
-  public:
-    AWS_SNOWDEVICEMANAGEMENT_API CreateTaskRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateTaskRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateTask"; }
+  ///@{
+  /**
+   * <p>The task to be performed. Only one task is executed on a device at a
+   * time.</p>
+   */
+  inline const Command& GetCommand() const { return m_command; }
+  inline bool CommandHasBeenSet() const { return m_commandHasBeenSet; }
+  template <typename CommandT = Command>
+  void SetCommand(CommandT&& value) {
+    m_commandHasBeenSet = true;
+    m_command = std::forward<CommandT>(value);
+  }
+  template <typename CommandT = Command>
+  CreateTaskRequest& WithCommand(CommandT&& value) {
+    SetCommand(std::forward<CommandT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SNOWDEVICEMANAGEMENT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A description of the task and its targets.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateTaskRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Optional metadata that you assign to a resource. You can use tags to
+   * categorize a resource in different ways, such as by purpose, owner, or
+   * environment. </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateTaskRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateTaskRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token ensuring that the action is called only once with the specified
-     * details.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateTaskRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateTaskRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateTaskRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of managed device IDs.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTargets() const { return m_targets; }
+  inline bool TargetsHasBeenSet() const { return m_targetsHasBeenSet; }
+  template <typename TargetsT = Aws::Vector<Aws::String>>
+  void SetTargets(TargetsT&& value) {
+    m_targetsHasBeenSet = true;
+    m_targets = std::forward<TargetsT>(value);
+  }
+  template <typename TargetsT = Aws::Vector<Aws::String>>
+  CreateTaskRequest& WithTargets(TargetsT&& value) {
+    SetTargets(std::forward<TargetsT>(value));
+    return *this;
+  }
+  template <typename TargetsT = Aws::String>
+  CreateTaskRequest& AddTargets(TargetsT&& value) {
+    m_targetsHasBeenSet = true;
+    m_targets.emplace_back(std::forward<TargetsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The task to be performed. Only one task is executed on a device at a
-     * time.</p>
-     */
-    inline const Command& GetCommand() const{ return m_command; }
-    inline bool CommandHasBeenSet() const { return m_commandHasBeenSet; }
-    inline void SetCommand(const Command& value) { m_commandHasBeenSet = true; m_command = value; }
-    inline void SetCommand(Command&& value) { m_commandHasBeenSet = true; m_command = std::move(value); }
-    inline CreateTaskRequest& WithCommand(const Command& value) { SetCommand(value); return *this;}
-    inline CreateTaskRequest& WithCommand(Command&& value) { SetCommand(std::move(value)); return *this;}
-    ///@}
+  Command m_command;
 
-    ///@{
-    /**
-     * <p>A description of the task and its targets.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateTaskRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateTaskRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateTaskRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>Optional metadata that you assign to a resource. You can use tags to
-     * categorize a resource in different ways, such as by purpose, owner, or
-     * environment. </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateTaskRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateTaskRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateTaskRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateTaskRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateTaskRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateTaskRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateTaskRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateTaskRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateTaskRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    ///@{
-    /**
-     * <p>A list of managed device IDs.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTargets() const{ return m_targets; }
-    inline bool TargetsHasBeenSet() const { return m_targetsHasBeenSet; }
-    inline void SetTargets(const Aws::Vector<Aws::String>& value) { m_targetsHasBeenSet = true; m_targets = value; }
-    inline void SetTargets(Aws::Vector<Aws::String>&& value) { m_targetsHasBeenSet = true; m_targets = std::move(value); }
-    inline CreateTaskRequest& WithTargets(const Aws::Vector<Aws::String>& value) { SetTargets(value); return *this;}
-    inline CreateTaskRequest& WithTargets(Aws::Vector<Aws::String>&& value) { SetTargets(std::move(value)); return *this;}
-    inline CreateTaskRequest& AddTargets(const Aws::String& value) { m_targetsHasBeenSet = true; m_targets.push_back(value); return *this; }
-    inline CreateTaskRequest& AddTargets(Aws::String&& value) { m_targetsHasBeenSet = true; m_targets.push_back(std::move(value)); return *this; }
-    inline CreateTaskRequest& AddTargets(const char* value) { m_targetsHasBeenSet = true; m_targets.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_targets;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_commandHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_targetsHasBeenSet = false;
+};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Command m_command;
-    bool m_commandHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_targets;
-    bool m_targetsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SnowDeviceManagement
-} // namespace Aws
+}  // namespace Model
+}  // namespace SnowDeviceManagement
+}  // namespace Aws

@@ -3,98 +3,78 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/glue/model/DataQualityRuleRecommendationRunDescription.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/glue/model/DataQualityRuleRecommendationRunDescription.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Glue {
+namespace Model {
 
-DataQualityRuleRecommendationRunDescription::DataQualityRuleRecommendationRunDescription() : 
-    m_runIdHasBeenSet(false),
-    m_status(TaskStatusType::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_startedOnHasBeenSet(false),
-    m_dataSourceHasBeenSet(false)
-{
-}
+DataQualityRuleRecommendationRunDescription::DataQualityRuleRecommendationRunDescription(JsonView jsonValue) { *this = jsonValue; }
 
-DataQualityRuleRecommendationRunDescription::DataQualityRuleRecommendationRunDescription(JsonView jsonValue)
-  : DataQualityRuleRecommendationRunDescription()
-{
-  *this = jsonValue;
-}
-
-DataQualityRuleRecommendationRunDescription& DataQualityRuleRecommendationRunDescription::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RunId"))
-  {
+DataQualityRuleRecommendationRunDescription& DataQualityRuleRecommendationRunDescription::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("RunId")) {
     m_runId = jsonValue.GetString("RunId");
-
     m_runIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Status"))
-  {
+  if (jsonValue.ValueExists("Status")) {
     m_status = TaskStatusTypeMapper::GetTaskStatusTypeForName(jsonValue.GetString("Status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("StartedOn"))
-  {
+  if (jsonValue.ValueExists("StartedOn")) {
     m_startedOn = jsonValue.GetDouble("StartedOn");
-
     m_startedOnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("DataSource"))
-  {
+  if (jsonValue.ValueExists("DataSource")) {
     m_dataSource = jsonValue.GetObject("DataSource");
-
     m_dataSourceHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("CreatedRulesetName")) {
+    m_createdRulesetName = jsonValue.GetString("CreatedRulesetName");
+    m_createdRulesetNameHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("RecommendationMode")) {
+    m_recommendationMode = RecommendationModeMapper::GetRecommendationModeForName(jsonValue.GetString("RecommendationMode"));
+    m_recommendationModeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue DataQualityRuleRecommendationRunDescription::Jsonize() const
-{
+JsonValue DataQualityRuleRecommendationRunDescription::Jsonize() const {
   JsonValue payload;
 
-  if(m_runIdHasBeenSet)
-  {
-   payload.WithString("RunId", m_runId);
-
+  if (m_runIdHasBeenSet) {
+    payload.WithString("RunId", m_runId);
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", TaskStatusTypeMapper::GetNameForTaskStatusType(m_status));
+  if (m_statusHasBeenSet) {
+    payload.WithString("Status", TaskStatusTypeMapper::GetNameForTaskStatusType(m_status));
   }
 
-  if(m_startedOnHasBeenSet)
-  {
-   payload.WithDouble("StartedOn", m_startedOn.SecondsWithMSPrecision());
+  if (m_startedOnHasBeenSet) {
+    payload.WithDouble("StartedOn", m_startedOn.SecondsWithMSPrecision());
   }
 
-  if(m_dataSourceHasBeenSet)
-  {
-   payload.WithObject("DataSource", m_dataSource.Jsonize());
+  if (m_dataSourceHasBeenSet) {
+    payload.WithObject("DataSource", m_dataSource.Jsonize());
+  }
 
+  if (m_createdRulesetNameHasBeenSet) {
+    payload.WithString("CreatedRulesetName", m_createdRulesetName);
+  }
+
+  if (m_recommendationModeHasBeenSet) {
+    payload.WithString("RecommendationMode", RecommendationModeMapper::GetNameForRecommendationMode(m_recommendationMode));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-logs "C++ SDK for the AWS logs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-logs "C++ SDK for Amazon CloudWatch Logs" aws-cpp-sdk-core)
 
 file(GLOB AWS_LOGS_HEADERS
     "include/aws/logs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LOGS_HEADERS
 
 file(GLOB AWS_LOGS_MODEL_HEADERS
     "include/aws/logs/model/*.h"
+)
+
+file(GLOB AWS_LOGS_INTERNAL_HEADERS
+    "include/aws/logs/internal/*.h"
 )
 
 file(GLOB AWS_LOGS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LOGS_MODEL_SOURCE
 
 file(GLOB LOGS_UNIFIED_HEADERS
     ${AWS_LOGS_HEADERS}
+    ${AWS_LOGS_INTERNAL_HEADERS}
     ${AWS_LOGS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\logs" FILES ${AWS_LOGS_HEADERS})
+        source_group("Header Files\\aws\\logs\\internal" FILES ${AWS_LOGS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\logs\\model" FILES ${AWS_LOGS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LOGS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LOGS_MODEL_SOURCE})

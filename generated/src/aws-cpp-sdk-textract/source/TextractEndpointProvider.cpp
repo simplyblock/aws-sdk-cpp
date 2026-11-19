@@ -4,13 +4,15 @@
  */
 
 #include <aws/textract/TextractEndpointProvider.h>
+#include <aws/textract/internal/TextractEndpointRules.h>
 
-namespace Aws
-{
-namespace Textract
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Textract
-} // namespace Aws
+namespace Aws {
+namespace Textract {
+namespace Endpoint {
+TextractEndpointProvider::TextractEndpointProvider()
+    : TextractDefaultEpProviderBase(Aws::Textract::TextractEndpointRules::GetRulesBlob(),
+                                    Aws::Textract::TextractEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Textract
+}  // namespace Aws

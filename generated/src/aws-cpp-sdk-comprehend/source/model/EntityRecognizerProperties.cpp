@@ -4,290 +4,963 @@
  */
 
 #include <aws/comprehend/model/EntityRecognizerProperties.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-EntityRecognizerProperties::EntityRecognizerProperties() : 
-    m_entityRecognizerArnHasBeenSet(false),
-    m_languageCode(LanguageCode::NOT_SET),
-    m_languageCodeHasBeenSet(false),
-    m_status(ModelStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_messageHasBeenSet(false),
-    m_submitTimeHasBeenSet(false),
-    m_endTimeHasBeenSet(false),
-    m_trainingStartTimeHasBeenSet(false),
-    m_trainingEndTimeHasBeenSet(false),
-    m_inputDataConfigHasBeenSet(false),
-    m_recognizerMetadataHasBeenSet(false),
-    m_dataAccessRoleArnHasBeenSet(false),
-    m_volumeKmsKeyIdHasBeenSet(false),
-    m_vpcConfigHasBeenSet(false),
-    m_modelKmsKeyIdHasBeenSet(false),
-    m_versionNameHasBeenSet(false),
-    m_sourceModelArnHasBeenSet(false),
-    m_flywheelArnHasBeenSet(false),
-    m_outputDataConfigHasBeenSet(false)
-{
-}
+EntityRecognizerProperties::EntityRecognizerProperties(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-EntityRecognizerProperties::EntityRecognizerProperties(JsonView jsonValue)
-  : EntityRecognizerProperties()
-{
-  *this = jsonValue;
-}
+EntityRecognizerProperties& EntityRecognizerProperties::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-EntityRecognizerProperties& EntityRecognizerProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("EntityRecognizerArn"))
-  {
-    m_entityRecognizerArn = jsonValue.GetString("EntityRecognizerArn");
+              if (initialKeyStr == "EntityRecognizerArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_entityRecognizerArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_entityRecognizerArn = ss.str();
+                  }
+                }
+                m_entityRecognizerArnHasBeenSet = true;
+              }
 
-    m_entityRecognizerArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "LanguageCode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_languageCode = LanguageCodeMapper::GetLanguageCodeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_languageCodeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("LanguageCode"))
-  {
-    m_languageCode = LanguageCodeMapper::GetLanguageCodeForName(jsonValue.GetString("LanguageCode"));
+              else if (initialKeyStr == "Status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = ModelStatusMapper::GetModelStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-    m_languageCodeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Message") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_message = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_message = ss.str();
+                  }
+                }
+                m_messageHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Status"))
-  {
-    m_status = ModelStatusMapper::GetModelStatusForName(jsonValue.GetString("Status"));
+              else if (initialKeyStr == "SubmitTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_submitTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_submitTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_submitTimeHasBeenSet = true;
+              }
 
-    m_statusHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EndTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_endTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_endTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_endTimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Message"))
-  {
-    m_message = jsonValue.GetString("Message");
+              else if (initialKeyStr == "TrainingStartTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_trainingStartTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_trainingStartTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_trainingStartTimeHasBeenSet = true;
+              }
 
-    m_messageHasBeenSet = true;
-  }
+              else if (initialKeyStr == "TrainingEndTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_trainingEndTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_trainingEndTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_trainingEndTimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("SubmitTime"))
-  {
-    m_submitTime = jsonValue.GetDouble("SubmitTime");
+              else if (initialKeyStr == "InputDataConfig") {
+                m_inputDataConfig = EntityRecognizerInputDataConfig(decoder);
+                m_inputDataConfigHasBeenSet = true;
+              }
 
-    m_submitTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "RecognizerMetadata") {
+                m_recognizerMetadata = EntityRecognizerMetadata(decoder);
+                m_recognizerMetadataHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("EndTime"))
-  {
-    m_endTime = jsonValue.GetDouble("EndTime");
+              else if (initialKeyStr == "DataAccessRoleArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_dataAccessRoleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_dataAccessRoleArn = ss.str();
+                  }
+                }
+                m_dataAccessRoleArnHasBeenSet = true;
+              }
 
-    m_endTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "VolumeKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_volumeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_volumeKmsKeyId = ss.str();
+                  }
+                }
+                m_volumeKmsKeyIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TrainingStartTime"))
-  {
-    m_trainingStartTime = jsonValue.GetDouble("TrainingStartTime");
+              else if (initialKeyStr == "VpcConfig") {
+                m_vpcConfig = VpcConfig(decoder);
+                m_vpcConfigHasBeenSet = true;
+              }
 
-    m_trainingStartTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ModelKmsKeyId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_modelKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_modelKmsKeyId = ss.str();
+                  }
+                }
+                m_modelKmsKeyIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TrainingEndTime"))
-  {
-    m_trainingEndTime = jsonValue.GetDouble("TrainingEndTime");
+              else if (initialKeyStr == "VersionName") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_versionName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_versionName = ss.str();
+                  }
+                }
+                m_versionNameHasBeenSet = true;
+              }
 
-    m_trainingEndTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "SourceModelArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_sourceModelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_sourceModelArn = ss.str();
+                  }
+                }
+                m_sourceModelArnHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("InputDataConfig"))
-  {
-    m_inputDataConfig = jsonValue.GetObject("InputDataConfig");
+              else if (initialKeyStr == "FlywheelArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_flywheelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_flywheelArn = ss.str();
+                  }
+                }
+                m_flywheelArnHasBeenSet = true;
+              }
 
-    m_inputDataConfigHasBeenSet = true;
-  }
+              else if (initialKeyStr == "OutputDataConfig") {
+                m_outputDataConfig = EntityRecognizerOutputDataConfig(decoder);
+                m_outputDataConfigHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("EntityRecognizerProperties", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("RecognizerMetadata"))
-  {
-    m_recognizerMetadata = jsonValue.GetObject("RecognizerMetadata");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_recognizerMetadataHasBeenSet = true;
-  }
+            if (initialKeyStr == "EntityRecognizerArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_entityRecognizerArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_entityRecognizerArn = ss.str();
+                }
+              }
+              m_entityRecognizerArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("DataAccessRoleArn"))
-  {
-    m_dataAccessRoleArn = jsonValue.GetString("DataAccessRoleArn");
+            else if (initialKeyStr == "LanguageCode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_languageCode = LanguageCodeMapper::GetLanguageCodeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_languageCodeHasBeenSet = true;
+            }
 
-    m_dataAccessRoleArnHasBeenSet = true;
-  }
+            else if (initialKeyStr == "Status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status =
+                    ModelStatusMapper::GetModelStatusForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VolumeKmsKeyId"))
-  {
-    m_volumeKmsKeyId = jsonValue.GetString("VolumeKmsKeyId");
+            else if (initialKeyStr == "Message") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_message = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_message = ss.str();
+                }
+              }
+              m_messageHasBeenSet = true;
+            }
 
-    m_volumeKmsKeyIdHasBeenSet = true;
-  }
+            else if (initialKeyStr == "SubmitTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_submitTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_submitTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_submitTimeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VpcConfig"))
-  {
-    m_vpcConfig = jsonValue.GetObject("VpcConfig");
+            else if (initialKeyStr == "EndTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_endTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_endTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_endTimeHasBeenSet = true;
+            }
 
-    m_vpcConfigHasBeenSet = true;
-  }
+            else if (initialKeyStr == "TrainingStartTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_trainingStartTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_trainingStartTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_trainingStartTimeHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("ModelKmsKeyId"))
-  {
-    m_modelKmsKeyId = jsonValue.GetString("ModelKmsKeyId");
+            else if (initialKeyStr == "TrainingEndTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_trainingEndTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_trainingEndTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_trainingEndTimeHasBeenSet = true;
+            }
 
-    m_modelKmsKeyIdHasBeenSet = true;
-  }
+            else if (initialKeyStr == "InputDataConfig") {
+              m_inputDataConfig = EntityRecognizerInputDataConfig(decoder);
+              m_inputDataConfigHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("VersionName"))
-  {
-    m_versionName = jsonValue.GetString("VersionName");
+            else if (initialKeyStr == "RecognizerMetadata") {
+              m_recognizerMetadata = EntityRecognizerMetadata(decoder);
+              m_recognizerMetadataHasBeenSet = true;
+            }
 
-    m_versionNameHasBeenSet = true;
-  }
+            else if (initialKeyStr == "DataAccessRoleArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_dataAccessRoleArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_dataAccessRoleArn = ss.str();
+                }
+              }
+              m_dataAccessRoleArnHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("SourceModelArn"))
-  {
-    m_sourceModelArn = jsonValue.GetString("SourceModelArn");
+            else if (initialKeyStr == "VolumeKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_volumeKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_volumeKmsKeyId = ss.str();
+                }
+              }
+              m_volumeKmsKeyIdHasBeenSet = true;
+            }
 
-    m_sourceModelArnHasBeenSet = true;
-  }
+            else if (initialKeyStr == "VpcConfig") {
+              m_vpcConfig = VpcConfig(decoder);
+              m_vpcConfigHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("FlywheelArn"))
-  {
-    m_flywheelArn = jsonValue.GetString("FlywheelArn");
+            else if (initialKeyStr == "ModelKmsKeyId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_modelKmsKeyId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_modelKmsKeyId = ss.str();
+                }
+              }
+              m_modelKmsKeyIdHasBeenSet = true;
+            }
 
-    m_flywheelArnHasBeenSet = true;
-  }
+            else if (initialKeyStr == "VersionName") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_versionName = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_versionName = ss.str();
+                }
+              }
+              m_versionNameHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("OutputDataConfig"))
-  {
-    m_outputDataConfig = jsonValue.GetObject("OutputDataConfig");
+            else if (initialKeyStr == "SourceModelArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_sourceModelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_sourceModelArn = ss.str();
+                }
+              }
+              m_sourceModelArnHasBeenSet = true;
+            }
 
-    m_outputDataConfigHasBeenSet = true;
+            else if (initialKeyStr == "FlywheelArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_flywheelArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_flywheelArn = ss.str();
+                }
+              }
+              m_flywheelArnHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "OutputDataConfig") {
+              m_outputDataConfig = EntityRecognizerOutputDataConfig(decoder);
+              m_outputDataConfigHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue EntityRecognizerProperties::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_entityRecognizerArnHasBeenSet)
-  {
-   payload.WithString("EntityRecognizerArn", m_entityRecognizerArn);
-
+void EntityRecognizerProperties::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_entityRecognizerArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_languageCodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_messageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_submitTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_endTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_trainingStartTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_trainingEndTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_inputDataConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_recognizerMetadataHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dataAccessRoleArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_volumeKmsKeyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_vpcConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_modelKmsKeyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_versionNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceModelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_flywheelArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_outputDataConfigHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_languageCodeHasBeenSet)
-  {
-   payload.WithString("LanguageCode", LanguageCodeMapper::GetNameForLanguageCode(m_languageCode));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_entityRecognizerArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EntityRecognizerArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_entityRecognizerArn.c_str()));
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", ModelStatusMapper::GetNameForModelStatus(m_status));
+  if (m_languageCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LanguageCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(LanguageCodeMapper::GetNameForLanguageCode(m_languageCode).c_str()));
   }
 
-  if(m_messageHasBeenSet)
-  {
-   payload.WithString("Message", m_message);
-
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ModelStatusMapper::GetNameForModelStatus(m_status).c_str()));
   }
 
-  if(m_submitTimeHasBeenSet)
-  {
-   payload.WithDouble("SubmitTime", m_submitTime.SecondsWithMSPrecision());
+  if (m_messageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Message"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_message.c_str()));
   }
 
-  if(m_endTimeHasBeenSet)
-  {
-   payload.WithDouble("EndTime", m_endTime.SecondsWithMSPrecision());
+  if (m_submitTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SubmitTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_submitTime.Seconds());
   }
 
-  if(m_trainingStartTimeHasBeenSet)
-  {
-   payload.WithDouble("TrainingStartTime", m_trainingStartTime.SecondsWithMSPrecision());
+  if (m_endTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EndTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_endTime.Seconds());
   }
 
-  if(m_trainingEndTimeHasBeenSet)
-  {
-   payload.WithDouble("TrainingEndTime", m_trainingEndTime.SecondsWithMSPrecision());
+  if (m_trainingStartTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TrainingStartTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_trainingStartTime.Seconds());
   }
 
-  if(m_inputDataConfigHasBeenSet)
-  {
-   payload.WithObject("InputDataConfig", m_inputDataConfig.Jsonize());
-
+  if (m_trainingEndTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TrainingEndTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_trainingEndTime.Seconds());
   }
 
-  if(m_recognizerMetadataHasBeenSet)
-  {
-   payload.WithObject("RecognizerMetadata", m_recognizerMetadata.Jsonize());
-
+  if (m_inputDataConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("InputDataConfig"));
+    m_inputDataConfig.CborEncode(encoder);
   }
 
-  if(m_dataAccessRoleArnHasBeenSet)
-  {
-   payload.WithString("DataAccessRoleArn", m_dataAccessRoleArn);
-
+  if (m_recognizerMetadataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RecognizerMetadata"));
+    m_recognizerMetadata.CborEncode(encoder);
   }
 
-  if(m_volumeKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("VolumeKmsKeyId", m_volumeKmsKeyId);
-
+  if (m_dataAccessRoleArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataAccessRoleArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_dataAccessRoleArn.c_str()));
   }
 
-  if(m_vpcConfigHasBeenSet)
-  {
-   payload.WithObject("VpcConfig", m_vpcConfig.Jsonize());
-
+  if (m_volumeKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VolumeKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_volumeKmsKeyId.c_str()));
   }
 
-  if(m_modelKmsKeyIdHasBeenSet)
-  {
-   payload.WithString("ModelKmsKeyId", m_modelKmsKeyId);
-
+  if (m_vpcConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VpcConfig"));
+    m_vpcConfig.CborEncode(encoder);
   }
 
-  if(m_versionNameHasBeenSet)
-  {
-   payload.WithString("VersionName", m_versionName);
-
+  if (m_modelKmsKeyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ModelKmsKeyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_modelKmsKeyId.c_str()));
   }
 
-  if(m_sourceModelArnHasBeenSet)
-  {
-   payload.WithString("SourceModelArn", m_sourceModelArn);
-
+  if (m_versionNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("VersionName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_versionName.c_str()));
   }
 
-  if(m_flywheelArnHasBeenSet)
-  {
-   payload.WithString("FlywheelArn", m_flywheelArn);
-
+  if (m_sourceModelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SourceModelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_sourceModelArn.c_str()));
   }
 
-  if(m_outputDataConfigHasBeenSet)
-  {
-   payload.WithObject("OutputDataConfig", m_outputDataConfig.Jsonize());
-
+  if (m_flywheelArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FlywheelArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_flywheelArn.c_str()));
   }
 
-  return payload;
+  if (m_outputDataConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OutputDataConfig"));
+    m_outputDataConfig.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

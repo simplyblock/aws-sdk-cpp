@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/location/model/GetDevicePositionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/location/model/GetDevicePositionRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::LocationService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDevicePositionRequest::GetDevicePositionRequest() : 
-    m_trackerNameHasBeenSet(false),
-    m_deviceIdHasBeenSet(false)
-{
-}
-
-Aws::String GetDevicePositionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDevicePositionRequest::SerializePayload() const { return {}; }

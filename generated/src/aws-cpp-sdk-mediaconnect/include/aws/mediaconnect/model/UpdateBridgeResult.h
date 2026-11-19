@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/Bridge.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
-  class UpdateBridgeResult
-  {
-  public:
-    AWS_MEDIACONNECT_API UpdateBridgeResult();
-    AWS_MEDIACONNECT_API UpdateBridgeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONNECT_API UpdateBridgeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
+class UpdateBridgeResult {
+ public:
+  AWS_MEDIACONNECT_API UpdateBridgeResult() = default;
+  AWS_MEDIACONNECT_API UpdateBridgeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONNECT_API UpdateBridgeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The bridge that was updated. </p>
+   */
+  inline const Bridge& GetBridge() const { return m_bridge; }
+  template <typename BridgeT = Bridge>
+  void SetBridge(BridgeT&& value) {
+    m_bridgeHasBeenSet = true;
+    m_bridge = std::forward<BridgeT>(value);
+  }
+  template <typename BridgeT = Bridge>
+  UpdateBridgeResult& WithBridge(BridgeT&& value) {
+    SetBridge(std::forward<BridgeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Bridge& GetBridge() const{ return m_bridge; }
-    inline void SetBridge(const Bridge& value) { m_bridge = value; }
-    inline void SetBridge(Bridge&& value) { m_bridge = std::move(value); }
-    inline UpdateBridgeResult& WithBridge(const Bridge& value) { SetBridge(value); return *this;}
-    inline UpdateBridgeResult& WithBridge(Bridge&& value) { SetBridge(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateBridgeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateBridgeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateBridgeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateBridgeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Bridge m_bridge;
+ private:
+  Bridge m_bridge;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bridgeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

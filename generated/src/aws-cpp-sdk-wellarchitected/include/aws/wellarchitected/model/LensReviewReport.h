@@ -4,88 +4,93 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
 
+/**
+ * <p>A report of a lens review.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/LensReviewReport">AWS
+ * API Reference</a></p>
+ */
+class LensReviewReport {
+ public:
+  AWS_WELLARCHITECTED_API LensReviewReport() = default;
+  AWS_WELLARCHITECTED_API LensReviewReport(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API LensReviewReport& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetLensAlias() const { return m_lensAlias; }
+  inline bool LensAliasHasBeenSet() const { return m_lensAliasHasBeenSet; }
+  template <typename LensAliasT = Aws::String>
+  void SetLensAlias(LensAliasT&& value) {
+    m_lensAliasHasBeenSet = true;
+    m_lensAlias = std::forward<LensAliasT>(value);
+  }
+  template <typename LensAliasT = Aws::String>
+  LensReviewReport& WithLensAlias(LensAliasT&& value) {
+    SetLensAlias(std::forward<LensAliasT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>A report of a lens review.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/LensReviewReport">AWS
-   * API Reference</a></p>
+   * <p>The ARN for the lens.</p>
    */
-  class LensReviewReport
-  {
-  public:
-    AWS_WELLARCHITECTED_API LensReviewReport();
-    AWS_WELLARCHITECTED_API LensReviewReport(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API LensReviewReport& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetLensArn() const { return m_lensArn; }
+  inline bool LensArnHasBeenSet() const { return m_lensArnHasBeenSet; }
+  template <typename LensArnT = Aws::String>
+  void SetLensArn(LensArnT&& value) {
+    m_lensArnHasBeenSet = true;
+    m_lensArn = std::forward<LensArnT>(value);
+  }
+  template <typename LensArnT = Aws::String>
+  LensReviewReport& WithLensArn(LensArnT&& value) {
+    SetLensArn(std::forward<LensArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetLensAlias() const{ return m_lensAlias; }
-    inline bool LensAliasHasBeenSet() const { return m_lensAliasHasBeenSet; }
-    inline void SetLensAlias(const Aws::String& value) { m_lensAliasHasBeenSet = true; m_lensAlias = value; }
-    inline void SetLensAlias(Aws::String&& value) { m_lensAliasHasBeenSet = true; m_lensAlias = std::move(value); }
-    inline void SetLensAlias(const char* value) { m_lensAliasHasBeenSet = true; m_lensAlias.assign(value); }
-    inline LensReviewReport& WithLensAlias(const Aws::String& value) { SetLensAlias(value); return *this;}
-    inline LensReviewReport& WithLensAlias(Aws::String&& value) { SetLensAlias(std::move(value)); return *this;}
-    inline LensReviewReport& WithLensAlias(const char* value) { SetLensAlias(value); return *this;}
-    ///@}
+  inline const Aws::String& GetBase64String() const { return m_base64String; }
+  inline bool Base64StringHasBeenSet() const { return m_base64StringHasBeenSet; }
+  template <typename Base64StringT = Aws::String>
+  void SetBase64String(Base64StringT&& value) {
+    m_base64StringHasBeenSet = true;
+    m_base64String = std::forward<Base64StringT>(value);
+  }
+  template <typename Base64StringT = Aws::String>
+  LensReviewReport& WithBase64String(Base64StringT&& value) {
+    SetBase64String(std::forward<Base64StringT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_lensAlias;
 
-    ///@{
-    /**
-     * <p>The ARN for the lens.</p>
-     */
-    inline const Aws::String& GetLensArn() const{ return m_lensArn; }
-    inline bool LensArnHasBeenSet() const { return m_lensArnHasBeenSet; }
-    inline void SetLensArn(const Aws::String& value) { m_lensArnHasBeenSet = true; m_lensArn = value; }
-    inline void SetLensArn(Aws::String&& value) { m_lensArnHasBeenSet = true; m_lensArn = std::move(value); }
-    inline void SetLensArn(const char* value) { m_lensArnHasBeenSet = true; m_lensArn.assign(value); }
-    inline LensReviewReport& WithLensArn(const Aws::String& value) { SetLensArn(value); return *this;}
-    inline LensReviewReport& WithLensArn(Aws::String&& value) { SetLensArn(std::move(value)); return *this;}
-    inline LensReviewReport& WithLensArn(const char* value) { SetLensArn(value); return *this;}
-    ///@}
+  Aws::String m_lensArn;
 
-    ///@{
-    
-    inline const Aws::String& GetBase64String() const{ return m_base64String; }
-    inline bool Base64StringHasBeenSet() const { return m_base64StringHasBeenSet; }
-    inline void SetBase64String(const Aws::String& value) { m_base64StringHasBeenSet = true; m_base64String = value; }
-    inline void SetBase64String(Aws::String&& value) { m_base64StringHasBeenSet = true; m_base64String = std::move(value); }
-    inline void SetBase64String(const char* value) { m_base64StringHasBeenSet = true; m_base64String.assign(value); }
-    inline LensReviewReport& WithBase64String(const Aws::String& value) { SetBase64String(value); return *this;}
-    inline LensReviewReport& WithBase64String(Aws::String&& value) { SetBase64String(std::move(value)); return *this;}
-    inline LensReviewReport& WithBase64String(const char* value) { SetBase64String(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_base64String;
+  bool m_lensAliasHasBeenSet = false;
+  bool m_lensArnHasBeenSet = false;
+  bool m_base64StringHasBeenSet = false;
+};
 
-    Aws::String m_lensAlias;
-    bool m_lensAliasHasBeenSet = false;
-
-    Aws::String m_lensArn;
-    bool m_lensArnHasBeenSet = false;
-
-    Aws::String m_base64String;
-    bool m_base64StringHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

@@ -7,70 +7,75 @@
 #include <aws/signer/Signer_EXPORTS.h>
 #include <aws/signer/model/EncryptionAlgorithmOptions.h>
 #include <aws/signer/model/HashAlgorithmOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace signer
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace signer {
+namespace Model {
 
+/**
+ * <p>The configuration of a signing operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/signer-2017-08-25/SigningConfiguration">AWS
+ * API Reference</a></p>
+ */
+class SigningConfiguration {
+ public:
+  AWS_SIGNER_API SigningConfiguration() = default;
+  AWS_SIGNER_API SigningConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SIGNER_API SigningConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SIGNER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration of a signing operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/signer-2017-08-25/SigningConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The encryption algorithm options that are available for a code-signing
+   * job.</p>
    */
-  class SigningConfiguration
-  {
-  public:
-    AWS_SIGNER_API SigningConfiguration();
-    AWS_SIGNER_API SigningConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SIGNER_API SigningConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SIGNER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const EncryptionAlgorithmOptions& GetEncryptionAlgorithmOptions() const { return m_encryptionAlgorithmOptions; }
+  inline bool EncryptionAlgorithmOptionsHasBeenSet() const { return m_encryptionAlgorithmOptionsHasBeenSet; }
+  template <typename EncryptionAlgorithmOptionsT = EncryptionAlgorithmOptions>
+  void SetEncryptionAlgorithmOptions(EncryptionAlgorithmOptionsT&& value) {
+    m_encryptionAlgorithmOptionsHasBeenSet = true;
+    m_encryptionAlgorithmOptions = std::forward<EncryptionAlgorithmOptionsT>(value);
+  }
+  template <typename EncryptionAlgorithmOptionsT = EncryptionAlgorithmOptions>
+  SigningConfiguration& WithEncryptionAlgorithmOptions(EncryptionAlgorithmOptionsT&& value) {
+    SetEncryptionAlgorithmOptions(std::forward<EncryptionAlgorithmOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The hash algorithm options that are available for a code-signing job.</p>
+   */
+  inline const HashAlgorithmOptions& GetHashAlgorithmOptions() const { return m_hashAlgorithmOptions; }
+  inline bool HashAlgorithmOptionsHasBeenSet() const { return m_hashAlgorithmOptionsHasBeenSet; }
+  template <typename HashAlgorithmOptionsT = HashAlgorithmOptions>
+  void SetHashAlgorithmOptions(HashAlgorithmOptionsT&& value) {
+    m_hashAlgorithmOptionsHasBeenSet = true;
+    m_hashAlgorithmOptions = std::forward<HashAlgorithmOptionsT>(value);
+  }
+  template <typename HashAlgorithmOptionsT = HashAlgorithmOptions>
+  SigningConfiguration& WithHashAlgorithmOptions(HashAlgorithmOptionsT&& value) {
+    SetHashAlgorithmOptions(std::forward<HashAlgorithmOptionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  EncryptionAlgorithmOptions m_encryptionAlgorithmOptions;
 
-    ///@{
-    /**
-     * <p>The encryption algorithm options that are available for a code-signing
-     * job.</p>
-     */
-    inline const EncryptionAlgorithmOptions& GetEncryptionAlgorithmOptions() const{ return m_encryptionAlgorithmOptions; }
-    inline bool EncryptionAlgorithmOptionsHasBeenSet() const { return m_encryptionAlgorithmOptionsHasBeenSet; }
-    inline void SetEncryptionAlgorithmOptions(const EncryptionAlgorithmOptions& value) { m_encryptionAlgorithmOptionsHasBeenSet = true; m_encryptionAlgorithmOptions = value; }
-    inline void SetEncryptionAlgorithmOptions(EncryptionAlgorithmOptions&& value) { m_encryptionAlgorithmOptionsHasBeenSet = true; m_encryptionAlgorithmOptions = std::move(value); }
-    inline SigningConfiguration& WithEncryptionAlgorithmOptions(const EncryptionAlgorithmOptions& value) { SetEncryptionAlgorithmOptions(value); return *this;}
-    inline SigningConfiguration& WithEncryptionAlgorithmOptions(EncryptionAlgorithmOptions&& value) { SetEncryptionAlgorithmOptions(std::move(value)); return *this;}
-    ///@}
+  HashAlgorithmOptions m_hashAlgorithmOptions;
+  bool m_encryptionAlgorithmOptionsHasBeenSet = false;
+  bool m_hashAlgorithmOptionsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The hash algorithm options that are available for a code-signing job.</p>
-     */
-    inline const HashAlgorithmOptions& GetHashAlgorithmOptions() const{ return m_hashAlgorithmOptions; }
-    inline bool HashAlgorithmOptionsHasBeenSet() const { return m_hashAlgorithmOptionsHasBeenSet; }
-    inline void SetHashAlgorithmOptions(const HashAlgorithmOptions& value) { m_hashAlgorithmOptionsHasBeenSet = true; m_hashAlgorithmOptions = value; }
-    inline void SetHashAlgorithmOptions(HashAlgorithmOptions&& value) { m_hashAlgorithmOptionsHasBeenSet = true; m_hashAlgorithmOptions = std::move(value); }
-    inline SigningConfiguration& WithHashAlgorithmOptions(const HashAlgorithmOptions& value) { SetHashAlgorithmOptions(value); return *this;}
-    inline SigningConfiguration& WithHashAlgorithmOptions(HashAlgorithmOptions&& value) { SetHashAlgorithmOptions(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    EncryptionAlgorithmOptions m_encryptionAlgorithmOptions;
-    bool m_encryptionAlgorithmOptionsHasBeenSet = false;
-
-    HashAlgorithmOptions m_hashAlgorithmOptions;
-    bool m_hashAlgorithmOptionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace signer
-} // namespace Aws
+}  // namespace Model
+}  // namespace signer
+}  // namespace Aws

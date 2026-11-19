@@ -4,152 +4,174 @@
  */
 
 #pragma once
-#include <aws/service-quotas/ServiceQuotas_EXPORTS.h>
-#include <aws/service-quotas/ServiceQuotasRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/service-quotas/model/RequestStatus.h>
+#include <aws/service-quotas/ServiceQuotasRequest.h>
+#include <aws/service-quotas/ServiceQuotas_EXPORTS.h>
 #include <aws/service-quotas/model/AppliedLevelEnum.h>
+#include <aws/service-quotas/model/RequestStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ServiceQuotas
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceQuotas {
+namespace Model {
 
+/**
+ */
+class ListRequestedServiceQuotaChangeHistoryByQuotaRequest : public ServiceQuotasRequest {
+ public:
+  AWS_SERVICEQUOTAS_API ListRequestedServiceQuotaChangeHistoryByQuotaRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListRequestedServiceQuotaChangeHistoryByQuota"; }
+
+  AWS_SERVICEQUOTAS_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICEQUOTAS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Specifies the service identifier. To find the service code value for an
+   * Amazon Web Services service, use the <a>ListServices</a> operation.</p>
    */
-  class ListRequestedServiceQuotaChangeHistoryByQuotaRequest : public ServiceQuotasRequest
-  {
-  public:
-    AWS_SERVICEQUOTAS_API ListRequestedServiceQuotaChangeHistoryByQuotaRequest();
+  inline const Aws::String& GetServiceCode() const { return m_serviceCode; }
+  inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
+  template <typename ServiceCodeT = Aws::String>
+  void SetServiceCode(ServiceCodeT&& value) {
+    m_serviceCodeHasBeenSet = true;
+    m_serviceCode = std::forward<ServiceCodeT>(value);
+  }
+  template <typename ServiceCodeT = Aws::String>
+  ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithServiceCode(ServiceCodeT&& value) {
+    SetServiceCode(std::forward<ServiceCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListRequestedServiceQuotaChangeHistoryByQuota"; }
+  ///@{
+  /**
+   * <p>Specifies the quota identifier. To find the quota code for a specific quota,
+   * use the <a>ListServiceQuotas</a> operation, and look for the
+   * <code>QuotaCode</code> response in the output for the quota you want.</p>
+   */
+  inline const Aws::String& GetQuotaCode() const { return m_quotaCode; }
+  inline bool QuotaCodeHasBeenSet() const { return m_quotaCodeHasBeenSet; }
+  template <typename QuotaCodeT = Aws::String>
+  void SetQuotaCode(QuotaCodeT&& value) {
+    m_quotaCodeHasBeenSet = true;
+    m_quotaCode = std::forward<QuotaCodeT>(value);
+  }
+  template <typename QuotaCodeT = Aws::String>
+  ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaCode(QuotaCodeT&& value) {
+    SetQuotaCode(std::forward<QuotaCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICEQUOTAS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies that you want to filter the results to only the requests with the
+   * matching status.</p>
+   */
+  inline RequestStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(RequestStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithStatus(RequestStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICEQUOTAS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Specifies a value for receiving additional results after you receive a
+   * <code>NextToken</code> response in a previous request. A <code>NextToken</code>
+   * response indicates that more output is available. Set this parameter to the
+   * value of the previous call's <code>NextToken</code> response to indicate where
+   * the output should continue from.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies the maximum number of results that you want included on each page
+   * of the response. If you do not include this parameter, it defaults to a value
+   * appropriate to the operation. If additional items exist beyond those included in
+   * the current response, the <code>NextToken</code> response element is present and
+   * has a value (is not null). Include that value as the <code>NextToken</code>
+   * request parameter in the next call to the operation to get the next part of the
+   * results.</p>  <p>An API operation can return fewer results than the
+   * maximum even when there are more results available. You should check
+   * <code>NextToken</code> after every operation to ensure that you receive all of
+   * the results.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the service identifier. To find the service code value for an
-     * Amazon Web Services service, use the <a>ListServices</a> operation.</p>
-     */
-    inline const Aws::String& GetServiceCode() const{ return m_serviceCode; }
-    inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
-    inline void SetServiceCode(const Aws::String& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = value; }
-    inline void SetServiceCode(Aws::String&& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = std::move(value); }
-    inline void SetServiceCode(const char* value) { m_serviceCodeHasBeenSet = true; m_serviceCode.assign(value); }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithServiceCode(const Aws::String& value) { SetServiceCode(value); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithServiceCode(Aws::String&& value) { SetServiceCode(std::move(value)); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithServiceCode(const char* value) { SetServiceCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Filters the response to return quota requests for the <code>ACCOUNT</code>,
+   * <code>RESOURCE</code>, or <code>ALL</code> levels. <code>ACCOUNT</code> is the
+   * default.</p>
+   */
+  inline AppliedLevelEnum GetQuotaRequestedAtLevel() const { return m_quotaRequestedAtLevel; }
+  inline bool QuotaRequestedAtLevelHasBeenSet() const { return m_quotaRequestedAtLevelHasBeenSet; }
+  inline void SetQuotaRequestedAtLevel(AppliedLevelEnum value) {
+    m_quotaRequestedAtLevelHasBeenSet = true;
+    m_quotaRequestedAtLevel = value;
+  }
+  inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaRequestedAtLevel(AppliedLevelEnum value) {
+    SetQuotaRequestedAtLevel(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_serviceCode;
 
-    ///@{
-    /**
-     * <p>Specifies the quota identifier. To find the quota code for a specific quota,
-     * use the <a>ListServiceQuotas</a> operation, and look for the
-     * <code>QuotaCode</code> response in the output for the quota you want.</p>
-     */
-    inline const Aws::String& GetQuotaCode() const{ return m_quotaCode; }
-    inline bool QuotaCodeHasBeenSet() const { return m_quotaCodeHasBeenSet; }
-    inline void SetQuotaCode(const Aws::String& value) { m_quotaCodeHasBeenSet = true; m_quotaCode = value; }
-    inline void SetQuotaCode(Aws::String&& value) { m_quotaCodeHasBeenSet = true; m_quotaCode = std::move(value); }
-    inline void SetQuotaCode(const char* value) { m_quotaCodeHasBeenSet = true; m_quotaCode.assign(value); }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaCode(const Aws::String& value) { SetQuotaCode(value); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaCode(Aws::String&& value) { SetQuotaCode(std::move(value)); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaCode(const char* value) { SetQuotaCode(value); return *this;}
-    ///@}
+  Aws::String m_quotaCode;
 
-    ///@{
-    /**
-     * <p>Specifies that you want to filter the results to only the requests with the
-     * matching status.</p>
-     */
-    inline const RequestStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const RequestStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(RequestStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithStatus(const RequestStatus& value) { SetStatus(value); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithStatus(RequestStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  RequestStatus m_status{RequestStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies a value for receiving additional results after you receive a
-     * <code>NextToken</code> response in a previous request. A <code>NextToken</code>
-     * response indicates that more output is available. Set this parameter to the
-     * value of the previous call's <code>NextToken</code> response to indicate where
-     * the output should continue from.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>Specifies the maximum number of results that you want included on each page
-     * of the response. If you do not include this parameter, it defaults to a value
-     * appropriate to the operation. If additional items exist beyond those included in
-     * the current response, the <code>NextToken</code> response element is present and
-     * has a value (is not null). Include that value as the <code>NextToken</code>
-     * request parameter in the next call to the operation to get the next part of the
-     * results.</p>  <p>An API operation can return fewer results than the
-     * maximum even when there are more results available. You should check
-     * <code>NextToken</code> after every operation to ensure that you receive all of
-     * the results.</p> 
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>Specifies at which level within the Amazon Web Services account the quota
-     * request applies to.</p>
-     */
-    inline const AppliedLevelEnum& GetQuotaRequestedAtLevel() const{ return m_quotaRequestedAtLevel; }
-    inline bool QuotaRequestedAtLevelHasBeenSet() const { return m_quotaRequestedAtLevelHasBeenSet; }
-    inline void SetQuotaRequestedAtLevel(const AppliedLevelEnum& value) { m_quotaRequestedAtLevelHasBeenSet = true; m_quotaRequestedAtLevel = value; }
-    inline void SetQuotaRequestedAtLevel(AppliedLevelEnum&& value) { m_quotaRequestedAtLevelHasBeenSet = true; m_quotaRequestedAtLevel = std::move(value); }
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaRequestedAtLevel(const AppliedLevelEnum& value) { SetQuotaRequestedAtLevel(value); return *this;}
-    inline ListRequestedServiceQuotaChangeHistoryByQuotaRequest& WithQuotaRequestedAtLevel(AppliedLevelEnum&& value) { SetQuotaRequestedAtLevel(std::move(value)); return *this;}
-    ///@}
-  private:
+  AppliedLevelEnum m_quotaRequestedAtLevel{AppliedLevelEnum::NOT_SET};
+  bool m_serviceCodeHasBeenSet = false;
+  bool m_quotaCodeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_quotaRequestedAtLevelHasBeenSet = false;
+};
 
-    Aws::String m_serviceCode;
-    bool m_serviceCodeHasBeenSet = false;
-
-    Aws::String m_quotaCode;
-    bool m_quotaCodeHasBeenSet = false;
-
-    RequestStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    AppliedLevelEnum m_quotaRequestedAtLevel;
-    bool m_quotaRequestedAtLevelHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceQuotas
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceQuotas
+}  // namespace Aws

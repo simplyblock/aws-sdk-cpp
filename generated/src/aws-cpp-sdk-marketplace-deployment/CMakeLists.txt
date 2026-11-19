@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-marketplace-deployment "C++ SDK for the AWS marketplace-deployment service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-marketplace-deployment "C++ SDK for AWS Marketplace Deployment Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_MARKETPLACE-DEPLOYMENT_HEADERS
     "include/aws/marketplace-deployment/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MARKETPLACE-DEPLOYMENT_HEADERS
 
 file(GLOB AWS_MARKETPLACE-DEPLOYMENT_MODEL_HEADERS
     "include/aws/marketplace-deployment/model/*.h"
+)
+
+file(GLOB AWS_MARKETPLACE-DEPLOYMENT_INTERNAL_HEADERS
+    "include/aws/marketplace-deployment/internal/*.h"
 )
 
 file(GLOB AWS_MARKETPLACE-DEPLOYMENT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MARKETPLACE-DEPLOYMENT_MODEL_SOURCE
 
 file(GLOB MARKETPLACE-DEPLOYMENT_UNIFIED_HEADERS
     ${AWS_MARKETPLACE-DEPLOYMENT_HEADERS}
+    ${AWS_MARKETPLACE-DEPLOYMENT_INTERNAL_HEADERS}
     ${AWS_MARKETPLACE-DEPLOYMENT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\marketplace-deployment" FILES ${AWS_MARKETPLACE-DEPLOYMENT_HEADERS})
+        source_group("Header Files\\aws\\marketplace-deployment\\internal" FILES ${AWS_MARKETPLACE-DEPLOYMENT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\marketplace-deployment\\model" FILES ${AWS_MARKETPLACE-DEPLOYMENT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MARKETPLACE-DEPLOYMENT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MARKETPLACE-DEPLOYMENT_MODEL_SOURCE})

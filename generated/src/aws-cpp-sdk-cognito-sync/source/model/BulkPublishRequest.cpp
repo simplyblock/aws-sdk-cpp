@@ -12,16 +12,4 @@ using namespace Aws::CognitoSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-BulkPublishRequest::BulkPublishRequest() : 
-    m_identityPoolIdHasBeenSet(false)
-{
-}
-
-Aws::String BulkPublishRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String BulkPublishRequest::SerializePayload() const { return {}; }

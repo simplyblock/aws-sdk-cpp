@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pca-connector-scep/PcaConnectorScep_EXPORTS.h>
 #include <aws/pca-connector-scep/model/ChallengeMetadata.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorScep
-{
-namespace Model
-{
-  class GetChallengeMetadataResult
-  {
-  public:
-    AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult();
-    AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorScep {
+namespace Model {
+class GetChallengeMetadataResult {
+ public:
+  AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult() = default;
+  AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORSCEP_API GetChallengeMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The metadata for the challenge.</p>
+   */
+  inline const ChallengeMetadata& GetChallengeMetadata() const { return m_challengeMetadata; }
+  template <typename ChallengeMetadataT = ChallengeMetadata>
+  void SetChallengeMetadata(ChallengeMetadataT&& value) {
+    m_challengeMetadataHasBeenSet = true;
+    m_challengeMetadata = std::forward<ChallengeMetadataT>(value);
+  }
+  template <typename ChallengeMetadataT = ChallengeMetadata>
+  GetChallengeMetadataResult& WithChallengeMetadata(ChallengeMetadataT&& value) {
+    SetChallengeMetadata(std::forward<ChallengeMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metadata for the challenge.</p>
-     */
-    inline const ChallengeMetadata& GetChallengeMetadata() const{ return m_challengeMetadata; }
-    inline void SetChallengeMetadata(const ChallengeMetadata& value) { m_challengeMetadata = value; }
-    inline void SetChallengeMetadata(ChallengeMetadata&& value) { m_challengeMetadata = std::move(value); }
-    inline GetChallengeMetadataResult& WithChallengeMetadata(const ChallengeMetadata& value) { SetChallengeMetadata(value); return *this;}
-    inline GetChallengeMetadataResult& WithChallengeMetadata(ChallengeMetadata&& value) { SetChallengeMetadata(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetChallengeMetadataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetChallengeMetadataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetChallengeMetadataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetChallengeMetadataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ChallengeMetadata m_challengeMetadata;
+ private:
+  ChallengeMetadata m_challengeMetadata;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_challengeMetadataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorScep
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorScep
+}  // namespace Aws

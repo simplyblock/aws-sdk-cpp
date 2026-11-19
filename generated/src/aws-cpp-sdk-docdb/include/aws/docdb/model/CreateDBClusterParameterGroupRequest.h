@@ -4,117 +4,134 @@
  */
 
 #pragma once
-#include <aws/docdb/DocDB_EXPORTS.h>
-#include <aws/docdb/DocDBRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/docdb/DocDBRequest.h>
+#include <aws/docdb/DocDB_EXPORTS.h>
 #include <aws/docdb/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DocDB
-{
-namespace Model
-{
+namespace Aws {
+namespace DocDB {
+namespace Model {
 
+/**
+ * <p>Represents the input of <a>CreateDBClusterParameterGroup</a>.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/CreateDBClusterParameterGroupMessage">AWS
+ * API Reference</a></p>
+ */
+class CreateDBClusterParameterGroupRequest : public DocDBRequest {
+ public:
+  AWS_DOCDB_API CreateDBClusterParameterGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDBClusterParameterGroup"; }
+
+  AWS_DOCDB_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_DOCDB_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p>Represents the input of <a>CreateDBClusterParameterGroup</a>.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/CreateDBClusterParameterGroupMessage">AWS
-   * API Reference</a></p>
+   * <p>The name of the cluster parameter group.</p> <p>Constraints:</p> <ul> <li>
+   * <p>Must not match the name of an existing
+   * <code>DBClusterParameterGroup</code>.</p> </li> </ul>  <p>This value is
+   * stored as a lowercase string.</p>
    */
-  class CreateDBClusterParameterGroupRequest : public DocDBRequest
-  {
-  public:
-    AWS_DOCDB_API CreateDBClusterParameterGroupRequest();
+  inline const Aws::String& GetDBClusterParameterGroupName() const { return m_dBClusterParameterGroupName; }
+  inline bool DBClusterParameterGroupNameHasBeenSet() const { return m_dBClusterParameterGroupNameHasBeenSet; }
+  template <typename DBClusterParameterGroupNameT = Aws::String>
+  void SetDBClusterParameterGroupName(DBClusterParameterGroupNameT&& value) {
+    m_dBClusterParameterGroupNameHasBeenSet = true;
+    m_dBClusterParameterGroupName = std::forward<DBClusterParameterGroupNameT>(value);
+  }
+  template <typename DBClusterParameterGroupNameT = Aws::String>
+  CreateDBClusterParameterGroupRequest& WithDBClusterParameterGroupName(DBClusterParameterGroupNameT&& value) {
+    SetDBClusterParameterGroupName(std::forward<DBClusterParameterGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDBClusterParameterGroup"; }
+  ///@{
+  /**
+   * <p>The cluster parameter group family name.</p>
+   */
+  inline const Aws::String& GetDBParameterGroupFamily() const { return m_dBParameterGroupFamily; }
+  inline bool DBParameterGroupFamilyHasBeenSet() const { return m_dBParameterGroupFamilyHasBeenSet; }
+  template <typename DBParameterGroupFamilyT = Aws::String>
+  void SetDBParameterGroupFamily(DBParameterGroupFamilyT&& value) {
+    m_dBParameterGroupFamilyHasBeenSet = true;
+    m_dBParameterGroupFamily = std::forward<DBParameterGroupFamilyT>(value);
+  }
+  template <typename DBParameterGroupFamilyT = Aws::String>
+  CreateDBClusterParameterGroupRequest& WithDBParameterGroupFamily(DBParameterGroupFamilyT&& value) {
+    SetDBParameterGroupFamily(std::forward<DBParameterGroupFamilyT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DOCDB_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The description for the cluster parameter group.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateDBClusterParameterGroupRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_DOCDB_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The tags to be assigned to the cluster parameter group.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateDBClusterParameterGroupRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateDBClusterParameterGroupRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_dBClusterParameterGroupName;
 
-  public:
+  Aws::String m_dBParameterGroupFamily;
 
-    ///@{
-    /**
-     * <p>The name of the cluster parameter group.</p> <p>Constraints:</p> <ul> <li>
-     * <p>Must not match the name of an existing
-     * <code>DBClusterParameterGroup</code>.</p> </li> </ul>  <p>This value is
-     * stored as a lowercase string.</p> 
-     */
-    inline const Aws::String& GetDBClusterParameterGroupName() const{ return m_dBClusterParameterGroupName; }
-    inline bool DBClusterParameterGroupNameHasBeenSet() const { return m_dBClusterParameterGroupNameHasBeenSet; }
-    inline void SetDBClusterParameterGroupName(const Aws::String& value) { m_dBClusterParameterGroupNameHasBeenSet = true; m_dBClusterParameterGroupName = value; }
-    inline void SetDBClusterParameterGroupName(Aws::String&& value) { m_dBClusterParameterGroupNameHasBeenSet = true; m_dBClusterParameterGroupName = std::move(value); }
-    inline void SetDBClusterParameterGroupName(const char* value) { m_dBClusterParameterGroupNameHasBeenSet = true; m_dBClusterParameterGroupName.assign(value); }
-    inline CreateDBClusterParameterGroupRequest& WithDBClusterParameterGroupName(const Aws::String& value) { SetDBClusterParameterGroupName(value); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDBClusterParameterGroupName(Aws::String&& value) { SetDBClusterParameterGroupName(std::move(value)); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDBClusterParameterGroupName(const char* value) { SetDBClusterParameterGroupName(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The cluster parameter group family name.</p>
-     */
-    inline const Aws::String& GetDBParameterGroupFamily() const{ return m_dBParameterGroupFamily; }
-    inline bool DBParameterGroupFamilyHasBeenSet() const { return m_dBParameterGroupFamilyHasBeenSet; }
-    inline void SetDBParameterGroupFamily(const Aws::String& value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily = value; }
-    inline void SetDBParameterGroupFamily(Aws::String&& value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily = std::move(value); }
-    inline void SetDBParameterGroupFamily(const char* value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily.assign(value); }
-    inline CreateDBClusterParameterGroupRequest& WithDBParameterGroupFamily(const Aws::String& value) { SetDBParameterGroupFamily(value); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDBParameterGroupFamily(Aws::String&& value) { SetDBParameterGroupFamily(std::move(value)); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDBParameterGroupFamily(const char* value) { SetDBParameterGroupFamily(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_dBClusterParameterGroupNameHasBeenSet = false;
+  bool m_dBParameterGroupFamilyHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The description for the cluster parameter group.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateDBClusterParameterGroupRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The tags to be assigned to the cluster parameter group.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateDBClusterParameterGroupRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateDBClusterParameterGroupRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateDBClusterParameterGroupRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateDBClusterParameterGroupRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_dBClusterParameterGroupName;
-    bool m_dBClusterParameterGroupNameHasBeenSet = false;
-
-    Aws::String m_dBParameterGroupFamily;
-    bool m_dBParameterGroupFamilyHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DocDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace DocDB
+}  // namespace Aws

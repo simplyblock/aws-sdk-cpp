@@ -12,16 +12,4 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RemoveBackendConfigRequest::RemoveBackendConfigRequest() : 
-    m_appIdHasBeenSet(false)
-{
-}
-
-Aws::String RemoveBackendConfigRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String RemoveBackendConfigRequest::SerializePayload() const { return {}; }

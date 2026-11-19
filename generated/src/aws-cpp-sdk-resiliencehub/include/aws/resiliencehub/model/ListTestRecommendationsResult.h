@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/TestRecommendation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class ListTestRecommendationsResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API ListTestRecommendationsResult();
-    AWS_RESILIENCEHUB_API ListTestRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API ListTestRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class ListTestRecommendationsResult {
+ public:
+  AWS_RESILIENCEHUB_API ListTestRecommendationsResult() = default;
+  AWS_RESILIENCEHUB_API ListTestRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API ListTestRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Token for the next set of results, or null if there are no more results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTestRecommendationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Token for the next set of results, or null if there are no more results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListTestRecommendationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTestRecommendationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTestRecommendationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The test recommendations for the Resilience Hub application.</p>
+   */
+  inline const Aws::Vector<TestRecommendation>& GetTestRecommendations() const { return m_testRecommendations; }
+  template <typename TestRecommendationsT = Aws::Vector<TestRecommendation>>
+  void SetTestRecommendations(TestRecommendationsT&& value) {
+    m_testRecommendationsHasBeenSet = true;
+    m_testRecommendations = std::forward<TestRecommendationsT>(value);
+  }
+  template <typename TestRecommendationsT = Aws::Vector<TestRecommendation>>
+  ListTestRecommendationsResult& WithTestRecommendations(TestRecommendationsT&& value) {
+    SetTestRecommendations(std::forward<TestRecommendationsT>(value));
+    return *this;
+  }
+  template <typename TestRecommendationsT = TestRecommendation>
+  ListTestRecommendationsResult& AddTestRecommendations(TestRecommendationsT&& value) {
+    m_testRecommendationsHasBeenSet = true;
+    m_testRecommendations.emplace_back(std::forward<TestRecommendationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The test recommendations for the Resilience Hub application.</p>
-     */
-    inline const Aws::Vector<TestRecommendation>& GetTestRecommendations() const{ return m_testRecommendations; }
-    inline void SetTestRecommendations(const Aws::Vector<TestRecommendation>& value) { m_testRecommendations = value; }
-    inline void SetTestRecommendations(Aws::Vector<TestRecommendation>&& value) { m_testRecommendations = std::move(value); }
-    inline ListTestRecommendationsResult& WithTestRecommendations(const Aws::Vector<TestRecommendation>& value) { SetTestRecommendations(value); return *this;}
-    inline ListTestRecommendationsResult& WithTestRecommendations(Aws::Vector<TestRecommendation>&& value) { SetTestRecommendations(std::move(value)); return *this;}
-    inline ListTestRecommendationsResult& AddTestRecommendations(const TestRecommendation& value) { m_testRecommendations.push_back(value); return *this; }
-    inline ListTestRecommendationsResult& AddTestRecommendations(TestRecommendation&& value) { m_testRecommendations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTestRecommendationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTestRecommendationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTestRecommendationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTestRecommendationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<TestRecommendation> m_testRecommendations;
+  Aws::Vector<TestRecommendation> m_testRecommendations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_testRecommendationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteFrameworkRequest::DeleteFrameworkRequest() : 
-    m_frameworkNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteFrameworkRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteFrameworkRequest::SerializePayload() const { return {}; }

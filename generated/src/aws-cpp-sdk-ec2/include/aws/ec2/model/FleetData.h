@@ -4,413 +4,560 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/ec2/model/FleetActivityStatus.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/FleetStateCode.h>
-#include <aws/ec2/model/FleetExcessCapacityTerminationPolicy.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/TargetCapacitySpecification.h>
-#include <aws/ec2/model/FleetType.h>
-#include <aws/ec2/model/SpotOptions.h>
-#include <aws/ec2/model/OnDemandOptions.h>
-#include <aws/ec2/model/FleetLaunchTemplateConfig.h>
-#include <aws/ec2/model/Tag.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/DescribeFleetError.h>
 #include <aws/ec2/model/DescribeFleetsInstances.h>
+#include <aws/ec2/model/FleetActivityStatus.h>
+#include <aws/ec2/model/FleetExcessCapacityTerminationPolicy.h>
+#include <aws/ec2/model/FleetLaunchTemplateConfig.h>
+#include <aws/ec2/model/FleetStateCode.h>
+#include <aws/ec2/model/FleetType.h>
+#include <aws/ec2/model/OnDemandOptions.h>
+#include <aws/ec2/model/ReservedCapacityOptions.h>
+#include <aws/ec2/model/SpotOptions.h>
+#include <aws/ec2/model/Tag.h>
+#include <aws/ec2/model/TargetCapacitySpecification.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes an EC2 Fleet.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FleetData">AWS API
+ * Reference</a></p>
+ */
+class FleetData {
+ public:
+  AWS_EC2_API FleetData() = default;
+  AWS_EC2_API FleetData(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API FleetData& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes an EC2 Fleet.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FleetData">AWS API
-   * Reference</a></p>
+   * <p>The progress of the EC2 Fleet.</p> <p>For fleets of type
+   * <code>instant</code>, the status is <code>fulfilled</code> after all requests
+   * are placed, regardless of whether target capacity is met (this is the only
+   * possible status for <code>instant</code> fleets).</p> <p>For fleets of type
+   * <code>request</code> or <code>maintain</code>, the status is
+   * <code>pending_fulfillment</code> after all requests are placed,
+   * <code>fulfilled</code> when the fleet size meets or exceeds target capacity,
+   * <code>pending_termination</code> while instances are terminating when fleet size
+   * is decreased, and <code>error</code> if there's an error.</p>
    */
-  class FleetData
-  {
-  public:
-    AWS_EC2_API FleetData();
-    AWS_EC2_API FleetData(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API FleetData& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline FleetActivityStatus GetActivityStatus() const { return m_activityStatus; }
+  inline bool ActivityStatusHasBeenSet() const { return m_activityStatusHasBeenSet; }
+  inline void SetActivityStatus(FleetActivityStatus value) {
+    m_activityStatusHasBeenSet = true;
+    m_activityStatus = value;
+  }
+  inline FleetData& WithActivityStatus(FleetActivityStatus value) {
+    SetActivityStatus(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The creation date and time of the EC2 Fleet.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateTime() const { return m_createTime; }
+  inline bool CreateTimeHasBeenSet() const { return m_createTimeHasBeenSet; }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  void SetCreateTime(CreateTimeT&& value) {
+    m_createTimeHasBeenSet = true;
+    m_createTime = std::forward<CreateTimeT>(value);
+  }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  FleetData& WithCreateTime(CreateTimeT&& value) {
+    SetCreateTime(std::forward<CreateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the EC2 Fleet.</p>
+   */
+  inline const Aws::String& GetFleetId() const { return m_fleetId; }
+  inline bool FleetIdHasBeenSet() const { return m_fleetIdHasBeenSet; }
+  template <typename FleetIdT = Aws::String>
+  void SetFleetId(FleetIdT&& value) {
+    m_fleetIdHasBeenSet = true;
+    m_fleetId = std::forward<FleetIdT>(value);
+  }
+  template <typename FleetIdT = Aws::String>
+  FleetData& WithFleetId(FleetIdT&& value) {
+    SetFleetId(std::forward<FleetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The progress of the EC2 Fleet. If there is an error, the status is
-     * <code>error</code>. After all requests are placed, the status is
-     * <code>pending_fulfillment</code>. If the size of the EC2 Fleet is equal to or
-     * greater than its target capacity, the status is <code>fulfilled</code>. If the
-     * size of the EC2 Fleet is decreased, the status is
-     * <code>pending_termination</code> while instances are terminating.</p>
-     */
-    inline const FleetActivityStatus& GetActivityStatus() const{ return m_activityStatus; }
-    inline bool ActivityStatusHasBeenSet() const { return m_activityStatusHasBeenSet; }
-    inline void SetActivityStatus(const FleetActivityStatus& value) { m_activityStatusHasBeenSet = true; m_activityStatus = value; }
-    inline void SetActivityStatus(FleetActivityStatus&& value) { m_activityStatusHasBeenSet = true; m_activityStatus = std::move(value); }
-    inline FleetData& WithActivityStatus(const FleetActivityStatus& value) { SetActivityStatus(value); return *this;}
-    inline FleetData& WithActivityStatus(FleetActivityStatus&& value) { SetActivityStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the EC2 Fleet.</p>
+   */
+  inline FleetStateCode GetFleetState() const { return m_fleetState; }
+  inline bool FleetStateHasBeenSet() const { return m_fleetStateHasBeenSet; }
+  inline void SetFleetState(FleetStateCode value) {
+    m_fleetStateHasBeenSet = true;
+    m_fleetState = value;
+  }
+  inline FleetData& WithFleetState(FleetStateCode value) {
+    SetFleetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The creation date and time of the EC2 Fleet.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateTime() const{ return m_createTime; }
-    inline bool CreateTimeHasBeenSet() const { return m_createTimeHasBeenSet; }
-    inline void SetCreateTime(const Aws::Utils::DateTime& value) { m_createTimeHasBeenSet = true; m_createTime = value; }
-    inline void SetCreateTime(Aws::Utils::DateTime&& value) { m_createTimeHasBeenSet = true; m_createTime = std::move(value); }
-    inline FleetData& WithCreateTime(const Aws::Utils::DateTime& value) { SetCreateTime(value); return *this;}
-    inline FleetData& WithCreateTime(Aws::Utils::DateTime&& value) { SetCreateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
+   * of the request. For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
+   * idempotency</a>.</p> <p>Constraints: Maximum 64 ASCII characters</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  FleetData& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the EC2 Fleet.</p>
-     */
-    inline const Aws::String& GetFleetId() const{ return m_fleetId; }
-    inline bool FleetIdHasBeenSet() const { return m_fleetIdHasBeenSet; }
-    inline void SetFleetId(const Aws::String& value) { m_fleetIdHasBeenSet = true; m_fleetId = value; }
-    inline void SetFleetId(Aws::String&& value) { m_fleetIdHasBeenSet = true; m_fleetId = std::move(value); }
-    inline void SetFleetId(const char* value) { m_fleetIdHasBeenSet = true; m_fleetId.assign(value); }
-    inline FleetData& WithFleetId(const Aws::String& value) { SetFleetId(value); return *this;}
-    inline FleetData& WithFleetId(Aws::String&& value) { SetFleetId(std::move(value)); return *this;}
-    inline FleetData& WithFleetId(const char* value) { SetFleetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether running instances should be terminated if the target
+   * capacity of the EC2 Fleet is decreased below the current size of the EC2
+   * Fleet.</p> <p>Supported only for fleets of type <code>maintain</code>.</p>
+   */
+  inline FleetExcessCapacityTerminationPolicy GetExcessCapacityTerminationPolicy() const { return m_excessCapacityTerminationPolicy; }
+  inline bool ExcessCapacityTerminationPolicyHasBeenSet() const { return m_excessCapacityTerminationPolicyHasBeenSet; }
+  inline void SetExcessCapacityTerminationPolicy(FleetExcessCapacityTerminationPolicy value) {
+    m_excessCapacityTerminationPolicyHasBeenSet = true;
+    m_excessCapacityTerminationPolicy = value;
+  }
+  inline FleetData& WithExcessCapacityTerminationPolicy(FleetExcessCapacityTerminationPolicy value) {
+    SetExcessCapacityTerminationPolicy(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the EC2 Fleet.</p>
-     */
-    inline const FleetStateCode& GetFleetState() const{ return m_fleetState; }
-    inline bool FleetStateHasBeenSet() const { return m_fleetStateHasBeenSet; }
-    inline void SetFleetState(const FleetStateCode& value) { m_fleetStateHasBeenSet = true; m_fleetState = value; }
-    inline void SetFleetState(FleetStateCode&& value) { m_fleetStateHasBeenSet = true; m_fleetState = std::move(value); }
-    inline FleetData& WithFleetState(const FleetStateCode& value) { SetFleetState(value); return *this;}
-    inline FleetData& WithFleetState(FleetStateCode&& value) { SetFleetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of units fulfilled by this request compared to the set target
+   * capacity.</p>
+   */
+  inline double GetFulfilledCapacity() const { return m_fulfilledCapacity; }
+  inline bool FulfilledCapacityHasBeenSet() const { return m_fulfilledCapacityHasBeenSet; }
+  inline void SetFulfilledCapacity(double value) {
+    m_fulfilledCapacityHasBeenSet = true;
+    m_fulfilledCapacity = value;
+  }
+  inline FleetData& WithFulfilledCapacity(double value) {
+    SetFulfilledCapacity(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
-     * of the request. For more information, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-     * idempotency</a>.</p> <p>Constraints: Maximum 64 ASCII characters</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline FleetData& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline FleetData& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline FleetData& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of units fulfilled by this request compared to the set target
+   * On-Demand capacity.</p>
+   */
+  inline double GetFulfilledOnDemandCapacity() const { return m_fulfilledOnDemandCapacity; }
+  inline bool FulfilledOnDemandCapacityHasBeenSet() const { return m_fulfilledOnDemandCapacityHasBeenSet; }
+  inline void SetFulfilledOnDemandCapacity(double value) {
+    m_fulfilledOnDemandCapacityHasBeenSet = true;
+    m_fulfilledOnDemandCapacity = value;
+  }
+  inline FleetData& WithFulfilledOnDemandCapacity(double value) {
+    SetFulfilledOnDemandCapacity(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether running instances should be terminated if the target
-     * capacity of the EC2 Fleet is decreased below the current size of the EC2
-     * Fleet.</p> <p>Supported only for fleets of type <code>maintain</code>.</p>
-     */
-    inline const FleetExcessCapacityTerminationPolicy& GetExcessCapacityTerminationPolicy() const{ return m_excessCapacityTerminationPolicy; }
-    inline bool ExcessCapacityTerminationPolicyHasBeenSet() const { return m_excessCapacityTerminationPolicyHasBeenSet; }
-    inline void SetExcessCapacityTerminationPolicy(const FleetExcessCapacityTerminationPolicy& value) { m_excessCapacityTerminationPolicyHasBeenSet = true; m_excessCapacityTerminationPolicy = value; }
-    inline void SetExcessCapacityTerminationPolicy(FleetExcessCapacityTerminationPolicy&& value) { m_excessCapacityTerminationPolicyHasBeenSet = true; m_excessCapacityTerminationPolicy = std::move(value); }
-    inline FleetData& WithExcessCapacityTerminationPolicy(const FleetExcessCapacityTerminationPolicy& value) { SetExcessCapacityTerminationPolicy(value); return *this;}
-    inline FleetData& WithExcessCapacityTerminationPolicy(FleetExcessCapacityTerminationPolicy&& value) { SetExcessCapacityTerminationPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The launch template and overrides.</p>
+   */
+  inline const Aws::Vector<FleetLaunchTemplateConfig>& GetLaunchTemplateConfigs() const { return m_launchTemplateConfigs; }
+  inline bool LaunchTemplateConfigsHasBeenSet() const { return m_launchTemplateConfigsHasBeenSet; }
+  template <typename LaunchTemplateConfigsT = Aws::Vector<FleetLaunchTemplateConfig>>
+  void SetLaunchTemplateConfigs(LaunchTemplateConfigsT&& value) {
+    m_launchTemplateConfigsHasBeenSet = true;
+    m_launchTemplateConfigs = std::forward<LaunchTemplateConfigsT>(value);
+  }
+  template <typename LaunchTemplateConfigsT = Aws::Vector<FleetLaunchTemplateConfig>>
+  FleetData& WithLaunchTemplateConfigs(LaunchTemplateConfigsT&& value) {
+    SetLaunchTemplateConfigs(std::forward<LaunchTemplateConfigsT>(value));
+    return *this;
+  }
+  template <typename LaunchTemplateConfigsT = FleetLaunchTemplateConfig>
+  FleetData& AddLaunchTemplateConfigs(LaunchTemplateConfigsT&& value) {
+    m_launchTemplateConfigsHasBeenSet = true;
+    m_launchTemplateConfigs.emplace_back(std::forward<LaunchTemplateConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of units fulfilled by this request compared to the set target
-     * capacity.</p>
-     */
-    inline double GetFulfilledCapacity() const{ return m_fulfilledCapacity; }
-    inline bool FulfilledCapacityHasBeenSet() const { return m_fulfilledCapacityHasBeenSet; }
-    inline void SetFulfilledCapacity(double value) { m_fulfilledCapacityHasBeenSet = true; m_fulfilledCapacity = value; }
-    inline FleetData& WithFulfilledCapacity(double value) { SetFulfilledCapacity(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of units to request. You can choose to set the target capacity in
+   * terms of instances or a performance characteristic that is important to your
+   * application workload, such as vCPUs, memory, or I/O. If the request type is
+   * <code>maintain</code>, you can specify a target capacity of 0 and add capacity
+   * later.</p>
+   */
+  inline const TargetCapacitySpecification& GetTargetCapacitySpecification() const { return m_targetCapacitySpecification; }
+  inline bool TargetCapacitySpecificationHasBeenSet() const { return m_targetCapacitySpecificationHasBeenSet; }
+  template <typename TargetCapacitySpecificationT = TargetCapacitySpecification>
+  void SetTargetCapacitySpecification(TargetCapacitySpecificationT&& value) {
+    m_targetCapacitySpecificationHasBeenSet = true;
+    m_targetCapacitySpecification = std::forward<TargetCapacitySpecificationT>(value);
+  }
+  template <typename TargetCapacitySpecificationT = TargetCapacitySpecification>
+  FleetData& WithTargetCapacitySpecification(TargetCapacitySpecificationT&& value) {
+    SetTargetCapacitySpecification(std::forward<TargetCapacitySpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of units fulfilled by this request compared to the set target
-     * On-Demand capacity.</p>
-     */
-    inline double GetFulfilledOnDemandCapacity() const{ return m_fulfilledOnDemandCapacity; }
-    inline bool FulfilledOnDemandCapacityHasBeenSet() const { return m_fulfilledOnDemandCapacityHasBeenSet; }
-    inline void SetFulfilledOnDemandCapacity(double value) { m_fulfilledOnDemandCapacityHasBeenSet = true; m_fulfilledOnDemandCapacity = value; }
-    inline FleetData& WithFulfilledOnDemandCapacity(double value) { SetFulfilledOnDemandCapacity(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether running instances should be terminated when the EC2 Fleet
+   * expires. </p>
+   */
+  inline bool GetTerminateInstancesWithExpiration() const { return m_terminateInstancesWithExpiration; }
+  inline bool TerminateInstancesWithExpirationHasBeenSet() const { return m_terminateInstancesWithExpirationHasBeenSet; }
+  inline void SetTerminateInstancesWithExpiration(bool value) {
+    m_terminateInstancesWithExpirationHasBeenSet = true;
+    m_terminateInstancesWithExpiration = value;
+  }
+  inline FleetData& WithTerminateInstancesWithExpiration(bool value) {
+    SetTerminateInstancesWithExpiration(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The launch template and overrides.</p>
-     */
-    inline const Aws::Vector<FleetLaunchTemplateConfig>& GetLaunchTemplateConfigs() const{ return m_launchTemplateConfigs; }
-    inline bool LaunchTemplateConfigsHasBeenSet() const { return m_launchTemplateConfigsHasBeenSet; }
-    inline void SetLaunchTemplateConfigs(const Aws::Vector<FleetLaunchTemplateConfig>& value) { m_launchTemplateConfigsHasBeenSet = true; m_launchTemplateConfigs = value; }
-    inline void SetLaunchTemplateConfigs(Aws::Vector<FleetLaunchTemplateConfig>&& value) { m_launchTemplateConfigsHasBeenSet = true; m_launchTemplateConfigs = std::move(value); }
-    inline FleetData& WithLaunchTemplateConfigs(const Aws::Vector<FleetLaunchTemplateConfig>& value) { SetLaunchTemplateConfigs(value); return *this;}
-    inline FleetData& WithLaunchTemplateConfigs(Aws::Vector<FleetLaunchTemplateConfig>&& value) { SetLaunchTemplateConfigs(std::move(value)); return *this;}
-    inline FleetData& AddLaunchTemplateConfigs(const FleetLaunchTemplateConfig& value) { m_launchTemplateConfigsHasBeenSet = true; m_launchTemplateConfigs.push_back(value); return *this; }
-    inline FleetData& AddLaunchTemplateConfigs(FleetLaunchTemplateConfig&& value) { m_launchTemplateConfigsHasBeenSet = true; m_launchTemplateConfigs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The type of request. Indicates whether the EC2 Fleet only
+   * <code>requests</code> the target capacity, or also attempts to
+   * <code>maintain</code> it. If you request a certain target capacity, EC2 Fleet
+   * only places the required requests; it does not attempt to replenish instances if
+   * capacity is diminished, and it does not submit requests in alternative capacity
+   * pools if capacity is unavailable. To maintain a certain target capacity, EC2
+   * Fleet places the required requests to meet this target capacity. It also
+   * automatically replenishes any interrupted Spot Instances. Default:
+   * <code>maintain</code>.</p>
+   */
+  inline FleetType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(FleetType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline FleetData& WithType(FleetType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of units to request. You can choose to set the target capacity in
-     * terms of instances or a performance characteristic that is important to your
-     * application workload, such as vCPUs, memory, or I/O. If the request type is
-     * <code>maintain</code>, you can specify a target capacity of 0 and add capacity
-     * later.</p>
-     */
-    inline const TargetCapacitySpecification& GetTargetCapacitySpecification() const{ return m_targetCapacitySpecification; }
-    inline bool TargetCapacitySpecificationHasBeenSet() const { return m_targetCapacitySpecificationHasBeenSet; }
-    inline void SetTargetCapacitySpecification(const TargetCapacitySpecification& value) { m_targetCapacitySpecificationHasBeenSet = true; m_targetCapacitySpecification = value; }
-    inline void SetTargetCapacitySpecification(TargetCapacitySpecification&& value) { m_targetCapacitySpecificationHasBeenSet = true; m_targetCapacitySpecification = std::move(value); }
-    inline FleetData& WithTargetCapacitySpecification(const TargetCapacitySpecification& value) { SetTargetCapacitySpecification(value); return *this;}
-    inline FleetData& WithTargetCapacitySpecification(TargetCapacitySpecification&& value) { SetTargetCapacitySpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The start date and time of the request, in UTC format (for example,
+   * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). The default is
+   * to start fulfilling the request immediately. </p>
+   */
+  inline const Aws::Utils::DateTime& GetValidFrom() const { return m_validFrom; }
+  inline bool ValidFromHasBeenSet() const { return m_validFromHasBeenSet; }
+  template <typename ValidFromT = Aws::Utils::DateTime>
+  void SetValidFrom(ValidFromT&& value) {
+    m_validFromHasBeenSet = true;
+    m_validFrom = std::forward<ValidFromT>(value);
+  }
+  template <typename ValidFromT = Aws::Utils::DateTime>
+  FleetData& WithValidFrom(ValidFromT&& value) {
+    SetValidFrom(std::forward<ValidFromT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether running instances should be terminated when the EC2 Fleet
-     * expires. </p>
-     */
-    inline bool GetTerminateInstancesWithExpiration() const{ return m_terminateInstancesWithExpiration; }
-    inline bool TerminateInstancesWithExpirationHasBeenSet() const { return m_terminateInstancesWithExpirationHasBeenSet; }
-    inline void SetTerminateInstancesWithExpiration(bool value) { m_terminateInstancesWithExpirationHasBeenSet = true; m_terminateInstancesWithExpiration = value; }
-    inline FleetData& WithTerminateInstancesWithExpiration(bool value) { SetTerminateInstancesWithExpiration(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The end date and time of the request, in UTC format (for example,
+   * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). At this point,
+   * no new instance requests are placed or able to fulfill the request. The default
+   * end date is 7 days from the current date. </p>
+   */
+  inline const Aws::Utils::DateTime& GetValidUntil() const { return m_validUntil; }
+  inline bool ValidUntilHasBeenSet() const { return m_validUntilHasBeenSet; }
+  template <typename ValidUntilT = Aws::Utils::DateTime>
+  void SetValidUntil(ValidUntilT&& value) {
+    m_validUntilHasBeenSet = true;
+    m_validUntil = std::forward<ValidUntilT>(value);
+  }
+  template <typename ValidUntilT = Aws::Utils::DateTime>
+  FleetData& WithValidUntil(ValidUntilT&& value) {
+    SetValidUntil(std::forward<ValidUntilT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of request. Indicates whether the EC2 Fleet only
-     * <code>requests</code> the target capacity, or also attempts to
-     * <code>maintain</code> it. If you request a certain target capacity, EC2 Fleet
-     * only places the required requests; it does not attempt to replenish instances if
-     * capacity is diminished, and it does not submit requests in alternative capacity
-     * pools if capacity is unavailable. To maintain a certain target capacity, EC2
-     * Fleet places the required requests to meet this target capacity. It also
-     * automatically replenishes any interrupted Spot Instances. Default:
-     * <code>maintain</code>.</p>
-     */
-    inline const FleetType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const FleetType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(FleetType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline FleetData& WithType(const FleetType& value) { SetType(value); return *this;}
-    inline FleetData& WithType(FleetType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether EC2 Fleet should replace unhealthy Spot Instances.
+   * Supported only for fleets of type <code>maintain</code>. For more information,
+   * see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-ec2-fleet.html#ec2-fleet-health-checks">EC2
+   * Fleet health checks</a> in the <i>Amazon EC2 User Guide</i>.</p>
+   */
+  inline bool GetReplaceUnhealthyInstances() const { return m_replaceUnhealthyInstances; }
+  inline bool ReplaceUnhealthyInstancesHasBeenSet() const { return m_replaceUnhealthyInstancesHasBeenSet; }
+  inline void SetReplaceUnhealthyInstances(bool value) {
+    m_replaceUnhealthyInstancesHasBeenSet = true;
+    m_replaceUnhealthyInstances = value;
+  }
+  inline FleetData& WithReplaceUnhealthyInstances(bool value) {
+    SetReplaceUnhealthyInstances(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The start date and time of the request, in UTC format (for example,
-     * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). The default is
-     * to start fulfilling the request immediately. </p>
-     */
-    inline const Aws::Utils::DateTime& GetValidFrom() const{ return m_validFrom; }
-    inline bool ValidFromHasBeenSet() const { return m_validFromHasBeenSet; }
-    inline void SetValidFrom(const Aws::Utils::DateTime& value) { m_validFromHasBeenSet = true; m_validFrom = value; }
-    inline void SetValidFrom(Aws::Utils::DateTime&& value) { m_validFromHasBeenSet = true; m_validFrom = std::move(value); }
-    inline FleetData& WithValidFrom(const Aws::Utils::DateTime& value) { SetValidFrom(value); return *this;}
-    inline FleetData& WithValidFrom(Aws::Utils::DateTime&& value) { SetValidFrom(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration of Spot Instances in an EC2 Fleet.</p>
+   */
+  inline const SpotOptions& GetSpotOptions() const { return m_spotOptions; }
+  inline bool SpotOptionsHasBeenSet() const { return m_spotOptionsHasBeenSet; }
+  template <typename SpotOptionsT = SpotOptions>
+  void SetSpotOptions(SpotOptionsT&& value) {
+    m_spotOptionsHasBeenSet = true;
+    m_spotOptions = std::forward<SpotOptionsT>(value);
+  }
+  template <typename SpotOptionsT = SpotOptions>
+  FleetData& WithSpotOptions(SpotOptionsT&& value) {
+    SetSpotOptions(std::forward<SpotOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The end date and time of the request, in UTC format (for example,
-     * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). At this point,
-     * no new instance requests are placed or able to fulfill the request. The default
-     * end date is 7 days from the current date. </p>
-     */
-    inline const Aws::Utils::DateTime& GetValidUntil() const{ return m_validUntil; }
-    inline bool ValidUntilHasBeenSet() const { return m_validUntilHasBeenSet; }
-    inline void SetValidUntil(const Aws::Utils::DateTime& value) { m_validUntilHasBeenSet = true; m_validUntil = value; }
-    inline void SetValidUntil(Aws::Utils::DateTime&& value) { m_validUntilHasBeenSet = true; m_validUntil = std::move(value); }
-    inline FleetData& WithValidUntil(const Aws::Utils::DateTime& value) { SetValidUntil(value); return *this;}
-    inline FleetData& WithValidUntil(Aws::Utils::DateTime&& value) { SetValidUntil(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>
+   */
+  inline const OnDemandOptions& GetOnDemandOptions() const { return m_onDemandOptions; }
+  inline bool OnDemandOptionsHasBeenSet() const { return m_onDemandOptionsHasBeenSet; }
+  template <typename OnDemandOptionsT = OnDemandOptions>
+  void SetOnDemandOptions(OnDemandOptionsT&& value) {
+    m_onDemandOptionsHasBeenSet = true;
+    m_onDemandOptions = std::forward<OnDemandOptionsT>(value);
+  }
+  template <typename OnDemandOptionsT = OnDemandOptions>
+  FleetData& WithOnDemandOptions(OnDemandOptionsT&& value) {
+    SetOnDemandOptions(std::forward<OnDemandOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether EC2 Fleet should replace unhealthy Spot Instances.
-     * Supported only for fleets of type <code>maintain</code>. For more information,
-     * see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-ec2-fleet.html#ec2-fleet-health-checks">EC2
-     * Fleet health checks</a> in the <i>Amazon EC2 User Guide</i>.</p>
-     */
-    inline bool GetReplaceUnhealthyInstances() const{ return m_replaceUnhealthyInstances; }
-    inline bool ReplaceUnhealthyInstancesHasBeenSet() const { return m_replaceUnhealthyInstancesHasBeenSet; }
-    inline void SetReplaceUnhealthyInstances(bool value) { m_replaceUnhealthyInstancesHasBeenSet = true; m_replaceUnhealthyInstances = value; }
-    inline FleetData& WithReplaceUnhealthyInstances(bool value) { SetReplaceUnhealthyInstances(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines EC2 Fleet preferences for utilizing reserved capacity when
+   * DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p>
+   */
+  inline const ReservedCapacityOptions& GetReservedCapacityOptions() const { return m_reservedCapacityOptions; }
+  inline bool ReservedCapacityOptionsHasBeenSet() const { return m_reservedCapacityOptionsHasBeenSet; }
+  template <typename ReservedCapacityOptionsT = ReservedCapacityOptions>
+  void SetReservedCapacityOptions(ReservedCapacityOptionsT&& value) {
+    m_reservedCapacityOptionsHasBeenSet = true;
+    m_reservedCapacityOptions = std::forward<ReservedCapacityOptionsT>(value);
+  }
+  template <typename ReservedCapacityOptionsT = ReservedCapacityOptions>
+  FleetData& WithReservedCapacityOptions(ReservedCapacityOptionsT&& value) {
+    SetReservedCapacityOptions(std::forward<ReservedCapacityOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration of Spot Instances in an EC2 Fleet.</p>
-     */
-    inline const SpotOptions& GetSpotOptions() const{ return m_spotOptions; }
-    inline bool SpotOptionsHasBeenSet() const { return m_spotOptionsHasBeenSet; }
-    inline void SetSpotOptions(const SpotOptions& value) { m_spotOptionsHasBeenSet = true; m_spotOptions = value; }
-    inline void SetSpotOptions(SpotOptions&& value) { m_spotOptionsHasBeenSet = true; m_spotOptions = std::move(value); }
-    inline FleetData& WithSpotOptions(const SpotOptions& value) { SetSpotOptions(value); return *this;}
-    inline FleetData& WithSpotOptions(SpotOptions&& value) { SetSpotOptions(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags for an EC2 Fleet resource.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  FleetData& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  FleetData& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>
-     */
-    inline const OnDemandOptions& GetOnDemandOptions() const{ return m_onDemandOptions; }
-    inline bool OnDemandOptionsHasBeenSet() const { return m_onDemandOptionsHasBeenSet; }
-    inline void SetOnDemandOptions(const OnDemandOptions& value) { m_onDemandOptionsHasBeenSet = true; m_onDemandOptions = value; }
-    inline void SetOnDemandOptions(OnDemandOptions&& value) { m_onDemandOptionsHasBeenSet = true; m_onDemandOptions = std::move(value); }
-    inline FleetData& WithOnDemandOptions(const OnDemandOptions& value) { SetOnDemandOptions(value); return *this;}
-    inline FleetData& WithOnDemandOptions(OnDemandOptions&& value) { SetOnDemandOptions(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the instances that could not be launched by the fleet.
+   * Valid only when <b>Type</b> is set to <code>instant</code>.</p>
+   */
+  inline const Aws::Vector<DescribeFleetError>& GetErrors() const { return m_errors; }
+  inline bool ErrorsHasBeenSet() const { return m_errorsHasBeenSet; }
+  template <typename ErrorsT = Aws::Vector<DescribeFleetError>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<DescribeFleetError>>
+  FleetData& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = DescribeFleetError>
+  FleetData& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags for an EC2 Fleet resource.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline FleetData& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline FleetData& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline FleetData& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline FleetData& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the instances that were launched by the fleet. Valid only
+   * when <b>Type</b> is set to <code>instant</code>.</p>
+   */
+  inline const Aws::Vector<DescribeFleetsInstances>& GetInstances() const { return m_instances; }
+  inline bool InstancesHasBeenSet() const { return m_instancesHasBeenSet; }
+  template <typename InstancesT = Aws::Vector<DescribeFleetsInstances>>
+  void SetInstances(InstancesT&& value) {
+    m_instancesHasBeenSet = true;
+    m_instances = std::forward<InstancesT>(value);
+  }
+  template <typename InstancesT = Aws::Vector<DescribeFleetsInstances>>
+  FleetData& WithInstances(InstancesT&& value) {
+    SetInstances(std::forward<InstancesT>(value));
+    return *this;
+  }
+  template <typename InstancesT = DescribeFleetsInstances>
+  FleetData& AddInstances(InstancesT&& value) {
+    m_instancesHasBeenSet = true;
+    m_instances.emplace_back(std::forward<InstancesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the instances that could not be launched by the fleet.
-     * Valid only when <b>Type</b> is set to <code>instant</code>.</p>
-     */
-    inline const Aws::Vector<DescribeFleetError>& GetErrors() const{ return m_errors; }
-    inline bool ErrorsHasBeenSet() const { return m_errorsHasBeenSet; }
-    inline void SetErrors(const Aws::Vector<DescribeFleetError>& value) { m_errorsHasBeenSet = true; m_errors = value; }
-    inline void SetErrors(Aws::Vector<DescribeFleetError>&& value) { m_errorsHasBeenSet = true; m_errors = std::move(value); }
-    inline FleetData& WithErrors(const Aws::Vector<DescribeFleetError>& value) { SetErrors(value); return *this;}
-    inline FleetData& WithErrors(Aws::Vector<DescribeFleetError>&& value) { SetErrors(std::move(value)); return *this;}
-    inline FleetData& AddErrors(const DescribeFleetError& value) { m_errorsHasBeenSet = true; m_errors.push_back(value); return *this; }
-    inline FleetData& AddErrors(DescribeFleetError&& value) { m_errorsHasBeenSet = true; m_errors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Reserved.</p>
+   */
+  inline const Aws::String& GetContext() const { return m_context; }
+  inline bool ContextHasBeenSet() const { return m_contextHasBeenSet; }
+  template <typename ContextT = Aws::String>
+  void SetContext(ContextT&& value) {
+    m_contextHasBeenSet = true;
+    m_context = std::forward<ContextT>(value);
+  }
+  template <typename ContextT = Aws::String>
+  FleetData& WithContext(ContextT&& value) {
+    SetContext(std::forward<ContextT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  FleetActivityStatus m_activityStatus{FleetActivityStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Information about the instances that were launched by the fleet. Valid only
-     * when <b>Type</b> is set to <code>instant</code>.</p>
-     */
-    inline const Aws::Vector<DescribeFleetsInstances>& GetInstances() const{ return m_instances; }
-    inline bool InstancesHasBeenSet() const { return m_instancesHasBeenSet; }
-    inline void SetInstances(const Aws::Vector<DescribeFleetsInstances>& value) { m_instancesHasBeenSet = true; m_instances = value; }
-    inline void SetInstances(Aws::Vector<DescribeFleetsInstances>&& value) { m_instancesHasBeenSet = true; m_instances = std::move(value); }
-    inline FleetData& WithInstances(const Aws::Vector<DescribeFleetsInstances>& value) { SetInstances(value); return *this;}
-    inline FleetData& WithInstances(Aws::Vector<DescribeFleetsInstances>&& value) { SetInstances(std::move(value)); return *this;}
-    inline FleetData& AddInstances(const DescribeFleetsInstances& value) { m_instancesHasBeenSet = true; m_instances.push_back(value); return *this; }
-    inline FleetData& AddInstances(DescribeFleetsInstances&& value) { m_instancesHasBeenSet = true; m_instances.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Utils::DateTime m_createTime{};
 
-    ///@{
-    /**
-     * <p>Reserved.</p>
-     */
-    inline const Aws::String& GetContext() const{ return m_context; }
-    inline bool ContextHasBeenSet() const { return m_contextHasBeenSet; }
-    inline void SetContext(const Aws::String& value) { m_contextHasBeenSet = true; m_context = value; }
-    inline void SetContext(Aws::String&& value) { m_contextHasBeenSet = true; m_context = std::move(value); }
-    inline void SetContext(const char* value) { m_contextHasBeenSet = true; m_context.assign(value); }
-    inline FleetData& WithContext(const Aws::String& value) { SetContext(value); return *this;}
-    inline FleetData& WithContext(Aws::String&& value) { SetContext(std::move(value)); return *this;}
-    inline FleetData& WithContext(const char* value) { SetContext(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_fleetId;
 
-    FleetActivityStatus m_activityStatus;
-    bool m_activityStatusHasBeenSet = false;
+  FleetStateCode m_fleetState{FleetStateCode::NOT_SET};
 
-    Aws::Utils::DateTime m_createTime;
-    bool m_createTimeHasBeenSet = false;
+  Aws::String m_clientToken;
 
-    Aws::String m_fleetId;
-    bool m_fleetIdHasBeenSet = false;
+  FleetExcessCapacityTerminationPolicy m_excessCapacityTerminationPolicy{FleetExcessCapacityTerminationPolicy::NOT_SET};
 
-    FleetStateCode m_fleetState;
-    bool m_fleetStateHasBeenSet = false;
+  double m_fulfilledCapacity{0.0};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  double m_fulfilledOnDemandCapacity{0.0};
 
-    FleetExcessCapacityTerminationPolicy m_excessCapacityTerminationPolicy;
-    bool m_excessCapacityTerminationPolicyHasBeenSet = false;
+  Aws::Vector<FleetLaunchTemplateConfig> m_launchTemplateConfigs;
 
-    double m_fulfilledCapacity;
-    bool m_fulfilledCapacityHasBeenSet = false;
+  TargetCapacitySpecification m_targetCapacitySpecification;
 
-    double m_fulfilledOnDemandCapacity;
-    bool m_fulfilledOnDemandCapacityHasBeenSet = false;
+  bool m_terminateInstancesWithExpiration{false};
 
-    Aws::Vector<FleetLaunchTemplateConfig> m_launchTemplateConfigs;
-    bool m_launchTemplateConfigsHasBeenSet = false;
+  FleetType m_type{FleetType::NOT_SET};
 
-    TargetCapacitySpecification m_targetCapacitySpecification;
-    bool m_targetCapacitySpecificationHasBeenSet = false;
+  Aws::Utils::DateTime m_validFrom{};
 
-    bool m_terminateInstancesWithExpiration;
-    bool m_terminateInstancesWithExpirationHasBeenSet = false;
+  Aws::Utils::DateTime m_validUntil{};
 
-    FleetType m_type;
-    bool m_typeHasBeenSet = false;
+  bool m_replaceUnhealthyInstances{false};
 
-    Aws::Utils::DateTime m_validFrom;
-    bool m_validFromHasBeenSet = false;
+  SpotOptions m_spotOptions;
 
-    Aws::Utils::DateTime m_validUntil;
-    bool m_validUntilHasBeenSet = false;
+  OnDemandOptions m_onDemandOptions;
 
-    bool m_replaceUnhealthyInstances;
-    bool m_replaceUnhealthyInstancesHasBeenSet = false;
+  ReservedCapacityOptions m_reservedCapacityOptions;
 
-    SpotOptions m_spotOptions;
-    bool m_spotOptionsHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    OnDemandOptions m_onDemandOptions;
-    bool m_onDemandOptionsHasBeenSet = false;
+  Aws::Vector<DescribeFleetError> m_errors;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::Vector<DescribeFleetsInstances> m_instances;
 
-    Aws::Vector<DescribeFleetError> m_errors;
-    bool m_errorsHasBeenSet = false;
+  Aws::String m_context;
+  bool m_activityStatusHasBeenSet = false;
+  bool m_createTimeHasBeenSet = false;
+  bool m_fleetIdHasBeenSet = false;
+  bool m_fleetStateHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+  bool m_excessCapacityTerminationPolicyHasBeenSet = false;
+  bool m_fulfilledCapacityHasBeenSet = false;
+  bool m_fulfilledOnDemandCapacityHasBeenSet = false;
+  bool m_launchTemplateConfigsHasBeenSet = false;
+  bool m_targetCapacitySpecificationHasBeenSet = false;
+  bool m_terminateInstancesWithExpirationHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_validFromHasBeenSet = false;
+  bool m_validUntilHasBeenSet = false;
+  bool m_replaceUnhealthyInstancesHasBeenSet = false;
+  bool m_spotOptionsHasBeenSet = false;
+  bool m_onDemandOptionsHasBeenSet = false;
+  bool m_reservedCapacityOptionsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
+  bool m_instancesHasBeenSet = false;
+  bool m_contextHasBeenSet = false;
+};
 
-    Aws::Vector<DescribeFleetsInstances> m_instances;
-    bool m_instancesHasBeenSet = false;
-
-    Aws::String m_context;
-    bool m_contextHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

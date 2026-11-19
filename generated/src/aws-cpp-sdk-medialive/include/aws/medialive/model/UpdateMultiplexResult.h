@@ -4,68 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/Multiplex.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
+/**
+ * Placeholder documentation for UpdateMultiplexResponse<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateMultiplexResponse">AWS
+ * API Reference</a></p>
+ */
+class UpdateMultiplexResult {
+ public:
+  AWS_MEDIALIVE_API UpdateMultiplexResult() = default;
+  AWS_MEDIALIVE_API UpdateMultiplexResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIALIVE_API UpdateMultiplexResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * Placeholder documentation for UpdateMultiplexResponse<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateMultiplexResponse">AWS
-   * API Reference</a></p>
+   * The updated multiplex.
    */
-  class UpdateMultiplexResult
-  {
-  public:
-    AWS_MEDIALIVE_API UpdateMultiplexResult();
-    AWS_MEDIALIVE_API UpdateMultiplexResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIALIVE_API UpdateMultiplexResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Multiplex& GetMultiplex() const { return m_multiplex; }
+  template <typename MultiplexT = Multiplex>
+  void SetMultiplex(MultiplexT&& value) {
+    m_multiplexHasBeenSet = true;
+    m_multiplex = std::forward<MultiplexT>(value);
+  }
+  template <typename MultiplexT = Multiplex>
+  UpdateMultiplexResult& WithMultiplex(MultiplexT&& value) {
+    SetMultiplex(std::forward<MultiplexT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * The updated multiplex.
-     */
-    inline const Multiplex& GetMultiplex() const{ return m_multiplex; }
-    inline void SetMultiplex(const Multiplex& value) { m_multiplex = value; }
-    inline void SetMultiplex(Multiplex&& value) { m_multiplex = std::move(value); }
-    inline UpdateMultiplexResult& WithMultiplex(const Multiplex& value) { SetMultiplex(value); return *this;}
-    inline UpdateMultiplexResult& WithMultiplex(Multiplex&& value) { SetMultiplex(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateMultiplexResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateMultiplexResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateMultiplexResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateMultiplexResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Multiplex m_multiplex;
 
-    Multiplex m_multiplex;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_multiplexHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

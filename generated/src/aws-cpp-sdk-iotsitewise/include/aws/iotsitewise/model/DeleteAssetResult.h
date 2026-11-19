@@ -4,64 +4,93 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/iotsitewise/model/AssetStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTSiteWise
-{
-namespace Model
-{
-  class DeleteAssetResult
-  {
-  public:
-    AWS_IOTSITEWISE_API DeleteAssetResult();
-    AWS_IOTSITEWISE_API DeleteAssetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTSITEWISE_API DeleteAssetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTSiteWise {
+namespace Model {
+class DeleteAssetResult {
+ public:
+  AWS_IOTSITEWISE_API DeleteAssetResult() = default;
+  AWS_IOTSITEWISE_API DeleteAssetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTSITEWISE_API DeleteAssetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the asset.</p>
+   */
+  inline const Aws::String& GetAssetId() const { return m_assetId; }
+  template <typename AssetIdT = Aws::String>
+  void SetAssetId(AssetIdT&& value) {
+    m_assetIdHasBeenSet = true;
+    m_assetId = std::forward<AssetIdT>(value);
+  }
+  template <typename AssetIdT = Aws::String>
+  DeleteAssetResult& WithAssetId(AssetIdT&& value) {
+    SetAssetId(std::forward<AssetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the asset, which contains a state (<code>DELETING</code> after
-     * successfully calling this operation) and any error message.</p>
-     */
-    inline const AssetStatus& GetAssetStatus() const{ return m_assetStatus; }
-    inline void SetAssetStatus(const AssetStatus& value) { m_assetStatus = value; }
-    inline void SetAssetStatus(AssetStatus&& value) { m_assetStatus = std::move(value); }
-    inline DeleteAssetResult& WithAssetStatus(const AssetStatus& value) { SetAssetStatus(value); return *this;}
-    inline DeleteAssetResult& WithAssetStatus(AssetStatus&& value) { SetAssetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the asset, which contains a state (<code>DELETING</code> after
+   * successfully calling this operation) and any error message.</p>
+   */
+  inline const AssetStatus& GetAssetStatus() const { return m_assetStatus; }
+  template <typename AssetStatusT = AssetStatus>
+  void SetAssetStatus(AssetStatusT&& value) {
+    m_assetStatusHasBeenSet = true;
+    m_assetStatus = std::forward<AssetStatusT>(value);
+  }
+  template <typename AssetStatusT = AssetStatus>
+  DeleteAssetResult& WithAssetStatus(AssetStatusT&& value) {
+    SetAssetStatus(std::forward<AssetStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteAssetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteAssetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteAssetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    AssetStatus m_assetStatus;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteAssetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_assetId;
 
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+  AssetStatus m_assetStatus;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_assetIdHasBeenSet = false;
+  bool m_assetStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

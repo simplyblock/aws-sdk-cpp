@@ -4,68 +4,70 @@
  */
 
 #include <aws/application-insights/model/DescribeComponentConfigurationRecommendationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ApplicationInsights::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeComponentConfigurationRecommendationRequest::DescribeComponentConfigurationRecommendationRequest() : 
-    m_resourceGroupNameHasBeenSet(false),
-    m_componentNameHasBeenSet(false),
-    m_tier(Tier::NOT_SET),
-    m_tierHasBeenSet(false),
-    m_workloadNameHasBeenSet(false),
-    m_recommendationType(RecommendationType::NOT_SET),
-    m_recommendationTypeHasBeenSet(false)
-{
+Aws::String DescribeComponentConfigurationRecommendationRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceGroupNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_componentNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tierHasBeenSet) {
+    mapSize++;
+  }
+  if (m_workloadNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_recommendationTypeHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_resourceGroupNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceGroupName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceGroupName.c_str()));
+  }
+
+  if (m_componentNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ComponentName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_componentName.c_str()));
+  }
+
+  if (m_tierHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tier"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TierMapper::GetNameForTier(m_tier).c_str()));
+  }
+
+  if (m_workloadNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkloadName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_workloadName.c_str()));
+  }
+
+  if (m_recommendationTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RecommendationType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(RecommendationTypeMapper::GetNameForRecommendationType(m_recommendationType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DescribeComponentConfigurationRecommendationRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceGroupNameHasBeenSet)
-  {
-   payload.WithString("ResourceGroupName", m_resourceGroupName);
-
-  }
-
-  if(m_componentNameHasBeenSet)
-  {
-   payload.WithString("ComponentName", m_componentName);
-
-  }
-
-  if(m_tierHasBeenSet)
-  {
-   payload.WithString("Tier", TierMapper::GetNameForTier(m_tier));
-  }
-
-  if(m_workloadNameHasBeenSet)
-  {
-   payload.WithString("WorkloadName", m_workloadName);
-
-  }
-
-  if(m_recommendationTypeHasBeenSet)
-  {
-   payload.WithString("RecommendationType", RecommendationTypeMapper::GetNameForRecommendationType(m_recommendationType));
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DescribeComponentConfigurationRecommendationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeComponentConfigurationRecommendationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "EC2WindowsBarleyService.DescribeComponentConfigurationRecommendation"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

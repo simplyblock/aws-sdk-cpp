@@ -4,13 +4,15 @@
  */
 
 #include <aws/connectcampaigns/ConnectCampaignsEndpointProvider.h>
+#include <aws/connectcampaigns/internal/ConnectCampaignsEndpointRules.h>
 
-namespace Aws
-{
-namespace ConnectCampaigns
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace ConnectCampaigns
-} // namespace Aws
+namespace Aws {
+namespace ConnectCampaigns {
+namespace Endpoint {
+ConnectCampaignsEndpointProvider::ConnectCampaignsEndpointProvider()
+    : ConnectCampaignsDefaultEpProviderBase(Aws::ConnectCampaigns::ConnectCampaignsEndpointRules::GetRulesBlob(),
+                                            Aws::ConnectCampaigns::ConnectCampaignsEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace ConnectCampaigns
+}  // namespace Aws

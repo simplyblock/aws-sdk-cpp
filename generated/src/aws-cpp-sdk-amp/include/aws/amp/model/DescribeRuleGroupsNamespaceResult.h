@@ -6,67 +6,77 @@
 #pragma once
 #include <aws/amp/PrometheusService_EXPORTS.h>
 #include <aws/amp/model/RuleGroupsNamespaceDescription.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PrometheusService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PrometheusService {
+namespace Model {
+/**
+ * <p>Represents the output of a <code>DescribeRuleGroupsNamespace</code>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/DescribeRuleGroupsNamespaceResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeRuleGroupsNamespaceResult {
+ public:
+  AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult() = default;
+  AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the output of a <code>DescribeRuleGroupsNamespace</code>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/amp-2020-08-01/DescribeRuleGroupsNamespaceResponse">AWS
-   * API Reference</a></p>
+   * <p>The information about the rule groups namespace.</p>
    */
-  class DescribeRuleGroupsNamespaceResult
-  {
-  public:
-    AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult();
-    AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PROMETHEUSSERVICE_API DescribeRuleGroupsNamespaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const RuleGroupsNamespaceDescription& GetRuleGroupsNamespace() const { return m_ruleGroupsNamespace; }
+  template <typename RuleGroupsNamespaceT = RuleGroupsNamespaceDescription>
+  void SetRuleGroupsNamespace(RuleGroupsNamespaceT&& value) {
+    m_ruleGroupsNamespaceHasBeenSet = true;
+    m_ruleGroupsNamespace = std::forward<RuleGroupsNamespaceT>(value);
+  }
+  template <typename RuleGroupsNamespaceT = RuleGroupsNamespaceDescription>
+  DescribeRuleGroupsNamespaceResult& WithRuleGroupsNamespace(RuleGroupsNamespaceT&& value) {
+    SetRuleGroupsNamespace(std::forward<RuleGroupsNamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The information about the rule groups namespace.</p>
-     */
-    inline const RuleGroupsNamespaceDescription& GetRuleGroupsNamespace() const{ return m_ruleGroupsNamespace; }
-    inline void SetRuleGroupsNamespace(const RuleGroupsNamespaceDescription& value) { m_ruleGroupsNamespace = value; }
-    inline void SetRuleGroupsNamespace(RuleGroupsNamespaceDescription&& value) { m_ruleGroupsNamespace = std::move(value); }
-    inline DescribeRuleGroupsNamespaceResult& WithRuleGroupsNamespace(const RuleGroupsNamespaceDescription& value) { SetRuleGroupsNamespace(value); return *this;}
-    inline DescribeRuleGroupsNamespaceResult& WithRuleGroupsNamespace(RuleGroupsNamespaceDescription&& value) { SetRuleGroupsNamespace(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeRuleGroupsNamespaceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeRuleGroupsNamespaceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeRuleGroupsNamespaceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeRuleGroupsNamespaceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  RuleGroupsNamespaceDescription m_ruleGroupsNamespace;
 
-    RuleGroupsNamespaceDescription m_ruleGroupsNamespace;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ruleGroupsNamespaceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace PrometheusService
-} // namespace Aws
+}  // namespace Model
+}  // namespace PrometheusService
+}  // namespace Aws

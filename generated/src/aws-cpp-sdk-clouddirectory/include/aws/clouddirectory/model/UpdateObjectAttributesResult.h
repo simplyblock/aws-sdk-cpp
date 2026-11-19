@@ -5,63 +5,70 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class UpdateObjectAttributesResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult();
-    AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class UpdateObjectAttributesResult {
+ public:
+  AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult() = default;
+  AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API UpdateObjectAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <code>ObjectIdentifier</code> of the updated object.</p>
+   */
+  inline const Aws::String& GetObjectIdentifier() const { return m_objectIdentifier; }
+  template <typename ObjectIdentifierT = Aws::String>
+  void SetObjectIdentifier(ObjectIdentifierT&& value) {
+    m_objectIdentifierHasBeenSet = true;
+    m_objectIdentifier = std::forward<ObjectIdentifierT>(value);
+  }
+  template <typename ObjectIdentifierT = Aws::String>
+  UpdateObjectAttributesResult& WithObjectIdentifier(ObjectIdentifierT&& value) {
+    SetObjectIdentifier(std::forward<ObjectIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>ObjectIdentifier</code> of the updated object.</p>
-     */
-    inline const Aws::String& GetObjectIdentifier() const{ return m_objectIdentifier; }
-    inline void SetObjectIdentifier(const Aws::String& value) { m_objectIdentifier = value; }
-    inline void SetObjectIdentifier(Aws::String&& value) { m_objectIdentifier = std::move(value); }
-    inline void SetObjectIdentifier(const char* value) { m_objectIdentifier.assign(value); }
-    inline UpdateObjectAttributesResult& WithObjectIdentifier(const Aws::String& value) { SetObjectIdentifier(value); return *this;}
-    inline UpdateObjectAttributesResult& WithObjectIdentifier(Aws::String&& value) { SetObjectIdentifier(std::move(value)); return *this;}
-    inline UpdateObjectAttributesResult& WithObjectIdentifier(const char* value) { SetObjectIdentifier(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateObjectAttributesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateObjectAttributesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateObjectAttributesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateObjectAttributesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_objectIdentifier;
+ private:
+  Aws::String m_objectIdentifier;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_objectIdentifierHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

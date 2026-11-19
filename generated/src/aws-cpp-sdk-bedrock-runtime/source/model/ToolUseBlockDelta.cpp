@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockRuntime {
+namespace Model {
 
-ToolUseBlockDelta::ToolUseBlockDelta() : 
-    m_inputHasBeenSet(false)
-{
-}
+ToolUseBlockDelta::ToolUseBlockDelta(JsonView jsonValue) { *this = jsonValue; }
 
-ToolUseBlockDelta::ToolUseBlockDelta(JsonView jsonValue)
-  : ToolUseBlockDelta()
-{
-  *this = jsonValue;
-}
-
-ToolUseBlockDelta& ToolUseBlockDelta::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("input"))
-  {
+ToolUseBlockDelta& ToolUseBlockDelta::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("input")) {
     m_input = jsonValue.GetString("input");
-
     m_inputHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ToolUseBlockDelta::Jsonize() const
-{
+JsonValue ToolUseBlockDelta::Jsonize() const {
   JsonValue payload;
 
-  if(m_inputHasBeenSet)
-  {
-   payload.WithString("input", m_input);
-
+  if (m_inputHasBeenSet) {
+    payload.WithString("input", m_input);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockRuntime
+}  // namespace Aws

@@ -12,39 +12,29 @@ using namespace Aws::ACM::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateCertificateOptionsRequest::UpdateCertificateOptionsRequest() : 
-    m_certificateArnHasBeenSet(false),
-    m_optionsHasBeenSet(false)
-{
-}
-
-Aws::String UpdateCertificateOptionsRequest::SerializePayload() const
-{
+Aws::String UpdateCertificateOptionsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_certificateArnHasBeenSet)
-  {
-   payload.WithString("CertificateArn", m_certificateArn);
-
+  if (m_certificateArnHasBeenSet) {
+    payload.WithString("CertificateArn", m_certificateArn);
   }
 
-  if(m_optionsHasBeenSet)
-  {
-   payload.WithObject("Options", m_options.Jsonize());
-
+  if (m_optionsHasBeenSet) {
+    payload.WithObject("Options", m_options.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateCertificateOptionsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateCertificateOptionsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CertificateManager.UpdateCertificateOptions"));
   return headers;
-
 }
 
-
-
-
+UpdateCertificateOptionsRequest::EndpointParameters UpdateCertificateOptionsRequest::GetEndpointContextParams() const {
+  EndpointParameters parameters;
+  // Static context parameters
+  parameters.emplace_back(Aws::String("ServiceType"), "ACM", Aws::Endpoint::EndpointParameter::ParameterOrigin::STATIC_CONTEXT);
+  return parameters;
+}

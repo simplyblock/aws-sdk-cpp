@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-connectparticipant "C++ SDK for the AWS connectparticipant service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-connectparticipant "C++ SDK for Amazon Connect Participant Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONNECTPARTICIPANT_HEADERS
     "include/aws/connectparticipant/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONNECTPARTICIPANT_HEADERS
 
 file(GLOB AWS_CONNECTPARTICIPANT_MODEL_HEADERS
     "include/aws/connectparticipant/model/*.h"
+)
+
+file(GLOB AWS_CONNECTPARTICIPANT_INTERNAL_HEADERS
+    "include/aws/connectparticipant/internal/*.h"
 )
 
 file(GLOB AWS_CONNECTPARTICIPANT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONNECTPARTICIPANT_MODEL_SOURCE
 
 file(GLOB CONNECTPARTICIPANT_UNIFIED_HEADERS
     ${AWS_CONNECTPARTICIPANT_HEADERS}
+    ${AWS_CONNECTPARTICIPANT_INTERNAL_HEADERS}
     ${AWS_CONNECTPARTICIPANT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\connectparticipant" FILES ${AWS_CONNECTPARTICIPANT_HEADERS})
+        source_group("Header Files\\aws\\connectparticipant\\internal" FILES ${AWS_CONNECTPARTICIPANT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\connectparticipant\\model" FILES ${AWS_CONNECTPARTICIPANT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONNECTPARTICIPANT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONNECTPARTICIPANT_MODEL_SOURCE})

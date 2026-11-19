@@ -4,78 +4,79 @@
  */
 
 #pragma once
-#include <aws/ivs/IVS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ivs/IVS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IVS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IVS {
+namespace Model {
 
+/**
+ * <p>Specifies information needed to stream using the SRT protocol.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ivs-2020-07-14/Srt">AWS API
+ * Reference</a></p>
+ */
+class Srt {
+ public:
+  AWS_IVS_API Srt() = default;
+  AWS_IVS_API Srt(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IVS_API Srt& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IVS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies information needed to stream using the SRT protocol.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ivs-2020-07-14/Srt">AWS API
-   * Reference</a></p>
+   * <p>The endpoint to be used when streaming with IVS using the SRT protocol.</p>
    */
-  class Srt
-  {
-  public:
-    AWS_IVS_API Srt();
-    AWS_IVS_API Srt(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IVS_API Srt& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IVS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEndpoint() const { return m_endpoint; }
+  inline bool EndpointHasBeenSet() const { return m_endpointHasBeenSet; }
+  template <typename EndpointT = Aws::String>
+  void SetEndpoint(EndpointT&& value) {
+    m_endpointHasBeenSet = true;
+    m_endpoint = std::forward<EndpointT>(value);
+  }
+  template <typename EndpointT = Aws::String>
+  Srt& WithEndpoint(EndpointT&& value) {
+    SetEndpoint(std::forward<EndpointT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Auto-generated passphrase to enable encryption. This field is applicable only
+   * if the end user has <i>not</i> enabled the <code>insecureIngest</code> option
+   * for the channel.</p>
+   */
+  inline const Aws::String& GetPassphrase() const { return m_passphrase; }
+  inline bool PassphraseHasBeenSet() const { return m_passphraseHasBeenSet; }
+  template <typename PassphraseT = Aws::String>
+  void SetPassphrase(PassphraseT&& value) {
+    m_passphraseHasBeenSet = true;
+    m_passphrase = std::forward<PassphraseT>(value);
+  }
+  template <typename PassphraseT = Aws::String>
+  Srt& WithPassphrase(PassphraseT&& value) {
+    SetPassphrase(std::forward<PassphraseT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endpoint;
 
-    ///@{
-    /**
-     * <p>The endpoint to be used when streaming with IVS using the SRT protocol.</p>
-     */
-    inline const Aws::String& GetEndpoint() const{ return m_endpoint; }
-    inline bool EndpointHasBeenSet() const { return m_endpointHasBeenSet; }
-    inline void SetEndpoint(const Aws::String& value) { m_endpointHasBeenSet = true; m_endpoint = value; }
-    inline void SetEndpoint(Aws::String&& value) { m_endpointHasBeenSet = true; m_endpoint = std::move(value); }
-    inline void SetEndpoint(const char* value) { m_endpointHasBeenSet = true; m_endpoint.assign(value); }
-    inline Srt& WithEndpoint(const Aws::String& value) { SetEndpoint(value); return *this;}
-    inline Srt& WithEndpoint(Aws::String&& value) { SetEndpoint(std::move(value)); return *this;}
-    inline Srt& WithEndpoint(const char* value) { SetEndpoint(value); return *this;}
-    ///@}
+  Aws::String m_passphrase;
+  bool m_endpointHasBeenSet = false;
+  bool m_passphraseHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Auto-generated passphrase to enable encryption. This field is applicable only
-     * if the end user has <i>not</i> enabled the <code>insecureIngest</code> option
-     * for the channel.</p>
-     */
-    inline const Aws::String& GetPassphrase() const{ return m_passphrase; }
-    inline bool PassphraseHasBeenSet() const { return m_passphraseHasBeenSet; }
-    inline void SetPassphrase(const Aws::String& value) { m_passphraseHasBeenSet = true; m_passphrase = value; }
-    inline void SetPassphrase(Aws::String&& value) { m_passphraseHasBeenSet = true; m_passphrase = std::move(value); }
-    inline void SetPassphrase(const char* value) { m_passphraseHasBeenSet = true; m_passphrase.assign(value); }
-    inline Srt& WithPassphrase(const Aws::String& value) { SetPassphrase(value); return *this;}
-    inline Srt& WithPassphrase(Aws::String&& value) { SetPassphrase(std::move(value)); return *this;}
-    inline Srt& WithPassphrase(const char* value) { SetPassphrase(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_endpoint;
-    bool m_endpointHasBeenSet = false;
-
-    Aws::String m_passphrase;
-    bool m_passphraseHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IVS
-} // namespace Aws
+}  // namespace Model
+}  // namespace IVS
+}  // namespace Aws

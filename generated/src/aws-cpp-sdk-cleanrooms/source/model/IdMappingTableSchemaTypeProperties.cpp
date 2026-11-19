@@ -11,57 +11,48 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
-IdMappingTableSchemaTypeProperties::IdMappingTableSchemaTypeProperties() : 
-    m_idMappingTableInputSourceHasBeenSet(false)
-{
-}
+IdMappingTableSchemaTypeProperties::IdMappingTableSchemaTypeProperties(JsonView jsonValue) { *this = jsonValue; }
 
-IdMappingTableSchemaTypeProperties::IdMappingTableSchemaTypeProperties(JsonView jsonValue)
-  : IdMappingTableSchemaTypeProperties()
-{
-  *this = jsonValue;
-}
-
-IdMappingTableSchemaTypeProperties& IdMappingTableSchemaTypeProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("idMappingTableInputSource"))
-  {
+IdMappingTableSchemaTypeProperties& IdMappingTableSchemaTypeProperties::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("idMappingTableInputSource")) {
     Aws::Utils::Array<JsonView> idMappingTableInputSourceJsonList = jsonValue.GetArray("idMappingTableInputSource");
-    for(unsigned idMappingTableInputSourceIndex = 0; idMappingTableInputSourceIndex < idMappingTableInputSourceJsonList.GetLength(); ++idMappingTableInputSourceIndex)
-    {
+    for (unsigned idMappingTableInputSourceIndex = 0; idMappingTableInputSourceIndex < idMappingTableInputSourceJsonList.GetLength();
+         ++idMappingTableInputSourceIndex) {
       m_idMappingTableInputSource.push_back(idMappingTableInputSourceJsonList[idMappingTableInputSourceIndex].AsObject());
     }
     m_idMappingTableInputSourceHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("idMappingTableId")) {
+    m_idMappingTableId = jsonValue.GetString("idMappingTableId");
+    m_idMappingTableIdHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue IdMappingTableSchemaTypeProperties::Jsonize() const
-{
+JsonValue IdMappingTableSchemaTypeProperties::Jsonize() const {
   JsonValue payload;
 
-  if(m_idMappingTableInputSourceHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> idMappingTableInputSourceJsonList(m_idMappingTableInputSource.size());
-   for(unsigned idMappingTableInputSourceIndex = 0; idMappingTableInputSourceIndex < idMappingTableInputSourceJsonList.GetLength(); ++idMappingTableInputSourceIndex)
-   {
-     idMappingTableInputSourceJsonList[idMappingTableInputSourceIndex].AsObject(m_idMappingTableInputSource[idMappingTableInputSourceIndex].Jsonize());
-   }
-   payload.WithArray("idMappingTableInputSource", std::move(idMappingTableInputSourceJsonList));
+  if (m_idMappingTableInputSourceHasBeenSet) {
+    Aws::Utils::Array<JsonValue> idMappingTableInputSourceJsonList(m_idMappingTableInputSource.size());
+    for (unsigned idMappingTableInputSourceIndex = 0; idMappingTableInputSourceIndex < idMappingTableInputSourceJsonList.GetLength();
+         ++idMappingTableInputSourceIndex) {
+      idMappingTableInputSourceJsonList[idMappingTableInputSourceIndex].AsObject(
+          m_idMappingTableInputSource[idMappingTableInputSourceIndex].Jsonize());
+    }
+    payload.WithArray("idMappingTableInputSource", std::move(idMappingTableInputSourceJsonList));
+  }
 
+  if (m_idMappingTableIdHasBeenSet) {
+    payload.WithString("idMappingTableId", m_idMappingTableId);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

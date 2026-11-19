@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/connect/ConnectEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Connect
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Connect {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ConnectClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using ConnectEndpointProviderBase =
     EndpointProviderBase<ConnectClientConfiguration, ConnectBuiltInParameters, ConnectClientContextParameters>;
 
 using ConnectDefaultEpProviderBase =
-    DefaultEndpointProvider<ConnectClientConfiguration, ConnectBuiltInParameters, ConnectClientContextParameters>;
+    BDDEndpointProvider<ConnectClientConfiguration, ConnectBuiltInParameters, ConnectClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CONNECT_API ConnectEndpointProvider : public ConnectDefaultEpProviderBase
-{
-public:
-    using ConnectResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CONNECT_API ConnectEndpointProvider : public ConnectDefaultEpProviderBase {
+ public:
+  using ConnectResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ConnectEndpointProvider()
-      : ConnectDefaultEpProviderBase(Aws::Connect::ConnectEndpointRules::GetRulesBlob(), Aws::Connect::ConnectEndpointRules::RulesBlobSize)
-    {}
+  ConnectEndpointProvider();
 
-    ~ConnectEndpointProvider()
-    {
-    }
+  ~ConnectEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Connect
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Connect
+}  // namespace Aws

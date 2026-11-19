@@ -4,80 +4,98 @@
  */
 
 #pragma once
-#include <aws/fsx/FSx_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/fsx/model/Volume.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FSx
-{
-namespace Model
-{
-  class DescribeVolumesResult
-  {
-  public:
-    AWS_FSX_API DescribeVolumesResult();
-    AWS_FSX_API DescribeVolumesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FSX_API DescribeVolumesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FSx {
+namespace Model {
+class DescribeVolumesResult {
+ public:
+  AWS_FSX_API DescribeVolumesResult() = default;
+  AWS_FSX_API DescribeVolumesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FSX_API DescribeVolumesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returned after a successful <code>DescribeVolumes</code> operation,
+   * describing each volume.</p>
+   */
+  inline const Aws::Vector<Volume>& GetVolumes() const { return m_volumes; }
+  template <typename VolumesT = Aws::Vector<Volume>>
+  void SetVolumes(VolumesT&& value) {
+    m_volumesHasBeenSet = true;
+    m_volumes = std::forward<VolumesT>(value);
+  }
+  template <typename VolumesT = Aws::Vector<Volume>>
+  DescribeVolumesResult& WithVolumes(VolumesT&& value) {
+    SetVolumes(std::forward<VolumesT>(value));
+    return *this;
+  }
+  template <typename VolumesT = Volume>
+  DescribeVolumesResult& AddVolumes(VolumesT&& value) {
+    m_volumesHasBeenSet = true;
+    m_volumes.emplace_back(std::forward<VolumesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returned after a successful <code>DescribeVolumes</code> operation,
-     * describing each volume.</p>
-     */
-    inline const Aws::Vector<Volume>& GetVolumes() const{ return m_volumes; }
-    inline void SetVolumes(const Aws::Vector<Volume>& value) { m_volumes = value; }
-    inline void SetVolumes(Aws::Vector<Volume>&& value) { m_volumes = std::move(value); }
-    inline DescribeVolumesResult& WithVolumes(const Aws::Vector<Volume>& value) { SetVolumes(value); return *this;}
-    inline DescribeVolumesResult& WithVolumes(Aws::Vector<Volume>&& value) { SetVolumes(std::move(value)); return *this;}
-    inline DescribeVolumesResult& AddVolumes(const Volume& value) { m_volumes.push_back(value); return *this; }
-    inline DescribeVolumesResult& AddVolumes(Volume&& value) { m_volumes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeVolumesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeVolumesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeVolumesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeVolumesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeVolumesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeVolumesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeVolumesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<Volume> m_volumes;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeVolumesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::Vector<Volume> m_volumes;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_nextToken;
 
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_volumesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteCorsConfigurationRequest::DeleteCorsConfigurationRequest() : 
-    m_apiIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteCorsConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteCorsConfigurationRequest::SerializePayload() const { return {}; }

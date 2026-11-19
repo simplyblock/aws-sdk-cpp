@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
-  class CreateNetworkSettingsResult
-  {
-  public:
-    AWS_WORKSPACESWEB_API CreateNetworkSettingsResult();
-    AWS_WORKSPACESWEB_API CreateNetworkSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESWEB_API CreateNetworkSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
+class CreateNetworkSettingsResult {
+ public:
+  AWS_WORKSPACESWEB_API CreateNetworkSettingsResult() = default;
+  AWS_WORKSPACESWEB_API CreateNetworkSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESWEB_API CreateNetworkSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the network settings.</p>
+   */
+  inline const Aws::String& GetNetworkSettingsArn() const { return m_networkSettingsArn; }
+  template <typename NetworkSettingsArnT = Aws::String>
+  void SetNetworkSettingsArn(NetworkSettingsArnT&& value) {
+    m_networkSettingsArnHasBeenSet = true;
+    m_networkSettingsArn = std::forward<NetworkSettingsArnT>(value);
+  }
+  template <typename NetworkSettingsArnT = Aws::String>
+  CreateNetworkSettingsResult& WithNetworkSettingsArn(NetworkSettingsArnT&& value) {
+    SetNetworkSettingsArn(std::forward<NetworkSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the network settings.</p>
-     */
-    inline const Aws::String& GetNetworkSettingsArn() const{ return m_networkSettingsArn; }
-    inline void SetNetworkSettingsArn(const Aws::String& value) { m_networkSettingsArn = value; }
-    inline void SetNetworkSettingsArn(Aws::String&& value) { m_networkSettingsArn = std::move(value); }
-    inline void SetNetworkSettingsArn(const char* value) { m_networkSettingsArn.assign(value); }
-    inline CreateNetworkSettingsResult& WithNetworkSettingsArn(const Aws::String& value) { SetNetworkSettingsArn(value); return *this;}
-    inline CreateNetworkSettingsResult& WithNetworkSettingsArn(Aws::String&& value) { SetNetworkSettingsArn(std::move(value)); return *this;}
-    inline CreateNetworkSettingsResult& WithNetworkSettingsArn(const char* value) { SetNetworkSettingsArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateNetworkSettingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateNetworkSettingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateNetworkSettingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateNetworkSettingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_networkSettingsArn;
+ private:
+  Aws::String m_networkSettingsArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_networkSettingsArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/iotwireless/IoTWireless_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotwireless/IoTWireless_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTWireless
-{
-namespace Model
-{
-  class SendDataToWirelessDeviceResult
-  {
-  public:
-    AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult();
-    AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTWireless {
+namespace Model {
+class SendDataToWirelessDeviceResult {
+ public:
+  AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult() = default;
+  AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTWIRELESS_API SendDataToWirelessDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the message sent to the wireless device.</p>
+   */
+  inline const Aws::String& GetMessageId() const { return m_messageId; }
+  template <typename MessageIdT = Aws::String>
+  void SetMessageId(MessageIdT&& value) {
+    m_messageIdHasBeenSet = true;
+    m_messageId = std::forward<MessageIdT>(value);
+  }
+  template <typename MessageIdT = Aws::String>
+  SendDataToWirelessDeviceResult& WithMessageId(MessageIdT&& value) {
+    SetMessageId(std::forward<MessageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the message sent to the wireless device.</p>
-     */
-    inline const Aws::String& GetMessageId() const{ return m_messageId; }
-    inline void SetMessageId(const Aws::String& value) { m_messageId = value; }
-    inline void SetMessageId(Aws::String&& value) { m_messageId = std::move(value); }
-    inline void SetMessageId(const char* value) { m_messageId.assign(value); }
-    inline SendDataToWirelessDeviceResult& WithMessageId(const Aws::String& value) { SetMessageId(value); return *this;}
-    inline SendDataToWirelessDeviceResult& WithMessageId(Aws::String&& value) { SetMessageId(std::move(value)); return *this;}
-    inline SendDataToWirelessDeviceResult& WithMessageId(const char* value) { SetMessageId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SendDataToWirelessDeviceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SendDataToWirelessDeviceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SendDataToWirelessDeviceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SendDataToWirelessDeviceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_messageId;
+ private:
+  Aws::String m_messageId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_messageIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTWireless
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTWireless
+}  // namespace Aws

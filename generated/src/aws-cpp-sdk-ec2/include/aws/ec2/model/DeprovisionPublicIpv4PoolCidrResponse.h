@@ -4,80 +4,99 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DeprovisionPublicIpv4PoolCidrResponse
-  {
-  public:
-    AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse();
-    AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DeprovisionPublicIpv4PoolCidrResponse {
+ public:
+  AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse() = default;
+  AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DeprovisionPublicIpv4PoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the pool that you deprovisioned the CIDR from.</p>
+   */
+  inline const Aws::String& GetPoolId() const { return m_poolId; }
+  template <typename PoolIdT = Aws::String>
+  void SetPoolId(PoolIdT&& value) {
+    m_poolIdHasBeenSet = true;
+    m_poolId = std::forward<PoolIdT>(value);
+  }
+  template <typename PoolIdT = Aws::String>
+  DeprovisionPublicIpv4PoolCidrResponse& WithPoolId(PoolIdT&& value) {
+    SetPoolId(std::forward<PoolIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the pool that you deprovisioned the CIDR from.</p>
-     */
-    inline const Aws::String& GetPoolId() const{ return m_poolId; }
-    inline void SetPoolId(const Aws::String& value) { m_poolId = value; }
-    inline void SetPoolId(Aws::String&& value) { m_poolId = std::move(value); }
-    inline void SetPoolId(const char* value) { m_poolId.assign(value); }
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithPoolId(const Aws::String& value) { SetPoolId(value); return *this;}
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithPoolId(Aws::String&& value) { SetPoolId(std::move(value)); return *this;}
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithPoolId(const char* value) { SetPoolId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The deprovisioned CIDRs.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDeprovisionedAddresses() const { return m_deprovisionedAddresses; }
+  template <typename DeprovisionedAddressesT = Aws::Vector<Aws::String>>
+  void SetDeprovisionedAddresses(DeprovisionedAddressesT&& value) {
+    m_deprovisionedAddressesHasBeenSet = true;
+    m_deprovisionedAddresses = std::forward<DeprovisionedAddressesT>(value);
+  }
+  template <typename DeprovisionedAddressesT = Aws::Vector<Aws::String>>
+  DeprovisionPublicIpv4PoolCidrResponse& WithDeprovisionedAddresses(DeprovisionedAddressesT&& value) {
+    SetDeprovisionedAddresses(std::forward<DeprovisionedAddressesT>(value));
+    return *this;
+  }
+  template <typename DeprovisionedAddressesT = Aws::String>
+  DeprovisionPublicIpv4PoolCidrResponse& AddDeprovisionedAddresses(DeprovisionedAddressesT&& value) {
+    m_deprovisionedAddressesHasBeenSet = true;
+    m_deprovisionedAddresses.emplace_back(std::forward<DeprovisionedAddressesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The deprovisioned CIDRs.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDeprovisionedAddresses() const{ return m_deprovisionedAddresses; }
-    inline void SetDeprovisionedAddresses(const Aws::Vector<Aws::String>& value) { m_deprovisionedAddresses = value; }
-    inline void SetDeprovisionedAddresses(Aws::Vector<Aws::String>&& value) { m_deprovisionedAddresses = std::move(value); }
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithDeprovisionedAddresses(const Aws::Vector<Aws::String>& value) { SetDeprovisionedAddresses(value); return *this;}
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithDeprovisionedAddresses(Aws::Vector<Aws::String>&& value) { SetDeprovisionedAddresses(std::move(value)); return *this;}
-    inline DeprovisionPublicIpv4PoolCidrResponse& AddDeprovisionedAddresses(const Aws::String& value) { m_deprovisionedAddresses.push_back(value); return *this; }
-    inline DeprovisionPublicIpv4PoolCidrResponse& AddDeprovisionedAddresses(Aws::String&& value) { m_deprovisionedAddresses.push_back(std::move(value)); return *this; }
-    inline DeprovisionPublicIpv4PoolCidrResponse& AddDeprovisionedAddresses(const char* value) { m_deprovisionedAddresses.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DeprovisionPublicIpv4PoolCidrResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DeprovisionPublicIpv4PoolCidrResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_poolId;
+ private:
+  Aws::String m_poolId;
 
-    Aws::Vector<Aws::String> m_deprovisionedAddresses;
+  Aws::Vector<Aws::String> m_deprovisionedAddresses;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_poolIdHasBeenSet = false;
+  bool m_deprovisionedAddressesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

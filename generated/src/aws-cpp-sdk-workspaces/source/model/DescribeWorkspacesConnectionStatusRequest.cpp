@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/DescribeWorkspacesConnectionStatusRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeWorkspacesConnectionStatusRequest::DescribeWorkspacesConnectionStatusRequest() : 
-    m_workspaceIdsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
+Aws::String DescribeWorkspacesConnectionStatusRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeWorkspacesConnectionStatusRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_workspaceIdsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> workspaceIdsJsonList(m_workspaceIds.size());
-   for(unsigned workspaceIdsIndex = 0; workspaceIdsIndex < workspaceIdsJsonList.GetLength(); ++workspaceIdsIndex)
-   {
-     workspaceIdsJsonList[workspaceIdsIndex].AsString(m_workspaceIds[workspaceIdsIndex]);
-   }
-   payload.WithArray("WorkspaceIds", std::move(workspaceIdsJsonList));
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_workspaceIdsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_workspaceIdsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkspaceIds"));
+    encoder.WriteArrayStart(m_workspaceIds.size());
+    for (const auto& item_0 : m_workspaceIds) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
   }
 
-  return payload.View().WriteReadable();
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeWorkspacesConnectionStatusRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeWorkspacesConnectionStatusRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.DescribeWorkspacesConnectionStatus"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

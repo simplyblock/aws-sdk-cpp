@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/route53/Route53_EXPORTS.h>
 #include <aws/route53/model/ChangeInfo.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Route53
-{
-namespace Model
-{
-  class DeleteKeySigningKeyResult
-  {
-  public:
-    AWS_ROUTE53_API DeleteKeySigningKeyResult();
-    AWS_ROUTE53_API DeleteKeySigningKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ROUTE53_API DeleteKeySigningKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Route53 {
+namespace Model {
+class DeleteKeySigningKeyResult {
+ public:
+  AWS_ROUTE53_API DeleteKeySigningKeyResult() = default;
+  AWS_ROUTE53_API DeleteKeySigningKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ROUTE53_API DeleteKeySigningKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ChangeInfo& GetChangeInfo() const{ return m_changeInfo; }
-    inline void SetChangeInfo(const ChangeInfo& value) { m_changeInfo = value; }
-    inline void SetChangeInfo(ChangeInfo&& value) { m_changeInfo = std::move(value); }
-    inline DeleteKeySigningKeyResult& WithChangeInfo(const ChangeInfo& value) { SetChangeInfo(value); return *this;}
-    inline DeleteKeySigningKeyResult& WithChangeInfo(ChangeInfo&& value) { SetChangeInfo(std::move(value)); return *this;}
-    ///@}
+  inline const ChangeInfo& GetChangeInfo() const { return m_changeInfo; }
+  template <typename ChangeInfoT = ChangeInfo>
+  void SetChangeInfo(ChangeInfoT&& value) {
+    m_changeInfoHasBeenSet = true;
+    m_changeInfo = std::forward<ChangeInfoT>(value);
+  }
+  template <typename ChangeInfoT = ChangeInfo>
+  DeleteKeySigningKeyResult& WithChangeInfo(ChangeInfoT&& value) {
+    SetChangeInfo(std::forward<ChangeInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteKeySigningKeyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteKeySigningKeyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteKeySigningKeyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ChangeInfo m_changeInfo;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteKeySigningKeyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  ChangeInfo m_changeInfo;
 
-} // namespace Model
-} // namespace Route53
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_changeInfoHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Route53
+}  // namespace Aws

@@ -5,113 +5,141 @@
 
 #pragma once
 #include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/model/S3StorageConfig.h>
 #include <aws/sagemaker/model/DataCatalogConfig.h>
+#include <aws/sagemaker/model/S3StorageConfig.h>
 #include <aws/sagemaker/model/TableFormat.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>The configuration of an <code>OfflineStore</code>.</p> <p>Provide an
+ * <code>OfflineStoreConfig</code> in a request to <code>CreateFeatureGroup</code>
+ * to create an <code>OfflineStore</code>.</p> <p>To encrypt an
+ * <code>OfflineStore</code> using at rest data encryption, specify Amazon Web
+ * Services Key Management Service (KMS) key ID, or <code>KMSKeyId</code>, in
+ * <code>S3StorageConfig</code>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/OfflineStoreConfig">AWS
+ * API Reference</a></p>
+ */
+class OfflineStoreConfig {
+ public:
+  AWS_SAGEMAKER_API OfflineStoreConfig() = default;
+  AWS_SAGEMAKER_API OfflineStoreConfig(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API OfflineStoreConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration of an <code>OfflineStore</code>.</p> <p>Provide an
-   * <code>OfflineStoreConfig</code> in a request to <code>CreateFeatureGroup</code>
-   * to create an <code>OfflineStore</code>.</p> <p>To encrypt an
-   * <code>OfflineStore</code> using at rest data encryption, specify Amazon Web
-   * Services Key Management Service (KMS) key ID, or <code>KMSKeyId</code>, in
-   * <code>S3StorageConfig</code>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/OfflineStoreConfig">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Simple Storage (Amazon S3) location of
+   * <code>OfflineStore</code>.</p>
    */
-  class OfflineStoreConfig
-  {
-  public:
-    AWS_SAGEMAKER_API OfflineStoreConfig();
-    AWS_SAGEMAKER_API OfflineStoreConfig(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API OfflineStoreConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const S3StorageConfig& GetS3StorageConfig() const { return m_s3StorageConfig; }
+  inline bool S3StorageConfigHasBeenSet() const { return m_s3StorageConfigHasBeenSet; }
+  template <typename S3StorageConfigT = S3StorageConfig>
+  void SetS3StorageConfig(S3StorageConfigT&& value) {
+    m_s3StorageConfigHasBeenSet = true;
+    m_s3StorageConfig = std::forward<S3StorageConfigT>(value);
+  }
+  template <typename S3StorageConfigT = S3StorageConfig>
+  OfflineStoreConfig& WithS3StorageConfig(S3StorageConfigT&& value) {
+    SetS3StorageConfig(std::forward<S3StorageConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Set to <code>True</code> to disable the automatic creation of an Amazon Web
+   * Services Glue table when configuring an <code>OfflineStore</code>. If set to
+   * <code>True</code> and <code>DataCatalogConfig</code> is provided, Feature Store
+   * associates the provided catalog configuration with the feature group without
+   * creating a table. In this case, you are responsible for creating and managing
+   * the Glue table. If set to <code>True</code> without
+   * <code>DataCatalogConfig</code>, no Glue table is created or associated with the
+   * feature group. The <code>Iceberg</code> table format is only supported when this
+   * is set to <code>False</code>.</p> <p>If set to <code>False</code> and
+   * <code>DataCatalogConfig</code> is provided, Feature Store creates the table
+   * using the specified names. If set to <code>False</code> without
+   * <code>DataCatalogConfig</code>, Feature Store auto-generates the table name
+   * following <a
+   * href="https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html">Athena's
+   * naming recommendations</a>. This applies to both Glue and Apache Iceberg table
+   * formats.</p> <p>The default value is <code>False</code>.</p>
+   */
+  inline bool GetDisableGlueTableCreation() const { return m_disableGlueTableCreation; }
+  inline bool DisableGlueTableCreationHasBeenSet() const { return m_disableGlueTableCreationHasBeenSet; }
+  inline void SetDisableGlueTableCreation(bool value) {
+    m_disableGlueTableCreationHasBeenSet = true;
+    m_disableGlueTableCreation = value;
+  }
+  inline OfflineStoreConfig& WithDisableGlueTableCreation(bool value) {
+    SetDisableGlueTableCreation(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Simple Storage (Amazon S3) location of
-     * <code>OfflineStore</code>.</p>
-     */
-    inline const S3StorageConfig& GetS3StorageConfig() const{ return m_s3StorageConfig; }
-    inline bool S3StorageConfigHasBeenSet() const { return m_s3StorageConfigHasBeenSet; }
-    inline void SetS3StorageConfig(const S3StorageConfig& value) { m_s3StorageConfigHasBeenSet = true; m_s3StorageConfig = value; }
-    inline void SetS3StorageConfig(S3StorageConfig&& value) { m_s3StorageConfigHasBeenSet = true; m_s3StorageConfig = std::move(value); }
-    inline OfflineStoreConfig& WithS3StorageConfig(const S3StorageConfig& value) { SetS3StorageConfig(value); return *this;}
-    inline OfflineStoreConfig& WithS3StorageConfig(S3StorageConfig&& value) { SetS3StorageConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The meta data of the Glue table for the <code>OfflineStore</code>. If not
+   * provided, Feature Store auto-generates the table name, database, and catalog
+   * when the <code>OfflineStore</code> is created. You can optionally provide this
+   * configuration to specify custom values. This applies to both Glue and Apache
+   * Iceberg table formats.</p>
+   */
+  inline const DataCatalogConfig& GetDataCatalogConfig() const { return m_dataCatalogConfig; }
+  inline bool DataCatalogConfigHasBeenSet() const { return m_dataCatalogConfigHasBeenSet; }
+  template <typename DataCatalogConfigT = DataCatalogConfig>
+  void SetDataCatalogConfig(DataCatalogConfigT&& value) {
+    m_dataCatalogConfigHasBeenSet = true;
+    m_dataCatalogConfig = std::forward<DataCatalogConfigT>(value);
+  }
+  template <typename DataCatalogConfigT = DataCatalogConfig>
+  OfflineStoreConfig& WithDataCatalogConfig(DataCatalogConfigT&& value) {
+    SetDataCatalogConfig(std::forward<DataCatalogConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Set to <code>True</code> to disable the automatic creation of an Amazon Web
-     * Services Glue table when configuring an <code>OfflineStore</code>. If set to
-     * <code>False</code>, Feature Store will name the <code>OfflineStore</code> Glue
-     * table following <a
-     * href="https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html">Athena's
-     * naming recommendations</a>.</p> <p>The default value is <code>False</code>.</p>
-     */
-    inline bool GetDisableGlueTableCreation() const{ return m_disableGlueTableCreation; }
-    inline bool DisableGlueTableCreationHasBeenSet() const { return m_disableGlueTableCreationHasBeenSet; }
-    inline void SetDisableGlueTableCreation(bool value) { m_disableGlueTableCreationHasBeenSet = true; m_disableGlueTableCreation = value; }
-    inline OfflineStoreConfig& WithDisableGlueTableCreation(bool value) { SetDisableGlueTableCreation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Format for the offline store table. Supported formats are Glue (Default) and
+   * <a href="https://iceberg.apache.org/">Apache Iceberg</a>.</p>
+   */
+  inline TableFormat GetTableFormat() const { return m_tableFormat; }
+  inline bool TableFormatHasBeenSet() const { return m_tableFormatHasBeenSet; }
+  inline void SetTableFormat(TableFormat value) {
+    m_tableFormatHasBeenSet = true;
+    m_tableFormat = value;
+  }
+  inline OfflineStoreConfig& WithTableFormat(TableFormat value) {
+    SetTableFormat(value);
+    return *this;
+  }
+  ///@}
+ private:
+  S3StorageConfig m_s3StorageConfig;
 
-    ///@{
-    /**
-     * <p>The meta data of the Glue table that is autogenerated when an
-     * <code>OfflineStore</code> is created. </p>
-     */
-    inline const DataCatalogConfig& GetDataCatalogConfig() const{ return m_dataCatalogConfig; }
-    inline bool DataCatalogConfigHasBeenSet() const { return m_dataCatalogConfigHasBeenSet; }
-    inline void SetDataCatalogConfig(const DataCatalogConfig& value) { m_dataCatalogConfigHasBeenSet = true; m_dataCatalogConfig = value; }
-    inline void SetDataCatalogConfig(DataCatalogConfig&& value) { m_dataCatalogConfigHasBeenSet = true; m_dataCatalogConfig = std::move(value); }
-    inline OfflineStoreConfig& WithDataCatalogConfig(const DataCatalogConfig& value) { SetDataCatalogConfig(value); return *this;}
-    inline OfflineStoreConfig& WithDataCatalogConfig(DataCatalogConfig&& value) { SetDataCatalogConfig(std::move(value)); return *this;}
-    ///@}
+  bool m_disableGlueTableCreation{false};
 
-    ///@{
-    /**
-     * <p>Format for the offline store table. Supported formats are Glue (Default) and
-     * <a href="https://iceberg.apache.org/">Apache Iceberg</a>.</p>
-     */
-    inline const TableFormat& GetTableFormat() const{ return m_tableFormat; }
-    inline bool TableFormatHasBeenSet() const { return m_tableFormatHasBeenSet; }
-    inline void SetTableFormat(const TableFormat& value) { m_tableFormatHasBeenSet = true; m_tableFormat = value; }
-    inline void SetTableFormat(TableFormat&& value) { m_tableFormatHasBeenSet = true; m_tableFormat = std::move(value); }
-    inline OfflineStoreConfig& WithTableFormat(const TableFormat& value) { SetTableFormat(value); return *this;}
-    inline OfflineStoreConfig& WithTableFormat(TableFormat&& value) { SetTableFormat(std::move(value)); return *this;}
-    ///@}
-  private:
+  DataCatalogConfig m_dataCatalogConfig;
 
-    S3StorageConfig m_s3StorageConfig;
-    bool m_s3StorageConfigHasBeenSet = false;
+  TableFormat m_tableFormat{TableFormat::NOT_SET};
+  bool m_s3StorageConfigHasBeenSet = false;
+  bool m_disableGlueTableCreationHasBeenSet = false;
+  bool m_dataCatalogConfigHasBeenSet = false;
+  bool m_tableFormatHasBeenSet = false;
+};
 
-    bool m_disableGlueTableCreation;
-    bool m_disableGlueTableCreationHasBeenSet = false;
-
-    DataCatalogConfig m_dataCatalogConfig;
-    bool m_dataCatalogConfigHasBeenSet = false;
-
-    TableFormat m_tableFormat;
-    bool m_tableFormatHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

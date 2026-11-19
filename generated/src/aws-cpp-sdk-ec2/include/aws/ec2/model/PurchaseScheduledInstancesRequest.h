@@ -4,100 +4,115 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/PurchaseRequest.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Contains the parameters for PurchaseScheduledInstances.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseScheduledInstancesRequest">AWS
+ * API Reference</a></p>
+ */
+class PurchaseScheduledInstancesRequest : public EC2Request {
+ public:
+  AWS_EC2_API PurchaseScheduledInstancesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PurchaseScheduledInstances"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p>Contains the parameters for PurchaseScheduledInstances.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseScheduledInstancesRequest">AWS
-   * API Reference</a></p>
+   * <p>Unique, case-sensitive identifier that ensures the idempotency of the
+   * request. For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
+   * Idempotency</a>.</p>
    */
-  class PurchaseScheduledInstancesRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API PurchaseScheduledInstancesRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  PurchaseScheduledInstancesRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PurchaseScheduledInstances"; }
+  ///@{
+  /**
+   * <p>Checks whether you have the required permissions for the action, without
+   * actually making the request, and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline PurchaseScheduledInstancesRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The purchase requests.</p>
+   */
+  inline const Aws::Vector<PurchaseRequest>& GetPurchaseRequests() const { return m_purchaseRequests; }
+  inline bool PurchaseRequestsHasBeenSet() const { return m_purchaseRequestsHasBeenSet; }
+  template <typename PurchaseRequestsT = Aws::Vector<PurchaseRequest>>
+  void SetPurchaseRequests(PurchaseRequestsT&& value) {
+    m_purchaseRequestsHasBeenSet = true;
+    m_purchaseRequests = std::forward<PurchaseRequestsT>(value);
+  }
+  template <typename PurchaseRequestsT = Aws::Vector<PurchaseRequest>>
+  PurchaseScheduledInstancesRequest& WithPurchaseRequests(PurchaseRequestsT&& value) {
+    SetPurchaseRequests(std::forward<PurchaseRequestsT>(value));
+    return *this;
+  }
+  template <typename PurchaseRequestsT = PurchaseRequest>
+  PurchaseScheduledInstancesRequest& AddPurchaseRequests(PurchaseRequestsT&& value) {
+    m_purchaseRequestsHasBeenSet = true;
+    m_purchaseRequests.emplace_back(std::forward<PurchaseRequestsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  bool m_dryRun{false};
 
-  public:
+  Aws::Vector<PurchaseRequest> m_purchaseRequests;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_dryRunHasBeenSet = false;
+  bool m_purchaseRequestsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier that ensures the idempotency of the
-     * request. For more information, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-     * Idempotency</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline PurchaseScheduledInstancesRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline PurchaseScheduledInstancesRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline PurchaseScheduledInstancesRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Checks whether you have the required permissions for the action, without
-     * actually making the request, and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline PurchaseScheduledInstancesRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The purchase requests.</p>
-     */
-    inline const Aws::Vector<PurchaseRequest>& GetPurchaseRequests() const{ return m_purchaseRequests; }
-    inline bool PurchaseRequestsHasBeenSet() const { return m_purchaseRequestsHasBeenSet; }
-    inline void SetPurchaseRequests(const Aws::Vector<PurchaseRequest>& value) { m_purchaseRequestsHasBeenSet = true; m_purchaseRequests = value; }
-    inline void SetPurchaseRequests(Aws::Vector<PurchaseRequest>&& value) { m_purchaseRequestsHasBeenSet = true; m_purchaseRequests = std::move(value); }
-    inline PurchaseScheduledInstancesRequest& WithPurchaseRequests(const Aws::Vector<PurchaseRequest>& value) { SetPurchaseRequests(value); return *this;}
-    inline PurchaseScheduledInstancesRequest& WithPurchaseRequests(Aws::Vector<PurchaseRequest>&& value) { SetPurchaseRequests(std::move(value)); return *this;}
-    inline PurchaseScheduledInstancesRequest& AddPurchaseRequests(const PurchaseRequest& value) { m_purchaseRequestsHasBeenSet = true; m_purchaseRequests.push_back(value); return *this; }
-    inline PurchaseScheduledInstancesRequest& AddPurchaseRequests(PurchaseRequest&& value) { m_purchaseRequestsHasBeenSet = true; m_purchaseRequests.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
-
-    Aws::Vector<PurchaseRequest> m_purchaseRequests;
-    bool m_purchaseRequestsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

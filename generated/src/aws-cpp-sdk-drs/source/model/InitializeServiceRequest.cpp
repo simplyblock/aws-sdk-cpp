@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/drs/model/InitializeServiceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/drs/model/InitializeServiceRequest.h>
 
 #include <utility>
 
@@ -12,15 +12,4 @@ using namespace Aws::drs::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-InitializeServiceRequest::InitializeServiceRequest()
-{
-}
-
-Aws::String InitializeServiceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String InitializeServiceRequest::SerializePayload() const { return {}; }

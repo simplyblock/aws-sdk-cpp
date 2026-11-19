@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/scheduler/Scheduler_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/scheduler/Scheduler_EXPORTS.h>
 
-#include <aws/scheduler/SchedulerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Scheduler
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Scheduler {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SchedulerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SchedulerEndpointProviderBase =
     EndpointProviderBase<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
 
 using SchedulerDefaultEpProviderBase =
-    DefaultEndpointProvider<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
+    BDDEndpointProvider<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SCHEDULER_API SchedulerEndpointProvider : public SchedulerDefaultEpProviderBase
-{
-public:
-    using SchedulerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SCHEDULER_API SchedulerEndpointProvider : public SchedulerDefaultEpProviderBase {
+ public:
+  using SchedulerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SchedulerEndpointProvider()
-      : SchedulerDefaultEpProviderBase(Aws::Scheduler::SchedulerEndpointRules::GetRulesBlob(), Aws::Scheduler::SchedulerEndpointRules::RulesBlobSize)
-    {}
+  SchedulerEndpointProvider();
 
-    ~SchedulerEndpointProvider()
-    {
-    }
+  ~SchedulerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Scheduler
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Scheduler
+}  // namespace Aws

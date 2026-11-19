@@ -5,82 +5,103 @@
 
 #pragma once
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/autoscaling/model/ResponseMetadata.h>
 #include <aws/autoscaling/model/LaunchConfiguration.h>
+#include <aws/autoscaling/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace AutoScaling
-{
-namespace Model
-{
-  class DescribeLaunchConfigurationsResult
-  {
-  public:
-    AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult();
-    AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace AutoScaling {
+namespace Model {
+class DescribeLaunchConfigurationsResult {
+ public:
+  AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult() = default;
+  AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_AUTOSCALING_API DescribeLaunchConfigurationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The launch configurations.</p>
+   */
+  inline const Aws::Vector<LaunchConfiguration>& GetLaunchConfigurations() const { return m_launchConfigurations; }
+  template <typename LaunchConfigurationsT = Aws::Vector<LaunchConfiguration>>
+  void SetLaunchConfigurations(LaunchConfigurationsT&& value) {
+    m_launchConfigurationsHasBeenSet = true;
+    m_launchConfigurations = std::forward<LaunchConfigurationsT>(value);
+  }
+  template <typename LaunchConfigurationsT = Aws::Vector<LaunchConfiguration>>
+  DescribeLaunchConfigurationsResult& WithLaunchConfigurations(LaunchConfigurationsT&& value) {
+    SetLaunchConfigurations(std::forward<LaunchConfigurationsT>(value));
+    return *this;
+  }
+  template <typename LaunchConfigurationsT = LaunchConfiguration>
+  DescribeLaunchConfigurationsResult& AddLaunchConfigurations(LaunchConfigurationsT&& value) {
+    m_launchConfigurationsHasBeenSet = true;
+    m_launchConfigurations.emplace_back(std::forward<LaunchConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The launch configurations.</p>
-     */
-    inline const Aws::Vector<LaunchConfiguration>& GetLaunchConfigurations() const{ return m_launchConfigurations; }
-    inline void SetLaunchConfigurations(const Aws::Vector<LaunchConfiguration>& value) { m_launchConfigurations = value; }
-    inline void SetLaunchConfigurations(Aws::Vector<LaunchConfiguration>&& value) { m_launchConfigurations = std::move(value); }
-    inline DescribeLaunchConfigurationsResult& WithLaunchConfigurations(const Aws::Vector<LaunchConfiguration>& value) { SetLaunchConfigurations(value); return *this;}
-    inline DescribeLaunchConfigurationsResult& WithLaunchConfigurations(Aws::Vector<LaunchConfiguration>&& value) { SetLaunchConfigurations(std::move(value)); return *this;}
-    inline DescribeLaunchConfigurationsResult& AddLaunchConfigurations(const LaunchConfiguration& value) { m_launchConfigurations.push_back(value); return *this; }
-    inline DescribeLaunchConfigurationsResult& AddLaunchConfigurations(LaunchConfiguration&& value) { m_launchConfigurations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A string that indicates that the response contains more items than can be
+   * returned in a single response. To receive additional items, specify this string
+   * for the <code>NextToken</code> value when requesting the next set of items. This
+   * value is null when there are no more items to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeLaunchConfigurationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string that indicates that the response contains more items than can be
-     * returned in a single response. To receive additional items, specify this string
-     * for the <code>NextToken</code> value when requesting the next set of items. This
-     * value is null when there are no more items to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeLaunchConfigurationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeLaunchConfigurationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeLaunchConfigurationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeLaunchConfigurationsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeLaunchConfigurationsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeLaunchConfigurationsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<LaunchConfiguration> m_launchConfigurations;
+ private:
+  Aws::Vector<LaunchConfiguration> m_launchConfigurations;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_launchConfigurationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AutoScaling
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScaling
+}  // namespace Aws

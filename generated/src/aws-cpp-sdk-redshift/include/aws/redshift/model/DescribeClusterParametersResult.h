@@ -4,92 +4,112 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/redshift/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/Parameter.h>
+#include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+/**
+ * <p>Contains the output from the <a>DescribeClusterParameters</a> action.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterGroupDetails">AWS
+ * API Reference</a></p>
+ */
+class DescribeClusterParametersResult {
+ public:
+  AWS_REDSHIFT_API DescribeClusterParametersResult() = default;
+  AWS_REDSHIFT_API DescribeClusterParametersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API DescribeClusterParametersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output from the <a>DescribeClusterParameters</a> action.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterGroupDetails">AWS
-   * API Reference</a></p>
+   * <p>A list of <a>Parameter</a> instances. Each instance lists the parameters of
+   * one cluster parameter group. </p>
    */
-  class DescribeClusterParametersResult
-  {
-  public:
-    AWS_REDSHIFT_API DescribeClusterParametersResult();
-    AWS_REDSHIFT_API DescribeClusterParametersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API DescribeClusterParametersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Parameter>& GetParameters() const { return m_parameters; }
+  template <typename ParametersT = Aws::Vector<Parameter>>
+  void SetParameters(ParametersT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters = std::forward<ParametersT>(value);
+  }
+  template <typename ParametersT = Aws::Vector<Parameter>>
+  DescribeClusterParametersResult& WithParameters(ParametersT&& value) {
+    SetParameters(std::forward<ParametersT>(value));
+    return *this;
+  }
+  template <typename ParametersT = Parameter>
+  DescribeClusterParametersResult& AddParameters(ParametersT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters.emplace_back(std::forward<ParametersT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A value that indicates the starting point for the next set of response
+   * records in a subsequent request. If a value is returned in a response, you can
+   * retrieve the next set of records by providing this returned marker value in the
+   * <code>Marker</code> parameter and retrying the command. If the
+   * <code>Marker</code> field is empty, all response records have been retrieved for
+   * the request. </p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeClusterParametersResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <a>Parameter</a> instances. Each instance lists the parameters of
-     * one cluster parameter group. </p>
-     */
-    inline const Aws::Vector<Parameter>& GetParameters() const{ return m_parameters; }
-    inline void SetParameters(const Aws::Vector<Parameter>& value) { m_parameters = value; }
-    inline void SetParameters(Aws::Vector<Parameter>&& value) { m_parameters = std::move(value); }
-    inline DescribeClusterParametersResult& WithParameters(const Aws::Vector<Parameter>& value) { SetParameters(value); return *this;}
-    inline DescribeClusterParametersResult& WithParameters(Aws::Vector<Parameter>&& value) { SetParameters(std::move(value)); return *this;}
-    inline DescribeClusterParametersResult& AddParameters(const Parameter& value) { m_parameters.push_back(value); return *this; }
-    inline DescribeClusterParametersResult& AddParameters(Parameter&& value) { m_parameters.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A value that indicates the starting point for the next set of response
-     * records in a subsequent request. If a value is returned in a response, you can
-     * retrieve the next set of records by providing this returned marker value in the
-     * <code>Marker</code> parameter and retrying the command. If the
-     * <code>Marker</code> field is empty, all response records have been retrieved for
-     * the request. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeClusterParametersResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeClusterParametersResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeClusterParametersResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeClusterParametersResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeClusterParametersResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeClusterParametersResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Parameter> m_parameters;
 
-    Aws::Vector<Parameter> m_parameters;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_parametersHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

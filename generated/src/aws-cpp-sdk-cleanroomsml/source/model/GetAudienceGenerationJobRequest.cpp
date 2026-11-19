@@ -12,16 +12,4 @@ using namespace Aws::CleanRoomsML::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAudienceGenerationJobRequest::GetAudienceGenerationJobRequest() : 
-    m_audienceGenerationJobArnHasBeenSet(false)
-{
-}
-
-Aws::String GetAudienceGenerationJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAudienceGenerationJobRequest::SerializePayload() const { return {}; }

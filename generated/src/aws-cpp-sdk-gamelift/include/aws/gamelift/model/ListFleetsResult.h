@@ -4,83 +4,100 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class ListFleetsResult
-  {
-  public:
-    AWS_GAMELIFT_API ListFleetsResult();
-    AWS_GAMELIFT_API ListFleetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API ListFleetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class ListFleetsResult {
+ public:
+  AWS_GAMELIFT_API ListFleetsResult() = default;
+  AWS_GAMELIFT_API ListFleetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API ListFleetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A set of fleet IDs that match the list request.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetFleetIds() const { return m_fleetIds; }
+  template <typename FleetIdsT = Aws::Vector<Aws::String>>
+  void SetFleetIds(FleetIdsT&& value) {
+    m_fleetIdsHasBeenSet = true;
+    m_fleetIds = std::forward<FleetIdsT>(value);
+  }
+  template <typename FleetIdsT = Aws::Vector<Aws::String>>
+  ListFleetsResult& WithFleetIds(FleetIdsT&& value) {
+    SetFleetIds(std::forward<FleetIdsT>(value));
+    return *this;
+  }
+  template <typename FleetIdsT = Aws::String>
+  ListFleetsResult& AddFleetIds(FleetIdsT&& value) {
+    m_fleetIdsHasBeenSet = true;
+    m_fleetIds.emplace_back(std::forward<FleetIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A set of fleet IDs that match the list request.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetFleetIds() const{ return m_fleetIds; }
-    inline void SetFleetIds(const Aws::Vector<Aws::String>& value) { m_fleetIds = value; }
-    inline void SetFleetIds(Aws::Vector<Aws::String>&& value) { m_fleetIds = std::move(value); }
-    inline ListFleetsResult& WithFleetIds(const Aws::Vector<Aws::String>& value) { SetFleetIds(value); return *this;}
-    inline ListFleetsResult& WithFleetIds(Aws::Vector<Aws::String>&& value) { SetFleetIds(std::move(value)); return *this;}
-    inline ListFleetsResult& AddFleetIds(const Aws::String& value) { m_fleetIds.push_back(value); return *this; }
-    inline ListFleetsResult& AddFleetIds(Aws::String&& value) { m_fleetIds.push_back(std::move(value)); return *this; }
-    inline ListFleetsResult& AddFleetIds(const char* value) { m_fleetIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that indicates where to resume retrieving results on the next call to
+   * this operation. If no token is returned, these results represent the end of the
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFleetsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that indicates where to resume retrieving results on the next call to
-     * this operation. If no token is returned, these results represent the end of the
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFleetsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFleetsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFleetsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFleetsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFleetsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFleetsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFleetsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_fleetIds;
+ private:
+  Aws::Vector<Aws::String> m_fleetIds;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fleetIdsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

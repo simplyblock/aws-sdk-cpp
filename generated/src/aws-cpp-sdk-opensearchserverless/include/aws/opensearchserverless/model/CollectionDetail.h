@@ -4,271 +4,413 @@
  */
 
 #pragma once
-#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/opensearchserverless/model/StandbyReplicas.h>
+#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
 #include <aws/opensearchserverless/model/CollectionStatus.h>
 #include <aws/opensearchserverless/model/CollectionType.h>
+#include <aws/opensearchserverless/model/DeletionProtection.h>
+#include <aws/opensearchserverless/model/FipsEndpoints.h>
+#include <aws/opensearchserverless/model/StandbyReplicas.h>
+#include <aws/opensearchserverless/model/VectorOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchServerless {
+namespace Model {
 
+/**
+ * <p>Details about each OpenSearch Serverless collection, including the collection
+ * endpoint, the OpenSearch Dashboards endpoint, and FIPS-compliant endpoints for
+ * federal government workloads.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearchserverless-2021-11-01/CollectionDetail">AWS
+ * API Reference</a></p>
+ */
+class CollectionDetail {
+ public:
+  AWS_OPENSEARCHSERVERLESS_API CollectionDetail() = default;
+  AWS_OPENSEARCHSERVERLESS_API CollectionDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVERLESS_API CollectionDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVERLESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details about each OpenSearch Serverless collection, including the collection
-   * endpoint and the OpenSearch Dashboards endpoint.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearchserverless-2021-11-01/CollectionDetail">AWS
-   * API Reference</a></p>
+   * <p>A unique identifier for the collection.</p>
    */
-  class CollectionDetail
-  {
-  public:
-    AWS_OPENSEARCHSERVERLESS_API CollectionDetail();
-    AWS_OPENSEARCHSERVERLESS_API CollectionDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVERLESS_API CollectionDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVERLESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  CollectionDetail& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the collection.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CollectionDetail& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the collection.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline CollectionDetail& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline CollectionDetail& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline CollectionDetail& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the collection.</p>
+   */
+  inline CollectionStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(CollectionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline CollectionDetail& WithStatus(CollectionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Collection-specific endpoint used to submit index, search, and data upload
-     * requests to an OpenSearch Serverless collection.</p>
-     */
-    inline const Aws::String& GetCollectionEndpoint() const{ return m_collectionEndpoint; }
-    inline bool CollectionEndpointHasBeenSet() const { return m_collectionEndpointHasBeenSet; }
-    inline void SetCollectionEndpoint(const Aws::String& value) { m_collectionEndpointHasBeenSet = true; m_collectionEndpoint = value; }
-    inline void SetCollectionEndpoint(Aws::String&& value) { m_collectionEndpointHasBeenSet = true; m_collectionEndpoint = std::move(value); }
-    inline void SetCollectionEndpoint(const char* value) { m_collectionEndpointHasBeenSet = true; m_collectionEndpoint.assign(value); }
-    inline CollectionDetail& WithCollectionEndpoint(const Aws::String& value) { SetCollectionEndpoint(value); return *this;}
-    inline CollectionDetail& WithCollectionEndpoint(Aws::String&& value) { SetCollectionEndpoint(std::move(value)); return *this;}
-    inline CollectionDetail& WithCollectionEndpoint(const char* value) { SetCollectionEndpoint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of collection.</p>
+   */
+  inline CollectionType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(CollectionType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline CollectionDetail& WithType(CollectionType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Epoch time when the collection was created.</p>
-     */
-    inline long long GetCreatedDate() const{ return m_createdDate; }
-    inline bool CreatedDateHasBeenSet() const { return m_createdDateHasBeenSet; }
-    inline void SetCreatedDate(long long value) { m_createdDateHasBeenSet = true; m_createdDate = value; }
-    inline CollectionDetail& WithCreatedDate(long long value) { SetCreatedDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A description of the collection.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CollectionDetail& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Collection-specific endpoint used to access OpenSearch Dashboards.</p>
-     */
-    inline const Aws::String& GetDashboardEndpoint() const{ return m_dashboardEndpoint; }
-    inline bool DashboardEndpointHasBeenSet() const { return m_dashboardEndpointHasBeenSet; }
-    inline void SetDashboardEndpoint(const Aws::String& value) { m_dashboardEndpointHasBeenSet = true; m_dashboardEndpoint = value; }
-    inline void SetDashboardEndpoint(Aws::String&& value) { m_dashboardEndpointHasBeenSet = true; m_dashboardEndpoint = std::move(value); }
-    inline void SetDashboardEndpoint(const char* value) { m_dashboardEndpointHasBeenSet = true; m_dashboardEndpoint.assign(value); }
-    inline CollectionDetail& WithDashboardEndpoint(const Aws::String& value) { SetDashboardEndpoint(value); return *this;}
-    inline CollectionDetail& WithDashboardEndpoint(Aws::String&& value) { SetDashboardEndpoint(std::move(value)); return *this;}
-    inline CollectionDetail& WithDashboardEndpoint(const char* value) { SetDashboardEndpoint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the collection.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  CollectionDetail& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description of the collection.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CollectionDetail& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CollectionDetail& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CollectionDetail& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the Amazon Web Services KMS key used to encrypt the
+   * collection.</p>
+   */
+  inline const Aws::String& GetKmsKeyArn() const { return m_kmsKeyArn; }
+  inline bool KmsKeyArnHasBeenSet() const { return m_kmsKeyArnHasBeenSet; }
+  template <typename KmsKeyArnT = Aws::String>
+  void SetKmsKeyArn(KmsKeyArnT&& value) {
+    m_kmsKeyArnHasBeenSet = true;
+    m_kmsKeyArn = std::forward<KmsKeyArnT>(value);
+  }
+  template <typename KmsKeyArnT = Aws::String>
+  CollectionDetail& WithKmsKeyArn(KmsKeyArnT&& value) {
+    SetKmsKeyArn(std::forward<KmsKeyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A failure code associated with the request.</p>
-     */
-    inline const Aws::String& GetFailureCode() const{ return m_failureCode; }
-    inline bool FailureCodeHasBeenSet() const { return m_failureCodeHasBeenSet; }
-    inline void SetFailureCode(const Aws::String& value) { m_failureCodeHasBeenSet = true; m_failureCode = value; }
-    inline void SetFailureCode(Aws::String&& value) { m_failureCodeHasBeenSet = true; m_failureCode = std::move(value); }
-    inline void SetFailureCode(const char* value) { m_failureCodeHasBeenSet = true; m_failureCode.assign(value); }
-    inline CollectionDetail& WithFailureCode(const Aws::String& value) { SetFailureCode(value); return *this;}
-    inline CollectionDetail& WithFailureCode(Aws::String&& value) { SetFailureCode(std::move(value)); return *this;}
-    inline CollectionDetail& WithFailureCode(const char* value) { SetFailureCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details about an OpenSearch Serverless collection.</p>
+   */
+  inline StandbyReplicas GetStandbyReplicas() const { return m_standbyReplicas; }
+  inline bool StandbyReplicasHasBeenSet() const { return m_standbyReplicasHasBeenSet; }
+  inline void SetStandbyReplicas(StandbyReplicas value) {
+    m_standbyReplicasHasBeenSet = true;
+    m_standbyReplicas = value;
+  }
+  inline CollectionDetail& WithStandbyReplicas(StandbyReplicas value) {
+    SetStandbyReplicas(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A message associated with the failure code.</p>
-     */
-    inline const Aws::String& GetFailureMessage() const{ return m_failureMessage; }
-    inline bool FailureMessageHasBeenSet() const { return m_failureMessageHasBeenSet; }
-    inline void SetFailureMessage(const Aws::String& value) { m_failureMessageHasBeenSet = true; m_failureMessage = value; }
-    inline void SetFailureMessage(Aws::String&& value) { m_failureMessageHasBeenSet = true; m_failureMessage = std::move(value); }
-    inline void SetFailureMessage(const char* value) { m_failureMessageHasBeenSet = true; m_failureMessage.assign(value); }
-    inline CollectionDetail& WithFailureMessage(const Aws::String& value) { SetFailureMessage(value); return *this;}
-    inline CollectionDetail& WithFailureMessage(Aws::String&& value) { SetFailureMessage(std::move(value)); return *this;}
-    inline CollectionDetail& WithFailureMessage(const char* value) { SetFailureMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether deletion protection is <code>ENABLED</code> or
+   * <code>DISABLED</code> for the collection.</p>
+   */
+  inline DeletionProtection GetDeletionProtection() const { return m_deletionProtection; }
+  inline bool DeletionProtectionHasBeenSet() const { return m_deletionProtectionHasBeenSet; }
+  inline void SetDeletionProtection(DeletionProtection value) {
+    m_deletionProtectionHasBeenSet = true;
+    m_deletionProtection = value;
+  }
+  inline CollectionDetail& WithDeletionProtection(DeletionProtection value) {
+    SetDeletionProtection(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the collection.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline CollectionDetail& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline CollectionDetail& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline CollectionDetail& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration options for vector search capabilities in the collection.</p>
+   */
+  inline const VectorOptions& GetVectorOptions() const { return m_vectorOptions; }
+  inline bool VectorOptionsHasBeenSet() const { return m_vectorOptionsHasBeenSet; }
+  template <typename VectorOptionsT = VectorOptions>
+  void SetVectorOptions(VectorOptionsT&& value) {
+    m_vectorOptionsHasBeenSet = true;
+    m_vectorOptions = std::forward<VectorOptionsT>(value);
+  }
+  template <typename VectorOptionsT = VectorOptions>
+  CollectionDetail& WithVectorOptions(VectorOptionsT&& value) {
+    SetVectorOptions(std::forward<VectorOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the Amazon Web Services KMS key used to encrypt the
-     * collection.</p>
-     */
-    inline const Aws::String& GetKmsKeyArn() const{ return m_kmsKeyArn; }
-    inline bool KmsKeyArnHasBeenSet() const { return m_kmsKeyArnHasBeenSet; }
-    inline void SetKmsKeyArn(const Aws::String& value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn = value; }
-    inline void SetKmsKeyArn(Aws::String&& value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn = std::move(value); }
-    inline void SetKmsKeyArn(const char* value) { m_kmsKeyArnHasBeenSet = true; m_kmsKeyArn.assign(value); }
-    inline CollectionDetail& WithKmsKeyArn(const Aws::String& value) { SetKmsKeyArn(value); return *this;}
-    inline CollectionDetail& WithKmsKeyArn(Aws::String&& value) { SetKmsKeyArn(std::move(value)); return *this;}
-    inline CollectionDetail& WithKmsKeyArn(const char* value) { SetKmsKeyArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Epoch time when the collection was created.</p>
+   */
+  inline long long GetCreatedDate() const { return m_createdDate; }
+  inline bool CreatedDateHasBeenSet() const { return m_createdDateHasBeenSet; }
+  inline void SetCreatedDate(long long value) {
+    m_createdDateHasBeenSet = true;
+    m_createdDate = value;
+  }
+  inline CollectionDetail& WithCreatedDate(long long value) {
+    SetCreatedDate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time when the collection was last modified.</p>
-     */
-    inline long long GetLastModifiedDate() const{ return m_lastModifiedDate; }
-    inline bool LastModifiedDateHasBeenSet() const { return m_lastModifiedDateHasBeenSet; }
-    inline void SetLastModifiedDate(long long value) { m_lastModifiedDateHasBeenSet = true; m_lastModifiedDate = value; }
-    inline CollectionDetail& WithLastModifiedDate(long long value) { SetLastModifiedDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time when the collection was last modified.</p>
+   */
+  inline long long GetLastModifiedDate() const { return m_lastModifiedDate; }
+  inline bool LastModifiedDateHasBeenSet() const { return m_lastModifiedDateHasBeenSet; }
+  inline void SetLastModifiedDate(long long value) {
+    m_lastModifiedDateHasBeenSet = true;
+    m_lastModifiedDate = value;
+  }
+  inline CollectionDetail& WithLastModifiedDate(long long value) {
+    SetLastModifiedDate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the collection.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CollectionDetail& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CollectionDetail& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CollectionDetail& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Collection-specific endpoint used to submit index, search, and data upload
+   * requests to an OpenSearch Serverless collection.</p>
+   */
+  inline const Aws::String& GetCollectionEndpoint() const { return m_collectionEndpoint; }
+  inline bool CollectionEndpointHasBeenSet() const { return m_collectionEndpointHasBeenSet; }
+  template <typename CollectionEndpointT = Aws::String>
+  void SetCollectionEndpoint(CollectionEndpointT&& value) {
+    m_collectionEndpointHasBeenSet = true;
+    m_collectionEndpoint = std::forward<CollectionEndpointT>(value);
+  }
+  template <typename CollectionEndpointT = Aws::String>
+  CollectionDetail& WithCollectionEndpoint(CollectionEndpointT&& value) {
+    SetCollectionEndpoint(std::forward<CollectionEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about an OpenSearch Serverless collection.</p>
-     */
-    inline const StandbyReplicas& GetStandbyReplicas() const{ return m_standbyReplicas; }
-    inline bool StandbyReplicasHasBeenSet() const { return m_standbyReplicasHasBeenSet; }
-    inline void SetStandbyReplicas(const StandbyReplicas& value) { m_standbyReplicasHasBeenSet = true; m_standbyReplicas = value; }
-    inline void SetStandbyReplicas(StandbyReplicas&& value) { m_standbyReplicasHasBeenSet = true; m_standbyReplicas = std::move(value); }
-    inline CollectionDetail& WithStandbyReplicas(const StandbyReplicas& value) { SetStandbyReplicas(value); return *this;}
-    inline CollectionDetail& WithStandbyReplicas(StandbyReplicas&& value) { SetStandbyReplicas(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Collection-specific endpoint used to access OpenSearch Dashboards.</p>
+   */
+  inline const Aws::String& GetDashboardEndpoint() const { return m_dashboardEndpoint; }
+  inline bool DashboardEndpointHasBeenSet() const { return m_dashboardEndpointHasBeenSet; }
+  template <typename DashboardEndpointT = Aws::String>
+  void SetDashboardEndpoint(DashboardEndpointT&& value) {
+    m_dashboardEndpointHasBeenSet = true;
+    m_dashboardEndpoint = std::forward<DashboardEndpointT>(value);
+  }
+  template <typename DashboardEndpointT = Aws::String>
+  CollectionDetail& WithDashboardEndpoint(DashboardEndpointT&& value) {
+    SetDashboardEndpoint(std::forward<DashboardEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the collection.</p>
-     */
-    inline const CollectionStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const CollectionStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(CollectionStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline CollectionDetail& WithStatus(const CollectionStatus& value) { SetStatus(value); return *this;}
-    inline CollectionDetail& WithStatus(CollectionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>FIPS-compliant endpoints for the collection. These endpoints use FIPS 140-3
+   * validated cryptographic modules and are required for federal government
+   * workloads that must comply with FedRAMP security standards.</p>
+   */
+  inline const FipsEndpoints& GetFipsEndpoints() const { return m_fipsEndpoints; }
+  inline bool FipsEndpointsHasBeenSet() const { return m_fipsEndpointsHasBeenSet; }
+  template <typename FipsEndpointsT = FipsEndpoints>
+  void SetFipsEndpoints(FipsEndpointsT&& value) {
+    m_fipsEndpointsHasBeenSet = true;
+    m_fipsEndpoints = std::forward<FipsEndpointsT>(value);
+  }
+  template <typename FipsEndpointsT = FipsEndpoints>
+  CollectionDetail& WithFipsEndpoints(FipsEndpointsT&& value) {
+    SetFipsEndpoints(std::forward<FipsEndpointsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of collection.</p>
-     */
-    inline const CollectionType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const CollectionType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(CollectionType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline CollectionDetail& WithType(const CollectionType& value) { SetType(value); return *this;}
-    inline CollectionDetail& WithType(CollectionType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>A failure code associated with the request.</p>
+   */
+  inline const Aws::String& GetFailureCode() const { return m_failureCode; }
+  inline bool FailureCodeHasBeenSet() const { return m_failureCodeHasBeenSet; }
+  template <typename FailureCodeT = Aws::String>
+  void SetFailureCode(FailureCodeT&& value) {
+    m_failureCodeHasBeenSet = true;
+    m_failureCode = std::forward<FailureCodeT>(value);
+  }
+  template <typename FailureCodeT = Aws::String>
+  CollectionDetail& WithFailureCode(FailureCodeT&& value) {
+    SetFailureCode(std::forward<FailureCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  ///@{
+  /**
+   * <p>A message associated with the failure code.</p>
+   */
+  inline const Aws::String& GetFailureMessage() const { return m_failureMessage; }
+  inline bool FailureMessageHasBeenSet() const { return m_failureMessageHasBeenSet; }
+  template <typename FailureMessageT = Aws::String>
+  void SetFailureMessage(FailureMessageT&& value) {
+    m_failureMessageHasBeenSet = true;
+    m_failureMessage = std::forward<FailureMessageT>(value);
+  }
+  template <typename FailureMessageT = Aws::String>
+  CollectionDetail& WithFailureMessage(FailureMessageT&& value) {
+    SetFailureMessage(std::forward<FailureMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_collectionEndpoint;
-    bool m_collectionEndpointHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The name of the collection group that contains this collection.</p>
+   */
+  inline const Aws::String& GetCollectionGroupName() const { return m_collectionGroupName; }
+  inline bool CollectionGroupNameHasBeenSet() const { return m_collectionGroupNameHasBeenSet; }
+  template <typename CollectionGroupNameT = Aws::String>
+  void SetCollectionGroupName(CollectionGroupNameT&& value) {
+    m_collectionGroupNameHasBeenSet = true;
+    m_collectionGroupName = std::forward<CollectionGroupNameT>(value);
+  }
+  template <typename CollectionGroupNameT = Aws::String>
+  CollectionDetail& WithCollectionGroupName(CollectionGroupNameT&& value) {
+    SetCollectionGroupName(std::forward<CollectionGroupNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    long long m_createdDate;
-    bool m_createdDateHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_dashboardEndpoint;
-    bool m_dashboardEndpointHasBeenSet = false;
+  CollectionStatus m_status{CollectionStatus::NOT_SET};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  CollectionType m_type{CollectionType::NOT_SET};
 
-    Aws::String m_failureCode;
-    bool m_failureCodeHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_failureMessage;
-    bool m_failureMessageHasBeenSet = false;
+  Aws::String m_arn;
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  Aws::String m_kmsKeyArn;
 
-    Aws::String m_kmsKeyArn;
-    bool m_kmsKeyArnHasBeenSet = false;
+  StandbyReplicas m_standbyReplicas{StandbyReplicas::NOT_SET};
 
-    long long m_lastModifiedDate;
-    bool m_lastModifiedDateHasBeenSet = false;
+  DeletionProtection m_deletionProtection{DeletionProtection::NOT_SET};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  VectorOptions m_vectorOptions;
 
-    StandbyReplicas m_standbyReplicas;
-    bool m_standbyReplicasHasBeenSet = false;
+  long long m_createdDate{0};
 
-    CollectionStatus m_status;
-    bool m_statusHasBeenSet = false;
+  long long m_lastModifiedDate{0};
 
-    CollectionType m_type;
-    bool m_typeHasBeenSet = false;
-  };
+  Aws::String m_collectionEndpoint;
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+  Aws::String m_dashboardEndpoint;
+
+  FipsEndpoints m_fipsEndpoints;
+
+  Aws::String m_failureCode;
+
+  Aws::String m_failureMessage;
+
+  Aws::String m_collectionGroupName;
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_kmsKeyArnHasBeenSet = false;
+  bool m_standbyReplicasHasBeenSet = false;
+  bool m_deletionProtectionHasBeenSet = false;
+  bool m_vectorOptionsHasBeenSet = false;
+  bool m_createdDateHasBeenSet = false;
+  bool m_lastModifiedDateHasBeenSet = false;
+  bool m_collectionEndpointHasBeenSet = false;
+  bool m_dashboardEndpointHasBeenSet = false;
+  bool m_fipsEndpointsHasBeenSet = false;
+  bool m_failureCodeHasBeenSet = false;
+  bool m_failureMessageHasBeenSet = false;
+  bool m_collectionGroupNameHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

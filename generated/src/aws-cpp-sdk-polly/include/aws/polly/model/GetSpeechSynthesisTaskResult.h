@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/polly/Polly_EXPORTS.h>
 #include <aws/polly/model/SynthesisTask.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Polly
-{
-namespace Model
-{
-  class GetSpeechSynthesisTaskResult
-  {
-  public:
-    AWS_POLLY_API GetSpeechSynthesisTaskResult();
-    AWS_POLLY_API GetSpeechSynthesisTaskResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_POLLY_API GetSpeechSynthesisTaskResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Polly {
+namespace Model {
+class GetSpeechSynthesisTaskResult {
+ public:
+  AWS_POLLY_API GetSpeechSynthesisTaskResult() = default;
+  AWS_POLLY_API GetSpeechSynthesisTaskResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_POLLY_API GetSpeechSynthesisTaskResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>SynthesisTask object that provides information from the requested task,
+   * including output format, creation time, task status, and so on.</p>
+   */
+  inline const SynthesisTask& GetSynthesisTask() const { return m_synthesisTask; }
+  template <typename SynthesisTaskT = SynthesisTask>
+  void SetSynthesisTask(SynthesisTaskT&& value) {
+    m_synthesisTaskHasBeenSet = true;
+    m_synthesisTask = std::forward<SynthesisTaskT>(value);
+  }
+  template <typename SynthesisTaskT = SynthesisTask>
+  GetSpeechSynthesisTaskResult& WithSynthesisTask(SynthesisTaskT&& value) {
+    SetSynthesisTask(std::forward<SynthesisTaskT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>SynthesisTask object that provides information from the requested task,
-     * including output format, creation time, task status, and so on.</p>
-     */
-    inline const SynthesisTask& GetSynthesisTask() const{ return m_synthesisTask; }
-    inline void SetSynthesisTask(const SynthesisTask& value) { m_synthesisTask = value; }
-    inline void SetSynthesisTask(SynthesisTask&& value) { m_synthesisTask = std::move(value); }
-    inline GetSpeechSynthesisTaskResult& WithSynthesisTask(const SynthesisTask& value) { SetSynthesisTask(value); return *this;}
-    inline GetSpeechSynthesisTaskResult& WithSynthesisTask(SynthesisTask&& value) { SetSynthesisTask(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSpeechSynthesisTaskResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSpeechSynthesisTaskResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSpeechSynthesisTaskResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSpeechSynthesisTaskResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SynthesisTask m_synthesisTask;
+ private:
+  SynthesisTask m_synthesisTask;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_synthesisTaskHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Polly
-} // namespace Aws
+}  // namespace Model
+}  // namespace Polly
+}  // namespace Aws

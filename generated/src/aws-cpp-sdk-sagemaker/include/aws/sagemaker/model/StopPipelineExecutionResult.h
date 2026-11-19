@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class StopPipelineExecutionResult
-  {
-  public:
-    AWS_SAGEMAKER_API StopPipelineExecutionResult();
-    AWS_SAGEMAKER_API StopPipelineExecutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API StopPipelineExecutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class StopPipelineExecutionResult {
+ public:
+  AWS_SAGEMAKER_API StopPipelineExecutionResult() = default;
+  AWS_SAGEMAKER_API StopPipelineExecutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API StopPipelineExecutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
+   */
+  inline const Aws::String& GetPipelineExecutionArn() const { return m_pipelineExecutionArn; }
+  template <typename PipelineExecutionArnT = Aws::String>
+  void SetPipelineExecutionArn(PipelineExecutionArnT&& value) {
+    m_pipelineExecutionArnHasBeenSet = true;
+    m_pipelineExecutionArn = std::forward<PipelineExecutionArnT>(value);
+  }
+  template <typename PipelineExecutionArnT = Aws::String>
+  StopPipelineExecutionResult& WithPipelineExecutionArn(PipelineExecutionArnT&& value) {
+    SetPipelineExecutionArn(std::forward<PipelineExecutionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the pipeline execution.</p>
-     */
-    inline const Aws::String& GetPipelineExecutionArn() const{ return m_pipelineExecutionArn; }
-    inline void SetPipelineExecutionArn(const Aws::String& value) { m_pipelineExecutionArn = value; }
-    inline void SetPipelineExecutionArn(Aws::String&& value) { m_pipelineExecutionArn = std::move(value); }
-    inline void SetPipelineExecutionArn(const char* value) { m_pipelineExecutionArn.assign(value); }
-    inline StopPipelineExecutionResult& WithPipelineExecutionArn(const Aws::String& value) { SetPipelineExecutionArn(value); return *this;}
-    inline StopPipelineExecutionResult& WithPipelineExecutionArn(Aws::String&& value) { SetPipelineExecutionArn(std::move(value)); return *this;}
-    inline StopPipelineExecutionResult& WithPipelineExecutionArn(const char* value) { SetPipelineExecutionArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StopPipelineExecutionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StopPipelineExecutionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StopPipelineExecutionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StopPipelineExecutionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_pipelineExecutionArn;
+ private:
+  Aws::String m_pipelineExecutionArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_pipelineExecutionArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

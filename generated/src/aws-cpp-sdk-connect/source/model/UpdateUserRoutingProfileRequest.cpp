@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateUserRoutingProfileRequest::UpdateUserRoutingProfileRequest() : 
-    m_routingProfileIdHasBeenSet(false),
-    m_userIdHasBeenSet(false),
-    m_instanceIdHasBeenSet(false)
-{
-}
-
-Aws::String UpdateUserRoutingProfileRequest::SerializePayload() const
-{
+Aws::String UpdateUserRoutingProfileRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_routingProfileIdHasBeenSet)
-  {
-   payload.WithString("RoutingProfileId", m_routingProfileId);
-
+  if (m_routingProfileIdHasBeenSet) {
+    payload.WithString("RoutingProfileId", m_routingProfileId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

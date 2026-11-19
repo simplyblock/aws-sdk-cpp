@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-kinesis "C++ SDK for the AWS kinesis service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-kinesis "C++ SDK for Amazon Kinesis" aws-cpp-sdk-core)
 
 file(GLOB AWS_KINESIS_HEADERS
     "include/aws/kinesis/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KINESIS_HEADERS
 
 file(GLOB AWS_KINESIS_MODEL_HEADERS
     "include/aws/kinesis/model/*.h"
+)
+
+file(GLOB AWS_KINESIS_INTERNAL_HEADERS
+    "include/aws/kinesis/internal/*.h"
 )
 
 file(GLOB AWS_KINESIS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KINESIS_MODEL_SOURCE
 
 file(GLOB KINESIS_UNIFIED_HEADERS
     ${AWS_KINESIS_HEADERS}
+    ${AWS_KINESIS_INTERNAL_HEADERS}
     ${AWS_KINESIS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\kinesis" FILES ${AWS_KINESIS_HEADERS})
+        source_group("Header Files\\aws\\kinesis\\internal" FILES ${AWS_KINESIS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\kinesis\\model" FILES ${AWS_KINESIS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KINESIS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KINESIS_MODEL_SOURCE})

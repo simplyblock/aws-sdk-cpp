@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-redshift-serverless "C++ SDK for the AWS redshift-serverless service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-redshift-serverless "C++ SDK for Redshift Serverless" aws-cpp-sdk-core)
 
 file(GLOB AWS_REDSHIFT-SERVERLESS_HEADERS
     "include/aws/redshift-serverless/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_REDSHIFT-SERVERLESS_HEADERS
 
 file(GLOB AWS_REDSHIFT-SERVERLESS_MODEL_HEADERS
     "include/aws/redshift-serverless/model/*.h"
+)
+
+file(GLOB AWS_REDSHIFT-SERVERLESS_INTERNAL_HEADERS
+    "include/aws/redshift-serverless/internal/*.h"
 )
 
 file(GLOB AWS_REDSHIFT-SERVERLESS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_REDSHIFT-SERVERLESS_MODEL_SOURCE
 
 file(GLOB REDSHIFT-SERVERLESS_UNIFIED_HEADERS
     ${AWS_REDSHIFT-SERVERLESS_HEADERS}
+    ${AWS_REDSHIFT-SERVERLESS_INTERNAL_HEADERS}
     ${AWS_REDSHIFT-SERVERLESS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\redshift-serverless" FILES ${AWS_REDSHIFT-SERVERLESS_HEADERS})
+        source_group("Header Files\\aws\\redshift-serverless\\internal" FILES ${AWS_REDSHIFT-SERVERLESS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\redshift-serverless\\model" FILES ${AWS_REDSHIFT-SERVERLESS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_REDSHIFT-SERVERLESS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_REDSHIFT-SERVERLESS_MODEL_SOURCE})

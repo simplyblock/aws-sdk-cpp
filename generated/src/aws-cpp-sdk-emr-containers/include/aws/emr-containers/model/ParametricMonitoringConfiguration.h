@@ -4,91 +4,102 @@
  */
 
 #pragma once
-#include <aws/emr-containers/EMRContainers_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/emr-containers/EMRContainers_EXPORTS.h>
 #include <aws/emr-containers/model/ParametricCloudWatchMonitoringConfiguration.h>
 #include <aws/emr-containers/model/ParametricS3MonitoringConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EMRContainers
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EMRContainers {
+namespace Model {
 
+/**
+ * <p> Configuration setting for monitoring. This data type allows job template
+ * parameters to be specified within.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ParametricMonitoringConfiguration">AWS
+ * API Reference</a></p>
+ */
+class ParametricMonitoringConfiguration {
+ public:
+  AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration() = default;
+  AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMRCONTAINERS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> Configuration setting for monitoring. This data type allows job template
-   * parameters to be specified within.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ParametricMonitoringConfiguration">AWS
-   * API Reference</a></p>
+   * <p> Monitoring configurations for the persistent application UI.</p>
    */
-  class ParametricMonitoringConfiguration
-  {
-  public:
-    AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration();
-    AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMRCONTAINERS_API ParametricMonitoringConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMRCONTAINERS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPersistentAppUI() const { return m_persistentAppUI; }
+  inline bool PersistentAppUIHasBeenSet() const { return m_persistentAppUIHasBeenSet; }
+  template <typename PersistentAppUIT = Aws::String>
+  void SetPersistentAppUI(PersistentAppUIT&& value) {
+    m_persistentAppUIHasBeenSet = true;
+    m_persistentAppUI = std::forward<PersistentAppUIT>(value);
+  }
+  template <typename PersistentAppUIT = Aws::String>
+  ParametricMonitoringConfiguration& WithPersistentAppUI(PersistentAppUIT&& value) {
+    SetPersistentAppUI(std::forward<PersistentAppUIT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> Monitoring configurations for CloudWatch.</p>
+   */
+  inline const ParametricCloudWatchMonitoringConfiguration& GetCloudWatchMonitoringConfiguration() const {
+    return m_cloudWatchMonitoringConfiguration;
+  }
+  inline bool CloudWatchMonitoringConfigurationHasBeenSet() const { return m_cloudWatchMonitoringConfigurationHasBeenSet; }
+  template <typename CloudWatchMonitoringConfigurationT = ParametricCloudWatchMonitoringConfiguration>
+  void SetCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfigurationT&& value) {
+    m_cloudWatchMonitoringConfigurationHasBeenSet = true;
+    m_cloudWatchMonitoringConfiguration = std::forward<CloudWatchMonitoringConfigurationT>(value);
+  }
+  template <typename CloudWatchMonitoringConfigurationT = ParametricCloudWatchMonitoringConfiguration>
+  ParametricMonitoringConfiguration& WithCloudWatchMonitoringConfiguration(CloudWatchMonitoringConfigurationT&& value) {
+    SetCloudWatchMonitoringConfiguration(std::forward<CloudWatchMonitoringConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Monitoring configurations for the persistent application UI.</p>
-     */
-    inline const Aws::String& GetPersistentAppUI() const{ return m_persistentAppUI; }
-    inline bool PersistentAppUIHasBeenSet() const { return m_persistentAppUIHasBeenSet; }
-    inline void SetPersistentAppUI(const Aws::String& value) { m_persistentAppUIHasBeenSet = true; m_persistentAppUI = value; }
-    inline void SetPersistentAppUI(Aws::String&& value) { m_persistentAppUIHasBeenSet = true; m_persistentAppUI = std::move(value); }
-    inline void SetPersistentAppUI(const char* value) { m_persistentAppUIHasBeenSet = true; m_persistentAppUI.assign(value); }
-    inline ParametricMonitoringConfiguration& WithPersistentAppUI(const Aws::String& value) { SetPersistentAppUI(value); return *this;}
-    inline ParametricMonitoringConfiguration& WithPersistentAppUI(Aws::String&& value) { SetPersistentAppUI(std::move(value)); return *this;}
-    inline ParametricMonitoringConfiguration& WithPersistentAppUI(const char* value) { SetPersistentAppUI(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Amazon S3 configuration for monitoring log publishing.</p>
+   */
+  inline const ParametricS3MonitoringConfiguration& GetS3MonitoringConfiguration() const { return m_s3MonitoringConfiguration; }
+  inline bool S3MonitoringConfigurationHasBeenSet() const { return m_s3MonitoringConfigurationHasBeenSet; }
+  template <typename S3MonitoringConfigurationT = ParametricS3MonitoringConfiguration>
+  void SetS3MonitoringConfiguration(S3MonitoringConfigurationT&& value) {
+    m_s3MonitoringConfigurationHasBeenSet = true;
+    m_s3MonitoringConfiguration = std::forward<S3MonitoringConfigurationT>(value);
+  }
+  template <typename S3MonitoringConfigurationT = ParametricS3MonitoringConfiguration>
+  ParametricMonitoringConfiguration& WithS3MonitoringConfiguration(S3MonitoringConfigurationT&& value) {
+    SetS3MonitoringConfiguration(std::forward<S3MonitoringConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_persistentAppUI;
 
-    ///@{
-    /**
-     * <p> Monitoring configurations for CloudWatch.</p>
-     */
-    inline const ParametricCloudWatchMonitoringConfiguration& GetCloudWatchMonitoringConfiguration() const{ return m_cloudWatchMonitoringConfiguration; }
-    inline bool CloudWatchMonitoringConfigurationHasBeenSet() const { return m_cloudWatchMonitoringConfigurationHasBeenSet; }
-    inline void SetCloudWatchMonitoringConfiguration(const ParametricCloudWatchMonitoringConfiguration& value) { m_cloudWatchMonitoringConfigurationHasBeenSet = true; m_cloudWatchMonitoringConfiguration = value; }
-    inline void SetCloudWatchMonitoringConfiguration(ParametricCloudWatchMonitoringConfiguration&& value) { m_cloudWatchMonitoringConfigurationHasBeenSet = true; m_cloudWatchMonitoringConfiguration = std::move(value); }
-    inline ParametricMonitoringConfiguration& WithCloudWatchMonitoringConfiguration(const ParametricCloudWatchMonitoringConfiguration& value) { SetCloudWatchMonitoringConfiguration(value); return *this;}
-    inline ParametricMonitoringConfiguration& WithCloudWatchMonitoringConfiguration(ParametricCloudWatchMonitoringConfiguration&& value) { SetCloudWatchMonitoringConfiguration(std::move(value)); return *this;}
-    ///@}
+  ParametricCloudWatchMonitoringConfiguration m_cloudWatchMonitoringConfiguration;
 
-    ///@{
-    /**
-     * <p> Amazon S3 configuration for monitoring log publishing.</p>
-     */
-    inline const ParametricS3MonitoringConfiguration& GetS3MonitoringConfiguration() const{ return m_s3MonitoringConfiguration; }
-    inline bool S3MonitoringConfigurationHasBeenSet() const { return m_s3MonitoringConfigurationHasBeenSet; }
-    inline void SetS3MonitoringConfiguration(const ParametricS3MonitoringConfiguration& value) { m_s3MonitoringConfigurationHasBeenSet = true; m_s3MonitoringConfiguration = value; }
-    inline void SetS3MonitoringConfiguration(ParametricS3MonitoringConfiguration&& value) { m_s3MonitoringConfigurationHasBeenSet = true; m_s3MonitoringConfiguration = std::move(value); }
-    inline ParametricMonitoringConfiguration& WithS3MonitoringConfiguration(const ParametricS3MonitoringConfiguration& value) { SetS3MonitoringConfiguration(value); return *this;}
-    inline ParametricMonitoringConfiguration& WithS3MonitoringConfiguration(ParametricS3MonitoringConfiguration&& value) { SetS3MonitoringConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  ParametricS3MonitoringConfiguration m_s3MonitoringConfiguration;
+  bool m_persistentAppUIHasBeenSet = false;
+  bool m_cloudWatchMonitoringConfigurationHasBeenSet = false;
+  bool m_s3MonitoringConfigurationHasBeenSet = false;
+};
 
-    Aws::String m_persistentAppUI;
-    bool m_persistentAppUIHasBeenSet = false;
-
-    ParametricCloudWatchMonitoringConfiguration m_cloudWatchMonitoringConfiguration;
-    bool m_cloudWatchMonitoringConfigurationHasBeenSet = false;
-
-    ParametricS3MonitoringConfiguration m_s3MonitoringConfiguration;
-    bool m_s3MonitoringConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EMRContainers
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMRContainers
+}  // namespace Aws

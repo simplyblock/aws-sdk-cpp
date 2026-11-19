@@ -12,17 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAgentAliasRequest::GetAgentAliasRequest() : 
-    m_agentAliasIdHasBeenSet(false),
-    m_agentIdHasBeenSet(false)
-{
-}
-
-Aws::String GetAgentAliasRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAgentAliasRequest::SerializePayload() const { return {}; }

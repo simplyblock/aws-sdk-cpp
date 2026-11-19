@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class UpdateDomainResult
-  {
-  public:
-    AWS_SAGEMAKER_API UpdateDomainResult();
-    AWS_SAGEMAKER_API UpdateDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API UpdateDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class UpdateDomainResult {
+ public:
+  AWS_SAGEMAKER_API UpdateDomainResult() = default;
+  AWS_SAGEMAKER_API UpdateDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API UpdateDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the domain.</p>
+   */
+  inline const Aws::String& GetDomainArn() const { return m_domainArn; }
+  template <typename DomainArnT = Aws::String>
+  void SetDomainArn(DomainArnT&& value) {
+    m_domainArnHasBeenSet = true;
+    m_domainArn = std::forward<DomainArnT>(value);
+  }
+  template <typename DomainArnT = Aws::String>
+  UpdateDomainResult& WithDomainArn(DomainArnT&& value) {
+    SetDomainArn(std::forward<DomainArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the domain.</p>
-     */
-    inline const Aws::String& GetDomainArn() const{ return m_domainArn; }
-    inline void SetDomainArn(const Aws::String& value) { m_domainArn = value; }
-    inline void SetDomainArn(Aws::String&& value) { m_domainArn = std::move(value); }
-    inline void SetDomainArn(const char* value) { m_domainArn.assign(value); }
-    inline UpdateDomainResult& WithDomainArn(const Aws::String& value) { SetDomainArn(value); return *this;}
-    inline UpdateDomainResult& WithDomainArn(Aws::String&& value) { SetDomainArn(std::move(value)); return *this;}
-    inline UpdateDomainResult& WithDomainArn(const char* value) { SetDomainArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateDomainResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateDomainResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateDomainResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateDomainResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_domainArn;
+ private:
+  Aws::String m_domainArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_domainArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

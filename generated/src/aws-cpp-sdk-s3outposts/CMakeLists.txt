@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-s3outposts "C++ SDK for the AWS s3outposts service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-s3outposts "C++ SDK for Amazon S3 on Outposts" aws-cpp-sdk-core)
 
 file(GLOB AWS_S3OUTPOSTS_HEADERS
     "include/aws/s3outposts/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_S3OUTPOSTS_HEADERS
 
 file(GLOB AWS_S3OUTPOSTS_MODEL_HEADERS
     "include/aws/s3outposts/model/*.h"
+)
+
+file(GLOB AWS_S3OUTPOSTS_INTERNAL_HEADERS
+    "include/aws/s3outposts/internal/*.h"
 )
 
 file(GLOB AWS_S3OUTPOSTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_S3OUTPOSTS_MODEL_SOURCE
 
 file(GLOB S3OUTPOSTS_UNIFIED_HEADERS
     ${AWS_S3OUTPOSTS_HEADERS}
+    ${AWS_S3OUTPOSTS_INTERNAL_HEADERS}
     ${AWS_S3OUTPOSTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\s3outposts" FILES ${AWS_S3OUTPOSTS_HEADERS})
+        source_group("Header Files\\aws\\s3outposts\\internal" FILES ${AWS_S3OUTPOSTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\s3outposts\\model" FILES ${AWS_S3OUTPOSTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_S3OUTPOSTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_S3OUTPOSTS_MODEL_SOURCE})

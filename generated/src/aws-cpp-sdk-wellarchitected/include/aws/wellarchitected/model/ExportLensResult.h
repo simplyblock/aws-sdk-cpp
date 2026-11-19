@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  class ExportLensResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API ExportLensResult();
-    AWS_WELLARCHITECTED_API ExportLensResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API ExportLensResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+class ExportLensResult {
+ public:
+  AWS_WELLARCHITECTED_API ExportLensResult() = default;
+  AWS_WELLARCHITECTED_API ExportLensResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API ExportLensResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The JSON representation of a lens.</p>
+   */
+  inline const Aws::String& GetLensJSON() const { return m_lensJSON; }
+  template <typename LensJSONT = Aws::String>
+  void SetLensJSON(LensJSONT&& value) {
+    m_lensJSONHasBeenSet = true;
+    m_lensJSON = std::forward<LensJSONT>(value);
+  }
+  template <typename LensJSONT = Aws::String>
+  ExportLensResult& WithLensJSON(LensJSONT&& value) {
+    SetLensJSON(std::forward<LensJSONT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The JSON representation of a lens.</p>
-     */
-    inline const Aws::String& GetLensJSON() const{ return m_lensJSON; }
-    inline void SetLensJSON(const Aws::String& value) { m_lensJSON = value; }
-    inline void SetLensJSON(Aws::String&& value) { m_lensJSON = std::move(value); }
-    inline void SetLensJSON(const char* value) { m_lensJSON.assign(value); }
-    inline ExportLensResult& WithLensJSON(const Aws::String& value) { SetLensJSON(value); return *this;}
-    inline ExportLensResult& WithLensJSON(Aws::String&& value) { SetLensJSON(std::move(value)); return *this;}
-    inline ExportLensResult& WithLensJSON(const char* value) { SetLensJSON(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ExportLensResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ExportLensResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ExportLensResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ExportLensResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_lensJSON;
+ private:
+  Aws::String m_lensJSON;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_lensJSONHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

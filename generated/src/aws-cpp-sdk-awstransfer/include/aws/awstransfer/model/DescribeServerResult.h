@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/awstransfer/model/DescribedServer.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Transfer
-{
-namespace Model
-{
-  class DescribeServerResult
-  {
-  public:
-    AWS_TRANSFER_API DescribeServerResult();
-    AWS_TRANSFER_API DescribeServerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSFER_API DescribeServerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Transfer {
+namespace Model {
+class DescribeServerResult {
+ public:
+  AWS_TRANSFER_API DescribeServerResult() = default;
+  AWS_TRANSFER_API DescribeServerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSFER_API DescribeServerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array containing the properties of a server with the <code>ServerID</code>
+   * you specified.</p>
+   */
+  inline const DescribedServer& GetServer() const { return m_server; }
+  template <typename ServerT = DescribedServer>
+  void SetServer(ServerT&& value) {
+    m_serverHasBeenSet = true;
+    m_server = std::forward<ServerT>(value);
+  }
+  template <typename ServerT = DescribedServer>
+  DescribeServerResult& WithServer(ServerT&& value) {
+    SetServer(std::forward<ServerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array containing the properties of a server with the <code>ServerID</code>
-     * you specified.</p>
-     */
-    inline const DescribedServer& GetServer() const{ return m_server; }
-    inline void SetServer(const DescribedServer& value) { m_server = value; }
-    inline void SetServer(DescribedServer&& value) { m_server = std::move(value); }
-    inline DescribeServerResult& WithServer(const DescribedServer& value) { SetServer(value); return *this;}
-    inline DescribeServerResult& WithServer(DescribedServer&& value) { SetServer(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeServerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeServerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeServerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeServerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DescribedServer m_server;
+ private:
+  DescribedServer m_server;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serverHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

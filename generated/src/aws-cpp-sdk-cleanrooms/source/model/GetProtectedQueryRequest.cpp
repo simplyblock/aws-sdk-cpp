@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetProtectedQueryRequest::GetProtectedQueryRequest() : 
-    m_membershipIdentifierHasBeenSet(false),
-    m_protectedQueryIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetProtectedQueryRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetProtectedQueryRequest::SerializePayload() const { return {}; }

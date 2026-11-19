@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
-#include <aws/wisdom/ConnectWisdomServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wisdom/ConnectWisdomServiceRequest.h>
+#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ConnectWisdomService
-{
-namespace Model
-{
+namespace Aws {
+namespace ConnectWisdomService {
+namespace Model {
 
+/**
+ */
+class GetAssistantAssociationRequest : public ConnectWisdomServiceRequest {
+ public:
+  AWS_CONNECTWISDOMSERVICE_API GetAssistantAssociationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetAssistantAssociation"; }
+
+  AWS_CONNECTWISDOMSERVICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the assistant association. Can be either the ID or the ARN.
+   * URLs cannot contain the ARN.</p>
    */
-  class GetAssistantAssociationRequest : public ConnectWisdomServiceRequest
-  {
-  public:
-    AWS_CONNECTWISDOMSERVICE_API GetAssistantAssociationRequest();
+  inline const Aws::String& GetAssistantAssociationId() const { return m_assistantAssociationId; }
+  inline bool AssistantAssociationIdHasBeenSet() const { return m_assistantAssociationIdHasBeenSet; }
+  template <typename AssistantAssociationIdT = Aws::String>
+  void SetAssistantAssociationId(AssistantAssociationIdT&& value) {
+    m_assistantAssociationIdHasBeenSet = true;
+    m_assistantAssociationId = std::forward<AssistantAssociationIdT>(value);
+  }
+  template <typename AssistantAssociationIdT = Aws::String>
+  GetAssistantAssociationRequest& WithAssistantAssociationId(AssistantAssociationIdT&& value) {
+    SetAssistantAssociationId(std::forward<AssistantAssociationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetAssistantAssociation"; }
+  ///@{
+  /**
+   * <p>The identifier of the Wisdom assistant. Can be either the ID or the ARN. URLs
+   * cannot contain the ARN.</p>
+   */
+  inline const Aws::String& GetAssistantId() const { return m_assistantId; }
+  inline bool AssistantIdHasBeenSet() const { return m_assistantIdHasBeenSet; }
+  template <typename AssistantIdT = Aws::String>
+  void SetAssistantId(AssistantIdT&& value) {
+    m_assistantIdHasBeenSet = true;
+    m_assistantId = std::forward<AssistantIdT>(value);
+  }
+  template <typename AssistantIdT = Aws::String>
+  GetAssistantAssociationRequest& WithAssistantId(AssistantIdT&& value) {
+    SetAssistantId(std::forward<AssistantIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_assistantAssociationId;
 
-    AWS_CONNECTWISDOMSERVICE_API Aws::String SerializePayload() const override;
+  Aws::String m_assistantId;
+  bool m_assistantAssociationIdHasBeenSet = false;
+  bool m_assistantIdHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The identifier of the assistant association. Can be either the ID or the ARN.
-     * URLs cannot contain the ARN.</p>
-     */
-    inline const Aws::String& GetAssistantAssociationId() const{ return m_assistantAssociationId; }
-    inline bool AssistantAssociationIdHasBeenSet() const { return m_assistantAssociationIdHasBeenSet; }
-    inline void SetAssistantAssociationId(const Aws::String& value) { m_assistantAssociationIdHasBeenSet = true; m_assistantAssociationId = value; }
-    inline void SetAssistantAssociationId(Aws::String&& value) { m_assistantAssociationIdHasBeenSet = true; m_assistantAssociationId = std::move(value); }
-    inline void SetAssistantAssociationId(const char* value) { m_assistantAssociationIdHasBeenSet = true; m_assistantAssociationId.assign(value); }
-    inline GetAssistantAssociationRequest& WithAssistantAssociationId(const Aws::String& value) { SetAssistantAssociationId(value); return *this;}
-    inline GetAssistantAssociationRequest& WithAssistantAssociationId(Aws::String&& value) { SetAssistantAssociationId(std::move(value)); return *this;}
-    inline GetAssistantAssociationRequest& WithAssistantAssociationId(const char* value) { SetAssistantAssociationId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the Wisdom assistant. Can be either the ID or the ARN. URLs
-     * cannot contain the ARN.</p>
-     */
-    inline const Aws::String& GetAssistantId() const{ return m_assistantId; }
-    inline bool AssistantIdHasBeenSet() const { return m_assistantIdHasBeenSet; }
-    inline void SetAssistantId(const Aws::String& value) { m_assistantIdHasBeenSet = true; m_assistantId = value; }
-    inline void SetAssistantId(Aws::String&& value) { m_assistantIdHasBeenSet = true; m_assistantId = std::move(value); }
-    inline void SetAssistantId(const char* value) { m_assistantIdHasBeenSet = true; m_assistantId.assign(value); }
-    inline GetAssistantAssociationRequest& WithAssistantId(const Aws::String& value) { SetAssistantId(value); return *this;}
-    inline GetAssistantAssociationRequest& WithAssistantId(Aws::String&& value) { SetAssistantId(std::move(value)); return *this;}
-    inline GetAssistantAssociationRequest& WithAssistantId(const char* value) { SetAssistantId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_assistantAssociationId;
-    bool m_assistantAssociationIdHasBeenSet = false;
-
-    Aws::String m_assistantId;
-    bool m_assistantIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectWisdomService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectWisdomService
+}  // namespace Aws

@@ -4,67 +4,76 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 #include <aws/mediaconvert/model/Queue.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConvert
-{
-namespace Model
-{
-  class UpdateQueueResult
-  {
-  public:
-    AWS_MEDIACONVERT_API UpdateQueueResult();
-    AWS_MEDIACONVERT_API UpdateQueueResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONVERT_API UpdateQueueResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
+class UpdateQueueResult {
+ public:
+  AWS_MEDIACONVERT_API UpdateQueueResult() = default;
+  AWS_MEDIACONVERT_API UpdateQueueResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONVERT_API UpdateQueueResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * You can use queues to manage the resources that are available to your AWS
+   * account for running multiple transcoding jobs at the same time. If you don't
+   * specify a queue, the service sends all jobs through the default queue. For more
+   * information, see
+   * https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html.
+   */
+  inline const Queue& GetQueue() const { return m_queue; }
+  template <typename QueueT = Queue>
+  void SetQueue(QueueT&& value) {
+    m_queueHasBeenSet = true;
+    m_queue = std::forward<QueueT>(value);
+  }
+  template <typename QueueT = Queue>
+  UpdateQueueResult& WithQueue(QueueT&& value) {
+    SetQueue(std::forward<QueueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * You can use queues to manage the resources that are available to your AWS
-     * account for running multiple transcoding jobs at the same time. If you don't
-     * specify a queue, the service sends all jobs through the default queue. For more
-     * information, see
-     * https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html.
-     */
-    inline const Queue& GetQueue() const{ return m_queue; }
-    inline void SetQueue(const Queue& value) { m_queue = value; }
-    inline void SetQueue(Queue&& value) { m_queue = std::move(value); }
-    inline UpdateQueueResult& WithQueue(const Queue& value) { SetQueue(value); return *this;}
-    inline UpdateQueueResult& WithQueue(Queue&& value) { SetQueue(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateQueueResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateQueueResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateQueueResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateQueueResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Queue m_queue;
+ private:
+  Queue m_queue;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_queueHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

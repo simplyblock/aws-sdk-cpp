@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/lakeformation/LakeFormation_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lakeformation/LakeFormation_EXPORTS.h>
 
-#include <aws/lakeformation/LakeFormationEndpointRules.h>
-
-
-namespace Aws
-{
-namespace LakeFormation
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace LakeFormation {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using LakeFormationClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using LakeFormationEndpointProviderBase =
     EndpointProviderBase<LakeFormationClientConfiguration, LakeFormationBuiltInParameters, LakeFormationClientContextParameters>;
 
 using LakeFormationDefaultEpProviderBase =
-    DefaultEndpointProvider<LakeFormationClientConfiguration, LakeFormationBuiltInParameters, LakeFormationClientContextParameters>;
+    BDDEndpointProvider<LakeFormationClientConfiguration, LakeFormationBuiltInParameters, LakeFormationClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_LAKEFORMATION_API LakeFormationEndpointProvider : public LakeFormationDefaultEpProviderBase
-{
-public:
-    using LakeFormationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_LAKEFORMATION_API LakeFormationEndpointProvider : public LakeFormationDefaultEpProviderBase {
+ public:
+  using LakeFormationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    LakeFormationEndpointProvider()
-      : LakeFormationDefaultEpProviderBase(Aws::LakeFormation::LakeFormationEndpointRules::GetRulesBlob(), Aws::LakeFormation::LakeFormationEndpointRules::RulesBlobSize)
-    {}
+  LakeFormationEndpointProvider();
 
-    ~LakeFormationEndpointProvider()
-    {
-    }
+  ~LakeFormationEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace LakeFormation
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace LakeFormation
+}  // namespace Aws

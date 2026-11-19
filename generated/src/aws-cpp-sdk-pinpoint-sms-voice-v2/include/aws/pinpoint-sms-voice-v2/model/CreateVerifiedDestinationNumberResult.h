@@ -4,144 +4,206 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/pinpoint-sms-voice-v2/model/VerificationStatus.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/Tag.h>
+#include <aws/pinpoint-sms-voice-v2/model/VerificationStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
-  class CreateVerifiedDestinationNumberResult
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult();
-    AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
+class CreateVerifiedDestinationNumberResult {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult() = default;
+  AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINTSMSVOICEV2_API CreateVerifiedDestinationNumberResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the verified destination phone number.</p>
+   */
+  inline const Aws::String& GetVerifiedDestinationNumberArn() const { return m_verifiedDestinationNumberArn; }
+  template <typename VerifiedDestinationNumberArnT = Aws::String>
+  void SetVerifiedDestinationNumberArn(VerifiedDestinationNumberArnT&& value) {
+    m_verifiedDestinationNumberArnHasBeenSet = true;
+    m_verifiedDestinationNumberArn = std::forward<VerifiedDestinationNumberArnT>(value);
+  }
+  template <typename VerifiedDestinationNumberArnT = Aws::String>
+  CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberArn(VerifiedDestinationNumberArnT&& value) {
+    SetVerifiedDestinationNumberArn(std::forward<VerifiedDestinationNumberArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the verified destination phone number.</p>
-     */
-    inline const Aws::String& GetVerifiedDestinationNumberArn() const{ return m_verifiedDestinationNumberArn; }
-    inline void SetVerifiedDestinationNumberArn(const Aws::String& value) { m_verifiedDestinationNumberArn = value; }
-    inline void SetVerifiedDestinationNumberArn(Aws::String&& value) { m_verifiedDestinationNumberArn = std::move(value); }
-    inline void SetVerifiedDestinationNumberArn(const char* value) { m_verifiedDestinationNumberArn.assign(value); }
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberArn(const Aws::String& value) { SetVerifiedDestinationNumberArn(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberArn(Aws::String&& value) { SetVerifiedDestinationNumberArn(std::move(value)); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberArn(const char* value) { SetVerifiedDestinationNumberArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the verified destination phone number.</p>
+   */
+  inline const Aws::String& GetVerifiedDestinationNumberId() const { return m_verifiedDestinationNumberId; }
+  template <typename VerifiedDestinationNumberIdT = Aws::String>
+  void SetVerifiedDestinationNumberId(VerifiedDestinationNumberIdT&& value) {
+    m_verifiedDestinationNumberIdHasBeenSet = true;
+    m_verifiedDestinationNumberId = std::forward<VerifiedDestinationNumberIdT>(value);
+  }
+  template <typename VerifiedDestinationNumberIdT = Aws::String>
+  CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberId(VerifiedDestinationNumberIdT&& value) {
+    SetVerifiedDestinationNumberId(std::forward<VerifiedDestinationNumberIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the verified destination phone number.</p>
-     */
-    inline const Aws::String& GetVerifiedDestinationNumberId() const{ return m_verifiedDestinationNumberId; }
-    inline void SetVerifiedDestinationNumberId(const Aws::String& value) { m_verifiedDestinationNumberId = value; }
-    inline void SetVerifiedDestinationNumberId(Aws::String&& value) { m_verifiedDestinationNumberId = std::move(value); }
-    inline void SetVerifiedDestinationNumberId(const char* value) { m_verifiedDestinationNumberId.assign(value); }
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberId(const Aws::String& value) { SetVerifiedDestinationNumberId(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberId(Aws::String&& value) { SetVerifiedDestinationNumberId(std::move(value)); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithVerifiedDestinationNumberId(const char* value) { SetVerifiedDestinationNumberId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The verified destination phone number, in E.164 format.</p>
+   */
+  inline const Aws::String& GetDestinationPhoneNumber() const { return m_destinationPhoneNumber; }
+  template <typename DestinationPhoneNumberT = Aws::String>
+  void SetDestinationPhoneNumber(DestinationPhoneNumberT&& value) {
+    m_destinationPhoneNumberHasBeenSet = true;
+    m_destinationPhoneNumber = std::forward<DestinationPhoneNumberT>(value);
+  }
+  template <typename DestinationPhoneNumberT = Aws::String>
+  CreateVerifiedDestinationNumberResult& WithDestinationPhoneNumber(DestinationPhoneNumberT&& value) {
+    SetDestinationPhoneNumber(std::forward<DestinationPhoneNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The verified destination phone number, in E.164 format.</p>
-     */
-    inline const Aws::String& GetDestinationPhoneNumber() const{ return m_destinationPhoneNumber; }
-    inline void SetDestinationPhoneNumber(const Aws::String& value) { m_destinationPhoneNumber = value; }
-    inline void SetDestinationPhoneNumber(Aws::String&& value) { m_destinationPhoneNumber = std::move(value); }
-    inline void SetDestinationPhoneNumber(const char* value) { m_destinationPhoneNumber.assign(value); }
-    inline CreateVerifiedDestinationNumberResult& WithDestinationPhoneNumber(const Aws::String& value) { SetDestinationPhoneNumber(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithDestinationPhoneNumber(Aws::String&& value) { SetDestinationPhoneNumber(std::move(value)); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithDestinationPhoneNumber(const char* value) { SetDestinationPhoneNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the verified destination phone number.</p> <ul> <li> <p>
+   * <code>PENDING</code>: The phone number hasn't been verified yet.</p> </li> <li>
+   * <p> <code>VERIFIED</code>: The phone number is verified and can receive
+   * messages.</p> </li> </ul>
+   */
+  inline VerificationStatus GetStatus() const { return m_status; }
+  inline void SetStatus(VerificationStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline CreateVerifiedDestinationNumberResult& WithStatus(VerificationStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the verified destination phone number.</p> <ul> <li> <p>
-     * <code>PENDING</code>: The phone number hasn't been verified yet.</p> </li> <li>
-     * <p> <code>VERIFIED</code>: The phone number is verified and can receive
-     * messages.</p> </li> </ul>
-     */
-    inline const VerificationStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const VerificationStatus& value) { m_status = value; }
-    inline void SetStatus(VerificationStatus&& value) { m_status = std::move(value); }
-    inline CreateVerifiedDestinationNumberResult& WithStatus(const VerificationStatus& value) { SetStatus(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithStatus(VerificationStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier of the RCS agent associated with the verified
+   * destination number.</p>
+   */
+  inline const Aws::String& GetRcsAgentId() const { return m_rcsAgentId; }
+  template <typename RcsAgentIdT = Aws::String>
+  void SetRcsAgentId(RcsAgentIdT&& value) {
+    m_rcsAgentIdHasBeenSet = true;
+    m_rcsAgentId = std::forward<RcsAgentIdT>(value);
+  }
+  template <typename RcsAgentIdT = Aws::String>
+  CreateVerifiedDestinationNumberResult& WithRcsAgentId(RcsAgentIdT&& value) {
+    SetRcsAgentId(std::forward<RcsAgentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of tags (key and value pairs) to associate with the destination
-     * number.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tags = std::move(value); }
-    inline CreateVerifiedDestinationNumberResult& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateVerifiedDestinationNumberResult& AddTags(const Tag& value) { m_tags.push_back(value); return *this; }
-    inline CreateVerifiedDestinationNumberResult& AddTags(Tag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An array of tags (key and value pairs) to associate with the destination
+   * number.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateVerifiedDestinationNumberResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateVerifiedDestinationNumberResult& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the verified phone number was created, in <a
-     * href="https://www.epochconverter.com/">UNIX epoch time</a> format.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTimestamp() const{ return m_createdTimestamp; }
-    inline void SetCreatedTimestamp(const Aws::Utils::DateTime& value) { m_createdTimestamp = value; }
-    inline void SetCreatedTimestamp(Aws::Utils::DateTime&& value) { m_createdTimestamp = std::move(value); }
-    inline CreateVerifiedDestinationNumberResult& WithCreatedTimestamp(const Aws::Utils::DateTime& value) { SetCreatedTimestamp(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithCreatedTimestamp(Aws::Utils::DateTime&& value) { SetCreatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the verified phone number was created, in <a
+   * href="https://www.epochconverter.com/">UNIX epoch time</a> format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTimestamp() const { return m_createdTimestamp; }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  void SetCreatedTimestamp(CreatedTimestampT&& value) {
+    m_createdTimestampHasBeenSet = true;
+    m_createdTimestamp = std::forward<CreatedTimestampT>(value);
+  }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  CreateVerifiedDestinationNumberResult& WithCreatedTimestamp(CreatedTimestampT&& value) {
+    SetCreatedTimestamp(std::forward<CreatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateVerifiedDestinationNumberResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateVerifiedDestinationNumberResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_verifiedDestinationNumberArn;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateVerifiedDestinationNumberResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_verifiedDestinationNumberId;
+ private:
+  Aws::String m_verifiedDestinationNumberArn;
 
-    Aws::String m_destinationPhoneNumber;
+  Aws::String m_verifiedDestinationNumberId;
 
-    VerificationStatus m_status;
+  Aws::String m_destinationPhoneNumber;
 
-    Aws::Vector<Tag> m_tags;
+  VerificationStatus m_status{VerificationStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_createdTimestamp;
+  Aws::String m_rcsAgentId;
 
-    Aws::String m_requestId;
-  };
+  Aws::Vector<Tag> m_tags;
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+  Aws::Utils::DateTime m_createdTimestamp{};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_verifiedDestinationNumberArnHasBeenSet = false;
+  bool m_verifiedDestinationNumberIdHasBeenSet = false;
+  bool m_destinationPhoneNumberHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_rcsAgentIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_createdTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

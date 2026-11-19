@@ -4,13 +4,15 @@
  */
 
 #include <aws/pinpoint-email/PinpointEmailEndpointProvider.h>
+#include <aws/pinpoint-email/internal/PinpointEmailEndpointRules.h>
 
-namespace Aws
-{
-namespace PinpointEmail
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace PinpointEmail
-} // namespace Aws
+namespace Aws {
+namespace PinpointEmail {
+namespace Endpoint {
+PinpointEmailEndpointProvider::PinpointEmailEndpointProvider()
+    : PinpointEmailDefaultEpProviderBase(Aws::PinpointEmail::PinpointEmailEndpointRules::GetRulesBlob(),
+                                         Aws::PinpointEmail::PinpointEmailEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace PinpointEmail
+}  // namespace Aws

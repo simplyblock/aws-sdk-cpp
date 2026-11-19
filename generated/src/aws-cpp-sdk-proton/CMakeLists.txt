@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-proton "C++ SDK for the AWS proton service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-proton "C++ SDK for AWS Proton" aws-cpp-sdk-core)
 
 file(GLOB AWS_PROTON_HEADERS
     "include/aws/proton/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PROTON_HEADERS
 
 file(GLOB AWS_PROTON_MODEL_HEADERS
     "include/aws/proton/model/*.h"
+)
+
+file(GLOB AWS_PROTON_INTERNAL_HEADERS
+    "include/aws/proton/internal/*.h"
 )
 
 file(GLOB AWS_PROTON_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PROTON_MODEL_SOURCE
 
 file(GLOB PROTON_UNIFIED_HEADERS
     ${AWS_PROTON_HEADERS}
+    ${AWS_PROTON_INTERNAL_HEADERS}
     ${AWS_PROTON_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\proton" FILES ${AWS_PROTON_HEADERS})
+        source_group("Header Files\\aws\\proton\\internal" FILES ${AWS_PROTON_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\proton\\model" FILES ${AWS_PROTON_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PROTON_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PROTON_MODEL_SOURCE})

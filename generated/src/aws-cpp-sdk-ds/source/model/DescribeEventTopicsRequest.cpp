@@ -3,53 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/DescribeEventTopicsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectoryService::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeEventTopicsRequest::DescribeEventTopicsRequest() : 
-    m_directoryIdHasBeenSet(false),
-    m_topicNamesHasBeenSet(false)
-{
-}
+Aws::String DescribeEventTopicsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeEventTopicsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_topicNamesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_topicNamesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> topicNamesJsonList(m_topicNames.size());
-   for(unsigned topicNamesIndex = 0; topicNamesIndex < topicNamesJsonList.GetLength(); ++topicNamesIndex)
-   {
-     topicNamesJsonList[topicNamesIndex].AsString(m_topicNames[topicNamesIndex]);
-   }
-   payload.WithArray("TopicNames", std::move(topicNamesJsonList));
+  encoder.WriteMapStart(mapSize);
 
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_topicNamesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TopicNames"));
+    encoder.WriteArrayStart(m_topicNames.size());
+    for (const auto& item_0 : m_topicNames) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeEventTopicsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeEventTopicsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DirectoryService_20150416.DescribeEventTopics"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

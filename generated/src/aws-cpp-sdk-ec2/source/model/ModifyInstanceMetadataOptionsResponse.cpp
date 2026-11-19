@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ModifyInstanceMetadataOptionsResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/ModifyInstanceMetadataOptionsResponse.h>
 
 #include <utility>
 
@@ -17,46 +17,41 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ModifyInstanceMetadataOptionsResponse::ModifyInstanceMetadataOptionsResponse()
-{
-}
-
-ModifyInstanceMetadataOptionsResponse::ModifyInstanceMetadataOptionsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifyInstanceMetadataOptionsResponse::ModifyInstanceMetadataOptionsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-ModifyInstanceMetadataOptionsResponse& ModifyInstanceMetadataOptionsResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifyInstanceMetadataOptionsResponse& ModifyInstanceMetadataOptionsResponse::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyInstanceMetadataOptionsResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyInstanceMetadataOptionsResponse")) {
     resultNode = rootNode.FirstChild("ModifyInstanceMetadataOptionsResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode instanceIdNode = resultNode.FirstChild("instanceId");
-    if(!instanceIdNode.IsNull())
-    {
+    if (!instanceIdNode.IsNull()) {
       m_instanceId = Aws::Utils::Xml::DecodeEscapedXmlText(instanceIdNode.GetText());
+      m_instanceIdHasBeenSet = true;
     }
     XmlNode instanceMetadataOptionsNode = resultNode.FirstChild("instanceMetadataOptions");
-    if(!instanceMetadataOptionsNode.IsNull())
-    {
+    if (!instanceMetadataOptionsNode.IsNull()) {
       m_instanceMetadataOptions = instanceMetadataOptionsNode;
+      m_instanceMetadataOptionsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::ModifyInstanceMetadataOptionsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::ModifyInstanceMetadataOptionsResponse",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

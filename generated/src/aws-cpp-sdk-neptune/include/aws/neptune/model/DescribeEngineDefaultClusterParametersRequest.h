@@ -4,113 +4,132 @@
  */
 
 #pragma once
-#include <aws/neptune/Neptune_EXPORTS.h>
-#include <aws/neptune/NeptuneRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/neptune/NeptuneRequest.h>
+#include <aws/neptune/Neptune_EXPORTS.h>
 #include <aws/neptune/model/Filter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Neptune
-{
-namespace Model
-{
+namespace Aws {
+namespace Neptune {
+namespace Model {
 
+/**
+ */
+class DescribeEngineDefaultClusterParametersRequest : public NeptuneRequest {
+ public:
+  AWS_NEPTUNE_API DescribeEngineDefaultClusterParametersRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeEngineDefaultClusterParameters"; }
+
+  AWS_NEPTUNE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_NEPTUNE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The name of the DB cluster parameter group family to return engine parameter
+   * information for.</p>
    */
-  class DescribeEngineDefaultClusterParametersRequest : public NeptuneRequest
-  {
-  public:
-    AWS_NEPTUNE_API DescribeEngineDefaultClusterParametersRequest();
+  inline const Aws::String& GetDBParameterGroupFamily() const { return m_dBParameterGroupFamily; }
+  inline bool DBParameterGroupFamilyHasBeenSet() const { return m_dBParameterGroupFamilyHasBeenSet; }
+  template <typename DBParameterGroupFamilyT = Aws::String>
+  void SetDBParameterGroupFamily(DBParameterGroupFamilyT&& value) {
+    m_dBParameterGroupFamilyHasBeenSet = true;
+    m_dBParameterGroupFamily = std::forward<DBParameterGroupFamilyT>(value);
+  }
+  template <typename DBParameterGroupFamilyT = Aws::String>
+  DescribeEngineDefaultClusterParametersRequest& WithDBParameterGroupFamily(DBParameterGroupFamilyT&& value) {
+    SetDBParameterGroupFamily(std::forward<DBParameterGroupFamilyT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeEngineDefaultClusterParameters"; }
+  ///@{
+  /**
+   * <p>This parameter is not currently supported.</p>
+   */
+  inline const Aws::Vector<Filter>& GetFilters() const { return m_filters; }
+  inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  void SetFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters = std::forward<FiltersT>(value);
+  }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  DescribeEngineDefaultClusterParametersRequest& WithFilters(FiltersT&& value) {
+    SetFilters(std::forward<FiltersT>(value));
+    return *this;
+  }
+  template <typename FiltersT = Filter>
+  DescribeEngineDefaultClusterParametersRequest& AddFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters.emplace_back(std::forward<FiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_NEPTUNE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The maximum number of records to include in the response. If more records
+   * exist than the specified <code>MaxRecords</code> value, a pagination token
+   * called a marker is included in the response so that the remaining results can be
+   * retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>
+   */
+  inline int GetMaxRecords() const { return m_maxRecords; }
+  inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
+  inline void SetMaxRecords(int value) {
+    m_maxRecordsHasBeenSet = true;
+    m_maxRecords = value;
+  }
+  inline DescribeEngineDefaultClusterParametersRequest& WithMaxRecords(int value) {
+    SetMaxRecords(value);
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_NEPTUNE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p> An optional pagination token provided by a previous
+   * <code>DescribeEngineDefaultClusterParameters</code> request. If this parameter
+   * is specified, the response includes only records beyond the marker, up to the
+   * value specified by <code>MaxRecords</code>.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeEngineDefaultClusterParametersRequest& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_dBParameterGroupFamily;
 
-  public:
+  Aws::Vector<Filter> m_filters;
 
-    ///@{
-    /**
-     * <p>The name of the DB cluster parameter group family to return engine parameter
-     * information for.</p>
-     */
-    inline const Aws::String& GetDBParameterGroupFamily() const{ return m_dBParameterGroupFamily; }
-    inline bool DBParameterGroupFamilyHasBeenSet() const { return m_dBParameterGroupFamilyHasBeenSet; }
-    inline void SetDBParameterGroupFamily(const Aws::String& value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily = value; }
-    inline void SetDBParameterGroupFamily(Aws::String&& value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily = std::move(value); }
-    inline void SetDBParameterGroupFamily(const char* value) { m_dBParameterGroupFamilyHasBeenSet = true; m_dBParameterGroupFamily.assign(value); }
-    inline DescribeEngineDefaultClusterParametersRequest& WithDBParameterGroupFamily(const Aws::String& value) { SetDBParameterGroupFamily(value); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& WithDBParameterGroupFamily(Aws::String&& value) { SetDBParameterGroupFamily(std::move(value)); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& WithDBParameterGroupFamily(const char* value) { SetDBParameterGroupFamily(value); return *this;}
-    ///@}
+  int m_maxRecords{0};
 
-    ///@{
-    /**
-     * <p>This parameter is not currently supported.</p>
-     */
-    inline const Aws::Vector<Filter>& GetFilters() const{ return m_filters; }
-    inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
-    inline void SetFilters(const Aws::Vector<Filter>& value) { m_filtersHasBeenSet = true; m_filters = value; }
-    inline void SetFilters(Aws::Vector<Filter>&& value) { m_filtersHasBeenSet = true; m_filters = std::move(value); }
-    inline DescribeEngineDefaultClusterParametersRequest& WithFilters(const Aws::Vector<Filter>& value) { SetFilters(value); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& WithFilters(Aws::Vector<Filter>&& value) { SetFilters(std::move(value)); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& AddFilters(const Filter& value) { m_filtersHasBeenSet = true; m_filters.push_back(value); return *this; }
-    inline DescribeEngineDefaultClusterParametersRequest& AddFilters(Filter&& value) { m_filtersHasBeenSet = true; m_filters.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_marker;
+  bool m_dBParameterGroupFamilyHasBeenSet = false;
+  bool m_filtersHasBeenSet = false;
+  bool m_maxRecordsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The maximum number of records to include in the response. If more records
-     * exist than the specified <code>MaxRecords</code> value, a pagination token
-     * called a marker is included in the response so that the remaining results can be
-     * retrieved.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>
-     */
-    inline int GetMaxRecords() const{ return m_maxRecords; }
-    inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
-    inline void SetMaxRecords(int value) { m_maxRecordsHasBeenSet = true; m_maxRecords = value; }
-    inline DescribeEngineDefaultClusterParametersRequest& WithMaxRecords(int value) { SetMaxRecords(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p> An optional pagination token provided by a previous
-     * <code>DescribeEngineDefaultClusterParameters</code> request. If this parameter
-     * is specified, the response includes only records beyond the marker, up to the
-     * value specified by <code>MaxRecords</code>.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
-    inline void SetMarker(const Aws::String& value) { m_markerHasBeenSet = true; m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_markerHasBeenSet = true; m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_markerHasBeenSet = true; m_marker.assign(value); }
-    inline DescribeEngineDefaultClusterParametersRequest& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeEngineDefaultClusterParametersRequest& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_dBParameterGroupFamily;
-    bool m_dBParameterGroupFamilyHasBeenSet = false;
-
-    Aws::Vector<Filter> m_filters;
-    bool m_filtersHasBeenSet = false;
-
-    int m_maxRecords;
-    bool m_maxRecordsHasBeenSet = false;
-
-    Aws::String m_marker;
-    bool m_markerHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Neptune
-} // namespace Aws
+}  // namespace Model
+}  // namespace Neptune
+}  // namespace Aws

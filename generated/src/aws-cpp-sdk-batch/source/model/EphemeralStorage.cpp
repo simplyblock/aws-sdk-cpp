@@ -11,50 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Batch
-{
-namespace Model
-{
+namespace Aws {
+namespace Batch {
+namespace Model {
 
-EphemeralStorage::EphemeralStorage() : 
-    m_sizeInGiB(0),
-    m_sizeInGiBHasBeenSet(false)
-{
-}
+EphemeralStorage::EphemeralStorage(JsonView jsonValue) { *this = jsonValue; }
 
-EphemeralStorage::EphemeralStorage(JsonView jsonValue)
-  : EphemeralStorage()
-{
-  *this = jsonValue;
-}
-
-EphemeralStorage& EphemeralStorage::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("sizeInGiB"))
-  {
+EphemeralStorage& EphemeralStorage::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("sizeInGiB")) {
     m_sizeInGiB = jsonValue.GetInteger("sizeInGiB");
-
     m_sizeInGiBHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue EphemeralStorage::Jsonize() const
-{
+JsonValue EphemeralStorage::Jsonize() const {
   JsonValue payload;
 
-  if(m_sizeInGiBHasBeenSet)
-  {
-   payload.WithInteger("sizeInGiB", m_sizeInGiB);
-
+  if (m_sizeInGiBHasBeenSet) {
+    payload.WithInteger("sizeInGiB", m_sizeInGiB);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Batch
-} // namespace Aws
+}  // namespace Model
+}  // namespace Batch
+}  // namespace Aws

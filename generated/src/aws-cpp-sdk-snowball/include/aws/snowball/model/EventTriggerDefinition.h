@@ -4,60 +4,57 @@
  */
 
 #pragma once
-#include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/snowball/Snowball_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Snowball
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace Snowball {
+namespace Model {
 
+/**
+ * <p>The container for the
+ * <a>EventTriggerDefinition$EventResourceARN</a>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/EventTriggerDefinition">AWS
+ * API Reference</a></p>
+ */
+class EventTriggerDefinition {
+ public:
+  AWS_SNOWBALL_API EventTriggerDefinition() = default;
+  AWS_SNOWBALL_API EventTriggerDefinition(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API EventTriggerDefinition& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>The container for the
-   * <a>EventTriggerDefinition$EventResourceARN</a>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/EventTriggerDefinition">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) for any local Amazon S3 resource that is an
+   * Lambda function's event trigger associated with this job.</p>
    */
-  class EventTriggerDefinition
-  {
-  public:
-    AWS_SNOWBALL_API EventTriggerDefinition();
-    AWS_SNOWBALL_API EventTriggerDefinition(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API EventTriggerDefinition& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEventResourceARN() const { return m_eventResourceARN; }
+  inline bool EventResourceARNHasBeenSet() const { return m_eventResourceARNHasBeenSet; }
+  template <typename EventResourceARNT = Aws::String>
+  void SetEventResourceARN(EventResourceARNT&& value) {
+    m_eventResourceARNHasBeenSet = true;
+    m_eventResourceARN = std::forward<EventResourceARNT>(value);
+  }
+  template <typename EventResourceARNT = Aws::String>
+  EventTriggerDefinition& WithEventResourceARN(EventResourceARNT&& value) {
+    SetEventResourceARN(std::forward<EventResourceARNT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_eventResourceARN;
+  bool m_eventResourceARNHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for any local Amazon S3 resource that is an
-     * Lambda function's event trigger associated with this job.</p>
-     */
-    inline const Aws::String& GetEventResourceARN() const{ return m_eventResourceARN; }
-    inline bool EventResourceARNHasBeenSet() const { return m_eventResourceARNHasBeenSet; }
-    inline void SetEventResourceARN(const Aws::String& value) { m_eventResourceARNHasBeenSet = true; m_eventResourceARN = value; }
-    inline void SetEventResourceARN(Aws::String&& value) { m_eventResourceARNHasBeenSet = true; m_eventResourceARN = std::move(value); }
-    inline void SetEventResourceARN(const char* value) { m_eventResourceARNHasBeenSet = true; m_eventResourceARN.assign(value); }
-    inline EventTriggerDefinition& WithEventResourceARN(const Aws::String& value) { SetEventResourceARN(value); return *this;}
-    inline EventTriggerDefinition& WithEventResourceARN(Aws::String&& value) { SetEventResourceARN(std::move(value)); return *this;}
-    inline EventTriggerDefinition& WithEventResourceARN(const char* value) { SetEventResourceARN(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_eventResourceARN;
-    bool m_eventResourceARNHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Model
+}  // namespace Snowball
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/kafka/model/UpdateConnectivityRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/kafka/model/UpdateConnectivityRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,20 @@ using namespace Aws::Kafka::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateConnectivityRequest::UpdateConnectivityRequest() : 
-    m_clusterArnHasBeenSet(false),
-    m_connectivityInfoHasBeenSet(false),
-    m_currentVersionHasBeenSet(false)
-{
-}
-
-Aws::String UpdateConnectivityRequest::SerializePayload() const
-{
+Aws::String UpdateConnectivityRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_connectivityInfoHasBeenSet)
-  {
-   payload.WithObject("connectivityInfo", m_connectivityInfo.Jsonize());
-
+  if (m_connectivityInfoHasBeenSet) {
+    payload.WithObject("connectivityInfo", m_connectivityInfo.Jsonize());
   }
 
-  if(m_currentVersionHasBeenSet)
-  {
-   payload.WithString("currentVersion", m_currentVersion);
+  if (m_currentVersionHasBeenSet) {
+    payload.WithString("currentVersion", m_currentVersion);
+  }
 
+  if (m_zookeeperAccessHasBeenSet) {
+    payload.WithObject("zookeeperAccess", m_zookeeperAccess.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAnalysisTemplateRequest::DeleteAnalysisTemplateRequest() : 
-    m_membershipIdentifierHasBeenSet(false),
-    m_analysisTemplateIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAnalysisTemplateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAnalysisTemplateRequest::SerializePayload() const { return {}; }

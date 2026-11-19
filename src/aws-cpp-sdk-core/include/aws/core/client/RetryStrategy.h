@@ -6,6 +6,7 @@
 #pragma once
 
 #include <aws/core/Core_EXPORTS.h>
+#include <aws/core/utils/memory/AWSMemory.h>
 #include <aws/core/utils/threading/ReaderWriterLock.h>
 #include <memory>
 
@@ -118,11 +119,24 @@ namespace Aws
             int m_retryQuota;
         };
 
+        struct StandardRetryStrategyOptions
+        {
+            long maxAttempts = 3;
+            double transientBackoffBaseSec = 0.05;
+            /**
+             * When null, the strategy creates its own retry quota container.
+             */
+            std::shared_ptr<RetryQuotaContainer> retryQuotaContainer;
+        };
+
         class AWS_CORE_API StandardRetryStrategy : public RetryStrategy
         {
         public:
+            explicit StandardRetryStrategy(const StandardRetryStrategyOptions& options);
             StandardRetryStrategy(long maxAttempts = 3);
             StandardRetryStrategy(std::shared_ptr<RetryQuotaContainer> retryQuotaContainer, long maxAttempts = 3);
+            StandardRetryStrategy(long maxAttempts, double transientBackoffBaseSec);
+            virtual ~StandardRetryStrategy();
 
             virtual void RequestBookkeeping(const HttpResponseOutcome& httpResponseOutcome) override;
             virtual void RequestBookkeeping(const HttpResponseOutcome& httpResponseOutcome, const AWSError<CoreErrors>& lastError) override;
@@ -138,6 +152,9 @@ namespace Aws
         protected:
             std::shared_ptr<RetryQuotaContainer> m_retryQuotaContainer;
             long m_maxAttempts;
+
+        private:
+            double m_transientBackoffBaseSec;
         };
     } // namespace Client
 } // namespace Aws

@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/LocalGatewayRoute.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class SearchLocalGatewayRoutesResponse
-  {
-  public:
-    AWS_EC2_API SearchLocalGatewayRoutesResponse();
-    AWS_EC2_API SearchLocalGatewayRoutesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API SearchLocalGatewayRoutesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class SearchLocalGatewayRoutesResponse {
+ public:
+  AWS_EC2_API SearchLocalGatewayRoutesResponse() = default;
+  AWS_EC2_API SearchLocalGatewayRoutesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API SearchLocalGatewayRoutesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the routes.</p>
+   */
+  inline const Aws::Vector<LocalGatewayRoute>& GetRoutes() const { return m_routes; }
+  template <typename RoutesT = Aws::Vector<LocalGatewayRoute>>
+  void SetRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes = std::forward<RoutesT>(value);
+  }
+  template <typename RoutesT = Aws::Vector<LocalGatewayRoute>>
+  SearchLocalGatewayRoutesResponse& WithRoutes(RoutesT&& value) {
+    SetRoutes(std::forward<RoutesT>(value));
+    return *this;
+  }
+  template <typename RoutesT = LocalGatewayRoute>
+  SearchLocalGatewayRoutesResponse& AddRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes.emplace_back(std::forward<RoutesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the routes.</p>
-     */
-    inline const Aws::Vector<LocalGatewayRoute>& GetRoutes() const{ return m_routes; }
-    inline void SetRoutes(const Aws::Vector<LocalGatewayRoute>& value) { m_routes = value; }
-    inline void SetRoutes(Aws::Vector<LocalGatewayRoute>&& value) { m_routes = std::move(value); }
-    inline SearchLocalGatewayRoutesResponse& WithRoutes(const Aws::Vector<LocalGatewayRoute>& value) { SetRoutes(value); return *this;}
-    inline SearchLocalGatewayRoutesResponse& WithRoutes(Aws::Vector<LocalGatewayRoute>&& value) { SetRoutes(std::move(value)); return *this;}
-    inline SearchLocalGatewayRoutesResponse& AddRoutes(const LocalGatewayRoute& value) { m_routes.push_back(value); return *this; }
-    inline SearchLocalGatewayRoutesResponse& AddRoutes(LocalGatewayRoute&& value) { m_routes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  SearchLocalGatewayRoutesResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline SearchLocalGatewayRoutesResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline SearchLocalGatewayRoutesResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline SearchLocalGatewayRoutesResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline SearchLocalGatewayRoutesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline SearchLocalGatewayRoutesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  SearchLocalGatewayRoutesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<LocalGatewayRoute> m_routes;
+ private:
+  Aws::Vector<LocalGatewayRoute> m_routes;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_routesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

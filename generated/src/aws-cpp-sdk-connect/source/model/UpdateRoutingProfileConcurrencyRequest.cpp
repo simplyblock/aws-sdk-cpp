@@ -12,31 +12,17 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateRoutingProfileConcurrencyRequest::UpdateRoutingProfileConcurrencyRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_routingProfileIdHasBeenSet(false),
-    m_mediaConcurrenciesHasBeenSet(false)
-{
-}
-
-Aws::String UpdateRoutingProfileConcurrencyRequest::SerializePayload() const
-{
+Aws::String UpdateRoutingProfileConcurrencyRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_mediaConcurrenciesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> mediaConcurrenciesJsonList(m_mediaConcurrencies.size());
-   for(unsigned mediaConcurrenciesIndex = 0; mediaConcurrenciesIndex < mediaConcurrenciesJsonList.GetLength(); ++mediaConcurrenciesIndex)
-   {
-     mediaConcurrenciesJsonList[mediaConcurrenciesIndex].AsObject(m_mediaConcurrencies[mediaConcurrenciesIndex].Jsonize());
-   }
-   payload.WithArray("MediaConcurrencies", std::move(mediaConcurrenciesJsonList));
-
+  if (m_mediaConcurrenciesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> mediaConcurrenciesJsonList(m_mediaConcurrencies.size());
+    for (unsigned mediaConcurrenciesIndex = 0; mediaConcurrenciesIndex < mediaConcurrenciesJsonList.GetLength();
+         ++mediaConcurrenciesIndex) {
+      mediaConcurrenciesJsonList[mediaConcurrenciesIndex].AsObject(m_mediaConcurrencies[mediaConcurrenciesIndex].Jsonize());
+    }
+    payload.WithArray("MediaConcurrencies", std::move(mediaConcurrenciesJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

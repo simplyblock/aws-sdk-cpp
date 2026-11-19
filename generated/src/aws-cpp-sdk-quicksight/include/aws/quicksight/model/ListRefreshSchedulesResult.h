@@ -4,77 +4,97 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/RefreshSchedule.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class ListRefreshSchedulesResult
-  {
-  public:
-    AWS_QUICKSIGHT_API ListRefreshSchedulesResult();
-    AWS_QUICKSIGHT_API ListRefreshSchedulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API ListRefreshSchedulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class ListRefreshSchedulesResult {
+ public:
+  AWS_QUICKSIGHT_API ListRefreshSchedulesResult() = default;
+  AWS_QUICKSIGHT_API ListRefreshSchedulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API ListRefreshSchedulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of refresh schedules for the dataset.</p>
+   */
+  inline const Aws::Vector<RefreshSchedule>& GetRefreshSchedules() const { return m_refreshSchedules; }
+  template <typename RefreshSchedulesT = Aws::Vector<RefreshSchedule>>
+  void SetRefreshSchedules(RefreshSchedulesT&& value) {
+    m_refreshSchedulesHasBeenSet = true;
+    m_refreshSchedules = std::forward<RefreshSchedulesT>(value);
+  }
+  template <typename RefreshSchedulesT = Aws::Vector<RefreshSchedule>>
+  ListRefreshSchedulesResult& WithRefreshSchedules(RefreshSchedulesT&& value) {
+    SetRefreshSchedules(std::forward<RefreshSchedulesT>(value));
+    return *this;
+  }
+  template <typename RefreshSchedulesT = RefreshSchedule>
+  ListRefreshSchedulesResult& AddRefreshSchedules(RefreshSchedulesT&& value) {
+    m_refreshSchedulesHasBeenSet = true;
+    m_refreshSchedules.emplace_back(std::forward<RefreshSchedulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of refresh schedules for the dataset.</p>
-     */
-    inline const Aws::Vector<RefreshSchedule>& GetRefreshSchedules() const{ return m_refreshSchedules; }
-    inline void SetRefreshSchedules(const Aws::Vector<RefreshSchedule>& value) { m_refreshSchedules = value; }
-    inline void SetRefreshSchedules(Aws::Vector<RefreshSchedule>&& value) { m_refreshSchedules = std::move(value); }
-    inline ListRefreshSchedulesResult& WithRefreshSchedules(const Aws::Vector<RefreshSchedule>& value) { SetRefreshSchedules(value); return *this;}
-    inline ListRefreshSchedulesResult& WithRefreshSchedules(Aws::Vector<RefreshSchedule>&& value) { SetRefreshSchedules(std::move(value)); return *this;}
-    inline ListRefreshSchedulesResult& AddRefreshSchedules(const RefreshSchedule& value) { m_refreshSchedules.push_back(value); return *this; }
-    inline ListRefreshSchedulesResult& AddRefreshSchedules(RefreshSchedule&& value) { m_refreshSchedules.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ListRefreshSchedulesResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline ListRefreshSchedulesResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListRefreshSchedulesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListRefreshSchedulesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListRefreshSchedulesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListRefreshSchedulesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<RefreshSchedule> m_refreshSchedules;
+ private:
+  Aws::Vector<RefreshSchedule> m_refreshSchedules;
 
-    int m_status;
+  int m_status{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_refreshSchedulesHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

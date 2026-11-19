@@ -3,32 +3,20 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/DescribeCustomerMetadataRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeCustomerMetadataRequest::DescribeCustomerMetadataRequest()
-{
-}
+Aws::String DescribeCustomerMetadataRequest::SerializePayload() const { return {}; }
 
-Aws::String DescribeCustomerMetadataRequest::SerializePayload() const
-{
-  return "{}";
-}
-
-Aws::Http::HeaderValueCollection DescribeCustomerMetadataRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeCustomerMetadataRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.DescribeCustomerMetadata"));
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

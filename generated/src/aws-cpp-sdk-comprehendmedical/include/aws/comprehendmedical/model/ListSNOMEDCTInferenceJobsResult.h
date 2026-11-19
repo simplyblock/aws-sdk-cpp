@@ -5,80 +5,101 @@
 
 #pragma once
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehendmedical/model/ComprehendMedicalAsyncJobProperties.h>
-#include <utility>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ComprehendMedical
-{
-namespace Model
-{
-  class ListSNOMEDCTInferenceJobsResult
-  {
-  public:
-    AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult();
-    AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComprehendMedical {
+namespace Model {
+class ListSNOMEDCTInferenceJobsResult {
+ public:
+  AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult() = default;
+  AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_COMPREHENDMEDICAL_API ListSNOMEDCTInferenceJobsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p> A list containing the properties of each job that is returned. </p>
+   */
+  inline const Aws::Vector<ComprehendMedicalAsyncJobProperties>& GetComprehendMedicalAsyncJobPropertiesList() const {
+    return m_comprehendMedicalAsyncJobPropertiesList;
+  }
+  template <typename ComprehendMedicalAsyncJobPropertiesListT = Aws::Vector<ComprehendMedicalAsyncJobProperties>>
+  void SetComprehendMedicalAsyncJobPropertiesList(ComprehendMedicalAsyncJobPropertiesListT&& value) {
+    m_comprehendMedicalAsyncJobPropertiesListHasBeenSet = true;
+    m_comprehendMedicalAsyncJobPropertiesList = std::forward<ComprehendMedicalAsyncJobPropertiesListT>(value);
+  }
+  template <typename ComprehendMedicalAsyncJobPropertiesListT = Aws::Vector<ComprehendMedicalAsyncJobProperties>>
+  ListSNOMEDCTInferenceJobsResult& WithComprehendMedicalAsyncJobPropertiesList(ComprehendMedicalAsyncJobPropertiesListT&& value) {
+    SetComprehendMedicalAsyncJobPropertiesList(std::forward<ComprehendMedicalAsyncJobPropertiesListT>(value));
+    return *this;
+  }
+  template <typename ComprehendMedicalAsyncJobPropertiesListT = ComprehendMedicalAsyncJobProperties>
+  ListSNOMEDCTInferenceJobsResult& AddComprehendMedicalAsyncJobPropertiesList(ComprehendMedicalAsyncJobPropertiesListT&& value) {
+    m_comprehendMedicalAsyncJobPropertiesListHasBeenSet = true;
+    m_comprehendMedicalAsyncJobPropertiesList.emplace_back(std::forward<ComprehendMedicalAsyncJobPropertiesListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A list containing the properties of each job that is returned. </p>
-     */
-    inline const Aws::Vector<ComprehendMedicalAsyncJobProperties>& GetComprehendMedicalAsyncJobPropertiesList() const{ return m_comprehendMedicalAsyncJobPropertiesList; }
-    inline void SetComprehendMedicalAsyncJobPropertiesList(const Aws::Vector<ComprehendMedicalAsyncJobProperties>& value) { m_comprehendMedicalAsyncJobPropertiesList = value; }
-    inline void SetComprehendMedicalAsyncJobPropertiesList(Aws::Vector<ComprehendMedicalAsyncJobProperties>&& value) { m_comprehendMedicalAsyncJobPropertiesList = std::move(value); }
-    inline ListSNOMEDCTInferenceJobsResult& WithComprehendMedicalAsyncJobPropertiesList(const Aws::Vector<ComprehendMedicalAsyncJobProperties>& value) { SetComprehendMedicalAsyncJobPropertiesList(value); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& WithComprehendMedicalAsyncJobPropertiesList(Aws::Vector<ComprehendMedicalAsyncJobProperties>&& value) { SetComprehendMedicalAsyncJobPropertiesList(std::move(value)); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& AddComprehendMedicalAsyncJobPropertiesList(const ComprehendMedicalAsyncJobProperties& value) { m_comprehendMedicalAsyncJobPropertiesList.push_back(value); return *this; }
-    inline ListSNOMEDCTInferenceJobsResult& AddComprehendMedicalAsyncJobPropertiesList(ComprehendMedicalAsyncJobProperties&& value) { m_comprehendMedicalAsyncJobPropertiesList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> Identifies the next page of results to return. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSNOMEDCTInferenceJobsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Identifies the next page of results to return. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSNOMEDCTInferenceJobsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSNOMEDCTInferenceJobsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSNOMEDCTInferenceJobsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSNOMEDCTInferenceJobsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ComprehendMedicalAsyncJobProperties> m_comprehendMedicalAsyncJobPropertiesList;
+ private:
+  Aws::Vector<ComprehendMedicalAsyncJobProperties> m_comprehendMedicalAsyncJobPropertiesList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_comprehendMedicalAsyncJobPropertiesListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ComprehendMedical
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComprehendMedical
+}  // namespace Aws

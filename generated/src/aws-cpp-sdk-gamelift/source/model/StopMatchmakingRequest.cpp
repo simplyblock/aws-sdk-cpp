@@ -3,41 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/StopMatchmakingRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-StopMatchmakingRequest::StopMatchmakingRequest() : 
-    m_ticketIdHasBeenSet(false)
-{
-}
+Aws::String StopMatchmakingRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String StopMatchmakingRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_ticketIdHasBeenSet)
-  {
-   payload.WithString("TicketId", m_ticketId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_ticketIdHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_ticketIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TicketId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_ticketId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection StopMatchmakingRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StopMatchmakingRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.StopMatchmaking"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

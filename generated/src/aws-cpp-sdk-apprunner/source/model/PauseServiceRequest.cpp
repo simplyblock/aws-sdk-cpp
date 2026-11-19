@@ -12,32 +12,18 @@ using namespace Aws::AppRunner::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PauseServiceRequest::PauseServiceRequest() : 
-    m_serviceArnHasBeenSet(false)
-{
-}
-
-Aws::String PauseServiceRequest::SerializePayload() const
-{
+Aws::String PauseServiceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_serviceArnHasBeenSet)
-  {
-   payload.WithString("ServiceArn", m_serviceArn);
-
+  if (m_serviceArnHasBeenSet) {
+    payload.WithString("ServiceArn", m_serviceArn);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection PauseServiceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PauseServiceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AppRunner.PauseService"));
   return headers;
-
 }
-
-
-
-

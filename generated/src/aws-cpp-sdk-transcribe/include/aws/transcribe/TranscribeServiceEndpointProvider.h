@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/transcribe/TranscribeService_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/transcribe/TranscribeService_EXPORTS.h>
 
-#include <aws/transcribe/TranscribeServiceEndpointRules.h>
-
-
-namespace Aws
-{
-namespace TranscribeService
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace TranscribeService {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using TranscribeServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -34,28 +28,23 @@ using TranscribeServiceBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * Inherit from this Base class / "Interface" should you want to provide a custom endpoint provider.
  * The SDK must use service-specific type for each service per specification.
  */
-using TranscribeServiceEndpointProviderBase =
-    EndpointProviderBase<TranscribeServiceClientConfiguration, TranscribeServiceBuiltInParameters, TranscribeServiceClientContextParameters>;
+using TranscribeServiceEndpointProviderBase = EndpointProviderBase<TranscribeServiceClientConfiguration, TranscribeServiceBuiltInParameters,
+                                                                   TranscribeServiceClientContextParameters>;
 
 using TranscribeServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<TranscribeServiceClientConfiguration, TranscribeServiceBuiltInParameters, TranscribeServiceClientContextParameters>;
+    BDDEndpointProvider<TranscribeServiceClientConfiguration, TranscribeServiceBuiltInParameters, TranscribeServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_TRANSCRIBESERVICE_API TranscribeServiceEndpointProvider : public TranscribeServiceDefaultEpProviderBase
-{
-public:
-    using TranscribeServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_TRANSCRIBESERVICE_API TranscribeServiceEndpointProvider : public TranscribeServiceDefaultEpProviderBase {
+ public:
+  using TranscribeServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    TranscribeServiceEndpointProvider()
-      : TranscribeServiceDefaultEpProviderBase(Aws::TranscribeService::TranscribeServiceEndpointRules::GetRulesBlob(), Aws::TranscribeService::TranscribeServiceEndpointRules::RulesBlobSize)
-    {}
+  TranscribeServiceEndpointProvider();
 
-    ~TranscribeServiceEndpointProvider()
-    {
-    }
+  ~TranscribeServiceEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace TranscribeService
+}  // namespace Aws

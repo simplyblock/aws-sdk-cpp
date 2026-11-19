@@ -4,202 +4,522 @@
  */
 
 #include <aws/codepipeline/model/PipelineExecutionSummary.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodePipeline
-{
-namespace Model
-{
+namespace Aws {
+namespace CodePipeline {
+namespace Model {
 
-PipelineExecutionSummary::PipelineExecutionSummary() : 
-    m_pipelineExecutionIdHasBeenSet(false),
-    m_status(PipelineExecutionStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_statusSummaryHasBeenSet(false),
-    m_startTimeHasBeenSet(false),
-    m_lastUpdateTimeHasBeenSet(false),
-    m_sourceRevisionsHasBeenSet(false),
-    m_triggerHasBeenSet(false),
-    m_stopTriggerHasBeenSet(false),
-    m_executionMode(ExecutionMode::NOT_SET),
-    m_executionModeHasBeenSet(false),
-    m_executionType(ExecutionType::NOT_SET),
-    m_executionTypeHasBeenSet(false),
-    m_rollbackMetadataHasBeenSet(false)
-{
-}
+PipelineExecutionSummary::PipelineExecutionSummary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-PipelineExecutionSummary::PipelineExecutionSummary(JsonView jsonValue)
-  : PipelineExecutionSummary()
-{
-  *this = jsonValue;
-}
+PipelineExecutionSummary& PipelineExecutionSummary::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-PipelineExecutionSummary& PipelineExecutionSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("pipelineExecutionId"))
-  {
-    m_pipelineExecutionId = jsonValue.GetString("pipelineExecutionId");
+              if (initialKeyStr == "pipelineExecutionId") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_pipelineExecutionId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_pipelineExecutionId = ss.str();
+                  }
+                }
+                m_pipelineExecutionIdHasBeenSet = true;
+              }
 
-    m_pipelineExecutionIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = PipelineExecutionStatusMapper::GetPipelineExecutionStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("status"))
-  {
-    m_status = PipelineExecutionStatusMapper::GetPipelineExecutionStatusForName(jsonValue.GetString("status"));
+              else if (initialKeyStr == "statusSummary") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_statusSummary = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_statusSummary = ss.str();
+                  }
+                }
+                m_statusSummaryHasBeenSet = true;
+              }
 
-    m_statusHasBeenSet = true;
-  }
+              else if (initialKeyStr == "startTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_startTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_startTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_startTimeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("statusSummary"))
-  {
-    m_statusSummary = jsonValue.GetString("statusSummary");
+              else if (initialKeyStr == "lastUpdateTime") {
+                auto tag = decoder->PopNextTagVal();
+                if (tag.has_value() &&
+                    tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+                {
+                  auto dateType = decoder->PeekType();
+                  if (dateType.has_value()) {
+                    if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                      auto val = decoder->PopNextFloatVal();
+                      if (val.has_value()) {
+                        m_lastUpdateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    } else {
+                      auto val = decoder->PopNextUnsignedIntVal();
+                      if (val.has_value()) {
+                        m_lastUpdateTime = Aws::Utils::DateTime(val.value());
+                      }
+                    }
+                  }
+                }
+                m_lastUpdateTimeHasBeenSet = true;
+              }
 
-    m_statusSummaryHasBeenSet = true;
-  }
+              else if (initialKeyStr == "sourceRevisions") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_sourceRevisions.push_back(SourceRevision(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_sourceRevisions.push_back(SourceRevision(decoder));
+                    }
+                  }
+                }
+                m_sourceRevisionsHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("startTime"))
-  {
-    m_startTime = jsonValue.GetDouble("startTime");
+              else if (initialKeyStr == "trigger") {
+                m_trigger = ExecutionTrigger(decoder);
+                m_triggerHasBeenSet = true;
+              }
 
-    m_startTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "stopTrigger") {
+                m_stopTrigger = StopExecutionTrigger(decoder);
+                m_stopTriggerHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("lastUpdateTime"))
-  {
-    m_lastUpdateTime = jsonValue.GetDouble("lastUpdateTime");
+              else if (initialKeyStr == "executionMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_executionMode = ExecutionModeMapper::GetExecutionModeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_executionModeHasBeenSet = true;
+              }
 
-    m_lastUpdateTimeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "executionType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_executionType = ExecutionTypeMapper::GetExecutionTypeForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_executionTypeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("sourceRevisions"))
-  {
-    Aws::Utils::Array<JsonView> sourceRevisionsJsonList = jsonValue.GetArray("sourceRevisions");
-    for(unsigned sourceRevisionsIndex = 0; sourceRevisionsIndex < sourceRevisionsJsonList.GetLength(); ++sourceRevisionsIndex)
-    {
-      m_sourceRevisions.push_back(sourceRevisionsJsonList[sourceRevisionsIndex].AsObject());
+              else if (initialKeyStr == "rollbackMetadata") {
+                m_rollbackMetadata = PipelineRollbackMetadata(decoder);
+                m_rollbackMetadataHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("PipelineExecutionSummary", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
+
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "pipelineExecutionId") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_pipelineExecutionId = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_pipelineExecutionId = ss.str();
+                }
+              }
+              m_pipelineExecutionIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status = PipelineExecutionStatusMapper::GetPipelineExecutionStatusForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "statusSummary") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_statusSummary = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_statusSummary = ss.str();
+                }
+              }
+              m_statusSummaryHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "startTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_startTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_startTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_startTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "lastUpdateTime") {
+              auto tag = decoder->PopNextTagVal();
+              if (tag.has_value() &&
+                  tag.value() == 1)  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+              {
+                auto dateType = decoder->PeekType();
+                if (dateType.has_value()) {
+                  if (dateType.value() == Aws::Crt::Cbor::CborType::Float) {
+                    auto val = decoder->PopNextFloatVal();
+                    if (val.has_value()) {
+                      m_lastUpdateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  } else {
+                    auto val = decoder->PopNextUnsignedIntVal();
+                    if (val.has_value()) {
+                      m_lastUpdateTime = Aws::Utils::DateTime(val.value());
+                    }
+                  }
+                }
+              }
+              m_lastUpdateTimeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "sourceRevisions") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_sourceRevisions.push_back(SourceRevision(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_sourceRevisions.push_back(SourceRevision(decoder));
+                  }
+                }
+              }
+              m_sourceRevisionsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "trigger") {
+              m_trigger = ExecutionTrigger(decoder);
+              m_triggerHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "stopTrigger") {
+              m_stopTrigger = StopExecutionTrigger(decoder);
+              m_stopTriggerHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "executionMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_executionMode = ExecutionModeMapper::GetExecutionModeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_executionModeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "executionType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_executionType = ExecutionTypeMapper::GetExecutionTypeForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_executionTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "rollbackMetadata") {
+              m_rollbackMetadata = PipelineRollbackMetadata(decoder);
+              m_rollbackMetadataHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_sourceRevisionsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("trigger"))
-  {
-    m_trigger = jsonValue.GetObject("trigger");
-
-    m_triggerHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("stopTrigger"))
-  {
-    m_stopTrigger = jsonValue.GetObject("stopTrigger");
-
-    m_stopTriggerHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("executionMode"))
-  {
-    m_executionMode = ExecutionModeMapper::GetExecutionModeForName(jsonValue.GetString("executionMode"));
-
-    m_executionModeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("executionType"))
-  {
-    m_executionType = ExecutionTypeMapper::GetExecutionTypeForName(jsonValue.GetString("executionType"));
-
-    m_executionTypeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("rollbackMetadata"))
-  {
-    m_rollbackMetadata = jsonValue.GetObject("rollbackMetadata");
-
-    m_rollbackMetadataHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue PipelineExecutionSummary::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_pipelineExecutionIdHasBeenSet)
-  {
-   payload.WithString("pipelineExecutionId", m_pipelineExecutionId);
-
+void PipelineExecutionSummary::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pipelineExecutionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusSummaryHasBeenSet) {
+    mapSize++;
+  }
+  if (m_startTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lastUpdateTimeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sourceRevisionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_triggerHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stopTriggerHasBeenSet) {
+    mapSize++;
+  }
+  if (m_executionModeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_executionTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_rollbackMetadataHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", PipelineExecutionStatusMapper::GetNameForPipelineExecutionStatus(m_status));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_pipelineExecutionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineExecutionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pipelineExecutionId.c_str()));
   }
 
-  if(m_statusSummaryHasBeenSet)
-  {
-   payload.WithString("statusSummary", m_statusSummary);
-
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(PipelineExecutionStatusMapper::GetNameForPipelineExecutionStatus(m_status).c_str()));
   }
 
-  if(m_startTimeHasBeenSet)
-  {
-   payload.WithDouble("startTime", m_startTime.SecondsWithMSPrecision());
+  if (m_statusSummaryHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("statusSummary"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_statusSummary.c_str()));
   }
 
-  if(m_lastUpdateTimeHasBeenSet)
-  {
-   payload.WithDouble("lastUpdateTime", m_lastUpdateTime.SecondsWithMSPrecision());
+  if (m_startTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("startTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_startTime.Seconds());
   }
 
-  if(m_sourceRevisionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> sourceRevisionsJsonList(m_sourceRevisions.size());
-   for(unsigned sourceRevisionsIndex = 0; sourceRevisionsIndex < sourceRevisionsJsonList.GetLength(); ++sourceRevisionsIndex)
-   {
-     sourceRevisionsJsonList[sourceRevisionsIndex].AsObject(m_sourceRevisions[sourceRevisionsIndex].Jsonize());
-   }
-   payload.WithArray("sourceRevisions", std::move(sourceRevisionsJsonList));
-
+  if (m_lastUpdateTimeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("lastUpdateTime"));
+    encoder.WriteTag(1);  // 1 represents Epoch-based date/time. See https://www.rfc-editor.org/rfc/rfc8949.html#tags
+    encoder.WriteUInt(m_lastUpdateTime.Seconds());
   }
 
-  if(m_triggerHasBeenSet)
-  {
-   payload.WithObject("trigger", m_trigger.Jsonize());
-
+  if (m_sourceRevisionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("sourceRevisions"));
+    encoder.WriteArrayStart(m_sourceRevisions.size());
+    for (const auto& item_0 : m_sourceRevisions) {
+      item_0.CborEncode(encoder);
+    }
   }
 
-  if(m_stopTriggerHasBeenSet)
-  {
-   payload.WithObject("stopTrigger", m_stopTrigger.Jsonize());
-
+  if (m_triggerHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("trigger"));
+    m_trigger.CborEncode(encoder);
   }
 
-  if(m_executionModeHasBeenSet)
-  {
-   payload.WithString("executionMode", ExecutionModeMapper::GetNameForExecutionMode(m_executionMode));
+  if (m_stopTriggerHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("stopTrigger"));
+    m_stopTrigger.CborEncode(encoder);
   }
 
-  if(m_executionTypeHasBeenSet)
-  {
-   payload.WithString("executionType", ExecutionTypeMapper::GetNameForExecutionType(m_executionType));
+  if (m_executionModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("executionMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ExecutionModeMapper::GetNameForExecutionMode(m_executionMode).c_str()));
   }
 
-  if(m_rollbackMetadataHasBeenSet)
-  {
-   payload.WithObject("rollbackMetadata", m_rollbackMetadata.Jsonize());
-
+  if (m_executionTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("executionType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(ExecutionTypeMapper::GetNameForExecutionType(m_executionType).c_str()));
   }
 
-  return payload;
+  if (m_rollbackMetadataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("rollbackMetadata"));
+    m_rollbackMetadata.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace CodePipeline
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodePipeline
+}  // namespace Aws

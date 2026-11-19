@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-eventbridge "C++ SDK for the AWS eventbridge service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-eventbridge "C++ SDK for Amazon EventBridge" aws-cpp-sdk-core)
 
 file(GLOB AWS_EVENTBRIDGE_HEADERS
     "include/aws/eventbridge/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EVENTBRIDGE_HEADERS
 
 file(GLOB AWS_EVENTBRIDGE_MODEL_HEADERS
     "include/aws/eventbridge/model/*.h"
+)
+
+file(GLOB AWS_EVENTBRIDGE_INTERNAL_HEADERS
+    "include/aws/eventbridge/internal/*.h"
 )
 
 file(GLOB AWS_EVENTBRIDGE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EVENTBRIDGE_MODEL_SOURCE
 
 file(GLOB EVENTBRIDGE_UNIFIED_HEADERS
     ${AWS_EVENTBRIDGE_HEADERS}
+    ${AWS_EVENTBRIDGE_INTERNAL_HEADERS}
     ${AWS_EVENTBRIDGE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\eventbridge" FILES ${AWS_EVENTBRIDGE_HEADERS})
+        source_group("Header Files\\aws\\eventbridge\\internal" FILES ${AWS_EVENTBRIDGE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\eventbridge\\model" FILES ${AWS_EVENTBRIDGE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EVENTBRIDGE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EVENTBRIDGE_MODEL_SOURCE})

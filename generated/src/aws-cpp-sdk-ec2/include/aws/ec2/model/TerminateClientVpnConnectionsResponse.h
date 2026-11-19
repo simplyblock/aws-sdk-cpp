@@ -4,95 +4,120 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/TerminateConnectionStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class TerminateClientVpnConnectionsResponse
-  {
-  public:
-    AWS_EC2_API TerminateClientVpnConnectionsResponse();
-    AWS_EC2_API TerminateClientVpnConnectionsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API TerminateClientVpnConnectionsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class TerminateClientVpnConnectionsResponse {
+ public:
+  AWS_EC2_API TerminateClientVpnConnectionsResponse() = default;
+  AWS_EC2_API TerminateClientVpnConnectionsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API TerminateClientVpnConnectionsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the Client VPN endpoint.</p>
+   */
+  inline const Aws::String& GetClientVpnEndpointId() const { return m_clientVpnEndpointId; }
+  template <typename ClientVpnEndpointIdT = Aws::String>
+  void SetClientVpnEndpointId(ClientVpnEndpointIdT&& value) {
+    m_clientVpnEndpointIdHasBeenSet = true;
+    m_clientVpnEndpointId = std::forward<ClientVpnEndpointIdT>(value);
+  }
+  template <typename ClientVpnEndpointIdT = Aws::String>
+  TerminateClientVpnConnectionsResponse& WithClientVpnEndpointId(ClientVpnEndpointIdT&& value) {
+    SetClientVpnEndpointId(std::forward<ClientVpnEndpointIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Client VPN endpoint.</p>
-     */
-    inline const Aws::String& GetClientVpnEndpointId() const{ return m_clientVpnEndpointId; }
-    inline void SetClientVpnEndpointId(const Aws::String& value) { m_clientVpnEndpointId = value; }
-    inline void SetClientVpnEndpointId(Aws::String&& value) { m_clientVpnEndpointId = std::move(value); }
-    inline void SetClientVpnEndpointId(const char* value) { m_clientVpnEndpointId.assign(value); }
-    inline TerminateClientVpnConnectionsResponse& WithClientVpnEndpointId(const Aws::String& value) { SetClientVpnEndpointId(value); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithClientVpnEndpointId(Aws::String&& value) { SetClientVpnEndpointId(std::move(value)); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithClientVpnEndpointId(const char* value) { SetClientVpnEndpointId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The user who established the terminated client connections.</p>
+   */
+  inline const Aws::String& GetUsername() const { return m_username; }
+  template <typename UsernameT = Aws::String>
+  void SetUsername(UsernameT&& value) {
+    m_usernameHasBeenSet = true;
+    m_username = std::forward<UsernameT>(value);
+  }
+  template <typename UsernameT = Aws::String>
+  TerminateClientVpnConnectionsResponse& WithUsername(UsernameT&& value) {
+    SetUsername(std::forward<UsernameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user who established the terminated client connections.</p>
-     */
-    inline const Aws::String& GetUsername() const{ return m_username; }
-    inline void SetUsername(const Aws::String& value) { m_username = value; }
-    inline void SetUsername(Aws::String&& value) { m_username = std::move(value); }
-    inline void SetUsername(const char* value) { m_username.assign(value); }
-    inline TerminateClientVpnConnectionsResponse& WithUsername(const Aws::String& value) { SetUsername(value); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithUsername(Aws::String&& value) { SetUsername(std::move(value)); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithUsername(const char* value) { SetUsername(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current state of the client connections.</p>
+   */
+  inline const Aws::Vector<TerminateConnectionStatus>& GetConnectionStatuses() const { return m_connectionStatuses; }
+  template <typename ConnectionStatusesT = Aws::Vector<TerminateConnectionStatus>>
+  void SetConnectionStatuses(ConnectionStatusesT&& value) {
+    m_connectionStatusesHasBeenSet = true;
+    m_connectionStatuses = std::forward<ConnectionStatusesT>(value);
+  }
+  template <typename ConnectionStatusesT = Aws::Vector<TerminateConnectionStatus>>
+  TerminateClientVpnConnectionsResponse& WithConnectionStatuses(ConnectionStatusesT&& value) {
+    SetConnectionStatuses(std::forward<ConnectionStatusesT>(value));
+    return *this;
+  }
+  template <typename ConnectionStatusesT = TerminateConnectionStatus>
+  TerminateClientVpnConnectionsResponse& AddConnectionStatuses(ConnectionStatusesT&& value) {
+    m_connectionStatusesHasBeenSet = true;
+    m_connectionStatuses.emplace_back(std::forward<ConnectionStatusesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current state of the client connections.</p>
-     */
-    inline const Aws::Vector<TerminateConnectionStatus>& GetConnectionStatuses() const{ return m_connectionStatuses; }
-    inline void SetConnectionStatuses(const Aws::Vector<TerminateConnectionStatus>& value) { m_connectionStatuses = value; }
-    inline void SetConnectionStatuses(Aws::Vector<TerminateConnectionStatus>&& value) { m_connectionStatuses = std::move(value); }
-    inline TerminateClientVpnConnectionsResponse& WithConnectionStatuses(const Aws::Vector<TerminateConnectionStatus>& value) { SetConnectionStatuses(value); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithConnectionStatuses(Aws::Vector<TerminateConnectionStatus>&& value) { SetConnectionStatuses(std::move(value)); return *this;}
-    inline TerminateClientVpnConnectionsResponse& AddConnectionStatuses(const TerminateConnectionStatus& value) { m_connectionStatuses.push_back(value); return *this; }
-    inline TerminateClientVpnConnectionsResponse& AddConnectionStatuses(TerminateConnectionStatus&& value) { m_connectionStatuses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline TerminateClientVpnConnectionsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline TerminateClientVpnConnectionsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  TerminateClientVpnConnectionsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_clientVpnEndpointId;
+ private:
+  Aws::String m_clientVpnEndpointId;
 
-    Aws::String m_username;
+  Aws::String m_username;
 
-    Aws::Vector<TerminateConnectionStatus> m_connectionStatuses;
+  Aws::Vector<TerminateConnectionStatus> m_connectionStatuses;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_clientVpnEndpointIdHasBeenSet = false;
+  bool m_usernameHasBeenSet = false;
+  bool m_connectionStatusesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

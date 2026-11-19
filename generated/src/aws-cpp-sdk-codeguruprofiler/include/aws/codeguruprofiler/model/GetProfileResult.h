@@ -5,102 +5,114 @@
 
 #pragma once
 #include <aws/codeguruprofiler/CodeGuruProfiler_EXPORTS.h>
-#include <aws/core/utils/stream/ResponseStream.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/stream/ResponseStream.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace CodeGuruProfiler
-{
-namespace Model
-{
+namespace CodeGuruProfiler {
+namespace Model {
+/**
+ * <p>The structure representing the getProfileResponse.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codeguruprofiler-2019-07-18/GetProfileResponse">AWS
+ * API Reference</a></p>
+ */
+class GetProfileResult {
+ public:
+  AWS_CODEGURUPROFILER_API GetProfileResult() = default;
+  AWS_CODEGURUPROFILER_API GetProfileResult(GetProfileResult&&) = default;
+  AWS_CODEGURUPROFILER_API GetProfileResult& operator=(GetProfileResult&&) = default;
+  // we delete these because Microsoft doesn't handle move generation correctly
+  // and we therefore don't trust them to get it right here either.
+  GetProfileResult(const GetProfileResult&) = delete;
+  GetProfileResult& operator=(const GetProfileResult&) = delete;
+
+  AWS_CODEGURUPROFILER_API GetProfileResult(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
+  AWS_CODEGURUPROFILER_API GetProfileResult& operator=(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
+
+  ///@{
   /**
-   * <p>The structure representing the getProfileResponse.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codeguruprofiler-2019-07-18/GetProfileResponse">AWS
-   * API Reference</a></p>
+   * <p>The content encoding of the profile.</p>
    */
-  class GetProfileResult
-  {
-  public:
-    AWS_CODEGURUPROFILER_API GetProfileResult();
-    //We have to define these because Microsoft doesn't auto generate them
-    AWS_CODEGURUPROFILER_API GetProfileResult(GetProfileResult&&);
-    AWS_CODEGURUPROFILER_API GetProfileResult& operator=(GetProfileResult&&);
-    //we delete these because Microsoft doesn't handle move generation correctly
-    //and we therefore don't trust them to get it right here either.
-    GetProfileResult(const GetProfileResult&) = delete;
-    GetProfileResult& operator=(const GetProfileResult&) = delete;
+  inline const Aws::String& GetContentEncoding() const { return m_contentEncoding; }
+  template <typename ContentEncodingT = Aws::String>
+  void SetContentEncoding(ContentEncodingT&& value) {
+    m_contentEncodingHasBeenSet = true;
+    m_contentEncoding = std::forward<ContentEncodingT>(value);
+  }
+  template <typename ContentEncodingT = Aws::String>
+  GetProfileResult& WithContentEncoding(ContentEncodingT&& value) {
+    SetContentEncoding(std::forward<ContentEncodingT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The content type of the profile in the payload. It is either
+   * <code>application/json</code> or the default
+   * <code>application/x-amzn-ion</code>.</p>
+   */
+  inline const Aws::String& GetContentType() const { return m_contentType; }
+  template <typename ContentTypeT = Aws::String>
+  void SetContentType(ContentTypeT&& value) {
+    m_contentTypeHasBeenSet = true;
+    m_contentType = std::forward<ContentTypeT>(value);
+  }
+  template <typename ContentTypeT = Aws::String>
+  GetProfileResult& WithContentType(ContentTypeT&& value) {
+    SetContentType(std::forward<ContentTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CODEGURUPROFILER_API GetProfileResult(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
-    AWS_CODEGURUPROFILER_API GetProfileResult& operator=(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
+  ///@{
+  /**
+   * <p>Information about the profile.</p>
+   */
+  inline Aws::IOStream& GetProfile() const { return m_profile.GetUnderlyingStream(); }
+  inline void ReplaceBody(Aws::IOStream* body) { m_profile = Aws::Utils::Stream::ResponseStream(body); }
 
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The content encoding of the profile.</p>
-     */
-    inline const Aws::String& GetContentEncoding() const{ return m_contentEncoding; }
-    inline void SetContentEncoding(const Aws::String& value) { m_contentEncoding = value; }
-    inline void SetContentEncoding(Aws::String&& value) { m_contentEncoding = std::move(value); }
-    inline void SetContentEncoding(const char* value) { m_contentEncoding.assign(value); }
-    inline GetProfileResult& WithContentEncoding(const Aws::String& value) { SetContentEncoding(value); return *this;}
-    inline GetProfileResult& WithContentEncoding(Aws::String&& value) { SetContentEncoding(std::move(value)); return *this;}
-    inline GetProfileResult& WithContentEncoding(const char* value) { SetContentEncoding(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetProfileResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The content type of the profile in the payload. It is either
-     * <code>application/json</code> or the default
-     * <code>application/x-amzn-ion</code>.</p>
-     */
-    inline const Aws::String& GetContentType() const{ return m_contentType; }
-    inline void SetContentType(const Aws::String& value) { m_contentType = value; }
-    inline void SetContentType(Aws::String&& value) { m_contentType = std::move(value); }
-    inline void SetContentType(const char* value) { m_contentType.assign(value); }
-    inline GetProfileResult& WithContentType(const Aws::String& value) { SetContentType(value); return *this;}
-    inline GetProfileResult& WithContentType(Aws::String&& value) { SetContentType(std::move(value)); return *this;}
-    inline GetProfileResult& WithContentType(const char* value) { SetContentType(value); return *this;}
-    ///@}
+ private:
+  Aws::String m_contentEncoding;
 
-    ///@{
-    /**
-     * <p>Information about the profile.</p>
-     */
-    inline Aws::IOStream& GetProfile() const { return m_profile.GetUnderlyingStream(); }
-    inline void ReplaceBody(Aws::IOStream* body) { m_profile = Aws::Utils::Stream::ResponseStream(body); }
+  Aws::String m_contentType;
 
-    ///@}
+  Aws::Utils::Stream::ResponseStream m_profile{};
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetProfileResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetProfileResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetProfileResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contentEncodingHasBeenSet = false;
+  bool m_contentTypeHasBeenSet = false;
+  bool m_profileHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_contentEncoding;
-
-    Aws::String m_contentType;
-
-    Aws::Utils::Stream::ResponseStream m_profile;
-
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CodeGuruProfiler
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeGuruProfiler
+}  // namespace Aws

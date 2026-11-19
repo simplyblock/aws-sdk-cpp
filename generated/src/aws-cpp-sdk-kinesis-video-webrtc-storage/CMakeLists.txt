@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-kinesis-video-webrtc-storage "C++ SDK for the AWS kinesis-video-webrtc-storage service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-kinesis-video-webrtc-storage "C++ SDK for Amazon Kinesis Video WebRTC Storage" aws-cpp-sdk-core)
 
 file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_HEADERS
     "include/aws/kinesis-video-webrtc-storage/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_HEADERS
 
 file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_MODEL_HEADERS
     "include/aws/kinesis-video-webrtc-storage/model/*.h"
+)
+
+file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_INTERNAL_HEADERS
+    "include/aws/kinesis-video-webrtc-storage/internal/*.h"
 )
 
 file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KINESIS-VIDEO-WEBRTC-STORAGE_MODEL_SOURCE
 
 file(GLOB KINESIS-VIDEO-WEBRTC-STORAGE_UNIFIED_HEADERS
     ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_HEADERS}
+    ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_INTERNAL_HEADERS}
     ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\kinesis-video-webrtc-storage" FILES ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_HEADERS})
+        source_group("Header Files\\aws\\kinesis-video-webrtc-storage\\internal" FILES ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\kinesis-video-webrtc-storage\\model" FILES ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KINESIS-VIDEO-WEBRTC-STORAGE_MODEL_SOURCE})

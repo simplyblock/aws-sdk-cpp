@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sso-oidc "C++ SDK for the AWS sso-oidc service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sso-oidc "C++ SDK for AWS SSO OIDC" aws-cpp-sdk-core)
 
 file(GLOB AWS_SSO-OIDC_HEADERS
     "include/aws/sso-oidc/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SSO-OIDC_HEADERS
 
 file(GLOB AWS_SSO-OIDC_MODEL_HEADERS
     "include/aws/sso-oidc/model/*.h"
+)
+
+file(GLOB AWS_SSO-OIDC_INTERNAL_HEADERS
+    "include/aws/sso-oidc/internal/*.h"
 )
 
 file(GLOB AWS_SSO-OIDC_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SSO-OIDC_MODEL_SOURCE
 
 file(GLOB SSO-OIDC_UNIFIED_HEADERS
     ${AWS_SSO-OIDC_HEADERS}
+    ${AWS_SSO-OIDC_INTERNAL_HEADERS}
     ${AWS_SSO-OIDC_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sso-oidc" FILES ${AWS_SSO-OIDC_HEADERS})
+        source_group("Header Files\\aws\\sso-oidc\\internal" FILES ${AWS_SSO-OIDC_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sso-oidc\\model" FILES ${AWS_SSO-OIDC_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SSO-OIDC_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SSO-OIDC_MODEL_SOURCE})

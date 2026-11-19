@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/AnalysisTemplate.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class GetAnalysisTemplateResult
-  {
-  public:
-    AWS_CLEANROOMS_API GetAnalysisTemplateResult();
-    AWS_CLEANROOMS_API GetAnalysisTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API GetAnalysisTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class GetAnalysisTemplateResult {
+ public:
+  AWS_CLEANROOMS_API GetAnalysisTemplateResult() = default;
+  AWS_CLEANROOMS_API GetAnalysisTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API GetAnalysisTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The analysis template.</p>
+   */
+  inline const AnalysisTemplate& GetAnalysisTemplate() const { return m_analysisTemplate; }
+  template <typename AnalysisTemplateT = AnalysisTemplate>
+  void SetAnalysisTemplate(AnalysisTemplateT&& value) {
+    m_analysisTemplateHasBeenSet = true;
+    m_analysisTemplate = std::forward<AnalysisTemplateT>(value);
+  }
+  template <typename AnalysisTemplateT = AnalysisTemplate>
+  GetAnalysisTemplateResult& WithAnalysisTemplate(AnalysisTemplateT&& value) {
+    SetAnalysisTemplate(std::forward<AnalysisTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The analysis template.</p>
-     */
-    inline const AnalysisTemplate& GetAnalysisTemplate() const{ return m_analysisTemplate; }
-    inline void SetAnalysisTemplate(const AnalysisTemplate& value) { m_analysisTemplate = value; }
-    inline void SetAnalysisTemplate(AnalysisTemplate&& value) { m_analysisTemplate = std::move(value); }
-    inline GetAnalysisTemplateResult& WithAnalysisTemplate(const AnalysisTemplate& value) { SetAnalysisTemplate(value); return *this;}
-    inline GetAnalysisTemplateResult& WithAnalysisTemplate(AnalysisTemplate&& value) { SetAnalysisTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAnalysisTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAnalysisTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAnalysisTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAnalysisTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AnalysisTemplate m_analysisTemplate;
+ private:
+  AnalysisTemplate m_analysisTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_analysisTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

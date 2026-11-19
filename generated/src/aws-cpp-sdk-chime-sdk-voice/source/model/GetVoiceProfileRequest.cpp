@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetVoiceProfileRequest::GetVoiceProfileRequest() : 
-    m_voiceProfileIdHasBeenSet(false)
-{
-}
-
-Aws::String GetVoiceProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetVoiceProfileRequest::SerializePayload() const { return {}; }

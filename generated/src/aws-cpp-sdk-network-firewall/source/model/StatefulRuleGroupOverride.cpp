@@ -3,57 +3,102 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/model/StatefulRuleGroupOverride.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace NetworkFirewall
-{
-namespace Model
-{
+namespace Aws {
+namespace NetworkFirewall {
+namespace Model {
 
-StatefulRuleGroupOverride::StatefulRuleGroupOverride() : 
-    m_action(OverrideAction::NOT_SET),
-    m_actionHasBeenSet(false)
-{
-}
+StatefulRuleGroupOverride::StatefulRuleGroupOverride(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-StatefulRuleGroupOverride::StatefulRuleGroupOverride(JsonView jsonValue)
-  : StatefulRuleGroupOverride()
-{
-  *this = jsonValue;
-}
+StatefulRuleGroupOverride& StatefulRuleGroupOverride::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-StatefulRuleGroupOverride& StatefulRuleGroupOverride::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Action"))
-  {
-    m_action = OverrideActionMapper::GetOverrideActionForName(jsonValue.GetString("Action"));
+              if (initialKeyStr == "Action") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_action = OverrideActionMapper::GetOverrideActionForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_actionHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("StatefulRuleGroupOverride", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_actionHasBeenSet = true;
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "Action") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_action = OverrideActionMapper::GetOverrideActionForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_actionHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue StatefulRuleGroupOverride::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_actionHasBeenSet)
-  {
-   payload.WithString("Action", OverrideActionMapper::GetNameForOverrideAction(m_action));
+void StatefulRuleGroupOverride::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_actionHasBeenSet) {
+    mapSize++;
   }
 
-  return payload;
+  encoder.WriteMapStart(mapSize);
+
+  if (m_actionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Action"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(OverrideActionMapper::GetNameForOverrideAction(m_action).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace NetworkFirewall
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkFirewall
+}  // namespace Aws

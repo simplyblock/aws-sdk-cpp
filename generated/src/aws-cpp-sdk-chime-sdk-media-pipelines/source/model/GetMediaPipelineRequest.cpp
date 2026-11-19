@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetMediaPipelineRequest::GetMediaPipelineRequest() : 
-    m_mediaPipelineIdHasBeenSet(false)
-{
-}
-
-Aws::String GetMediaPipelineRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetMediaPipelineRequest::SerializePayload() const { return {}; }

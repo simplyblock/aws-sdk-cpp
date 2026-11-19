@@ -12,17 +12,4 @@ using namespace Aws::Amplify::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDomainAssociationRequest::DeleteDomainAssociationRequest() : 
-    m_appIdHasBeenSet(false),
-    m_domainNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDomainAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDomainAssociationRequest::SerializePayload() const { return {}; }

@@ -4,93 +4,105 @@
  */
 
 #pragma once
-#include <aws/mturk-requester/MTurk_EXPORTS.h>
-#include <aws/mturk-requester/MTurkRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mturk-requester/MTurkRequest.h>
+#include <aws/mturk-requester/MTurk_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MTurk
-{
-namespace Model
-{
+namespace Aws {
+namespace MTurk {
+namespace Model {
 
+/**
+ */
+class NotifyWorkersRequest : public MTurkRequest {
+ public:
+  AWS_MTURK_API NotifyWorkersRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "NotifyWorkers"; }
+
+  AWS_MTURK_API Aws::String SerializePayload() const override;
+
+  AWS_MTURK_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The subject line of the email message to send. Can include up to 200
+   * characters.</p>
    */
-  class NotifyWorkersRequest : public MTurkRequest
-  {
-  public:
-    AWS_MTURK_API NotifyWorkersRequest();
+  inline const Aws::String& GetSubject() const { return m_subject; }
+  inline bool SubjectHasBeenSet() const { return m_subjectHasBeenSet; }
+  template <typename SubjectT = Aws::String>
+  void SetSubject(SubjectT&& value) {
+    m_subjectHasBeenSet = true;
+    m_subject = std::forward<SubjectT>(value);
+  }
+  template <typename SubjectT = Aws::String>
+  NotifyWorkersRequest& WithSubject(SubjectT&& value) {
+    SetSubject(std::forward<SubjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "NotifyWorkers"; }
+  ///@{
+  /**
+   * <p>The text of the email message to send. Can include up to 4,096 characters</p>
+   */
+  inline const Aws::String& GetMessageText() const { return m_messageText; }
+  inline bool MessageTextHasBeenSet() const { return m_messageTextHasBeenSet; }
+  template <typename MessageTextT = Aws::String>
+  void SetMessageText(MessageTextT&& value) {
+    m_messageTextHasBeenSet = true;
+    m_messageText = std::forward<MessageTextT>(value);
+  }
+  template <typename MessageTextT = Aws::String>
+  NotifyWorkersRequest& WithMessageText(MessageTextT&& value) {
+    SetMessageText(std::forward<MessageTextT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MTURK_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A list of Worker IDs you wish to notify. You can notify upto 100 Workers at a
+   * time.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetWorkerIds() const { return m_workerIds; }
+  inline bool WorkerIdsHasBeenSet() const { return m_workerIdsHasBeenSet; }
+  template <typename WorkerIdsT = Aws::Vector<Aws::String>>
+  void SetWorkerIds(WorkerIdsT&& value) {
+    m_workerIdsHasBeenSet = true;
+    m_workerIds = std::forward<WorkerIdsT>(value);
+  }
+  template <typename WorkerIdsT = Aws::Vector<Aws::String>>
+  NotifyWorkersRequest& WithWorkerIds(WorkerIdsT&& value) {
+    SetWorkerIds(std::forward<WorkerIdsT>(value));
+    return *this;
+  }
+  template <typename WorkerIdsT = Aws::String>
+  NotifyWorkersRequest& AddWorkerIds(WorkerIdsT&& value) {
+    m_workerIdsHasBeenSet = true;
+    m_workerIds.emplace_back(std::forward<WorkerIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_subject;
 
-    AWS_MTURK_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_messageText;
 
+  Aws::Vector<Aws::String> m_workerIds;
+  bool m_subjectHasBeenSet = false;
+  bool m_messageTextHasBeenSet = false;
+  bool m_workerIdsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The subject line of the email message to send. Can include up to 200
-     * characters.</p>
-     */
-    inline const Aws::String& GetSubject() const{ return m_subject; }
-    inline bool SubjectHasBeenSet() const { return m_subjectHasBeenSet; }
-    inline void SetSubject(const Aws::String& value) { m_subjectHasBeenSet = true; m_subject = value; }
-    inline void SetSubject(Aws::String&& value) { m_subjectHasBeenSet = true; m_subject = std::move(value); }
-    inline void SetSubject(const char* value) { m_subjectHasBeenSet = true; m_subject.assign(value); }
-    inline NotifyWorkersRequest& WithSubject(const Aws::String& value) { SetSubject(value); return *this;}
-    inline NotifyWorkersRequest& WithSubject(Aws::String&& value) { SetSubject(std::move(value)); return *this;}
-    inline NotifyWorkersRequest& WithSubject(const char* value) { SetSubject(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The text of the email message to send. Can include up to 4,096 characters</p>
-     */
-    inline const Aws::String& GetMessageText() const{ return m_messageText; }
-    inline bool MessageTextHasBeenSet() const { return m_messageTextHasBeenSet; }
-    inline void SetMessageText(const Aws::String& value) { m_messageTextHasBeenSet = true; m_messageText = value; }
-    inline void SetMessageText(Aws::String&& value) { m_messageTextHasBeenSet = true; m_messageText = std::move(value); }
-    inline void SetMessageText(const char* value) { m_messageTextHasBeenSet = true; m_messageText.assign(value); }
-    inline NotifyWorkersRequest& WithMessageText(const Aws::String& value) { SetMessageText(value); return *this;}
-    inline NotifyWorkersRequest& WithMessageText(Aws::String&& value) { SetMessageText(std::move(value)); return *this;}
-    inline NotifyWorkersRequest& WithMessageText(const char* value) { SetMessageText(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of Worker IDs you wish to notify. You can notify upto 100 Workers at a
-     * time.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetWorkerIds() const{ return m_workerIds; }
-    inline bool WorkerIdsHasBeenSet() const { return m_workerIdsHasBeenSet; }
-    inline void SetWorkerIds(const Aws::Vector<Aws::String>& value) { m_workerIdsHasBeenSet = true; m_workerIds = value; }
-    inline void SetWorkerIds(Aws::Vector<Aws::String>&& value) { m_workerIdsHasBeenSet = true; m_workerIds = std::move(value); }
-    inline NotifyWorkersRequest& WithWorkerIds(const Aws::Vector<Aws::String>& value) { SetWorkerIds(value); return *this;}
-    inline NotifyWorkersRequest& WithWorkerIds(Aws::Vector<Aws::String>&& value) { SetWorkerIds(std::move(value)); return *this;}
-    inline NotifyWorkersRequest& AddWorkerIds(const Aws::String& value) { m_workerIdsHasBeenSet = true; m_workerIds.push_back(value); return *this; }
-    inline NotifyWorkersRequest& AddWorkerIds(Aws::String&& value) { m_workerIdsHasBeenSet = true; m_workerIds.push_back(std::move(value)); return *this; }
-    inline NotifyWorkersRequest& AddWorkerIds(const char* value) { m_workerIdsHasBeenSet = true; m_workerIds.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_subject;
-    bool m_subjectHasBeenSet = false;
-
-    Aws::String m_messageText;
-    bool m_messageTextHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_workerIds;
-    bool m_workerIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MTurk
-} // namespace Aws
+}  // namespace Model
+}  // namespace MTurk
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-quicksight "C++ SDK for the AWS quicksight service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-quicksight "C++ SDK for Amazon QuickSight" aws-cpp-sdk-core)
 
 file(GLOB AWS_QUICKSIGHT_HEADERS
     "include/aws/quicksight/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_QUICKSIGHT_HEADERS
 
 file(GLOB AWS_QUICKSIGHT_MODEL_HEADERS
     "include/aws/quicksight/model/*.h"
+)
+
+file(GLOB AWS_QUICKSIGHT_INTERNAL_HEADERS
+    "include/aws/quicksight/internal/*.h"
 )
 
 file(GLOB AWS_QUICKSIGHT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_QUICKSIGHT_MODEL_SOURCE
 
 file(GLOB QUICKSIGHT_UNIFIED_HEADERS
     ${AWS_QUICKSIGHT_HEADERS}
+    ${AWS_QUICKSIGHT_INTERNAL_HEADERS}
     ${AWS_QUICKSIGHT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\quicksight" FILES ${AWS_QUICKSIGHT_HEADERS})
+        source_group("Header Files\\aws\\quicksight\\internal" FILES ${AWS_QUICKSIGHT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\quicksight\\model" FILES ${AWS_QUICKSIGHT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_QUICKSIGHT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_QUICKSIGHT_MODEL_SOURCE})

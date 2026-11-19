@@ -7,104 +7,115 @@
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/ResultFormat.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
 
+/**
+ * <p>Contains the configuration to write the query results to S3.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/ProtectedQueryS3OutputConfiguration">AWS
+ * API Reference</a></p>
+ */
+class ProtectedQueryS3OutputConfiguration {
+ public:
+  AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration() = default;
+  AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains the configuration to write the query results to S3.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/ProtectedQueryS3OutputConfiguration">AWS
-   * API Reference</a></p>
+   * <p>Intended file format of the result.</p>
    */
-  class ProtectedQueryS3OutputConfiguration
-  {
-  public:
-    AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration();
-    AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API ProtectedQueryS3OutputConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ResultFormat GetResultFormat() const { return m_resultFormat; }
+  inline bool ResultFormatHasBeenSet() const { return m_resultFormatHasBeenSet; }
+  inline void SetResultFormat(ResultFormat value) {
+    m_resultFormatHasBeenSet = true;
+    m_resultFormat = value;
+  }
+  inline ProtectedQueryS3OutputConfiguration& WithResultFormat(ResultFormat value) {
+    SetResultFormat(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The S3 bucket to unload the protected query results.</p>
+   */
+  inline const Aws::String& GetBucket() const { return m_bucket; }
+  inline bool BucketHasBeenSet() const { return m_bucketHasBeenSet; }
+  template <typename BucketT = Aws::String>
+  void SetBucket(BucketT&& value) {
+    m_bucketHasBeenSet = true;
+    m_bucket = std::forward<BucketT>(value);
+  }
+  template <typename BucketT = Aws::String>
+  ProtectedQueryS3OutputConfiguration& WithBucket(BucketT&& value) {
+    SetBucket(std::forward<BucketT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Intended file format of the result.</p>
-     */
-    inline const ResultFormat& GetResultFormat() const{ return m_resultFormat; }
-    inline bool ResultFormatHasBeenSet() const { return m_resultFormatHasBeenSet; }
-    inline void SetResultFormat(const ResultFormat& value) { m_resultFormatHasBeenSet = true; m_resultFormat = value; }
-    inline void SetResultFormat(ResultFormat&& value) { m_resultFormatHasBeenSet = true; m_resultFormat = std::move(value); }
-    inline ProtectedQueryS3OutputConfiguration& WithResultFormat(const ResultFormat& value) { SetResultFormat(value); return *this;}
-    inline ProtectedQueryS3OutputConfiguration& WithResultFormat(ResultFormat&& value) { SetResultFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The S3 prefix to unload the protected query results.</p>
+   */
+  inline const Aws::String& GetKeyPrefix() const { return m_keyPrefix; }
+  inline bool KeyPrefixHasBeenSet() const { return m_keyPrefixHasBeenSet; }
+  template <typename KeyPrefixT = Aws::String>
+  void SetKeyPrefix(KeyPrefixT&& value) {
+    m_keyPrefixHasBeenSet = true;
+    m_keyPrefix = std::forward<KeyPrefixT>(value);
+  }
+  template <typename KeyPrefixT = Aws::String>
+  ProtectedQueryS3OutputConfiguration& WithKeyPrefix(KeyPrefixT&& value) {
+    SetKeyPrefix(std::forward<KeyPrefixT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The S3 bucket to unload the protected query results.</p>
-     */
-    inline const Aws::String& GetBucket() const{ return m_bucket; }
-    inline bool BucketHasBeenSet() const { return m_bucketHasBeenSet; }
-    inline void SetBucket(const Aws::String& value) { m_bucketHasBeenSet = true; m_bucket = value; }
-    inline void SetBucket(Aws::String&& value) { m_bucketHasBeenSet = true; m_bucket = std::move(value); }
-    inline void SetBucket(const char* value) { m_bucketHasBeenSet = true; m_bucket.assign(value); }
-    inline ProtectedQueryS3OutputConfiguration& WithBucket(const Aws::String& value) { SetBucket(value); return *this;}
-    inline ProtectedQueryS3OutputConfiguration& WithBucket(Aws::String&& value) { SetBucket(std::move(value)); return *this;}
-    inline ProtectedQueryS3OutputConfiguration& WithBucket(const char* value) { SetBucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether files should be output as a single file (<code>TRUE</code>)
+   * or output as multiple files (<code>FALSE</code>). This parameter is only
+   * supported for analyses with the Spark analytics engine.</p>
+   */
+  inline bool GetSingleFileOutput() const { return m_singleFileOutput; }
+  inline bool SingleFileOutputHasBeenSet() const { return m_singleFileOutputHasBeenSet; }
+  inline void SetSingleFileOutput(bool value) {
+    m_singleFileOutputHasBeenSet = true;
+    m_singleFileOutput = value;
+  }
+  inline ProtectedQueryS3OutputConfiguration& WithSingleFileOutput(bool value) {
+    SetSingleFileOutput(value);
+    return *this;
+  }
+  ///@}
+ private:
+  ResultFormat m_resultFormat{ResultFormat::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The S3 prefix to unload the protected query results.</p>
-     */
-    inline const Aws::String& GetKeyPrefix() const{ return m_keyPrefix; }
-    inline bool KeyPrefixHasBeenSet() const { return m_keyPrefixHasBeenSet; }
-    inline void SetKeyPrefix(const Aws::String& value) { m_keyPrefixHasBeenSet = true; m_keyPrefix = value; }
-    inline void SetKeyPrefix(Aws::String&& value) { m_keyPrefixHasBeenSet = true; m_keyPrefix = std::move(value); }
-    inline void SetKeyPrefix(const char* value) { m_keyPrefixHasBeenSet = true; m_keyPrefix.assign(value); }
-    inline ProtectedQueryS3OutputConfiguration& WithKeyPrefix(const Aws::String& value) { SetKeyPrefix(value); return *this;}
-    inline ProtectedQueryS3OutputConfiguration& WithKeyPrefix(Aws::String&& value) { SetKeyPrefix(std::move(value)); return *this;}
-    inline ProtectedQueryS3OutputConfiguration& WithKeyPrefix(const char* value) { SetKeyPrefix(value); return *this;}
-    ///@}
+  Aws::String m_bucket;
 
-    ///@{
-    /**
-     * <p>Indicates whether files should be output as a single file (<code>TRUE</code>)
-     * or output as multiple files (<code>FALSE</code>). This parameter is only
-     * supported for analyses with the Spark analytics engine.</p>
-     */
-    inline bool GetSingleFileOutput() const{ return m_singleFileOutput; }
-    inline bool SingleFileOutputHasBeenSet() const { return m_singleFileOutputHasBeenSet; }
-    inline void SetSingleFileOutput(bool value) { m_singleFileOutputHasBeenSet = true; m_singleFileOutput = value; }
-    inline ProtectedQueryS3OutputConfiguration& WithSingleFileOutput(bool value) { SetSingleFileOutput(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_keyPrefix;
 
-    ResultFormat m_resultFormat;
-    bool m_resultFormatHasBeenSet = false;
+  bool m_singleFileOutput{false};
+  bool m_resultFormatHasBeenSet = false;
+  bool m_bucketHasBeenSet = false;
+  bool m_keyPrefixHasBeenSet = false;
+  bool m_singleFileOutputHasBeenSet = false;
+};
 
-    Aws::String m_bucket;
-    bool m_bucketHasBeenSet = false;
-
-    Aws::String m_keyPrefix;
-    bool m_keyPrefixHasBeenSet = false;
-
-    bool m_singleFileOutput;
-    bool m_singleFileOutputHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

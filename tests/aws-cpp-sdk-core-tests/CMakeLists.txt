@@ -12,6 +12,8 @@ file(GLOB AWS_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/aws/client/*.cpp")
 file(GLOB AWS_NET_SRC "${CMAKE_CURRENT_SOURCE_DIR}/aws/net/*.cpp")
 file(GLOB HTTP_SRC "${CMAKE_CURRENT_SOURCE_DIR}/http/*.cpp")
 file(GLOB UTILS_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/*.cpp")
+file(GLOB UTILS_PAGINATION_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/pagination/*.cpp")
+file(GLOB UTILS_CHECKSUM_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/checksum/*.cpp")
 file(GLOB UTILS_CRYPTO_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/crypto/*.cpp")
 file(GLOB UTILS_EVENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/event/*.cpp")
 file(GLOB UTILS_JSON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/json/*.cpp")
@@ -25,6 +27,7 @@ file(GLOB UTILS_COMPONENT_REGISTRY_SRC "${CMAKE_CURRENT_SOURCE_DIR}/utils/compon
 file(GLOB MONITORING_SRC "${CMAKE_CURRENT_SOURCE_DIR}/monitoring/*.cpp")
 file(GLOB SMITHY_TRACING_SRC "${CMAKE_CURRENT_SOURCE_DIR}/smithy/tracing/*.cpp")
 file(GLOB SMITHY_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/*.cpp")
+file(GLOB SMITHY_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/schema/*.cpp")
 file(GLOB SMITHY_CLIENT_SERIALIZER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/serializer/*.cpp")
 file(GLOB SMITHY_CLIENT_FEATURE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/feature/*.cpp")
 file(GLOB ENDPOINT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/endpoint/*.cpp")
@@ -33,6 +36,7 @@ file(GLOB ENDPOINT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/endpoint/*.cpp")
 file(GLOB AWS_CPP_SDK_CORE_TESTS_SRC
   "${CMAKE_CURRENT_SOURCE_DIR}/RunTests.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/VersionTests.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/AsyncSmithyClientTest.cpp"
   ${AWS_SRC}
   ${AWS_AUTH_SRC}
   ${AWS_CONFIG_SRC}
@@ -41,6 +45,8 @@ file(GLOB AWS_CPP_SDK_CORE_TESTS_SRC
   ${AWS_NET_SRC}
   ${HTTP_SRC}
   ${UTILS_SRC}
+  ${UTILS_PAGINATION_SRC}
+  ${UTILS_CHECKSUM_SRC}
   ${UTILS_CRYPTO_SRC}
   ${UTILS_EVENT_SRC}
   ${UTILS_JSON_SRC}
@@ -69,6 +75,8 @@ if(PLATFORM_WINDOWS)
     source_group("Source Files\\http" FILES  ${HTTP_SRC})
     source_group("Source Files\\monitoring" FILES ${MONITORING_SRC})
     source_group("Source Files\\utils" FILES ${UTILS_SRC})
+    source_group("Source Files\\utils\\pagination" FILES ${UTILS_PAGINATION_SRC})
+    source_group("Source Files\\utils\\checksum" FILES ${UTILS_CHECKSUM_SRC})
     source_group("Source Files\\utils\\crypto" FILES ${UTILS_CRYPTO_SRC})
     source_group("Source Files\\utils\\event" FILES ${UTILS_EVENT_SRC})
     source_group("Source Files\\utils\\json" FILES ${UTILS_JSON_SRC})
@@ -118,6 +126,9 @@ if (NO_HTTP_CLIENT)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${PROJECT_LIBS} ${CLIENT_LIBS})
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    "CLOCK_SKEW_TEST_CASES_PATH=\"${CMAKE_CURRENT_SOURCE_DIR}/resources/clock-skew-test-cases.json\"")
 
 add_custom_command(TARGET aws-cpp-sdk-core-tests PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeViewRequest::DescribeViewRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_viewIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeViewRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeViewRequest::SerializePayload() const { return {}; }

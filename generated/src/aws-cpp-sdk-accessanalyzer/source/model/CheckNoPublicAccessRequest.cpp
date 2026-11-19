@@ -12,31 +12,16 @@ using namespace Aws::AccessAnalyzer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CheckNoPublicAccessRequest::CheckNoPublicAccessRequest() : 
-    m_policyDocumentHasBeenSet(false),
-    m_resourceType(AccessCheckResourceType::NOT_SET),
-    m_resourceTypeHasBeenSet(false)
-{
-}
-
-Aws::String CheckNoPublicAccessRequest::SerializePayload() const
-{
+Aws::String CheckNoPublicAccessRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_policyDocumentHasBeenSet)
-  {
-   payload.WithString("policyDocument", m_policyDocument);
-
+  if (m_policyDocumentHasBeenSet) {
+    payload.WithString("policyDocument", m_policyDocument);
   }
 
-  if(m_resourceTypeHasBeenSet)
-  {
-   payload.WithString("resourceType", AccessCheckResourceTypeMapper::GetNameForAccessCheckResourceType(m_resourceType));
+  if (m_resourceTypeHasBeenSet) {
+    payload.WithString("resourceType", AccessCheckResourceTypeMapper::GetNameForAccessCheckResourceType(m_resourceType));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

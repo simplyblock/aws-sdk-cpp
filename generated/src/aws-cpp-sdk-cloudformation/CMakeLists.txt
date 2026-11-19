@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cloudformation "C++ SDK for the AWS cloudformation service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cloudformation "C++ SDK for AWS CloudFormation" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLOUDFORMATION_HEADERS
     "include/aws/cloudformation/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLOUDFORMATION_HEADERS
 
 file(GLOB AWS_CLOUDFORMATION_MODEL_HEADERS
     "include/aws/cloudformation/model/*.h"
+)
+
+file(GLOB AWS_CLOUDFORMATION_INTERNAL_HEADERS
+    "include/aws/cloudformation/internal/*.h"
 )
 
 file(GLOB AWS_CLOUDFORMATION_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLOUDFORMATION_MODEL_SOURCE
 
 file(GLOB CLOUDFORMATION_UNIFIED_HEADERS
     ${AWS_CLOUDFORMATION_HEADERS}
+    ${AWS_CLOUDFORMATION_INTERNAL_HEADERS}
     ${AWS_CLOUDFORMATION_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cloudformation" FILES ${AWS_CLOUDFORMATION_HEADERS})
+        source_group("Header Files\\aws\\cloudformation\\internal" FILES ${AWS_CLOUDFORMATION_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cloudformation\\model" FILES ${AWS_CLOUDFORMATION_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLOUDFORMATION_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLOUDFORMATION_MODEL_SOURCE})

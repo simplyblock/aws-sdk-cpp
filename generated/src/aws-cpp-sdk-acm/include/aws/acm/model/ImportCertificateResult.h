@@ -5,65 +5,72 @@
 
 #pragma once
 #include <aws/acm/ACM_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ACM
-{
-namespace Model
-{
-  class ImportCertificateResult
-  {
-  public:
-    AWS_ACM_API ImportCertificateResult();
-    AWS_ACM_API ImportCertificateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ACM_API ImportCertificateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ACM {
+namespace Model {
+class ImportCertificateResult {
+ public:
+  AWS_ACM_API ImportCertificateResult() = default;
+  AWS_ACM_API ImportCertificateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ACM_API ImportCertificateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon
+   * Resource Name (ARN)</a> of the imported certificate.</p>
+   */
+  inline const Aws::String& GetCertificateArn() const { return m_certificateArn; }
+  template <typename CertificateArnT = Aws::String>
+  void SetCertificateArn(CertificateArnT&& value) {
+    m_certificateArnHasBeenSet = true;
+    m_certificateArn = std::forward<CertificateArnT>(value);
+  }
+  template <typename CertificateArnT = Aws::String>
+  ImportCertificateResult& WithCertificateArn(CertificateArnT&& value) {
+    SetCertificateArn(std::forward<CertificateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon
-     * Resource Name (ARN)</a> of the imported certificate.</p>
-     */
-    inline const Aws::String& GetCertificateArn() const{ return m_certificateArn; }
-    inline void SetCertificateArn(const Aws::String& value) { m_certificateArn = value; }
-    inline void SetCertificateArn(Aws::String&& value) { m_certificateArn = std::move(value); }
-    inline void SetCertificateArn(const char* value) { m_certificateArn.assign(value); }
-    inline ImportCertificateResult& WithCertificateArn(const Aws::String& value) { SetCertificateArn(value); return *this;}
-    inline ImportCertificateResult& WithCertificateArn(Aws::String&& value) { SetCertificateArn(std::move(value)); return *this;}
-    inline ImportCertificateResult& WithCertificateArn(const char* value) { SetCertificateArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ImportCertificateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ImportCertificateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ImportCertificateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ImportCertificateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_certificateArn;
+ private:
+  Aws::String m_certificateArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_certificateArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ACM
-} // namespace Aws
+}  // namespace Model
+}  // namespace ACM
+}  // namespace Aws

@@ -4,60 +4,64 @@
  */
 
 #pragma once
-#include <aws/acm/ACM_EXPORTS.h>
 #include <aws/acm/ACMRequest.h>
+#include <aws/acm/ACM_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ACM
-{
-namespace Model
-{
+namespace Aws {
+namespace ACM {
+namespace Model {
+
+/**
+ */
+class ListTagsForCertificateRequest : public ACMRequest {
+ public:
+  AWS_ACM_API ListTagsForCertificateRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListTagsForCertificate"; }
+
+  AWS_ACM_API Aws::String SerializePayload() const override;
+
+  AWS_ACM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
   /**
+   * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
    */
-  class ListTagsForCertificateRequest : public ACMRequest
-  {
-  public:
-    AWS_ACM_API ListTagsForCertificateRequest();
+  AWS_ACM_API EndpointParameters GetEndpointContextParams() const override;
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListTagsForCertificate"; }
+  ///@{
+  /**
+   * <p>String that contains the ARN of the ACM certificate for which you want to
+   * list the tags. This must have the following form:</p> <p>
+   * <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code>
+   * </p> <p>For more information about ARNs, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon
+   * Resource Names (ARNs)</a>.</p>
+   */
+  inline const Aws::String& GetCertificateArn() const { return m_certificateArn; }
+  inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
+  template <typename CertificateArnT = Aws::String>
+  void SetCertificateArn(CertificateArnT&& value) {
+    m_certificateArnHasBeenSet = true;
+    m_certificateArn = std::forward<CertificateArnT>(value);
+  }
+  template <typename CertificateArnT = Aws::String>
+  ListTagsForCertificateRequest& WithCertificateArn(CertificateArnT&& value) {
+    SetCertificateArn(std::forward<CertificateArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateArn;
+  bool m_certificateArnHasBeenSet = false;
+};
 
-    AWS_ACM_API Aws::String SerializePayload() const override;
-
-    AWS_ACM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>String that contains the ARN of the ACM certificate for which you want to
-     * list the tags. This must have the following form:</p> <p>
-     * <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code>
-     * </p> <p>For more information about ARNs, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon
-     * Resource Names (ARNs)</a>.</p>
-     */
-    inline const Aws::String& GetCertificateArn() const{ return m_certificateArn; }
-    inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
-    inline void SetCertificateArn(const Aws::String& value) { m_certificateArnHasBeenSet = true; m_certificateArn = value; }
-    inline void SetCertificateArn(Aws::String&& value) { m_certificateArnHasBeenSet = true; m_certificateArn = std::move(value); }
-    inline void SetCertificateArn(const char* value) { m_certificateArnHasBeenSet = true; m_certificateArn.assign(value); }
-    inline ListTagsForCertificateRequest& WithCertificateArn(const Aws::String& value) { SetCertificateArn(value); return *this;}
-    inline ListTagsForCertificateRequest& WithCertificateArn(Aws::String&& value) { SetCertificateArn(std::move(value)); return *this;}
-    inline ListTagsForCertificateRequest& WithCertificateArn(const char* value) { SetCertificateArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateArn;
-    bool m_certificateArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ACM
-} // namespace Aws
+}  // namespace Model
+}  // namespace ACM
+}  // namespace Aws

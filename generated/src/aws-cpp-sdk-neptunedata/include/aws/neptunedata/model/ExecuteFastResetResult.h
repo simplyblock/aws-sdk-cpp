@@ -4,82 +4,96 @@
  */
 
 #pragma once
-#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/neptunedata/Neptunedata_EXPORTS.h>
 #include <aws/neptunedata/model/FastResetToken.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace neptunedata
-{
-namespace Model
-{
-  class ExecuteFastResetResult
-  {
-  public:
-    AWS_NEPTUNEDATA_API ExecuteFastResetResult();
-    AWS_NEPTUNEDATA_API ExecuteFastResetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NEPTUNEDATA_API ExecuteFastResetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace neptunedata {
+namespace Model {
+class ExecuteFastResetResult {
+ public:
+  AWS_NEPTUNEDATA_API ExecuteFastResetResult() = default;
+  AWS_NEPTUNEDATA_API ExecuteFastResetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NEPTUNEDATA_API ExecuteFastResetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <code>status</code> is only returned for the
+   * <code>performDatabaseReset</code> action, and indicates whether or not the fast
+   * reset rquest is accepted.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  ExecuteFastResetResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>status</code> is only returned for the
-     * <code>performDatabaseReset</code> action, and indicates whether or not the fast
-     * reset rquest is accepted.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline ExecuteFastResetResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline ExecuteFastResetResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline ExecuteFastResetResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>payload</code> is only returned by the
+   * <code>initiateDatabaseReset</code> action, and contains the unique token to use
+   * with the <code>performDatabaseReset</code> action to make the reset occur.</p>
+   */
+  inline const FastResetToken& GetPayload() const { return m_payload; }
+  template <typename PayloadT = FastResetToken>
+  void SetPayload(PayloadT&& value) {
+    m_payloadHasBeenSet = true;
+    m_payload = std::forward<PayloadT>(value);
+  }
+  template <typename PayloadT = FastResetToken>
+  ExecuteFastResetResult& WithPayload(PayloadT&& value) {
+    SetPayload(std::forward<PayloadT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>payload</code> is only returned by the
-     * <code>initiateDatabaseReset</code> action, and contains the unique token to use
-     * with the <code>performDatabaseReset</code> action to make the reset occur.</p>
-     */
-    inline const FastResetToken& GetPayload() const{ return m_payload; }
-    inline void SetPayload(const FastResetToken& value) { m_payload = value; }
-    inline void SetPayload(FastResetToken&& value) { m_payload = std::move(value); }
-    inline ExecuteFastResetResult& WithPayload(const FastResetToken& value) { SetPayload(value); return *this;}
-    inline ExecuteFastResetResult& WithPayload(FastResetToken&& value) { SetPayload(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ExecuteFastResetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ExecuteFastResetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ExecuteFastResetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ExecuteFastResetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_status;
+ private:
+  Aws::String m_status;
 
-    FastResetToken m_payload;
+  FastResetToken m_payload;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_payloadHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace neptunedata
-} // namespace Aws
+}  // namespace Model
+}  // namespace neptunedata
+}  // namespace Aws

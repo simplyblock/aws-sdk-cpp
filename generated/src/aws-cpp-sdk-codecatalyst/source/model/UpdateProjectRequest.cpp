@@ -12,26 +12,12 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateProjectRequest::UpdateProjectRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String UpdateProjectRequest::SerializePayload() const
-{
+Aws::String UpdateProjectRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,96 +4,127 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/AssignedPrivateIpAddress.h>
 #include <aws/ec2/model/Ipv4PrefixSpecification.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class AssignPrivateIpAddressesResponse
-  {
-  public:
-    AWS_EC2_API AssignPrivateIpAddressesResponse();
-    AWS_EC2_API AssignPrivateIpAddressesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API AssignPrivateIpAddressesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class AssignPrivateIpAddressesResponse {
+ public:
+  AWS_EC2_API AssignPrivateIpAddressesResponse() = default;
+  AWS_EC2_API AssignPrivateIpAddressesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API AssignPrivateIpAddressesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the network interface.</p>
+   */
+  inline const Aws::String& GetNetworkInterfaceId() const { return m_networkInterfaceId; }
+  template <typename NetworkInterfaceIdT = Aws::String>
+  void SetNetworkInterfaceId(NetworkInterfaceIdT&& value) {
+    m_networkInterfaceIdHasBeenSet = true;
+    m_networkInterfaceId = std::forward<NetworkInterfaceIdT>(value);
+  }
+  template <typename NetworkInterfaceIdT = Aws::String>
+  AssignPrivateIpAddressesResponse& WithNetworkInterfaceId(NetworkInterfaceIdT&& value) {
+    SetNetworkInterfaceId(std::forward<NetworkInterfaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the network interface.</p>
-     */
-    inline const Aws::String& GetNetworkInterfaceId() const{ return m_networkInterfaceId; }
-    inline void SetNetworkInterfaceId(const Aws::String& value) { m_networkInterfaceId = value; }
-    inline void SetNetworkInterfaceId(Aws::String&& value) { m_networkInterfaceId = std::move(value); }
-    inline void SetNetworkInterfaceId(const char* value) { m_networkInterfaceId.assign(value); }
-    inline AssignPrivateIpAddressesResponse& WithNetworkInterfaceId(const Aws::String& value) { SetNetworkInterfaceId(value); return *this;}
-    inline AssignPrivateIpAddressesResponse& WithNetworkInterfaceId(Aws::String&& value) { SetNetworkInterfaceId(std::move(value)); return *this;}
-    inline AssignPrivateIpAddressesResponse& WithNetworkInterfaceId(const char* value) { SetNetworkInterfaceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The private IP addresses assigned to the network interface.</p>
+   */
+  inline const Aws::Vector<AssignedPrivateIpAddress>& GetAssignedPrivateIpAddresses() const { return m_assignedPrivateIpAddresses; }
+  template <typename AssignedPrivateIpAddressesT = Aws::Vector<AssignedPrivateIpAddress>>
+  void SetAssignedPrivateIpAddresses(AssignedPrivateIpAddressesT&& value) {
+    m_assignedPrivateIpAddressesHasBeenSet = true;
+    m_assignedPrivateIpAddresses = std::forward<AssignedPrivateIpAddressesT>(value);
+  }
+  template <typename AssignedPrivateIpAddressesT = Aws::Vector<AssignedPrivateIpAddress>>
+  AssignPrivateIpAddressesResponse& WithAssignedPrivateIpAddresses(AssignedPrivateIpAddressesT&& value) {
+    SetAssignedPrivateIpAddresses(std::forward<AssignedPrivateIpAddressesT>(value));
+    return *this;
+  }
+  template <typename AssignedPrivateIpAddressesT = AssignedPrivateIpAddress>
+  AssignPrivateIpAddressesResponse& AddAssignedPrivateIpAddresses(AssignedPrivateIpAddressesT&& value) {
+    m_assignedPrivateIpAddressesHasBeenSet = true;
+    m_assignedPrivateIpAddresses.emplace_back(std::forward<AssignedPrivateIpAddressesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The private IP addresses assigned to the network interface.</p>
-     */
-    inline const Aws::Vector<AssignedPrivateIpAddress>& GetAssignedPrivateIpAddresses() const{ return m_assignedPrivateIpAddresses; }
-    inline void SetAssignedPrivateIpAddresses(const Aws::Vector<AssignedPrivateIpAddress>& value) { m_assignedPrivateIpAddresses = value; }
-    inline void SetAssignedPrivateIpAddresses(Aws::Vector<AssignedPrivateIpAddress>&& value) { m_assignedPrivateIpAddresses = std::move(value); }
-    inline AssignPrivateIpAddressesResponse& WithAssignedPrivateIpAddresses(const Aws::Vector<AssignedPrivateIpAddress>& value) { SetAssignedPrivateIpAddresses(value); return *this;}
-    inline AssignPrivateIpAddressesResponse& WithAssignedPrivateIpAddresses(Aws::Vector<AssignedPrivateIpAddress>&& value) { SetAssignedPrivateIpAddresses(std::move(value)); return *this;}
-    inline AssignPrivateIpAddressesResponse& AddAssignedPrivateIpAddresses(const AssignedPrivateIpAddress& value) { m_assignedPrivateIpAddresses.push_back(value); return *this; }
-    inline AssignPrivateIpAddressesResponse& AddAssignedPrivateIpAddresses(AssignedPrivateIpAddress&& value) { m_assignedPrivateIpAddresses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The IPv4 prefixes that are assigned to the network interface.</p>
+   */
+  inline const Aws::Vector<Ipv4PrefixSpecification>& GetAssignedIpv4Prefixes() const { return m_assignedIpv4Prefixes; }
+  template <typename AssignedIpv4PrefixesT = Aws::Vector<Ipv4PrefixSpecification>>
+  void SetAssignedIpv4Prefixes(AssignedIpv4PrefixesT&& value) {
+    m_assignedIpv4PrefixesHasBeenSet = true;
+    m_assignedIpv4Prefixes = std::forward<AssignedIpv4PrefixesT>(value);
+  }
+  template <typename AssignedIpv4PrefixesT = Aws::Vector<Ipv4PrefixSpecification>>
+  AssignPrivateIpAddressesResponse& WithAssignedIpv4Prefixes(AssignedIpv4PrefixesT&& value) {
+    SetAssignedIpv4Prefixes(std::forward<AssignedIpv4PrefixesT>(value));
+    return *this;
+  }
+  template <typename AssignedIpv4PrefixesT = Ipv4PrefixSpecification>
+  AssignPrivateIpAddressesResponse& AddAssignedIpv4Prefixes(AssignedIpv4PrefixesT&& value) {
+    m_assignedIpv4PrefixesHasBeenSet = true;
+    m_assignedIpv4Prefixes.emplace_back(std::forward<AssignedIpv4PrefixesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IPv4 prefixes that are assigned to the network interface.</p>
-     */
-    inline const Aws::Vector<Ipv4PrefixSpecification>& GetAssignedIpv4Prefixes() const{ return m_assignedIpv4Prefixes; }
-    inline void SetAssignedIpv4Prefixes(const Aws::Vector<Ipv4PrefixSpecification>& value) { m_assignedIpv4Prefixes = value; }
-    inline void SetAssignedIpv4Prefixes(Aws::Vector<Ipv4PrefixSpecification>&& value) { m_assignedIpv4Prefixes = std::move(value); }
-    inline AssignPrivateIpAddressesResponse& WithAssignedIpv4Prefixes(const Aws::Vector<Ipv4PrefixSpecification>& value) { SetAssignedIpv4Prefixes(value); return *this;}
-    inline AssignPrivateIpAddressesResponse& WithAssignedIpv4Prefixes(Aws::Vector<Ipv4PrefixSpecification>&& value) { SetAssignedIpv4Prefixes(std::move(value)); return *this;}
-    inline AssignPrivateIpAddressesResponse& AddAssignedIpv4Prefixes(const Ipv4PrefixSpecification& value) { m_assignedIpv4Prefixes.push_back(value); return *this; }
-    inline AssignPrivateIpAddressesResponse& AddAssignedIpv4Prefixes(Ipv4PrefixSpecification&& value) { m_assignedIpv4Prefixes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline AssignPrivateIpAddressesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline AssignPrivateIpAddressesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  AssignPrivateIpAddressesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_networkInterfaceId;
+ private:
+  Aws::String m_networkInterfaceId;
 
-    Aws::Vector<AssignedPrivateIpAddress> m_assignedPrivateIpAddresses;
+  Aws::Vector<AssignedPrivateIpAddress> m_assignedPrivateIpAddresses;
 
-    Aws::Vector<Ipv4PrefixSpecification> m_assignedIpv4Prefixes;
+  Aws::Vector<Ipv4PrefixSpecification> m_assignedIpv4Prefixes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_networkInterfaceIdHasBeenSet = false;
+  bool m_assignedPrivateIpAddressesHasBeenSet = false;
+  bool m_assignedIpv4PrefixesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

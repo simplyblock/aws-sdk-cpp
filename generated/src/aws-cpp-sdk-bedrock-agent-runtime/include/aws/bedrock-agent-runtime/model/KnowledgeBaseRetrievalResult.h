@@ -7,113 +7,152 @@
 #include <aws/bedrock-agent-runtime/BedrockAgentRuntime_EXPORTS.h>
 #include <aws/bedrock-agent-runtime/model/RetrievalResultContent.h>
 #include <aws/bedrock-agent-runtime/model/RetrievalResultLocation.h>
+#include <aws/core/utils/Document.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/Document.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgentRuntime {
+namespace Model {
 
+/**
+ * <p>Details about a result from querying the knowledge base.</p> <p>This data
+ * type is used in the following API operations:</p> <ul> <li> <p> <a
+ * href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax">Retrieve
+ * response</a> – in the <code>retrievalResults</code> field</p> </li>
+ * </ul><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/KnowledgeBaseRetrievalResult">AWS
+ * API Reference</a></p>
+ */
+class KnowledgeBaseRetrievalResult {
+ public:
+  AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult() = default;
+  AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENTRUNTIME_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details about a result from querying the knowledge base.</p> <p>This data
-   * type is used in the following API operations:</p> <ul> <li> <p> <a
-   * href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax">Retrieve
-   * response</a> – in the <code>retrievalResults</code> field</p> </li>
-   * </ul><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/KnowledgeBaseRetrievalResult">AWS
-   * API Reference</a></p>
+   * <p>Contains information about the content of the chunk.</p>
    */
-  class KnowledgeBaseRetrievalResult
-  {
-  public:
-    AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult();
-    AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENTRUNTIME_API KnowledgeBaseRetrievalResult& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENTRUNTIME_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const RetrievalResultContent& GetContent() const { return m_content; }
+  inline bool ContentHasBeenSet() const { return m_contentHasBeenSet; }
+  template <typename ContentT = RetrievalResultContent>
+  void SetContent(ContentT&& value) {
+    m_contentHasBeenSet = true;
+    m_content = std::forward<ContentT>(value);
+  }
+  template <typename ContentT = RetrievalResultContent>
+  KnowledgeBaseRetrievalResult& WithContent(ContentT&& value) {
+    SetContent(std::forward<ContentT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of the document. Use with
+   * <code>GetDocumentContent</code> to retrieve the full document.</p>
+   */
+  inline const Aws::String& GetDocumentId() const { return m_documentId; }
+  inline bool DocumentIdHasBeenSet() const { return m_documentIdHasBeenSet; }
+  template <typename DocumentIdT = Aws::String>
+  void SetDocumentId(DocumentIdT&& value) {
+    m_documentIdHasBeenSet = true;
+    m_documentId = std::forward<DocumentIdT>(value);
+  }
+  template <typename DocumentIdT = Aws::String>
+  KnowledgeBaseRetrievalResult& WithDocumentId(DocumentIdT&& value) {
+    SetDocumentId(std::forward<DocumentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains a chunk of text from a data source in the knowledge base.</p>
-     */
-    inline const RetrievalResultContent& GetContent() const{ return m_content; }
-    inline bool ContentHasBeenSet() const { return m_contentHasBeenSet; }
-    inline void SetContent(const RetrievalResultContent& value) { m_contentHasBeenSet = true; m_content = value; }
-    inline void SetContent(RetrievalResultContent&& value) { m_contentHasBeenSet = true; m_content = std::move(value); }
-    inline KnowledgeBaseRetrievalResult& WithContent(const RetrievalResultContent& value) { SetContent(value); return *this;}
-    inline KnowledgeBaseRetrievalResult& WithContent(RetrievalResultContent&& value) { SetContent(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains information about the location of the data source.</p>
+   */
+  inline const RetrievalResultLocation& GetLocation() const { return m_location; }
+  inline bool LocationHasBeenSet() const { return m_locationHasBeenSet; }
+  template <typename LocationT = RetrievalResultLocation>
+  void SetLocation(LocationT&& value) {
+    m_locationHasBeenSet = true;
+    m_location = std::forward<LocationT>(value);
+  }
+  template <typename LocationT = RetrievalResultLocation>
+  KnowledgeBaseRetrievalResult& WithLocation(LocationT&& value) {
+    SetLocation(std::forward<LocationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains information about the location of the data source.</p>
-     */
-    inline const RetrievalResultLocation& GetLocation() const{ return m_location; }
-    inline bool LocationHasBeenSet() const { return m_locationHasBeenSet; }
-    inline void SetLocation(const RetrievalResultLocation& value) { m_locationHasBeenSet = true; m_location = value; }
-    inline void SetLocation(RetrievalResultLocation&& value) { m_locationHasBeenSet = true; m_location = std::move(value); }
-    inline KnowledgeBaseRetrievalResult& WithLocation(const RetrievalResultLocation& value) { SetLocation(value); return *this;}
-    inline KnowledgeBaseRetrievalResult& WithLocation(RetrievalResultLocation&& value) { SetLocation(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains metadata attributes and their values for the file in the data
+   * source. For more information, see <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-ds.html#kb-ds-metadata">Metadata
+   * and filtering</a>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Utils::Document>& GetMetadata() const { return m_metadata; }
+  inline bool MetadataHasBeenSet() const { return m_metadataHasBeenSet; }
+  template <typename MetadataT = Aws::Map<Aws::String, Aws::Utils::Document>>
+  void SetMetadata(MetadataT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata = std::forward<MetadataT>(value);
+  }
+  template <typename MetadataT = Aws::Map<Aws::String, Aws::Utils::Document>>
+  KnowledgeBaseRetrievalResult& WithMetadata(MetadataT&& value) {
+    SetMetadata(std::forward<MetadataT>(value));
+    return *this;
+  }
+  template <typename MetadataKeyT = Aws::String, typename MetadataValueT = Aws::Utils::Document>
+  KnowledgeBaseRetrievalResult& AddMetadata(MetadataKeyT&& key, MetadataValueT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata.emplace(std::forward<MetadataKeyT>(key), std::forward<MetadataValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains metadata attributes and their values for the file in the data
-     * source. For more information, see <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-ds.html#kb-ds-metadata">Metadata
-     * and filtering</a>.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::Utils::Document>& GetMetadata() const{ return m_metadata; }
-    inline bool MetadataHasBeenSet() const { return m_metadataHasBeenSet; }
-    inline void SetMetadata(const Aws::Map<Aws::String, Aws::Utils::Document>& value) { m_metadataHasBeenSet = true; m_metadata = value; }
-    inline void SetMetadata(Aws::Map<Aws::String, Aws::Utils::Document>&& value) { m_metadataHasBeenSet = true; m_metadata = std::move(value); }
-    inline KnowledgeBaseRetrievalResult& WithMetadata(const Aws::Map<Aws::String, Aws::Utils::Document>& value) { SetMetadata(value); return *this;}
-    inline KnowledgeBaseRetrievalResult& WithMetadata(Aws::Map<Aws::String, Aws::Utils::Document>&& value) { SetMetadata(std::move(value)); return *this;}
-    inline KnowledgeBaseRetrievalResult& AddMetadata(const Aws::String& key, const Aws::Utils::Document& value) { m_metadataHasBeenSet = true; m_metadata.emplace(key, value); return *this; }
-    inline KnowledgeBaseRetrievalResult& AddMetadata(Aws::String&& key, const Aws::Utils::Document& value) { m_metadataHasBeenSet = true; m_metadata.emplace(std::move(key), value); return *this; }
-    inline KnowledgeBaseRetrievalResult& AddMetadata(const Aws::String& key, Aws::Utils::Document&& value) { m_metadataHasBeenSet = true; m_metadata.emplace(key, std::move(value)); return *this; }
-    inline KnowledgeBaseRetrievalResult& AddMetadata(Aws::String&& key, Aws::Utils::Document&& value) { m_metadataHasBeenSet = true; m_metadata.emplace(std::move(key), std::move(value)); return *this; }
-    inline KnowledgeBaseRetrievalResult& AddMetadata(const char* key, Aws::Utils::Document&& value) { m_metadataHasBeenSet = true; m_metadata.emplace(key, std::move(value)); return *this; }
-    inline KnowledgeBaseRetrievalResult& AddMetadata(const char* key, const Aws::Utils::Document& value) { m_metadataHasBeenSet = true; m_metadata.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The level of relevance of the result to the query.</p>
+   */
+  inline double GetScore() const { return m_score; }
+  inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
+  inline void SetScore(double value) {
+    m_scoreHasBeenSet = true;
+    m_score = value;
+  }
+  inline KnowledgeBaseRetrievalResult& WithScore(double value) {
+    SetScore(value);
+    return *this;
+  }
+  ///@}
+ private:
+  RetrievalResultContent m_content;
 
-    ///@{
-    /**
-     * <p>The level of relevance of the result to the query.</p>
-     */
-    inline double GetScore() const{ return m_score; }
-    inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
-    inline void SetScore(double value) { m_scoreHasBeenSet = true; m_score = value; }
-    inline KnowledgeBaseRetrievalResult& WithScore(double value) { SetScore(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_documentId;
 
-    RetrievalResultContent m_content;
-    bool m_contentHasBeenSet = false;
+  RetrievalResultLocation m_location;
 
-    RetrievalResultLocation m_location;
-    bool m_locationHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::Utils::Document> m_metadata;
 
-    Aws::Map<Aws::String, Aws::Utils::Document> m_metadata;
-    bool m_metadataHasBeenSet = false;
+  double m_score{0.0};
+  bool m_contentHasBeenSet = false;
+  bool m_documentIdHasBeenSet = false;
+  bool m_locationHasBeenSet = false;
+  bool m_metadataHasBeenSet = false;
+  bool m_scoreHasBeenSet = false;
+};
 
-    double m_score;
-    bool m_scoreHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

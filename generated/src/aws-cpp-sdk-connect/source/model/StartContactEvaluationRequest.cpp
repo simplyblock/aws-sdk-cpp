@@ -12,40 +12,32 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartContactEvaluationRequest::StartContactEvaluationRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_contactIdHasBeenSet(false),
-    m_evaluationFormIdHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true)
-{
-}
-
-Aws::String StartContactEvaluationRequest::SerializePayload() const
-{
+Aws::String StartContactEvaluationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_contactIdHasBeenSet)
-  {
-   payload.WithString("ContactId", m_contactId);
-
+  if (m_contactIdHasBeenSet) {
+    payload.WithString("ContactId", m_contactId);
   }
 
-  if(m_evaluationFormIdHasBeenSet)
-  {
-   payload.WithString("EvaluationFormId", m_evaluationFormId);
-
+  if (m_evaluationFormIdHasBeenSet) {
+    payload.WithString("EvaluationFormId", m_evaluationFormId);
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("ClientToken", m_clientToken);
+  if (m_autoEvaluationConfigurationHasBeenSet) {
+    payload.WithObject("AutoEvaluationConfiguration", m_autoEvaluationConfiguration.Jsonize());
+  }
 
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("ClientToken", m_clientToken);
+  }
+
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("Tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

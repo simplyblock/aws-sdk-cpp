@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/license-manager/LicenseManager_EXPORTS.h>
 #include <aws/license-manager/model/License.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManager
-{
-namespace Model
-{
-  class GetLicenseResult
-  {
-  public:
-    AWS_LICENSEMANAGER_API GetLicenseResult();
-    AWS_LICENSEMANAGER_API GetLicenseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGER_API GetLicenseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManager {
+namespace Model {
+class GetLicenseResult {
+ public:
+  AWS_LICENSEMANAGER_API GetLicenseResult() = default;
+  AWS_LICENSEMANAGER_API GetLicenseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGER_API GetLicenseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>License details.</p>
+   */
+  inline const License& GetLicense() const { return m_license; }
+  template <typename LicenseT = License>
+  void SetLicense(LicenseT&& value) {
+    m_licenseHasBeenSet = true;
+    m_license = std::forward<LicenseT>(value);
+  }
+  template <typename LicenseT = License>
+  GetLicenseResult& WithLicense(LicenseT&& value) {
+    SetLicense(std::forward<LicenseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>License details.</p>
-     */
-    inline const License& GetLicense() const{ return m_license; }
-    inline void SetLicense(const License& value) { m_license = value; }
-    inline void SetLicense(License&& value) { m_license = std::move(value); }
-    inline GetLicenseResult& WithLicense(const License& value) { SetLicense(value); return *this;}
-    inline GetLicenseResult& WithLicense(License&& value) { SetLicense(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLicenseResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLicenseResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLicenseResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLicenseResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    License m_license;
+ private:
+  License m_license;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_licenseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManager
+}  // namespace Aws

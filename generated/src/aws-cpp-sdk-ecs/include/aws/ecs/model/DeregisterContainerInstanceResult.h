@@ -4,63 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ecs/ECS_EXPORTS.h>
 #include <aws/ecs/model/ContainerInstance.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class DeregisterContainerInstanceResult
-  {
-  public:
-    AWS_ECS_API DeregisterContainerInstanceResult();
-    AWS_ECS_API DeregisterContainerInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API DeregisterContainerInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+/**
+ * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DeregisterContainerInstanceResponse">AWS
+ * API Reference</a></p>
+ */
+class DeregisterContainerInstanceResult {
+ public:
+  AWS_ECS_API DeregisterContainerInstanceResult() = default;
+  AWS_ECS_API DeregisterContainerInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API DeregisterContainerInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The container instance that was deregistered.</p>
+   */
+  inline const ContainerInstance& GetContainerInstance() const { return m_containerInstance; }
+  template <typename ContainerInstanceT = ContainerInstance>
+  void SetContainerInstance(ContainerInstanceT&& value) {
+    m_containerInstanceHasBeenSet = true;
+    m_containerInstance = std::forward<ContainerInstanceT>(value);
+  }
+  template <typename ContainerInstanceT = ContainerInstance>
+  DeregisterContainerInstanceResult& WithContainerInstance(ContainerInstanceT&& value) {
+    SetContainerInstance(std::forward<ContainerInstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The container instance that was deregistered.</p>
-     */
-    inline const ContainerInstance& GetContainerInstance() const{ return m_containerInstance; }
-    inline void SetContainerInstance(const ContainerInstance& value) { m_containerInstance = value; }
-    inline void SetContainerInstance(ContainerInstance&& value) { m_containerInstance = std::move(value); }
-    inline DeregisterContainerInstanceResult& WithContainerInstance(const ContainerInstance& value) { SetContainerInstance(value); return *this;}
-    inline DeregisterContainerInstanceResult& WithContainerInstance(ContainerInstance&& value) { SetContainerInstance(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeregisterContainerInstanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeregisterContainerInstanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeregisterContainerInstanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeregisterContainerInstanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContainerInstance m_containerInstance;
+ private:
+  ContainerInstance m_containerInstance;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_containerInstanceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

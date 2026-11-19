@@ -1,0 +1,78 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/bedrock-data-automation/BedrockDataAutomationClientConfiguration.h>
+#include <aws/bedrock-data-automation/BedrockDataAutomation_EXPORTS.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
+#include <aws/core/endpoint/EndpointParameter.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
+namespace Aws {
+namespace BedrockDataAutomation {
+namespace Endpoint {
+using BedrockDataAutomationClientConfiguration = Aws::BedrockDataAutomation::BedrockDataAutomationClientConfiguration;
+using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
+using Aws::Endpoint::EndpointProviderBase;
+
+using BedrockDataAutomationClientContextParameters = Aws::Endpoint::ClientContextParameters;
+
+class AWS_BEDROCKDATAAUTOMATION_API BedrockDataAutomationBuiltInParameters : public Aws::Endpoint::BuiltInParameters {
+ public:
+  virtual ~BedrockDataAutomationBuiltInParameters() {};
+  using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
+  virtual void SetFromClientConfiguration(const BedrockDataAutomationClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const BedrockDataAutomationClientConfiguration& config, const Aws::String& serviceName);
+};
+
+/**
+ * The type for the BedrockDataAutomation Client Endpoint Provider.
+ * Inherit from this Base class / "Interface" should you want to provide a custom endpoint provider.
+ * The SDK must use service-specific type for each service per specification.
+ */
+using BedrockDataAutomationEndpointProviderBase =
+    EndpointProviderBase<BedrockDataAutomationClientConfiguration, BedrockDataAutomationBuiltInParameters,
+                         BedrockDataAutomationClientContextParameters>;
+
+using BedrockDataAutomationDefaultEpProviderBase =
+    BDDEndpointProvider<BedrockDataAutomationClientConfiguration, BedrockDataAutomationBuiltInParameters,
+                        BedrockDataAutomationClientContextParameters>;
+
+}  // namespace Endpoint
+}  // namespace BedrockDataAutomation
+
+namespace Endpoint {
+/**
+ * Export endpoint provider symbols for Windows DLL, otherwise declare as extern
+ */
+AWS_BEDROCKDATAAUTOMATION_EXTERN template class AWS_BEDROCKDATAAUTOMATION_API
+    Aws::Endpoint::EndpointProviderBase<BedrockDataAutomation::Endpoint::BedrockDataAutomationClientConfiguration,
+                                        BedrockDataAutomation::Endpoint::BedrockDataAutomationBuiltInParameters,
+                                        BedrockDataAutomation::Endpoint::BedrockDataAutomationClientContextParameters>;
+
+AWS_BEDROCKDATAAUTOMATION_EXTERN template class AWS_BEDROCKDATAAUTOMATION_API
+    Aws::Endpoint::BDDEndpointProvider<BedrockDataAutomation::Endpoint::BedrockDataAutomationClientConfiguration,
+                                       BedrockDataAutomation::Endpoint::BedrockDataAutomationBuiltInParameters,
+                                       BedrockDataAutomation::Endpoint::BedrockDataAutomationClientContextParameters>;
+}  // namespace Endpoint
+
+namespace BedrockDataAutomation {
+namespace Endpoint {
+/**
+ * Default endpoint provider used for this service
+ */
+class AWS_BEDROCKDATAAUTOMATION_API BedrockDataAutomationEndpointProvider : public BedrockDataAutomationDefaultEpProviderBase {
+ public:
+  using BedrockDataAutomationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+
+  BedrockDataAutomationEndpointProvider();
+
+  ~BedrockDataAutomationEndpointProvider() {}
+};
+}  // namespace Endpoint
+}  // namespace BedrockDataAutomation
+}  // namespace Aws

@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker-a2i-runtime/AugmentedAIRuntime_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker-a2i-runtime/AugmentedAIRuntime_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AugmentedAIRuntime
-{
-namespace Model
-{
-  class StartHumanLoopResult
-  {
-  public:
-    AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult();
-    AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AugmentedAIRuntime {
+namespace Model {
+class StartHumanLoopResult {
+ public:
+  AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult() = default;
+  AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUGMENTEDAIRUNTIME_API StartHumanLoopResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the human loop.</p>
+   */
+  inline const Aws::String& GetHumanLoopArn() const { return m_humanLoopArn; }
+  template <typename HumanLoopArnT = Aws::String>
+  void SetHumanLoopArn(HumanLoopArnT&& value) {
+    m_humanLoopArnHasBeenSet = true;
+    m_humanLoopArn = std::forward<HumanLoopArnT>(value);
+  }
+  template <typename HumanLoopArnT = Aws::String>
+  StartHumanLoopResult& WithHumanLoopArn(HumanLoopArnT&& value) {
+    SetHumanLoopArn(std::forward<HumanLoopArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the human loop.</p>
-     */
-    inline const Aws::String& GetHumanLoopArn() const{ return m_humanLoopArn; }
-    inline void SetHumanLoopArn(const Aws::String& value) { m_humanLoopArn = value; }
-    inline void SetHumanLoopArn(Aws::String&& value) { m_humanLoopArn = std::move(value); }
-    inline void SetHumanLoopArn(const char* value) { m_humanLoopArn.assign(value); }
-    inline StartHumanLoopResult& WithHumanLoopArn(const Aws::String& value) { SetHumanLoopArn(value); return *this;}
-    inline StartHumanLoopResult& WithHumanLoopArn(Aws::String&& value) { SetHumanLoopArn(std::move(value)); return *this;}
-    inline StartHumanLoopResult& WithHumanLoopArn(const char* value) { SetHumanLoopArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartHumanLoopResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartHumanLoopResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartHumanLoopResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartHumanLoopResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_humanLoopArn;
+ private:
+  Aws::String m_humanLoopArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_humanLoopArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AugmentedAIRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace AugmentedAIRuntime
+}  // namespace Aws

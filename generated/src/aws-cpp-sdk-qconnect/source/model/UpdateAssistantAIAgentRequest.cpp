@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/UpdateAssistantAIAgentRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qconnect/model/UpdateAssistantAIAgentRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,20 @@ using namespace Aws::QConnect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAssistantAIAgentRequest::UpdateAssistantAIAgentRequest() : 
-    m_aiAgentType(AIAgentType::NOT_SET),
-    m_aiAgentTypeHasBeenSet(false),
-    m_assistantIdHasBeenSet(false),
-    m_configurationHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAssistantAIAgentRequest::SerializePayload() const
-{
+Aws::String UpdateAssistantAIAgentRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_aiAgentTypeHasBeenSet)
-  {
-   payload.WithString("aiAgentType", AIAgentTypeMapper::GetNameForAIAgentType(m_aiAgentType));
+  if (m_aiAgentTypeHasBeenSet) {
+    payload.WithString("aiAgentType", AIAgentTypeMapper::GetNameForAIAgentType(m_aiAgentType));
   }
 
-  if(m_configurationHasBeenSet)
-  {
-   payload.WithObject("configuration", m_configuration.Jsonize());
+  if (m_configurationHasBeenSet) {
+    payload.WithObject("configuration", m_configuration.Jsonize());
+  }
 
+  if (m_orchestratorUseCaseHasBeenSet) {
+    payload.WithString("orchestratorUseCase", m_orchestratorUseCase);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,83 +4,84 @@
  */
 
 #pragma once
-#include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediaconvert/MediaConvert_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConvert
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
 
+/**
+ * To transcode only portions of your video overlay, include one input clip for
+ * each part of your video overlay that you want in your output.<p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/VideoOverlayInputClipping">AWS
+ * API Reference</a></p>
+ */
+class VideoOverlayInputClipping {
+ public:
+  AWS_MEDIACONVERT_API VideoOverlayInputClipping() = default;
+  AWS_MEDIACONVERT_API VideoOverlayInputClipping(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API VideoOverlayInputClipping& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * To transcode only portions of your video overlay, include one input clip for
-   * each part of your video overlay that you want in your output.<p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/VideoOverlayInputClipping">AWS
-   * API Reference</a></p>
+   * Specify the timecode of the last frame to include in your video overlay's clip.
+   * Use the format HH:MM:SS:FF or HH:MM:SS;FF, where HH is the hour, MM is the
+   * minute, SS is the second, and FF is the frame number. When entering this value,
+   * take into account your choice for Timecode source.
    */
-  class VideoOverlayInputClipping
-  {
-  public:
-    AWS_MEDIACONVERT_API VideoOverlayInputClipping();
-    AWS_MEDIACONVERT_API VideoOverlayInputClipping(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API VideoOverlayInputClipping& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEndTimecode() const { return m_endTimecode; }
+  inline bool EndTimecodeHasBeenSet() const { return m_endTimecodeHasBeenSet; }
+  template <typename EndTimecodeT = Aws::String>
+  void SetEndTimecode(EndTimecodeT&& value) {
+    m_endTimecodeHasBeenSet = true;
+    m_endTimecode = std::forward<EndTimecodeT>(value);
+  }
+  template <typename EndTimecodeT = Aws::String>
+  VideoOverlayInputClipping& WithEndTimecode(EndTimecodeT&& value) {
+    SetEndTimecode(std::forward<EndTimecodeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * Specify the timecode of the first frame to include in your video overlay's clip.
+   * Use the format HH:MM:SS:FF or HH:MM:SS;FF, where HH is the hour, MM is the
+   * minute, SS is the second, and FF is the frame number. When entering this value,
+   * take into account your choice for Timecode source.
+   */
+  inline const Aws::String& GetStartTimecode() const { return m_startTimecode; }
+  inline bool StartTimecodeHasBeenSet() const { return m_startTimecodeHasBeenSet; }
+  template <typename StartTimecodeT = Aws::String>
+  void SetStartTimecode(StartTimecodeT&& value) {
+    m_startTimecodeHasBeenSet = true;
+    m_startTimecode = std::forward<StartTimecodeT>(value);
+  }
+  template <typename StartTimecodeT = Aws::String>
+  VideoOverlayInputClipping& WithStartTimecode(StartTimecodeT&& value) {
+    SetStartTimecode(std::forward<StartTimecodeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endTimecode;
 
-    ///@{
-    /**
-     * Specify the timecode of the last frame to include in your video overlay's clip.
-     * Use the format HH:MM:SS:FF or HH:MM:SS;FF, where HH is the hour, MM is the
-     * minute, SS is the second, and FF is the frame number. When entering this value,
-     * take into account your choice for Timecode source.
-     */
-    inline const Aws::String& GetEndTimecode() const{ return m_endTimecode; }
-    inline bool EndTimecodeHasBeenSet() const { return m_endTimecodeHasBeenSet; }
-    inline void SetEndTimecode(const Aws::String& value) { m_endTimecodeHasBeenSet = true; m_endTimecode = value; }
-    inline void SetEndTimecode(Aws::String&& value) { m_endTimecodeHasBeenSet = true; m_endTimecode = std::move(value); }
-    inline void SetEndTimecode(const char* value) { m_endTimecodeHasBeenSet = true; m_endTimecode.assign(value); }
-    inline VideoOverlayInputClipping& WithEndTimecode(const Aws::String& value) { SetEndTimecode(value); return *this;}
-    inline VideoOverlayInputClipping& WithEndTimecode(Aws::String&& value) { SetEndTimecode(std::move(value)); return *this;}
-    inline VideoOverlayInputClipping& WithEndTimecode(const char* value) { SetEndTimecode(value); return *this;}
-    ///@}
+  Aws::String m_startTimecode;
+  bool m_endTimecodeHasBeenSet = false;
+  bool m_startTimecodeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * Specify the timecode of the first frame to include in your video overlay's clip.
-     * Use the format HH:MM:SS:FF or HH:MM:SS;FF, where HH is the hour, MM is the
-     * minute, SS is the second, and FF is the frame number. When entering this value,
-     * take into account your choice for Timecode source.
-     */
-    inline const Aws::String& GetStartTimecode() const{ return m_startTimecode; }
-    inline bool StartTimecodeHasBeenSet() const { return m_startTimecodeHasBeenSet; }
-    inline void SetStartTimecode(const Aws::String& value) { m_startTimecodeHasBeenSet = true; m_startTimecode = value; }
-    inline void SetStartTimecode(Aws::String&& value) { m_startTimecodeHasBeenSet = true; m_startTimecode = std::move(value); }
-    inline void SetStartTimecode(const char* value) { m_startTimecodeHasBeenSet = true; m_startTimecode.assign(value); }
-    inline VideoOverlayInputClipping& WithStartTimecode(const Aws::String& value) { SetStartTimecode(value); return *this;}
-    inline VideoOverlayInputClipping& WithStartTimecode(Aws::String&& value) { SetStartTimecode(std::move(value)); return *this;}
-    inline VideoOverlayInputClipping& WithStartTimecode(const char* value) { SetStartTimecode(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_endTimecode;
-    bool m_endTimecodeHasBeenSet = false;
-
-    Aws::String m_startTimecode;
-    bool m_startTimecodeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

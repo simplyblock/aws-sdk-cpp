@@ -4,13 +4,15 @@
  */
 
 #include <aws/AWSMigrationHub/MigrationHubEndpointProvider.h>
+#include <aws/AWSMigrationHub/internal/MigrationHubEndpointRules.h>
 
-namespace Aws
-{
-namespace MigrationHub
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace MigrationHub
-} // namespace Aws
+namespace Aws {
+namespace MigrationHub {
+namespace Endpoint {
+MigrationHubEndpointProvider::MigrationHubEndpointProvider()
+    : MigrationHubDefaultEpProviderBase(Aws::MigrationHub::MigrationHubEndpointRules::GetRulesBlob(),
+                                        Aws::MigrationHub::MigrationHubEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace MigrationHub
+}  // namespace Aws

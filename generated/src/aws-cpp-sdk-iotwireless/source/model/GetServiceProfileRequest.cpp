@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotwireless/model/GetServiceProfileRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotwireless/model/GetServiceProfileRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoTWireless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetServiceProfileRequest::GetServiceProfileRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String GetServiceProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetServiceProfileRequest::SerializePayload() const { return {}; }

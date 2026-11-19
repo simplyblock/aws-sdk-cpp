@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/lakeformation/LakeFormation_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lakeformation/LakeFormation_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LakeFormation
-{
-namespace Model
-{
-  class StartTransactionResult
-  {
-  public:
-    AWS_LAKEFORMATION_API StartTransactionResult();
-    AWS_LAKEFORMATION_API StartTransactionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAKEFORMATION_API StartTransactionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LakeFormation {
+namespace Model {
+class StartTransactionResult {
+ public:
+  AWS_LAKEFORMATION_API StartTransactionResult() = default;
+  AWS_LAKEFORMATION_API StartTransactionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAKEFORMATION_API StartTransactionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An opaque identifier for the transaction.</p>
+   */
+  inline const Aws::String& GetTransactionId() const { return m_transactionId; }
+  template <typename TransactionIdT = Aws::String>
+  void SetTransactionId(TransactionIdT&& value) {
+    m_transactionIdHasBeenSet = true;
+    m_transactionId = std::forward<TransactionIdT>(value);
+  }
+  template <typename TransactionIdT = Aws::String>
+  StartTransactionResult& WithTransactionId(TransactionIdT&& value) {
+    SetTransactionId(std::forward<TransactionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An opaque identifier for the transaction.</p>
-     */
-    inline const Aws::String& GetTransactionId() const{ return m_transactionId; }
-    inline void SetTransactionId(const Aws::String& value) { m_transactionId = value; }
-    inline void SetTransactionId(Aws::String&& value) { m_transactionId = std::move(value); }
-    inline void SetTransactionId(const char* value) { m_transactionId.assign(value); }
-    inline StartTransactionResult& WithTransactionId(const Aws::String& value) { SetTransactionId(value); return *this;}
-    inline StartTransactionResult& WithTransactionId(Aws::String&& value) { SetTransactionId(std::move(value)); return *this;}
-    inline StartTransactionResult& WithTransactionId(const char* value) { SetTransactionId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartTransactionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartTransactionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartTransactionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartTransactionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_transactionId;
+ private:
+  Aws::String m_transactionId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_transactionIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LakeFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace LakeFormation
+}  // namespace Aws

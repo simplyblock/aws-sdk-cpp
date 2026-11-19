@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-forecastquery "C++ SDK for the AWS forecastquery service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-forecastquery "C++ SDK for Amazon Forecast Query Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_FORECASTQUERY_HEADERS
     "include/aws/forecastquery/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_FORECASTQUERY_HEADERS
 
 file(GLOB AWS_FORECASTQUERY_MODEL_HEADERS
     "include/aws/forecastquery/model/*.h"
+)
+
+file(GLOB AWS_FORECASTQUERY_INTERNAL_HEADERS
+    "include/aws/forecastquery/internal/*.h"
 )
 
 file(GLOB AWS_FORECASTQUERY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_FORECASTQUERY_MODEL_SOURCE
 
 file(GLOB FORECASTQUERY_UNIFIED_HEADERS
     ${AWS_FORECASTQUERY_HEADERS}
+    ${AWS_FORECASTQUERY_INTERNAL_HEADERS}
     ${AWS_FORECASTQUERY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\forecastquery" FILES ${AWS_FORECASTQUERY_HEADERS})
+        source_group("Header Files\\aws\\forecastquery\\internal" FILES ${AWS_FORECASTQUERY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\forecastquery\\model" FILES ${AWS_FORECASTQUERY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_FORECASTQUERY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_FORECASTQUERY_MODEL_SOURCE})

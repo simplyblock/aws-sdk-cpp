@@ -12,27 +12,12 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateSourceRepositoryRequest::CreateSourceRepositoryRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_projectNameHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String CreateSourceRepositoryRequest::SerializePayload() const
-{
+Aws::String CreateSourceRepositoryRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

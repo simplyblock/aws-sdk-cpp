@@ -4,242 +4,291 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/ServiceUpdateSeverity.h>
 #include <aws/elasticache/model/ServiceUpdateStatus.h>
 #include <aws/elasticache/model/ServiceUpdateType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
 
+/**
+ * <p>An update that you can apply to your Valkey or Redis OSS
+ * clusters.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ServiceUpdate">AWS
+ * API Reference</a></p>
+ */
+class ServiceUpdate {
+ public:
+  AWS_ELASTICACHE_API ServiceUpdate() = default;
+  AWS_ELASTICACHE_API ServiceUpdate(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_ELASTICACHE_API ServiceUpdate& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>An update that you can apply to your Valkey or Redis OSS
-   * clusters.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ServiceUpdate">AWS
-   * API Reference</a></p>
+   * <p>The unique ID of the service update</p>
    */
-  class ServiceUpdate
-  {
-  public:
-    AWS_ELASTICACHE_API ServiceUpdate();
-    AWS_ELASTICACHE_API ServiceUpdate(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_ELASTICACHE_API ServiceUpdate& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetServiceUpdateName() const { return m_serviceUpdateName; }
+  inline bool ServiceUpdateNameHasBeenSet() const { return m_serviceUpdateNameHasBeenSet; }
+  template <typename ServiceUpdateNameT = Aws::String>
+  void SetServiceUpdateName(ServiceUpdateNameT&& value) {
+    m_serviceUpdateNameHasBeenSet = true;
+    m_serviceUpdateName = std::forward<ServiceUpdateNameT>(value);
+  }
+  template <typename ServiceUpdateNameT = Aws::String>
+  ServiceUpdate& WithServiceUpdateName(ServiceUpdateNameT&& value) {
+    SetServiceUpdateName(std::forward<ServiceUpdateNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The date when the service update is initially available</p>
+   */
+  inline const Aws::Utils::DateTime& GetServiceUpdateReleaseDate() const { return m_serviceUpdateReleaseDate; }
+  inline bool ServiceUpdateReleaseDateHasBeenSet() const { return m_serviceUpdateReleaseDateHasBeenSet; }
+  template <typename ServiceUpdateReleaseDateT = Aws::Utils::DateTime>
+  void SetServiceUpdateReleaseDate(ServiceUpdateReleaseDateT&& value) {
+    m_serviceUpdateReleaseDateHasBeenSet = true;
+    m_serviceUpdateReleaseDate = std::forward<ServiceUpdateReleaseDateT>(value);
+  }
+  template <typename ServiceUpdateReleaseDateT = Aws::Utils::DateTime>
+  ServiceUpdate& WithServiceUpdateReleaseDate(ServiceUpdateReleaseDateT&& value) {
+    SetServiceUpdateReleaseDate(std::forward<ServiceUpdateReleaseDateT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The date after which the service update is no longer available</p>
+   */
+  inline const Aws::Utils::DateTime& GetServiceUpdateEndDate() const { return m_serviceUpdateEndDate; }
+  inline bool ServiceUpdateEndDateHasBeenSet() const { return m_serviceUpdateEndDateHasBeenSet; }
+  template <typename ServiceUpdateEndDateT = Aws::Utils::DateTime>
+  void SetServiceUpdateEndDate(ServiceUpdateEndDateT&& value) {
+    m_serviceUpdateEndDateHasBeenSet = true;
+    m_serviceUpdateEndDate = std::forward<ServiceUpdateEndDateT>(value);
+  }
+  template <typename ServiceUpdateEndDateT = Aws::Utils::DateTime>
+  ServiceUpdate& WithServiceUpdateEndDate(ServiceUpdateEndDateT&& value) {
+    SetServiceUpdateEndDate(std::forward<ServiceUpdateEndDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique ID of the service update</p>
-     */
-    inline const Aws::String& GetServiceUpdateName() const{ return m_serviceUpdateName; }
-    inline bool ServiceUpdateNameHasBeenSet() const { return m_serviceUpdateNameHasBeenSet; }
-    inline void SetServiceUpdateName(const Aws::String& value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName = value; }
-    inline void SetServiceUpdateName(Aws::String&& value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName = std::move(value); }
-    inline void SetServiceUpdateName(const char* value) { m_serviceUpdateNameHasBeenSet = true; m_serviceUpdateName.assign(value); }
-    inline ServiceUpdate& WithServiceUpdateName(const Aws::String& value) { SetServiceUpdateName(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateName(Aws::String&& value) { SetServiceUpdateName(std::move(value)); return *this;}
-    inline ServiceUpdate& WithServiceUpdateName(const char* value) { SetServiceUpdateName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The severity of the service update</p>
+   */
+  inline ServiceUpdateSeverity GetServiceUpdateSeverity() const { return m_serviceUpdateSeverity; }
+  inline bool ServiceUpdateSeverityHasBeenSet() const { return m_serviceUpdateSeverityHasBeenSet; }
+  inline void SetServiceUpdateSeverity(ServiceUpdateSeverity value) {
+    m_serviceUpdateSeverityHasBeenSet = true;
+    m_serviceUpdateSeverity = value;
+  }
+  inline ServiceUpdate& WithServiceUpdateSeverity(ServiceUpdateSeverity value) {
+    SetServiceUpdateSeverity(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date when the service update is initially available</p>
-     */
-    inline const Aws::Utils::DateTime& GetServiceUpdateReleaseDate() const{ return m_serviceUpdateReleaseDate; }
-    inline bool ServiceUpdateReleaseDateHasBeenSet() const { return m_serviceUpdateReleaseDateHasBeenSet; }
-    inline void SetServiceUpdateReleaseDate(const Aws::Utils::DateTime& value) { m_serviceUpdateReleaseDateHasBeenSet = true; m_serviceUpdateReleaseDate = value; }
-    inline void SetServiceUpdateReleaseDate(Aws::Utils::DateTime&& value) { m_serviceUpdateReleaseDateHasBeenSet = true; m_serviceUpdateReleaseDate = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateReleaseDate(const Aws::Utils::DateTime& value) { SetServiceUpdateReleaseDate(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateReleaseDate(Aws::Utils::DateTime&& value) { SetServiceUpdateReleaseDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The recommendend date to apply the service update in order to ensure
+   * compliance. For information on compliance, see <a
+   * href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/elasticache-compliance.html#elasticache-compliance-self-service">Self-Service
+   * Security Updates for Compliance</a>.</p>
+   */
+  inline const Aws::Utils::DateTime& GetServiceUpdateRecommendedApplyByDate() const { return m_serviceUpdateRecommendedApplyByDate; }
+  inline bool ServiceUpdateRecommendedApplyByDateHasBeenSet() const { return m_serviceUpdateRecommendedApplyByDateHasBeenSet; }
+  template <typename ServiceUpdateRecommendedApplyByDateT = Aws::Utils::DateTime>
+  void SetServiceUpdateRecommendedApplyByDate(ServiceUpdateRecommendedApplyByDateT&& value) {
+    m_serviceUpdateRecommendedApplyByDateHasBeenSet = true;
+    m_serviceUpdateRecommendedApplyByDate = std::forward<ServiceUpdateRecommendedApplyByDateT>(value);
+  }
+  template <typename ServiceUpdateRecommendedApplyByDateT = Aws::Utils::DateTime>
+  ServiceUpdate& WithServiceUpdateRecommendedApplyByDate(ServiceUpdateRecommendedApplyByDateT&& value) {
+    SetServiceUpdateRecommendedApplyByDate(std::forward<ServiceUpdateRecommendedApplyByDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date after which the service update is no longer available</p>
-     */
-    inline const Aws::Utils::DateTime& GetServiceUpdateEndDate() const{ return m_serviceUpdateEndDate; }
-    inline bool ServiceUpdateEndDateHasBeenSet() const { return m_serviceUpdateEndDateHasBeenSet; }
-    inline void SetServiceUpdateEndDate(const Aws::Utils::DateTime& value) { m_serviceUpdateEndDateHasBeenSet = true; m_serviceUpdateEndDate = value; }
-    inline void SetServiceUpdateEndDate(Aws::Utils::DateTime&& value) { m_serviceUpdateEndDateHasBeenSet = true; m_serviceUpdateEndDate = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateEndDate(const Aws::Utils::DateTime& value) { SetServiceUpdateEndDate(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateEndDate(Aws::Utils::DateTime&& value) { SetServiceUpdateEndDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the service update</p>
+   */
+  inline ServiceUpdateStatus GetServiceUpdateStatus() const { return m_serviceUpdateStatus; }
+  inline bool ServiceUpdateStatusHasBeenSet() const { return m_serviceUpdateStatusHasBeenSet; }
+  inline void SetServiceUpdateStatus(ServiceUpdateStatus value) {
+    m_serviceUpdateStatusHasBeenSet = true;
+    m_serviceUpdateStatus = value;
+  }
+  inline ServiceUpdate& WithServiceUpdateStatus(ServiceUpdateStatus value) {
+    SetServiceUpdateStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The severity of the service update</p>
-     */
-    inline const ServiceUpdateSeverity& GetServiceUpdateSeverity() const{ return m_serviceUpdateSeverity; }
-    inline bool ServiceUpdateSeverityHasBeenSet() const { return m_serviceUpdateSeverityHasBeenSet; }
-    inline void SetServiceUpdateSeverity(const ServiceUpdateSeverity& value) { m_serviceUpdateSeverityHasBeenSet = true; m_serviceUpdateSeverity = value; }
-    inline void SetServiceUpdateSeverity(ServiceUpdateSeverity&& value) { m_serviceUpdateSeverityHasBeenSet = true; m_serviceUpdateSeverity = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateSeverity(const ServiceUpdateSeverity& value) { SetServiceUpdateSeverity(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateSeverity(ServiceUpdateSeverity&& value) { SetServiceUpdateSeverity(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides details of the service update</p>
+   */
+  inline const Aws::String& GetServiceUpdateDescription() const { return m_serviceUpdateDescription; }
+  inline bool ServiceUpdateDescriptionHasBeenSet() const { return m_serviceUpdateDescriptionHasBeenSet; }
+  template <typename ServiceUpdateDescriptionT = Aws::String>
+  void SetServiceUpdateDescription(ServiceUpdateDescriptionT&& value) {
+    m_serviceUpdateDescriptionHasBeenSet = true;
+    m_serviceUpdateDescription = std::forward<ServiceUpdateDescriptionT>(value);
+  }
+  template <typename ServiceUpdateDescriptionT = Aws::String>
+  ServiceUpdate& WithServiceUpdateDescription(ServiceUpdateDescriptionT&& value) {
+    SetServiceUpdateDescription(std::forward<ServiceUpdateDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The recommendend date to apply the service update in order to ensure
-     * compliance. For information on compliance, see <a
-     * href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/elasticache-compliance.html#elasticache-compliance-self-service">Self-Service
-     * Security Updates for Compliance</a>.</p>
-     */
-    inline const Aws::Utils::DateTime& GetServiceUpdateRecommendedApplyByDate() const{ return m_serviceUpdateRecommendedApplyByDate; }
-    inline bool ServiceUpdateRecommendedApplyByDateHasBeenSet() const { return m_serviceUpdateRecommendedApplyByDateHasBeenSet; }
-    inline void SetServiceUpdateRecommendedApplyByDate(const Aws::Utils::DateTime& value) { m_serviceUpdateRecommendedApplyByDateHasBeenSet = true; m_serviceUpdateRecommendedApplyByDate = value; }
-    inline void SetServiceUpdateRecommendedApplyByDate(Aws::Utils::DateTime&& value) { m_serviceUpdateRecommendedApplyByDateHasBeenSet = true; m_serviceUpdateRecommendedApplyByDate = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateRecommendedApplyByDate(const Aws::Utils::DateTime& value) { SetServiceUpdateRecommendedApplyByDate(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateRecommendedApplyByDate(Aws::Utils::DateTime&& value) { SetServiceUpdateRecommendedApplyByDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Reflects the nature of the service update</p>
+   */
+  inline ServiceUpdateType GetServiceUpdateType() const { return m_serviceUpdateType; }
+  inline bool ServiceUpdateTypeHasBeenSet() const { return m_serviceUpdateTypeHasBeenSet; }
+  inline void SetServiceUpdateType(ServiceUpdateType value) {
+    m_serviceUpdateTypeHasBeenSet = true;
+    m_serviceUpdateType = value;
+  }
+  inline ServiceUpdate& WithServiceUpdateType(ServiceUpdateType value) {
+    SetServiceUpdateType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the service update</p>
-     */
-    inline const ServiceUpdateStatus& GetServiceUpdateStatus() const{ return m_serviceUpdateStatus; }
-    inline bool ServiceUpdateStatusHasBeenSet() const { return m_serviceUpdateStatusHasBeenSet; }
-    inline void SetServiceUpdateStatus(const ServiceUpdateStatus& value) { m_serviceUpdateStatusHasBeenSet = true; m_serviceUpdateStatus = value; }
-    inline void SetServiceUpdateStatus(ServiceUpdateStatus&& value) { m_serviceUpdateStatusHasBeenSet = true; m_serviceUpdateStatus = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateStatus(const ServiceUpdateStatus& value) { SetServiceUpdateStatus(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateStatus(ServiceUpdateStatus&& value) { SetServiceUpdateStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Elasticache engine to which the update applies. Either Valkey, Redis OSS
+   * or Memcached.</p>
+   */
+  inline const Aws::String& GetEngine() const { return m_engine; }
+  inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
+  template <typename EngineT = Aws::String>
+  void SetEngine(EngineT&& value) {
+    m_engineHasBeenSet = true;
+    m_engine = std::forward<EngineT>(value);
+  }
+  template <typename EngineT = Aws::String>
+  ServiceUpdate& WithEngine(EngineT&& value) {
+    SetEngine(std::forward<EngineT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides details of the service update</p>
-     */
-    inline const Aws::String& GetServiceUpdateDescription() const{ return m_serviceUpdateDescription; }
-    inline bool ServiceUpdateDescriptionHasBeenSet() const { return m_serviceUpdateDescriptionHasBeenSet; }
-    inline void SetServiceUpdateDescription(const Aws::String& value) { m_serviceUpdateDescriptionHasBeenSet = true; m_serviceUpdateDescription = value; }
-    inline void SetServiceUpdateDescription(Aws::String&& value) { m_serviceUpdateDescriptionHasBeenSet = true; m_serviceUpdateDescription = std::move(value); }
-    inline void SetServiceUpdateDescription(const char* value) { m_serviceUpdateDescriptionHasBeenSet = true; m_serviceUpdateDescription.assign(value); }
-    inline ServiceUpdate& WithServiceUpdateDescription(const Aws::String& value) { SetServiceUpdateDescription(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateDescription(Aws::String&& value) { SetServiceUpdateDescription(std::move(value)); return *this;}
-    inline ServiceUpdate& WithServiceUpdateDescription(const char* value) { SetServiceUpdateDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Elasticache engine version to which the update applies. Either Valkey,
+   * Redis OSS or Memcached engine version.</p>
+   */
+  inline const Aws::String& GetEngineVersion() const { return m_engineVersion; }
+  inline bool EngineVersionHasBeenSet() const { return m_engineVersionHasBeenSet; }
+  template <typename EngineVersionT = Aws::String>
+  void SetEngineVersion(EngineVersionT&& value) {
+    m_engineVersionHasBeenSet = true;
+    m_engineVersion = std::forward<EngineVersionT>(value);
+  }
+  template <typename EngineVersionT = Aws::String>
+  ServiceUpdate& WithEngineVersion(EngineVersionT&& value) {
+    SetEngineVersion(std::forward<EngineVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Reflects the nature of the service update</p>
-     */
-    inline const ServiceUpdateType& GetServiceUpdateType() const{ return m_serviceUpdateType; }
-    inline bool ServiceUpdateTypeHasBeenSet() const { return m_serviceUpdateTypeHasBeenSet; }
-    inline void SetServiceUpdateType(const ServiceUpdateType& value) { m_serviceUpdateTypeHasBeenSet = true; m_serviceUpdateType = value; }
-    inline void SetServiceUpdateType(ServiceUpdateType&& value) { m_serviceUpdateTypeHasBeenSet = true; m_serviceUpdateType = std::move(value); }
-    inline ServiceUpdate& WithServiceUpdateType(const ServiceUpdateType& value) { SetServiceUpdateType(value); return *this;}
-    inline ServiceUpdate& WithServiceUpdateType(ServiceUpdateType&& value) { SetServiceUpdateType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the service update will be automatically applied once the
+   * recommended apply-by date has expired. </p>
+   */
+  inline bool GetAutoUpdateAfterRecommendedApplyByDate() const { return m_autoUpdateAfterRecommendedApplyByDate; }
+  inline bool AutoUpdateAfterRecommendedApplyByDateHasBeenSet() const { return m_autoUpdateAfterRecommendedApplyByDateHasBeenSet; }
+  inline void SetAutoUpdateAfterRecommendedApplyByDate(bool value) {
+    m_autoUpdateAfterRecommendedApplyByDateHasBeenSet = true;
+    m_autoUpdateAfterRecommendedApplyByDate = value;
+  }
+  inline ServiceUpdate& WithAutoUpdateAfterRecommendedApplyByDate(bool value) {
+    SetAutoUpdateAfterRecommendedApplyByDate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Elasticache engine to which the update applies. Either Valkey, Redis OSS
-     * or Memcached.</p>
-     */
-    inline const Aws::String& GetEngine() const{ return m_engine; }
-    inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
-    inline void SetEngine(const Aws::String& value) { m_engineHasBeenSet = true; m_engine = value; }
-    inline void SetEngine(Aws::String&& value) { m_engineHasBeenSet = true; m_engine = std::move(value); }
-    inline void SetEngine(const char* value) { m_engineHasBeenSet = true; m_engine.assign(value); }
-    inline ServiceUpdate& WithEngine(const Aws::String& value) { SetEngine(value); return *this;}
-    inline ServiceUpdate& WithEngine(Aws::String&& value) { SetEngine(std::move(value)); return *this;}
-    inline ServiceUpdate& WithEngine(const char* value) { SetEngine(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The estimated length of time the service update will take</p>
+   */
+  inline const Aws::String& GetEstimatedUpdateTime() const { return m_estimatedUpdateTime; }
+  inline bool EstimatedUpdateTimeHasBeenSet() const { return m_estimatedUpdateTimeHasBeenSet; }
+  template <typename EstimatedUpdateTimeT = Aws::String>
+  void SetEstimatedUpdateTime(EstimatedUpdateTimeT&& value) {
+    m_estimatedUpdateTimeHasBeenSet = true;
+    m_estimatedUpdateTime = std::forward<EstimatedUpdateTimeT>(value);
+  }
+  template <typename EstimatedUpdateTimeT = Aws::String>
+  ServiceUpdate& WithEstimatedUpdateTime(EstimatedUpdateTimeT&& value) {
+    SetEstimatedUpdateTime(std::forward<EstimatedUpdateTimeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_serviceUpdateName;
 
-    ///@{
-    /**
-     * <p>The Elasticache engine version to which the update applies. Either Valkey,
-     * Redis OSS or Memcached engine version.</p>
-     */
-    inline const Aws::String& GetEngineVersion() const{ return m_engineVersion; }
-    inline bool EngineVersionHasBeenSet() const { return m_engineVersionHasBeenSet; }
-    inline void SetEngineVersion(const Aws::String& value) { m_engineVersionHasBeenSet = true; m_engineVersion = value; }
-    inline void SetEngineVersion(Aws::String&& value) { m_engineVersionHasBeenSet = true; m_engineVersion = std::move(value); }
-    inline void SetEngineVersion(const char* value) { m_engineVersionHasBeenSet = true; m_engineVersion.assign(value); }
-    inline ServiceUpdate& WithEngineVersion(const Aws::String& value) { SetEngineVersion(value); return *this;}
-    inline ServiceUpdate& WithEngineVersion(Aws::String&& value) { SetEngineVersion(std::move(value)); return *this;}
-    inline ServiceUpdate& WithEngineVersion(const char* value) { SetEngineVersion(value); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_serviceUpdateReleaseDate{};
 
-    ///@{
-    /**
-     * <p>Indicates whether the service update will be automatically applied once the
-     * recommended apply-by date has expired. </p>
-     */
-    inline bool GetAutoUpdateAfterRecommendedApplyByDate() const{ return m_autoUpdateAfterRecommendedApplyByDate; }
-    inline bool AutoUpdateAfterRecommendedApplyByDateHasBeenSet() const { return m_autoUpdateAfterRecommendedApplyByDateHasBeenSet; }
-    inline void SetAutoUpdateAfterRecommendedApplyByDate(bool value) { m_autoUpdateAfterRecommendedApplyByDateHasBeenSet = true; m_autoUpdateAfterRecommendedApplyByDate = value; }
-    inline ServiceUpdate& WithAutoUpdateAfterRecommendedApplyByDate(bool value) { SetAutoUpdateAfterRecommendedApplyByDate(value); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_serviceUpdateEndDate{};
 
-    ///@{
-    /**
-     * <p>The estimated length of time the service update will take</p>
-     */
-    inline const Aws::String& GetEstimatedUpdateTime() const{ return m_estimatedUpdateTime; }
-    inline bool EstimatedUpdateTimeHasBeenSet() const { return m_estimatedUpdateTimeHasBeenSet; }
-    inline void SetEstimatedUpdateTime(const Aws::String& value) { m_estimatedUpdateTimeHasBeenSet = true; m_estimatedUpdateTime = value; }
-    inline void SetEstimatedUpdateTime(Aws::String&& value) { m_estimatedUpdateTimeHasBeenSet = true; m_estimatedUpdateTime = std::move(value); }
-    inline void SetEstimatedUpdateTime(const char* value) { m_estimatedUpdateTimeHasBeenSet = true; m_estimatedUpdateTime.assign(value); }
-    inline ServiceUpdate& WithEstimatedUpdateTime(const Aws::String& value) { SetEstimatedUpdateTime(value); return *this;}
-    inline ServiceUpdate& WithEstimatedUpdateTime(Aws::String&& value) { SetEstimatedUpdateTime(std::move(value)); return *this;}
-    inline ServiceUpdate& WithEstimatedUpdateTime(const char* value) { SetEstimatedUpdateTime(value); return *this;}
-    ///@}
-  private:
+  ServiceUpdateSeverity m_serviceUpdateSeverity{ServiceUpdateSeverity::NOT_SET};
 
-    Aws::String m_serviceUpdateName;
-    bool m_serviceUpdateNameHasBeenSet = false;
+  Aws::Utils::DateTime m_serviceUpdateRecommendedApplyByDate{};
 
-    Aws::Utils::DateTime m_serviceUpdateReleaseDate;
-    bool m_serviceUpdateReleaseDateHasBeenSet = false;
+  ServiceUpdateStatus m_serviceUpdateStatus{ServiceUpdateStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_serviceUpdateEndDate;
-    bool m_serviceUpdateEndDateHasBeenSet = false;
+  Aws::String m_serviceUpdateDescription;
 
-    ServiceUpdateSeverity m_serviceUpdateSeverity;
-    bool m_serviceUpdateSeverityHasBeenSet = false;
+  ServiceUpdateType m_serviceUpdateType{ServiceUpdateType::NOT_SET};
 
-    Aws::Utils::DateTime m_serviceUpdateRecommendedApplyByDate;
-    bool m_serviceUpdateRecommendedApplyByDateHasBeenSet = false;
+  Aws::String m_engine;
 
-    ServiceUpdateStatus m_serviceUpdateStatus;
-    bool m_serviceUpdateStatusHasBeenSet = false;
+  Aws::String m_engineVersion;
 
-    Aws::String m_serviceUpdateDescription;
-    bool m_serviceUpdateDescriptionHasBeenSet = false;
+  bool m_autoUpdateAfterRecommendedApplyByDate{false};
 
-    ServiceUpdateType m_serviceUpdateType;
-    bool m_serviceUpdateTypeHasBeenSet = false;
+  Aws::String m_estimatedUpdateTime;
+  bool m_serviceUpdateNameHasBeenSet = false;
+  bool m_serviceUpdateReleaseDateHasBeenSet = false;
+  bool m_serviceUpdateEndDateHasBeenSet = false;
+  bool m_serviceUpdateSeverityHasBeenSet = false;
+  bool m_serviceUpdateRecommendedApplyByDateHasBeenSet = false;
+  bool m_serviceUpdateStatusHasBeenSet = false;
+  bool m_serviceUpdateDescriptionHasBeenSet = false;
+  bool m_serviceUpdateTypeHasBeenSet = false;
+  bool m_engineHasBeenSet = false;
+  bool m_engineVersionHasBeenSet = false;
+  bool m_autoUpdateAfterRecommendedApplyByDateHasBeenSet = false;
+  bool m_estimatedUpdateTimeHasBeenSet = false;
+};
 
-    Aws::String m_engine;
-    bool m_engineHasBeenSet = false;
-
-    Aws::String m_engineVersion;
-    bool m_engineVersionHasBeenSet = false;
-
-    bool m_autoUpdateAfterRecommendedApplyByDate;
-    bool m_autoUpdateAfterRecommendedApplyByDateHasBeenSet = false;
-
-    Aws::String m_estimatedUpdateTime;
-    bool m_estimatedUpdateTimeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

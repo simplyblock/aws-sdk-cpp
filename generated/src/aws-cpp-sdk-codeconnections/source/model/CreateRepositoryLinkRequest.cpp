@@ -4,73 +4,72 @@
  */
 
 #include <aws/codeconnections/model/CreateRepositoryLinkRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeConnections::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateRepositoryLinkRequest::CreateRepositoryLinkRequest() : 
-    m_connectionArnHasBeenSet(false),
-    m_ownerIdHasBeenSet(false),
-    m_repositoryNameHasBeenSet(false),
-    m_encryptionKeyArnHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
+Aws::String CreateRepositoryLinkRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_connectionArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_ownerIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_repositoryNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionKeyArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_connectionArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ConnectionArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_connectionArn.c_str()));
+  }
+
+  if (m_ownerIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OwnerId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_ownerId.c_str()));
+  }
+
+  if (m_repositoryNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RepositoryName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_repositoryName.c_str()));
+  }
+
+  if (m_encryptionKeyArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EncryptionKeyArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_encryptionKeyArn.c_str()));
+  }
+
+  if (m_tagsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Tags"));
+    encoder.WriteArrayStart(m_tags.size());
+    for (const auto& item_0 : m_tags) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateRepositoryLinkRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_connectionArnHasBeenSet)
-  {
-   payload.WithString("ConnectionArn", m_connectionArn);
-
-  }
-
-  if(m_ownerIdHasBeenSet)
-  {
-   payload.WithString("OwnerId", m_ownerId);
-
-  }
-
-  if(m_repositoryNameHasBeenSet)
-  {
-   payload.WithString("RepositoryName", m_repositoryName);
-
-  }
-
-  if(m_encryptionKeyArnHasBeenSet)
-  {
-   payload.WithString("EncryptionKeyArn", m_encryptionKeyArn);
-
-  }
-
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateRepositoryLinkRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateRepositoryLinkRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "com.amazonaws.codeconnections.CodeConnections_20231201.CreateRepositoryLink"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

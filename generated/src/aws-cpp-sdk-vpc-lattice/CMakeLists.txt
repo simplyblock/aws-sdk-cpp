@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-vpc-lattice "C++ SDK for the AWS vpc-lattice service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-vpc-lattice "C++ SDK for Amazon VPC Lattice" aws-cpp-sdk-core)
 
 file(GLOB AWS_VPC-LATTICE_HEADERS
     "include/aws/vpc-lattice/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_VPC-LATTICE_HEADERS
 
 file(GLOB AWS_VPC-LATTICE_MODEL_HEADERS
     "include/aws/vpc-lattice/model/*.h"
+)
+
+file(GLOB AWS_VPC-LATTICE_INTERNAL_HEADERS
+    "include/aws/vpc-lattice/internal/*.h"
 )
 
 file(GLOB AWS_VPC-LATTICE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_VPC-LATTICE_MODEL_SOURCE
 
 file(GLOB VPC-LATTICE_UNIFIED_HEADERS
     ${AWS_VPC-LATTICE_HEADERS}
+    ${AWS_VPC-LATTICE_INTERNAL_HEADERS}
     ${AWS_VPC-LATTICE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\vpc-lattice" FILES ${AWS_VPC-LATTICE_HEADERS})
+        source_group("Header Files\\aws\\vpc-lattice\\internal" FILES ${AWS_VPC-LATTICE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\vpc-lattice\\model" FILES ${AWS_VPC-LATTICE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_VPC-LATTICE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_VPC-LATTICE_MODEL_SOURCE})

@@ -12,19 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteViewVersionRequest::DeleteViewVersionRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_viewIdHasBeenSet(false),
-    m_viewVersion(0),
-    m_viewVersionHasBeenSet(false)
-{
-}
-
-Aws::String DeleteViewVersionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteViewVersionRequest::SerializePayload() const { return {}; }

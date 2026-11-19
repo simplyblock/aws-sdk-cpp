@@ -4,197 +4,289 @@
  */
 
 #pragma once
-#include <aws/opensearch/OpenSearchService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/opensearch/model/ApplicationStatus.h>
-#include <aws/opensearch/model/IamIdentityCenterOptions.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/opensearch/model/DataSource.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/opensearch/model/AppConfig.h>
+#include <aws/opensearch/model/ApplicationStatus.h>
+#include <aws/opensearch/model/DataSource.h>
+#include <aws/opensearch/model/IamIdentityCenterOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
-  class GetApplicationResult
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API GetApplicationResult();
-    AWS_OPENSEARCHSERVICE_API GetApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OPENSEARCHSERVICE_API GetApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
+class GetApplicationResult {
+ public:
+  AWS_OPENSEARCHSERVICE_API GetApplicationResult() = default;
+  AWS_OPENSEARCHSERVICE_API GetApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OPENSEARCHSERVICE_API GetApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the OpenSearch application.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetApplicationResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Unique identifier of the checked OpenSearch Application.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline GetApplicationResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetApplicationResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetApplicationResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline GetApplicationResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetApplicationResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetApplicationResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetApplicationResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the checked OpenSearch Application.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline GetApplicationResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetApplicationResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetApplicationResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the OpenSearch application.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetApplicationResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Endpoint URL of the checked OpenSearch Application.</p>
-     */
-    inline const Aws::String& GetEndpoint() const{ return m_endpoint; }
-    inline void SetEndpoint(const Aws::String& value) { m_endpoint = value; }
-    inline void SetEndpoint(Aws::String&& value) { m_endpoint = std::move(value); }
-    inline void SetEndpoint(const char* value) { m_endpoint.assign(value); }
-    inline GetApplicationResult& WithEndpoint(const Aws::String& value) { SetEndpoint(value); return *this;}
-    inline GetApplicationResult& WithEndpoint(Aws::String&& value) { SetEndpoint(std::move(value)); return *this;}
-    inline GetApplicationResult& WithEndpoint(const char* value) { SetEndpoint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The endpoint URL of the OpenSearch application.</p>
+   */
+  inline const Aws::String& GetEndpoint() const { return m_endpoint; }
+  template <typename EndpointT = Aws::String>
+  void SetEndpoint(EndpointT&& value) {
+    m_endpointHasBeenSet = true;
+    m_endpoint = std::forward<EndpointT>(value);
+  }
+  template <typename EndpointT = Aws::String>
+  GetApplicationResult& WithEndpoint(EndpointT&& value) {
+    SetEndpoint(std::forward<EndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Current status of the checked OpenSearch Application. Possible values are
-     * <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>,
-     * <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>
-     */
-    inline const ApplicationStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const ApplicationStatus& value) { m_status = value; }
-    inline void SetStatus(ApplicationStatus&& value) { m_status = std::move(value); }
-    inline GetApplicationResult& WithStatus(const ApplicationStatus& value) { SetStatus(value); return *this;}
-    inline GetApplicationResult& WithStatus(ApplicationStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the OpenSearch application. Possible values:
+   * <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>,
+   * <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>
+   */
+  inline ApplicationStatus GetStatus() const { return m_status; }
+  inline void SetStatus(ApplicationStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetApplicationResult& WithStatus(ApplicationStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>IAM Identity Center settings for the checked OpenSearch Application.</p>
-     */
-    inline const IamIdentityCenterOptions& GetIamIdentityCenterOptions() const{ return m_iamIdentityCenterOptions; }
-    inline void SetIamIdentityCenterOptions(const IamIdentityCenterOptions& value) { m_iamIdentityCenterOptions = value; }
-    inline void SetIamIdentityCenterOptions(IamIdentityCenterOptions&& value) { m_iamIdentityCenterOptions = std::move(value); }
-    inline GetApplicationResult& WithIamIdentityCenterOptions(const IamIdentityCenterOptions& value) { SetIamIdentityCenterOptions(value); return *this;}
-    inline GetApplicationResult& WithIamIdentityCenterOptions(IamIdentityCenterOptions&& value) { SetIamIdentityCenterOptions(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IAM Identity Center settings configured for the OpenSearch
+   * application.</p>
+   */
+  inline const IamIdentityCenterOptions& GetIamIdentityCenterOptions() const { return m_iamIdentityCenterOptions; }
+  template <typename IamIdentityCenterOptionsT = IamIdentityCenterOptions>
+  void SetIamIdentityCenterOptions(IamIdentityCenterOptionsT&& value) {
+    m_iamIdentityCenterOptionsHasBeenSet = true;
+    m_iamIdentityCenterOptions = std::forward<IamIdentityCenterOptionsT>(value);
+  }
+  template <typename IamIdentityCenterOptionsT = IamIdentityCenterOptions>
+  GetApplicationResult& WithIamIdentityCenterOptions(IamIdentityCenterOptionsT&& value) {
+    SetIamIdentityCenterOptions(std::forward<IamIdentityCenterOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Associated data sources to the checked OpenSearch Application.</p>
-     */
-    inline const Aws::Vector<DataSource>& GetDataSources() const{ return m_dataSources; }
-    inline void SetDataSources(const Aws::Vector<DataSource>& value) { m_dataSources = value; }
-    inline void SetDataSources(Aws::Vector<DataSource>&& value) { m_dataSources = std::move(value); }
-    inline GetApplicationResult& WithDataSources(const Aws::Vector<DataSource>& value) { SetDataSources(value); return *this;}
-    inline GetApplicationResult& WithDataSources(Aws::Vector<DataSource>&& value) { SetDataSources(std::move(value)); return *this;}
-    inline GetApplicationResult& AddDataSources(const DataSource& value) { m_dataSources.push_back(value); return *this; }
-    inline GetApplicationResult& AddDataSources(DataSource&& value) { m_dataSources.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The data sources associated with the OpenSearch application.</p>
+   */
+  inline const Aws::Vector<DataSource>& GetDataSources() const { return m_dataSources; }
+  template <typename DataSourcesT = Aws::Vector<DataSource>>
+  void SetDataSources(DataSourcesT&& value) {
+    m_dataSourcesHasBeenSet = true;
+    m_dataSources = std::forward<DataSourcesT>(value);
+  }
+  template <typename DataSourcesT = Aws::Vector<DataSource>>
+  GetApplicationResult& WithDataSources(DataSourcesT&& value) {
+    SetDataSources(std::forward<DataSourcesT>(value));
+    return *this;
+  }
+  template <typename DataSourcesT = DataSource>
+  GetApplicationResult& AddDataSources(DataSourcesT&& value) {
+    m_dataSourcesHasBeenSet = true;
+    m_dataSources.emplace_back(std::forward<DataSourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>App configurations of the checked OpenSearch Application.</p>
-     */
-    inline const Aws::Vector<AppConfig>& GetAppConfigs() const{ return m_appConfigs; }
-    inline void SetAppConfigs(const Aws::Vector<AppConfig>& value) { m_appConfigs = value; }
-    inline void SetAppConfigs(Aws::Vector<AppConfig>&& value) { m_appConfigs = std::move(value); }
-    inline GetApplicationResult& WithAppConfigs(const Aws::Vector<AppConfig>& value) { SetAppConfigs(value); return *this;}
-    inline GetApplicationResult& WithAppConfigs(Aws::Vector<AppConfig>&& value) { SetAppConfigs(std::move(value)); return *this;}
-    inline GetApplicationResult& AddAppConfigs(const AppConfig& value) { m_appConfigs.push_back(value); return *this; }
-    inline GetApplicationResult& AddAppConfigs(AppConfig&& value) { m_appConfigs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration settings of the OpenSearch application.</p>
+   */
+  inline const Aws::Vector<AppConfig>& GetAppConfigs() const { return m_appConfigs; }
+  template <typename AppConfigsT = Aws::Vector<AppConfig>>
+  void SetAppConfigs(AppConfigsT&& value) {
+    m_appConfigsHasBeenSet = true;
+    m_appConfigs = std::forward<AppConfigsT>(value);
+  }
+  template <typename AppConfigsT = Aws::Vector<AppConfig>>
+  GetApplicationResult& WithAppConfigs(AppConfigsT&& value) {
+    SetAppConfigs(std::forward<AppConfigsT>(value));
+    return *this;
+  }
+  template <typename AppConfigsT = AppConfig>
+  GetApplicationResult& AddAppConfigs(AppConfigsT&& value) {
+    m_appConfigsHasBeenSet = true;
+    m_appConfigs.emplace_back(std::forward<AppConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Timestamp at which the checked OpenSearch Application was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetApplicationResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetApplicationResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp when the OpenSearch application was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetApplicationResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Timestamp at which the checked OpenSearch Application was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedAt() const{ return m_lastUpdatedAt; }
-    inline void SetLastUpdatedAt(const Aws::Utils::DateTime& value) { m_lastUpdatedAt = value; }
-    inline void SetLastUpdatedAt(Aws::Utils::DateTime&& value) { m_lastUpdatedAt = std::move(value); }
-    inline GetApplicationResult& WithLastUpdatedAt(const Aws::Utils::DateTime& value) { SetLastUpdatedAt(value); return *this;}
-    inline GetApplicationResult& WithLastUpdatedAt(Aws::Utils::DateTime&& value) { SetLastUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of the last update to the OpenSearch application.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedAt() const { return m_lastUpdatedAt; }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  void SetLastUpdatedAt(LastUpdatedAtT&& value) {
+    m_lastUpdatedAtHasBeenSet = true;
+    m_lastUpdatedAt = std::forward<LastUpdatedAtT>(value);
+  }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  GetApplicationResult& WithLastUpdatedAt(LastUpdatedAtT&& value) {
+    SetLastUpdatedAt(std::forward<LastUpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the
+   * application's data at rest.</p>
+   */
+  inline const Aws::String& GetKmsKeyArn() const { return m_kmsKeyArn; }
+  template <typename KmsKeyArnT = Aws::String>
+  void SetKmsKeyArn(KmsKeyArnT&& value) {
+    m_kmsKeyArnHasBeenSet = true;
+    m_kmsKeyArn = std::forward<KmsKeyArnT>(value);
+  }
+  template <typename KmsKeyArnT = Aws::String>
+  GetApplicationResult& WithKmsKeyArn(KmsKeyArnT&& value) {
+    SetKmsKeyArn(std::forward<KmsKeyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_id;
+  ///@{
 
-    Aws::String m_arn;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_name;
+ private:
+  Aws::String m_id;
 
-    Aws::String m_endpoint;
+  Aws::String m_arn;
 
-    ApplicationStatus m_status;
+  Aws::String m_name;
 
-    IamIdentityCenterOptions m_iamIdentityCenterOptions;
+  Aws::String m_endpoint;
 
-    Aws::Vector<DataSource> m_dataSources;
+  ApplicationStatus m_status{ApplicationStatus::NOT_SET};
 
-    Aws::Vector<AppConfig> m_appConfigs;
+  IamIdentityCenterOptions m_iamIdentityCenterOptions;
 
-    Aws::Utils::DateTime m_createdAt;
+  Aws::Vector<DataSource> m_dataSources;
 
-    Aws::Utils::DateTime m_lastUpdatedAt;
+  Aws::Vector<AppConfig> m_appConfigs;
 
-    Aws::String m_requestId;
-  };
+  Aws::Utils::DateTime m_createdAt{};
 
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+  Aws::Utils::DateTime m_lastUpdatedAt{};
+
+  Aws::String m_kmsKeyArn;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_idHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_endpointHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_iamIdentityCenterOptionsHasBeenSet = false;
+  bool m_dataSourcesHasBeenSet = false;
+  bool m_appConfigsHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_lastUpdatedAtHasBeenSet = false;
+  bool m_kmsKeyArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-personalize-events "C++ SDK for the AWS personalize-events service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-personalize-events "C++ SDK for Amazon Personalize Events" aws-cpp-sdk-core)
 
 file(GLOB AWS_PERSONALIZE-EVENTS_HEADERS
     "include/aws/personalize-events/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PERSONALIZE-EVENTS_HEADERS
 
 file(GLOB AWS_PERSONALIZE-EVENTS_MODEL_HEADERS
     "include/aws/personalize-events/model/*.h"
+)
+
+file(GLOB AWS_PERSONALIZE-EVENTS_INTERNAL_HEADERS
+    "include/aws/personalize-events/internal/*.h"
 )
 
 file(GLOB AWS_PERSONALIZE-EVENTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PERSONALIZE-EVENTS_MODEL_SOURCE
 
 file(GLOB PERSONALIZE-EVENTS_UNIFIED_HEADERS
     ${AWS_PERSONALIZE-EVENTS_HEADERS}
+    ${AWS_PERSONALIZE-EVENTS_INTERNAL_HEADERS}
     ${AWS_PERSONALIZE-EVENTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\personalize-events" FILES ${AWS_PERSONALIZE-EVENTS_HEADERS})
+        source_group("Header Files\\aws\\personalize-events\\internal" FILES ${AWS_PERSONALIZE-EVENTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\personalize-events\\model" FILES ${AWS_PERSONALIZE-EVENTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PERSONALIZE-EVENTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PERSONALIZE-EVENTS_MODEL_SOURCE})

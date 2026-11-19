@@ -4,83 +4,103 @@
  */
 
 #pragma once
-#include <aws/rds/RDS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/rds/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/DBRecommendation.h>
+#include <aws/rds/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace RDS
-{
-namespace Model
-{
-  class DescribeDBRecommendationsResult
-  {
-  public:
-    AWS_RDS_API DescribeDBRecommendationsResult();
-    AWS_RDS_API DescribeDBRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_RDS_API DescribeDBRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace RDS {
+namespace Model {
+class DescribeDBRecommendationsResult {
+ public:
+  AWS_RDS_API DescribeDBRecommendationsResult() = default;
+  AWS_RDS_API DescribeDBRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_RDS_API DescribeDBRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A list of recommendations which is returned from
+   * <code>DescribeDBRecommendations</code> API request.</p>
+   */
+  inline const Aws::Vector<DBRecommendation>& GetDBRecommendations() const { return m_dBRecommendations; }
+  template <typename DBRecommendationsT = Aws::Vector<DBRecommendation>>
+  void SetDBRecommendations(DBRecommendationsT&& value) {
+    m_dBRecommendationsHasBeenSet = true;
+    m_dBRecommendations = std::forward<DBRecommendationsT>(value);
+  }
+  template <typename DBRecommendationsT = Aws::Vector<DBRecommendation>>
+  DescribeDBRecommendationsResult& WithDBRecommendations(DBRecommendationsT&& value) {
+    SetDBRecommendations(std::forward<DBRecommendationsT>(value));
+    return *this;
+  }
+  template <typename DBRecommendationsT = DBRecommendation>
+  DescribeDBRecommendationsResult& AddDBRecommendations(DBRecommendationsT&& value) {
+    m_dBRecommendationsHasBeenSet = true;
+    m_dBRecommendations.emplace_back(std::forward<DBRecommendationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of recommendations which is returned from
-     * <code>DescribeDBRecommendations</code> API request.</p>
-     */
-    inline const Aws::Vector<DBRecommendation>& GetDBRecommendations() const{ return m_dBRecommendations; }
-    inline void SetDBRecommendations(const Aws::Vector<DBRecommendation>& value) { m_dBRecommendations = value; }
-    inline void SetDBRecommendations(Aws::Vector<DBRecommendation>&& value) { m_dBRecommendations = std::move(value); }
-    inline DescribeDBRecommendationsResult& WithDBRecommendations(const Aws::Vector<DBRecommendation>& value) { SetDBRecommendations(value); return *this;}
-    inline DescribeDBRecommendationsResult& WithDBRecommendations(Aws::Vector<DBRecommendation>&& value) { SetDBRecommendations(std::move(value)); return *this;}
-    inline DescribeDBRecommendationsResult& AddDBRecommendations(const DBRecommendation& value) { m_dBRecommendations.push_back(value); return *this; }
-    inline DescribeDBRecommendationsResult& AddDBRecommendations(DBRecommendation&& value) { m_dBRecommendations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An optional pagination token provided by a previous
+   * <code>DBRecommendationsMessage</code> request. This token can be used later in a
+   * <code>DescribeDBRecomendations</code> request. </p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeDBRecommendationsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous
-     * <code>DBRecommendationsMessage</code> request. This token can be used later in a
-     * <code>DescribeDBRecomendations</code> request. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeDBRecommendationsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeDBRecommendationsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeDBRecommendationsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeDBRecommendationsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeDBRecommendationsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeDBRecommendationsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DBRecommendation> m_dBRecommendations;
+ private:
+  Aws::Vector<DBRecommendation> m_dBRecommendations;
 
-    Aws::String m_marker;
+  Aws::String m_marker;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dBRecommendationsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RDS
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDS
+}  // namespace Aws

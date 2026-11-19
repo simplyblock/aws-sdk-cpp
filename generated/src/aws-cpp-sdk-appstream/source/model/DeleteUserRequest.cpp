@@ -4,47 +4,46 @@
  */
 
 #include <aws/appstream/model/DeleteUserRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::AppStream::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DeleteUserRequest::DeleteUserRequest() : 
-    m_userNameHasBeenSet(false),
-    m_authenticationType(AuthenticationType::NOT_SET),
-    m_authenticationTypeHasBeenSet(false)
-{
-}
+Aws::String DeleteUserRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DeleteUserRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_userNameHasBeenSet)
-  {
-   payload.WithString("UserName", m_userName);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_userNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_authenticationTypeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_authenticationTypeHasBeenSet)
-  {
-   payload.WithString("AuthenticationType", AuthenticationTypeMapper::GetNameForAuthenticationType(m_authenticationType));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_userNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_userName.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_authenticationTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AuthenticationType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(AuthenticationTypeMapper::GetNameForAuthenticationType(m_authenticationType).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DeleteUserRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteUserRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.DeleteUser"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

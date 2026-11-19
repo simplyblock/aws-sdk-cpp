@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/servicecatalog-appregistry/AppRegistry_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/servicecatalog-appregistry/AppRegistry_EXPORTS.h>
 #include <aws/servicecatalog-appregistry/model/AttributeGroupSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppRegistry
-{
-namespace Model
-{
-  class ListAttributeGroupsResult
-  {
-  public:
-    AWS_APPREGISTRY_API ListAttributeGroupsResult();
-    AWS_APPREGISTRY_API ListAttributeGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPREGISTRY_API ListAttributeGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppRegistry {
+namespace Model {
+class ListAttributeGroupsResult {
+ public:
+  AWS_APPREGISTRY_API ListAttributeGroupsResult() = default;
+  AWS_APPREGISTRY_API ListAttributeGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPREGISTRY_API ListAttributeGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>This list of attribute groups.</p>
+   */
+  inline const Aws::Vector<AttributeGroupSummary>& GetAttributeGroups() const { return m_attributeGroups; }
+  template <typename AttributeGroupsT = Aws::Vector<AttributeGroupSummary>>
+  void SetAttributeGroups(AttributeGroupsT&& value) {
+    m_attributeGroupsHasBeenSet = true;
+    m_attributeGroups = std::forward<AttributeGroupsT>(value);
+  }
+  template <typename AttributeGroupsT = Aws::Vector<AttributeGroupSummary>>
+  ListAttributeGroupsResult& WithAttributeGroups(AttributeGroupsT&& value) {
+    SetAttributeGroups(std::forward<AttributeGroupsT>(value));
+    return *this;
+  }
+  template <typename AttributeGroupsT = AttributeGroupSummary>
+  ListAttributeGroupsResult& AddAttributeGroups(AttributeGroupsT&& value) {
+    m_attributeGroupsHasBeenSet = true;
+    m_attributeGroups.emplace_back(std::forward<AttributeGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This list of attribute groups.</p>
-     */
-    inline const Aws::Vector<AttributeGroupSummary>& GetAttributeGroups() const{ return m_attributeGroups; }
-    inline void SetAttributeGroups(const Aws::Vector<AttributeGroupSummary>& value) { m_attributeGroups = value; }
-    inline void SetAttributeGroups(Aws::Vector<AttributeGroupSummary>&& value) { m_attributeGroups = std::move(value); }
-    inline ListAttributeGroupsResult& WithAttributeGroups(const Aws::Vector<AttributeGroupSummary>& value) { SetAttributeGroups(value); return *this;}
-    inline ListAttributeGroupsResult& WithAttributeGroups(Aws::Vector<AttributeGroupSummary>&& value) { SetAttributeGroups(std::move(value)); return *this;}
-    inline ListAttributeGroupsResult& AddAttributeGroups(const AttributeGroupSummary& value) { m_attributeGroups.push_back(value); return *this; }
-    inline ListAttributeGroupsResult& AddAttributeGroups(AttributeGroupSummary&& value) { m_attributeGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to get the next page of results after a previous API call.
+   * </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAttributeGroupsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to get the next page of results after a previous API call.
-     * </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListAttributeGroupsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAttributeGroupsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAttributeGroupsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListAttributeGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListAttributeGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListAttributeGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListAttributeGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AttributeGroupSummary> m_attributeGroups;
+ private:
+  Aws::Vector<AttributeGroupSummary> m_attributeGroups;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attributeGroupsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppRegistry
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppRegistry
+}  // namespace Aws

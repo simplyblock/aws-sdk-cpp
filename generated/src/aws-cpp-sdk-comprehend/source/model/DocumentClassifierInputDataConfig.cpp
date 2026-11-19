@@ -4,162 +4,441 @@
  */
 
 #include <aws/comprehend/model/DocumentClassifierInputDataConfig.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-DocumentClassifierInputDataConfig::DocumentClassifierInputDataConfig() : 
-    m_dataFormat(DocumentClassifierDataFormat::NOT_SET),
-    m_dataFormatHasBeenSet(false),
-    m_s3UriHasBeenSet(false),
-    m_testS3UriHasBeenSet(false),
-    m_labelDelimiterHasBeenSet(false),
-    m_augmentedManifestsHasBeenSet(false),
-    m_documentType(DocumentClassifierDocumentTypeFormat::NOT_SET),
-    m_documentTypeHasBeenSet(false),
-    m_documentsHasBeenSet(false),
-    m_documentReaderConfigHasBeenSet(false)
-{
+DocumentClassifierInputDataConfig::DocumentClassifierInputDataConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-DocumentClassifierInputDataConfig::DocumentClassifierInputDataConfig(JsonView jsonValue)
-  : DocumentClassifierInputDataConfig()
-{
-  *this = jsonValue;
-}
+DocumentClassifierInputDataConfig& DocumentClassifierInputDataConfig::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-DocumentClassifierInputDataConfig& DocumentClassifierInputDataConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("DataFormat"))
-  {
-    m_dataFormat = DocumentClassifierDataFormatMapper::GetDocumentClassifierDataFormatForName(jsonValue.GetString("DataFormat"));
+              if (initialKeyStr == "DataFormat") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_dataFormat = DocumentClassifierDataFormatMapper::GetDocumentClassifierDataFormatForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_dataFormatHasBeenSet = true;
+              }
 
-    m_dataFormatHasBeenSet = true;
-  }
+              else if (initialKeyStr == "S3Uri") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3Uri = ss.str();
+                  }
+                }
+                m_s3UriHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("S3Uri"))
-  {
-    m_s3Uri = jsonValue.GetString("S3Uri");
+              else if (initialKeyStr == "TestS3Uri") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_testS3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_testS3Uri = ss.str();
+                  }
+                }
+                m_testS3UriHasBeenSet = true;
+              }
 
-    m_s3UriHasBeenSet = true;
-  }
+              else if (initialKeyStr == "LabelDelimiter") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_labelDelimiter = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_labelDelimiter = ss.str();
+                  }
+                }
+                m_labelDelimiterHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("TestS3Uri"))
-  {
-    m_testS3Uri = jsonValue.GetString("TestS3Uri");
+              else if (initialKeyStr == "AugmentedManifests") {
+                auto peekType_0 = decoder->PeekType();
+                if (peekType_0.has_value() &&
+                    (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                  if (peekType_0.value() == CborType::ArrayStart) {
+                    auto listSize_0 = decoder->PopNextArrayStart();
+                    if (listSize_0.has_value()) {
+                      for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                        m_augmentedManifests.push_back(AugmentedManifestsListItem(decoder));
+                      }
+                    }
+                  } else  // IndefArrayStart
+                  {
+                    decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType_0 = decoder->PeekType();
+                      if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                        if (nextType_0.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      m_augmentedManifests.push_back(AugmentedManifestsListItem(decoder));
+                    }
+                  }
+                }
+                m_augmentedManifestsHasBeenSet = true;
+              }
 
-    m_testS3UriHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DocumentType") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_documentType = DocumentClassifierDocumentTypeFormatMapper::GetDocumentClassifierDocumentTypeFormatForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_documentTypeHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("LabelDelimiter"))
-  {
-    m_labelDelimiter = jsonValue.GetString("LabelDelimiter");
+              else if (initialKeyStr == "Documents") {
+                m_documents = DocumentClassifierDocuments(decoder);
+                m_documentsHasBeenSet = true;
+              }
 
-    m_labelDelimiterHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DocumentReaderConfig") {
+                m_documentReaderConfig = DocumentReaderConfig(decoder);
+                m_documentReaderConfigHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("DocumentClassifierInputDataConfig", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("AugmentedManifests"))
-  {
-    Aws::Utils::Array<JsonView> augmentedManifestsJsonList = jsonValue.GetArray("AugmentedManifests");
-    for(unsigned augmentedManifestsIndex = 0; augmentedManifestsIndex < augmentedManifestsJsonList.GetLength(); ++augmentedManifestsIndex)
-    {
-      m_augmentedManifests.push_back(augmentedManifestsJsonList[augmentedManifestsIndex].AsObject());
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "DataFormat") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_dataFormat = DocumentClassifierDataFormatMapper::GetDocumentClassifierDataFormatForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_dataFormatHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "S3Uri") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3Uri = ss.str();
+                }
+              }
+              m_s3UriHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "TestS3Uri") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_testS3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_testS3Uri = ss.str();
+                }
+              }
+              m_testS3UriHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "LabelDelimiter") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_labelDelimiter = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_labelDelimiter = ss.str();
+                }
+              }
+              m_labelDelimiterHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "AugmentedManifests") {
+              auto peekType_0 = decoder->PeekType();
+              if (peekType_0.has_value() &&
+                  (peekType_0.value() == CborType::ArrayStart || peekType_0.value() == CborType::IndefArrayStart)) {
+                if (peekType_0.value() == CborType::ArrayStart) {
+                  auto listSize_0 = decoder->PopNextArrayStart();
+                  if (listSize_0.has_value()) {
+                    for (size_t j_0 = 0; j_0 < listSize_0.value(); j_0++) {
+                      m_augmentedManifests.push_back(AugmentedManifestsListItem(decoder));
+                    }
+                  }
+                } else  // IndefArrayStart
+                {
+                  decoder->ConsumeNextSingleElement();  // consume the IndefArrayStart
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType_0 = decoder->PeekType();
+                    if (!nextType_0.has_value() || nextType_0.value() == CborType::Break) {
+                      if (nextType_0.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    m_augmentedManifests.push_back(AugmentedManifestsListItem(decoder));
+                  }
+                }
+              }
+              m_augmentedManifestsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DocumentType") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_documentType = DocumentClassifierDocumentTypeFormatMapper::GetDocumentClassifierDocumentTypeFormatForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_documentTypeHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "Documents") {
+              m_documents = DocumentClassifierDocuments(decoder);
+              m_documentsHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DocumentReaderConfig") {
+              m_documentReaderConfig = DocumentReaderConfig(decoder);
+              m_documentReaderConfigHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
     }
-    m_augmentedManifestsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("DocumentType"))
-  {
-    m_documentType = DocumentClassifierDocumentTypeFormatMapper::GetDocumentClassifierDocumentTypeFormatForName(jsonValue.GetString("DocumentType"));
-
-    m_documentTypeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("Documents"))
-  {
-    m_documents = jsonValue.GetObject("Documents");
-
-    m_documentsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("DocumentReaderConfig"))
-  {
-    m_documentReaderConfig = jsonValue.GetObject("DocumentReaderConfig");
-
-    m_documentReaderConfigHasBeenSet = true;
   }
 
   return *this;
 }
 
-JsonValue DocumentClassifierInputDataConfig::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_dataFormatHasBeenSet)
-  {
-   payload.WithString("DataFormat", DocumentClassifierDataFormatMapper::GetNameForDocumentClassifierDataFormat(m_dataFormat));
+void DocumentClassifierInputDataConfig::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_dataFormatHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3UriHasBeenSet) {
+    mapSize++;
+  }
+  if (m_testS3UriHasBeenSet) {
+    mapSize++;
+  }
+  if (m_labelDelimiterHasBeenSet) {
+    mapSize++;
+  }
+  if (m_augmentedManifestsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_documentTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_documentsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_documentReaderConfigHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_s3UriHasBeenSet)
-  {
-   payload.WithString("S3Uri", m_s3Uri);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_dataFormatHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataFormat"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(DocumentClassifierDataFormatMapper::GetNameForDocumentClassifierDataFormat(m_dataFormat).c_str()));
   }
 
-  if(m_testS3UriHasBeenSet)
-  {
-   payload.WithString("TestS3Uri", m_testS3Uri);
-
+  if (m_s3UriHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("S3Uri"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3Uri.c_str()));
   }
 
-  if(m_labelDelimiterHasBeenSet)
-  {
-   payload.WithString("LabelDelimiter", m_labelDelimiter);
-
+  if (m_testS3UriHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TestS3Uri"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_testS3Uri.c_str()));
   }
 
-  if(m_augmentedManifestsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> augmentedManifestsJsonList(m_augmentedManifests.size());
-   for(unsigned augmentedManifestsIndex = 0; augmentedManifestsIndex < augmentedManifestsJsonList.GetLength(); ++augmentedManifestsIndex)
-   {
-     augmentedManifestsJsonList[augmentedManifestsIndex].AsObject(m_augmentedManifests[augmentedManifestsIndex].Jsonize());
-   }
-   payload.WithArray("AugmentedManifests", std::move(augmentedManifestsJsonList));
-
+  if (m_labelDelimiterHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LabelDelimiter"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_labelDelimiter.c_str()));
   }
 
-  if(m_documentTypeHasBeenSet)
-  {
-   payload.WithString("DocumentType", DocumentClassifierDocumentTypeFormatMapper::GetNameForDocumentClassifierDocumentTypeFormat(m_documentType));
+  if (m_augmentedManifestsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AugmentedManifests"));
+    encoder.WriteArrayStart(m_augmentedManifests.size());
+    for (const auto& item_0 : m_augmentedManifests) {
+      item_0.CborEncode(encoder);
+    }
   }
 
-  if(m_documentsHasBeenSet)
-  {
-   payload.WithObject("Documents", m_documents.Jsonize());
-
+  if (m_documentTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DocumentType"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(
+        DocumentClassifierDocumentTypeFormatMapper::GetNameForDocumentClassifierDocumentTypeFormat(m_documentType).c_str()));
   }
 
-  if(m_documentReaderConfigHasBeenSet)
-  {
-   payload.WithObject("DocumentReaderConfig", m_documentReaderConfig.Jsonize());
-
+  if (m_documentsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Documents"));
+    m_documents.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_documentReaderConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DocumentReaderConfig"));
+    m_documentReaderConfig.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

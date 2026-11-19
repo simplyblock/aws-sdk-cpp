@@ -4,152 +4,173 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/quicksight/QuickSightRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/quicksight/model/AssignmentStatus.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSightRequest.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/quicksight/model/AssignmentStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace QuickSight {
+namespace Model {
 
+/**
+ */
+class UpdateIAMPolicyAssignmentRequest : public QuickSightRequest {
+ public:
+  AWS_QUICKSIGHT_API UpdateIAMPolicyAssignmentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateIAMPolicyAssignment"; }
+
+  AWS_QUICKSIGHT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID of the Amazon Web Services account that contains the IAM policy
+   * assignment. </p>
    */
-  class UpdateIAMPolicyAssignmentRequest : public QuickSightRequest
-  {
-  public:
-    AWS_QUICKSIGHT_API UpdateIAMPolicyAssignmentRequest();
+  inline const Aws::String& GetAwsAccountId() const { return m_awsAccountId; }
+  inline bool AwsAccountIdHasBeenSet() const { return m_awsAccountIdHasBeenSet; }
+  template <typename AwsAccountIdT = Aws::String>
+  void SetAwsAccountId(AwsAccountIdT&& value) {
+    m_awsAccountIdHasBeenSet = true;
+    m_awsAccountId = std::forward<AwsAccountIdT>(value);
+  }
+  template <typename AwsAccountIdT = Aws::String>
+  UpdateIAMPolicyAssignmentRequest& WithAwsAccountId(AwsAccountIdT&& value) {
+    SetAwsAccountId(std::forward<AwsAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateIAMPolicyAssignment"; }
+  ///@{
+  /**
+   * <p>The name of the assignment, also called a rule. The name must be unique
+   * within the Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetAssignmentName() const { return m_assignmentName; }
+  inline bool AssignmentNameHasBeenSet() const { return m_assignmentNameHasBeenSet; }
+  template <typename AssignmentNameT = Aws::String>
+  void SetAssignmentName(AssignmentNameT&& value) {
+    m_assignmentNameHasBeenSet = true;
+    m_assignmentName = std::forward<AssignmentNameT>(value);
+  }
+  template <typename AssignmentNameT = Aws::String>
+  UpdateIAMPolicyAssignmentRequest& WithAssignmentName(AssignmentNameT&& value) {
+    SetAssignmentName(std::forward<AssignmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_QUICKSIGHT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The namespace of the assignment.</p>
+   */
+  inline const Aws::String& GetNamespace() const { return m_namespace; }
+  inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
+  template <typename NamespaceT = Aws::String>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = Aws::String>
+  UpdateIAMPolicyAssignmentRequest& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The status of the assignment. Possible values are as follows:</p> <ul> <li>
+   * <p> <code>ENABLED</code> - Anything specified in this assignment is used when
+   * creating the data source.</p> </li> <li> <p> <code>DISABLED</code> - This
+   * assignment isn't used when creating the data source.</p> </li> <li> <p>
+   * <code>DRAFT</code> - This assignment is an unfinished draft and isn't used when
+   * creating the data source.</p> </li> </ul>
+   */
+  inline AssignmentStatus GetAssignmentStatus() const { return m_assignmentStatus; }
+  inline bool AssignmentStatusHasBeenSet() const { return m_assignmentStatusHasBeenSet; }
+  inline void SetAssignmentStatus(AssignmentStatus value) {
+    m_assignmentStatusHasBeenSet = true;
+    m_assignmentStatus = value;
+  }
+  inline UpdateIAMPolicyAssignmentRequest& WithAssignmentStatus(AssignmentStatus value) {
+    SetAssignmentStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon Web Services account that contains the IAM policy
-     * assignment. </p>
-     */
-    inline const Aws::String& GetAwsAccountId() const{ return m_awsAccountId; }
-    inline bool AwsAccountIdHasBeenSet() const { return m_awsAccountIdHasBeenSet; }
-    inline void SetAwsAccountId(const Aws::String& value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId = value; }
-    inline void SetAwsAccountId(Aws::String&& value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId = std::move(value); }
-    inline void SetAwsAccountId(const char* value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId.assign(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithAwsAccountId(const Aws::String& value) { SetAwsAccountId(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithAwsAccountId(Aws::String&& value) { SetAwsAccountId(std::move(value)); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithAwsAccountId(const char* value) { SetAwsAccountId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN for the IAM policy to apply to the Amazon Quick Sight users and
+   * groups specified in this assignment.</p>
+   */
+  inline const Aws::String& GetPolicyArn() const { return m_policyArn; }
+  inline bool PolicyArnHasBeenSet() const { return m_policyArnHasBeenSet; }
+  template <typename PolicyArnT = Aws::String>
+  void SetPolicyArn(PolicyArnT&& value) {
+    m_policyArnHasBeenSet = true;
+    m_policyArn = std::forward<PolicyArnT>(value);
+  }
+  template <typename PolicyArnT = Aws::String>
+  UpdateIAMPolicyAssignmentRequest& WithPolicyArn(PolicyArnT&& value) {
+    SetPolicyArn(std::forward<PolicyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the assignment, also called a rule. The name must be unique
-     * within the Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetAssignmentName() const{ return m_assignmentName; }
-    inline bool AssignmentNameHasBeenSet() const { return m_assignmentNameHasBeenSet; }
-    inline void SetAssignmentName(const Aws::String& value) { m_assignmentNameHasBeenSet = true; m_assignmentName = value; }
-    inline void SetAssignmentName(Aws::String&& value) { m_assignmentNameHasBeenSet = true; m_assignmentName = std::move(value); }
-    inline void SetAssignmentName(const char* value) { m_assignmentNameHasBeenSet = true; m_assignmentName.assign(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithAssignmentName(const Aws::String& value) { SetAssignmentName(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithAssignmentName(Aws::String&& value) { SetAssignmentName(std::move(value)); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithAssignmentName(const char* value) { SetAssignmentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Quick Sight users, groups, or both that you want to assign the
+   * policy to.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& GetIdentities() const { return m_identities; }
+  inline bool IdentitiesHasBeenSet() const { return m_identitiesHasBeenSet; }
+  template <typename IdentitiesT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
+  void SetIdentities(IdentitiesT&& value) {
+    m_identitiesHasBeenSet = true;
+    m_identities = std::forward<IdentitiesT>(value);
+  }
+  template <typename IdentitiesT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
+  UpdateIAMPolicyAssignmentRequest& WithIdentities(IdentitiesT&& value) {
+    SetIdentities(std::forward<IdentitiesT>(value));
+    return *this;
+  }
+  template <typename IdentitiesKeyT = Aws::String, typename IdentitiesValueT = Aws::Vector<Aws::String>>
+  UpdateIAMPolicyAssignmentRequest& AddIdentities(IdentitiesKeyT&& key, IdentitiesValueT&& value) {
+    m_identitiesHasBeenSet = true;
+    m_identities.emplace(std::forward<IdentitiesKeyT>(key), std::forward<IdentitiesValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_awsAccountId;
 
-    ///@{
-    /**
-     * <p>The namespace of the assignment.</p>
-     */
-    inline const Aws::String& GetNamespace() const{ return m_namespace; }
-    inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
-    inline void SetNamespace(const Aws::String& value) { m_namespaceHasBeenSet = true; m_namespace = value; }
-    inline void SetNamespace(Aws::String&& value) { m_namespaceHasBeenSet = true; m_namespace = std::move(value); }
-    inline void SetNamespace(const char* value) { m_namespaceHasBeenSet = true; m_namespace.assign(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithNamespace(const Aws::String& value) { SetNamespace(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithNamespace(Aws::String&& value) { SetNamespace(std::move(value)); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithNamespace(const char* value) { SetNamespace(value); return *this;}
-    ///@}
+  Aws::String m_assignmentName;
 
-    ///@{
-    /**
-     * <p>The status of the assignment. Possible values are as follows:</p> <ul> <li>
-     * <p> <code>ENABLED</code> - Anything specified in this assignment is used when
-     * creating the data source.</p> </li> <li> <p> <code>DISABLED</code> - This
-     * assignment isn't used when creating the data source.</p> </li> <li> <p>
-     * <code>DRAFT</code> - This assignment is an unfinished draft and isn't used when
-     * creating the data source.</p> </li> </ul>
-     */
-    inline const AssignmentStatus& GetAssignmentStatus() const{ return m_assignmentStatus; }
-    inline bool AssignmentStatusHasBeenSet() const { return m_assignmentStatusHasBeenSet; }
-    inline void SetAssignmentStatus(const AssignmentStatus& value) { m_assignmentStatusHasBeenSet = true; m_assignmentStatus = value; }
-    inline void SetAssignmentStatus(AssignmentStatus&& value) { m_assignmentStatusHasBeenSet = true; m_assignmentStatus = std::move(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithAssignmentStatus(const AssignmentStatus& value) { SetAssignmentStatus(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithAssignmentStatus(AssignmentStatus&& value) { SetAssignmentStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_namespace;
 
-    ///@{
-    /**
-     * <p>The ARN for the IAM policy to apply to the Amazon QuickSight users and groups
-     * specified in this assignment.</p>
-     */
-    inline const Aws::String& GetPolicyArn() const{ return m_policyArn; }
-    inline bool PolicyArnHasBeenSet() const { return m_policyArnHasBeenSet; }
-    inline void SetPolicyArn(const Aws::String& value) { m_policyArnHasBeenSet = true; m_policyArn = value; }
-    inline void SetPolicyArn(Aws::String&& value) { m_policyArnHasBeenSet = true; m_policyArn = std::move(value); }
-    inline void SetPolicyArn(const char* value) { m_policyArnHasBeenSet = true; m_policyArn.assign(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithPolicyArn(const Aws::String& value) { SetPolicyArn(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithPolicyArn(Aws::String&& value) { SetPolicyArn(std::move(value)); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithPolicyArn(const char* value) { SetPolicyArn(value); return *this;}
-    ///@}
+  AssignmentStatus m_assignmentStatus{AssignmentStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The Amazon QuickSight users, groups, or both that you want to assign the
-     * policy to.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& GetIdentities() const{ return m_identities; }
-    inline bool IdentitiesHasBeenSet() const { return m_identitiesHasBeenSet; }
-    inline void SetIdentities(const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& value) { m_identitiesHasBeenSet = true; m_identities = value; }
-    inline void SetIdentities(Aws::Map<Aws::String, Aws::Vector<Aws::String>>&& value) { m_identitiesHasBeenSet = true; m_identities = std::move(value); }
-    inline UpdateIAMPolicyAssignmentRequest& WithIdentities(const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& value) { SetIdentities(value); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& WithIdentities(Aws::Map<Aws::String, Aws::Vector<Aws::String>>&& value) { SetIdentities(std::move(value)); return *this;}
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(const Aws::String& key, const Aws::Vector<Aws::String>& value) { m_identitiesHasBeenSet = true; m_identities.emplace(key, value); return *this; }
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(Aws::String&& key, const Aws::Vector<Aws::String>& value) { m_identitiesHasBeenSet = true; m_identities.emplace(std::move(key), value); return *this; }
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(const Aws::String& key, Aws::Vector<Aws::String>&& value) { m_identitiesHasBeenSet = true; m_identities.emplace(key, std::move(value)); return *this; }
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(Aws::String&& key, Aws::Vector<Aws::String>&& value) { m_identitiesHasBeenSet = true; m_identities.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(const char* key, Aws::Vector<Aws::String>&& value) { m_identitiesHasBeenSet = true; m_identities.emplace(key, std::move(value)); return *this; }
-    inline UpdateIAMPolicyAssignmentRequest& AddIdentities(const char* key, const Aws::Vector<Aws::String>& value) { m_identitiesHasBeenSet = true; m_identities.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::String m_policyArn;
 
-    Aws::String m_awsAccountId;
-    bool m_awsAccountIdHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_identities;
+  bool m_awsAccountIdHasBeenSet = false;
+  bool m_assignmentNameHasBeenSet = false;
+  bool m_namespaceHasBeenSet = false;
+  bool m_assignmentStatusHasBeenSet = false;
+  bool m_policyArnHasBeenSet = false;
+  bool m_identitiesHasBeenSet = false;
+};
 
-    Aws::String m_assignmentName;
-    bool m_assignmentNameHasBeenSet = false;
-
-    Aws::String m_namespace;
-    bool m_namespaceHasBeenSet = false;
-
-    AssignmentStatus m_assignmentStatus;
-    bool m_assignmentStatusHasBeenSet = false;
-
-    Aws::String m_policyArn;
-    bool m_policyArnHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_identities;
-    bool m_identitiesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

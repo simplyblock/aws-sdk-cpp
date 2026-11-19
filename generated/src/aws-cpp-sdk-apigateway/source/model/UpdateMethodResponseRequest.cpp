@@ -12,33 +12,16 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateMethodResponseRequest::UpdateMethodResponseRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_resourceIdHasBeenSet(false),
-    m_httpMethodHasBeenSet(false),
-    m_statusCodeHasBeenSet(false),
-    m_patchOperationsHasBeenSet(false)
-{
-}
-
-Aws::String UpdateMethodResponseRequest::SerializePayload() const
-{
+Aws::String UpdateMethodResponseRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_patchOperationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> patchOperationsJsonList(m_patchOperations.size());
-   for(unsigned patchOperationsIndex = 0; patchOperationsIndex < patchOperationsJsonList.GetLength(); ++patchOperationsIndex)
-   {
-     patchOperationsJsonList[patchOperationsIndex].AsObject(m_patchOperations[patchOperationsIndex].Jsonize());
-   }
-   payload.WithArray("patchOperations", std::move(patchOperationsJsonList));
-
+  if (m_patchOperationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> patchOperationsJsonList(m_patchOperations.size());
+    for (unsigned patchOperationsIndex = 0; patchOperationsIndex < patchOperationsJsonList.GetLength(); ++patchOperationsIndex) {
+      patchOperationsJsonList[patchOperationsIndex].AsObject(m_patchOperations[patchOperationsIndex].Jsonize());
+    }
+    payload.WithArray("patchOperations", std::move(patchOperationsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

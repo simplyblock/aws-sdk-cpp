@@ -1,0 +1,403 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/lambda/model/DurableConfig.h>
+#include <aws/lambda/model/ErrorObject.h>
+#include <aws/lambda/model/ExecutionStatus.h>
+#include <aws/lambda/model/PauseDetails.h>
+#include <aws/lambda/model/TraceHeader.h>
+
+#include <utility>
+
+namespace Aws {
+template <typename RESULT_TYPE>
+class AmazonWebServiceResult;
+
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+/**
+ * <p>The response from the GetDurableExecution operation, containing detailed
+ * information about the durable execution.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetDurableExecutionResponse">AWS
+ * API Reference</a></p>
+ */
+class GetDurableExecutionResult {
+ public:
+  AWS_LAMBDA_API GetDurableExecutionResult() = default;
+  AWS_LAMBDA_API GetDurableExecutionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAMBDA_API GetDurableExecutionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the durable execution.</p>
+   */
+  inline const Aws::String& GetDurableExecutionArn() const { return m_durableExecutionArn; }
+  template <typename DurableExecutionArnT = Aws::String>
+  void SetDurableExecutionArn(DurableExecutionArnT&& value) {
+    m_durableExecutionArnHasBeenSet = true;
+    m_durableExecutionArn = std::forward<DurableExecutionArnT>(value);
+  }
+  template <typename DurableExecutionArnT = Aws::String>
+  GetDurableExecutionResult& WithDurableExecutionArn(DurableExecutionArnT&& value) {
+    SetDurableExecutionArn(std::forward<DurableExecutionArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The name of the durable execution. This is either the name you provided when
+   * invoking the function, or a system-generated unique identifier if no name was
+   * provided.</p>
+   */
+  inline const Aws::String& GetDurableExecutionName() const { return m_durableExecutionName; }
+  template <typename DurableExecutionNameT = Aws::String>
+  void SetDurableExecutionName(DurableExecutionNameT&& value) {
+    m_durableExecutionNameHasBeenSet = true;
+    m_durableExecutionName = std::forward<DurableExecutionNameT>(value);
+  }
+  template <typename DurableExecutionNameT = Aws::String>
+  GetDurableExecutionResult& WithDurableExecutionName(DurableExecutionNameT&& value) {
+    SetDurableExecutionName(std::forward<DurableExecutionNameT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the Lambda function that was invoked to
+   * start this durable execution.</p>
+   */
+  inline const Aws::String& GetFunctionArn() const { return m_functionArn; }
+  template <typename FunctionArnT = Aws::String>
+  void SetFunctionArn(FunctionArnT&& value) {
+    m_functionArnHasBeenSet = true;
+    m_functionArn = std::forward<FunctionArnT>(value);
+  }
+  template <typename FunctionArnT = Aws::String>
+  GetDurableExecutionResult& WithFunctionArn(FunctionArnT&& value) {
+    SetFunctionArn(std::forward<FunctionArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The JSON input payload that you provided when you started the durable
+   * execution. Asynchronous invocations support up to 1 MB, and synchronous
+   * invocations support up to 6 MB.</p>
+   */
+  inline const Aws::String& GetInputPayload() const { return m_inputPayload; }
+  template <typename InputPayloadT = Aws::String>
+  void SetInputPayload(InputPayloadT&& value) {
+    m_inputPayloadHasBeenSet = true;
+    m_inputPayload = std::forward<InputPayloadT>(value);
+  }
+  template <typename InputPayloadT = Aws::String>
+  GetDurableExecutionResult& WithInputPayload(InputPayloadT&& value) {
+    SetInputPayload(std::forward<InputPayloadT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The JSON result returned by the durable execution if it completed
+   * successfully. This field is only present when the execution status is
+   * <code>SUCCEEDED</code>. Asynchronous invocations support up to 1 MB, and
+   * synchronous invocations support up to 6 MB.</p>
+   */
+  inline const Aws::String& GetResult() const { return m_result; }
+  template <typename ResultT = Aws::String>
+  void SetResult(ResultT&& value) {
+    m_resultHasBeenSet = true;
+    m_result = std::forward<ResultT>(value);
+  }
+  template <typename ResultT = Aws::String>
+  GetDurableExecutionResult& WithResult(ResultT&& value) {
+    SetResult(std::forward<ResultT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Error information if the durable execution failed. This field is only present
+   * when the execution status is <code>FAILED</code>, <code>TIMED_OUT</code>, or
+   * <code>STOPPED</code>. The combined size of all error fields is limited to 1
+   * MB.</p>
+   */
+  inline const ErrorObject& GetError() const { return m_error; }
+  template <typename ErrorT = ErrorObject>
+  void SetError(ErrorT&& value) {
+    m_errorHasBeenSet = true;
+    m_error = std::forward<ErrorT>(value);
+  }
+  template <typename ErrorT = ErrorObject>
+  GetDurableExecutionResult& WithError(ErrorT&& value) {
+    SetError(std::forward<ErrorT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The date and time when the durable execution started, in Unix timestamp
+   * format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTimestamp() const { return m_startTimestamp; }
+  template <typename StartTimestampT = Aws::Utils::DateTime>
+  void SetStartTimestamp(StartTimestampT&& value) {
+    m_startTimestampHasBeenSet = true;
+    m_startTimestamp = std::forward<StartTimestampT>(value);
+  }
+  template <typename StartTimestampT = Aws::Utils::DateTime>
+  GetDurableExecutionResult& WithStartTimestamp(StartTimestampT&& value) {
+    SetStartTimestamp(std::forward<StartTimestampT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The durable execution has one of the following statuses:</p> <ul> <li> <p>
+   * <code>RUNNING</code> – The execution is running or waiting for pending
+   * operations to complete.</p> </li> <li> <p> <code>PAUSING</code> – The execution
+   * is waiting for an in-progress invocation to reach its next checkpoint before it
+   * pauses.</p> </li> <li> <p> <code>PAUSED</code> – The execution is paused, and
+   * Lambda doesn't invoke your function.</p> </li> <li> <p> <code>SUCCEEDED</code> –
+   * The execution completed successfully.</p> </li> <li> <p> <code>FAILED</code> –
+   * The execution completed with an error.</p> </li> <li> <p> <code>TIMED_OUT</code>
+   * – The execution exceeded its execution timeout.</p> </li> <li> <p>
+   * <code>STOPPED</code> – A <code>StopDurableExecution</code> request stopped the
+   * execution.</p> </li> <li> <p> <code>DELETING</code> – A
+   * <code>DeleteDurableExecution</code> request is deleting the execution and its
+   * data.</p> </li> </ul>
+   */
+  inline ExecutionStatus GetStatus() const { return m_status; }
+  inline void SetStatus(ExecutionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetDurableExecutionResult& WithStatus(ExecutionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The date and time when the durable execution ended, in Unix timestamp format.
+   * This field is only present if the execution has completed (status is
+   * <code>SUCCEEDED</code>, <code>FAILED</code>, <code>TIMED_OUT</code>, or
+   * <code>STOPPED</code>).</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTimestamp() const { return m_endTimestamp; }
+  template <typename EndTimestampT = Aws::Utils::DateTime>
+  void SetEndTimestamp(EndTimestampT&& value) {
+    m_endTimestampHasBeenSet = true;
+    m_endTimestamp = std::forward<EndTimestampT>(value);
+  }
+  template <typename EndTimestampT = Aws::Utils::DateTime>
+  GetDurableExecutionResult& WithEndTimestamp(EndTimestampT&& value) {
+    SetEndTimestamp(std::forward<EndTimestampT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The version of the Lambda function that was invoked for this durable
+   * execution. This ensures that all replays during the execution use the same
+   * function version.</p>
+   */
+  inline const Aws::String& GetVersion() const { return m_version; }
+  template <typename VersionT = Aws::String>
+  void SetVersion(VersionT&& value) {
+    m_versionHasBeenSet = true;
+    m_version = std::forward<VersionT>(value);
+  }
+  template <typename VersionT = Aws::String>
+  GetDurableExecutionResult& WithVersion(VersionT&& value) {
+    SetVersion(std::forward<VersionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The trace headers associated with the durable execution.</p>
+   */
+  inline const TraceHeader& GetTraceHeader() const { return m_traceHeader; }
+  template <typename TraceHeaderT = TraceHeader>
+  void SetTraceHeader(TraceHeaderT&& value) {
+    m_traceHeaderHasBeenSet = true;
+    m_traceHeader = std::forward<TraceHeaderT>(value);
+  }
+  template <typename TraceHeaderT = TraceHeader>
+  GetDurableExecutionResult& WithTraceHeader(TraceHeaderT&& value) {
+    SetTraceHeader(std::forward<TraceHeaderT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Indicates whether execution data is included in this response. Returns
+   * <code>false</code> when <code>IncludeExecutionData</code> is set to
+   * <code>false</code> in the request.</p>
+   */
+  inline bool GetExecutionDataIncluded() const { return m_executionDataIncluded; }
+  inline void SetExecutionDataIncluded(bool value) {
+    m_executionDataIncludedHasBeenSet = true;
+    m_executionDataIncluded = value;
+  }
+  inline GetDurableExecutionResult& WithExecutionDataIncluded(bool value) {
+    SetExecutionDataIncluded(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Configuration settings for the durable execution, including execution
+   * timeout, retention period for execution history, and an optional ARN of the Key
+   * Management Service (KMS) customer managed key that is used to encrypt your
+   * durable execution's payload data, including input, output, and error
+   * payloads.</p>
+   */
+  inline const DurableConfig& GetDurableConfig() const { return m_durableConfig; }
+  template <typename DurableConfigT = DurableConfig>
+  void SetDurableConfig(DurableConfigT&& value) {
+    m_durableConfigHasBeenSet = true;
+    m_durableConfig = std::forward<DurableConfigT>(value);
+  }
+  template <typename DurableConfigT = DurableConfig>
+  GetDurableExecutionResult& WithDurableConfig(DurableConfigT&& value) {
+    SetDurableConfig(std::forward<DurableConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The details of the pause, including when you requested it and whether it
+   * pauses the execution timeout. This field is only present when the execution
+   * status is <code>PAUSING</code> or <code>PAUSED</code>.</p>
+   */
+  inline const PauseDetails& GetPauseDetails() const { return m_pauseDetails; }
+  template <typename PauseDetailsT = PauseDetails>
+  void SetPauseDetails(PauseDetailsT&& value) {
+    m_pauseDetailsHasBeenSet = true;
+    m_pauseDetails = std::forward<PauseDetailsT>(value);
+  }
+  template <typename PauseDetailsT = PauseDetails>
+  GetDurableExecutionResult& WithPauseDetails(PauseDetailsT&& value) {
+    SetPauseDetails(std::forward<PauseDetailsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The date and time when the durable execution will time out, in Unix timestamp
+   * format. This value includes any extension from time the execution spent paused.
+   * While the execution is paused with its execution timeout paused, this value is
+   * 366 days after the start time. This field isn't present for completed
+   * executions.</p>
+   */
+  inline const Aws::Utils::DateTime& GetExpectedExecutionTimeoutTimestamp() const { return m_expectedExecutionTimeoutTimestamp; }
+  template <typename ExpectedExecutionTimeoutTimestampT = Aws::Utils::DateTime>
+  void SetExpectedExecutionTimeoutTimestamp(ExpectedExecutionTimeoutTimestampT&& value) {
+    m_expectedExecutionTimeoutTimestampHasBeenSet = true;
+    m_expectedExecutionTimeoutTimestamp = std::forward<ExpectedExecutionTimeoutTimestampT>(value);
+  }
+  template <typename ExpectedExecutionTimeoutTimestampT = Aws::Utils::DateTime>
+  GetDurableExecutionResult& WithExpectedExecutionTimeoutTimestamp(ExpectedExecutionTimeoutTimestampT&& value) {
+    SetExpectedExecutionTimeoutTimestamp(std::forward<ExpectedExecutionTimeoutTimestampT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDurableExecutionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
+
+ private:
+  Aws::String m_durableExecutionArn;
+
+  Aws::String m_durableExecutionName;
+
+  Aws::String m_functionArn;
+
+  Aws::String m_inputPayload;
+
+  Aws::String m_result;
+
+  ErrorObject m_error;
+
+  Aws::Utils::DateTime m_startTimestamp{};
+
+  ExecutionStatus m_status{ExecutionStatus::NOT_SET};
+
+  Aws::Utils::DateTime m_endTimestamp{};
+
+  Aws::String m_version;
+
+  TraceHeader m_traceHeader;
+
+  bool m_executionDataIncluded{false};
+
+  DurableConfig m_durableConfig;
+
+  PauseDetails m_pauseDetails;
+
+  Aws::Utils::DateTime m_expectedExecutionTimeoutTimestamp{};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_durableExecutionArnHasBeenSet = false;
+  bool m_durableExecutionNameHasBeenSet = false;
+  bool m_functionArnHasBeenSet = false;
+  bool m_inputPayloadHasBeenSet = false;
+  bool m_resultHasBeenSet = false;
+  bool m_errorHasBeenSet = false;
+  bool m_startTimestampHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_endTimestampHasBeenSet = false;
+  bool m_versionHasBeenSet = false;
+  bool m_traceHeaderHasBeenSet = false;
+  bool m_executionDataIncludedHasBeenSet = false;
+  bool m_durableConfigHasBeenSet = false;
+  bool m_pauseDetailsHasBeenSet = false;
+  bool m_expectedExecutionTimeoutTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

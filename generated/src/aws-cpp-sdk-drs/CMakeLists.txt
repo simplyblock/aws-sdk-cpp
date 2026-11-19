@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-drs "C++ SDK for the AWS drs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-drs "C++ SDK for Elastic Disaster Recovery Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_DRS_HEADERS
     "include/aws/drs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DRS_HEADERS
 
 file(GLOB AWS_DRS_MODEL_HEADERS
     "include/aws/drs/model/*.h"
+)
+
+file(GLOB AWS_DRS_INTERNAL_HEADERS
+    "include/aws/drs/internal/*.h"
 )
 
 file(GLOB AWS_DRS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DRS_MODEL_SOURCE
 
 file(GLOB DRS_UNIFIED_HEADERS
     ${AWS_DRS_HEADERS}
+    ${AWS_DRS_INTERNAL_HEADERS}
     ${AWS_DRS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\drs" FILES ${AWS_DRS_HEADERS})
+        source_group("Header Files\\aws\\drs\\internal" FILES ${AWS_DRS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\drs\\model" FILES ${AWS_DRS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DRS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DRS_MODEL_SOURCE})

@@ -4,90 +4,110 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/ResponseMetadata.h>
 #include <aws/redshift/model/TaggedResource.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/TaggedResourceListMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeTagsResult {
+ public:
+  AWS_REDSHIFT_API DescribeTagsResult() = default;
+  AWS_REDSHIFT_API DescribeTagsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API DescribeTagsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/TaggedResourceListMessage">AWS
-   * API Reference</a></p>
+   * <p>A list of tags with their associated resources.</p>
    */
-  class DescribeTagsResult
-  {
-  public:
-    AWS_REDSHIFT_API DescribeTagsResult();
-    AWS_REDSHIFT_API DescribeTagsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API DescribeTagsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<TaggedResource>& GetTaggedResources() const { return m_taggedResources; }
+  template <typename TaggedResourcesT = Aws::Vector<TaggedResource>>
+  void SetTaggedResources(TaggedResourcesT&& value) {
+    m_taggedResourcesHasBeenSet = true;
+    m_taggedResources = std::forward<TaggedResourcesT>(value);
+  }
+  template <typename TaggedResourcesT = Aws::Vector<TaggedResource>>
+  DescribeTagsResult& WithTaggedResources(TaggedResourcesT&& value) {
+    SetTaggedResources(std::forward<TaggedResourcesT>(value));
+    return *this;
+  }
+  template <typename TaggedResourcesT = TaggedResource>
+  DescribeTagsResult& AddTaggedResources(TaggedResourcesT&& value) {
+    m_taggedResourcesHasBeenSet = true;
+    m_taggedResources.emplace_back(std::forward<TaggedResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A value that indicates the starting point for the next set of response
+   * records in a subsequent request. If a value is returned in a response, you can
+   * retrieve the next set of records by providing this returned marker value in the
+   * <code>Marker</code> parameter and retrying the command. If the
+   * <code>Marker</code> field is empty, all response records have been retrieved for
+   * the request. </p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeTagsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of tags with their associated resources.</p>
-     */
-    inline const Aws::Vector<TaggedResource>& GetTaggedResources() const{ return m_taggedResources; }
-    inline void SetTaggedResources(const Aws::Vector<TaggedResource>& value) { m_taggedResources = value; }
-    inline void SetTaggedResources(Aws::Vector<TaggedResource>&& value) { m_taggedResources = std::move(value); }
-    inline DescribeTagsResult& WithTaggedResources(const Aws::Vector<TaggedResource>& value) { SetTaggedResources(value); return *this;}
-    inline DescribeTagsResult& WithTaggedResources(Aws::Vector<TaggedResource>&& value) { SetTaggedResources(std::move(value)); return *this;}
-    inline DescribeTagsResult& AddTaggedResources(const TaggedResource& value) { m_taggedResources.push_back(value); return *this; }
-    inline DescribeTagsResult& AddTaggedResources(TaggedResource&& value) { m_taggedResources.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A value that indicates the starting point for the next set of response
-     * records in a subsequent request. If a value is returned in a response, you can
-     * retrieve the next set of records by providing this returned marker value in the
-     * <code>Marker</code> parameter and retrying the command. If the
-     * <code>Marker</code> field is empty, all response records have been retrieved for
-     * the request. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeTagsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeTagsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeTagsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeTagsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeTagsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeTagsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<TaggedResource> m_taggedResources;
 
-    Aws::Vector<TaggedResource> m_taggedResources;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_taggedResourcesHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

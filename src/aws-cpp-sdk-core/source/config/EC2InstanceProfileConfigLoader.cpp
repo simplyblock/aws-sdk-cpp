@@ -6,6 +6,7 @@
 #include <aws/core/config/AWSProfileConfigLoader.h>
 #include <aws/core/internal/AWSHttpResourceClient.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
+#include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSList.h>
 #include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/json/JsonSerializer.h>
@@ -37,6 +38,12 @@ namespace Aws
                 m_ec2metadataClient = client;
             }
         }
+        
+        EC2InstanceProfileConfigLoader::EC2InstanceProfileConfigLoader(const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& credentialConfig)
+        {
+            Aws::Internal::InitEC2MetadataClient(credentialConfig);
+            m_ec2metadataClient = Aws::Internal::GetEC2MetadataClient();
+        }
 
         bool EC2InstanceProfileConfigLoader::LoadInternal()
         {
@@ -49,7 +56,7 @@ namespace Aws
             this->credentialsValidUntilMillis = DateTime::Now().Millis();
 
             if (!m_ec2metadataClient) {
-                AWS_LOGSTREAM_FATAL(EC2_INSTANCE_PROFILE_LOG_TAG, "EC2MetadataClient is a nullptr!")
+                AWS_LOGSTREAM_FATAL(EC2_INSTANCE_PROFILE_LOG_TAG, "EC2MetadataClient is a nullptr!");
                 return false;
             }
             auto credentialsStr = m_ec2metadataClient->GetDefaultCredentialsSecurely();
@@ -72,7 +79,7 @@ namespace Aws
             auto credentialsView = credentialsDoc.View();
             DateTime expirationTime(credentialsView.GetString(expiration), Aws::Utils::DateFormat::ISO_8601);
             // re-use old credentials and not block if the IMDS call failed or if the latest credential is in the past
-            if (expirationTime.WasParseSuccessful() && DateTime::Now() > expirationTime) {
+            if (expirationTime.WasParseSuccessful() && DateTime::Now() > expirationTime && m_profiles.find(INSTANCE_PROFILE_KEY) != m_profiles.end()) {
                 AWS_LOGSTREAM_ERROR(EC2_INSTANCE_PROFILE_LOG_TAG,
                                     "Expiration Time of Credentials in the past, refusing to update credentials");
                 this->credentialsValidUntilMillis = DateTime::Now().Millis() + calculateRetryTime();

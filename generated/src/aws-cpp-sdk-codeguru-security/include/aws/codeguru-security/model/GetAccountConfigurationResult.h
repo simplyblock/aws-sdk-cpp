@@ -6,65 +6,74 @@
 #pragma once
 #include <aws/codeguru-security/CodeGuruSecurity_EXPORTS.h>
 #include <aws/codeguru-security/model/EncryptionConfig.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeGuruSecurity
-{
-namespace Model
-{
-  class GetAccountConfigurationResult
-  {
-  public:
-    AWS_CODEGURUSECURITY_API GetAccountConfigurationResult();
-    AWS_CODEGURUSECURITY_API GetAccountConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEGURUSECURITY_API GetAccountConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeGuruSecurity {
+namespace Model {
+class GetAccountConfigurationResult {
+ public:
+  AWS_CODEGURUSECURITY_API GetAccountConfigurationResult() = default;
+  AWS_CODEGURUSECURITY_API GetAccountConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEGURUSECURITY_API GetAccountConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An <code>EncryptionConfig</code> object that contains the KMS key ARN that is
+   * used for encryption. By default, CodeGuru Security uses an AWS-managed key for
+   * encryption. To specify your own key, call
+   * <code>UpdateAccountConfiguration</code>. If you do not specify a
+   * customer-managed key, returns empty.</p>
+   */
+  inline const EncryptionConfig& GetEncryptionConfig() const { return m_encryptionConfig; }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  void SetEncryptionConfig(EncryptionConfigT&& value) {
+    m_encryptionConfigHasBeenSet = true;
+    m_encryptionConfig = std::forward<EncryptionConfigT>(value);
+  }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  GetAccountConfigurationResult& WithEncryptionConfig(EncryptionConfigT&& value) {
+    SetEncryptionConfig(std::forward<EncryptionConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An <code>EncryptionConfig</code> object that contains the KMS key ARN that is
-     * used for encryption. By default, CodeGuru Security uses an AWS-managed key for
-     * encryption. To specify your own key, call
-     * <code>UpdateAccountConfiguration</code>. If you do not specify a
-     * customer-managed key, returns empty.</p>
-     */
-    inline const EncryptionConfig& GetEncryptionConfig() const{ return m_encryptionConfig; }
-    inline void SetEncryptionConfig(const EncryptionConfig& value) { m_encryptionConfig = value; }
-    inline void SetEncryptionConfig(EncryptionConfig&& value) { m_encryptionConfig = std::move(value); }
-    inline GetAccountConfigurationResult& WithEncryptionConfig(const EncryptionConfig& value) { SetEncryptionConfig(value); return *this;}
-    inline GetAccountConfigurationResult& WithEncryptionConfig(EncryptionConfig&& value) { SetEncryptionConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAccountConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAccountConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAccountConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAccountConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    EncryptionConfig m_encryptionConfig;
+ private:
+  EncryptionConfig m_encryptionConfig;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_encryptionConfigHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeGuruSecurity
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeGuruSecurity
+}  // namespace Aws

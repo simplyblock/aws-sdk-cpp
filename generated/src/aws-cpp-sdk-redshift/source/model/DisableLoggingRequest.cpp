@@ -3,33 +3,39 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/DisableLoggingRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/redshift/model/DisableLoggingRequest.h>
 
 using namespace Aws::Redshift::Model;
 using namespace Aws::Utils;
 
-DisableLoggingRequest::DisableLoggingRequest() : 
-    m_clusterIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DisableLoggingRequest::SerializePayload() const
-{
+Aws::String DisableLoggingRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DisableLogging&";
-  if(m_clusterIdentifierHasBeenSet)
-  {
+  if (m_clusterIdentifierHasBeenSet) {
     ss << "ClusterIdentifier=" << StringUtils::URLEncode(m_clusterIdentifier.c_str()) << "&";
+  }
+
+  if (m_logDestinationTypeHasBeenSet) {
+    ss << "LogDestinationType=" << StringUtils::URLEncode(LogDestinationTypeMapper::GetNameForLogDestinationType(m_logDestinationType))
+       << "&";
+  }
+
+  if (m_logExportsHasBeenSet) {
+    if (m_logExports.empty()) {
+      ss << "LogExports=&";
+    } else {
+      unsigned logExportsCount = 1;
+      for (auto& item : m_logExports) {
+        ss << "LogExports.member." << logExportsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
+        logExportsCount++;
+      }
+    }
   }
 
   ss << "Version=2012-12-01";
   return ss.str();
 }
 
-
-void  DisableLoggingRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DisableLoggingRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

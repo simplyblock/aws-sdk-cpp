@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/GetAccountLinkRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-GetAccountLinkRequest::GetAccountLinkRequest() : 
-    m_linkIdHasBeenSet(false),
-    m_linkedAccountIdHasBeenSet(false)
-{
-}
+Aws::String GetAccountLinkRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String GetAccountLinkRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_linkIdHasBeenSet)
-  {
-   payload.WithString("LinkId", m_linkId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_linkIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_linkedAccountIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_linkedAccountIdHasBeenSet)
-  {
-   payload.WithString("LinkedAccountId", m_linkedAccountId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_linkIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LinkId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_linkId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_linkedAccountIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LinkedAccountId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_linkedAccountId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection GetAccountLinkRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetAccountLinkRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.GetAccountLink"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

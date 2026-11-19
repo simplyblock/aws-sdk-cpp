@@ -12,16 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAccountRequest::DeleteAccountRequest() : 
-    m_accountIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAccountRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAccountRequest::SerializePayload() const { return {}; }

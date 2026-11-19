@@ -4,73 +4,76 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
 
+/**
+ */
+class DeletePortfolioRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API DeletePortfolioRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeletePortfolio"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class DeletePortfolioRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API DeletePortfolioRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  DeletePortfolioRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeletePortfolio"; }
+  ///@{
+  /**
+   * <p>The portfolio identifier.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  DeletePortfolioRequest& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  Aws::String m_id;
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+};
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline DeletePortfolioRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline DeletePortfolioRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline DeletePortfolioRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The portfolio identifier.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline DeletePortfolioRequest& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline DeletePortfolioRequest& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline DeletePortfolioRequest& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

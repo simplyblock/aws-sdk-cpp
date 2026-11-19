@@ -11,50 +11,48 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgent
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgent {
+namespace Model {
 
-BedrockEmbeddingModelConfiguration::BedrockEmbeddingModelConfiguration() : 
-    m_dimensions(0),
-    m_dimensionsHasBeenSet(false)
-{
-}
+BedrockEmbeddingModelConfiguration::BedrockEmbeddingModelConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-BedrockEmbeddingModelConfiguration::BedrockEmbeddingModelConfiguration(JsonView jsonValue)
-  : BedrockEmbeddingModelConfiguration()
-{
-  *this = jsonValue;
-}
-
-BedrockEmbeddingModelConfiguration& BedrockEmbeddingModelConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("dimensions"))
-  {
+BedrockEmbeddingModelConfiguration& BedrockEmbeddingModelConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("dimensions")) {
     m_dimensions = jsonValue.GetInteger("dimensions");
-
     m_dimensionsHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("embeddingDataType")) {
+    m_embeddingDataType = EmbeddingDataTypeMapper::GetEmbeddingDataTypeForName(jsonValue.GetString("embeddingDataType"));
+    m_embeddingDataTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("modelConfiguration")) {
+    m_modelConfiguration = jsonValue.GetObject("modelConfiguration");
+    m_modelConfigurationHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue BedrockEmbeddingModelConfiguration::Jsonize() const
-{
+JsonValue BedrockEmbeddingModelConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_dimensionsHasBeenSet)
-  {
-   payload.WithInteger("dimensions", m_dimensions);
+  if (m_dimensionsHasBeenSet) {
+    payload.WithInteger("dimensions", m_dimensions);
+  }
 
+  if (m_embeddingDataTypeHasBeenSet) {
+    payload.WithString("embeddingDataType", EmbeddingDataTypeMapper::GetNameForEmbeddingDataType(m_embeddingDataType));
+  }
+
+  if (m_modelConfigurationHasBeenSet) {
+    if (!m_modelConfiguration.View().IsNull()) {
+      payload.WithObject("modelConfiguration", JsonValue(m_modelConfiguration.View()));
+    }
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

@@ -4,88 +4,147 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
+#include <aws/monitoring/model/AnomalyDetectorAdaptationSpeed.h>
+#include <aws/monitoring/model/AnomalyDetectorOutlierFilteringStrength.h>
 #include <aws/monitoring/model/Range.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
 
+/**
+ * <p>The configuration specifies details about how the anomaly detection model is
+ * to be trained, including time ranges to exclude from use for training the model
+ * and the time zone to use for the metric.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/monitoring-2010-08-01/AnomalyDetectorConfiguration">AWS
+ * API Reference</a></p>
+ */
+class AnomalyDetectorConfiguration {
+ public:
+  AWS_CLOUDWATCH_API AnomalyDetectorConfiguration() = default;
+  AWS_CLOUDWATCH_API AnomalyDetectorConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CLOUDWATCH_API AnomalyDetectorConfiguration& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CLOUDWATCH_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>The configuration specifies details about how the anomaly detection model is
-   * to be trained, including time ranges to exclude from use for training the model
-   * and the time zone to use for the metric.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/monitoring-2010-08-01/AnomalyDetectorConfiguration">AWS
-   * API Reference</a></p>
+   * <p>An array of time ranges to exclude from use when the anomaly detection model
+   * is trained. Use this to make sure that events that could cause unusual values
+   * for the metric, such as deployments, aren't used when CloudWatch creates the
+   * model.</p>
    */
-  class AnomalyDetectorConfiguration
-  {
-  public:
-    AWS_CLOUDWATCH_API AnomalyDetectorConfiguration();
-    AWS_CLOUDWATCH_API AnomalyDetectorConfiguration(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_CLOUDWATCH_API AnomalyDetectorConfiguration& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::Vector<Range>& GetExcludedTimeRanges() const { return m_excludedTimeRanges; }
+  inline bool ExcludedTimeRangesHasBeenSet() const { return m_excludedTimeRangesHasBeenSet; }
+  template <typename ExcludedTimeRangesT = Aws::Vector<Range>>
+  void SetExcludedTimeRanges(ExcludedTimeRangesT&& value) {
+    m_excludedTimeRangesHasBeenSet = true;
+    m_excludedTimeRanges = std::forward<ExcludedTimeRangesT>(value);
+  }
+  template <typename ExcludedTimeRangesT = Aws::Vector<Range>>
+  AnomalyDetectorConfiguration& WithExcludedTimeRanges(ExcludedTimeRangesT&& value) {
+    SetExcludedTimeRanges(std::forward<ExcludedTimeRangesT>(value));
+    return *this;
+  }
+  template <typename ExcludedTimeRangesT = Range>
+  AnomalyDetectorConfiguration& AddExcludedTimeRanges(ExcludedTimeRangesT&& value) {
+    m_excludedTimeRangesHasBeenSet = true;
+    m_excludedTimeRanges.emplace_back(std::forward<ExcludedTimeRangesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCH_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_CLOUDWATCH_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The time zone to use for the metric. This is useful to enable the model to
+   * automatically account for daylight savings time changes if the metric is
+   * sensitive to such time changes.</p> <p>To specify a time zone, use the name of
+   * the time zone as specified in the standard tz database. For more information,
+   * see <a href="https://en.wikipedia.org/wiki/Tz_database">tz database</a>.</p>
+   */
+  inline const Aws::String& GetMetricTimezone() const { return m_metricTimezone; }
+  inline bool MetricTimezoneHasBeenSet() const { return m_metricTimezoneHasBeenSet; }
+  template <typename MetricTimezoneT = Aws::String>
+  void SetMetricTimezone(MetricTimezoneT&& value) {
+    m_metricTimezoneHasBeenSet = true;
+    m_metricTimezone = std::forward<MetricTimezoneT>(value);
+  }
+  template <typename MetricTimezoneT = Aws::String>
+  AnomalyDetectorConfiguration& WithMetricTimezone(MetricTimezoneT&& value) {
+    SetMetricTimezone(std::forward<MetricTimezoneT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The speed at which the anomaly detection model adapts to sustained changes in
+   * the metric's baseline. Faster adaptation lets the model track shifting workloads
+   * sooner, but increases the chance that the model treats a real, lasting change as
+   * normal.</p> <p>Valid values:</p> <ul> <li> <p> <code>FAST</code> - The model
+   * adapts quickly to sustained changes in the baseline.</p> </li> <li> <p>
+   * <code>NORMAL</code> - The model adapts at a moderate pace. This is the default
+   * value.</p> </li> <li> <p> <code>SLOW</code> - The model adapts slowly, reducing
+   * the risk of treating a real change as normal.</p> </li> </ul>
+   */
+  inline AnomalyDetectorAdaptationSpeed GetAdaptationSpeed() const { return m_adaptationSpeed; }
+  inline bool AdaptationSpeedHasBeenSet() const { return m_adaptationSpeedHasBeenSet; }
+  inline void SetAdaptationSpeed(AnomalyDetectorAdaptationSpeed value) {
+    m_adaptationSpeedHasBeenSet = true;
+    m_adaptationSpeed = value;
+  }
+  inline AnomalyDetectorConfiguration& WithAdaptationSpeed(AnomalyDetectorAdaptationSpeed value) {
+    SetAdaptationSpeed(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of time ranges to exclude from use when the anomaly detection model
-     * is trained. Use this to make sure that events that could cause unusual values
-     * for the metric, such as deployments, aren't used when CloudWatch creates the
-     * model.</p>
-     */
-    inline const Aws::Vector<Range>& GetExcludedTimeRanges() const{ return m_excludedTimeRanges; }
-    inline bool ExcludedTimeRangesHasBeenSet() const { return m_excludedTimeRangesHasBeenSet; }
-    inline void SetExcludedTimeRanges(const Aws::Vector<Range>& value) { m_excludedTimeRangesHasBeenSet = true; m_excludedTimeRanges = value; }
-    inline void SetExcludedTimeRanges(Aws::Vector<Range>&& value) { m_excludedTimeRangesHasBeenSet = true; m_excludedTimeRanges = std::move(value); }
-    inline AnomalyDetectorConfiguration& WithExcludedTimeRanges(const Aws::Vector<Range>& value) { SetExcludedTimeRanges(value); return *this;}
-    inline AnomalyDetectorConfiguration& WithExcludedTimeRanges(Aws::Vector<Range>&& value) { SetExcludedTimeRanges(std::move(value)); return *this;}
-    inline AnomalyDetectorConfiguration& AddExcludedTimeRanges(const Range& value) { m_excludedTimeRangesHasBeenSet = true; m_excludedTimeRanges.push_back(value); return *this; }
-    inline AnomalyDetectorConfiguration& AddExcludedTimeRanges(Range&& value) { m_excludedTimeRangesHasBeenSet = true; m_excludedTimeRanges.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The aggressiveness with which CloudWatch filters outliers from the metric
+   * data that the anomaly detection model uses. Stronger filtering excludes more
+   * extreme values, which can produce a tighter band of expected values but may also
+   * suppress legitimate spikes.</p> <p>Valid values:</p> <ul> <li> <p>
+   * <code>MINIMAL</code> - Excludes only the most extreme outliers.</p> </li> <li>
+   * <p> <code>MODERATE</code> - Excludes a moderate range of outliers. This is the
+   * default value.</p> </li> <li> <p> <code>STRICT</code> - Excludes a wider range
+   * of outliers, which can suppress legitimate spikes.</p> </li> </ul>
+   */
+  inline AnomalyDetectorOutlierFilteringStrength GetOutlierFilteringStrength() const { return m_outlierFilteringStrength; }
+  inline bool OutlierFilteringStrengthHasBeenSet() const { return m_outlierFilteringStrengthHasBeenSet; }
+  inline void SetOutlierFilteringStrength(AnomalyDetectorOutlierFilteringStrength value) {
+    m_outlierFilteringStrengthHasBeenSet = true;
+    m_outlierFilteringStrength = value;
+  }
+  inline AnomalyDetectorConfiguration& WithOutlierFilteringStrength(AnomalyDetectorOutlierFilteringStrength value) {
+    SetOutlierFilteringStrength(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Range> m_excludedTimeRanges;
 
-    ///@{
-    /**
-     * <p>The time zone to use for the metric. This is useful to enable the model to
-     * automatically account for daylight savings time changes if the metric is
-     * sensitive to such time changes.</p> <p>To specify a time zone, use the name of
-     * the time zone as specified in the standard tz database. For more information,
-     * see <a href="https://en.wikipedia.org/wiki/Tz_database">tz database</a>.</p>
-     */
-    inline const Aws::String& GetMetricTimezone() const{ return m_metricTimezone; }
-    inline bool MetricTimezoneHasBeenSet() const { return m_metricTimezoneHasBeenSet; }
-    inline void SetMetricTimezone(const Aws::String& value) { m_metricTimezoneHasBeenSet = true; m_metricTimezone = value; }
-    inline void SetMetricTimezone(Aws::String&& value) { m_metricTimezoneHasBeenSet = true; m_metricTimezone = std::move(value); }
-    inline void SetMetricTimezone(const char* value) { m_metricTimezoneHasBeenSet = true; m_metricTimezone.assign(value); }
-    inline AnomalyDetectorConfiguration& WithMetricTimezone(const Aws::String& value) { SetMetricTimezone(value); return *this;}
-    inline AnomalyDetectorConfiguration& WithMetricTimezone(Aws::String&& value) { SetMetricTimezone(std::move(value)); return *this;}
-    inline AnomalyDetectorConfiguration& WithMetricTimezone(const char* value) { SetMetricTimezone(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_metricTimezone;
 
-    Aws::Vector<Range> m_excludedTimeRanges;
-    bool m_excludedTimeRangesHasBeenSet = false;
+  AnomalyDetectorAdaptationSpeed m_adaptationSpeed{AnomalyDetectorAdaptationSpeed::NOT_SET};
 
-    Aws::String m_metricTimezone;
-    bool m_metricTimezoneHasBeenSet = false;
-  };
+  AnomalyDetectorOutlierFilteringStrength m_outlierFilteringStrength{AnomalyDetectorOutlierFilteringStrength::NOT_SET};
+  bool m_excludedTimeRangesHasBeenSet = false;
+  bool m_metricTimezoneHasBeenSet = false;
+  bool m_adaptationSpeedHasBeenSet = false;
+  bool m_outlierFilteringStrengthHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

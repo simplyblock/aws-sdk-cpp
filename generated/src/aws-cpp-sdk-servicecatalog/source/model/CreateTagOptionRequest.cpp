@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/CreateTagOptionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateTagOptionRequest::CreateTagOptionRequest() : 
-    m_keyHasBeenSet(false),
-    m_valueHasBeenSet(false)
-{
-}
+Aws::String CreateTagOptionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String CreateTagOptionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_keyHasBeenSet)
-  {
-   payload.WithString("Key", m_key);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_keyHasBeenSet) {
+    mapSize++;
+  }
+  if (m_valueHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithString("Value", m_value);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_keyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Key"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_key.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_valueHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Value"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_value.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection CreateTagOptionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateTagOptionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.CreateTagOption"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

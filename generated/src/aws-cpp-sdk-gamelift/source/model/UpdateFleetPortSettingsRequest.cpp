@@ -3,65 +3,60 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/UpdateFleetPortSettingsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateFleetPortSettingsRequest::UpdateFleetPortSettingsRequest() : 
-    m_fleetIdHasBeenSet(false),
-    m_inboundPermissionAuthorizationsHasBeenSet(false),
-    m_inboundPermissionRevocationsHasBeenSet(false)
-{
+Aws::String UpdateFleetPortSettingsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_fleetIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_inboundPermissionAuthorizationsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_inboundPermissionRevocationsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_fleetIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FleetId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_fleetId.c_str()));
+  }
+
+  if (m_inboundPermissionAuthorizationsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("InboundPermissionAuthorizations"));
+    encoder.WriteArrayStart(m_inboundPermissionAuthorizations.size());
+    for (const auto& item_0 : m_inboundPermissionAuthorizations) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_inboundPermissionRevocationsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("InboundPermissionRevocations"));
+    encoder.WriteArrayStart(m_inboundPermissionRevocations.size());
+    for (const auto& item_0 : m_inboundPermissionRevocations) {
+      item_0.CborEncode(encoder);
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateFleetPortSettingsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_fleetIdHasBeenSet)
-  {
-   payload.WithString("FleetId", m_fleetId);
-
-  }
-
-  if(m_inboundPermissionAuthorizationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> inboundPermissionAuthorizationsJsonList(m_inboundPermissionAuthorizations.size());
-   for(unsigned inboundPermissionAuthorizationsIndex = 0; inboundPermissionAuthorizationsIndex < inboundPermissionAuthorizationsJsonList.GetLength(); ++inboundPermissionAuthorizationsIndex)
-   {
-     inboundPermissionAuthorizationsJsonList[inboundPermissionAuthorizationsIndex].AsObject(m_inboundPermissionAuthorizations[inboundPermissionAuthorizationsIndex].Jsonize());
-   }
-   payload.WithArray("InboundPermissionAuthorizations", std::move(inboundPermissionAuthorizationsJsonList));
-
-  }
-
-  if(m_inboundPermissionRevocationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> inboundPermissionRevocationsJsonList(m_inboundPermissionRevocations.size());
-   for(unsigned inboundPermissionRevocationsIndex = 0; inboundPermissionRevocationsIndex < inboundPermissionRevocationsJsonList.GetLength(); ++inboundPermissionRevocationsIndex)
-   {
-     inboundPermissionRevocationsJsonList[inboundPermissionRevocationsIndex].AsObject(m_inboundPermissionRevocations[inboundPermissionRevocationsIndex].Jsonize());
-   }
-   payload.WithArray("InboundPermissionRevocations", std::move(inboundPermissionRevocationsJsonList));
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateFleetPortSettingsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateFleetPortSettingsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.UpdateFleetPortSettings"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

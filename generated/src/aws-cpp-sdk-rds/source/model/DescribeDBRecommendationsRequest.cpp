@@ -3,67 +3,45 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DescribeDBRecommendationsRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/DescribeDBRecommendationsRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-DescribeDBRecommendationsRequest::DescribeDBRecommendationsRequest() : 
-    m_lastUpdatedAfterHasBeenSet(false),
-    m_lastUpdatedBeforeHasBeenSet(false),
-    m_localeHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_maxRecords(0),
-    m_maxRecordsHasBeenSet(false),
-    m_markerHasBeenSet(false)
-{
-}
-
-Aws::String DescribeDBRecommendationsRequest::SerializePayload() const
-{
+Aws::String DescribeDBRecommendationsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeDBRecommendations&";
-  if(m_lastUpdatedAfterHasBeenSet)
-  {
+  if (m_lastUpdatedAfterHasBeenSet) {
     ss << "LastUpdatedAfter=" << StringUtils::URLEncode(m_lastUpdatedAfter.ToGmtString(Aws::Utils::DateFormat::ISO_8601).c_str()) << "&";
   }
 
-  if(m_lastUpdatedBeforeHasBeenSet)
-  {
+  if (m_lastUpdatedBeforeHasBeenSet) {
     ss << "LastUpdatedBefore=" << StringUtils::URLEncode(m_lastUpdatedBefore.ToGmtString(Aws::Utils::DateFormat::ISO_8601).c_str()) << "&";
   }
 
-  if(m_localeHasBeenSet)
-  {
+  if (m_localeHasBeenSet) {
     ss << "Locale=" << StringUtils::URLEncode(m_locale.c_str()) << "&";
   }
 
-  if(m_filtersHasBeenSet)
-  {
-    if (m_filters.empty())
-    {
+  if (m_filtersHasBeenSet) {
+    if (m_filters.empty()) {
       ss << "Filters=&";
-    }
-    else
-    {
+    } else {
       unsigned filtersCount = 1;
-      for(auto& item : m_filters)
-      {
-        item.OutputToStream(ss, "Filters.member.", filtersCount, "");
+      for (auto& item : m_filters) {
+        item.OutputToStream(ss, "Filters.Filter.", filtersCount, "");
         filtersCount++;
       }
     }
   }
 
-  if(m_maxRecordsHasBeenSet)
-  {
+  if (m_maxRecordsHasBeenSet) {
     ss << "MaxRecords=" << m_maxRecords << "&";
   }
 
-  if(m_markerHasBeenSet)
-  {
+  if (m_markerHasBeenSet) {
     ss << "Marker=" << StringUtils::URLEncode(m_marker.c_str()) << "&";
   }
 
@@ -71,8 +49,4 @@ Aws::String DescribeDBRecommendationsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeDBRecommendationsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeDBRecommendationsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

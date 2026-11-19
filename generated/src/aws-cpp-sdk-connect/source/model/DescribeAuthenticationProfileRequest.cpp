@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeAuthenticationProfileRequest::DescribeAuthenticationProfileRequest() : 
-    m_authenticationProfileIdHasBeenSet(false),
-    m_instanceIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeAuthenticationProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeAuthenticationProfileRequest::SerializePayload() const { return {}; }

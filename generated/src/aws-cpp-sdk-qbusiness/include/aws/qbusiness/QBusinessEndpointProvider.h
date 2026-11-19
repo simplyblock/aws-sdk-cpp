@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/qbusiness/QBusiness_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/qbusiness/QBusiness_EXPORTS.h>
 
-#include <aws/qbusiness/QBusinessEndpointRules.h>
-
-
-namespace Aws
-{
-namespace QBusiness
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace QBusiness {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using QBusinessClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using QBusinessEndpointProviderBase =
     EndpointProviderBase<QBusinessClientConfiguration, QBusinessBuiltInParameters, QBusinessClientContextParameters>;
 
 using QBusinessDefaultEpProviderBase =
-    DefaultEndpointProvider<QBusinessClientConfiguration, QBusinessBuiltInParameters, QBusinessClientContextParameters>;
+    BDDEndpointProvider<QBusinessClientConfiguration, QBusinessBuiltInParameters, QBusinessClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_QBUSINESS_API QBusinessEndpointProvider : public QBusinessDefaultEpProviderBase
-{
-public:
-    using QBusinessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_QBUSINESS_API QBusinessEndpointProvider : public QBusinessDefaultEpProviderBase {
+ public:
+  using QBusinessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    QBusinessEndpointProvider()
-      : QBusinessDefaultEpProviderBase(Aws::QBusiness::QBusinessEndpointRules::GetRulesBlob(), Aws::QBusiness::QBusinessEndpointRules::RulesBlobSize)
-    {}
+  QBusinessEndpointProvider();
 
-    ~QBusinessEndpointProvider()
-    {
-    }
+  ~QBusinessEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace QBusiness
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace QBusiness
+}  // namespace Aws

@@ -4,300 +4,428 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/AttributeBooleanValue.h>
-#include <aws/ec2/model/EnclaveOptions.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/AttributeBooleanValue.h>
 #include <aws/ec2/model/AttributeValue.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/EnclaveOptions.h>
+#include <aws/ec2/model/GroupIdentifier.h>
 #include <aws/ec2/model/InstanceBlockDeviceMapping.h>
 #include <aws/ec2/model/ProductCode.h>
-#include <aws/ec2/model/GroupIdentifier.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Describes an instance attribute.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceAttribute">AWS
+ * API Reference</a></p>
+ */
+class DescribeInstanceAttributeResponse {
+ public:
+  AWS_EC2_API DescribeInstanceAttributeResponse() = default;
+  AWS_EC2_API DescribeInstanceAttributeResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeInstanceAttributeResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Describes an instance attribute.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceAttribute">AWS
-   * API Reference</a></p>
+   * <p>The block device mapping of the instance.</p>
    */
-  class DescribeInstanceAttributeResponse
-  {
-  public:
-    AWS_EC2_API DescribeInstanceAttributeResponse();
-    AWS_EC2_API DescribeInstanceAttributeResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeInstanceAttributeResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<InstanceBlockDeviceMapping>& GetBlockDeviceMappings() const { return m_blockDeviceMappings; }
+  template <typename BlockDeviceMappingsT = Aws::Vector<InstanceBlockDeviceMapping>>
+  void SetBlockDeviceMappings(BlockDeviceMappingsT&& value) {
+    m_blockDeviceMappingsHasBeenSet = true;
+    m_blockDeviceMappings = std::forward<BlockDeviceMappingsT>(value);
+  }
+  template <typename BlockDeviceMappingsT = Aws::Vector<InstanceBlockDeviceMapping>>
+  DescribeInstanceAttributeResponse& WithBlockDeviceMappings(BlockDeviceMappingsT&& value) {
+    SetBlockDeviceMappings(std::forward<BlockDeviceMappingsT>(value));
+    return *this;
+  }
+  template <typename BlockDeviceMappingsT = InstanceBlockDeviceMapping>
+  DescribeInstanceAttributeResponse& AddBlockDeviceMappings(BlockDeviceMappingsT&& value) {
+    m_blockDeviceMappingsHasBeenSet = true;
+    m_blockDeviceMappings.emplace_back(std::forward<BlockDeviceMappingsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Indicates whether termination protection is enabled. If the value is
+   * <code>true</code>, you can't terminate the instance using the Amazon EC2
+   * console, command line tools, or API.</p>
+   */
+  inline const AttributeBooleanValue& GetDisableApiTermination() const { return m_disableApiTermination; }
+  template <typename DisableApiTerminationT = AttributeBooleanValue>
+  void SetDisableApiTermination(DisableApiTerminationT&& value) {
+    m_disableApiTerminationHasBeenSet = true;
+    m_disableApiTermination = std::forward<DisableApiTerminationT>(value);
+  }
+  template <typename DisableApiTerminationT = AttributeBooleanValue>
+  DescribeInstanceAttributeResponse& WithDisableApiTermination(DisableApiTerminationT&& value) {
+    SetDisableApiTermination(std::forward<DisableApiTerminationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The block device mapping of the instance.</p>
-     */
-    inline const Aws::Vector<InstanceBlockDeviceMapping>& GetBlockDeviceMappings() const{ return m_blockDeviceMappings; }
-    inline void SetBlockDeviceMappings(const Aws::Vector<InstanceBlockDeviceMapping>& value) { m_blockDeviceMappings = value; }
-    inline void SetBlockDeviceMappings(Aws::Vector<InstanceBlockDeviceMapping>&& value) { m_blockDeviceMappings = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithBlockDeviceMappings(const Aws::Vector<InstanceBlockDeviceMapping>& value) { SetBlockDeviceMappings(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithBlockDeviceMappings(Aws::Vector<InstanceBlockDeviceMapping>&& value) { SetBlockDeviceMappings(std::move(value)); return *this;}
-    inline DescribeInstanceAttributeResponse& AddBlockDeviceMappings(const InstanceBlockDeviceMapping& value) { m_blockDeviceMappings.push_back(value); return *this; }
-    inline DescribeInstanceAttributeResponse& AddBlockDeviceMappings(InstanceBlockDeviceMapping&& value) { m_blockDeviceMappings.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether enhanced networking with ENA is enabled.</p>
+   */
+  inline const AttributeBooleanValue& GetEnaSupport() const { return m_enaSupport; }
+  template <typename EnaSupportT = AttributeBooleanValue>
+  void SetEnaSupport(EnaSupportT&& value) {
+    m_enaSupportHasBeenSet = true;
+    m_enaSupport = std::forward<EnaSupportT>(value);
+  }
+  template <typename EnaSupportT = AttributeBooleanValue>
+  DescribeInstanceAttributeResponse& WithEnaSupport(EnaSupportT&& value) {
+    SetEnaSupport(std::forward<EnaSupportT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the value is <code>true</code>, you can't terminate the instance through
-     * the Amazon EC2 console, CLI, or API; otherwise, you can.</p>
-     */
-    inline const AttributeBooleanValue& GetDisableApiTermination() const{ return m_disableApiTermination; }
-    inline void SetDisableApiTermination(const AttributeBooleanValue& value) { m_disableApiTermination = value; }
-    inline void SetDisableApiTermination(AttributeBooleanValue&& value) { m_disableApiTermination = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithDisableApiTermination(const AttributeBooleanValue& value) { SetDisableApiTermination(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithDisableApiTermination(AttributeBooleanValue&& value) { SetDisableApiTermination(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the instance is enabled for Amazon Web Services Nitro
+   * Enclaves.</p>
+   */
+  inline const EnclaveOptions& GetEnclaveOptions() const { return m_enclaveOptions; }
+  template <typename EnclaveOptionsT = EnclaveOptions>
+  void SetEnclaveOptions(EnclaveOptionsT&& value) {
+    m_enclaveOptionsHasBeenSet = true;
+    m_enclaveOptions = std::forward<EnclaveOptionsT>(value);
+  }
+  template <typename EnclaveOptionsT = EnclaveOptions>
+  DescribeInstanceAttributeResponse& WithEnclaveOptions(EnclaveOptionsT&& value) {
+    SetEnclaveOptions(std::forward<EnclaveOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether enhanced networking with ENA is enabled.</p>
-     */
-    inline const AttributeBooleanValue& GetEnaSupport() const{ return m_enaSupport; }
-    inline void SetEnaSupport(const AttributeBooleanValue& value) { m_enaSupport = value; }
-    inline void SetEnaSupport(AttributeBooleanValue&& value) { m_enaSupport = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithEnaSupport(const AttributeBooleanValue& value) { SetEnaSupport(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithEnaSupport(AttributeBooleanValue&& value) { SetEnaSupport(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the instance is optimized for Amazon EBS I/O.</p>
+   */
+  inline const AttributeBooleanValue& GetEbsOptimized() const { return m_ebsOptimized; }
+  template <typename EbsOptimizedT = AttributeBooleanValue>
+  void SetEbsOptimized(EbsOptimizedT&& value) {
+    m_ebsOptimizedHasBeenSet = true;
+    m_ebsOptimized = std::forward<EbsOptimizedT>(value);
+  }
+  template <typename EbsOptimizedT = AttributeBooleanValue>
+  DescribeInstanceAttributeResponse& WithEbsOptimized(EbsOptimizedT&& value) {
+    SetEbsOptimized(std::forward<EbsOptimizedT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>To enable the instance for Amazon Web Services Nitro Enclaves, set this
-     * parameter to <code>true</code>; otherwise, set it to <code>false</code>.</p>
-     */
-    inline const EnclaveOptions& GetEnclaveOptions() const{ return m_enclaveOptions; }
-    inline void SetEnclaveOptions(const EnclaveOptions& value) { m_enclaveOptions = value; }
-    inline void SetEnclaveOptions(EnclaveOptions&& value) { m_enclaveOptions = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithEnclaveOptions(const EnclaveOptions& value) { SetEnclaveOptions(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithEnclaveOptions(EnclaveOptions&& value) { SetEnclaveOptions(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the instance.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  DescribeInstanceAttributeResponse& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the instance is optimized for Amazon EBS I/O.</p>
-     */
-    inline const AttributeBooleanValue& GetEbsOptimized() const{ return m_ebsOptimized; }
-    inline void SetEbsOptimized(const AttributeBooleanValue& value) { m_ebsOptimized = value; }
-    inline void SetEbsOptimized(AttributeBooleanValue&& value) { m_ebsOptimized = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithEbsOptimized(const AttributeBooleanValue& value) { SetEbsOptimized(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithEbsOptimized(AttributeBooleanValue&& value) { SetEbsOptimized(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether an instance stops or terminates when you initiate shutdown
+   * from the instance (using the operating system command for system shutdown).</p>
+   */
+  inline const AttributeValue& GetInstanceInitiatedShutdownBehavior() const { return m_instanceInitiatedShutdownBehavior; }
+  template <typename InstanceInitiatedShutdownBehaviorT = AttributeValue>
+  void SetInstanceInitiatedShutdownBehavior(InstanceInitiatedShutdownBehaviorT&& value) {
+    m_instanceInitiatedShutdownBehaviorHasBeenSet = true;
+    m_instanceInitiatedShutdownBehavior = std::forward<InstanceInitiatedShutdownBehaviorT>(value);
+  }
+  template <typename InstanceInitiatedShutdownBehaviorT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithInstanceInitiatedShutdownBehavior(InstanceInitiatedShutdownBehaviorT&& value) {
+    SetInstanceInitiatedShutdownBehavior(std::forward<InstanceInitiatedShutdownBehaviorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceId.assign(value); }
-    inline DescribeInstanceAttributeResponse& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline DescribeInstanceAttributeResponse& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The instance type.</p>
+   */
+  inline const AttributeValue& GetInstanceType() const { return m_instanceType; }
+  template <typename InstanceTypeT = AttributeValue>
+  void SetInstanceType(InstanceTypeT&& value) {
+    m_instanceTypeHasBeenSet = true;
+    m_instanceType = std::forward<InstanceTypeT>(value);
+  }
+  template <typename InstanceTypeT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithInstanceType(InstanceTypeT&& value) {
+    SetInstanceType(std::forward<InstanceTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether an instance stops or terminates when you initiate shutdown
-     * from the instance (using the operating system command for system shutdown).</p>
-     */
-    inline const AttributeValue& GetInstanceInitiatedShutdownBehavior() const{ return m_instanceInitiatedShutdownBehavior; }
-    inline void SetInstanceInitiatedShutdownBehavior(const AttributeValue& value) { m_instanceInitiatedShutdownBehavior = value; }
-    inline void SetInstanceInitiatedShutdownBehavior(AttributeValue&& value) { m_instanceInitiatedShutdownBehavior = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithInstanceInitiatedShutdownBehavior(const AttributeValue& value) { SetInstanceInitiatedShutdownBehavior(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithInstanceInitiatedShutdownBehavior(AttributeValue&& value) { SetInstanceInitiatedShutdownBehavior(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The kernel ID.</p>
+   */
+  inline const AttributeValue& GetKernelId() const { return m_kernelId; }
+  template <typename KernelIdT = AttributeValue>
+  void SetKernelId(KernelIdT&& value) {
+    m_kernelIdHasBeenSet = true;
+    m_kernelId = std::forward<KernelIdT>(value);
+  }
+  template <typename KernelIdT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithKernelId(KernelIdT&& value) {
+    SetKernelId(std::forward<KernelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The instance type.</p>
-     */
-    inline const AttributeValue& GetInstanceType() const{ return m_instanceType; }
-    inline void SetInstanceType(const AttributeValue& value) { m_instanceType = value; }
-    inline void SetInstanceType(AttributeValue&& value) { m_instanceType = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithInstanceType(const AttributeValue& value) { SetInstanceType(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithInstanceType(AttributeValue&& value) { SetInstanceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The product codes.</p>
+   */
+  inline const Aws::Vector<ProductCode>& GetProductCodes() const { return m_productCodes; }
+  template <typename ProductCodesT = Aws::Vector<ProductCode>>
+  void SetProductCodes(ProductCodesT&& value) {
+    m_productCodesHasBeenSet = true;
+    m_productCodes = std::forward<ProductCodesT>(value);
+  }
+  template <typename ProductCodesT = Aws::Vector<ProductCode>>
+  DescribeInstanceAttributeResponse& WithProductCodes(ProductCodesT&& value) {
+    SetProductCodes(std::forward<ProductCodesT>(value));
+    return *this;
+  }
+  template <typename ProductCodesT = ProductCode>
+  DescribeInstanceAttributeResponse& AddProductCodes(ProductCodesT&& value) {
+    m_productCodesHasBeenSet = true;
+    m_productCodes.emplace_back(std::forward<ProductCodesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The kernel ID.</p>
-     */
-    inline const AttributeValue& GetKernelId() const{ return m_kernelId; }
-    inline void SetKernelId(const AttributeValue& value) { m_kernelId = value; }
-    inline void SetKernelId(AttributeValue&& value) { m_kernelId = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithKernelId(const AttributeValue& value) { SetKernelId(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithKernelId(AttributeValue&& value) { SetKernelId(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The RAM disk ID.</p>
+   */
+  inline const AttributeValue& GetRamdiskId() const { return m_ramdiskId; }
+  template <typename RamdiskIdT = AttributeValue>
+  void SetRamdiskId(RamdiskIdT&& value) {
+    m_ramdiskIdHasBeenSet = true;
+    m_ramdiskId = std::forward<RamdiskIdT>(value);
+  }
+  template <typename RamdiskIdT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithRamdiskId(RamdiskIdT&& value) {
+    SetRamdiskId(std::forward<RamdiskIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of product codes.</p>
-     */
-    inline const Aws::Vector<ProductCode>& GetProductCodes() const{ return m_productCodes; }
-    inline void SetProductCodes(const Aws::Vector<ProductCode>& value) { m_productCodes = value; }
-    inline void SetProductCodes(Aws::Vector<ProductCode>&& value) { m_productCodes = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithProductCodes(const Aws::Vector<ProductCode>& value) { SetProductCodes(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithProductCodes(Aws::Vector<ProductCode>&& value) { SetProductCodes(std::move(value)); return *this;}
-    inline DescribeInstanceAttributeResponse& AddProductCodes(const ProductCode& value) { m_productCodes.push_back(value); return *this; }
-    inline DescribeInstanceAttributeResponse& AddProductCodes(ProductCode&& value) { m_productCodes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The device name of the root device volume (for example,
+   * <code>/dev/sda1</code>).</p>
+   */
+  inline const AttributeValue& GetRootDeviceName() const { return m_rootDeviceName; }
+  template <typename RootDeviceNameT = AttributeValue>
+  void SetRootDeviceName(RootDeviceNameT&& value) {
+    m_rootDeviceNameHasBeenSet = true;
+    m_rootDeviceName = std::forward<RootDeviceNameT>(value);
+  }
+  template <typename RootDeviceNameT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithRootDeviceName(RootDeviceNameT&& value) {
+    SetRootDeviceName(std::forward<RootDeviceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The RAM disk ID.</p>
-     */
-    inline const AttributeValue& GetRamdiskId() const{ return m_ramdiskId; }
-    inline void SetRamdiskId(const AttributeValue& value) { m_ramdiskId = value; }
-    inline void SetRamdiskId(AttributeValue&& value) { m_ramdiskId = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithRamdiskId(const AttributeValue& value) { SetRamdiskId(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithRamdiskId(AttributeValue&& value) { SetRamdiskId(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether source/destination checks are enabled.</p>
+   */
+  inline const AttributeBooleanValue& GetSourceDestCheck() const { return m_sourceDestCheck; }
+  template <typename SourceDestCheckT = AttributeBooleanValue>
+  void SetSourceDestCheck(SourceDestCheckT&& value) {
+    m_sourceDestCheckHasBeenSet = true;
+    m_sourceDestCheck = std::forward<SourceDestCheckT>(value);
+  }
+  template <typename SourceDestCheckT = AttributeBooleanValue>
+  DescribeInstanceAttributeResponse& WithSourceDestCheck(SourceDestCheckT&& value) {
+    SetSourceDestCheck(std::forward<SourceDestCheckT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The device name of the root device volume (for example,
-     * <code>/dev/sda1</code>).</p>
-     */
-    inline const AttributeValue& GetRootDeviceName() const{ return m_rootDeviceName; }
-    inline void SetRootDeviceName(const AttributeValue& value) { m_rootDeviceName = value; }
-    inline void SetRootDeviceName(AttributeValue&& value) { m_rootDeviceName = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithRootDeviceName(const AttributeValue& value) { SetRootDeviceName(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithRootDeviceName(AttributeValue&& value) { SetRootDeviceName(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether enhanced networking with the Intel 82599 Virtual Function
+   * interface is enabled.</p>
+   */
+  inline const AttributeValue& GetSriovNetSupport() const { return m_sriovNetSupport; }
+  template <typename SriovNetSupportT = AttributeValue>
+  void SetSriovNetSupport(SriovNetSupportT&& value) {
+    m_sriovNetSupportHasBeenSet = true;
+    m_sriovNetSupport = std::forward<SriovNetSupportT>(value);
+  }
+  template <typename SriovNetSupportT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithSriovNetSupport(SriovNetSupportT&& value) {
+    SetSriovNetSupport(std::forward<SriovNetSupportT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Enable or disable source/destination checks, which ensure that the instance
-     * is either the source or the destination of any traffic that it receives. If the
-     * value is <code>true</code>, source/destination checks are enabled; otherwise,
-     * they are disabled. The default value is <code>true</code>. You must disable
-     * source/destination checks if the instance runs services such as network address
-     * translation, routing, or firewalls.</p>
-     */
-    inline const AttributeBooleanValue& GetSourceDestCheck() const{ return m_sourceDestCheck; }
-    inline void SetSourceDestCheck(const AttributeBooleanValue& value) { m_sourceDestCheck = value; }
-    inline void SetSourceDestCheck(AttributeBooleanValue&& value) { m_sourceDestCheck = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithSourceDestCheck(const AttributeBooleanValue& value) { SetSourceDestCheck(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithSourceDestCheck(AttributeBooleanValue&& value) { SetSourceDestCheck(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The user data.</p>
+   */
+  inline const AttributeValue& GetUserData() const { return m_userData; }
+  template <typename UserDataT = AttributeValue>
+  void SetUserData(UserDataT&& value) {
+    m_userDataHasBeenSet = true;
+    m_userData = std::forward<UserDataT>(value);
+  }
+  template <typename UserDataT = AttributeValue>
+  DescribeInstanceAttributeResponse& WithUserData(UserDataT&& value) {
+    SetUserData(std::forward<UserDataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether enhanced networking with the Intel 82599 Virtual Function
-     * interface is enabled.</p>
-     */
-    inline const AttributeValue& GetSriovNetSupport() const{ return m_sriovNetSupport; }
-    inline void SetSriovNetSupport(const AttributeValue& value) { m_sriovNetSupport = value; }
-    inline void SetSriovNetSupport(AttributeValue&& value) { m_sriovNetSupport = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithSriovNetSupport(const AttributeValue& value) { SetSriovNetSupport(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithSriovNetSupport(AttributeValue&& value) { SetSriovNetSupport(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether stop protection is enabled for the instance.</p>
+   */
+  inline const AttributeBooleanValue& GetDisableApiStop() const { return m_disableApiStop; }
+  template <typename DisableApiStopT = AttributeBooleanValue>
+  void SetDisableApiStop(DisableApiStopT&& value) {
+    m_disableApiStopHasBeenSet = true;
+    m_disableApiStop = std::forward<DisableApiStopT>(value);
+  }
+  template <typename DisableApiStopT = AttributeBooleanValue>
+  DescribeInstanceAttributeResponse& WithDisableApiStop(DisableApiStopT&& value) {
+    SetDisableApiStop(std::forward<DisableApiStopT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user data.</p>
-     */
-    inline const AttributeValue& GetUserData() const{ return m_userData; }
-    inline void SetUserData(const AttributeValue& value) { m_userData = value; }
-    inline void SetUserData(AttributeValue&& value) { m_userData = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithUserData(const AttributeValue& value) { SetUserData(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithUserData(AttributeValue&& value) { SetUserData(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The security groups associated with the instance.</p>
+   */
+  inline const Aws::Vector<GroupIdentifier>& GetGroups() const { return m_groups; }
+  template <typename GroupsT = Aws::Vector<GroupIdentifier>>
+  void SetGroups(GroupsT&& value) {
+    m_groupsHasBeenSet = true;
+    m_groups = std::forward<GroupsT>(value);
+  }
+  template <typename GroupsT = Aws::Vector<GroupIdentifier>>
+  DescribeInstanceAttributeResponse& WithGroups(GroupsT&& value) {
+    SetGroups(std::forward<GroupsT>(value));
+    return *this;
+  }
+  template <typename GroupsT = GroupIdentifier>
+  DescribeInstanceAttributeResponse& AddGroups(GroupsT&& value) {
+    m_groupsHasBeenSet = true;
+    m_groups.emplace_back(std::forward<GroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>To enable the instance for Amazon Web Services Stop Protection, set this
-     * parameter to <code>true</code>; otherwise, set it to <code>false</code>.</p>
-     */
-    inline const AttributeBooleanValue& GetDisableApiStop() const{ return m_disableApiStop; }
-    inline void SetDisableApiStop(const AttributeBooleanValue& value) { m_disableApiStop = value; }
-    inline void SetDisableApiStop(AttributeBooleanValue&& value) { m_disableApiStop = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithDisableApiStop(const AttributeBooleanValue& value) { SetDisableApiStop(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithDisableApiStop(AttributeBooleanValue&& value) { SetDisableApiStop(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The security groups associated with the instance.</p>
-     */
-    inline const Aws::Vector<GroupIdentifier>& GetGroups() const{ return m_groups; }
-    inline void SetGroups(const Aws::Vector<GroupIdentifier>& value) { m_groups = value; }
-    inline void SetGroups(Aws::Vector<GroupIdentifier>&& value) { m_groups = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithGroups(const Aws::Vector<GroupIdentifier>& value) { SetGroups(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithGroups(Aws::Vector<GroupIdentifier>&& value) { SetGroups(std::move(value)); return *this;}
-    inline DescribeInstanceAttributeResponse& AddGroups(const GroupIdentifier& value) { m_groups.push_back(value); return *this; }
-    inline DescribeInstanceAttributeResponse& AddGroups(GroupIdentifier&& value) { m_groups.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeInstanceAttributeResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeInstanceAttributeResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeInstanceAttributeResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<InstanceBlockDeviceMapping> m_blockDeviceMappings;
 
-    Aws::Vector<InstanceBlockDeviceMapping> m_blockDeviceMappings;
+  AttributeBooleanValue m_disableApiTermination;
 
-    AttributeBooleanValue m_disableApiTermination;
+  AttributeBooleanValue m_enaSupport;
 
-    AttributeBooleanValue m_enaSupport;
+  EnclaveOptions m_enclaveOptions;
 
-    EnclaveOptions m_enclaveOptions;
+  AttributeBooleanValue m_ebsOptimized;
 
-    AttributeBooleanValue m_ebsOptimized;
+  Aws::String m_instanceId;
 
-    Aws::String m_instanceId;
+  AttributeValue m_instanceInitiatedShutdownBehavior;
 
-    AttributeValue m_instanceInitiatedShutdownBehavior;
+  AttributeValue m_instanceType;
 
-    AttributeValue m_instanceType;
+  AttributeValue m_kernelId;
 
-    AttributeValue m_kernelId;
+  Aws::Vector<ProductCode> m_productCodes;
 
-    Aws::Vector<ProductCode> m_productCodes;
+  AttributeValue m_ramdiskId;
 
-    AttributeValue m_ramdiskId;
+  AttributeValue m_rootDeviceName;
 
-    AttributeValue m_rootDeviceName;
+  AttributeBooleanValue m_sourceDestCheck;
 
-    AttributeBooleanValue m_sourceDestCheck;
+  AttributeValue m_sriovNetSupport;
 
-    AttributeValue m_sriovNetSupport;
+  AttributeValue m_userData;
 
-    AttributeValue m_userData;
+  AttributeBooleanValue m_disableApiStop;
 
-    AttributeBooleanValue m_disableApiStop;
+  Aws::Vector<GroupIdentifier> m_groups;
 
-    Aws::Vector<GroupIdentifier> m_groups;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_blockDeviceMappingsHasBeenSet = false;
+  bool m_disableApiTerminationHasBeenSet = false;
+  bool m_enaSupportHasBeenSet = false;
+  bool m_enclaveOptionsHasBeenSet = false;
+  bool m_ebsOptimizedHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_instanceInitiatedShutdownBehaviorHasBeenSet = false;
+  bool m_instanceTypeHasBeenSet = false;
+  bool m_kernelIdHasBeenSet = false;
+  bool m_productCodesHasBeenSet = false;
+  bool m_ramdiskIdHasBeenSet = false;
+  bool m_rootDeviceNameHasBeenSet = false;
+  bool m_sourceDestCheckHasBeenSet = false;
+  bool m_sriovNetSupportHasBeenSet = false;
+  bool m_userDataHasBeenSet = false;
+  bool m_disableApiStopHasBeenSet = false;
+  bool m_groupsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

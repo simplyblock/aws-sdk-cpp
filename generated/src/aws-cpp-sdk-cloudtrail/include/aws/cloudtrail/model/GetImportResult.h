@@ -5,182 +5,246 @@
 
 #pragma once
 #include <aws/cloudtrail/CloudTrail_EXPORTS.h>
+#include <aws/cloudtrail/model/ImportSource.h>
+#include <aws/cloudtrail/model/ImportStatistics.h>
+#include <aws/cloudtrail/model/ImportStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/cloudtrail/model/ImportSource.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/cloudtrail/model/ImportStatus.h>
-#include <aws/cloudtrail/model/ImportStatistics.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudTrail
-{
-namespace Model
-{
-  class GetImportResult
-  {
-  public:
-    AWS_CLOUDTRAIL_API GetImportResult();
-    AWS_CLOUDTRAIL_API GetImportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDTRAIL_API GetImportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudTrail {
+namespace Model {
+class GetImportResult {
+ public:
+  AWS_CLOUDTRAIL_API GetImportResult() = default;
+  AWS_CLOUDTRAIL_API GetImportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDTRAIL_API GetImportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The ID of the import. </p>
+   */
+  inline const Aws::String& GetImportId() const { return m_importId; }
+  template <typename ImportIdT = Aws::String>
+  void SetImportId(ImportIdT&& value) {
+    m_importIdHasBeenSet = true;
+    m_importId = std::forward<ImportIdT>(value);
+  }
+  template <typename ImportIdT = Aws::String>
+  GetImportResult& WithImportId(ImportIdT&& value) {
+    SetImportId(std::forward<ImportIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The ID of the import. </p>
-     */
-    inline const Aws::String& GetImportId() const{ return m_importId; }
-    inline void SetImportId(const Aws::String& value) { m_importId = value; }
-    inline void SetImportId(Aws::String&& value) { m_importId = std::move(value); }
-    inline void SetImportId(const char* value) { m_importId.assign(value); }
-    inline GetImportResult& WithImportId(const Aws::String& value) { SetImportId(value); return *this;}
-    inline GetImportResult& WithImportId(Aws::String&& value) { SetImportId(std::move(value)); return *this;}
-    inline GetImportResult& WithImportId(const char* value) { SetImportId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The ARN of the destination event data store. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDestinations() const { return m_destinations; }
+  template <typename DestinationsT = Aws::Vector<Aws::String>>
+  void SetDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations = std::forward<DestinationsT>(value);
+  }
+  template <typename DestinationsT = Aws::Vector<Aws::String>>
+  GetImportResult& WithDestinations(DestinationsT&& value) {
+    SetDestinations(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  template <typename DestinationsT = Aws::String>
+  GetImportResult& AddDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations.emplace_back(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The ARN of the destination event data store. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDestinations() const{ return m_destinations; }
-    inline void SetDestinations(const Aws::Vector<Aws::String>& value) { m_destinations = value; }
-    inline void SetDestinations(Aws::Vector<Aws::String>&& value) { m_destinations = std::move(value); }
-    inline GetImportResult& WithDestinations(const Aws::Vector<Aws::String>& value) { SetDestinations(value); return *this;}
-    inline GetImportResult& WithDestinations(Aws::Vector<Aws::String>&& value) { SetDestinations(std::move(value)); return *this;}
-    inline GetImportResult& AddDestinations(const Aws::String& value) { m_destinations.push_back(value); return *this; }
-    inline GetImportResult& AddDestinations(Aws::String&& value) { m_destinations.push_back(std::move(value)); return *this; }
-    inline GetImportResult& AddDestinations(const char* value) { m_destinations.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The source S3 bucket. </p>
+   */
+  inline const ImportSource& GetImportSource() const { return m_importSource; }
+  template <typename ImportSourceT = ImportSource>
+  void SetImportSource(ImportSourceT&& value) {
+    m_importSourceHasBeenSet = true;
+    m_importSource = std::forward<ImportSourceT>(value);
+  }
+  template <typename ImportSourceT = ImportSource>
+  GetImportResult& WithImportSource(ImportSourceT&& value) {
+    SetImportSource(std::forward<ImportSourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The source S3 bucket. </p>
-     */
-    inline const ImportSource& GetImportSource() const{ return m_importSource; }
-    inline void SetImportSource(const ImportSource& value) { m_importSource = value; }
-    inline void SetImportSource(ImportSource&& value) { m_importSource = std::move(value); }
-    inline GetImportResult& WithImportSource(const ImportSource& value) { SetImportSource(value); return *this;}
-    inline GetImportResult& WithImportSource(ImportSource&& value) { SetImportSource(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Used with <code>EndEventTime</code> to bound a <code>StartImport</code>
+   * request, and limit imported trail events to only those events logged within a
+   * specified time period. </p>
+   */
+  inline const Aws::Utils::DateTime& GetStartEventTime() const { return m_startEventTime; }
+  template <typename StartEventTimeT = Aws::Utils::DateTime>
+  void SetStartEventTime(StartEventTimeT&& value) {
+    m_startEventTimeHasBeenSet = true;
+    m_startEventTime = std::forward<StartEventTimeT>(value);
+  }
+  template <typename StartEventTimeT = Aws::Utils::DateTime>
+  GetImportResult& WithStartEventTime(StartEventTimeT&& value) {
+    SetStartEventTime(std::forward<StartEventTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Used with <code>EndEventTime</code> to bound a <code>StartImport</code>
-     * request, and limit imported trail events to only those events logged within a
-     * specified time period. </p>
-     */
-    inline const Aws::Utils::DateTime& GetStartEventTime() const{ return m_startEventTime; }
-    inline void SetStartEventTime(const Aws::Utils::DateTime& value) { m_startEventTime = value; }
-    inline void SetStartEventTime(Aws::Utils::DateTime&& value) { m_startEventTime = std::move(value); }
-    inline GetImportResult& WithStartEventTime(const Aws::Utils::DateTime& value) { SetStartEventTime(value); return *this;}
-    inline GetImportResult& WithStartEventTime(Aws::Utils::DateTime&& value) { SetStartEventTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Used with <code>StartEventTime</code> to bound a <code>StartImport</code>
+   * request, and limit imported trail events to only those events logged within a
+   * specified time period. </p>
+   */
+  inline const Aws::Utils::DateTime& GetEndEventTime() const { return m_endEventTime; }
+  template <typename EndEventTimeT = Aws::Utils::DateTime>
+  void SetEndEventTime(EndEventTimeT&& value) {
+    m_endEventTimeHasBeenSet = true;
+    m_endEventTime = std::forward<EndEventTimeT>(value);
+  }
+  template <typename EndEventTimeT = Aws::Utils::DateTime>
+  GetImportResult& WithEndEventTime(EndEventTimeT&& value) {
+    SetEndEventTime(std::forward<EndEventTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Used with <code>StartEventTime</code> to bound a <code>StartImport</code>
-     * request, and limit imported trail events to only those events logged within a
-     * specified time period. </p>
-     */
-    inline const Aws::Utils::DateTime& GetEndEventTime() const{ return m_endEventTime; }
-    inline void SetEndEventTime(const Aws::Utils::DateTime& value) { m_endEventTime = value; }
-    inline void SetEndEventTime(Aws::Utils::DateTime&& value) { m_endEventTime = std::move(value); }
-    inline GetImportResult& WithEndEventTime(const Aws::Utils::DateTime& value) { SetEndEventTime(value); return *this;}
-    inline GetImportResult& WithEndEventTime(Aws::Utils::DateTime&& value) { SetEndEventTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The status of the import. </p>
+   */
+  inline ImportStatus GetImportStatus() const { return m_importStatus; }
+  inline void SetImportStatus(ImportStatus value) {
+    m_importStatusHasBeenSet = true;
+    m_importStatus = value;
+  }
+  inline GetImportResult& WithImportStatus(ImportStatus value) {
+    SetImportStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The status of the import. </p>
-     */
-    inline const ImportStatus& GetImportStatus() const{ return m_importStatus; }
-    inline void SetImportStatus(const ImportStatus& value) { m_importStatus = value; }
-    inline void SetImportStatus(ImportStatus&& value) { m_importStatus = std::move(value); }
-    inline GetImportResult& WithImportStatus(const ImportStatus& value) { SetImportStatus(value); return *this;}
-    inline GetImportResult& WithImportStatus(ImportStatus&& value) { SetImportStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The timestamp of the import's creation. </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTimestamp() const { return m_createdTimestamp; }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  void SetCreatedTimestamp(CreatedTimestampT&& value) {
+    m_createdTimestampHasBeenSet = true;
+    m_createdTimestamp = std::forward<CreatedTimestampT>(value);
+  }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  GetImportResult& WithCreatedTimestamp(CreatedTimestampT&& value) {
+    SetCreatedTimestamp(std::forward<CreatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The timestamp of the import's creation. </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTimestamp() const{ return m_createdTimestamp; }
-    inline void SetCreatedTimestamp(const Aws::Utils::DateTime& value) { m_createdTimestamp = value; }
-    inline void SetCreatedTimestamp(Aws::Utils::DateTime&& value) { m_createdTimestamp = std::move(value); }
-    inline GetImportResult& WithCreatedTimestamp(const Aws::Utils::DateTime& value) { SetCreatedTimestamp(value); return *this;}
-    inline GetImportResult& WithCreatedTimestamp(Aws::Utils::DateTime&& value) { SetCreatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The timestamp of when the import was updated. </p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedTimestamp() const { return m_updatedTimestamp; }
+  template <typename UpdatedTimestampT = Aws::Utils::DateTime>
+  void SetUpdatedTimestamp(UpdatedTimestampT&& value) {
+    m_updatedTimestampHasBeenSet = true;
+    m_updatedTimestamp = std::forward<UpdatedTimestampT>(value);
+  }
+  template <typename UpdatedTimestampT = Aws::Utils::DateTime>
+  GetImportResult& WithUpdatedTimestamp(UpdatedTimestampT&& value) {
+    SetUpdatedTimestamp(std::forward<UpdatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The timestamp of when the import was updated. </p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedTimestamp() const{ return m_updatedTimestamp; }
-    inline void SetUpdatedTimestamp(const Aws::Utils::DateTime& value) { m_updatedTimestamp = value; }
-    inline void SetUpdatedTimestamp(Aws::Utils::DateTime&& value) { m_updatedTimestamp = std::move(value); }
-    inline GetImportResult& WithUpdatedTimestamp(const Aws::Utils::DateTime& value) { SetUpdatedTimestamp(value); return *this;}
-    inline GetImportResult& WithUpdatedTimestamp(Aws::Utils::DateTime&& value) { SetUpdatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Provides statistics for the import. CloudTrail does not update import
+   * statistics in real-time. Returned values for parameters such as
+   * <code>EventsCompleted</code> may be lower than the actual value, because
+   * CloudTrail updates statistics incrementally over the course of the import. </p>
+   */
+  inline const ImportStatistics& GetImportStatistics() const { return m_importStatistics; }
+  template <typename ImportStatisticsT = ImportStatistics>
+  void SetImportStatistics(ImportStatisticsT&& value) {
+    m_importStatisticsHasBeenSet = true;
+    m_importStatistics = std::forward<ImportStatisticsT>(value);
+  }
+  template <typename ImportStatisticsT = ImportStatistics>
+  GetImportResult& WithImportStatistics(ImportStatisticsT&& value) {
+    SetImportStatistics(std::forward<ImportStatisticsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Provides statistics for the import. CloudTrail does not update import
-     * statistics in real-time. Returned values for parameters such as
-     * <code>EventsCompleted</code> may be lower than the actual value, because
-     * CloudTrail updates statistics incrementally over the course of the import. </p>
-     */
-    inline const ImportStatistics& GetImportStatistics() const{ return m_importStatistics; }
-    inline void SetImportStatistics(const ImportStatistics& value) { m_importStatistics = value; }
-    inline void SetImportStatistics(ImportStatistics&& value) { m_importStatistics = std::move(value); }
-    inline GetImportResult& WithImportStatistics(const ImportStatistics& value) { SetImportStatistics(value); return *this;}
-    inline GetImportResult& WithImportStatistics(ImportStatistics&& value) { SetImportStatistics(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetImportResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetImportResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetImportResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetImportResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_importId;
+ private:
+  Aws::String m_importId;
 
-    Aws::Vector<Aws::String> m_destinations;
+  Aws::Vector<Aws::String> m_destinations;
 
-    ImportSource m_importSource;
+  ImportSource m_importSource;
 
-    Aws::Utils::DateTime m_startEventTime;
+  Aws::Utils::DateTime m_startEventTime{};
 
-    Aws::Utils::DateTime m_endEventTime;
+  Aws::Utils::DateTime m_endEventTime{};
 
-    ImportStatus m_importStatus;
+  ImportStatus m_importStatus{ImportStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_createdTimestamp;
+  Aws::Utils::DateTime m_createdTimestamp{};
 
-    Aws::Utils::DateTime m_updatedTimestamp;
+  Aws::Utils::DateTime m_updatedTimestamp{};
 
-    ImportStatistics m_importStatistics;
+  ImportStatistics m_importStatistics;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_importIdHasBeenSet = false;
+  bool m_destinationsHasBeenSet = false;
+  bool m_importSourceHasBeenSet = false;
+  bool m_startEventTimeHasBeenSet = false;
+  bool m_endEventTimeHasBeenSet = false;
+  bool m_importStatusHasBeenSet = false;
+  bool m_createdTimestampHasBeenSet = false;
+  bool m_updatedTimestampHasBeenSet = false;
+  bool m_importStatisticsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudTrail
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudTrail
+}  // namespace Aws

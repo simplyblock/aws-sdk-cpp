@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-osis "C++ SDK for the AWS osis service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-osis "C++ SDK for Amazon OpenSearch Ingestion" aws-cpp-sdk-core)
 
 file(GLOB AWS_OSIS_HEADERS
     "include/aws/osis/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OSIS_HEADERS
 
 file(GLOB AWS_OSIS_MODEL_HEADERS
     "include/aws/osis/model/*.h"
+)
+
+file(GLOB AWS_OSIS_INTERNAL_HEADERS
+    "include/aws/osis/internal/*.h"
 )
 
 file(GLOB AWS_OSIS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OSIS_MODEL_SOURCE
 
 file(GLOB OSIS_UNIFIED_HEADERS
     ${AWS_OSIS_HEADERS}
+    ${AWS_OSIS_INTERNAL_HEADERS}
     ${AWS_OSIS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\osis" FILES ${AWS_OSIS_HEADERS})
+        source_group("Header Files\\aws\\osis\\internal" FILES ${AWS_OSIS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\osis\\model" FILES ${AWS_OSIS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OSIS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OSIS_MODEL_SOURCE})

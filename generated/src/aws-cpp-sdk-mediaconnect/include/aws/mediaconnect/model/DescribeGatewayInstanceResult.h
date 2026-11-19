@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/GatewayInstance.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
-  class DescribeGatewayInstanceResult
-  {
-  public:
-    AWS_MEDIACONNECT_API DescribeGatewayInstanceResult();
-    AWS_MEDIACONNECT_API DescribeGatewayInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONNECT_API DescribeGatewayInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
+class DescribeGatewayInstanceResult {
+ public:
+  AWS_MEDIACONNECT_API DescribeGatewayInstanceResult() = default;
+  AWS_MEDIACONNECT_API DescribeGatewayInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONNECT_API DescribeGatewayInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The gateway instance that you requested a description of. </p>
+   */
+  inline const GatewayInstance& GetGatewayInstance() const { return m_gatewayInstance; }
+  template <typename GatewayInstanceT = GatewayInstance>
+  void SetGatewayInstance(GatewayInstanceT&& value) {
+    m_gatewayInstanceHasBeenSet = true;
+    m_gatewayInstance = std::forward<GatewayInstanceT>(value);
+  }
+  template <typename GatewayInstanceT = GatewayInstance>
+  DescribeGatewayInstanceResult& WithGatewayInstance(GatewayInstanceT&& value) {
+    SetGatewayInstance(std::forward<GatewayInstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const GatewayInstance& GetGatewayInstance() const{ return m_gatewayInstance; }
-    inline void SetGatewayInstance(const GatewayInstance& value) { m_gatewayInstance = value; }
-    inline void SetGatewayInstance(GatewayInstance&& value) { m_gatewayInstance = std::move(value); }
-    inline DescribeGatewayInstanceResult& WithGatewayInstance(const GatewayInstance& value) { SetGatewayInstance(value); return *this;}
-    inline DescribeGatewayInstanceResult& WithGatewayInstance(GatewayInstance&& value) { SetGatewayInstance(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeGatewayInstanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeGatewayInstanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeGatewayInstanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeGatewayInstanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    GatewayInstance m_gatewayInstance;
+ private:
+  GatewayInstance m_gatewayInstance;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_gatewayInstanceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

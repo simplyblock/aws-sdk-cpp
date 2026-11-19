@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/cloudhsm/CloudHSM_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/cloudhsm/CloudHSMEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudHSM
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudHSM {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudHSMClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudHSMEndpointProviderBase =
     EndpointProviderBase<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
 
 using CloudHSMDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
+    BDDEndpointProvider<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDHSM_API CloudHSMEndpointProvider : public CloudHSMDefaultEpProviderBase
-{
-public:
-    using CloudHSMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDHSM_API CloudHSMEndpointProvider : public CloudHSMDefaultEpProviderBase {
+ public:
+  using CloudHSMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudHSMEndpointProvider()
-      : CloudHSMDefaultEpProviderBase(Aws::CloudHSM::CloudHSMEndpointRules::GetRulesBlob(), Aws::CloudHSM::CloudHSMEndpointRules::RulesBlobSize)
-    {}
+  CloudHSMEndpointProvider();
 
-    ~CloudHSMEndpointProvider()
-    {
-    }
+  ~CloudHSMEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudHSM
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudHSM
+}  // namespace Aws

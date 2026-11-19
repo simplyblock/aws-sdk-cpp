@@ -5,70 +5,73 @@
 
 #pragma once
 #include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/model/InstanceType.h>
+#include <aws/sagemaker/model/ProductionVariantInstanceType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>The infrastructure configuration for deploying the model to a real-time
+ * inference endpoint.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/RealTimeInferenceConfig">AWS
+ * API Reference</a></p>
+ */
+class RealTimeInferenceConfig {
+ public:
+  AWS_SAGEMAKER_API RealTimeInferenceConfig() = default;
+  AWS_SAGEMAKER_API RealTimeInferenceConfig(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API RealTimeInferenceConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The infrastructure configuration for deploying the model to a real-time
-   * inference endpoint.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/RealTimeInferenceConfig">AWS
-   * API Reference</a></p>
+   * <p>The instance type the model is deployed to.</p>
    */
-  class RealTimeInferenceConfig
-  {
-  public:
-    AWS_SAGEMAKER_API RealTimeInferenceConfig();
-    AWS_SAGEMAKER_API RealTimeInferenceConfig(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API RealTimeInferenceConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ProductionVariantInstanceType GetInstanceType() const { return m_instanceType; }
+  inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
+  inline void SetInstanceType(ProductionVariantInstanceType value) {
+    m_instanceTypeHasBeenSet = true;
+    m_instanceType = value;
+  }
+  inline RealTimeInferenceConfig& WithInstanceType(ProductionVariantInstanceType value) {
+    SetInstanceType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The number of instances of the type specified by
+   * <code>InstanceType</code>.</p>
+   */
+  inline int GetInstanceCount() const { return m_instanceCount; }
+  inline bool InstanceCountHasBeenSet() const { return m_instanceCountHasBeenSet; }
+  inline void SetInstanceCount(int value) {
+    m_instanceCountHasBeenSet = true;
+    m_instanceCount = value;
+  }
+  inline RealTimeInferenceConfig& WithInstanceCount(int value) {
+    SetInstanceCount(value);
+    return *this;
+  }
+  ///@}
+ private:
+  ProductionVariantInstanceType m_instanceType{ProductionVariantInstanceType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The instance type the model is deployed to.</p>
-     */
-    inline const InstanceType& GetInstanceType() const{ return m_instanceType; }
-    inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
-    inline void SetInstanceType(const InstanceType& value) { m_instanceTypeHasBeenSet = true; m_instanceType = value; }
-    inline void SetInstanceType(InstanceType&& value) { m_instanceTypeHasBeenSet = true; m_instanceType = std::move(value); }
-    inline RealTimeInferenceConfig& WithInstanceType(const InstanceType& value) { SetInstanceType(value); return *this;}
-    inline RealTimeInferenceConfig& WithInstanceType(InstanceType&& value) { SetInstanceType(std::move(value)); return *this;}
-    ///@}
+  int m_instanceCount{0};
+  bool m_instanceTypeHasBeenSet = false;
+  bool m_instanceCountHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The number of instances of the type specified by
-     * <code>InstanceType</code>.</p>
-     */
-    inline int GetInstanceCount() const{ return m_instanceCount; }
-    inline bool InstanceCountHasBeenSet() const { return m_instanceCountHasBeenSet; }
-    inline void SetInstanceCount(int value) { m_instanceCountHasBeenSet = true; m_instanceCount = value; }
-    inline RealTimeInferenceConfig& WithInstanceCount(int value) { SetInstanceCount(value); return *this;}
-    ///@}
-  private:
-
-    InstanceType m_instanceType;
-    bool m_instanceTypeHasBeenSet = false;
-
-    int m_instanceCount;
-    bool m_instanceCountHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

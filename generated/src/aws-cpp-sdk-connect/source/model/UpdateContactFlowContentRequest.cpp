@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateContactFlowContentRequest::UpdateContactFlowContentRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_contactFlowIdHasBeenSet(false),
-    m_contentHasBeenSet(false)
-{
-}
-
-Aws::String UpdateContactFlowContentRequest::SerializePayload() const
-{
+Aws::String UpdateContactFlowContentRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_contentHasBeenSet)
-  {
-   payload.WithString("Content", m_content);
-
+  if (m_contentHasBeenSet) {
+    payload.WithString("Content", m_content);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

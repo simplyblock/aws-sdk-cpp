@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/keyspaces/Keyspaces_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/keyspaces/Keyspaces_EXPORTS.h>
 
-#include <aws/keyspaces/KeyspacesEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Keyspaces
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Keyspaces {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using KeyspacesClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using KeyspacesEndpointProviderBase =
     EndpointProviderBase<KeyspacesClientConfiguration, KeyspacesBuiltInParameters, KeyspacesClientContextParameters>;
 
 using KeyspacesDefaultEpProviderBase =
-    DefaultEndpointProvider<KeyspacesClientConfiguration, KeyspacesBuiltInParameters, KeyspacesClientContextParameters>;
+    BDDEndpointProvider<KeyspacesClientConfiguration, KeyspacesBuiltInParameters, KeyspacesClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_KEYSPACES_API KeyspacesEndpointProvider : public KeyspacesDefaultEpProviderBase
-{
-public:
-    using KeyspacesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_KEYSPACES_API KeyspacesEndpointProvider : public KeyspacesDefaultEpProviderBase {
+ public:
+  using KeyspacesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    KeyspacesEndpointProvider()
-      : KeyspacesDefaultEpProviderBase(Aws::Keyspaces::KeyspacesEndpointRules::GetRulesBlob(), Aws::Keyspaces::KeyspacesEndpointRules::RulesBlobSize)
-    {}
+  KeyspacesEndpointProvider();
 
-    ~KeyspacesEndpointProvider()
-    {
-    }
+  ~KeyspacesEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Keyspaces
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Keyspaces
+}  // namespace Aws

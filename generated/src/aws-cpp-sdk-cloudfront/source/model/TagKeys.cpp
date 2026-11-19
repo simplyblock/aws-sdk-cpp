@@ -4,45 +4,30 @@
  */
 
 #include <aws/cloudfront/model/TagKeys.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CloudFront
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudFront {
+namespace Model {
 
-TagKeys::TagKeys() : 
-    m_itemsHasBeenSet(false)
-{
-}
+TagKeys::TagKeys(const XmlNode& xmlNode) { *this = xmlNode; }
 
-TagKeys::TagKeys(const XmlNode& xmlNode)
-  : TagKeys()
-{
-  *this = xmlNode;
-}
-
-TagKeys& TagKeys::operator =(const XmlNode& xmlNode)
-{
+TagKeys& TagKeys::operator=(const XmlNode& xmlNode) {
   XmlNode resultNode = xmlNode;
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode itemsNode = resultNode.FirstChild("Items");
-    if(!itemsNode.IsNull())
-    {
+    if (!itemsNode.IsNull()) {
       XmlNode itemsMember = itemsNode.FirstChild("Key");
-      while(!itemsMember.IsNull())
-      {
+      m_itemsHasBeenSet = !itemsMember.IsNull();
+      while (!itemsMember.IsNull()) {
         m_items.push_back(itemsMember.GetText());
         itemsMember = itemsMember.NextNode("Key");
       }
@@ -54,21 +39,17 @@ TagKeys& TagKeys::operator =(const XmlNode& xmlNode)
   return *this;
 }
 
-void TagKeys::AddToNode(XmlNode& parentNode) const
-{
+void TagKeys::AddToNode(XmlNode& parentNode) const {
   Aws::StringStream ss;
-  if(m_itemsHasBeenSet)
-  {
-   XmlNode itemsParentNode = parentNode.CreateChildElement("Items");
-   for(const auto& item : m_items)
-   {
-     XmlNode itemsNode = itemsParentNode.CreateChildElement("Key");
-     itemsNode.SetText(item);
-   }
+  if (m_itemsHasBeenSet) {
+    XmlNode itemsParentNode = parentNode.CreateChildElement("Items");
+    for (const auto& item : m_items) {
+      XmlNode itemsNode = itemsParentNode.CreateChildElement("Key");
+      itemsNode.SetText(item);
+    }
   }
-
 }
 
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

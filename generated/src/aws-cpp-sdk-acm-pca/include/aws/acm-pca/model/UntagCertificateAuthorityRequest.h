@@ -4,78 +4,87 @@
  */
 
 #pragma once
-#include <aws/acm-pca/ACMPCA_EXPORTS.h>
 #include <aws/acm-pca/ACMPCARequest.h>
+#include <aws/acm-pca/ACMPCA_EXPORTS.h>
+#include <aws/acm-pca/model/Tag.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/acm-pca/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ACMPCA
-{
-namespace Model
-{
+namespace Aws {
+namespace ACMPCA {
+namespace Model {
 
+/**
+ */
+class UntagCertificateAuthorityRequest : public ACMPCARequest {
+ public:
+  AWS_ACMPCA_API UntagCertificateAuthorityRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UntagCertificateAuthority"; }
+
+  AWS_ACMPCA_API Aws::String SerializePayload() const override;
+
+  AWS_ACMPCA_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) that was returned when you called <a
+   * href="https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html">CreateCertificateAuthority</a>.
+   * This must be of the form: </p> <p>
+   * <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i>
+   * </code> </p>
    */
-  class UntagCertificateAuthorityRequest : public ACMPCARequest
-  {
-  public:
-    AWS_ACMPCA_API UntagCertificateAuthorityRequest();
+  inline const Aws::String& GetCertificateAuthorityArn() const { return m_certificateAuthorityArn; }
+  inline bool CertificateAuthorityArnHasBeenSet() const { return m_certificateAuthorityArnHasBeenSet; }
+  template <typename CertificateAuthorityArnT = Aws::String>
+  void SetCertificateAuthorityArn(CertificateAuthorityArnT&& value) {
+    m_certificateAuthorityArnHasBeenSet = true;
+    m_certificateAuthorityArn = std::forward<CertificateAuthorityArnT>(value);
+  }
+  template <typename CertificateAuthorityArnT = Aws::String>
+  UntagCertificateAuthorityRequest& WithCertificateAuthorityArn(CertificateAuthorityArnT&& value) {
+    SetCertificateAuthorityArn(std::forward<CertificateAuthorityArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UntagCertificateAuthority"; }
+  ///@{
+  /**
+   * <p>List of tags to be removed from the CA.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  UntagCertificateAuthorityRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  UntagCertificateAuthorityRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateAuthorityArn;
 
-    AWS_ACMPCA_API Aws::String SerializePayload() const override;
+  Aws::Vector<Tag> m_tags;
+  bool m_certificateAuthorityArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    AWS_ACMPCA_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) that was returned when you called <a
-     * href="https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html">CreateCertificateAuthority</a>.
-     * This must be of the form: </p> <p>
-     * <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i>
-     * </code> </p>
-     */
-    inline const Aws::String& GetCertificateAuthorityArn() const{ return m_certificateAuthorityArn; }
-    inline bool CertificateAuthorityArnHasBeenSet() const { return m_certificateAuthorityArnHasBeenSet; }
-    inline void SetCertificateAuthorityArn(const Aws::String& value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn = value; }
-    inline void SetCertificateAuthorityArn(Aws::String&& value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn = std::move(value); }
-    inline void SetCertificateAuthorityArn(const char* value) { m_certificateAuthorityArnHasBeenSet = true; m_certificateAuthorityArn.assign(value); }
-    inline UntagCertificateAuthorityRequest& WithCertificateAuthorityArn(const Aws::String& value) { SetCertificateAuthorityArn(value); return *this;}
-    inline UntagCertificateAuthorityRequest& WithCertificateAuthorityArn(Aws::String&& value) { SetCertificateAuthorityArn(std::move(value)); return *this;}
-    inline UntagCertificateAuthorityRequest& WithCertificateAuthorityArn(const char* value) { SetCertificateAuthorityArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>List of tags to be removed from the CA.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline UntagCertificateAuthorityRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline UntagCertificateAuthorityRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline UntagCertificateAuthorityRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline UntagCertificateAuthorityRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_certificateAuthorityArn;
-    bool m_certificateAuthorityArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ACMPCA
-} // namespace Aws
+}  // namespace Model
+}  // namespace ACMPCA
+}  // namespace Aws

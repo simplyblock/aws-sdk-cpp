@@ -5,78 +5,92 @@
 
 #pragma once
 #include <aws/appintegrations/AppIntegrationsService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppIntegrationsService
-{
-namespace Model
-{
-  class CreateDataIntegrationAssociationResult
-  {
-  public:
-    AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult();
-    AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppIntegrationsService {
+namespace Model {
+class CreateDataIntegrationAssociationResult {
+ public:
+  AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult() = default;
+  AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPINTEGRATIONSSERVICE_API CreateDataIntegrationAssociationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A unique identifier. for the DataIntegrationAssociation.</p>
+   */
+  inline const Aws::String& GetDataIntegrationAssociationId() const { return m_dataIntegrationAssociationId; }
+  template <typename DataIntegrationAssociationIdT = Aws::String>
+  void SetDataIntegrationAssociationId(DataIntegrationAssociationIdT&& value) {
+    m_dataIntegrationAssociationIdHasBeenSet = true;
+    m_dataIntegrationAssociationId = std::forward<DataIntegrationAssociationIdT>(value);
+  }
+  template <typename DataIntegrationAssociationIdT = Aws::String>
+  CreateDataIntegrationAssociationResult& WithDataIntegrationAssociationId(DataIntegrationAssociationIdT&& value) {
+    SetDataIntegrationAssociationId(std::forward<DataIntegrationAssociationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier. for the DataIntegrationAssociation.</p>
-     */
-    inline const Aws::String& GetDataIntegrationAssociationId() const{ return m_dataIntegrationAssociationId; }
-    inline void SetDataIntegrationAssociationId(const Aws::String& value) { m_dataIntegrationAssociationId = value; }
-    inline void SetDataIntegrationAssociationId(Aws::String&& value) { m_dataIntegrationAssociationId = std::move(value); }
-    inline void SetDataIntegrationAssociationId(const char* value) { m_dataIntegrationAssociationId.assign(value); }
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationAssociationId(const Aws::String& value) { SetDataIntegrationAssociationId(value); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationAssociationId(Aws::String&& value) { SetDataIntegrationAssociationId(std::move(value)); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationAssociationId(const char* value) { SetDataIntegrationAssociationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the DataIntegration.</p>
+   */
+  inline const Aws::String& GetDataIntegrationArn() const { return m_dataIntegrationArn; }
+  template <typename DataIntegrationArnT = Aws::String>
+  void SetDataIntegrationArn(DataIntegrationArnT&& value) {
+    m_dataIntegrationArnHasBeenSet = true;
+    m_dataIntegrationArn = std::forward<DataIntegrationArnT>(value);
+  }
+  template <typename DataIntegrationArnT = Aws::String>
+  CreateDataIntegrationAssociationResult& WithDataIntegrationArn(DataIntegrationArnT&& value) {
+    SetDataIntegrationArn(std::forward<DataIntegrationArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the DataIntegration.</p>
-     */
-    inline const Aws::String& GetDataIntegrationArn() const{ return m_dataIntegrationArn; }
-    inline void SetDataIntegrationArn(const Aws::String& value) { m_dataIntegrationArn = value; }
-    inline void SetDataIntegrationArn(Aws::String&& value) { m_dataIntegrationArn = std::move(value); }
-    inline void SetDataIntegrationArn(const char* value) { m_dataIntegrationArn.assign(value); }
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationArn(const Aws::String& value) { SetDataIntegrationArn(value); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationArn(Aws::String&& value) { SetDataIntegrationArn(std::move(value)); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithDataIntegrationArn(const char* value) { SetDataIntegrationArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDataIntegrationAssociationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDataIntegrationAssociationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDataIntegrationAssociationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_dataIntegrationAssociationId;
+ private:
+  Aws::String m_dataIntegrationAssociationId;
 
-    Aws::String m_dataIntegrationArn;
+  Aws::String m_dataIntegrationArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataIntegrationAssociationIdHasBeenSet = false;
+  bool m_dataIntegrationArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppIntegrationsService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppIntegrationsService
+}  // namespace Aws

@@ -4,61 +4,62 @@
  */
 
 #include <aws/comprehend/model/ClassifyDocumentRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::Comprehend::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ClassifyDocumentRequest::ClassifyDocumentRequest() : 
-    m_textHasBeenSet(false),
-    m_endpointArnHasBeenSet(false),
-    m_bytesHasBeenSet(false),
-    m_documentReaderConfigHasBeenSet(false)
-{
+Aws::String ClassifyDocumentRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_textHasBeenSet) {
+    mapSize++;
+  }
+  if (m_endpointArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_bytesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_documentReaderConfigHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_textHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Text"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_text.c_str()));
+  }
+
+  if (m_endpointArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EndpointArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_endpointArn.c_str()));
+  }
+
+  if (m_bytesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Bytes"));
+    encoder.WriteBytes(Aws::Crt::ByteCursorFromArray(m_bytes.GetUnderlyingData(), m_bytes.GetLength()));
+  }
+
+  if (m_documentReaderConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DocumentReaderConfig"));
+    m_documentReaderConfig.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ClassifyDocumentRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_textHasBeenSet)
-  {
-   payload.WithString("Text", m_text);
-
-  }
-
-  if(m_endpointArnHasBeenSet)
-  {
-   payload.WithString("EndpointArn", m_endpointArn);
-
-  }
-
-  if(m_bytesHasBeenSet)
-  {
-   payload.WithString("Bytes", HashingUtils::Base64Encode(m_bytes));
-  }
-
-  if(m_documentReaderConfigHasBeenSet)
-  {
-   payload.WithObject("DocumentReaderConfig", m_documentReaderConfig.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ClassifyDocumentRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ClassifyDocumentRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.ClassifyDocument"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -3,65 +3,45 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/geo-routes/model/WaypointOptimizationExclusionOptions.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/geo-routes/model/WaypointOptimizationExclusionOptions.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace GeoRoutes
-{
-namespace Model
-{
+namespace Aws {
+namespace GeoRoutes {
+namespace Model {
 
-WaypointOptimizationExclusionOptions::WaypointOptimizationExclusionOptions() : 
-    m_countriesHasBeenSet(false)
-{
-}
+WaypointOptimizationExclusionOptions::WaypointOptimizationExclusionOptions(JsonView jsonValue) { *this = jsonValue; }
 
-WaypointOptimizationExclusionOptions::WaypointOptimizationExclusionOptions(JsonView jsonValue)
-  : WaypointOptimizationExclusionOptions()
-{
-  *this = jsonValue;
-}
-
-WaypointOptimizationExclusionOptions& WaypointOptimizationExclusionOptions::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Countries"))
-  {
+WaypointOptimizationExclusionOptions& WaypointOptimizationExclusionOptions::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Countries")) {
     Aws::Utils::Array<JsonView> countriesJsonList = jsonValue.GetArray("Countries");
-    for(unsigned countriesIndex = 0; countriesIndex < countriesJsonList.GetLength(); ++countriesIndex)
-    {
+    for (unsigned countriesIndex = 0; countriesIndex < countriesJsonList.GetLength(); ++countriesIndex) {
       m_countries.push_back(countriesJsonList[countriesIndex].AsString());
     }
     m_countriesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue WaypointOptimizationExclusionOptions::Jsonize() const
-{
+JsonValue WaypointOptimizationExclusionOptions::Jsonize() const {
   JsonValue payload;
 
-  if(m_countriesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> countriesJsonList(m_countries.size());
-   for(unsigned countriesIndex = 0; countriesIndex < countriesJsonList.GetLength(); ++countriesIndex)
-   {
-     countriesJsonList[countriesIndex].AsString(m_countries[countriesIndex]);
-   }
-   payload.WithArray("Countries", std::move(countriesJsonList));
-
+  if (m_countriesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> countriesJsonList(m_countries.size());
+    for (unsigned countriesIndex = 0; countriesIndex < countriesJsonList.GetLength(); ++countriesIndex) {
+      countriesJsonList[countriesIndex].AsString(m_countries[countriesIndex]);
+    }
+    payload.WithArray("Countries", std::move(countriesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace GeoRoutes
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoRoutes
+}  // namespace Aws

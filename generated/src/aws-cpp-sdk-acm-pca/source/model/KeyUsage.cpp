@@ -4,177 +4,291 @@
  */
 
 #include <aws/acm-pca/model/KeyUsage.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ACMPCA
-{
-namespace Model
-{
+namespace Aws {
+namespace ACMPCA {
+namespace Model {
 
-KeyUsage::KeyUsage() : 
-    m_digitalSignature(false),
-    m_digitalSignatureHasBeenSet(false),
-    m_nonRepudiation(false),
-    m_nonRepudiationHasBeenSet(false),
-    m_keyEncipherment(false),
-    m_keyEnciphermentHasBeenSet(false),
-    m_dataEncipherment(false),
-    m_dataEnciphermentHasBeenSet(false),
-    m_keyAgreement(false),
-    m_keyAgreementHasBeenSet(false),
-    m_keyCertSign(false),
-    m_keyCertSignHasBeenSet(false),
-    m_cRLSign(false),
-    m_cRLSignHasBeenSet(false),
-    m_encipherOnly(false),
-    m_encipherOnlyHasBeenSet(false),
-    m_decipherOnly(false),
-    m_decipherOnlyHasBeenSet(false)
-{
-}
+KeyUsage::KeyUsage(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-KeyUsage::KeyUsage(JsonView jsonValue)
-  : KeyUsage()
-{
-  *this = jsonValue;
-}
+KeyUsage& KeyUsage::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-KeyUsage& KeyUsage::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("DigitalSignature"))
-  {
-    m_digitalSignature = jsonValue.GetBool("DigitalSignature");
+              if (initialKeyStr == "DigitalSignature") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_digitalSignature = val.value();
+                }
+                m_digitalSignatureHasBeenSet = true;
+              }
 
-    m_digitalSignatureHasBeenSet = true;
-  }
+              else if (initialKeyStr == "NonRepudiation") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_nonRepudiation = val.value();
+                }
+                m_nonRepudiationHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("NonRepudiation"))
-  {
-    m_nonRepudiation = jsonValue.GetBool("NonRepudiation");
+              else if (initialKeyStr == "KeyEncipherment") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_keyEncipherment = val.value();
+                }
+                m_keyEnciphermentHasBeenSet = true;
+              }
 
-    m_nonRepudiationHasBeenSet = true;
-  }
+              else if (initialKeyStr == "DataEncipherment") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_dataEncipherment = val.value();
+                }
+                m_dataEnciphermentHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("KeyEncipherment"))
-  {
-    m_keyEncipherment = jsonValue.GetBool("KeyEncipherment");
+              else if (initialKeyStr == "KeyAgreement") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_keyAgreement = val.value();
+                }
+                m_keyAgreementHasBeenSet = true;
+              }
 
-    m_keyEnciphermentHasBeenSet = true;
-  }
+              else if (initialKeyStr == "KeyCertSign") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_keyCertSign = val.value();
+                }
+                m_keyCertSignHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("DataEncipherment"))
-  {
-    m_dataEncipherment = jsonValue.GetBool("DataEncipherment");
+              else if (initialKeyStr == "CRLSign") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_cRLSign = val.value();
+                }
+                m_cRLSignHasBeenSet = true;
+              }
 
-    m_dataEnciphermentHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EncipherOnly") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_encipherOnly = val.value();
+                }
+                m_encipherOnlyHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("KeyAgreement"))
-  {
-    m_keyAgreement = jsonValue.GetBool("KeyAgreement");
+              else if (initialKeyStr == "DecipherOnly") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_decipherOnly = val.value();
+                }
+                m_decipherOnlyHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("KeyUsage", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_keyAgreementHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("KeyCertSign"))
-  {
-    m_keyCertSign = jsonValue.GetBool("KeyCertSign");
+            if (initialKeyStr == "DigitalSignature") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_digitalSignature = val.value();
+              }
+              m_digitalSignatureHasBeenSet = true;
+            }
 
-    m_keyCertSignHasBeenSet = true;
-  }
+            else if (initialKeyStr == "NonRepudiation") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_nonRepudiation = val.value();
+              }
+              m_nonRepudiationHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("CRLSign"))
-  {
-    m_cRLSign = jsonValue.GetBool("CRLSign");
+            else if (initialKeyStr == "KeyEncipherment") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_keyEncipherment = val.value();
+              }
+              m_keyEnciphermentHasBeenSet = true;
+            }
 
-    m_cRLSignHasBeenSet = true;
-  }
+            else if (initialKeyStr == "DataEncipherment") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_dataEncipherment = val.value();
+              }
+              m_dataEnciphermentHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("EncipherOnly"))
-  {
-    m_encipherOnly = jsonValue.GetBool("EncipherOnly");
+            else if (initialKeyStr == "KeyAgreement") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_keyAgreement = val.value();
+              }
+              m_keyAgreementHasBeenSet = true;
+            }
 
-    m_encipherOnlyHasBeenSet = true;
-  }
+            else if (initialKeyStr == "KeyCertSign") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_keyCertSign = val.value();
+              }
+              m_keyCertSignHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("DecipherOnly"))
-  {
-    m_decipherOnly = jsonValue.GetBool("DecipherOnly");
+            else if (initialKeyStr == "CRLSign") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_cRLSign = val.value();
+              }
+              m_cRLSignHasBeenSet = true;
+            }
 
-    m_decipherOnlyHasBeenSet = true;
+            else if (initialKeyStr == "EncipherOnly") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_encipherOnly = val.value();
+              }
+              m_encipherOnlyHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "DecipherOnly") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_decipherOnly = val.value();
+              }
+              m_decipherOnlyHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue KeyUsage::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_digitalSignatureHasBeenSet)
-  {
-   payload.WithBool("DigitalSignature", m_digitalSignature);
-
+void KeyUsage::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_digitalSignatureHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nonRepudiationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_keyEnciphermentHasBeenSet) {
+    mapSize++;
+  }
+  if (m_dataEnciphermentHasBeenSet) {
+    mapSize++;
+  }
+  if (m_keyAgreementHasBeenSet) {
+    mapSize++;
+  }
+  if (m_keyCertSignHasBeenSet) {
+    mapSize++;
+  }
+  if (m_cRLSignHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encipherOnlyHasBeenSet) {
+    mapSize++;
+  }
+  if (m_decipherOnlyHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_nonRepudiationHasBeenSet)
-  {
-   payload.WithBool("NonRepudiation", m_nonRepudiation);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_digitalSignatureHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DigitalSignature"));
+    encoder.WriteBool(m_digitalSignature);
   }
 
-  if(m_keyEnciphermentHasBeenSet)
-  {
-   payload.WithBool("KeyEncipherment", m_keyEncipherment);
-
+  if (m_nonRepudiationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NonRepudiation"));
+    encoder.WriteBool(m_nonRepudiation);
   }
 
-  if(m_dataEnciphermentHasBeenSet)
-  {
-   payload.WithBool("DataEncipherment", m_dataEncipherment);
-
+  if (m_keyEnciphermentHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("KeyEncipherment"));
+    encoder.WriteBool(m_keyEncipherment);
   }
 
-  if(m_keyAgreementHasBeenSet)
-  {
-   payload.WithBool("KeyAgreement", m_keyAgreement);
-
+  if (m_dataEnciphermentHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DataEncipherment"));
+    encoder.WriteBool(m_dataEncipherment);
   }
 
-  if(m_keyCertSignHasBeenSet)
-  {
-   payload.WithBool("KeyCertSign", m_keyCertSign);
-
+  if (m_keyAgreementHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("KeyAgreement"));
+    encoder.WriteBool(m_keyAgreement);
   }
 
-  if(m_cRLSignHasBeenSet)
-  {
-   payload.WithBool("CRLSign", m_cRLSign);
-
+  if (m_keyCertSignHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("KeyCertSign"));
+    encoder.WriteBool(m_keyCertSign);
   }
 
-  if(m_encipherOnlyHasBeenSet)
-  {
-   payload.WithBool("EncipherOnly", m_encipherOnly);
-
+  if (m_cRLSignHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CRLSign"));
+    encoder.WriteBool(m_cRLSign);
   }
 
-  if(m_decipherOnlyHasBeenSet)
-  {
-   payload.WithBool("DecipherOnly", m_decipherOnly);
-
+  if (m_encipherOnlyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EncipherOnly"));
+    encoder.WriteBool(m_encipherOnly);
   }
 
-  return payload;
+  if (m_decipherOnlyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DecipherOnly"));
+    encoder.WriteBool(m_decipherOnly);
+  }
 }
 
-} // namespace Model
-} // namespace ACMPCA
-} // namespace Aws
+}  // namespace Model
+}  // namespace ACMPCA
+}  // namespace Aws

@@ -4,83 +4,100 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/location/LocationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
-  class ListTrackerConsumersResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API ListTrackerConsumersResult();
-    AWS_LOCATIONSERVICE_API ListTrackerConsumersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LOCATIONSERVICE_API ListTrackerConsumersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
+class ListTrackerConsumersResult {
+ public:
+  AWS_LOCATIONSERVICE_API ListTrackerConsumersResult() = default;
+  AWS_LOCATIONSERVICE_API ListTrackerConsumersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LOCATIONSERVICE_API ListTrackerConsumersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains the list of geofence collection ARNs associated to the tracker
+   * resource.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetConsumerArns() const { return m_consumerArns; }
+  template <typename ConsumerArnsT = Aws::Vector<Aws::String>>
+  void SetConsumerArns(ConsumerArnsT&& value) {
+    m_consumerArnsHasBeenSet = true;
+    m_consumerArns = std::forward<ConsumerArnsT>(value);
+  }
+  template <typename ConsumerArnsT = Aws::Vector<Aws::String>>
+  ListTrackerConsumersResult& WithConsumerArns(ConsumerArnsT&& value) {
+    SetConsumerArns(std::forward<ConsumerArnsT>(value));
+    return *this;
+  }
+  template <typename ConsumerArnsT = Aws::String>
+  ListTrackerConsumersResult& AddConsumerArns(ConsumerArnsT&& value) {
+    m_consumerArnsHasBeenSet = true;
+    m_consumerArns.emplace_back(std::forward<ConsumerArnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains the list of geofence collection ARNs associated to the tracker
-     * resource.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetConsumerArns() const{ return m_consumerArns; }
-    inline void SetConsumerArns(const Aws::Vector<Aws::String>& value) { m_consumerArns = value; }
-    inline void SetConsumerArns(Aws::Vector<Aws::String>&& value) { m_consumerArns = std::move(value); }
-    inline ListTrackerConsumersResult& WithConsumerArns(const Aws::Vector<Aws::String>& value) { SetConsumerArns(value); return *this;}
-    inline ListTrackerConsumersResult& WithConsumerArns(Aws::Vector<Aws::String>&& value) { SetConsumerArns(std::move(value)); return *this;}
-    inline ListTrackerConsumersResult& AddConsumerArns(const Aws::String& value) { m_consumerArns.push_back(value); return *this; }
-    inline ListTrackerConsumersResult& AddConsumerArns(Aws::String&& value) { m_consumerArns.push_back(std::move(value)); return *this; }
-    inline ListTrackerConsumersResult& AddConsumerArns(const char* value) { m_consumerArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A pagination token indicating there are additional pages available. You can
+   * use the token in a following request to fetch the next set of results. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTrackerConsumersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A pagination token indicating there are additional pages available. You can
-     * use the token in a following request to fetch the next set of results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListTrackerConsumersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTrackerConsumersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTrackerConsumersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTrackerConsumersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTrackerConsumersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTrackerConsumersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTrackerConsumersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_consumerArns;
+ private:
+  Aws::Vector<Aws::String> m_consumerArns;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_consumerArnsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

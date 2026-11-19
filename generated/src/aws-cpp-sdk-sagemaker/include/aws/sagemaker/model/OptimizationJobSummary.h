@@ -4,189 +4,250 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/OptimizationJobStatus.h>
-#include <aws/sagemaker/model/OptimizationJobDeploymentInstanceType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/OptimizationJobDeploymentInstanceType.h>
+#include <aws/sagemaker/model/OptimizationJobStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Summarizes an optimization job by providing some of its key
+ * properties.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/OptimizationJobSummary">AWS
+ * API Reference</a></p>
+ */
+class OptimizationJobSummary {
+ public:
+  AWS_SAGEMAKER_API OptimizationJobSummary() = default;
+  AWS_SAGEMAKER_API OptimizationJobSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API OptimizationJobSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Summarizes an optimization job by providing some of its key
-   * properties.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/OptimizationJobSummary">AWS
-   * API Reference</a></p>
+   * <p>The name that you assigned to the optimization job.</p>
    */
-  class OptimizationJobSummary
-  {
-  public:
-    AWS_SAGEMAKER_API OptimizationJobSummary();
-    AWS_SAGEMAKER_API OptimizationJobSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API OptimizationJobSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetOptimizationJobName() const { return m_optimizationJobName; }
+  inline bool OptimizationJobNameHasBeenSet() const { return m_optimizationJobNameHasBeenSet; }
+  template <typename OptimizationJobNameT = Aws::String>
+  void SetOptimizationJobName(OptimizationJobNameT&& value) {
+    m_optimizationJobNameHasBeenSet = true;
+    m_optimizationJobName = std::forward<OptimizationJobNameT>(value);
+  }
+  template <typename OptimizationJobNameT = Aws::String>
+  OptimizationJobSummary& WithOptimizationJobName(OptimizationJobNameT&& value) {
+    SetOptimizationJobName(std::forward<OptimizationJobNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the optimization job.</p>
+   */
+  inline const Aws::String& GetOptimizationJobArn() const { return m_optimizationJobArn; }
+  inline bool OptimizationJobArnHasBeenSet() const { return m_optimizationJobArnHasBeenSet; }
+  template <typename OptimizationJobArnT = Aws::String>
+  void SetOptimizationJobArn(OptimizationJobArnT&& value) {
+    m_optimizationJobArnHasBeenSet = true;
+    m_optimizationJobArn = std::forward<OptimizationJobArnT>(value);
+  }
+  template <typename OptimizationJobArnT = Aws::String>
+  OptimizationJobSummary& WithOptimizationJobArn(OptimizationJobArnT&& value) {
+    SetOptimizationJobArn(std::forward<OptimizationJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name that you assigned to the optimization job.</p>
-     */
-    inline const Aws::String& GetOptimizationJobName() const{ return m_optimizationJobName; }
-    inline bool OptimizationJobNameHasBeenSet() const { return m_optimizationJobNameHasBeenSet; }
-    inline void SetOptimizationJobName(const Aws::String& value) { m_optimizationJobNameHasBeenSet = true; m_optimizationJobName = value; }
-    inline void SetOptimizationJobName(Aws::String&& value) { m_optimizationJobNameHasBeenSet = true; m_optimizationJobName = std::move(value); }
-    inline void SetOptimizationJobName(const char* value) { m_optimizationJobNameHasBeenSet = true; m_optimizationJobName.assign(value); }
-    inline OptimizationJobSummary& WithOptimizationJobName(const Aws::String& value) { SetOptimizationJobName(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationJobName(Aws::String&& value) { SetOptimizationJobName(std::move(value)); return *this;}
-    inline OptimizationJobSummary& WithOptimizationJobName(const char* value) { SetOptimizationJobName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when you created the optimization job.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  OptimizationJobSummary& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the optimization job.</p>
-     */
-    inline const Aws::String& GetOptimizationJobArn() const{ return m_optimizationJobArn; }
-    inline bool OptimizationJobArnHasBeenSet() const { return m_optimizationJobArnHasBeenSet; }
-    inline void SetOptimizationJobArn(const Aws::String& value) { m_optimizationJobArnHasBeenSet = true; m_optimizationJobArn = value; }
-    inline void SetOptimizationJobArn(Aws::String&& value) { m_optimizationJobArnHasBeenSet = true; m_optimizationJobArn = std::move(value); }
-    inline void SetOptimizationJobArn(const char* value) { m_optimizationJobArnHasBeenSet = true; m_optimizationJobArn.assign(value); }
-    inline OptimizationJobSummary& WithOptimizationJobArn(const Aws::String& value) { SetOptimizationJobArn(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationJobArn(Aws::String&& value) { SetOptimizationJobArn(std::move(value)); return *this;}
-    inline OptimizationJobSummary& WithOptimizationJobArn(const char* value) { SetOptimizationJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the optimization job.</p>
+   */
+  inline OptimizationJobStatus GetOptimizationJobStatus() const { return m_optimizationJobStatus; }
+  inline bool OptimizationJobStatusHasBeenSet() const { return m_optimizationJobStatusHasBeenSet; }
+  inline void SetOptimizationJobStatus(OptimizationJobStatus value) {
+    m_optimizationJobStatusHasBeenSet = true;
+    m_optimizationJobStatus = value;
+  }
+  inline OptimizationJobSummary& WithOptimizationJobStatus(OptimizationJobStatus value) {
+    SetOptimizationJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when you created the optimization job.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline OptimizationJobSummary& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline OptimizationJobSummary& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the optimization job started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetOptimizationStartTime() const { return m_optimizationStartTime; }
+  inline bool OptimizationStartTimeHasBeenSet() const { return m_optimizationStartTimeHasBeenSet; }
+  template <typename OptimizationStartTimeT = Aws::Utils::DateTime>
+  void SetOptimizationStartTime(OptimizationStartTimeT&& value) {
+    m_optimizationStartTimeHasBeenSet = true;
+    m_optimizationStartTime = std::forward<OptimizationStartTimeT>(value);
+  }
+  template <typename OptimizationStartTimeT = Aws::Utils::DateTime>
+  OptimizationJobSummary& WithOptimizationStartTime(OptimizationStartTimeT&& value) {
+    SetOptimizationStartTime(std::forward<OptimizationStartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the optimization job.</p>
-     */
-    inline const OptimizationJobStatus& GetOptimizationJobStatus() const{ return m_optimizationJobStatus; }
-    inline bool OptimizationJobStatusHasBeenSet() const { return m_optimizationJobStatusHasBeenSet; }
-    inline void SetOptimizationJobStatus(const OptimizationJobStatus& value) { m_optimizationJobStatusHasBeenSet = true; m_optimizationJobStatus = value; }
-    inline void SetOptimizationJobStatus(OptimizationJobStatus&& value) { m_optimizationJobStatusHasBeenSet = true; m_optimizationJobStatus = std::move(value); }
-    inline OptimizationJobSummary& WithOptimizationJobStatus(const OptimizationJobStatus& value) { SetOptimizationJobStatus(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationJobStatus(OptimizationJobStatus&& value) { SetOptimizationJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the optimization job finished processing.</p>
+   */
+  inline const Aws::Utils::DateTime& GetOptimizationEndTime() const { return m_optimizationEndTime; }
+  inline bool OptimizationEndTimeHasBeenSet() const { return m_optimizationEndTimeHasBeenSet; }
+  template <typename OptimizationEndTimeT = Aws::Utils::DateTime>
+  void SetOptimizationEndTime(OptimizationEndTimeT&& value) {
+    m_optimizationEndTimeHasBeenSet = true;
+    m_optimizationEndTime = std::forward<OptimizationEndTimeT>(value);
+  }
+  template <typename OptimizationEndTimeT = Aws::Utils::DateTime>
+  OptimizationJobSummary& WithOptimizationEndTime(OptimizationEndTimeT&& value) {
+    SetOptimizationEndTime(std::forward<OptimizationEndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the optimization job started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetOptimizationStartTime() const{ return m_optimizationStartTime; }
-    inline bool OptimizationStartTimeHasBeenSet() const { return m_optimizationStartTimeHasBeenSet; }
-    inline void SetOptimizationStartTime(const Aws::Utils::DateTime& value) { m_optimizationStartTimeHasBeenSet = true; m_optimizationStartTime = value; }
-    inline void SetOptimizationStartTime(Aws::Utils::DateTime&& value) { m_optimizationStartTimeHasBeenSet = true; m_optimizationStartTime = std::move(value); }
-    inline OptimizationJobSummary& WithOptimizationStartTime(const Aws::Utils::DateTime& value) { SetOptimizationStartTime(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationStartTime(Aws::Utils::DateTime&& value) { SetOptimizationStartTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the optimization job was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  OptimizationJobSummary& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the optimization job finished processing.</p>
-     */
-    inline const Aws::Utils::DateTime& GetOptimizationEndTime() const{ return m_optimizationEndTime; }
-    inline bool OptimizationEndTimeHasBeenSet() const { return m_optimizationEndTimeHasBeenSet; }
-    inline void SetOptimizationEndTime(const Aws::Utils::DateTime& value) { m_optimizationEndTimeHasBeenSet = true; m_optimizationEndTime = value; }
-    inline void SetOptimizationEndTime(Aws::Utils::DateTime&& value) { m_optimizationEndTimeHasBeenSet = true; m_optimizationEndTime = std::move(value); }
-    inline OptimizationJobSummary& WithOptimizationEndTime(const Aws::Utils::DateTime& value) { SetOptimizationEndTime(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationEndTime(Aws::Utils::DateTime&& value) { SetOptimizationEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of instance that hosts the optimized model that you create with the
+   * optimization job.</p>
+   */
+  inline OptimizationJobDeploymentInstanceType GetDeploymentInstanceType() const { return m_deploymentInstanceType; }
+  inline bool DeploymentInstanceTypeHasBeenSet() const { return m_deploymentInstanceTypeHasBeenSet; }
+  inline void SetDeploymentInstanceType(OptimizationJobDeploymentInstanceType value) {
+    m_deploymentInstanceTypeHasBeenSet = true;
+    m_deploymentInstanceType = value;
+  }
+  inline OptimizationJobSummary& WithDeploymentInstanceType(OptimizationJobDeploymentInstanceType value) {
+    SetDeploymentInstanceType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the optimization job was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline OptimizationJobSummary& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline OptimizationJobSummary& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum number of instances to use for the optimization job.</p>
+   */
+  inline int GetMaxInstanceCount() const { return m_maxInstanceCount; }
+  inline bool MaxInstanceCountHasBeenSet() const { return m_maxInstanceCountHasBeenSet; }
+  inline void SetMaxInstanceCount(int value) {
+    m_maxInstanceCountHasBeenSet = true;
+    m_maxInstanceCount = value;
+  }
+  inline OptimizationJobSummary& WithMaxInstanceCount(int value) {
+    SetMaxInstanceCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of instance that hosts the optimized model that you create with the
-     * optimization job.</p>
-     */
-    inline const OptimizationJobDeploymentInstanceType& GetDeploymentInstanceType() const{ return m_deploymentInstanceType; }
-    inline bool DeploymentInstanceTypeHasBeenSet() const { return m_deploymentInstanceTypeHasBeenSet; }
-    inline void SetDeploymentInstanceType(const OptimizationJobDeploymentInstanceType& value) { m_deploymentInstanceTypeHasBeenSet = true; m_deploymentInstanceType = value; }
-    inline void SetDeploymentInstanceType(OptimizationJobDeploymentInstanceType&& value) { m_deploymentInstanceTypeHasBeenSet = true; m_deploymentInstanceType = std::move(value); }
-    inline OptimizationJobSummary& WithDeploymentInstanceType(const OptimizationJobDeploymentInstanceType& value) { SetDeploymentInstanceType(value); return *this;}
-    inline OptimizationJobSummary& WithDeploymentInstanceType(OptimizationJobDeploymentInstanceType&& value) { SetDeploymentInstanceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The optimization techniques that are applied by the optimization job.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetOptimizationTypes() const { return m_optimizationTypes; }
+  inline bool OptimizationTypesHasBeenSet() const { return m_optimizationTypesHasBeenSet; }
+  template <typename OptimizationTypesT = Aws::Vector<Aws::String>>
+  void SetOptimizationTypes(OptimizationTypesT&& value) {
+    m_optimizationTypesHasBeenSet = true;
+    m_optimizationTypes = std::forward<OptimizationTypesT>(value);
+  }
+  template <typename OptimizationTypesT = Aws::Vector<Aws::String>>
+  OptimizationJobSummary& WithOptimizationTypes(OptimizationTypesT&& value) {
+    SetOptimizationTypes(std::forward<OptimizationTypesT>(value));
+    return *this;
+  }
+  template <typename OptimizationTypesT = Aws::String>
+  OptimizationJobSummary& AddOptimizationTypes(OptimizationTypesT&& value) {
+    m_optimizationTypesHasBeenSet = true;
+    m_optimizationTypes.emplace_back(std::forward<OptimizationTypesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_optimizationJobName;
 
-    ///@{
-    /**
-     * <p>The optimization techniques that are applied by the optimization job.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetOptimizationTypes() const{ return m_optimizationTypes; }
-    inline bool OptimizationTypesHasBeenSet() const { return m_optimizationTypesHasBeenSet; }
-    inline void SetOptimizationTypes(const Aws::Vector<Aws::String>& value) { m_optimizationTypesHasBeenSet = true; m_optimizationTypes = value; }
-    inline void SetOptimizationTypes(Aws::Vector<Aws::String>&& value) { m_optimizationTypesHasBeenSet = true; m_optimizationTypes = std::move(value); }
-    inline OptimizationJobSummary& WithOptimizationTypes(const Aws::Vector<Aws::String>& value) { SetOptimizationTypes(value); return *this;}
-    inline OptimizationJobSummary& WithOptimizationTypes(Aws::Vector<Aws::String>&& value) { SetOptimizationTypes(std::move(value)); return *this;}
-    inline OptimizationJobSummary& AddOptimizationTypes(const Aws::String& value) { m_optimizationTypesHasBeenSet = true; m_optimizationTypes.push_back(value); return *this; }
-    inline OptimizationJobSummary& AddOptimizationTypes(Aws::String&& value) { m_optimizationTypesHasBeenSet = true; m_optimizationTypes.push_back(std::move(value)); return *this; }
-    inline OptimizationJobSummary& AddOptimizationTypes(const char* value) { m_optimizationTypesHasBeenSet = true; m_optimizationTypes.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_optimizationJobArn;
 
-    Aws::String m_optimizationJobName;
-    bool m_optimizationJobNameHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::String m_optimizationJobArn;
-    bool m_optimizationJobArnHasBeenSet = false;
+  OptimizationJobStatus m_optimizationJobStatus{OptimizationJobStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_optimizationStartTime{};
 
-    OptimizationJobStatus m_optimizationJobStatus;
-    bool m_optimizationJobStatusHasBeenSet = false;
+  Aws::Utils::DateTime m_optimizationEndTime{};
 
-    Aws::Utils::DateTime m_optimizationStartTime;
-    bool m_optimizationStartTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    Aws::Utils::DateTime m_optimizationEndTime;
-    bool m_optimizationEndTimeHasBeenSet = false;
+  OptimizationJobDeploymentInstanceType m_deploymentInstanceType{OptimizationJobDeploymentInstanceType::NOT_SET};
 
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
+  int m_maxInstanceCount{0};
 
-    OptimizationJobDeploymentInstanceType m_deploymentInstanceType;
-    bool m_deploymentInstanceTypeHasBeenSet = false;
+  Aws::Vector<Aws::String> m_optimizationTypes;
+  bool m_optimizationJobNameHasBeenSet = false;
+  bool m_optimizationJobArnHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_optimizationJobStatusHasBeenSet = false;
+  bool m_optimizationStartTimeHasBeenSet = false;
+  bool m_optimizationEndTimeHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_deploymentInstanceTypeHasBeenSet = false;
+  bool m_maxInstanceCountHasBeenSet = false;
+  bool m_optimizationTypesHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_optimizationTypes;
-    bool m_optimizationTypesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

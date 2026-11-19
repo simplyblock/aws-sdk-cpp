@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/customer-profiles/model/GetEventStreamRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/customer-profiles/model/GetEventStreamRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::CustomerProfiles::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetEventStreamRequest::GetEventStreamRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_eventStreamNameHasBeenSet(false)
-{
-}
-
-Aws::String GetEventStreamRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetEventStreamRequest::SerializePayload() const { return {}; }

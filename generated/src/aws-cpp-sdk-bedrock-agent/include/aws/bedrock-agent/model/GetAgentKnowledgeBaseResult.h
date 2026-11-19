@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
 #include <aws/bedrock-agent/model/AgentKnowledgeBase.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
-  class GetAgentKnowledgeBaseResult
-  {
-  public:
-    AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult();
-    AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
+class GetAgentKnowledgeBaseResult {
+ public:
+  AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult() = default;
+  AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCKAGENT_API GetAgentKnowledgeBaseResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains details about a knowledge base attached to an agent.</p>
+   */
+  inline const AgentKnowledgeBase& GetAgentKnowledgeBase() const { return m_agentKnowledgeBase; }
+  template <typename AgentKnowledgeBaseT = AgentKnowledgeBase>
+  void SetAgentKnowledgeBase(AgentKnowledgeBaseT&& value) {
+    m_agentKnowledgeBaseHasBeenSet = true;
+    m_agentKnowledgeBase = std::forward<AgentKnowledgeBaseT>(value);
+  }
+  template <typename AgentKnowledgeBaseT = AgentKnowledgeBase>
+  GetAgentKnowledgeBaseResult& WithAgentKnowledgeBase(AgentKnowledgeBaseT&& value) {
+    SetAgentKnowledgeBase(std::forward<AgentKnowledgeBaseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains details about a knowledge base attached to an agent.</p>
-     */
-    inline const AgentKnowledgeBase& GetAgentKnowledgeBase() const{ return m_agentKnowledgeBase; }
-    inline void SetAgentKnowledgeBase(const AgentKnowledgeBase& value) { m_agentKnowledgeBase = value; }
-    inline void SetAgentKnowledgeBase(AgentKnowledgeBase&& value) { m_agentKnowledgeBase = std::move(value); }
-    inline GetAgentKnowledgeBaseResult& WithAgentKnowledgeBase(const AgentKnowledgeBase& value) { SetAgentKnowledgeBase(value); return *this;}
-    inline GetAgentKnowledgeBaseResult& WithAgentKnowledgeBase(AgentKnowledgeBase&& value) { SetAgentKnowledgeBase(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAgentKnowledgeBaseResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAgentKnowledgeBaseResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAgentKnowledgeBaseResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAgentKnowledgeBaseResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AgentKnowledgeBase m_agentKnowledgeBase;
+ private:
+  AgentKnowledgeBase m_agentKnowledgeBase;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_agentKnowledgeBaseHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

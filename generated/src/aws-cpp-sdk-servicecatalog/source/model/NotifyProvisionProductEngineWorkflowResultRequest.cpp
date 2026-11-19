@@ -3,89 +3,89 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/NotifyProvisionProductEngineWorkflowResultRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-NotifyProvisionProductEngineWorkflowResultRequest::NotifyProvisionProductEngineWorkflowResultRequest() : 
-    m_workflowTokenHasBeenSet(false),
-    m_recordIdHasBeenSet(false),
-    m_status(EngineWorkflowStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_failureReasonHasBeenSet(false),
-    m_resourceIdentifierHasBeenSet(false),
-    m_outputsHasBeenSet(false),
-    m_idempotencyToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_idempotencyTokenHasBeenSet(true)
-{
+Aws::String NotifyProvisionProductEngineWorkflowResultRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_workflowTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_recordIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_failureReasonHasBeenSet) {
+    mapSize++;
+  }
+  if (m_resourceIdentifierHasBeenSet) {
+    mapSize++;
+  }
+  if (m_outputsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idempotencyTokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_workflowTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkflowToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_workflowToken.c_str()));
+  }
+
+  if (m_recordIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RecordId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_recordId.c_str()));
+  }
+
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(EngineWorkflowStatusMapper::GetNameForEngineWorkflowStatus(m_status).c_str()));
+  }
+
+  if (m_failureReasonHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FailureReason"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_failureReason.c_str()));
+  }
+
+  if (m_resourceIdentifierHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceIdentifier"));
+    m_resourceIdentifier.CborEncode(encoder);
+  }
+
+  if (m_outputsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Outputs"));
+    encoder.WriteArrayStart(m_outputs.size());
+    for (const auto& item_0 : m_outputs) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_idempotencyTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IdempotencyToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_idempotencyToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String NotifyProvisionProductEngineWorkflowResultRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_workflowTokenHasBeenSet)
-  {
-   payload.WithString("WorkflowToken", m_workflowToken);
-
-  }
-
-  if(m_recordIdHasBeenSet)
-  {
-   payload.WithString("RecordId", m_recordId);
-
-  }
-
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", EngineWorkflowStatusMapper::GetNameForEngineWorkflowStatus(m_status));
-  }
-
-  if(m_failureReasonHasBeenSet)
-  {
-   payload.WithString("FailureReason", m_failureReason);
-
-  }
-
-  if(m_resourceIdentifierHasBeenSet)
-  {
-   payload.WithObject("ResourceIdentifier", m_resourceIdentifier.Jsonize());
-
-  }
-
-  if(m_outputsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> outputsJsonList(m_outputs.size());
-   for(unsigned outputsIndex = 0; outputsIndex < outputsJsonList.GetLength(); ++outputsIndex)
-   {
-     outputsJsonList[outputsIndex].AsObject(m_outputs[outputsIndex].Jsonize());
-   }
-   payload.WithArray("Outputs", std::move(outputsJsonList));
-
-  }
-
-  if(m_idempotencyTokenHasBeenSet)
-  {
-   payload.WithString("IdempotencyToken", m_idempotencyToken);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection NotifyProvisionProductEngineWorkflowResultRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection NotifyProvisionProductEngineWorkflowResultRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.NotifyProvisionProductEngineWorkflowResult"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -4,47 +4,45 @@
  */
 
 #include <aws/acm-pca/model/DescribeCertificateAuthorityAuditReportRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ACMPCA::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeCertificateAuthorityAuditReportRequest::DescribeCertificateAuthorityAuditReportRequest() : 
-    m_certificateAuthorityArnHasBeenSet(false),
-    m_auditReportIdHasBeenSet(false)
-{
-}
+Aws::String DescribeCertificateAuthorityAuditReportRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DescribeCertificateAuthorityAuditReportRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_certificateAuthorityArnHasBeenSet)
-  {
-   payload.WithString("CertificateAuthorityArn", m_certificateAuthorityArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_certificateAuthorityArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_auditReportIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_auditReportIdHasBeenSet)
-  {
-   payload.WithString("AuditReportId", m_auditReportId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_certificateAuthorityArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CertificateAuthorityArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_certificateAuthorityArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_auditReportIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AuditReportId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_auditReportId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DescribeCertificateAuthorityAuditReportRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeCertificateAuthorityAuditReportRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ACMPrivateCA.DescribeCertificateAuthorityAuditReport"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

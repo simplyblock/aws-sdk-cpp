@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/states/SFN_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/states/SFN_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SFN
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SFN {
+namespace Model {
 
+/**
+ * <p>Contains details about a Map Run failure event that occurred during a state
+ * machine execution.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/MapRunFailedEventDetails">AWS
+ * API Reference</a></p>
+ */
+class MapRunFailedEventDetails {
+ public:
+  AWS_SFN_API MapRunFailedEventDetails() = default;
+  AWS_SFN_API MapRunFailedEventDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SFN_API MapRunFailedEventDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SFN_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains details about a Map Run failure event that occurred during a state
-   * machine execution.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/MapRunFailedEventDetails">AWS
-   * API Reference</a></p>
+   * <p>The error code of the Map Run failure.</p>
    */
-  class MapRunFailedEventDetails
-  {
-  public:
-    AWS_SFN_API MapRunFailedEventDetails();
-    AWS_SFN_API MapRunFailedEventDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SFN_API MapRunFailedEventDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SFN_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetError() const { return m_error; }
+  inline bool ErrorHasBeenSet() const { return m_errorHasBeenSet; }
+  template <typename ErrorT = Aws::String>
+  void SetError(ErrorT&& value) {
+    m_errorHasBeenSet = true;
+    m_error = std::forward<ErrorT>(value);
+  }
+  template <typename ErrorT = Aws::String>
+  MapRunFailedEventDetails& WithError(ErrorT&& value) {
+    SetError(std::forward<ErrorT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A more detailed explanation of the cause of the failure.</p>
+   */
+  inline const Aws::String& GetCause() const { return m_cause; }
+  inline bool CauseHasBeenSet() const { return m_causeHasBeenSet; }
+  template <typename CauseT = Aws::String>
+  void SetCause(CauseT&& value) {
+    m_causeHasBeenSet = true;
+    m_cause = std::forward<CauseT>(value);
+  }
+  template <typename CauseT = Aws::String>
+  MapRunFailedEventDetails& WithCause(CauseT&& value) {
+    SetCause(std::forward<CauseT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_error;
 
-    ///@{
-    /**
-     * <p>The error code of the Map Run failure.</p>
-     */
-    inline const Aws::String& GetError() const{ return m_error; }
-    inline bool ErrorHasBeenSet() const { return m_errorHasBeenSet; }
-    inline void SetError(const Aws::String& value) { m_errorHasBeenSet = true; m_error = value; }
-    inline void SetError(Aws::String&& value) { m_errorHasBeenSet = true; m_error = std::move(value); }
-    inline void SetError(const char* value) { m_errorHasBeenSet = true; m_error.assign(value); }
-    inline MapRunFailedEventDetails& WithError(const Aws::String& value) { SetError(value); return *this;}
-    inline MapRunFailedEventDetails& WithError(Aws::String&& value) { SetError(std::move(value)); return *this;}
-    inline MapRunFailedEventDetails& WithError(const char* value) { SetError(value); return *this;}
-    ///@}
+  Aws::String m_cause;
+  bool m_errorHasBeenSet = false;
+  bool m_causeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A more detailed explanation of the cause of the failure.</p>
-     */
-    inline const Aws::String& GetCause() const{ return m_cause; }
-    inline bool CauseHasBeenSet() const { return m_causeHasBeenSet; }
-    inline void SetCause(const Aws::String& value) { m_causeHasBeenSet = true; m_cause = value; }
-    inline void SetCause(Aws::String&& value) { m_causeHasBeenSet = true; m_cause = std::move(value); }
-    inline void SetCause(const char* value) { m_causeHasBeenSet = true; m_cause.assign(value); }
-    inline MapRunFailedEventDetails& WithCause(const Aws::String& value) { SetCause(value); return *this;}
-    inline MapRunFailedEventDetails& WithCause(Aws::String&& value) { SetCause(std::move(value)); return *this;}
-    inline MapRunFailedEventDetails& WithCause(const char* value) { SetCause(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_error;
-    bool m_errorHasBeenSet = false;
-
-    Aws::String m_cause;
-    bool m_causeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SFN
-} // namespace Aws
+}  // namespace Model
+}  // namespace SFN
+}  // namespace Aws

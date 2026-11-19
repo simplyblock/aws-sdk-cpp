@@ -4,108 +4,138 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/ResourcePermission.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeDataSetPermissionsResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult();
-    AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeDataSetPermissionsResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult() = default;
+  AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeDataSetPermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the dataset.</p>
+   */
+  inline const Aws::String& GetDataSetArn() const { return m_dataSetArn; }
+  template <typename DataSetArnT = Aws::String>
+  void SetDataSetArn(DataSetArnT&& value) {
+    m_dataSetArnHasBeenSet = true;
+    m_dataSetArn = std::forward<DataSetArnT>(value);
+  }
+  template <typename DataSetArnT = Aws::String>
+  DescribeDataSetPermissionsResult& WithDataSetArn(DataSetArnT&& value) {
+    SetDataSetArn(std::forward<DataSetArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the dataset.</p>
-     */
-    inline const Aws::String& GetDataSetArn() const{ return m_dataSetArn; }
-    inline void SetDataSetArn(const Aws::String& value) { m_dataSetArn = value; }
-    inline void SetDataSetArn(Aws::String&& value) { m_dataSetArn = std::move(value); }
-    inline void SetDataSetArn(const char* value) { m_dataSetArn.assign(value); }
-    inline DescribeDataSetPermissionsResult& WithDataSetArn(const Aws::String& value) { SetDataSetArn(value); return *this;}
-    inline DescribeDataSetPermissionsResult& WithDataSetArn(Aws::String&& value) { SetDataSetArn(std::move(value)); return *this;}
-    inline DescribeDataSetPermissionsResult& WithDataSetArn(const char* value) { SetDataSetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID for the dataset that you want to describe. This ID is unique per
+   * Amazon Web Services Region for each Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetDataSetId() const { return m_dataSetId; }
+  template <typename DataSetIdT = Aws::String>
+  void SetDataSetId(DataSetIdT&& value) {
+    m_dataSetIdHasBeenSet = true;
+    m_dataSetId = std::forward<DataSetIdT>(value);
+  }
+  template <typename DataSetIdT = Aws::String>
+  DescribeDataSetPermissionsResult& WithDataSetId(DataSetIdT&& value) {
+    SetDataSetId(std::forward<DataSetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID for the dataset that you want to create. This ID is unique per Amazon
-     * Web Services Region for each Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetDataSetId() const{ return m_dataSetId; }
-    inline void SetDataSetId(const Aws::String& value) { m_dataSetId = value; }
-    inline void SetDataSetId(Aws::String&& value) { m_dataSetId = std::move(value); }
-    inline void SetDataSetId(const char* value) { m_dataSetId.assign(value); }
-    inline DescribeDataSetPermissionsResult& WithDataSetId(const Aws::String& value) { SetDataSetId(value); return *this;}
-    inline DescribeDataSetPermissionsResult& WithDataSetId(Aws::String&& value) { SetDataSetId(std::move(value)); return *this;}
-    inline DescribeDataSetPermissionsResult& WithDataSetId(const char* value) { SetDataSetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of resource permissions on the dataset.</p>
+   */
+  inline const Aws::Vector<ResourcePermission>& GetPermissions() const { return m_permissions; }
+  template <typename PermissionsT = Aws::Vector<ResourcePermission>>
+  void SetPermissions(PermissionsT&& value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions = std::forward<PermissionsT>(value);
+  }
+  template <typename PermissionsT = Aws::Vector<ResourcePermission>>
+  DescribeDataSetPermissionsResult& WithPermissions(PermissionsT&& value) {
+    SetPermissions(std::forward<PermissionsT>(value));
+    return *this;
+  }
+  template <typename PermissionsT = ResourcePermission>
+  DescribeDataSetPermissionsResult& AddPermissions(PermissionsT&& value) {
+    m_permissionsHasBeenSet = true;
+    m_permissions.emplace_back(std::forward<PermissionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of resource permissions on the dataset.</p>
-     */
-    inline const Aws::Vector<ResourcePermission>& GetPermissions() const{ return m_permissions; }
-    inline void SetPermissions(const Aws::Vector<ResourcePermission>& value) { m_permissions = value; }
-    inline void SetPermissions(Aws::Vector<ResourcePermission>&& value) { m_permissions = std::move(value); }
-    inline DescribeDataSetPermissionsResult& WithPermissions(const Aws::Vector<ResourcePermission>& value) { SetPermissions(value); return *this;}
-    inline DescribeDataSetPermissionsResult& WithPermissions(Aws::Vector<ResourcePermission>&& value) { SetPermissions(std::move(value)); return *this;}
-    inline DescribeDataSetPermissionsResult& AddPermissions(const ResourcePermission& value) { m_permissions.push_back(value); return *this; }
-    inline DescribeDataSetPermissionsResult& AddPermissions(ResourcePermission&& value) { m_permissions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeDataSetPermissionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeDataSetPermissionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeDataSetPermissionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeDataSetPermissionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeDataSetPermissionsResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeDataSetPermissionsResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_dataSetArn;
+ private:
+  Aws::String m_dataSetArn;
 
-    Aws::String m_dataSetId;
+  Aws::String m_dataSetId;
 
-    Aws::Vector<ResourcePermission> m_permissions;
+  Aws::Vector<ResourcePermission> m_permissions;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataSetArnHasBeenSet = false;
+  bool m_dataSetIdHasBeenSet = false;
+  bool m_permissionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

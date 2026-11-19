@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/RedshiftIdcApplication.h>
 #include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
-  class CreateRedshiftIdcApplicationResult
-  {
-  public:
-    AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult();
-    AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+class CreateRedshiftIdcApplicationResult {
+ public:
+  AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult() = default;
+  AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API CreateRedshiftIdcApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const RedshiftIdcApplication& GetRedshiftIdcApplication() const{ return m_redshiftIdcApplication; }
-    inline void SetRedshiftIdcApplication(const RedshiftIdcApplication& value) { m_redshiftIdcApplication = value; }
-    inline void SetRedshiftIdcApplication(RedshiftIdcApplication&& value) { m_redshiftIdcApplication = std::move(value); }
-    inline CreateRedshiftIdcApplicationResult& WithRedshiftIdcApplication(const RedshiftIdcApplication& value) { SetRedshiftIdcApplication(value); return *this;}
-    inline CreateRedshiftIdcApplicationResult& WithRedshiftIdcApplication(RedshiftIdcApplication&& value) { SetRedshiftIdcApplication(std::move(value)); return *this;}
-    ///@}
+  inline const RedshiftIdcApplication& GetRedshiftIdcApplication() const { return m_redshiftIdcApplication; }
+  template <typename RedshiftIdcApplicationT = RedshiftIdcApplication>
+  void SetRedshiftIdcApplication(RedshiftIdcApplicationT&& value) {
+    m_redshiftIdcApplicationHasBeenSet = true;
+    m_redshiftIdcApplication = std::forward<RedshiftIdcApplicationT>(value);
+  }
+  template <typename RedshiftIdcApplicationT = RedshiftIdcApplication>
+  CreateRedshiftIdcApplicationResult& WithRedshiftIdcApplication(RedshiftIdcApplicationT&& value) {
+    SetRedshiftIdcApplication(std::forward<RedshiftIdcApplicationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateRedshiftIdcApplicationResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateRedshiftIdcApplicationResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    RedshiftIdcApplication m_redshiftIdcApplication;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateRedshiftIdcApplicationResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  RedshiftIdcApplication m_redshiftIdcApplication;
 
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_redshiftIdcApplicationHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

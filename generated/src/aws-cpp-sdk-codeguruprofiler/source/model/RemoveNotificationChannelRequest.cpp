@@ -12,17 +12,4 @@ using namespace Aws::CodeGuruProfiler::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RemoveNotificationChannelRequest::RemoveNotificationChannelRequest() : 
-    m_channelIdHasBeenSet(false),
-    m_profilingGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String RemoveNotificationChannelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String RemoveNotificationChannelRequest::SerializePayload() const { return {}; }

@@ -5,89 +5,96 @@
 
 #pragma once
 #include <aws/appflow/Appflow_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appflow/model/ConnectorOAuthRequest.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Appflow {
+namespace Model {
 
+/**
+ * <p> The connector-specific credentials required when using Amazon Honeycode.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/HoneycodeConnectorProfileCredentials">AWS
+ * API Reference</a></p>
+ */
+class HoneycodeConnectorProfileCredentials {
+ public:
+  AWS_APPFLOW_API HoneycodeConnectorProfileCredentials() = default;
+  AWS_APPFLOW_API HoneycodeConnectorProfileCredentials(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API HoneycodeConnectorProfileCredentials& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> The connector-specific credentials required when using Amazon Honeycode.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/HoneycodeConnectorProfileCredentials">AWS
-   * API Reference</a></p>
+   * <p> The credentials used to access protected Amazon Honeycode resources. </p>
    */
-  class HoneycodeConnectorProfileCredentials
-  {
-  public:
-    AWS_APPFLOW_API HoneycodeConnectorProfileCredentials();
-    AWS_APPFLOW_API HoneycodeConnectorProfileCredentials(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API HoneycodeConnectorProfileCredentials& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAccessToken() const { return m_accessToken; }
+  inline bool AccessTokenHasBeenSet() const { return m_accessTokenHasBeenSet; }
+  template <typename AccessTokenT = Aws::String>
+  void SetAccessToken(AccessTokenT&& value) {
+    m_accessTokenHasBeenSet = true;
+    m_accessToken = std::forward<AccessTokenT>(value);
+  }
+  template <typename AccessTokenT = Aws::String>
+  HoneycodeConnectorProfileCredentials& WithAccessToken(AccessTokenT&& value) {
+    SetAccessToken(std::forward<AccessTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The credentials used to acquire new access tokens. </p>
+   */
+  inline const Aws::String& GetRefreshToken() const { return m_refreshToken; }
+  inline bool RefreshTokenHasBeenSet() const { return m_refreshTokenHasBeenSet; }
+  template <typename RefreshTokenT = Aws::String>
+  void SetRefreshToken(RefreshTokenT&& value) {
+    m_refreshTokenHasBeenSet = true;
+    m_refreshToken = std::forward<RefreshTokenT>(value);
+  }
+  template <typename RefreshTokenT = Aws::String>
+  HoneycodeConnectorProfileCredentials& WithRefreshToken(RefreshTokenT&& value) {
+    SetRefreshToken(std::forward<RefreshTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The credentials used to access protected Amazon Honeycode resources. </p>
-     */
-    inline const Aws::String& GetAccessToken() const{ return m_accessToken; }
-    inline bool AccessTokenHasBeenSet() const { return m_accessTokenHasBeenSet; }
-    inline void SetAccessToken(const Aws::String& value) { m_accessTokenHasBeenSet = true; m_accessToken = value; }
-    inline void SetAccessToken(Aws::String&& value) { m_accessTokenHasBeenSet = true; m_accessToken = std::move(value); }
-    inline void SetAccessToken(const char* value) { m_accessTokenHasBeenSet = true; m_accessToken.assign(value); }
-    inline HoneycodeConnectorProfileCredentials& WithAccessToken(const Aws::String& value) { SetAccessToken(value); return *this;}
-    inline HoneycodeConnectorProfileCredentials& WithAccessToken(Aws::String&& value) { SetAccessToken(std::move(value)); return *this;}
-    inline HoneycodeConnectorProfileCredentials& WithAccessToken(const char* value) { SetAccessToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p> The credentials used to acquire new access tokens. </p>
-     */
-    inline const Aws::String& GetRefreshToken() const{ return m_refreshToken; }
-    inline bool RefreshTokenHasBeenSet() const { return m_refreshTokenHasBeenSet; }
-    inline void SetRefreshToken(const Aws::String& value) { m_refreshTokenHasBeenSet = true; m_refreshToken = value; }
-    inline void SetRefreshToken(Aws::String&& value) { m_refreshTokenHasBeenSet = true; m_refreshToken = std::move(value); }
-    inline void SetRefreshToken(const char* value) { m_refreshTokenHasBeenSet = true; m_refreshToken.assign(value); }
-    inline HoneycodeConnectorProfileCredentials& WithRefreshToken(const Aws::String& value) { SetRefreshToken(value); return *this;}
-    inline HoneycodeConnectorProfileCredentials& WithRefreshToken(Aws::String&& value) { SetRefreshToken(std::move(value)); return *this;}
-    inline HoneycodeConnectorProfileCredentials& WithRefreshToken(const char* value) { SetRefreshToken(value); return *this;}
-    ///@}
+  inline const ConnectorOAuthRequest& GetOAuthRequest() const { return m_oAuthRequest; }
+  inline bool OAuthRequestHasBeenSet() const { return m_oAuthRequestHasBeenSet; }
+  template <typename OAuthRequestT = ConnectorOAuthRequest>
+  void SetOAuthRequest(OAuthRequestT&& value) {
+    m_oAuthRequestHasBeenSet = true;
+    m_oAuthRequest = std::forward<OAuthRequestT>(value);
+  }
+  template <typename OAuthRequestT = ConnectorOAuthRequest>
+  HoneycodeConnectorProfileCredentials& WithOAuthRequest(OAuthRequestT&& value) {
+    SetOAuthRequest(std::forward<OAuthRequestT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accessToken;
 
-    ///@{
-    
-    inline const ConnectorOAuthRequest& GetOAuthRequest() const{ return m_oAuthRequest; }
-    inline bool OAuthRequestHasBeenSet() const { return m_oAuthRequestHasBeenSet; }
-    inline void SetOAuthRequest(const ConnectorOAuthRequest& value) { m_oAuthRequestHasBeenSet = true; m_oAuthRequest = value; }
-    inline void SetOAuthRequest(ConnectorOAuthRequest&& value) { m_oAuthRequestHasBeenSet = true; m_oAuthRequest = std::move(value); }
-    inline HoneycodeConnectorProfileCredentials& WithOAuthRequest(const ConnectorOAuthRequest& value) { SetOAuthRequest(value); return *this;}
-    inline HoneycodeConnectorProfileCredentials& WithOAuthRequest(ConnectorOAuthRequest&& value) { SetOAuthRequest(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_refreshToken;
 
-    Aws::String m_accessToken;
-    bool m_accessTokenHasBeenSet = false;
+  ConnectorOAuthRequest m_oAuthRequest;
+  bool m_accessTokenHasBeenSet = false;
+  bool m_refreshTokenHasBeenSet = false;
+  bool m_oAuthRequestHasBeenSet = false;
+};
 
-    Aws::String m_refreshToken;
-    bool m_refreshTokenHasBeenSet = false;
-
-    ConnectorOAuthRequest m_oAuthRequest;
-    bool m_oAuthRequestHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppMesh
-{
-namespace Model
-{
+namespace Aws {
+namespace AppMesh {
+namespace Model {
 
-VirtualGatewayLogging::VirtualGatewayLogging() : 
-    m_accessLogHasBeenSet(false)
-{
-}
+VirtualGatewayLogging::VirtualGatewayLogging(JsonView jsonValue) { *this = jsonValue; }
 
-VirtualGatewayLogging::VirtualGatewayLogging(JsonView jsonValue)
-  : VirtualGatewayLogging()
-{
-  *this = jsonValue;
-}
-
-VirtualGatewayLogging& VirtualGatewayLogging::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("accessLog"))
-  {
+VirtualGatewayLogging& VirtualGatewayLogging::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("accessLog")) {
     m_accessLog = jsonValue.GetObject("accessLog");
-
     m_accessLogHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue VirtualGatewayLogging::Jsonize() const
-{
+JsonValue VirtualGatewayLogging::Jsonize() const {
   JsonValue payload;
 
-  if(m_accessLogHasBeenSet)
-  {
-   payload.WithObject("accessLog", m_accessLog.Jsonize());
-
+  if (m_accessLogHasBeenSet) {
+    payload.WithObject("accessLog", m_accessLog.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppMesh
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppMesh
+}  // namespace Aws

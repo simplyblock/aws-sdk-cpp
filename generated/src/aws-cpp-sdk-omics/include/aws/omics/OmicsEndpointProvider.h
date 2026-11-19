@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/omics/Omics_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/omics/Omics_EXPORTS.h>
 
-#include <aws/omics/OmicsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Omics
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Omics {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using OmicsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -34,28 +28,21 @@ using OmicsBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * Inherit from this Base class / "Interface" should you want to provide a custom endpoint provider.
  * The SDK must use service-specific type for each service per specification.
  */
-using OmicsEndpointProviderBase =
-    EndpointProviderBase<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
+using OmicsEndpointProviderBase = EndpointProviderBase<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
 
-using OmicsDefaultEpProviderBase =
-    DefaultEndpointProvider<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
+using OmicsDefaultEpProviderBase = BDDEndpointProvider<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_OMICS_API OmicsEndpointProvider : public OmicsDefaultEpProviderBase
-{
-public:
-    using OmicsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_OMICS_API OmicsEndpointProvider : public OmicsDefaultEpProviderBase {
+ public:
+  using OmicsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    OmicsEndpointProvider()
-      : OmicsDefaultEpProviderBase(Aws::Omics::OmicsEndpointRules::GetRulesBlob(), Aws::Omics::OmicsEndpointRules::RulesBlobSize)
-    {}
+  OmicsEndpointProvider();
 
-    ~OmicsEndpointProvider()
-    {
-    }
+  ~OmicsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Omics
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Omics
+}  // namespace Aws

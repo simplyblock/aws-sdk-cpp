@@ -4,148 +4,210 @@
  */
 
 #pragma once
-#include <aws/dynamodb/DynamoDB_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dynamodb/DynamoDB_EXPORTS.h>
+#include <aws/dynamodb/model/ContributorInsightsMode.h>
 #include <aws/dynamodb/model/ContributorInsightsStatus.h>
-#include <aws/core/utils/DateTime.h>
 #include <aws/dynamodb/model/FailureException.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DynamoDB
-{
-namespace Model
-{
-  class DescribeContributorInsightsResult
-  {
-  public:
-    AWS_DYNAMODB_API DescribeContributorInsightsResult();
-    AWS_DYNAMODB_API DescribeContributorInsightsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DYNAMODB_API DescribeContributorInsightsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DynamoDB {
+namespace Model {
+class DescribeContributorInsightsResult {
+ public:
+  AWS_DYNAMODB_API DescribeContributorInsightsResult() = default;
+  AWS_DYNAMODB_API DescribeContributorInsightsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DYNAMODB_API DescribeContributorInsightsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name of the table being described.</p>
+   */
+  inline const Aws::String& GetTableName() const { return m_tableName; }
+  template <typename TableNameT = Aws::String>
+  void SetTableName(TableNameT&& value) {
+    m_tableNameHasBeenSet = true;
+    m_tableName = std::forward<TableNameT>(value);
+  }
+  template <typename TableNameT = Aws::String>
+  DescribeContributorInsightsResult& WithTableName(TableNameT&& value) {
+    SetTableName(std::forward<TableNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the table being described.</p>
-     */
-    inline const Aws::String& GetTableName() const{ return m_tableName; }
-    inline void SetTableName(const Aws::String& value) { m_tableName = value; }
-    inline void SetTableName(Aws::String&& value) { m_tableName = std::move(value); }
-    inline void SetTableName(const char* value) { m_tableName.assign(value); }
-    inline DescribeContributorInsightsResult& WithTableName(const Aws::String& value) { SetTableName(value); return *this;}
-    inline DescribeContributorInsightsResult& WithTableName(Aws::String&& value) { SetTableName(std::move(value)); return *this;}
-    inline DescribeContributorInsightsResult& WithTableName(const char* value) { SetTableName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the global secondary index being described.</p>
+   */
+  inline const Aws::String& GetIndexName() const { return m_indexName; }
+  template <typename IndexNameT = Aws::String>
+  void SetIndexName(IndexNameT&& value) {
+    m_indexNameHasBeenSet = true;
+    m_indexName = std::forward<IndexNameT>(value);
+  }
+  template <typename IndexNameT = Aws::String>
+  DescribeContributorInsightsResult& WithIndexName(IndexNameT&& value) {
+    SetIndexName(std::forward<IndexNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the global secondary index being described.</p>
-     */
-    inline const Aws::String& GetIndexName() const{ return m_indexName; }
-    inline void SetIndexName(const Aws::String& value) { m_indexName = value; }
-    inline void SetIndexName(Aws::String&& value) { m_indexName = std::move(value); }
-    inline void SetIndexName(const char* value) { m_indexName.assign(value); }
-    inline DescribeContributorInsightsResult& WithIndexName(const Aws::String& value) { SetIndexName(value); return *this;}
-    inline DescribeContributorInsightsResult& WithIndexName(Aws::String&& value) { SetIndexName(std::move(value)); return *this;}
-    inline DescribeContributorInsightsResult& WithIndexName(const char* value) { SetIndexName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>List of names of the associated contributor insights rules.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetContributorInsightsRuleList() const { return m_contributorInsightsRuleList; }
+  template <typename ContributorInsightsRuleListT = Aws::Vector<Aws::String>>
+  void SetContributorInsightsRuleList(ContributorInsightsRuleListT&& value) {
+    m_contributorInsightsRuleListHasBeenSet = true;
+    m_contributorInsightsRuleList = std::forward<ContributorInsightsRuleListT>(value);
+  }
+  template <typename ContributorInsightsRuleListT = Aws::Vector<Aws::String>>
+  DescribeContributorInsightsResult& WithContributorInsightsRuleList(ContributorInsightsRuleListT&& value) {
+    SetContributorInsightsRuleList(std::forward<ContributorInsightsRuleListT>(value));
+    return *this;
+  }
+  template <typename ContributorInsightsRuleListT = Aws::String>
+  DescribeContributorInsightsResult& AddContributorInsightsRuleList(ContributorInsightsRuleListT&& value) {
+    m_contributorInsightsRuleListHasBeenSet = true;
+    m_contributorInsightsRuleList.emplace_back(std::forward<ContributorInsightsRuleListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>List of names of the associated contributor insights rules.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetContributorInsightsRuleList() const{ return m_contributorInsightsRuleList; }
-    inline void SetContributorInsightsRuleList(const Aws::Vector<Aws::String>& value) { m_contributorInsightsRuleList = value; }
-    inline void SetContributorInsightsRuleList(Aws::Vector<Aws::String>&& value) { m_contributorInsightsRuleList = std::move(value); }
-    inline DescribeContributorInsightsResult& WithContributorInsightsRuleList(const Aws::Vector<Aws::String>& value) { SetContributorInsightsRuleList(value); return *this;}
-    inline DescribeContributorInsightsResult& WithContributorInsightsRuleList(Aws::Vector<Aws::String>&& value) { SetContributorInsightsRuleList(std::move(value)); return *this;}
-    inline DescribeContributorInsightsResult& AddContributorInsightsRuleList(const Aws::String& value) { m_contributorInsightsRuleList.push_back(value); return *this; }
-    inline DescribeContributorInsightsResult& AddContributorInsightsRuleList(Aws::String&& value) { m_contributorInsightsRuleList.push_back(std::move(value)); return *this; }
-    inline DescribeContributorInsightsResult& AddContributorInsightsRuleList(const char* value) { m_contributorInsightsRuleList.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Current status of contributor insights.</p>
+   */
+  inline ContributorInsightsStatus GetContributorInsightsStatus() const { return m_contributorInsightsStatus; }
+  inline void SetContributorInsightsStatus(ContributorInsightsStatus value) {
+    m_contributorInsightsStatusHasBeenSet = true;
+    m_contributorInsightsStatus = value;
+  }
+  inline DescribeContributorInsightsResult& WithContributorInsightsStatus(ContributorInsightsStatus value) {
+    SetContributorInsightsStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Current status of contributor insights.</p>
-     */
-    inline const ContributorInsightsStatus& GetContributorInsightsStatus() const{ return m_contributorInsightsStatus; }
-    inline void SetContributorInsightsStatus(const ContributorInsightsStatus& value) { m_contributorInsightsStatus = value; }
-    inline void SetContributorInsightsStatus(ContributorInsightsStatus&& value) { m_contributorInsightsStatus = std::move(value); }
-    inline DescribeContributorInsightsResult& WithContributorInsightsStatus(const ContributorInsightsStatus& value) { SetContributorInsightsStatus(value); return *this;}
-    inline DescribeContributorInsightsResult& WithContributorInsightsStatus(ContributorInsightsStatus&& value) { SetContributorInsightsStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Timestamp of the last time the status was changed.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdateDateTime() const { return m_lastUpdateDateTime; }
+  template <typename LastUpdateDateTimeT = Aws::Utils::DateTime>
+  void SetLastUpdateDateTime(LastUpdateDateTimeT&& value) {
+    m_lastUpdateDateTimeHasBeenSet = true;
+    m_lastUpdateDateTime = std::forward<LastUpdateDateTimeT>(value);
+  }
+  template <typename LastUpdateDateTimeT = Aws::Utils::DateTime>
+  DescribeContributorInsightsResult& WithLastUpdateDateTime(LastUpdateDateTimeT&& value) {
+    SetLastUpdateDateTime(std::forward<LastUpdateDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Timestamp of the last time the status was changed.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdateDateTime() const{ return m_lastUpdateDateTime; }
-    inline void SetLastUpdateDateTime(const Aws::Utils::DateTime& value) { m_lastUpdateDateTime = value; }
-    inline void SetLastUpdateDateTime(Aws::Utils::DateTime&& value) { m_lastUpdateDateTime = std::move(value); }
-    inline DescribeContributorInsightsResult& WithLastUpdateDateTime(const Aws::Utils::DateTime& value) { SetLastUpdateDateTime(value); return *this;}
-    inline DescribeContributorInsightsResult& WithLastUpdateDateTime(Aws::Utils::DateTime&& value) { SetLastUpdateDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Returns information about the last failure that was encountered.</p> <p>The
+   * most common exceptions for a FAILED status are:</p> <ul> <li>
+   * <p>LimitExceededException - Per-account Amazon CloudWatch Contributor Insights
+   * rule limit reached. Please disable Contributor Insights for other tables/indexes
+   * OR disable Contributor Insights rules before retrying.</p> </li> <li>
+   * <p>AccessDeniedException - Amazon CloudWatch Contributor Insights rules cannot
+   * be modified due to insufficient permissions.</p> </li> <li>
+   * <p>AccessDeniedException - Failed to create service-linked role for Contributor
+   * Insights due to insufficient permissions.</p> </li> <li> <p>InternalServerError
+   * - Failed to create Amazon CloudWatch Contributor Insights rules. Please retry
+   * request.</p> </li> </ul>
+   */
+  inline const FailureException& GetFailureException() const { return m_failureException; }
+  template <typename FailureExceptionT = FailureException>
+  void SetFailureException(FailureExceptionT&& value) {
+    m_failureExceptionHasBeenSet = true;
+    m_failureException = std::forward<FailureExceptionT>(value);
+  }
+  template <typename FailureExceptionT = FailureException>
+  DescribeContributorInsightsResult& WithFailureException(FailureExceptionT&& value) {
+    SetFailureException(std::forward<FailureExceptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns information about the last failure that was encountered.</p> <p>The
-     * most common exceptions for a FAILED status are:</p> <ul> <li>
-     * <p>LimitExceededException - Per-account Amazon CloudWatch Contributor Insights
-     * rule limit reached. Please disable Contributor Insights for other tables/indexes
-     * OR disable Contributor Insights rules before retrying.</p> </li> <li>
-     * <p>AccessDeniedException - Amazon CloudWatch Contributor Insights rules cannot
-     * be modified due to insufficient permissions.</p> </li> <li>
-     * <p>AccessDeniedException - Failed to create service-linked role for Contributor
-     * Insights due to insufficient permissions.</p> </li> <li> <p>InternalServerError
-     * - Failed to create Amazon CloudWatch Contributor Insights rules. Please retry
-     * request.</p> </li> </ul>
-     */
-    inline const FailureException& GetFailureException() const{ return m_failureException; }
-    inline void SetFailureException(const FailureException& value) { m_failureException = value; }
-    inline void SetFailureException(FailureException&& value) { m_failureException = std::move(value); }
-    inline DescribeContributorInsightsResult& WithFailureException(const FailureException& value) { SetFailureException(value); return *this;}
-    inline DescribeContributorInsightsResult& WithFailureException(FailureException&& value) { SetFailureException(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The mode of CloudWatch Contributor Insights for DynamoDB that determines
+   * which events are emitted. Can be set to track all access and throttled events or
+   * throttled events only.</p>
+   */
+  inline ContributorInsightsMode GetContributorInsightsMode() const { return m_contributorInsightsMode; }
+  inline void SetContributorInsightsMode(ContributorInsightsMode value) {
+    m_contributorInsightsModeHasBeenSet = true;
+    m_contributorInsightsMode = value;
+  }
+  inline DescribeContributorInsightsResult& WithContributorInsightsMode(ContributorInsightsMode value) {
+    SetContributorInsightsMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeContributorInsightsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeContributorInsightsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeContributorInsightsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_tableName;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeContributorInsightsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_indexName;
+ private:
+  Aws::String m_tableName;
 
-    Aws::Vector<Aws::String> m_contributorInsightsRuleList;
+  Aws::String m_indexName;
 
-    ContributorInsightsStatus m_contributorInsightsStatus;
+  Aws::Vector<Aws::String> m_contributorInsightsRuleList;
 
-    Aws::Utils::DateTime m_lastUpdateDateTime;
+  ContributorInsightsStatus m_contributorInsightsStatus{ContributorInsightsStatus::NOT_SET};
 
-    FailureException m_failureException;
+  Aws::Utils::DateTime m_lastUpdateDateTime{};
 
-    Aws::String m_requestId;
-  };
+  FailureException m_failureException;
 
-} // namespace Model
-} // namespace DynamoDB
-} // namespace Aws
+  ContributorInsightsMode m_contributorInsightsMode{ContributorInsightsMode::NOT_SET};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_tableNameHasBeenSet = false;
+  bool m_indexNameHasBeenSet = false;
+  bool m_contributorInsightsRuleListHasBeenSet = false;
+  bool m_contributorInsightsStatusHasBeenSet = false;
+  bool m_lastUpdateDateTimeHasBeenSet = false;
+  bool m_failureExceptionHasBeenSet = false;
+  bool m_contributorInsightsModeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DynamoDB
+}  // namespace Aws

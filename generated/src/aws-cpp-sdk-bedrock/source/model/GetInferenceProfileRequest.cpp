@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetInferenceProfileRequest::GetInferenceProfileRequest() : 
-    m_inferenceProfileIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetInferenceProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetInferenceProfileRequest::SerializePayload() const { return {}; }

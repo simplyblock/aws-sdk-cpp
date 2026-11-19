@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/model/AssociateHostedConnectionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectConnect::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-AssociateHostedConnectionRequest::AssociateHostedConnectionRequest() : 
-    m_connectionIdHasBeenSet(false),
-    m_parentConnectionIdHasBeenSet(false)
-{
-}
+Aws::String AssociateHostedConnectionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String AssociateHostedConnectionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_connectionIdHasBeenSet)
-  {
-   payload.WithString("connectionId", m_connectionId);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_connectionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_parentConnectionIdHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_parentConnectionIdHasBeenSet)
-  {
-   payload.WithString("parentConnectionId", m_parentConnectionId);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_connectionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("connectionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_connectionId.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_parentConnectionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("parentConnectionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_parentConnectionId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection AssociateHostedConnectionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection AssociateHostedConnectionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "OvertureService.AssociateHostedConnection"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

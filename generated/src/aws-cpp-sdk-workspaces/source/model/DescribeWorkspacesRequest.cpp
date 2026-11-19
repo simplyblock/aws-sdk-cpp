@@ -3,89 +3,89 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/DescribeWorkspacesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DescribeWorkspacesRequest::DescribeWorkspacesRequest() : 
-    m_workspaceIdsHasBeenSet(false),
-    m_directoryIdHasBeenSet(false),
-    m_userNameHasBeenSet(false),
-    m_bundleIdHasBeenSet(false),
-    m_limit(0),
-    m_limitHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_workspaceNameHasBeenSet(false)
-{
+Aws::String DescribeWorkspacesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_workspaceIdsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_userNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_bundleIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_limitHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_workspaceNameHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_workspaceIdsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkspaceIds"));
+    encoder.WriteArrayStart(m_workspaceIds.size());
+    for (const auto& item_0 : m_workspaceIds) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
+  }
+
+  if (m_userNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("UserName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_userName.c_str()));
+  }
+
+  if (m_bundleIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("BundleId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_bundleId.c_str()));
+  }
+
+  if (m_limitHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Limit"));
+    (m_limit >= 0) ? encoder.WriteUInt(m_limit) : encoder.WriteNegInt(m_limit);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+
+  if (m_workspaceNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WorkspaceName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_workspaceName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String DescribeWorkspacesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_workspaceIdsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> workspaceIdsJsonList(m_workspaceIds.size());
-   for(unsigned workspaceIdsIndex = 0; workspaceIdsIndex < workspaceIdsJsonList.GetLength(); ++workspaceIdsIndex)
-   {
-     workspaceIdsJsonList[workspaceIdsIndex].AsString(m_workspaceIds[workspaceIdsIndex]);
-   }
-   payload.WithArray("WorkspaceIds", std::move(workspaceIdsJsonList));
-
-  }
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
-  }
-
-  if(m_userNameHasBeenSet)
-  {
-   payload.WithString("UserName", m_userName);
-
-  }
-
-  if(m_bundleIdHasBeenSet)
-  {
-   payload.WithString("BundleId", m_bundleId);
-
-  }
-
-  if(m_limitHasBeenSet)
-  {
-   payload.WithInteger("Limit", m_limit);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  if(m_workspaceNameHasBeenSet)
-  {
-   payload.WithString("WorkspaceName", m_workspaceName);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection DescribeWorkspacesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeWorkspacesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.DescribeWorkspaces"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

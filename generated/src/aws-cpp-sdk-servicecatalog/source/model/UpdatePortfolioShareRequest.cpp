@@ -3,78 +3,78 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/UpdatePortfolioShareRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::ServiceCatalog::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdatePortfolioShareRequest::UpdatePortfolioShareRequest() : 
-    m_acceptLanguageHasBeenSet(false),
-    m_portfolioIdHasBeenSet(false),
-    m_accountIdHasBeenSet(false),
-    m_organizationNodeHasBeenSet(false),
-    m_shareTagOptions(false),
-    m_shareTagOptionsHasBeenSet(false),
-    m_sharePrincipals(false),
-    m_sharePrincipalsHasBeenSet(false)
-{
+Aws::String UpdatePortfolioShareRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_acceptLanguageHasBeenSet) {
+    mapSize++;
+  }
+  if (m_portfolioIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_accountIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_organizationNodeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_shareTagOptionsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_sharePrincipalsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_acceptLanguageHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AcceptLanguage"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_acceptLanguage.c_str()));
+  }
+
+  if (m_portfolioIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PortfolioId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_portfolioId.c_str()));
+  }
+
+  if (m_accountIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AccountId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_accountId.c_str()));
+  }
+
+  if (m_organizationNodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OrganizationNode"));
+    m_organizationNode.CborEncode(encoder);
+  }
+
+  if (m_shareTagOptionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ShareTagOptions"));
+    encoder.WriteBool(m_shareTagOptions);
+  }
+
+  if (m_sharePrincipalsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SharePrincipals"));
+    encoder.WriteBool(m_sharePrincipals);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdatePortfolioShareRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_acceptLanguageHasBeenSet)
-  {
-   payload.WithString("AcceptLanguage", m_acceptLanguage);
-
-  }
-
-  if(m_portfolioIdHasBeenSet)
-  {
-   payload.WithString("PortfolioId", m_portfolioId);
-
-  }
-
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("AccountId", m_accountId);
-
-  }
-
-  if(m_organizationNodeHasBeenSet)
-  {
-   payload.WithObject("OrganizationNode", m_organizationNode.Jsonize());
-
-  }
-
-  if(m_shareTagOptionsHasBeenSet)
-  {
-   payload.WithBool("ShareTagOptions", m_shareTagOptions);
-
-  }
-
-  if(m_sharePrincipalsHasBeenSet)
-  {
-   payload.WithBool("SharePrincipals", m_sharePrincipals);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdatePortfolioShareRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdatePortfolioShareRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWS242ServiceCatalogService.UpdatePortfolioShare"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

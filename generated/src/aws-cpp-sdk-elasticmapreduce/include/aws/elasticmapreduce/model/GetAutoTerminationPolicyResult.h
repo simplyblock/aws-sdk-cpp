@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/elasticmapreduce/EMR_EXPORTS.h>
 #include <aws/elasticmapreduce/model/AutoTerminationPolicy.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EMR
-{
-namespace Model
-{
-  class GetAutoTerminationPolicyResult
-  {
-  public:
-    AWS_EMR_API GetAutoTerminationPolicyResult();
-    AWS_EMR_API GetAutoTerminationPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EMR_API GetAutoTerminationPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EMR {
+namespace Model {
+class GetAutoTerminationPolicyResult {
+ public:
+  AWS_EMR_API GetAutoTerminationPolicyResult() = default;
+  AWS_EMR_API GetAutoTerminationPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EMR_API GetAutoTerminationPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Specifies the auto-termination policy that is attached to an Amazon EMR
+   * cluster. </p>
+   */
+  inline const AutoTerminationPolicy& GetAutoTerminationPolicy() const { return m_autoTerminationPolicy; }
+  template <typename AutoTerminationPolicyT = AutoTerminationPolicy>
+  void SetAutoTerminationPolicy(AutoTerminationPolicyT&& value) {
+    m_autoTerminationPolicyHasBeenSet = true;
+    m_autoTerminationPolicy = std::forward<AutoTerminationPolicyT>(value);
+  }
+  template <typename AutoTerminationPolicyT = AutoTerminationPolicy>
+  GetAutoTerminationPolicyResult& WithAutoTerminationPolicy(AutoTerminationPolicyT&& value) {
+    SetAutoTerminationPolicy(std::forward<AutoTerminationPolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the auto-termination policy that is attached to an Amazon EMR
-     * cluster. </p>
-     */
-    inline const AutoTerminationPolicy& GetAutoTerminationPolicy() const{ return m_autoTerminationPolicy; }
-    inline void SetAutoTerminationPolicy(const AutoTerminationPolicy& value) { m_autoTerminationPolicy = value; }
-    inline void SetAutoTerminationPolicy(AutoTerminationPolicy&& value) { m_autoTerminationPolicy = std::move(value); }
-    inline GetAutoTerminationPolicyResult& WithAutoTerminationPolicy(const AutoTerminationPolicy& value) { SetAutoTerminationPolicy(value); return *this;}
-    inline GetAutoTerminationPolicyResult& WithAutoTerminationPolicy(AutoTerminationPolicy&& value) { SetAutoTerminationPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAutoTerminationPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAutoTerminationPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAutoTerminationPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAutoTerminationPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AutoTerminationPolicy m_autoTerminationPolicy;
+ private:
+  AutoTerminationPolicy m_autoTerminationPolicy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_autoTerminationPolicyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

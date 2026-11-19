@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/amplifyuibuilder/AmplifyUIBuilder_EXPORTS.h>
 #include <aws/amplifyuibuilder/model/Component.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AmplifyUIBuilder
-{
-namespace Model
-{
-  class GetComponentResult
-  {
-  public:
-    AWS_AMPLIFYUIBUILDER_API GetComponentResult();
-    AWS_AMPLIFYUIBUILDER_API GetComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFYUIBUILDER_API GetComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AmplifyUIBuilder {
+namespace Model {
+class GetComponentResult {
+ public:
+  AWS_AMPLIFYUIBUILDER_API GetComponentResult() = default;
+  AWS_AMPLIFYUIBUILDER_API GetComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFYUIBUILDER_API GetComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Represents the configuration settings for the component.</p>
+   */
+  inline const Component& GetComponent() const { return m_component; }
+  template <typename ComponentT = Component>
+  void SetComponent(ComponentT&& value) {
+    m_componentHasBeenSet = true;
+    m_component = std::forward<ComponentT>(value);
+  }
+  template <typename ComponentT = Component>
+  GetComponentResult& WithComponent(ComponentT&& value) {
+    SetComponent(std::forward<ComponentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Represents the configuration settings for the component.</p>
-     */
-    inline const Component& GetComponent() const{ return m_component; }
-    inline void SetComponent(const Component& value) { m_component = value; }
-    inline void SetComponent(Component&& value) { m_component = std::move(value); }
-    inline GetComponentResult& WithComponent(const Component& value) { SetComponent(value); return *this;}
-    inline GetComponentResult& WithComponent(Component&& value) { SetComponent(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetComponentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetComponentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetComponentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetComponentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Component m_component;
+ private:
+  Component m_component;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_componentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AmplifyUIBuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyUIBuilder
+}  // namespace Aws

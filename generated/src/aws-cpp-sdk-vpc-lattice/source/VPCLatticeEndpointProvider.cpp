@@ -4,13 +4,15 @@
  */
 
 #include <aws/vpc-lattice/VPCLatticeEndpointProvider.h>
+#include <aws/vpc-lattice/internal/VPCLatticeEndpointRules.h>
 
-namespace Aws
-{
-namespace VPCLattice
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace VPCLattice
-} // namespace Aws
+namespace Aws {
+namespace VPCLattice {
+namespace Endpoint {
+VPCLatticeEndpointProvider::VPCLatticeEndpointProvider()
+    : VPCLatticeDefaultEpProviderBase(Aws::VPCLattice::VPCLatticeEndpointRules::GetRulesBlob(),
+                                      Aws::VPCLattice::VPCLatticeEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace VPCLattice
+}  // namespace Aws

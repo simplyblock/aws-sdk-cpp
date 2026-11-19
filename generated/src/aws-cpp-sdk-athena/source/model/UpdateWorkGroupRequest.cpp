@@ -12,53 +12,30 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateWorkGroupRequest::UpdateWorkGroupRequest() : 
-    m_workGroupHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_configurationUpdatesHasBeenSet(false),
-    m_state(WorkGroupState::NOT_SET),
-    m_stateHasBeenSet(false)
-{
-}
-
-Aws::String UpdateWorkGroupRequest::SerializePayload() const
-{
+Aws::String UpdateWorkGroupRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_workGroupHasBeenSet)
-  {
-   payload.WithString("WorkGroup", m_workGroup);
-
+  if (m_workGroupHasBeenSet) {
+    payload.WithString("WorkGroup", m_workGroup);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_configurationUpdatesHasBeenSet)
-  {
-   payload.WithObject("ConfigurationUpdates", m_configurationUpdates.Jsonize());
-
+  if (m_configurationUpdatesHasBeenSet) {
+    payload.WithObject("ConfigurationUpdates", m_configurationUpdates.Jsonize());
   }
 
-  if(m_stateHasBeenSet)
-  {
-   payload.WithString("State", WorkGroupStateMapper::GetNameForWorkGroupState(m_state));
+  if (m_stateHasBeenSet) {
+    payload.WithString("State", WorkGroupStateMapper::GetNameForWorkGroupState(m_state));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateWorkGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateWorkGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.UpdateWorkGroup"));
   return headers;
-
 }
-
-
-
-

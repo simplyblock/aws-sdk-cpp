@@ -12,16 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeInstanceRequest::DescribeInstanceRequest() : 
-    m_instanceIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeInstanceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeInstanceRequest::SerializePayload() const { return {}; }

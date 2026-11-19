@@ -4,86 +4,108 @@
  */
 
 #pragma once
-#include <aws/ecs/ECS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ecs/ECS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class ListServicesResult
-  {
-  public:
-    AWS_ECS_API ListServicesResult();
-    AWS_ECS_API ListServicesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API ListServicesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+/**
+ * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ListServicesResponse">AWS
+ * API Reference</a></p>
+ */
+class ListServicesResult {
+ public:
+  AWS_ECS_API ListServicesResult() = default;
+  AWS_ECS_API ListServicesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API ListServicesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of full ARN entries for each service that's associated with the
+   * specified cluster.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetServiceArns() const { return m_serviceArns; }
+  template <typename ServiceArnsT = Aws::Vector<Aws::String>>
+  void SetServiceArns(ServiceArnsT&& value) {
+    m_serviceArnsHasBeenSet = true;
+    m_serviceArns = std::forward<ServiceArnsT>(value);
+  }
+  template <typename ServiceArnsT = Aws::Vector<Aws::String>>
+  ListServicesResult& WithServiceArns(ServiceArnsT&& value) {
+    SetServiceArns(std::forward<ServiceArnsT>(value));
+    return *this;
+  }
+  template <typename ServiceArnsT = Aws::String>
+  ListServicesResult& AddServiceArns(ServiceArnsT&& value) {
+    m_serviceArnsHasBeenSet = true;
+    m_serviceArns.emplace_back(std::forward<ServiceArnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of full ARN entries for each service that's associated with the
-     * specified cluster.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetServiceArns() const{ return m_serviceArns; }
-    inline void SetServiceArns(const Aws::Vector<Aws::String>& value) { m_serviceArns = value; }
-    inline void SetServiceArns(Aws::Vector<Aws::String>&& value) { m_serviceArns = std::move(value); }
-    inline ListServicesResult& WithServiceArns(const Aws::Vector<Aws::String>& value) { SetServiceArns(value); return *this;}
-    inline ListServicesResult& WithServiceArns(Aws::Vector<Aws::String>&& value) { SetServiceArns(std::move(value)); return *this;}
-    inline ListServicesResult& AddServiceArns(const Aws::String& value) { m_serviceArns.push_back(value); return *this; }
-    inline ListServicesResult& AddServiceArns(Aws::String&& value) { m_serviceArns.push_back(std::move(value)); return *this; }
-    inline ListServicesResult& AddServiceArns(const char* value) { m_serviceArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>nextToken</code> value to include in a future
+   * <code>ListServices</code> request. When the results of a
+   * <code>ListServices</code> request exceed <code>maxResults</code>, this value can
+   * be used to retrieve the next page of results. This value is <code>null</code>
+   * when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListServicesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>nextToken</code> value to include in a future
-     * <code>ListServices</code> request. When the results of a
-     * <code>ListServices</code> request exceed <code>maxResults</code>, this value can
-     * be used to retrieve the next page of results. This value is <code>null</code>
-     * when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListServicesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListServicesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListServicesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListServicesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListServicesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListServicesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListServicesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_serviceArns;
+ private:
+  Aws::Vector<Aws::String> m_serviceArns;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serviceArnsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

@@ -4,70 +4,77 @@
  */
 
 #pragma once
-#include <aws/rds-data/RDSDataService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/rds-data/RDSDataService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RDSDataService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RDSDataService {
+namespace Model {
+/**
+ * <p>The response elements represent the output of a request to perform a rollback
+ * of a transaction.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/RollbackTransactionResponse">AWS
+ * API Reference</a></p>
+ */
+class RollbackTransactionResult {
+ public:
+  AWS_RDSDATASERVICE_API RollbackTransactionResult() = default;
+  AWS_RDSDATASERVICE_API RollbackTransactionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RDSDATASERVICE_API RollbackTransactionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response elements represent the output of a request to perform a rollback
-   * of a transaction.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rds-data-2018-08-01/RollbackTransactionResponse">AWS
-   * API Reference</a></p>
+   * <p>The status of the rollback operation.</p>
    */
-  class RollbackTransactionResult
-  {
-  public:
-    AWS_RDSDATASERVICE_API RollbackTransactionResult();
-    AWS_RDSDATASERVICE_API RollbackTransactionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RDSDATASERVICE_API RollbackTransactionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetTransactionStatus() const { return m_transactionStatus; }
+  template <typename TransactionStatusT = Aws::String>
+  void SetTransactionStatus(TransactionStatusT&& value) {
+    m_transactionStatusHasBeenSet = true;
+    m_transactionStatus = std::forward<TransactionStatusT>(value);
+  }
+  template <typename TransactionStatusT = Aws::String>
+  RollbackTransactionResult& WithTransactionStatus(TransactionStatusT&& value) {
+    SetTransactionStatus(std::forward<TransactionStatusT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The status of the rollback operation.</p>
-     */
-    inline const Aws::String& GetTransactionStatus() const{ return m_transactionStatus; }
-    inline void SetTransactionStatus(const Aws::String& value) { m_transactionStatus = value; }
-    inline void SetTransactionStatus(Aws::String&& value) { m_transactionStatus = std::move(value); }
-    inline void SetTransactionStatus(const char* value) { m_transactionStatus.assign(value); }
-    inline RollbackTransactionResult& WithTransactionStatus(const Aws::String& value) { SetTransactionStatus(value); return *this;}
-    inline RollbackTransactionResult& WithTransactionStatus(Aws::String&& value) { SetTransactionStatus(std::move(value)); return *this;}
-    inline RollbackTransactionResult& WithTransactionStatus(const char* value) { SetTransactionStatus(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RollbackTransactionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RollbackTransactionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RollbackTransactionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RollbackTransactionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_transactionStatus;
 
-    Aws::String m_transactionStatus;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_transactionStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace RDSDataService
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDSDataService
+}  // namespace Aws

@@ -4,75 +4,77 @@
  */
 
 #pragma once
-#include <aws/iotwireless/IoTWireless_EXPORTS.h>
-#include <aws/iotwireless/IoTWirelessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotwireless/IoTWirelessRequest.h>
+#include <aws/iotwireless/IoTWireless_EXPORTS.h>
 #include <aws/iotwireless/model/PartnerType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace IoTWireless
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace IoTWireless {
+namespace Model {
 
+/**
+ */
+class GetPartnerAccountRequest : public IoTWirelessRequest {
+ public:
+  AWS_IOTWIRELESS_API GetPartnerAccountRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetPartnerAccount"; }
+
+  AWS_IOTWIRELESS_API Aws::String SerializePayload() const override;
+
+  AWS_IOTWIRELESS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The partner account ID to disassociate from the AWS account.</p>
    */
-  class GetPartnerAccountRequest : public IoTWirelessRequest
-  {
-  public:
-    AWS_IOTWIRELESS_API GetPartnerAccountRequest();
+  inline const Aws::String& GetPartnerAccountId() const { return m_partnerAccountId; }
+  inline bool PartnerAccountIdHasBeenSet() const { return m_partnerAccountIdHasBeenSet; }
+  template <typename PartnerAccountIdT = Aws::String>
+  void SetPartnerAccountId(PartnerAccountIdT&& value) {
+    m_partnerAccountIdHasBeenSet = true;
+    m_partnerAccountId = std::forward<PartnerAccountIdT>(value);
+  }
+  template <typename PartnerAccountIdT = Aws::String>
+  GetPartnerAccountRequest& WithPartnerAccountId(PartnerAccountIdT&& value) {
+    SetPartnerAccountId(std::forward<PartnerAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetPartnerAccount"; }
+  ///@{
+  /**
+   * <p>The partner type.</p>
+   */
+  inline PartnerType GetPartnerType() const { return m_partnerType; }
+  inline bool PartnerTypeHasBeenSet() const { return m_partnerTypeHasBeenSet; }
+  inline void SetPartnerType(PartnerType value) {
+    m_partnerTypeHasBeenSet = true;
+    m_partnerType = value;
+  }
+  inline GetPartnerAccountRequest& WithPartnerType(PartnerType value) {
+    SetPartnerType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_partnerAccountId;
 
-    AWS_IOTWIRELESS_API Aws::String SerializePayload() const override;
+  PartnerType m_partnerType{PartnerType::NOT_SET};
+  bool m_partnerAccountIdHasBeenSet = false;
+  bool m_partnerTypeHasBeenSet = false;
+};
 
-    AWS_IOTWIRELESS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
-
-
-    ///@{
-    /**
-     * <p>The partner account ID to disassociate from the AWS account.</p>
-     */
-    inline const Aws::String& GetPartnerAccountId() const{ return m_partnerAccountId; }
-    inline bool PartnerAccountIdHasBeenSet() const { return m_partnerAccountIdHasBeenSet; }
-    inline void SetPartnerAccountId(const Aws::String& value) { m_partnerAccountIdHasBeenSet = true; m_partnerAccountId = value; }
-    inline void SetPartnerAccountId(Aws::String&& value) { m_partnerAccountIdHasBeenSet = true; m_partnerAccountId = std::move(value); }
-    inline void SetPartnerAccountId(const char* value) { m_partnerAccountIdHasBeenSet = true; m_partnerAccountId.assign(value); }
-    inline GetPartnerAccountRequest& WithPartnerAccountId(const Aws::String& value) { SetPartnerAccountId(value); return *this;}
-    inline GetPartnerAccountRequest& WithPartnerAccountId(Aws::String&& value) { SetPartnerAccountId(std::move(value)); return *this;}
-    inline GetPartnerAccountRequest& WithPartnerAccountId(const char* value) { SetPartnerAccountId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The partner type.</p>
-     */
-    inline const PartnerType& GetPartnerType() const{ return m_partnerType; }
-    inline bool PartnerTypeHasBeenSet() const { return m_partnerTypeHasBeenSet; }
-    inline void SetPartnerType(const PartnerType& value) { m_partnerTypeHasBeenSet = true; m_partnerType = value; }
-    inline void SetPartnerType(PartnerType&& value) { m_partnerTypeHasBeenSet = true; m_partnerType = std::move(value); }
-    inline GetPartnerAccountRequest& WithPartnerType(const PartnerType& value) { SetPartnerType(value); return *this;}
-    inline GetPartnerAccountRequest& WithPartnerType(PartnerType&& value) { SetPartnerType(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_partnerAccountId;
-    bool m_partnerAccountIdHasBeenSet = false;
-
-    PartnerType m_partnerType;
-    bool m_partnerTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTWireless
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTWireless
+}  // namespace Aws

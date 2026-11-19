@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/snowball/Snowball_EXPORTS.h>
 
-#include <aws/snowball/SnowballEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Snowball
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Snowball {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SnowballClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SnowballEndpointProviderBase =
     EndpointProviderBase<SnowballClientConfiguration, SnowballBuiltInParameters, SnowballClientContextParameters>;
 
 using SnowballDefaultEpProviderBase =
-    DefaultEndpointProvider<SnowballClientConfiguration, SnowballBuiltInParameters, SnowballClientContextParameters>;
+    BDDEndpointProvider<SnowballClientConfiguration, SnowballBuiltInParameters, SnowballClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SNOWBALL_API SnowballEndpointProvider : public SnowballDefaultEpProviderBase
-{
-public:
-    using SnowballResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SNOWBALL_API SnowballEndpointProvider : public SnowballDefaultEpProviderBase {
+ public:
+  using SnowballResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SnowballEndpointProvider()
-      : SnowballDefaultEpProviderBase(Aws::Snowball::SnowballEndpointRules::GetRulesBlob(), Aws::Snowball::SnowballEndpointRules::RulesBlobSize)
-    {}
+  SnowballEndpointProvider();
 
-    ~SnowballEndpointProvider()
-    {
-    }
+  ~SnowballEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Snowball
+}  // namespace Aws

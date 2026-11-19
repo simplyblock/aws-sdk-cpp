@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/personalize-runtime/PersonalizeRuntime_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/personalize-runtime/PersonalizeRuntime_EXPORTS.h>
 
-#include <aws/personalize-runtime/PersonalizeRuntimeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace PersonalizeRuntime
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace PersonalizeRuntime {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using PersonalizeRuntimeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using PersonalizeRuntimeBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * The SDK must use service-specific type for each service per specification.
  */
 using PersonalizeRuntimeEndpointProviderBase =
-    EndpointProviderBase<PersonalizeRuntimeClientConfiguration, PersonalizeRuntimeBuiltInParameters, PersonalizeRuntimeClientContextParameters>;
+    EndpointProviderBase<PersonalizeRuntimeClientConfiguration, PersonalizeRuntimeBuiltInParameters,
+                         PersonalizeRuntimeClientContextParameters>;
 
 using PersonalizeRuntimeDefaultEpProviderBase =
-    DefaultEndpointProvider<PersonalizeRuntimeClientConfiguration, PersonalizeRuntimeBuiltInParameters, PersonalizeRuntimeClientContextParameters>;
+    BDDEndpointProvider<PersonalizeRuntimeClientConfiguration, PersonalizeRuntimeBuiltInParameters,
+                        PersonalizeRuntimeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_PERSONALIZERUNTIME_API PersonalizeRuntimeEndpointProvider : public PersonalizeRuntimeDefaultEpProviderBase
-{
-public:
-    using PersonalizeRuntimeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_PERSONALIZERUNTIME_API PersonalizeRuntimeEndpointProvider : public PersonalizeRuntimeDefaultEpProviderBase {
+ public:
+  using PersonalizeRuntimeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    PersonalizeRuntimeEndpointProvider()
-      : PersonalizeRuntimeDefaultEpProviderBase(Aws::PersonalizeRuntime::PersonalizeRuntimeEndpointRules::GetRulesBlob(), Aws::PersonalizeRuntime::PersonalizeRuntimeEndpointRules::RulesBlobSize)
-    {}
+  PersonalizeRuntimeEndpointProvider();
 
-    ~PersonalizeRuntimeEndpointProvider()
-    {
-    }
+  ~PersonalizeRuntimeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace PersonalizeRuntime
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace PersonalizeRuntime
+}  // namespace Aws

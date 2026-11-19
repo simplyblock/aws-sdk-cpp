@@ -4,106 +4,121 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/wellarchitected/model/DifferenceStatus.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+#include <aws/wellarchitected/model/DifferenceStatus.h>
 #include <aws/wellarchitected/model/QuestionDifference.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
 
+/**
+ * <p>A pillar difference return object.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/PillarDifference">AWS
+ * API Reference</a></p>
+ */
+class PillarDifference {
+ public:
+  AWS_WELLARCHITECTED_API PillarDifference() = default;
+  AWS_WELLARCHITECTED_API PillarDifference(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API PillarDifference& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetPillarId() const { return m_pillarId; }
+  inline bool PillarIdHasBeenSet() const { return m_pillarIdHasBeenSet; }
+  template <typename PillarIdT = Aws::String>
+  void SetPillarId(PillarIdT&& value) {
+    m_pillarIdHasBeenSet = true;
+    m_pillarId = std::forward<PillarIdT>(value);
+  }
+  template <typename PillarIdT = Aws::String>
+  PillarDifference& WithPillarId(PillarIdT&& value) {
+    SetPillarId(std::forward<PillarIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::String& GetPillarName() const { return m_pillarName; }
+  inline bool PillarNameHasBeenSet() const { return m_pillarNameHasBeenSet; }
+  template <typename PillarNameT = Aws::String>
+  void SetPillarName(PillarNameT&& value) {
+    m_pillarNameHasBeenSet = true;
+    m_pillarName = std::forward<PillarNameT>(value);
+  }
+  template <typename PillarNameT = Aws::String>
+  PillarDifference& WithPillarName(PillarNameT&& value) {
+    SetPillarName(std::forward<PillarNameT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>A pillar difference return object.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/PillarDifference">AWS
-   * API Reference</a></p>
+   * <p>Indicates the type of change to the pillar.</p>
    */
-  class PillarDifference
-  {
-  public:
-    AWS_WELLARCHITECTED_API PillarDifference();
-    AWS_WELLARCHITECTED_API PillarDifference(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API PillarDifference& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline DifferenceStatus GetDifferenceStatus() const { return m_differenceStatus; }
+  inline bool DifferenceStatusHasBeenSet() const { return m_differenceStatusHasBeenSet; }
+  inline void SetDifferenceStatus(DifferenceStatus value) {
+    m_differenceStatusHasBeenSet = true;
+    m_differenceStatus = value;
+  }
+  inline PillarDifference& WithDifferenceStatus(DifferenceStatus value) {
+    SetDifferenceStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>List of question differences.</p>
+   */
+  inline const Aws::Vector<QuestionDifference>& GetQuestionDifferences() const { return m_questionDifferences; }
+  inline bool QuestionDifferencesHasBeenSet() const { return m_questionDifferencesHasBeenSet; }
+  template <typename QuestionDifferencesT = Aws::Vector<QuestionDifference>>
+  void SetQuestionDifferences(QuestionDifferencesT&& value) {
+    m_questionDifferencesHasBeenSet = true;
+    m_questionDifferences = std::forward<QuestionDifferencesT>(value);
+  }
+  template <typename QuestionDifferencesT = Aws::Vector<QuestionDifference>>
+  PillarDifference& WithQuestionDifferences(QuestionDifferencesT&& value) {
+    SetQuestionDifferences(std::forward<QuestionDifferencesT>(value));
+    return *this;
+  }
+  template <typename QuestionDifferencesT = QuestionDifference>
+  PillarDifference& AddQuestionDifferences(QuestionDifferencesT&& value) {
+    m_questionDifferencesHasBeenSet = true;
+    m_questionDifferences.emplace_back(std::forward<QuestionDifferencesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_pillarId;
 
-    ///@{
-    
-    inline const Aws::String& GetPillarId() const{ return m_pillarId; }
-    inline bool PillarIdHasBeenSet() const { return m_pillarIdHasBeenSet; }
-    inline void SetPillarId(const Aws::String& value) { m_pillarIdHasBeenSet = true; m_pillarId = value; }
-    inline void SetPillarId(Aws::String&& value) { m_pillarIdHasBeenSet = true; m_pillarId = std::move(value); }
-    inline void SetPillarId(const char* value) { m_pillarIdHasBeenSet = true; m_pillarId.assign(value); }
-    inline PillarDifference& WithPillarId(const Aws::String& value) { SetPillarId(value); return *this;}
-    inline PillarDifference& WithPillarId(Aws::String&& value) { SetPillarId(std::move(value)); return *this;}
-    inline PillarDifference& WithPillarId(const char* value) { SetPillarId(value); return *this;}
-    ///@}
+  Aws::String m_pillarName;
 
-    ///@{
-    
-    inline const Aws::String& GetPillarName() const{ return m_pillarName; }
-    inline bool PillarNameHasBeenSet() const { return m_pillarNameHasBeenSet; }
-    inline void SetPillarName(const Aws::String& value) { m_pillarNameHasBeenSet = true; m_pillarName = value; }
-    inline void SetPillarName(Aws::String&& value) { m_pillarNameHasBeenSet = true; m_pillarName = std::move(value); }
-    inline void SetPillarName(const char* value) { m_pillarNameHasBeenSet = true; m_pillarName.assign(value); }
-    inline PillarDifference& WithPillarName(const Aws::String& value) { SetPillarName(value); return *this;}
-    inline PillarDifference& WithPillarName(Aws::String&& value) { SetPillarName(std::move(value)); return *this;}
-    inline PillarDifference& WithPillarName(const char* value) { SetPillarName(value); return *this;}
-    ///@}
+  DifferenceStatus m_differenceStatus{DifferenceStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Indicates the type of change to the pillar.</p>
-     */
-    inline const DifferenceStatus& GetDifferenceStatus() const{ return m_differenceStatus; }
-    inline bool DifferenceStatusHasBeenSet() const { return m_differenceStatusHasBeenSet; }
-    inline void SetDifferenceStatus(const DifferenceStatus& value) { m_differenceStatusHasBeenSet = true; m_differenceStatus = value; }
-    inline void SetDifferenceStatus(DifferenceStatus&& value) { m_differenceStatusHasBeenSet = true; m_differenceStatus = std::move(value); }
-    inline PillarDifference& WithDifferenceStatus(const DifferenceStatus& value) { SetDifferenceStatus(value); return *this;}
-    inline PillarDifference& WithDifferenceStatus(DifferenceStatus&& value) { SetDifferenceStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<QuestionDifference> m_questionDifferences;
+  bool m_pillarIdHasBeenSet = false;
+  bool m_pillarNameHasBeenSet = false;
+  bool m_differenceStatusHasBeenSet = false;
+  bool m_questionDifferencesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>List of question differences.</p>
-     */
-    inline const Aws::Vector<QuestionDifference>& GetQuestionDifferences() const{ return m_questionDifferences; }
-    inline bool QuestionDifferencesHasBeenSet() const { return m_questionDifferencesHasBeenSet; }
-    inline void SetQuestionDifferences(const Aws::Vector<QuestionDifference>& value) { m_questionDifferencesHasBeenSet = true; m_questionDifferences = value; }
-    inline void SetQuestionDifferences(Aws::Vector<QuestionDifference>&& value) { m_questionDifferencesHasBeenSet = true; m_questionDifferences = std::move(value); }
-    inline PillarDifference& WithQuestionDifferences(const Aws::Vector<QuestionDifference>& value) { SetQuestionDifferences(value); return *this;}
-    inline PillarDifference& WithQuestionDifferences(Aws::Vector<QuestionDifference>&& value) { SetQuestionDifferences(std::move(value)); return *this;}
-    inline PillarDifference& AddQuestionDifferences(const QuestionDifference& value) { m_questionDifferencesHasBeenSet = true; m_questionDifferences.push_back(value); return *this; }
-    inline PillarDifference& AddQuestionDifferences(QuestionDifference&& value) { m_questionDifferencesHasBeenSet = true; m_questionDifferences.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_pillarId;
-    bool m_pillarIdHasBeenSet = false;
-
-    Aws::String m_pillarName;
-    bool m_pillarNameHasBeenSet = false;
-
-    DifferenceStatus m_differenceStatus;
-    bool m_differenceStatusHasBeenSet = false;
-
-    Aws::Vector<QuestionDifference> m_questionDifferences;
-    bool m_questionDifferencesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/license-manager/LicenseManager_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/license-manager/LicenseManager_EXPORTS.h>
 #include <aws/license-manager/model/ResourceInventory.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManager
-{
-namespace Model
-{
-  class ListResourceInventoryResult
-  {
-  public:
-    AWS_LICENSEMANAGER_API ListResourceInventoryResult();
-    AWS_LICENSEMANAGER_API ListResourceInventoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGER_API ListResourceInventoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManager {
+namespace Model {
+class ListResourceInventoryResult {
+ public:
+  AWS_LICENSEMANAGER_API ListResourceInventoryResult() = default;
+  AWS_LICENSEMANAGER_API ListResourceInventoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGER_API ListResourceInventoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the resources.</p>
+   */
+  inline const Aws::Vector<ResourceInventory>& GetResourceInventoryList() const { return m_resourceInventoryList; }
+  template <typename ResourceInventoryListT = Aws::Vector<ResourceInventory>>
+  void SetResourceInventoryList(ResourceInventoryListT&& value) {
+    m_resourceInventoryListHasBeenSet = true;
+    m_resourceInventoryList = std::forward<ResourceInventoryListT>(value);
+  }
+  template <typename ResourceInventoryListT = Aws::Vector<ResourceInventory>>
+  ListResourceInventoryResult& WithResourceInventoryList(ResourceInventoryListT&& value) {
+    SetResourceInventoryList(std::forward<ResourceInventoryListT>(value));
+    return *this;
+  }
+  template <typename ResourceInventoryListT = ResourceInventory>
+  ListResourceInventoryResult& AddResourceInventoryList(ResourceInventoryListT&& value) {
+    m_resourceInventoryListHasBeenSet = true;
+    m_resourceInventoryList.emplace_back(std::forward<ResourceInventoryListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the resources.</p>
-     */
-    inline const Aws::Vector<ResourceInventory>& GetResourceInventoryList() const{ return m_resourceInventoryList; }
-    inline void SetResourceInventoryList(const Aws::Vector<ResourceInventory>& value) { m_resourceInventoryList = value; }
-    inline void SetResourceInventoryList(Aws::Vector<ResourceInventory>&& value) { m_resourceInventoryList = std::move(value); }
-    inline ListResourceInventoryResult& WithResourceInventoryList(const Aws::Vector<ResourceInventory>& value) { SetResourceInventoryList(value); return *this;}
-    inline ListResourceInventoryResult& WithResourceInventoryList(Aws::Vector<ResourceInventory>&& value) { SetResourceInventoryList(std::move(value)); return *this;}
-    inline ListResourceInventoryResult& AddResourceInventoryList(const ResourceInventory& value) { m_resourceInventoryList.push_back(value); return *this; }
-    inline ListResourceInventoryResult& AddResourceInventoryList(ResourceInventory&& value) { m_resourceInventoryList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Token for the next set of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListResourceInventoryResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Token for the next set of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListResourceInventoryResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListResourceInventoryResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListResourceInventoryResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListResourceInventoryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListResourceInventoryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListResourceInventoryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListResourceInventoryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ResourceInventory> m_resourceInventoryList;
+ private:
+  Aws::Vector<ResourceInventory> m_resourceInventoryList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceInventoryListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManager
+}  // namespace Aws

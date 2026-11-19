@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-identitystore "C++ SDK for the AWS identitystore service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-identitystore "C++ SDK for AWS SSO Identity Store" aws-cpp-sdk-core)
 
 file(GLOB AWS_IDENTITYSTORE_HEADERS
     "include/aws/identitystore/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IDENTITYSTORE_HEADERS
 
 file(GLOB AWS_IDENTITYSTORE_MODEL_HEADERS
     "include/aws/identitystore/model/*.h"
+)
+
+file(GLOB AWS_IDENTITYSTORE_INTERNAL_HEADERS
+    "include/aws/identitystore/internal/*.h"
 )
 
 file(GLOB AWS_IDENTITYSTORE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IDENTITYSTORE_MODEL_SOURCE
 
 file(GLOB IDENTITYSTORE_UNIFIED_HEADERS
     ${AWS_IDENTITYSTORE_HEADERS}
+    ${AWS_IDENTITYSTORE_INTERNAL_HEADERS}
     ${AWS_IDENTITYSTORE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\identitystore" FILES ${AWS_IDENTITYSTORE_HEADERS})
+        source_group("Header Files\\aws\\identitystore\\internal" FILES ${AWS_IDENTITYSTORE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\identitystore\\model" FILES ${AWS_IDENTITYSTORE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IDENTITYSTORE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IDENTITYSTORE_MODEL_SOURCE})

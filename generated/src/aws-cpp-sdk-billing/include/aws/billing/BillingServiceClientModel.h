@@ -1,0 +1,321 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+
+/* Generic header includes */
+#include <aws/billing/BillingEndpointProvider.h>
+#include <aws/billing/BillingErrors.h>
+#include <aws/core/client/AWSError.h>
+#include <aws/core/client/AsyncCallerContext.h>
+#include <aws/core/client/GenericClientConfiguration.h>
+#include <aws/core/http/HttpTypes.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
+#include <functional>
+#include <future>
+/* End of generic header includes */
+
+/* Service model headers required in BillingClient header */
+#include <aws/billing/model/AssociateContractResult.h>
+#include <aws/billing/model/AssociateSourceViewsResult.h>
+#include <aws/billing/model/CancelContractualInvestmentAttestationResult.h>
+#include <aws/billing/model/CreateBillingViewResult.h>
+#include <aws/billing/model/CreateContractualInvestmentAttestationResult.h>
+#include <aws/billing/model/DeleteBillingViewResult.h>
+#include <aws/billing/model/DisassociateContractResult.h>
+#include <aws/billing/model/DisassociateSourceViewsResult.h>
+#include <aws/billing/model/GetBillingPreferencesResult.h>
+#include <aws/billing/model/GetBillingViewResult.h>
+#include <aws/billing/model/GetContractInformationResult.h>
+#include <aws/billing/model/GetCreditAllocationHistoryResult.h>
+#include <aws/billing/model/GetCreditsResult.h>
+#include <aws/billing/model/GetEnterpriseSupportChargeSummaryResult.h>
+#include <aws/billing/model/GetEnterpriseSupportContractDetailsResult.h>
+#include <aws/billing/model/GetResourcePolicyResult.h>
+#include <aws/billing/model/ListBillingViewSegmentsRequest.h>
+#include <aws/billing/model/ListBillingViewSegmentsResult.h>
+#include <aws/billing/model/ListBillingViewsRequest.h>
+#include <aws/billing/model/ListBillingViewsResult.h>
+#include <aws/billing/model/ListBusinessSupportAccountChargesResult.h>
+#include <aws/billing/model/ListBusinessSupportSubscriptionHistoryRequest.h>
+#include <aws/billing/model/ListBusinessSupportSubscriptionHistoryResult.h>
+#include <aws/billing/model/ListContractsRequest.h>
+#include <aws/billing/model/ListContractsResult.h>
+#include <aws/billing/model/ListContractualInvestmentAttestationsResult.h>
+#include <aws/billing/model/ListContractualInvestmentSummariesResult.h>
+#include <aws/billing/model/ListContractualInvestmentsResult.h>
+#include <aws/billing/model/ListEnterpriseSupportLinkedAccountChargesResult.h>
+#include <aws/billing/model/ListSourceViewsForBillingViewResult.h>
+#include <aws/billing/model/ListTagsForResourceResult.h>
+#include <aws/billing/model/RedeemCreditsResult.h>
+#include <aws/billing/model/SplitCreditResult.h>
+#include <aws/billing/model/TagResourceResult.h>
+#include <aws/billing/model/TransferCreditResult.h>
+#include <aws/billing/model/UntagResourceResult.h>
+#include <aws/billing/model/UpdateBillingPreferencesResult.h>
+#include <aws/billing/model/UpdateBillingViewResult.h>
+/* End of service model headers required in BillingClient header */
+
+namespace Aws {
+namespace Http {
+class HttpClient;
+class HttpClientFactory;
+}  // namespace Http
+
+namespace Utils {
+template <typename R, typename E>
+class Outcome;
+
+namespace Threading {
+class Executor;
+}  // namespace Threading
+}  // namespace Utils
+
+namespace Auth {
+class AWSCredentials;
+class AWSCredentialsProvider;
+}  // namespace Auth
+
+namespace Client {
+class RetryStrategy;
+}  // namespace Client
+
+namespace Billing {
+using BillingClientConfiguration = Aws::Client::GenericClientConfiguration;
+using BillingEndpointProviderBase = Aws::Billing::Endpoint::BillingEndpointProviderBase;
+using BillingEndpointProvider = Aws::Billing::Endpoint::BillingEndpointProvider;
+
+namespace Model {
+/* Service model forward declarations required in BillingClient header */
+class AssociateContractRequest;
+class AssociateSourceViewsRequest;
+class CancelContractualInvestmentAttestationRequest;
+class CreateBillingViewRequest;
+class CreateContractualInvestmentAttestationRequest;
+class DeleteBillingViewRequest;
+class DisassociateContractRequest;
+class DisassociateSourceViewsRequest;
+class GetBillingPreferencesRequest;
+class GetBillingViewRequest;
+class GetContractInformationRequest;
+class GetCreditAllocationHistoryRequest;
+class GetCreditsRequest;
+class GetEnterpriseSupportChargeSummaryRequest;
+class GetEnterpriseSupportContractDetailsRequest;
+class GetResourcePolicyRequest;
+class ListBillingViewSegmentsRequest;
+class ListBillingViewsRequest;
+class ListBusinessSupportAccountChargesRequest;
+class ListBusinessSupportSubscriptionHistoryRequest;
+class ListContractsRequest;
+class ListContractualInvestmentAttestationsRequest;
+class ListContractualInvestmentSummariesRequest;
+class ListContractualInvestmentsRequest;
+class ListEnterpriseSupportLinkedAccountChargesRequest;
+class ListSourceViewsForBillingViewRequest;
+class ListTagsForResourceRequest;
+class RedeemCreditsRequest;
+class SplitCreditRequest;
+class TagResourceRequest;
+class TransferCreditRequest;
+class UntagResourceRequest;
+class UpdateBillingPreferencesRequest;
+class UpdateBillingViewRequest;
+/* End of service model forward declarations required in BillingClient header */
+
+/* Service model Outcome class definitions */
+typedef Aws::Utils::Outcome<AssociateContractResult, BillingError> AssociateContractOutcome;
+typedef Aws::Utils::Outcome<AssociateSourceViewsResult, BillingError> AssociateSourceViewsOutcome;
+typedef Aws::Utils::Outcome<CancelContractualInvestmentAttestationResult, BillingError> CancelContractualInvestmentAttestationOutcome;
+typedef Aws::Utils::Outcome<CreateBillingViewResult, BillingError> CreateBillingViewOutcome;
+typedef Aws::Utils::Outcome<CreateContractualInvestmentAttestationResult, BillingError> CreateContractualInvestmentAttestationOutcome;
+typedef Aws::Utils::Outcome<DeleteBillingViewResult, BillingError> DeleteBillingViewOutcome;
+typedef Aws::Utils::Outcome<DisassociateContractResult, BillingError> DisassociateContractOutcome;
+typedef Aws::Utils::Outcome<DisassociateSourceViewsResult, BillingError> DisassociateSourceViewsOutcome;
+typedef Aws::Utils::Outcome<GetBillingPreferencesResult, BillingError> GetBillingPreferencesOutcome;
+typedef Aws::Utils::Outcome<GetBillingViewResult, BillingError> GetBillingViewOutcome;
+typedef Aws::Utils::Outcome<GetContractInformationResult, BillingError> GetContractInformationOutcome;
+typedef Aws::Utils::Outcome<GetCreditAllocationHistoryResult, BillingError> GetCreditAllocationHistoryOutcome;
+typedef Aws::Utils::Outcome<GetCreditsResult, BillingError> GetCreditsOutcome;
+typedef Aws::Utils::Outcome<GetEnterpriseSupportChargeSummaryResult, BillingError> GetEnterpriseSupportChargeSummaryOutcome;
+typedef Aws::Utils::Outcome<GetEnterpriseSupportContractDetailsResult, BillingError> GetEnterpriseSupportContractDetailsOutcome;
+typedef Aws::Utils::Outcome<GetResourcePolicyResult, BillingError> GetResourcePolicyOutcome;
+typedef Aws::Utils::Outcome<ListBillingViewSegmentsResult, BillingError> ListBillingViewSegmentsOutcome;
+typedef Aws::Utils::Outcome<ListBillingViewsResult, BillingError> ListBillingViewsOutcome;
+typedef Aws::Utils::Outcome<ListBusinessSupportAccountChargesResult, BillingError> ListBusinessSupportAccountChargesOutcome;
+typedef Aws::Utils::Outcome<ListBusinessSupportSubscriptionHistoryResult, BillingError> ListBusinessSupportSubscriptionHistoryOutcome;
+typedef Aws::Utils::Outcome<ListContractsResult, BillingError> ListContractsOutcome;
+typedef Aws::Utils::Outcome<ListContractualInvestmentAttestationsResult, BillingError> ListContractualInvestmentAttestationsOutcome;
+typedef Aws::Utils::Outcome<ListContractualInvestmentSummariesResult, BillingError> ListContractualInvestmentSummariesOutcome;
+typedef Aws::Utils::Outcome<ListContractualInvestmentsResult, BillingError> ListContractualInvestmentsOutcome;
+typedef Aws::Utils::Outcome<ListEnterpriseSupportLinkedAccountChargesResult, BillingError> ListEnterpriseSupportLinkedAccountChargesOutcome;
+typedef Aws::Utils::Outcome<ListSourceViewsForBillingViewResult, BillingError> ListSourceViewsForBillingViewOutcome;
+typedef Aws::Utils::Outcome<ListTagsForResourceResult, BillingError> ListTagsForResourceOutcome;
+typedef Aws::Utils::Outcome<RedeemCreditsResult, BillingError> RedeemCreditsOutcome;
+typedef Aws::Utils::Outcome<SplitCreditResult, BillingError> SplitCreditOutcome;
+typedef Aws::Utils::Outcome<TagResourceResult, BillingError> TagResourceOutcome;
+typedef Aws::Utils::Outcome<TransferCreditResult, BillingError> TransferCreditOutcome;
+typedef Aws::Utils::Outcome<UntagResourceResult, BillingError> UntagResourceOutcome;
+typedef Aws::Utils::Outcome<UpdateBillingPreferencesResult, BillingError> UpdateBillingPreferencesOutcome;
+typedef Aws::Utils::Outcome<UpdateBillingViewResult, BillingError> UpdateBillingViewOutcome;
+/* End of service model Outcome class definitions */
+
+/* Service model Outcome callable definitions */
+typedef std::future<AssociateContractOutcome> AssociateContractOutcomeCallable;
+typedef std::future<AssociateSourceViewsOutcome> AssociateSourceViewsOutcomeCallable;
+typedef std::future<CancelContractualInvestmentAttestationOutcome> CancelContractualInvestmentAttestationOutcomeCallable;
+typedef std::future<CreateBillingViewOutcome> CreateBillingViewOutcomeCallable;
+typedef std::future<CreateContractualInvestmentAttestationOutcome> CreateContractualInvestmentAttestationOutcomeCallable;
+typedef std::future<DeleteBillingViewOutcome> DeleteBillingViewOutcomeCallable;
+typedef std::future<DisassociateContractOutcome> DisassociateContractOutcomeCallable;
+typedef std::future<DisassociateSourceViewsOutcome> DisassociateSourceViewsOutcomeCallable;
+typedef std::future<GetBillingPreferencesOutcome> GetBillingPreferencesOutcomeCallable;
+typedef std::future<GetBillingViewOutcome> GetBillingViewOutcomeCallable;
+typedef std::future<GetContractInformationOutcome> GetContractInformationOutcomeCallable;
+typedef std::future<GetCreditAllocationHistoryOutcome> GetCreditAllocationHistoryOutcomeCallable;
+typedef std::future<GetCreditsOutcome> GetCreditsOutcomeCallable;
+typedef std::future<GetEnterpriseSupportChargeSummaryOutcome> GetEnterpriseSupportChargeSummaryOutcomeCallable;
+typedef std::future<GetEnterpriseSupportContractDetailsOutcome> GetEnterpriseSupportContractDetailsOutcomeCallable;
+typedef std::future<GetResourcePolicyOutcome> GetResourcePolicyOutcomeCallable;
+typedef std::future<ListBillingViewSegmentsOutcome> ListBillingViewSegmentsOutcomeCallable;
+typedef std::future<ListBillingViewsOutcome> ListBillingViewsOutcomeCallable;
+typedef std::future<ListBusinessSupportAccountChargesOutcome> ListBusinessSupportAccountChargesOutcomeCallable;
+typedef std::future<ListBusinessSupportSubscriptionHistoryOutcome> ListBusinessSupportSubscriptionHistoryOutcomeCallable;
+typedef std::future<ListContractsOutcome> ListContractsOutcomeCallable;
+typedef std::future<ListContractualInvestmentAttestationsOutcome> ListContractualInvestmentAttestationsOutcomeCallable;
+typedef std::future<ListContractualInvestmentSummariesOutcome> ListContractualInvestmentSummariesOutcomeCallable;
+typedef std::future<ListContractualInvestmentsOutcome> ListContractualInvestmentsOutcomeCallable;
+typedef std::future<ListEnterpriseSupportLinkedAccountChargesOutcome> ListEnterpriseSupportLinkedAccountChargesOutcomeCallable;
+typedef std::future<ListSourceViewsForBillingViewOutcome> ListSourceViewsForBillingViewOutcomeCallable;
+typedef std::future<ListTagsForResourceOutcome> ListTagsForResourceOutcomeCallable;
+typedef std::future<RedeemCreditsOutcome> RedeemCreditsOutcomeCallable;
+typedef std::future<SplitCreditOutcome> SplitCreditOutcomeCallable;
+typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
+typedef std::future<TransferCreditOutcome> TransferCreditOutcomeCallable;
+typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
+typedef std::future<UpdateBillingPreferencesOutcome> UpdateBillingPreferencesOutcomeCallable;
+typedef std::future<UpdateBillingViewOutcome> UpdateBillingViewOutcomeCallable;
+/* End of service model Outcome callable definitions */
+}  // namespace Model
+
+class BillingClient;
+
+/* Service model async handlers definitions */
+typedef std::function<void(const BillingClient*, const Model::AssociateContractRequest&, const Model::AssociateContractOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AssociateContractResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::AssociateSourceViewsRequest&, const Model::AssociateSourceViewsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AssociateSourceViewsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::CancelContractualInvestmentAttestationRequest&,
+                           const Model::CancelContractualInvestmentAttestationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CancelContractualInvestmentAttestationResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::CreateBillingViewRequest&, const Model::CreateBillingViewOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateBillingViewResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::CreateContractualInvestmentAttestationRequest&,
+                           const Model::CreateContractualInvestmentAttestationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateContractualInvestmentAttestationResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::DeleteBillingViewRequest&, const Model::DeleteBillingViewOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteBillingViewResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::DisassociateContractRequest&, const Model::DisassociateContractOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DisassociateContractResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::DisassociateSourceViewsRequest&, const Model::DisassociateSourceViewsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DisassociateSourceViewsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetBillingPreferencesRequest&, const Model::GetBillingPreferencesOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetBillingPreferencesResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetBillingViewRequest&, const Model::GetBillingViewOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetBillingViewResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetContractInformationRequest&, const Model::GetContractInformationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetContractInformationResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetCreditAllocationHistoryRequest&,
+                           const Model::GetCreditAllocationHistoryOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCreditAllocationHistoryResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetCreditsRequest&, const Model::GetCreditsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCreditsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetEnterpriseSupportChargeSummaryRequest&,
+                           const Model::GetEnterpriseSupportChargeSummaryOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetEnterpriseSupportChargeSummaryResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetEnterpriseSupportContractDetailsRequest&,
+                           const Model::GetEnterpriseSupportContractDetailsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetEnterpriseSupportContractDetailsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::GetResourcePolicyRequest&, const Model::GetResourcePolicyOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetResourcePolicyResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListBillingViewSegmentsRequest&, const Model::ListBillingViewSegmentsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListBillingViewSegmentsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListBillingViewsRequest&, const Model::ListBillingViewsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListBillingViewsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListBusinessSupportAccountChargesRequest&,
+                           const Model::ListBusinessSupportAccountChargesOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListBusinessSupportAccountChargesResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListBusinessSupportSubscriptionHistoryRequest&,
+                           const Model::ListBusinessSupportSubscriptionHistoryOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListBusinessSupportSubscriptionHistoryResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListContractsRequest&, const Model::ListContractsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListContractsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListContractualInvestmentAttestationsRequest&,
+                           const Model::ListContractualInvestmentAttestationsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListContractualInvestmentAttestationsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListContractualInvestmentSummariesRequest&,
+                           const Model::ListContractualInvestmentSummariesOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListContractualInvestmentSummariesResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListContractualInvestmentsRequest&,
+                           const Model::ListContractualInvestmentsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListContractualInvestmentsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListEnterpriseSupportLinkedAccountChargesRequest&,
+                           const Model::ListEnterpriseSupportLinkedAccountChargesOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListEnterpriseSupportLinkedAccountChargesResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListSourceViewsForBillingViewRequest&,
+                           const Model::ListSourceViewsForBillingViewOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListSourceViewsForBillingViewResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::ListTagsForResourceRequest&, const Model::ListTagsForResourceOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListTagsForResourceResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::RedeemCreditsRequest&, const Model::RedeemCreditsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    RedeemCreditsResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::SplitCreditRequest&, const Model::SplitCreditOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    SplitCreditResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::TagResourceRequest&, const Model::TagResourceOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    TagResourceResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::TransferCreditRequest&, const Model::TransferCreditOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    TransferCreditResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::UntagResourceRequest&, const Model::UntagResourceOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UntagResourceResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::UpdateBillingPreferencesRequest&,
+                           const Model::UpdateBillingPreferencesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateBillingPreferencesResponseReceivedHandler;
+typedef std::function<void(const BillingClient*, const Model::UpdateBillingViewRequest&, const Model::UpdateBillingViewOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateBillingViewResponseReceivedHandler;
+/* End of service model async handlers definitions */
+}  // namespace Billing
+}  // namespace Aws

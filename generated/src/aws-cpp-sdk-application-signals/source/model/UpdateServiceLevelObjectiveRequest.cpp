@@ -12,46 +12,37 @@ using namespace Aws::ApplicationSignals::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateServiceLevelObjectiveRequest::UpdateServiceLevelObjectiveRequest() : 
-    m_idHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_sliConfigHasBeenSet(false),
-    m_requestBasedSliConfigHasBeenSet(false),
-    m_goalHasBeenSet(false)
-{
-}
-
-Aws::String UpdateServiceLevelObjectiveRequest::SerializePayload() const
-{
+Aws::String UpdateServiceLevelObjectiveRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_sliConfigHasBeenSet)
-  {
-   payload.WithObject("SliConfig", m_sliConfig.Jsonize());
-
+  if (m_sliConfigHasBeenSet) {
+    payload.WithObject("SliConfig", m_sliConfig.Jsonize());
   }
 
-  if(m_requestBasedSliConfigHasBeenSet)
-  {
-   payload.WithObject("RequestBasedSliConfig", m_requestBasedSliConfig.Jsonize());
-
+  if (m_requestBasedSliConfigHasBeenSet) {
+    payload.WithObject("RequestBasedSliConfig", m_requestBasedSliConfig.Jsonize());
   }
 
-  if(m_goalHasBeenSet)
-  {
-   payload.WithObject("Goal", m_goal.Jsonize());
+  if (m_goalHasBeenSet) {
+    payload.WithObject("Goal", m_goal.Jsonize());
+  }
 
+  if (m_burnRateConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> burnRateConfigurationsJsonList(m_burnRateConfigurations.size());
+    for (unsigned burnRateConfigurationsIndex = 0; burnRateConfigurationsIndex < burnRateConfigurationsJsonList.GetLength();
+         ++burnRateConfigurationsIndex) {
+      burnRateConfigurationsJsonList[burnRateConfigurationsIndex].AsObject(m_burnRateConfigurations[burnRateConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("BurnRateConfigurations", std::move(burnRateConfigurationsJsonList));
+  }
+
+  if (m_autoInvestigationEnabledHasBeenSet) {
+    payload.WithBool("AutoInvestigationEnabled", m_autoInvestigationEnabled);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

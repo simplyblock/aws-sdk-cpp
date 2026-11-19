@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetVoiceConnectorLoggingConfigurationRequest::GetVoiceConnectorLoggingConfigurationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false)
-{
-}
-
-Aws::String GetVoiceConnectorLoggingConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetVoiceConnectorLoggingConfigurationRequest::SerializePayload() const { return {}; }

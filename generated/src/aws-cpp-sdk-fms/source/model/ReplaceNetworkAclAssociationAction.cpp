@@ -3,100 +3,207 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/ReplaceNetworkAclAssociationAction.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace FMS
-{
-namespace Model
-{
+namespace Aws {
+namespace FMS {
+namespace Model {
 
-ReplaceNetworkAclAssociationAction::ReplaceNetworkAclAssociationAction() : 
-    m_descriptionHasBeenSet(false),
-    m_associationIdHasBeenSet(false),
-    m_networkAclIdHasBeenSet(false),
-    m_fMSCanRemediate(false),
-    m_fMSCanRemediateHasBeenSet(false)
-{
+ReplaceNetworkAclAssociationAction::ReplaceNetworkAclAssociationAction(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  *this = decoder;
 }
 
-ReplaceNetworkAclAssociationAction::ReplaceNetworkAclAssociationAction(JsonView jsonValue)
-  : ReplaceNetworkAclAssociationAction()
-{
-  *this = jsonValue;
-}
+ReplaceNetworkAclAssociationAction& ReplaceNetworkAclAssociationAction::operator=(
+    const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-ReplaceNetworkAclAssociationAction& ReplaceNetworkAclAssociationAction::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Description"))
-  {
-    m_description = jsonValue.GetString("Description");
+              if (initialKeyStr == "Description") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_description = ss.str();
+                  }
+                }
+                m_descriptionHasBeenSet = true;
+              }
 
-    m_descriptionHasBeenSet = true;
-  }
+              else if (initialKeyStr == "AssociationId") {
+                m_associationId = ActionTarget(decoder);
+                m_associationIdHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("AssociationId"))
-  {
-    m_associationId = jsonValue.GetObject("AssociationId");
+              else if (initialKeyStr == "NetworkAclId") {
+                m_networkAclId = ActionTarget(decoder);
+                m_networkAclIdHasBeenSet = true;
+              }
 
-    m_associationIdHasBeenSet = true;
-  }
+              else if (initialKeyStr == "FMSCanRemediate") {
+                auto val = decoder->PopNextBooleanVal();
+                if (val.has_value()) {
+                  m_fMSCanRemediate = val.value();
+                }
+                m_fMSCanRemediateHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("ReplaceNetworkAclAssociationAction", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("NetworkAclId"))
-  {
-    m_networkAclId = jsonValue.GetObject("NetworkAclId");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_networkAclIdHasBeenSet = true;
-  }
+            if (initialKeyStr == "Description") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_description = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_description = ss.str();
+                }
+              }
+              m_descriptionHasBeenSet = true;
+            }
 
-  if(jsonValue.ValueExists("FMSCanRemediate"))
-  {
-    m_fMSCanRemediate = jsonValue.GetBool("FMSCanRemediate");
+            else if (initialKeyStr == "AssociationId") {
+              m_associationId = ActionTarget(decoder);
+              m_associationIdHasBeenSet = true;
+            }
 
-    m_fMSCanRemediateHasBeenSet = true;
+            else if (initialKeyStr == "NetworkAclId") {
+              m_networkAclId = ActionTarget(decoder);
+              m_networkAclIdHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "FMSCanRemediate") {
+              auto val = decoder->PopNextBooleanVal();
+              if (val.has_value()) {
+                m_fMSCanRemediate = val.value();
+              }
+              m_fMSCanRemediateHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue ReplaceNetworkAclAssociationAction::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+void ReplaceNetworkAclAssociationAction::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_associationIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_networkAclIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fMSCanRemediateHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_associationIdHasBeenSet)
-  {
-   payload.WithObject("AssociationId", m_associationId.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
   }
 
-  if(m_networkAclIdHasBeenSet)
-  {
-   payload.WithObject("NetworkAclId", m_networkAclId.Jsonize());
-
+  if (m_associationIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AssociationId"));
+    m_associationId.CborEncode(encoder);
   }
 
-  if(m_fMSCanRemediateHasBeenSet)
-  {
-   payload.WithBool("FMSCanRemediate", m_fMSCanRemediate);
-
+  if (m_networkAclIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NetworkAclId"));
+    m_networkAclId.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_fMSCanRemediateHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FMSCanRemediate"));
+    encoder.WriteBool(m_fMSCanRemediate);
+  }
 }
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

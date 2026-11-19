@@ -4,64 +4,73 @@
  */
 
 #pragma once
-#include <aws/email/SES_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/email/SES_EXPORTS.h>
 #include <aws/email/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SES
-{
-namespace Model
-{
-  class TestRenderTemplateResult
-  {
-  public:
-    AWS_SES_API TestRenderTemplateResult();
-    AWS_SES_API TestRenderTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SES_API TestRenderTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SES {
+namespace Model {
+class TestRenderTemplateResult {
+ public:
+  AWS_SES_API TestRenderTemplateResult() = default;
+  AWS_SES_API TestRenderTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SES_API TestRenderTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The complete MIME message rendered by applying the data in the TemplateData
+   * parameter to the template specified in the TemplateName parameter.</p>
+   */
+  inline const Aws::String& GetRenderedTemplate() const { return m_renderedTemplate; }
+  template <typename RenderedTemplateT = Aws::String>
+  void SetRenderedTemplate(RenderedTemplateT&& value) {
+    m_renderedTemplateHasBeenSet = true;
+    m_renderedTemplate = std::forward<RenderedTemplateT>(value);
+  }
+  template <typename RenderedTemplateT = Aws::String>
+  TestRenderTemplateResult& WithRenderedTemplate(RenderedTemplateT&& value) {
+    SetRenderedTemplate(std::forward<RenderedTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The complete MIME message rendered by applying the data in the TemplateData
-     * parameter to the template specified in the TemplateName parameter.</p>
-     */
-    inline const Aws::String& GetRenderedTemplate() const{ return m_renderedTemplate; }
-    inline void SetRenderedTemplate(const Aws::String& value) { m_renderedTemplate = value; }
-    inline void SetRenderedTemplate(Aws::String&& value) { m_renderedTemplate = std::move(value); }
-    inline void SetRenderedTemplate(const char* value) { m_renderedTemplate.assign(value); }
-    inline TestRenderTemplateResult& WithRenderedTemplate(const Aws::String& value) { SetRenderedTemplate(value); return *this;}
-    inline TestRenderTemplateResult& WithRenderedTemplate(Aws::String&& value) { SetRenderedTemplate(std::move(value)); return *this;}
-    inline TestRenderTemplateResult& WithRenderedTemplate(const char* value) { SetRenderedTemplate(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline TestRenderTemplateResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline TestRenderTemplateResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  TestRenderTemplateResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_renderedTemplate;
+ private:
+  Aws::String m_renderedTemplate;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_renderedTemplateHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SES
-} // namespace Aws
+}  // namespace Model
+}  // namespace SES
+}  // namespace Aws

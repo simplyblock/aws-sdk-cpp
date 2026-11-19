@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticloadbalancing/model/CreateLoadBalancerPolicyResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticloadbalancing/model/CreateLoadBalancerPolicyResult.h>
 
 #include <utility>
 
@@ -17,33 +17,26 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateLoadBalancerPolicyResult::CreateLoadBalancerPolicyResult()
-{
-}
+CreateLoadBalancerPolicyResult::CreateLoadBalancerPolicyResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-CreateLoadBalancerPolicyResult::CreateLoadBalancerPolicyResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-CreateLoadBalancerPolicyResult& CreateLoadBalancerPolicyResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateLoadBalancerPolicyResult& CreateLoadBalancerPolicyResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateLoadBalancerPolicyResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateLoadBalancerPolicyResult")) {
     resultNode = rootNode.FirstChild("CreateLoadBalancerPolicyResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancing::Model::CreateLoadBalancerPolicyResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancing::Model::CreateLoadBalancerPolicyResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

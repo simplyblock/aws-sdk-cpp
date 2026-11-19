@@ -4,54 +4,53 @@
  */
 
 #pragma once
-#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
-#include <aws/resource-groups/ResourceGroupsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/resource-groups/ResourceGroupsRequest.h>
+#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ResourceGroups
-{
-namespace Model
-{
+namespace Aws {
+namespace ResourceGroups {
+namespace Model {
 
+/**
+ */
+class GetGroupRequest : public ResourceGroupsRequest {
+ public:
+  AWS_RESOURCEGROUPS_API GetGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetGroup"; }
+
+  AWS_RESOURCEGROUPS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name or the Amazon resource name (ARN) of the resource group to
+   * retrieve.</p>
    */
-  class GetGroupRequest : public ResourceGroupsRequest
-  {
-  public:
-    AWS_RESOURCEGROUPS_API GetGroupRequest();
+  inline const Aws::String& GetGroup() const { return m_group; }
+  inline bool GroupHasBeenSet() const { return m_groupHasBeenSet; }
+  template <typename GroupT = Aws::String>
+  void SetGroup(GroupT&& value) {
+    m_groupHasBeenSet = true;
+    m_group = std::forward<GroupT>(value);
+  }
+  template <typename GroupT = Aws::String>
+  GetGroupRequest& WithGroup(GroupT&& value) {
+    SetGroup(std::forward<GroupT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_group;
+  bool m_groupHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetGroup"; }
-
-    AWS_RESOURCEGROUPS_API Aws::String SerializePayload() const override;
-
-
-    ///@{
-    /**
-     * <p>The name or the Amazon resource name (ARN) of the resource group to
-     * retrieve.</p>
-     */
-    inline const Aws::String& GetGroup() const{ return m_group; }
-    inline bool GroupHasBeenSet() const { return m_groupHasBeenSet; }
-    inline void SetGroup(const Aws::String& value) { m_groupHasBeenSet = true; m_group = value; }
-    inline void SetGroup(Aws::String&& value) { m_groupHasBeenSet = true; m_group = std::move(value); }
-    inline void SetGroup(const char* value) { m_groupHasBeenSet = true; m_group.assign(value); }
-    inline GetGroupRequest& WithGroup(const Aws::String& value) { SetGroup(value); return *this;}
-    inline GetGroupRequest& WithGroup(Aws::String&& value) { SetGroup(std::move(value)); return *this;}
-    inline GetGroupRequest& WithGroup(const char* value) { SetGroup(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_group;
-    bool m_groupHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ResourceGroups
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResourceGroups
+}  // namespace Aws

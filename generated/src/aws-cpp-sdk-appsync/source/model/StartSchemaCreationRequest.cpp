@@ -4,8 +4,8 @@
  */
 
 #include <aws/appsync/model/StartSchemaCreationRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
@@ -13,24 +13,12 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartSchemaCreationRequest::StartSchemaCreationRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_definitionHasBeenSet(false)
-{
-}
-
-Aws::String StartSchemaCreationRequest::SerializePayload() const
-{
+Aws::String StartSchemaCreationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_definitionHasBeenSet)
-  {
-   payload.WithString("definition", HashingUtils::Base64Encode(m_definition));
+  if (m_definitionHasBeenSet) {
+    payload.WithString("definition", HashingUtils::Base64Encode(m_definition));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

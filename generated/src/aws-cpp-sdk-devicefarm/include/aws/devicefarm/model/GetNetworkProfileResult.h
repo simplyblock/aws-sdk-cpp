@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/devicefarm/DeviceFarm_EXPORTS.h>
 #include <aws/devicefarm/model/NetworkProfile.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DeviceFarm
-{
-namespace Model
-{
-  class GetNetworkProfileResult
-  {
-  public:
-    AWS_DEVICEFARM_API GetNetworkProfileResult();
-    AWS_DEVICEFARM_API GetNetworkProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEVICEFARM_API GetNetworkProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DeviceFarm {
+namespace Model {
+class GetNetworkProfileResult {
+ public:
+  AWS_DEVICEFARM_API GetNetworkProfileResult() = default;
+  AWS_DEVICEFARM_API GetNetworkProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEVICEFARM_API GetNetworkProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The network profile.</p>
+   */
+  inline const NetworkProfile& GetNetworkProfile() const { return m_networkProfile; }
+  template <typename NetworkProfileT = NetworkProfile>
+  void SetNetworkProfile(NetworkProfileT&& value) {
+    m_networkProfileHasBeenSet = true;
+    m_networkProfile = std::forward<NetworkProfileT>(value);
+  }
+  template <typename NetworkProfileT = NetworkProfile>
+  GetNetworkProfileResult& WithNetworkProfile(NetworkProfileT&& value) {
+    SetNetworkProfile(std::forward<NetworkProfileT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The network profile.</p>
-     */
-    inline const NetworkProfile& GetNetworkProfile() const{ return m_networkProfile; }
-    inline void SetNetworkProfile(const NetworkProfile& value) { m_networkProfile = value; }
-    inline void SetNetworkProfile(NetworkProfile&& value) { m_networkProfile = std::move(value); }
-    inline GetNetworkProfileResult& WithNetworkProfile(const NetworkProfile& value) { SetNetworkProfile(value); return *this;}
-    inline GetNetworkProfileResult& WithNetworkProfile(NetworkProfile&& value) { SetNetworkProfile(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetNetworkProfileResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetNetworkProfileResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetNetworkProfileResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetNetworkProfileResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    NetworkProfile m_networkProfile;
+ private:
+  NetworkProfile m_networkProfile;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_networkProfileHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

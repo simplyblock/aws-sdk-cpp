@@ -4,135 +4,202 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dataexchange/DataExchange_EXPORTS.h>
 #include <aws/dataexchange/model/Action.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/DateTime.h>
 #include <aws/dataexchange/model/Event.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataExchange
-{
-namespace Model
-{
-  class GetEventActionResult
-  {
-  public:
-    AWS_DATAEXCHANGE_API GetEventActionResult();
-    AWS_DATAEXCHANGE_API GetEventActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATAEXCHANGE_API GetEventActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataExchange {
+namespace Model {
+class GetEventActionResult {
+ public:
+  AWS_DATAEXCHANGE_API GetEventActionResult() = default;
+  AWS_DATAEXCHANGE_API GetEventActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATAEXCHANGE_API GetEventActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>What occurs after a certain event.</p>
+   */
+  inline const Action& GetAction() const { return m_action; }
+  template <typename ActionT = Action>
+  void SetAction(ActionT&& value) {
+    m_actionHasBeenSet = true;
+    m_action = std::forward<ActionT>(value);
+  }
+  template <typename ActionT = Action>
+  GetEventActionResult& WithAction(ActionT&& value) {
+    SetAction(std::forward<ActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>What occurs after a certain event.</p>
-     */
-    inline const Action& GetAction() const{ return m_action; }
-    inline void SetAction(const Action& value) { m_action = value; }
-    inline void SetAction(Action&& value) { m_action = std::move(value); }
-    inline GetEventActionResult& WithAction(const Action& value) { SetAction(value); return *this;}
-    inline GetEventActionResult& WithAction(Action&& value) { SetAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN for the event action.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetEventActionResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN for the event action.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline GetEventActionResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetEventActionResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetEventActionResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the event action was created, in ISO 8601 format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetEventActionResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the event action was created, in ISO 8601 format.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetEventActionResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetEventActionResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>What occurs to start an action.</p>
+   */
+  inline const Event& GetEvent() const { return m_event; }
+  template <typename EventT = Event>
+  void SetEvent(EventT&& value) {
+    m_eventHasBeenSet = true;
+    m_event = std::forward<EventT>(value);
+  }
+  template <typename EventT = Event>
+  GetEventActionResult& WithEvent(EventT&& value) {
+    SetEvent(std::forward<EventT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>What occurs to start an action.</p>
-     */
-    inline const Event& GetEvent() const{ return m_event; }
-    inline void SetEvent(const Event& value) { m_event = value; }
-    inline void SetEvent(Event&& value) { m_event = std::move(value); }
-    inline GetEventActionResult& WithEvent(const Event& value) { SetEvent(value); return *this;}
-    inline GetEventActionResult& WithEvent(Event&& value) { SetEvent(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the event action.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetEventActionResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the event action.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline GetEventActionResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetEventActionResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetEventActionResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags for the event action.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  GetEventActionResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  GetEventActionResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the event action was last updated, in ISO 8601
-     * format.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAt = std::move(value); }
-    inline GetEventActionResult& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline GetEventActionResult& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the event action was last updated, in ISO 8601
+   * format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetEventActionResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEventActionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEventActionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEventActionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Action m_action;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEventActionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Action m_action;
 
-    Aws::Utils::DateTime m_createdAt;
+  Aws::String m_arn;
 
-    Event m_event;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_id;
+  Event m_event;
 
-    Aws::Utils::DateTime m_updatedAt;
+  Aws::String m_id;
 
-    Aws::String m_requestId;
-  };
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-} // namespace Model
-} // namespace DataExchange
-} // namespace Aws
+  Aws::Utils::DateTime m_updatedAt{};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_actionHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_eventHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DataExchange
+}  // namespace Aws

@@ -4,83 +4,100 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListDimensionsResult
-  {
-  public:
-    AWS_IOT_API ListDimensionsResult();
-    AWS_IOT_API ListDimensionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListDimensionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListDimensionsResult {
+ public:
+  AWS_IOT_API ListDimensionsResult() = default;
+  AWS_IOT_API ListDimensionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListDimensionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of the names of the defined dimensions. Use
+   * <code>DescribeDimension</code> to get details for a dimension.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDimensionNames() const { return m_dimensionNames; }
+  template <typename DimensionNamesT = Aws::Vector<Aws::String>>
+  void SetDimensionNames(DimensionNamesT&& value) {
+    m_dimensionNamesHasBeenSet = true;
+    m_dimensionNames = std::forward<DimensionNamesT>(value);
+  }
+  template <typename DimensionNamesT = Aws::Vector<Aws::String>>
+  ListDimensionsResult& WithDimensionNames(DimensionNamesT&& value) {
+    SetDimensionNames(std::forward<DimensionNamesT>(value));
+    return *this;
+  }
+  template <typename DimensionNamesT = Aws::String>
+  ListDimensionsResult& AddDimensionNames(DimensionNamesT&& value) {
+    m_dimensionNamesHasBeenSet = true;
+    m_dimensionNames.emplace_back(std::forward<DimensionNamesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of the names of the defined dimensions. Use
-     * <code>DescribeDimension</code> to get details for a dimension.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDimensionNames() const{ return m_dimensionNames; }
-    inline void SetDimensionNames(const Aws::Vector<Aws::String>& value) { m_dimensionNames = value; }
-    inline void SetDimensionNames(Aws::Vector<Aws::String>&& value) { m_dimensionNames = std::move(value); }
-    inline ListDimensionsResult& WithDimensionNames(const Aws::Vector<Aws::String>& value) { SetDimensionNames(value); return *this;}
-    inline ListDimensionsResult& WithDimensionNames(Aws::Vector<Aws::String>&& value) { SetDimensionNames(std::move(value)); return *this;}
-    inline ListDimensionsResult& AddDimensionNames(const Aws::String& value) { m_dimensionNames.push_back(value); return *this; }
-    inline ListDimensionsResult& AddDimensionNames(Aws::String&& value) { m_dimensionNames.push_back(std::move(value)); return *this; }
-    inline ListDimensionsResult& AddDimensionNames(const char* value) { m_dimensionNames.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that can be used to retrieve the next set of results, or
+   * <code>null</code> if there are no additional results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDimensionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that can be used to retrieve the next set of results, or
-     * <code>null</code> if there are no additional results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDimensionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDimensionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDimensionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDimensionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDimensionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDimensionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDimensionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_dimensionNames;
+ private:
+  Aws::Vector<Aws::String> m_dimensionNames;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dimensionNamesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

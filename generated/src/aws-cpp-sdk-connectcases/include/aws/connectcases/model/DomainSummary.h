@@ -6,91 +6,96 @@
 #pragma once
 #include <aws/connectcases/ConnectCases_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ConnectCases
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectCases {
+namespace Model {
 
+/**
+ * <p>Object for the summarized details of the domain.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/DomainSummary">AWS
+ * API Reference</a></p>
+ */
+class DomainSummary {
+ public:
+  AWS_CONNECTCASES_API DomainSummary() = default;
+  AWS_CONNECTCASES_API DomainSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCASES_API DomainSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCASES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Object for the summarized details of the domain.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/DomainSummary">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier of the domain.</p>
    */
-  class DomainSummary
-  {
-  public:
-    AWS_CONNECTCASES_API DomainSummary();
-    AWS_CONNECTCASES_API DomainSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCASES_API DomainSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCASES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  DomainSummary& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the domain.</p>
+   */
+  inline const Aws::String& GetDomainArn() const { return m_domainArn; }
+  inline bool DomainArnHasBeenSet() const { return m_domainArnHasBeenSet; }
+  template <typename DomainArnT = Aws::String>
+  void SetDomainArn(DomainArnT&& value) {
+    m_domainArnHasBeenSet = true;
+    m_domainArn = std::forward<DomainArnT>(value);
+  }
+  template <typename DomainArnT = Aws::String>
+  DomainSummary& WithDomainArn(DomainArnT&& value) {
+    SetDomainArn(std::forward<DomainArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the domain.</p>
-     */
-    inline const Aws::String& GetDomainArn() const{ return m_domainArn; }
-    inline bool DomainArnHasBeenSet() const { return m_domainArnHasBeenSet; }
-    inline void SetDomainArn(const Aws::String& value) { m_domainArnHasBeenSet = true; m_domainArn = value; }
-    inline void SetDomainArn(Aws::String&& value) { m_domainArnHasBeenSet = true; m_domainArn = std::move(value); }
-    inline void SetDomainArn(const char* value) { m_domainArnHasBeenSet = true; m_domainArn.assign(value); }
-    inline DomainSummary& WithDomainArn(const Aws::String& value) { SetDomainArn(value); return *this;}
-    inline DomainSummary& WithDomainArn(Aws::String&& value) { SetDomainArn(std::move(value)); return *this;}
-    inline DomainSummary& WithDomainArn(const char* value) { SetDomainArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the domain.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DomainSummary& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainId;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the domain.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
-    inline void SetDomainId(const Aws::String& value) { m_domainIdHasBeenSet = true; m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainIdHasBeenSet = true; m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainIdHasBeenSet = true; m_domainId.assign(value); }
-    inline DomainSummary& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline DomainSummary& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline DomainSummary& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
+  Aws::String m_domainArn;
 
-    ///@{
-    /**
-     * <p>The name of the domain.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline DomainSummary& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DomainSummary& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DomainSummary& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_name;
+  bool m_domainIdHasBeenSet = false;
+  bool m_domainArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    Aws::String m_domainArn;
-    bool m_domainArnHasBeenSet = false;
-
-    Aws::String m_domainId;
-    bool m_domainIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectCases
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectCases
+}  // namespace Aws

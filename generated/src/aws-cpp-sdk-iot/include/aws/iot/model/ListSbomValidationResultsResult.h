@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/iot/model/SbomValidationResultSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListSbomValidationResultsResult
-  {
-  public:
-    AWS_IOT_API ListSbomValidationResultsResult();
-    AWS_IOT_API ListSbomValidationResultsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListSbomValidationResultsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListSbomValidationResultsResult {
+ public:
+  AWS_IOT_API ListSbomValidationResultsResult() = default;
+  AWS_IOT_API ListSbomValidationResultsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListSbomValidationResultsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A summary of the validation results for each software bill of materials
+   * attached to a software package version.</p>
+   */
+  inline const Aws::Vector<SbomValidationResultSummary>& GetValidationResultSummaries() const { return m_validationResultSummaries; }
+  template <typename ValidationResultSummariesT = Aws::Vector<SbomValidationResultSummary>>
+  void SetValidationResultSummaries(ValidationResultSummariesT&& value) {
+    m_validationResultSummariesHasBeenSet = true;
+    m_validationResultSummaries = std::forward<ValidationResultSummariesT>(value);
+  }
+  template <typename ValidationResultSummariesT = Aws::Vector<SbomValidationResultSummary>>
+  ListSbomValidationResultsResult& WithValidationResultSummaries(ValidationResultSummariesT&& value) {
+    SetValidationResultSummaries(std::forward<ValidationResultSummariesT>(value));
+    return *this;
+  }
+  template <typename ValidationResultSummariesT = SbomValidationResultSummary>
+  ListSbomValidationResultsResult& AddValidationResultSummaries(ValidationResultSummariesT&& value) {
+    m_validationResultSummariesHasBeenSet = true;
+    m_validationResultSummaries.emplace_back(std::forward<ValidationResultSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A summary of the validation results for each software bill of materials
-     * attached to a software package version.</p>
-     */
-    inline const Aws::Vector<SbomValidationResultSummary>& GetValidationResultSummaries() const{ return m_validationResultSummaries; }
-    inline void SetValidationResultSummaries(const Aws::Vector<SbomValidationResultSummary>& value) { m_validationResultSummaries = value; }
-    inline void SetValidationResultSummaries(Aws::Vector<SbomValidationResultSummary>&& value) { m_validationResultSummaries = std::move(value); }
-    inline ListSbomValidationResultsResult& WithValidationResultSummaries(const Aws::Vector<SbomValidationResultSummary>& value) { SetValidationResultSummaries(value); return *this;}
-    inline ListSbomValidationResultsResult& WithValidationResultSummaries(Aws::Vector<SbomValidationResultSummary>&& value) { SetValidationResultSummaries(std::move(value)); return *this;}
-    inline ListSbomValidationResultsResult& AddValidationResultSummaries(const SbomValidationResultSummary& value) { m_validationResultSummaries.push_back(value); return *this; }
-    inline ListSbomValidationResultsResult& AddValidationResultSummaries(SbomValidationResultSummary&& value) { m_validationResultSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that can be used to retrieve the next set of results, or null if
+   * there are no additional results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSbomValidationResultsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that can be used to retrieve the next set of results, or null if
-     * there are no additional results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSbomValidationResultsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSbomValidationResultsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSbomValidationResultsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSbomValidationResultsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSbomValidationResultsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSbomValidationResultsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSbomValidationResultsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SbomValidationResultSummary> m_validationResultSummaries;
+ private:
+  Aws::Vector<SbomValidationResultSummary> m_validationResultSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_validationResultSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

@@ -4,79 +4,97 @@
  */
 
 #pragma once
-#include <aws/outposts/Outposts_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/outposts/Outposts_EXPORTS.h>
 #include <aws/outposts/model/CapacityTaskSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Outposts
-{
-namespace Model
-{
-  class ListCapacityTasksResult
-  {
-  public:
-    AWS_OUTPOSTS_API ListCapacityTasksResult();
-    AWS_OUTPOSTS_API ListCapacityTasksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OUTPOSTS_API ListCapacityTasksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Outposts {
+namespace Model {
+class ListCapacityTasksResult {
+ public:
+  AWS_OUTPOSTS_API ListCapacityTasksResult() = default;
+  AWS_OUTPOSTS_API ListCapacityTasksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OUTPOSTS_API ListCapacityTasksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Lists all the capacity tasks.</p>
+   */
+  inline const Aws::Vector<CapacityTaskSummary>& GetCapacityTasks() const { return m_capacityTasks; }
+  template <typename CapacityTasksT = Aws::Vector<CapacityTaskSummary>>
+  void SetCapacityTasks(CapacityTasksT&& value) {
+    m_capacityTasksHasBeenSet = true;
+    m_capacityTasks = std::forward<CapacityTasksT>(value);
+  }
+  template <typename CapacityTasksT = Aws::Vector<CapacityTaskSummary>>
+  ListCapacityTasksResult& WithCapacityTasks(CapacityTasksT&& value) {
+    SetCapacityTasks(std::forward<CapacityTasksT>(value));
+    return *this;
+  }
+  template <typename CapacityTasksT = CapacityTaskSummary>
+  ListCapacityTasksResult& AddCapacityTasks(CapacityTasksT&& value) {
+    m_capacityTasksHasBeenSet = true;
+    m_capacityTasks.emplace_back(std::forward<CapacityTasksT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Lists all the capacity tasks.</p>
-     */
-    inline const Aws::Vector<CapacityTaskSummary>& GetCapacityTasks() const{ return m_capacityTasks; }
-    inline void SetCapacityTasks(const Aws::Vector<CapacityTaskSummary>& value) { m_capacityTasks = value; }
-    inline void SetCapacityTasks(Aws::Vector<CapacityTaskSummary>&& value) { m_capacityTasks = std::move(value); }
-    inline ListCapacityTasksResult& WithCapacityTasks(const Aws::Vector<CapacityTaskSummary>& value) { SetCapacityTasks(value); return *this;}
-    inline ListCapacityTasksResult& WithCapacityTasks(Aws::Vector<CapacityTaskSummary>&& value) { SetCapacityTasks(std::move(value)); return *this;}
-    inline ListCapacityTasksResult& AddCapacityTasks(const CapacityTaskSummary& value) { m_capacityTasks.push_back(value); return *this; }
-    inline ListCapacityTasksResult& AddCapacityTasks(CapacityTaskSummary&& value) { m_capacityTasks.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListCapacityTasksResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListCapacityTasksResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListCapacityTasksResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListCapacityTasksResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListCapacityTasksResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListCapacityTasksResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListCapacityTasksResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<CapacityTaskSummary> m_capacityTasks;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListCapacityTasksResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::Vector<CapacityTaskSummary> m_capacityTasks;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_nextToken;
 
-} // namespace Model
-} // namespace Outposts
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_capacityTasksHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Outposts
+}  // namespace Aws

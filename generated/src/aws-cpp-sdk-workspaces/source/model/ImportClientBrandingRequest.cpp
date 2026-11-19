@@ -3,83 +3,86 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/model/ImportClientBrandingRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::WorkSpaces::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ImportClientBrandingRequest::ImportClientBrandingRequest() : 
-    m_resourceIdHasBeenSet(false),
-    m_deviceTypeWindowsHasBeenSet(false),
-    m_deviceTypeOsxHasBeenSet(false),
-    m_deviceTypeAndroidHasBeenSet(false),
-    m_deviceTypeIosHasBeenSet(false),
-    m_deviceTypeLinuxHasBeenSet(false),
-    m_deviceTypeWebHasBeenSet(false)
-{
+Aws::String ImportClientBrandingRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeWindowsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeOsxHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeAndroidHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeIosHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeLinuxHasBeenSet) {
+    mapSize++;
+  }
+  if (m_deviceTypeWebHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_resourceIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceId.c_str()));
+  }
+
+  if (m_deviceTypeWindowsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeWindows"));
+    m_deviceTypeWindows.CborEncode(encoder);
+  }
+
+  if (m_deviceTypeOsxHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeOsx"));
+    m_deviceTypeOsx.CborEncode(encoder);
+  }
+
+  if (m_deviceTypeAndroidHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeAndroid"));
+    m_deviceTypeAndroid.CborEncode(encoder);
+  }
+
+  if (m_deviceTypeIosHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeIos"));
+    m_deviceTypeIos.CborEncode(encoder);
+  }
+
+  if (m_deviceTypeLinuxHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeLinux"));
+    m_deviceTypeLinux.CborEncode(encoder);
+  }
+
+  if (m_deviceTypeWebHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DeviceTypeWeb"));
+    m_deviceTypeWeb.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ImportClientBrandingRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_resourceIdHasBeenSet)
-  {
-   payload.WithString("ResourceId", m_resourceId);
-
-  }
-
-  if(m_deviceTypeWindowsHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeWindows", m_deviceTypeWindows.Jsonize());
-
-  }
-
-  if(m_deviceTypeOsxHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeOsx", m_deviceTypeOsx.Jsonize());
-
-  }
-
-  if(m_deviceTypeAndroidHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeAndroid", m_deviceTypeAndroid.Jsonize());
-
-  }
-
-  if(m_deviceTypeIosHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeIos", m_deviceTypeIos.Jsonize());
-
-  }
-
-  if(m_deviceTypeLinuxHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeLinux", m_deviceTypeLinux.Jsonize());
-
-  }
-
-  if(m_deviceTypeWebHasBeenSet)
-  {
-   payload.WithObject("DeviceTypeWeb", m_deviceTypeWeb.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ImportClientBrandingRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ImportClientBrandingRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "WorkspacesService.ImportClientBranding"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

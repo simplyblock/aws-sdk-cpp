@@ -3,62 +3,70 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/UpdateLocationNfsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DataSync::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateLocationNfsRequest::UpdateLocationNfsRequest() : 
-    m_locationArnHasBeenSet(false),
-    m_subdirectoryHasBeenSet(false),
-    m_onPremConfigHasBeenSet(false),
-    m_mountOptionsHasBeenSet(false)
-{
+Aws::String UpdateLocationNfsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_locationArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_subdirectoryHasBeenSet) {
+    mapSize++;
+  }
+  if (m_serverHostnameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_onPremConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_mountOptionsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_locationArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LocationArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_locationArn.c_str()));
+  }
+
+  if (m_subdirectoryHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Subdirectory"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_subdirectory.c_str()));
+  }
+
+  if (m_serverHostnameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ServerHostname"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_serverHostname.c_str()));
+  }
+
+  if (m_onPremConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("OnPremConfig"));
+    m_onPremConfig.CborEncode(encoder);
+  }
+
+  if (m_mountOptionsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MountOptions"));
+    m_mountOptions.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateLocationNfsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_locationArnHasBeenSet)
-  {
-   payload.WithString("LocationArn", m_locationArn);
-
-  }
-
-  if(m_subdirectoryHasBeenSet)
-  {
-   payload.WithString("Subdirectory", m_subdirectory);
-
-  }
-
-  if(m_onPremConfigHasBeenSet)
-  {
-   payload.WithObject("OnPremConfig", m_onPremConfig.Jsonize());
-
-  }
-
-  if(m_mountOptionsHasBeenSet)
-  {
-   payload.WithObject("MountOptions", m_mountOptions.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateLocationNfsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateLocationNfsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "FmrsService.UpdateLocationNfs"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

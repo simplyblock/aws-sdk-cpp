@@ -4,83 +4,102 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/ProtectConfigurationInformation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
-  class DescribeProtectConfigurationsResult
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult();
-    AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
+class DescribeProtectConfigurationsResult {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult() = default;
+  AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINTSMSVOICEV2_API DescribeProtectConfigurationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of ProtectConfigurationInformation objects that contain the details
+   * for the request. </p>
+   */
+  inline const Aws::Vector<ProtectConfigurationInformation>& GetProtectConfigurations() const { return m_protectConfigurations; }
+  template <typename ProtectConfigurationsT = Aws::Vector<ProtectConfigurationInformation>>
+  void SetProtectConfigurations(ProtectConfigurationsT&& value) {
+    m_protectConfigurationsHasBeenSet = true;
+    m_protectConfigurations = std::forward<ProtectConfigurationsT>(value);
+  }
+  template <typename ProtectConfigurationsT = Aws::Vector<ProtectConfigurationInformation>>
+  DescribeProtectConfigurationsResult& WithProtectConfigurations(ProtectConfigurationsT&& value) {
+    SetProtectConfigurations(std::forward<ProtectConfigurationsT>(value));
+    return *this;
+  }
+  template <typename ProtectConfigurationsT = ProtectConfigurationInformation>
+  DescribeProtectConfigurationsResult& AddProtectConfigurations(ProtectConfigurationsT&& value) {
+    m_protectConfigurationsHasBeenSet = true;
+    m_protectConfigurations.emplace_back(std::forward<ProtectConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of ProtectConfigurationInformation objects that contain the details
-     * for the request. </p>
-     */
-    inline const Aws::Vector<ProtectConfigurationInformation>& GetProtectConfigurations() const{ return m_protectConfigurations; }
-    inline void SetProtectConfigurations(const Aws::Vector<ProtectConfigurationInformation>& value) { m_protectConfigurations = value; }
-    inline void SetProtectConfigurations(Aws::Vector<ProtectConfigurationInformation>&& value) { m_protectConfigurations = std::move(value); }
-    inline DescribeProtectConfigurationsResult& WithProtectConfigurations(const Aws::Vector<ProtectConfigurationInformation>& value) { SetProtectConfigurations(value); return *this;}
-    inline DescribeProtectConfigurationsResult& WithProtectConfigurations(Aws::Vector<ProtectConfigurationInformation>&& value) { SetProtectConfigurations(std::move(value)); return *this;}
-    inline DescribeProtectConfigurationsResult& AddProtectConfigurations(const ProtectConfigurationInformation& value) { m_protectConfigurations.push_back(value); return *this; }
-    inline DescribeProtectConfigurationsResult& AddProtectConfigurations(ProtectConfigurationInformation&& value) { m_protectConfigurations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to be used for the next set of paginated results. You don't need to
+   * supply a value for this field in the initial request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeProtectConfigurationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to be used for the next set of paginated results. You don't need to
-     * supply a value for this field in the initial request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeProtectConfigurationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeProtectConfigurationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeProtectConfigurationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeProtectConfigurationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeProtectConfigurationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeProtectConfigurationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeProtectConfigurationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ProtectConfigurationInformation> m_protectConfigurations;
+ private:
+  Aws::Vector<ProtectConfigurationInformation> m_protectConfigurations;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_protectConfigurationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

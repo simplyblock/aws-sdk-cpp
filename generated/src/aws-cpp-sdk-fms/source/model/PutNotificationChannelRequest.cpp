@@ -3,48 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/fms/model/PutNotificationChannelRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::FMS::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-PutNotificationChannelRequest::PutNotificationChannelRequest() : 
-    m_snsTopicArnHasBeenSet(false),
-    m_snsRoleNameHasBeenSet(false)
-{
-}
+Aws::String PutNotificationChannelRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String PutNotificationChannelRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_snsTopicArnHasBeenSet)
-  {
-   payload.WithString("SnsTopicArn", m_snsTopicArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_snsTopicArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_snsRoleNameHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_snsRoleNameHasBeenSet)
-  {
-   payload.WithString("SnsRoleName", m_snsRoleName);
+  encoder.WriteMapStart(mapSize);
 
+  if (m_snsTopicArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SnsTopicArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_snsTopicArn.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_snsRoleNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("SnsRoleName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_snsRoleName.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection PutNotificationChannelRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection PutNotificationChannelRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSFMS_20180101.PutNotificationChannel"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

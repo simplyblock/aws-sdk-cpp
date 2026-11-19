@@ -4,75 +4,85 @@
  */
 
 #pragma once
-#include <aws/sns/SNS_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/sns/model/ResponseMetadata.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sns/SNS_EXPORTS.h>
+#include <aws/sns/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SNS
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SNS {
+namespace Model {
+/**
+ * <p>The response from the <code>GetSMSAttributes</code> request.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/GetSMSAttributesResponse">AWS
+ * API Reference</a></p>
+ */
+class GetSMSAttributesResult {
+ public:
+  AWS_SNS_API GetSMSAttributesResult() = default;
+  AWS_SNS_API GetSMSAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SNS_API GetSMSAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>The response from the <code>GetSMSAttributes</code> request.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/GetSMSAttributesResponse">AWS
-   * API Reference</a></p>
+   * <p>The SMS attribute names and their values.</p>
    */
-  class GetSMSAttributesResult
-  {
-  public:
-    AWS_SNS_API GetSMSAttributesResult();
-    AWS_SNS_API GetSMSAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SNS_API GetSMSAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Map<Aws::String, Aws::String>& GetAttributes() const { return m_attributes; }
+  template <typename AttributesT = Aws::Map<Aws::String, Aws::String>>
+  void SetAttributes(AttributesT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes = std::forward<AttributesT>(value);
+  }
+  template <typename AttributesT = Aws::Map<Aws::String, Aws::String>>
+  GetSMSAttributesResult& WithAttributes(AttributesT&& value) {
+    SetAttributes(std::forward<AttributesT>(value));
+    return *this;
+  }
+  template <typename AttributesKeyT = Aws::String, typename AttributesValueT = Aws::String>
+  GetSMSAttributesResult& AddAttributes(AttributesKeyT&& key, AttributesValueT&& value) {
+    m_attributesHasBeenSet = true;
+    m_attributes.emplace(std::forward<AttributesKeyT>(key), std::forward<AttributesValueT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The SMS attribute names and their values.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetAttributes() const{ return m_attributes; }
-    inline void SetAttributes(const Aws::Map<Aws::String, Aws::String>& value) { m_attributes = value; }
-    inline void SetAttributes(Aws::Map<Aws::String, Aws::String>&& value) { m_attributes = std::move(value); }
-    inline GetSMSAttributesResult& WithAttributes(const Aws::Map<Aws::String, Aws::String>& value) { SetAttributes(value); return *this;}
-    inline GetSMSAttributesResult& WithAttributes(Aws::Map<Aws::String, Aws::String>&& value) { SetAttributes(std::move(value)); return *this;}
-    inline GetSMSAttributesResult& AddAttributes(const Aws::String& key, const Aws::String& value) { m_attributes.emplace(key, value); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(Aws::String&& key, const Aws::String& value) { m_attributes.emplace(std::move(key), value); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(const Aws::String& key, Aws::String&& value) { m_attributes.emplace(key, std::move(value)); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(Aws::String&& key, Aws::String&& value) { m_attributes.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(const char* key, Aws::String&& value) { m_attributes.emplace(key, std::move(value)); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(Aws::String&& key, const char* value) { m_attributes.emplace(std::move(key), value); return *this; }
-    inline GetSMSAttributesResult& AddAttributes(const char* key, const char* value) { m_attributes.emplace(key, value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetSMSAttributesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetSMSAttributesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetSMSAttributesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Map<Aws::String, Aws::String> m_attributes;
 
-    Aws::Map<Aws::String, Aws::String> m_attributes;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attributesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace SNS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SNS
+}  // namespace Aws

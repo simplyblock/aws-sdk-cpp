@@ -12,30 +12,20 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-TagResourceRequest::TagResourceRequest() : 
-    m_arnHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String TagResourceRequest::SerializePayload() const
-{
+Aws::String TagResourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      if (!tagsItem.second.has_value()) {
+        tagsJsonMap.WithNull(tagsItem.first);
+        continue;
+      }
+      tagsJsonMap.WithString(tagsItem.first, *tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

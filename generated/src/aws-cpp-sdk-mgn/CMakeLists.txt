@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mgn "C++ SDK for the AWS mgn service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mgn "C++ SDK for Application Migration Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_MGN_HEADERS
     "include/aws/mgn/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MGN_HEADERS
 
 file(GLOB AWS_MGN_MODEL_HEADERS
     "include/aws/mgn/model/*.h"
+)
+
+file(GLOB AWS_MGN_INTERNAL_HEADERS
+    "include/aws/mgn/internal/*.h"
 )
 
 file(GLOB AWS_MGN_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MGN_MODEL_SOURCE
 
 file(GLOB MGN_UNIFIED_HEADERS
     ${AWS_MGN_HEADERS}
+    ${AWS_MGN_INTERNAL_HEADERS}
     ${AWS_MGN_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mgn" FILES ${AWS_MGN_HEADERS})
+        source_group("Header Files\\aws\\mgn\\internal" FILES ${AWS_MGN_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mgn\\model" FILES ${AWS_MGN_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MGN_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MGN_MODEL_SOURCE})

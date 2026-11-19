@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/application-insights/ApplicationInsights_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/application-insights/ApplicationInsightsEndpointRules.h>
-
-
-namespace Aws
-{
-namespace ApplicationInsights
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace ApplicationInsights {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using ApplicationInsightsClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using ApplicationInsightsBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  * The SDK must use service-specific type for each service per specification.
  */
 using ApplicationInsightsEndpointProviderBase =
-    EndpointProviderBase<ApplicationInsightsClientConfiguration, ApplicationInsightsBuiltInParameters, ApplicationInsightsClientContextParameters>;
+    EndpointProviderBase<ApplicationInsightsClientConfiguration, ApplicationInsightsBuiltInParameters,
+                         ApplicationInsightsClientContextParameters>;
 
 using ApplicationInsightsDefaultEpProviderBase =
-    DefaultEndpointProvider<ApplicationInsightsClientConfiguration, ApplicationInsightsBuiltInParameters, ApplicationInsightsClientContextParameters>;
+    BDDEndpointProvider<ApplicationInsightsClientConfiguration, ApplicationInsightsBuiltInParameters,
+                        ApplicationInsightsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_APPLICATIONINSIGHTS_API ApplicationInsightsEndpointProvider : public ApplicationInsightsDefaultEpProviderBase
-{
-public:
-    using ApplicationInsightsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_APPLICATIONINSIGHTS_API ApplicationInsightsEndpointProvider : public ApplicationInsightsDefaultEpProviderBase {
+ public:
+  using ApplicationInsightsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    ApplicationInsightsEndpointProvider()
-      : ApplicationInsightsDefaultEpProviderBase(Aws::ApplicationInsights::ApplicationInsightsEndpointRules::GetRulesBlob(), Aws::ApplicationInsights::ApplicationInsightsEndpointRules::RulesBlobSize)
-    {}
+  ApplicationInsightsEndpointProvider();
 
-    ~ApplicationInsightsEndpointProvider()
-    {
-    }
+  ~ApplicationInsightsEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace ApplicationInsights
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace ApplicationInsights
+}  // namespace Aws

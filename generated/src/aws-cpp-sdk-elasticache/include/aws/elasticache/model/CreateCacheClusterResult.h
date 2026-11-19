@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/CacheCluster.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class CreateCacheClusterResult
-  {
-  public:
-    AWS_ELASTICACHE_API CreateCacheClusterResult();
-    AWS_ELASTICACHE_API CreateCacheClusterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API CreateCacheClusterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class CreateCacheClusterResult {
+ public:
+  AWS_ELASTICACHE_API CreateCacheClusterResult() = default;
+  AWS_ELASTICACHE_API CreateCacheClusterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API CreateCacheClusterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const CacheCluster& GetCacheCluster() const{ return m_cacheCluster; }
-    inline void SetCacheCluster(const CacheCluster& value) { m_cacheCluster = value; }
-    inline void SetCacheCluster(CacheCluster&& value) { m_cacheCluster = std::move(value); }
-    inline CreateCacheClusterResult& WithCacheCluster(const CacheCluster& value) { SetCacheCluster(value); return *this;}
-    inline CreateCacheClusterResult& WithCacheCluster(CacheCluster&& value) { SetCacheCluster(std::move(value)); return *this;}
-    ///@}
+  inline const CacheCluster& GetCacheCluster() const { return m_cacheCluster; }
+  template <typename CacheClusterT = CacheCluster>
+  void SetCacheCluster(CacheClusterT&& value) {
+    m_cacheClusterHasBeenSet = true;
+    m_cacheCluster = std::forward<CacheClusterT>(value);
+  }
+  template <typename CacheClusterT = CacheCluster>
+  CreateCacheClusterResult& WithCacheCluster(CacheClusterT&& value) {
+    SetCacheCluster(std::forward<CacheClusterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateCacheClusterResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateCacheClusterResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    CacheCluster m_cacheCluster;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateCacheClusterResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  CacheCluster m_cacheCluster;
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_cacheClusterHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

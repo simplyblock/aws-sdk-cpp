@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/dynamodb/model/BatchGetItemResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/dynamodb/model/BatchGetItemResult.h>
 
 #include <utility>
 
@@ -17,66 +17,50 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-BatchGetItemResult::BatchGetItemResult()
-{
-}
+BatchGetItemResult::BatchGetItemResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-BatchGetItemResult::BatchGetItemResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-BatchGetItemResult& BatchGetItemResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+BatchGetItemResult& BatchGetItemResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("Responses"))
-  {
+  if (jsonValue.ValueExists("Responses")) {
     Aws::Map<Aws::String, JsonView> responsesJsonMap = jsonValue.GetObject("Responses").GetAllObjects();
-    for(auto& responsesItem : responsesJsonMap)
-    {
-      Aws::Utils::Array<JsonView> itemListJsonList = responsesItem.second.AsArray();
-      Aws::Vector<Aws::Map<Aws::String, AttributeValue>> itemListList;
-      itemListList.reserve((size_t)itemListJsonList.GetLength());
-      for(unsigned itemListIndex = 0; itemListIndex < itemListJsonList.GetLength(); ++itemListIndex)
-      {
-        Aws::Map<Aws::String, JsonView> attributeMapJsonMap = itemListJsonList[itemListIndex].GetAllObjects();
-        Aws::Map<Aws::String, AttributeValue> attributeMapMap;
-        for(auto& attributeMapItem : attributeMapJsonMap)
-        {
-          attributeMapMap[attributeMapItem.first] = attributeMapItem.second.AsObject();
+    for (auto& responsesItem : responsesJsonMap) {
+      Aws::Utils::Array<JsonView> itemList2JsonList = responsesItem.second.AsArray();
+      Aws::Vector<Aws::Map<Aws::String, AttributeValue>> itemList2List;
+      itemList2List.reserve((size_t)itemList2JsonList.GetLength());
+      for (unsigned itemList2Index = 0; itemList2Index < itemList2JsonList.GetLength(); ++itemList2Index) {
+        Aws::Map<Aws::String, JsonView> attributeMap3JsonMap = itemList2JsonList[itemList2Index].GetAllObjects();
+        Aws::Map<Aws::String, AttributeValue> attributeMap3Map;
+        for (auto& attributeMap3Item : attributeMap3JsonMap) {
+          attributeMap3Map[attributeMap3Item.first] = attributeMap3Item.second.AsObject();
         }
-        itemListList.push_back(std::move(attributeMapMap));
+        itemList2List.push_back(std::move(attributeMap3Map));
       }
-      m_responses[responsesItem.first] = std::move(itemListList);
+      m_responses[responsesItem.first] = std::move(itemList2List);
     }
+    m_responsesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("UnprocessedKeys"))
-  {
+  if (jsonValue.ValueExists("UnprocessedKeys")) {
     Aws::Map<Aws::String, JsonView> unprocessedKeysJsonMap = jsonValue.GetObject("UnprocessedKeys").GetAllObjects();
-    for(auto& unprocessedKeysItem : unprocessedKeysJsonMap)
-    {
+    for (auto& unprocessedKeysItem : unprocessedKeysJsonMap) {
       m_unprocessedKeys[unprocessedKeysItem.first] = unprocessedKeysItem.second.AsObject();
     }
+    m_unprocessedKeysHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ConsumedCapacity"))
-  {
+  if (jsonValue.ValueExists("ConsumedCapacity")) {
     Aws::Utils::Array<JsonView> consumedCapacityJsonList = jsonValue.GetArray("ConsumedCapacity");
-    for(unsigned consumedCapacityIndex = 0; consumedCapacityIndex < consumedCapacityJsonList.GetLength(); ++consumedCapacityIndex)
-    {
+    for (unsigned consumedCapacityIndex = 0; consumedCapacityIndex < consumedCapacityJsonList.GetLength(); ++consumedCapacityIndex) {
       m_consumedCapacity.push_back(consumedCapacityJsonList[consumedCapacityIndex].AsObject());
     }
+    m_consumedCapacityHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

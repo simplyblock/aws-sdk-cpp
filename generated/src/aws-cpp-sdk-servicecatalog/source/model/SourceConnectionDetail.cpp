@@ -3,85 +3,138 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicecatalog/model/SourceConnectionDetail.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
 
-SourceConnectionDetail::SourceConnectionDetail() : 
-    m_type(SourceType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_connectionParametersHasBeenSet(false),
-    m_lastSyncHasBeenSet(false)
-{
-}
+SourceConnectionDetail::SourceConnectionDetail(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-SourceConnectionDetail::SourceConnectionDetail(JsonView jsonValue)
-  : SourceConnectionDetail()
-{
-  *this = jsonValue;
-}
+SourceConnectionDetail& SourceConnectionDetail::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-SourceConnectionDetail& SourceConnectionDetail::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Type"))
-  {
-    m_type = SourceTypeMapper::GetSourceTypeForName(jsonValue.GetString("Type"));
+              if (initialKeyStr == "Type") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_type =
+                      SourceTypeMapper::GetSourceTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_typeHasBeenSet = true;
+              }
 
-    m_typeHasBeenSet = true;
-  }
+              else if (initialKeyStr == "ConnectionParameters") {
+                m_connectionParameters = SourceConnectionParameters(decoder);
+                m_connectionParametersHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("ConnectionParameters"))
-  {
-    m_connectionParameters = jsonValue.GetObject("ConnectionParameters");
+              else if (initialKeyStr == "LastSync") {
+                m_lastSync = LastSync(decoder);
+                m_lastSyncHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("SourceConnectionDetail", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_connectionParametersHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("LastSync"))
-  {
-    m_lastSync = jsonValue.GetObject("LastSync");
+            if (initialKeyStr == "Type") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_type =
+                    SourceTypeMapper::GetSourceTypeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_typeHasBeenSet = true;
+            }
 
-    m_lastSyncHasBeenSet = true;
+            else if (initialKeyStr == "ConnectionParameters") {
+              m_connectionParameters = SourceConnectionParameters(decoder);
+              m_connectionParametersHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "LastSync") {
+              m_lastSync = LastSync(decoder);
+              m_lastSyncHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue SourceConnectionDetail::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", SourceTypeMapper::GetNameForSourceType(m_type));
+void SourceConnectionDetail::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_typeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_connectionParametersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_lastSyncHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_connectionParametersHasBeenSet)
-  {
-   payload.WithObject("ConnectionParameters", m_connectionParameters.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_typeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Type"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(SourceTypeMapper::GetNameForSourceType(m_type).c_str()));
   }
 
-  if(m_lastSyncHasBeenSet)
-  {
-   payload.WithObject("LastSync", m_lastSync.Jsonize());
-
+  if (m_connectionParametersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ConnectionParameters"));
+    m_connectionParameters.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_lastSyncHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LastSync"));
+    m_lastSync.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

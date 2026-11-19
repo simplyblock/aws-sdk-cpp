@@ -4,55 +4,54 @@
  */
 
 #pragma once
-#include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
 #include <aws/clouddirectory/CloudDirectoryRequest.h>
+#include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudDirectory
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudDirectory {
+namespace Model {
 
+/**
+ */
+class EnableDirectoryRequest : public CloudDirectoryRequest {
+ public:
+  AWS_CLOUDDIRECTORY_API EnableDirectoryRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "EnableDirectory"; }
+
+  AWS_CLOUDDIRECTORY_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUDDIRECTORY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the directory to enable.</p>
    */
-  class EnableDirectoryRequest : public CloudDirectoryRequest
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API EnableDirectoryRequest();
+  inline const Aws::String& GetDirectoryArn() const { return m_directoryArn; }
+  inline bool DirectoryArnHasBeenSet() const { return m_directoryArnHasBeenSet; }
+  template <typename DirectoryArnT = Aws::String>
+  void SetDirectoryArn(DirectoryArnT&& value) {
+    m_directoryArnHasBeenSet = true;
+    m_directoryArn = std::forward<DirectoryArnT>(value);
+  }
+  template <typename DirectoryArnT = Aws::String>
+  EnableDirectoryRequest& WithDirectoryArn(DirectoryArnT&& value) {
+    SetDirectoryArn(std::forward<DirectoryArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_directoryArn;
+  bool m_directoryArnHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "EnableDirectory"; }
-
-    AWS_CLOUDDIRECTORY_API Aws::String SerializePayload() const override;
-
-    AWS_CLOUDDIRECTORY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The ARN of the directory to enable.</p>
-     */
-    inline const Aws::String& GetDirectoryArn() const{ return m_directoryArn; }
-    inline bool DirectoryArnHasBeenSet() const { return m_directoryArnHasBeenSet; }
-    inline void SetDirectoryArn(const Aws::String& value) { m_directoryArnHasBeenSet = true; m_directoryArn = value; }
-    inline void SetDirectoryArn(Aws::String&& value) { m_directoryArnHasBeenSet = true; m_directoryArn = std::move(value); }
-    inline void SetDirectoryArn(const char* value) { m_directoryArnHasBeenSet = true; m_directoryArn.assign(value); }
-    inline EnableDirectoryRequest& WithDirectoryArn(const Aws::String& value) { SetDirectoryArn(value); return *this;}
-    inline EnableDirectoryRequest& WithDirectoryArn(Aws::String&& value) { SetDirectoryArn(std::move(value)); return *this;}
-    inline EnableDirectoryRequest& WithDirectoryArn(const char* value) { SetDirectoryArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_directoryArn;
-    bool m_directoryArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

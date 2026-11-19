@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/firehose/Firehose_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/firehose/Firehose_EXPORTS.h>
 
-#include <aws/firehose/FirehoseEndpointRules.h>
-
-
-namespace Aws
-{
-namespace Firehose
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace Firehose {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using FirehoseClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using FirehoseEndpointProviderBase =
     EndpointProviderBase<FirehoseClientConfiguration, FirehoseBuiltInParameters, FirehoseClientContextParameters>;
 
 using FirehoseDefaultEpProviderBase =
-    DefaultEndpointProvider<FirehoseClientConfiguration, FirehoseBuiltInParameters, FirehoseClientContextParameters>;
+    BDDEndpointProvider<FirehoseClientConfiguration, FirehoseBuiltInParameters, FirehoseClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_FIREHOSE_API FirehoseEndpointProvider : public FirehoseDefaultEpProviderBase
-{
-public:
-    using FirehoseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_FIREHOSE_API FirehoseEndpointProvider : public FirehoseDefaultEpProviderBase {
+ public:
+  using FirehoseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    FirehoseEndpointProvider()
-      : FirehoseDefaultEpProviderBase(Aws::Firehose::FirehoseEndpointRules::GetRulesBlob(), Aws::Firehose::FirehoseEndpointRules::RulesBlobSize)
-    {}
+  FirehoseEndpointProvider();
 
-    ~FirehoseEndpointProvider()
-    {
-    }
+  ~FirehoseEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace Firehose
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace Firehose
+}  // namespace Aws

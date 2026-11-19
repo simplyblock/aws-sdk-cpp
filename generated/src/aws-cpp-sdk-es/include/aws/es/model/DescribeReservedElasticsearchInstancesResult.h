@@ -4,88 +4,110 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
 #include <aws/es/model/ReservedElasticsearchInstance.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p>Container for results from
+ * <code>DescribeReservedElasticsearchInstances</code></p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DescribeReservedElasticsearchInstancesResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeReservedElasticsearchInstancesResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Container for results from
-   * <code>DescribeReservedElasticsearchInstances</code></p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DescribeReservedElasticsearchInstancesResponse">AWS
-   * API Reference</a></p>
+   * <p>Provides an identifier to allow retrieval of paginated results.</p>
    */
-  class DescribeReservedElasticsearchInstancesResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult();
-    AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API DescribeReservedElasticsearchInstancesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeReservedElasticsearchInstancesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>List of reserved Elasticsearch instances.</p>
+   */
+  inline const Aws::Vector<ReservedElasticsearchInstance>& GetReservedElasticsearchInstances() const {
+    return m_reservedElasticsearchInstances;
+  }
+  template <typename ReservedElasticsearchInstancesT = Aws::Vector<ReservedElasticsearchInstance>>
+  void SetReservedElasticsearchInstances(ReservedElasticsearchInstancesT&& value) {
+    m_reservedElasticsearchInstancesHasBeenSet = true;
+    m_reservedElasticsearchInstances = std::forward<ReservedElasticsearchInstancesT>(value);
+  }
+  template <typename ReservedElasticsearchInstancesT = Aws::Vector<ReservedElasticsearchInstance>>
+  DescribeReservedElasticsearchInstancesResult& WithReservedElasticsearchInstances(ReservedElasticsearchInstancesT&& value) {
+    SetReservedElasticsearchInstances(std::forward<ReservedElasticsearchInstancesT>(value));
+    return *this;
+  }
+  template <typename ReservedElasticsearchInstancesT = ReservedElasticsearchInstance>
+  DescribeReservedElasticsearchInstancesResult& AddReservedElasticsearchInstances(ReservedElasticsearchInstancesT&& value) {
+    m_reservedElasticsearchInstancesHasBeenSet = true;
+    m_reservedElasticsearchInstances.emplace_back(std::forward<ReservedElasticsearchInstancesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides an identifier to allow retrieval of paginated results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeReservedElasticsearchInstancesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>List of reserved Elasticsearch instances.</p>
-     */
-    inline const Aws::Vector<ReservedElasticsearchInstance>& GetReservedElasticsearchInstances() const{ return m_reservedElasticsearchInstances; }
-    inline void SetReservedElasticsearchInstances(const Aws::Vector<ReservedElasticsearchInstance>& value) { m_reservedElasticsearchInstances = value; }
-    inline void SetReservedElasticsearchInstances(Aws::Vector<ReservedElasticsearchInstance>&& value) { m_reservedElasticsearchInstances = std::move(value); }
-    inline DescribeReservedElasticsearchInstancesResult& WithReservedElasticsearchInstances(const Aws::Vector<ReservedElasticsearchInstance>& value) { SetReservedElasticsearchInstances(value); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& WithReservedElasticsearchInstances(Aws::Vector<ReservedElasticsearchInstance>&& value) { SetReservedElasticsearchInstances(std::move(value)); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& AddReservedElasticsearchInstances(const ReservedElasticsearchInstance& value) { m_reservedElasticsearchInstances.push_back(value); return *this; }
-    inline DescribeReservedElasticsearchInstancesResult& AddReservedElasticsearchInstances(ReservedElasticsearchInstance&& value) { m_reservedElasticsearchInstances.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReservedElasticsearchInstancesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReservedElasticsearchInstancesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReservedElasticsearchInstancesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::Vector<ReservedElasticsearchInstance> m_reservedElasticsearchInstances;
 
-    Aws::Vector<ReservedElasticsearchInstance> m_reservedElasticsearchInstances;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_reservedElasticsearchInstancesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

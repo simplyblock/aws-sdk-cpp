@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
 
-#include <aws/secretsmanager/SecretsManagerEndpointRules.h>
-
-
-namespace Aws
-{
-namespace SecretsManager
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace SecretsManager {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using SecretsManagerClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using SecretsManagerEndpointProviderBase =
     EndpointProviderBase<SecretsManagerClientConfiguration, SecretsManagerBuiltInParameters, SecretsManagerClientContextParameters>;
 
 using SecretsManagerDefaultEpProviderBase =
-    DefaultEndpointProvider<SecretsManagerClientConfiguration, SecretsManagerBuiltInParameters, SecretsManagerClientContextParameters>;
+    BDDEndpointProvider<SecretsManagerClientConfiguration, SecretsManagerBuiltInParameters, SecretsManagerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_SECRETSMANAGER_API SecretsManagerEndpointProvider : public SecretsManagerDefaultEpProviderBase
-{
-public:
-    using SecretsManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_SECRETSMANAGER_API SecretsManagerEndpointProvider : public SecretsManagerDefaultEpProviderBase {
+ public:
+  using SecretsManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    SecretsManagerEndpointProvider()
-      : SecretsManagerDefaultEpProviderBase(Aws::SecretsManager::SecretsManagerEndpointRules::GetRulesBlob(), Aws::SecretsManager::SecretsManagerEndpointRules::RulesBlobSize)
-    {}
+  SecretsManagerEndpointProvider();
 
-    ~SecretsManagerEndpointProvider()
-    {
-    }
+  ~SecretsManagerEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace SecretsManager
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace SecretsManager
+}  // namespace Aws

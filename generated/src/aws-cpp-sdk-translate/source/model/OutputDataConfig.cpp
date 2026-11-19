@@ -3,71 +3,162 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/translate/model/OutputDataConfig.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Translate
-{
-namespace Model
-{
+namespace Aws {
+namespace Translate {
+namespace Model {
 
-OutputDataConfig::OutputDataConfig() : 
-    m_s3UriHasBeenSet(false),
-    m_encryptionKeyHasBeenSet(false)
-{
-}
+OutputDataConfig::OutputDataConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-OutputDataConfig::OutputDataConfig(JsonView jsonValue)
-  : OutputDataConfig()
-{
-  *this = jsonValue;
-}
+OutputDataConfig& OutputDataConfig::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-OutputDataConfig& OutputDataConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("S3Uri"))
-  {
-    m_s3Uri = jsonValue.GetString("S3Uri");
+              if (initialKeyStr == "S3Uri") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_s3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_s3Uri = ss.str();
+                  }
+                }
+                m_s3UriHasBeenSet = true;
+              }
 
-    m_s3UriHasBeenSet = true;
-  }
+              else if (initialKeyStr == "EncryptionKey") {
+                m_encryptionKey = EncryptionKey(decoder);
+                m_encryptionKeyHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("OutputDataConfig", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("EncryptionKey"))
-  {
-    m_encryptionKey = jsonValue.GetObject("EncryptionKey");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_encryptionKeyHasBeenSet = true;
+            if (initialKeyStr == "S3Uri") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_s3Uri = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_s3Uri = ss.str();
+                }
+              }
+              m_s3UriHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "EncryptionKey") {
+              m_encryptionKey = EncryptionKey(decoder);
+              m_encryptionKeyHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue OutputDataConfig::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_s3UriHasBeenSet)
-  {
-   payload.WithString("S3Uri", m_s3Uri);
-
+void OutputDataConfig::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_s3UriHasBeenSet) {
+    mapSize++;
+  }
+  if (m_encryptionKeyHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_encryptionKeyHasBeenSet)
-  {
-   payload.WithObject("EncryptionKey", m_encryptionKey.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_s3UriHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("S3Uri"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_s3Uri.c_str()));
   }
 
-  return payload;
+  if (m_encryptionKeyHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("EncryptionKey"));
+    m_encryptionKey.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace Translate
-} // namespace Aws
+}  // namespace Model
+}  // namespace Translate
+}  // namespace Aws

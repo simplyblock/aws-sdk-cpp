@@ -3,304 +3,227 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/secretsmanager/model/SecretListEntry.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/secretsmanager/model/SecretListEntry.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace SecretsManager
-{
-namespace Model
-{
+namespace Aws {
+namespace SecretsManager {
+namespace Model {
 
-SecretListEntry::SecretListEntry() : 
-    m_aRNHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_kmsKeyIdHasBeenSet(false),
-    m_rotationEnabled(false),
-    m_rotationEnabledHasBeenSet(false),
-    m_rotationLambdaARNHasBeenSet(false),
-    m_rotationRulesHasBeenSet(false),
-    m_lastRotatedDateHasBeenSet(false),
-    m_lastChangedDateHasBeenSet(false),
-    m_lastAccessedDateHasBeenSet(false),
-    m_deletedDateHasBeenSet(false),
-    m_nextRotationDateHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_secretVersionsToStagesHasBeenSet(false),
-    m_owningServiceHasBeenSet(false),
-    m_createdDateHasBeenSet(false),
-    m_primaryRegionHasBeenSet(false)
-{
-}
+SecretListEntry::SecretListEntry(JsonView jsonValue) { *this = jsonValue; }
 
-SecretListEntry::SecretListEntry(JsonView jsonValue)
-  : SecretListEntry()
-{
-  *this = jsonValue;
-}
-
-SecretListEntry& SecretListEntry::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ARN"))
-  {
+SecretListEntry& SecretListEntry::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ARN")) {
     m_aRN = jsonValue.GetString("ARN");
-
     m_aRNHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Name"))
-  {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Description"))
-  {
+  if (jsonValue.ValueExists("Type")) {
+    m_type = jsonValue.GetString("Type");
+    m_typeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("Description")) {
     m_description = jsonValue.GetString("Description");
-
     m_descriptionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("KmsKeyId"))
-  {
+  if (jsonValue.ValueExists("KmsKeyId")) {
     m_kmsKeyId = jsonValue.GetString("KmsKeyId");
-
     m_kmsKeyIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RotationEnabled"))
-  {
+  if (jsonValue.ValueExists("RotationEnabled")) {
     m_rotationEnabled = jsonValue.GetBool("RotationEnabled");
-
     m_rotationEnabledHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RotationLambdaARN"))
-  {
+  if (jsonValue.ValueExists("RotationLambdaARN")) {
     m_rotationLambdaARN = jsonValue.GetString("RotationLambdaARN");
-
     m_rotationLambdaARNHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RotationRules"))
-  {
+  if (jsonValue.ValueExists("RotationRules")) {
     m_rotationRules = jsonValue.GetObject("RotationRules");
-
     m_rotationRulesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("LastRotatedDate"))
-  {
+  if (jsonValue.ValueExists("ExternalSecretRotationMetadata")) {
+    Aws::Utils::Array<JsonView> externalSecretRotationMetadataJsonList = jsonValue.GetArray("ExternalSecretRotationMetadata");
+    for (unsigned externalSecretRotationMetadataIndex = 0;
+         externalSecretRotationMetadataIndex < externalSecretRotationMetadataJsonList.GetLength(); ++externalSecretRotationMetadataIndex) {
+      m_externalSecretRotationMetadata.push_back(externalSecretRotationMetadataJsonList[externalSecretRotationMetadataIndex].AsObject());
+    }
+    m_externalSecretRotationMetadataHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ExternalSecretRotationRoleArn")) {
+    m_externalSecretRotationRoleArn = jsonValue.GetString("ExternalSecretRotationRoleArn");
+    m_externalSecretRotationRoleArnHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("LastRotatedDate")) {
     m_lastRotatedDate = jsonValue.GetDouble("LastRotatedDate");
-
     m_lastRotatedDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("LastChangedDate"))
-  {
+  if (jsonValue.ValueExists("LastChangedDate")) {
     m_lastChangedDate = jsonValue.GetDouble("LastChangedDate");
-
     m_lastChangedDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("LastAccessedDate"))
-  {
+  if (jsonValue.ValueExists("LastAccessedDate")) {
     m_lastAccessedDate = jsonValue.GetDouble("LastAccessedDate");
-
     m_lastAccessedDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("DeletedDate"))
-  {
+  if (jsonValue.ValueExists("DeletedDate")) {
     m_deletedDate = jsonValue.GetDouble("DeletedDate");
-
     m_deletedDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("NextRotationDate"))
-  {
+  if (jsonValue.ValueExists("NextRotationDate")) {
     m_nextRotationDate = jsonValue.GetDouble("NextRotationDate");
-
     m_nextRotationDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Tags"))
-  {
+  if (jsonValue.ValueExists("Tags")) {
     Aws::Utils::Array<JsonView> tagsJsonList = jsonValue.GetArray("Tags");
-    for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-    {
+    for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
       m_tags.push_back(tagsJsonList[tagsIndex].AsObject());
     }
     m_tagsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("SecretVersionsToStages"))
-  {
+  if (jsonValue.ValueExists("SecretVersionsToStages")) {
     Aws::Map<Aws::String, JsonView> secretVersionsToStagesJsonMap = jsonValue.GetObject("SecretVersionsToStages").GetAllObjects();
-    for(auto& secretVersionsToStagesItem : secretVersionsToStagesJsonMap)
-    {
-      Aws::Utils::Array<JsonView> secretVersionStagesTypeJsonList = secretVersionsToStagesItem.second.AsArray();
-      Aws::Vector<Aws::String> secretVersionStagesTypeList;
-      secretVersionStagesTypeList.reserve((size_t)secretVersionStagesTypeJsonList.GetLength());
-      for(unsigned secretVersionStagesTypeIndex = 0; secretVersionStagesTypeIndex < secretVersionStagesTypeJsonList.GetLength(); ++secretVersionStagesTypeIndex)
-      {
-        secretVersionStagesTypeList.push_back(secretVersionStagesTypeJsonList[secretVersionStagesTypeIndex].AsString());
+    for (auto& secretVersionsToStagesItem : secretVersionsToStagesJsonMap) {
+      Aws::Utils::Array<JsonView> secretVersionStagesType2JsonList = secretVersionsToStagesItem.second.AsArray();
+      Aws::Vector<Aws::String> secretVersionStagesType2List;
+      secretVersionStagesType2List.reserve((size_t)secretVersionStagesType2JsonList.GetLength());
+      for (unsigned secretVersionStagesType2Index = 0; secretVersionStagesType2Index < secretVersionStagesType2JsonList.GetLength();
+           ++secretVersionStagesType2Index) {
+        secretVersionStagesType2List.push_back(secretVersionStagesType2JsonList[secretVersionStagesType2Index].AsString());
       }
-      m_secretVersionsToStages[secretVersionsToStagesItem.first] = std::move(secretVersionStagesTypeList);
+      m_secretVersionsToStages[secretVersionsToStagesItem.first] = std::move(secretVersionStagesType2List);
     }
     m_secretVersionsToStagesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("OwningService"))
-  {
+  if (jsonValue.ValueExists("OwningService")) {
     m_owningService = jsonValue.GetString("OwningService");
-
     m_owningServiceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CreatedDate"))
-  {
+  if (jsonValue.ValueExists("CreatedDate")) {
     m_createdDate = jsonValue.GetDouble("CreatedDate");
-
     m_createdDateHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("PrimaryRegion"))
-  {
+  if (jsonValue.ValueExists("PrimaryRegion")) {
     m_primaryRegion = jsonValue.GetString("PrimaryRegion");
-
     m_primaryRegionHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue SecretListEntry::Jsonize() const
-{
+JsonValue SecretListEntry::Jsonize() const {
   JsonValue payload;
 
-  if(m_aRNHasBeenSet)
-  {
-   payload.WithString("ARN", m_aRN);
-
+  if (m_aRNHasBeenSet) {
+    payload.WithString("ARN", m_aRN);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_typeHasBeenSet) {
+    payload.WithString("Type", m_type);
   }
 
-  if(m_kmsKeyIdHasBeenSet)
-  {
-   payload.WithString("KmsKeyId", m_kmsKeyId);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_rotationEnabledHasBeenSet)
-  {
-   payload.WithBool("RotationEnabled", m_rotationEnabled);
-
+  if (m_kmsKeyIdHasBeenSet) {
+    payload.WithString("KmsKeyId", m_kmsKeyId);
   }
 
-  if(m_rotationLambdaARNHasBeenSet)
-  {
-   payload.WithString("RotationLambdaARN", m_rotationLambdaARN);
-
+  if (m_rotationEnabledHasBeenSet) {
+    payload.WithBool("RotationEnabled", m_rotationEnabled);
   }
 
-  if(m_rotationRulesHasBeenSet)
-  {
-   payload.WithObject("RotationRules", m_rotationRules.Jsonize());
-
+  if (m_rotationLambdaARNHasBeenSet) {
+    payload.WithString("RotationLambdaARN", m_rotationLambdaARN);
   }
 
-  if(m_lastRotatedDateHasBeenSet)
-  {
-   payload.WithDouble("LastRotatedDate", m_lastRotatedDate.SecondsWithMSPrecision());
+  if (m_rotationRulesHasBeenSet) {
+    payload.WithObject("RotationRules", m_rotationRules.Jsonize());
   }
 
-  if(m_lastChangedDateHasBeenSet)
-  {
-   payload.WithDouble("LastChangedDate", m_lastChangedDate.SecondsWithMSPrecision());
+  if (m_externalSecretRotationMetadataHasBeenSet) {
+    Aws::Utils::Array<JsonValue> externalSecretRotationMetadataJsonList(m_externalSecretRotationMetadata.size());
+    for (unsigned externalSecretRotationMetadataIndex = 0;
+         externalSecretRotationMetadataIndex < externalSecretRotationMetadataJsonList.GetLength(); ++externalSecretRotationMetadataIndex) {
+      externalSecretRotationMetadataJsonList[externalSecretRotationMetadataIndex].AsObject(
+          m_externalSecretRotationMetadata[externalSecretRotationMetadataIndex].Jsonize());
+    }
+    payload.WithArray("ExternalSecretRotationMetadata", std::move(externalSecretRotationMetadataJsonList));
   }
 
-  if(m_lastAccessedDateHasBeenSet)
-  {
-   payload.WithDouble("LastAccessedDate", m_lastAccessedDate.SecondsWithMSPrecision());
+  if (m_externalSecretRotationRoleArnHasBeenSet) {
+    payload.WithString("ExternalSecretRotationRoleArn", m_externalSecretRotationRoleArn);
   }
 
-  if(m_deletedDateHasBeenSet)
-  {
-   payload.WithDouble("DeletedDate", m_deletedDate.SecondsWithMSPrecision());
+  if (m_lastRotatedDateHasBeenSet) {
+    payload.WithDouble("LastRotatedDate", m_lastRotatedDate.SecondsWithMSPrecision());
   }
 
-  if(m_nextRotationDateHasBeenSet)
-  {
-   payload.WithDouble("NextRotationDate", m_nextRotationDate.SecondsWithMSPrecision());
+  if (m_lastChangedDateHasBeenSet) {
+    payload.WithDouble("LastChangedDate", m_lastChangedDate.SecondsWithMSPrecision());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
+  if (m_lastAccessedDateHasBeenSet) {
+    payload.WithDouble("LastAccessedDate", m_lastAccessedDate.SecondsWithMSPrecision());
   }
 
-  if(m_secretVersionsToStagesHasBeenSet)
-  {
-   JsonValue secretVersionsToStagesJsonMap;
-   for(auto& secretVersionsToStagesItem : m_secretVersionsToStages)
-   {
-     Aws::Utils::Array<JsonValue> secretVersionStagesTypeJsonList(secretVersionsToStagesItem.second.size());
-     for(unsigned secretVersionStagesTypeIndex = 0; secretVersionStagesTypeIndex < secretVersionStagesTypeJsonList.GetLength(); ++secretVersionStagesTypeIndex)
-     {
-       secretVersionStagesTypeJsonList[secretVersionStagesTypeIndex].AsString(secretVersionsToStagesItem.second[secretVersionStagesTypeIndex]);
-     }
-     secretVersionsToStagesJsonMap.WithArray(secretVersionsToStagesItem.first, std::move(secretVersionStagesTypeJsonList));
-   }
-   payload.WithObject("SecretVersionsToStages", std::move(secretVersionsToStagesJsonMap));
-
+  if (m_deletedDateHasBeenSet) {
+    payload.WithDouble("DeletedDate", m_deletedDate.SecondsWithMSPrecision());
   }
 
-  if(m_owningServiceHasBeenSet)
-  {
-   payload.WithString("OwningService", m_owningService);
-
+  if (m_nextRotationDateHasBeenSet) {
+    payload.WithDouble("NextRotationDate", m_nextRotationDate.SecondsWithMSPrecision());
   }
 
-  if(m_createdDateHasBeenSet)
-  {
-   payload.WithDouble("CreatedDate", m_createdDate.SecondsWithMSPrecision());
+  if (m_tagsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
+    for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
+      tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
+    }
+    payload.WithArray("Tags", std::move(tagsJsonList));
   }
 
-  if(m_primaryRegionHasBeenSet)
-  {
-   payload.WithString("PrimaryRegion", m_primaryRegion);
+  if (m_secretVersionsToStagesHasBeenSet) {
+    JsonValue secretVersionsToStagesJsonMap;
+    for (auto& secretVersionsToStagesItem : m_secretVersionsToStages) {
+      Aws::Utils::Array<JsonValue> secretVersionStagesTypeJsonList(secretVersionsToStagesItem.second.size());
+      for (unsigned secretVersionStagesTypeIndex = 0; secretVersionStagesTypeIndex < secretVersionStagesTypeJsonList.GetLength();
+           ++secretVersionStagesTypeIndex) {
+        secretVersionStagesTypeJsonList[secretVersionStagesTypeIndex].AsString(
+            secretVersionsToStagesItem.second[secretVersionStagesTypeIndex]);
+      }
+      secretVersionsToStagesJsonMap.WithArray(secretVersionsToStagesItem.first, std::move(secretVersionStagesTypeJsonList));
+    }
+    payload.WithObject("SecretVersionsToStages", std::move(secretVersionsToStagesJsonMap));
+  }
 
+  if (m_owningServiceHasBeenSet) {
+    payload.WithString("OwningService", m_owningService);
+  }
+
+  if (m_createdDateHasBeenSet) {
+    payload.WithDouble("CreatedDate", m_createdDate.SecondsWithMSPrecision());
+  }
+
+  if (m_primaryRegionHasBeenSet) {
+    payload.WithString("PrimaryRegion", m_primaryRegion);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace SecretsManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecretsManager
+}  // namespace Aws

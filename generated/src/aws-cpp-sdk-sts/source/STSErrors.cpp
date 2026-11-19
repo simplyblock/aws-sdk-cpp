@@ -11,62 +11,56 @@ using namespace Aws::Client;
 using namespace Aws::Utils;
 using namespace Aws::STS;
 
-namespace Aws
-{
-namespace STS
-{
-namespace STSErrorMapper
-{
+namespace Aws {
+namespace STS {
+namespace STSErrorMapper {
 
 static const int MALFORMED_POLICY_DOCUMENT_HASH = HashingUtils::HashString("MalformedPolicyDocument");
 static const int PACKED_POLICY_TOO_LARGE_HASH = HashingUtils::HashString("PackedPolicyTooLarge");
 static const int I_D_P_COMMUNICATION_ERROR_HASH = HashingUtils::HashString("IDPCommunicationError");
 static const int I_D_P_REJECTED_CLAIM_HASH = HashingUtils::HashString("IDPRejectedClaim");
+static const int SESSION_DURATION_ESCALATION_HASH = HashingUtils::HashString("SessionDurationEscalationException");
+static const int EXPIRED_TRADE_IN_TOKEN_HASH = HashingUtils::HashString("ExpiredTradeInTokenException");
+static const int OUTBOUND_WEB_IDENTITY_FEDERATION_DISABLED_HASH =
+    HashingUtils::HashString("OutboundWebIdentityFederationDisabledException");
 static const int EXPIRED_TOKEN_HASH = HashingUtils::HashString("ExpiredTokenException");
+static const int J_W_T_PAYLOAD_SIZE_EXCEEDED_HASH = HashingUtils::HashString("JWTPayloadSizeExceededException");
 static const int INVALID_IDENTITY_TOKEN_HASH = HashingUtils::HashString("InvalidIdentityToken");
 static const int INVALID_AUTHORIZATION_MESSAGE_HASH = HashingUtils::HashString("InvalidAuthorizationMessageException");
 static const int REGION_DISABLED_HASH = HashingUtils::HashString("RegionDisabledException");
 
-
-AWSError<CoreErrors> GetErrorForName(const char* errorName)
-{
+AWSError<CoreErrors> GetErrorForName(const char* errorName) {
   int hashCode = HashingUtils::HashString(errorName);
 
-  if (hashCode == MALFORMED_POLICY_DOCUMENT_HASH)
-  {
+  if (hashCode == MALFORMED_POLICY_DOCUMENT_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::MALFORMED_POLICY_DOCUMENT), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == PACKED_POLICY_TOO_LARGE_HASH)
-  {
+  } else if (hashCode == PACKED_POLICY_TOO_LARGE_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::PACKED_POLICY_TOO_LARGE), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == I_D_P_COMMUNICATION_ERROR_HASH)
-  {
-    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::I_D_P_COMMUNICATION_ERROR), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == I_D_P_REJECTED_CLAIM_HASH)
-  {
+  } else if (hashCode == I_D_P_COMMUNICATION_ERROR_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::I_D_P_COMMUNICATION_ERROR), RetryableType::RETRYABLE);
+  } else if (hashCode == I_D_P_REJECTED_CLAIM_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::I_D_P_REJECTED_CLAIM), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == EXPIRED_TOKEN_HASH)
-  {
+  } else if (hashCode == SESSION_DURATION_ESCALATION_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::SESSION_DURATION_ESCALATION), RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == EXPIRED_TRADE_IN_TOKEN_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::EXPIRED_TRADE_IN_TOKEN), RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == OUTBOUND_WEB_IDENTITY_FEDERATION_DISABLED_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::OUTBOUND_WEB_IDENTITY_FEDERATION_DISABLED),
+                                RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == EXPIRED_TOKEN_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::EXPIRED_TOKEN), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == INVALID_IDENTITY_TOKEN_HASH)
-  {
+  } else if (hashCode == J_W_T_PAYLOAD_SIZE_EXCEEDED_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::J_W_T_PAYLOAD_SIZE_EXCEEDED), RetryableType::NOT_RETRYABLE);
+  } else if (hashCode == INVALID_IDENTITY_TOKEN_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::INVALID_IDENTITY_TOKEN), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == INVALID_AUTHORIZATION_MESSAGE_HASH)
-  {
+  } else if (hashCode == INVALID_AUTHORIZATION_MESSAGE_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::INVALID_AUTHORIZATION_MESSAGE), RetryableType::NOT_RETRYABLE);
-  }
-  else if (hashCode == REGION_DISABLED_HASH)
-  {
+  } else if (hashCode == REGION_DISABLED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(STSErrors::REGION_DISABLED), RetryableType::NOT_RETRYABLE);
   }
   return AWSError<CoreErrors>(CoreErrors::UNKNOWN, false);
 }
 
-} // namespace STSErrorMapper
-} // namespace STS
-} // namespace Aws
+}  // namespace STSErrorMapper
+}  // namespace STS
+}  // namespace Aws

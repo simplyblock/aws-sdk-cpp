@@ -3,71 +3,112 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/servicediscovery/model/NamespaceProperties.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ServiceDiscovery
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceDiscovery {
+namespace Model {
 
-NamespaceProperties::NamespaceProperties() : 
-    m_dnsPropertiesHasBeenSet(false),
-    m_httpPropertiesHasBeenSet(false)
-{
-}
+NamespaceProperties::NamespaceProperties(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-NamespaceProperties::NamespaceProperties(JsonView jsonValue)
-  : NamespaceProperties()
-{
-  *this = jsonValue;
-}
+NamespaceProperties& NamespaceProperties::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-NamespaceProperties& NamespaceProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("DnsProperties"))
-  {
-    m_dnsProperties = jsonValue.GetObject("DnsProperties");
+              if (initialKeyStr == "DnsProperties") {
+                m_dnsProperties = DnsProperties(decoder);
+                m_dnsPropertiesHasBeenSet = true;
+              }
 
-    m_dnsPropertiesHasBeenSet = true;
-  }
+              else if (initialKeyStr == "HttpProperties") {
+                m_httpProperties = HttpProperties(decoder);
+                m_httpPropertiesHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("NamespaceProperties", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("HttpProperties"))
-  {
-    m_httpProperties = jsonValue.GetObject("HttpProperties");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_httpPropertiesHasBeenSet = true;
+            if (initialKeyStr == "DnsProperties") {
+              m_dnsProperties = DnsProperties(decoder);
+              m_dnsPropertiesHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "HttpProperties") {
+              m_httpProperties = HttpProperties(decoder);
+              m_httpPropertiesHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue NamespaceProperties::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_dnsPropertiesHasBeenSet)
-  {
-   payload.WithObject("DnsProperties", m_dnsProperties.Jsonize());
-
+void NamespaceProperties::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_dnsPropertiesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_httpPropertiesHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_httpPropertiesHasBeenSet)
-  {
-   payload.WithObject("HttpProperties", m_httpProperties.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_dnsPropertiesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DnsProperties"));
+    m_dnsProperties.CborEncode(encoder);
   }
 
-  return payload;
+  if (m_httpPropertiesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HttpProperties"));
+    m_httpProperties.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace ServiceDiscovery
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceDiscovery
+}  // namespace Aws

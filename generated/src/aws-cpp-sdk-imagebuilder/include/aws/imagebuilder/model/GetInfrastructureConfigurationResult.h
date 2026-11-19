@@ -4,70 +4,80 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 #include <aws/imagebuilder/model/InfrastructureConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+/**
+ * <p>GetInfrastructureConfiguration response object.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetInfrastructureConfigurationResponse">AWS
+ * API Reference</a></p>
+ */
+class GetInfrastructureConfigurationResult {
+ public:
+  AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult() = default;
+  AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>GetInfrastructureConfiguration response object.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetInfrastructureConfigurationResponse">AWS
-   * API Reference</a></p>
+   * <p>The request ID that uniquely identifies this request.</p>
    */
-  class GetInfrastructureConfigurationResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult();
-    AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API GetInfrastructureConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetInfrastructureConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The infrastructure configuration object.</p>
+   */
+  inline const InfrastructureConfiguration& GetInfrastructureConfiguration() const { return m_infrastructureConfiguration; }
+  template <typename InfrastructureConfigurationT = InfrastructureConfiguration>
+  void SetInfrastructureConfiguration(InfrastructureConfigurationT&& value) {
+    m_infrastructureConfigurationHasBeenSet = true;
+    m_infrastructureConfiguration = std::forward<InfrastructureConfigurationT>(value);
+  }
+  template <typename InfrastructureConfigurationT = InfrastructureConfiguration>
+  GetInfrastructureConfigurationResult& WithInfrastructureConfiguration(InfrastructureConfigurationT&& value) {
+    SetInfrastructureConfiguration(std::forward<InfrastructureConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The request ID that uniquely identifies this request.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetInfrastructureConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetInfrastructureConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetInfrastructureConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+ private:
+  Aws::String m_requestId;
 
-    ///@{
-    /**
-     * <p>The infrastructure configuration object.</p>
-     */
-    inline const InfrastructureConfiguration& GetInfrastructureConfiguration() const{ return m_infrastructureConfiguration; }
-    inline void SetInfrastructureConfiguration(const InfrastructureConfiguration& value) { m_infrastructureConfiguration = value; }
-    inline void SetInfrastructureConfiguration(InfrastructureConfiguration&& value) { m_infrastructureConfiguration = std::move(value); }
-    inline GetInfrastructureConfigurationResult& WithInfrastructureConfiguration(const InfrastructureConfiguration& value) { SetInfrastructureConfiguration(value); return *this;}
-    inline GetInfrastructureConfigurationResult& WithInfrastructureConfiguration(InfrastructureConfiguration&& value) { SetInfrastructureConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  InfrastructureConfiguration m_infrastructureConfiguration;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_infrastructureConfigurationHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-
-    InfrastructureConfiguration m_infrastructureConfiguration;
-  };
-
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

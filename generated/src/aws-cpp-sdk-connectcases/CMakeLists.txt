@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-connectcases "C++ SDK for the AWS connectcases service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-connectcases "C++ SDK for Amazon Connect Cases" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONNECTCASES_HEADERS
     "include/aws/connectcases/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONNECTCASES_HEADERS
 
 file(GLOB AWS_CONNECTCASES_MODEL_HEADERS
     "include/aws/connectcases/model/*.h"
+)
+
+file(GLOB AWS_CONNECTCASES_INTERNAL_HEADERS
+    "include/aws/connectcases/internal/*.h"
 )
 
 file(GLOB AWS_CONNECTCASES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONNECTCASES_MODEL_SOURCE
 
 file(GLOB CONNECTCASES_UNIFIED_HEADERS
     ${AWS_CONNECTCASES_HEADERS}
+    ${AWS_CONNECTCASES_INTERNAL_HEADERS}
     ${AWS_CONNECTCASES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\connectcases" FILES ${AWS_CONNECTCASES_HEADERS})
+        source_group("Header Files\\aws\\connectcases\\internal" FILES ${AWS_CONNECTCASES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\connectcases\\model" FILES ${AWS_CONNECTCASES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONNECTCASES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONNECTCASES_MODEL_SOURCE})

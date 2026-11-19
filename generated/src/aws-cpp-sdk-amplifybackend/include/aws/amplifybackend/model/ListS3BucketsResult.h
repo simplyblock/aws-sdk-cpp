@@ -5,80 +5,98 @@
 
 #pragma once
 #include <aws/amplifybackend/AmplifyBackend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/amplifybackend/model/S3BucketInfo.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AmplifyBackend
-{
-namespace Model
-{
-  class ListS3BucketsResult
-  {
-  public:
-    AWS_AMPLIFYBACKEND_API ListS3BucketsResult();
-    AWS_AMPLIFYBACKEND_API ListS3BucketsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFYBACKEND_API ListS3BucketsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AmplifyBackend {
+namespace Model {
+class ListS3BucketsResult {
+ public:
+  AWS_AMPLIFYBACKEND_API ListS3BucketsResult() = default;
+  AWS_AMPLIFYBACKEND_API ListS3BucketsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFYBACKEND_API ListS3BucketsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of S3 buckets.</p>
+   */
+  inline const Aws::Vector<S3BucketInfo>& GetBuckets() const { return m_buckets; }
+  template <typename BucketsT = Aws::Vector<S3BucketInfo>>
+  void SetBuckets(BucketsT&& value) {
+    m_bucketsHasBeenSet = true;
+    m_buckets = std::forward<BucketsT>(value);
+  }
+  template <typename BucketsT = Aws::Vector<S3BucketInfo>>
+  ListS3BucketsResult& WithBuckets(BucketsT&& value) {
+    SetBuckets(std::forward<BucketsT>(value));
+    return *this;
+  }
+  template <typename BucketsT = S3BucketInfo>
+  ListS3BucketsResult& AddBuckets(BucketsT&& value) {
+    m_bucketsHasBeenSet = true;
+    m_buckets.emplace_back(std::forward<BucketsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of S3 buckets.</p>
-     */
-    inline const Aws::Vector<S3BucketInfo>& GetBuckets() const{ return m_buckets; }
-    inline void SetBuckets(const Aws::Vector<S3BucketInfo>& value) { m_buckets = value; }
-    inline void SetBuckets(Aws::Vector<S3BucketInfo>&& value) { m_buckets = std::move(value); }
-    inline ListS3BucketsResult& WithBuckets(const Aws::Vector<S3BucketInfo>& value) { SetBuckets(value); return *this;}
-    inline ListS3BucketsResult& WithBuckets(Aws::Vector<S3BucketInfo>&& value) { SetBuckets(std::move(value)); return *this;}
-    inline ListS3BucketsResult& AddBuckets(const S3BucketInfo& value) { m_buckets.push_back(value); return *this; }
-    inline ListS3BucketsResult& AddBuckets(S3BucketInfo&& value) { m_buckets.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Reserved for future use.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListS3BucketsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Reserved for future use.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListS3BucketsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListS3BucketsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListS3BucketsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListS3BucketsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListS3BucketsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListS3BucketsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListS3BucketsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<S3BucketInfo> m_buckets;
+ private:
+  Aws::Vector<S3BucketInfo> m_buckets;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bucketsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AmplifyBackend
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyBackend
+}  // namespace Aws

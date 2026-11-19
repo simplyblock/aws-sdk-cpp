@@ -1,0 +1,58 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/core/Globals.h>
+#include <aws/core/utils/EnumParseOverflowContainer.h>
+#include <aws/core/utils/HashingUtils.h>
+#include <aws/quicksight/model/CapabilityState.h>
+
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace QuickSight {
+namespace Model {
+namespace CapabilityStateMapper {
+
+static const int DENY_HASH = HashingUtils::HashString("DENY");
+static const int ALLOW_HASH = HashingUtils::HashString("ALLOW");
+
+CapabilityState GetCapabilityStateForName(const Aws::String& name) {
+  int hashCode = HashingUtils::HashString(name.c_str());
+  if (hashCode == DENY_HASH) {
+    return CapabilityState::DENY;
+  } else if (hashCode == ALLOW_HASH) {
+    return CapabilityState::ALLOW;
+  }
+  EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+  if (overflowContainer) {
+    overflowContainer->StoreOverflow(hashCode, name);
+    return static_cast<CapabilityState>(hashCode);
+  }
+
+  return CapabilityState::NOT_SET;
+}
+
+Aws::String GetNameForCapabilityState(CapabilityState enumValue) {
+  switch (enumValue) {
+    case CapabilityState::NOT_SET:
+      return {};
+    case CapabilityState::DENY:
+      return "DENY";
+    case CapabilityState::ALLOW:
+      return "ALLOW";
+    default:
+      EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
+      if (overflowContainer) {
+        return overflowContainer->RetrieveOverflow(static_cast<int>(enumValue));
+      }
+
+      return {};
+  }
+}
+
+}  // namespace CapabilityStateMapper
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

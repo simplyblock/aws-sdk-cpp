@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 
-#include <aws/monitoring/CloudWatchEndpointRules.h>
-
-
-namespace Aws
-{
-namespace CloudWatch
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace CloudWatch {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using CloudWatchClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using CloudWatchEndpointProviderBase =
     EndpointProviderBase<CloudWatchClientConfiguration, CloudWatchBuiltInParameters, CloudWatchClientContextParameters>;
 
 using CloudWatchDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudWatchClientConfiguration, CloudWatchBuiltInParameters, CloudWatchClientContextParameters>;
+    BDDEndpointProvider<CloudWatchClientConfiguration, CloudWatchBuiltInParameters, CloudWatchClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_CLOUDWATCH_API CloudWatchEndpointProvider : public CloudWatchDefaultEpProviderBase
-{
-public:
-    using CloudWatchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_CLOUDWATCH_API CloudWatchEndpointProvider : public CloudWatchDefaultEpProviderBase {
+ public:
+  using CloudWatchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    CloudWatchEndpointProvider()
-      : CloudWatchDefaultEpProviderBase(Aws::CloudWatch::CloudWatchEndpointRules::GetRulesBlob(), Aws::CloudWatch::CloudWatchEndpointRules::RulesBlobSize)
-    {}
+  CloudWatchEndpointProvider();
 
-    ~CloudWatchEndpointProvider()
-    {
-    }
+  ~CloudWatchEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace CloudWatch
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace CloudWatch
+}  // namespace Aws

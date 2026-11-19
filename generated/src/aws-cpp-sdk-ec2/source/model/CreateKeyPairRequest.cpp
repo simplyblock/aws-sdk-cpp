@@ -3,56 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/CreateKeyPairRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/CreateKeyPairRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-CreateKeyPairRequest::CreateKeyPairRequest() : 
-    m_keyNameHasBeenSet(false),
-    m_keyType(KeyType::NOT_SET),
-    m_keyTypeHasBeenSet(false),
-    m_tagSpecificationsHasBeenSet(false),
-    m_keyFormat(KeyFormat::NOT_SET),
-    m_keyFormatHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String CreateKeyPairRequest::SerializePayload() const
-{
+Aws::String CreateKeyPairRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateKeyPair&";
-  if(m_keyNameHasBeenSet)
-  {
+  if (m_keyNameHasBeenSet) {
     ss << "KeyName=" << StringUtils::URLEncode(m_keyName.c_str()) << "&";
   }
 
-  if(m_keyTypeHasBeenSet)
-  {
-    ss << "KeyType=" << KeyTypeMapper::GetNameForKeyType(m_keyType) << "&";
+  if (m_keyTypeHasBeenSet) {
+    ss << "KeyType=" << StringUtils::URLEncode(KeyTypeMapper::GetNameForKeyType(m_keyType)) << "&";
   }
 
-  if(m_tagSpecificationsHasBeenSet)
-  {
+  if (m_tagSpecificationsHasBeenSet) {
     unsigned tagSpecificationsCount = 1;
-    for(auto& item : m_tagSpecifications)
-    {
+    for (auto& item : m_tagSpecifications) {
       item.OutputToStream(ss, "TagSpecification.", tagSpecificationsCount, "");
       tagSpecificationsCount++;
     }
   }
 
-  if(m_keyFormatHasBeenSet)
-  {
-    ss << "KeyFormat=" << KeyFormatMapper::GetNameForKeyFormat(m_keyFormat) << "&";
+  if (m_keyFormatHasBeenSet) {
+    ss << "KeyFormat=" << StringUtils::URLEncode(KeyFormatMapper::GetNameForKeyFormat(m_keyFormat)) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -60,8 +41,4 @@ Aws::String CreateKeyPairRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CreateKeyPairRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateKeyPairRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

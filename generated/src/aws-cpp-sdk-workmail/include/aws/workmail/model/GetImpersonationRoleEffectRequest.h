@@ -4,94 +4,101 @@
  */
 
 #pragma once
-#include <aws/workmail/WorkMail_EXPORTS.h>
-#include <aws/workmail/WorkMailRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workmail/WorkMailRequest.h>
+#include <aws/workmail/WorkMail_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace WorkMail
-{
-namespace Model
-{
+namespace Aws {
+namespace WorkMail {
+namespace Model {
 
+/**
+ */
+class GetImpersonationRoleEffectRequest : public WorkMailRequest {
+ public:
+  AWS_WORKMAIL_API GetImpersonationRoleEffectRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetImpersonationRoleEffect"; }
+
+  AWS_WORKMAIL_API Aws::String SerializePayload() const override;
+
+  AWS_WORKMAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The WorkMail organization where the impersonation role is defined.</p>
    */
-  class GetImpersonationRoleEffectRequest : public WorkMailRequest
-  {
-  public:
-    AWS_WORKMAIL_API GetImpersonationRoleEffectRequest();
+  inline const Aws::String& GetOrganizationId() const { return m_organizationId; }
+  inline bool OrganizationIdHasBeenSet() const { return m_organizationIdHasBeenSet; }
+  template <typename OrganizationIdT = Aws::String>
+  void SetOrganizationId(OrganizationIdT&& value) {
+    m_organizationIdHasBeenSet = true;
+    m_organizationId = std::forward<OrganizationIdT>(value);
+  }
+  template <typename OrganizationIdT = Aws::String>
+  GetImpersonationRoleEffectRequest& WithOrganizationId(OrganizationIdT&& value) {
+    SetOrganizationId(std::forward<OrganizationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetImpersonationRoleEffect"; }
+  ///@{
+  /**
+   * <p>The impersonation role ID to test.</p>
+   */
+  inline const Aws::String& GetImpersonationRoleId() const { return m_impersonationRoleId; }
+  inline bool ImpersonationRoleIdHasBeenSet() const { return m_impersonationRoleIdHasBeenSet; }
+  template <typename ImpersonationRoleIdT = Aws::String>
+  void SetImpersonationRoleId(ImpersonationRoleIdT&& value) {
+    m_impersonationRoleIdHasBeenSet = true;
+    m_impersonationRoleId = std::forward<ImpersonationRoleIdT>(value);
+  }
+  template <typename ImpersonationRoleIdT = Aws::String>
+  GetImpersonationRoleEffectRequest& WithImpersonationRoleId(ImpersonationRoleIdT&& value) {
+    SetImpersonationRoleId(std::forward<ImpersonationRoleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_WORKMAIL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The WorkMail organization user chosen to test the impersonation role. The
+   * following identity formats are available:</p> <ul> <li> <p>User ID:
+   * <code>12345678-1234-1234-1234-123456789012</code> or
+   * <code>S-1-1-12-1234567890-123456789-123456789-1234</code> </p> </li> <li>
+   * <p>Email address: <code>user@domain.tld</code> </p> </li> <li> <p>User name:
+   * <code>user</code> </p> </li> </ul>
+   */
+  inline const Aws::String& GetTargetUser() const { return m_targetUser; }
+  inline bool TargetUserHasBeenSet() const { return m_targetUserHasBeenSet; }
+  template <typename TargetUserT = Aws::String>
+  void SetTargetUser(TargetUserT&& value) {
+    m_targetUserHasBeenSet = true;
+    m_targetUser = std::forward<TargetUserT>(value);
+  }
+  template <typename TargetUserT = Aws::String>
+  GetImpersonationRoleEffectRequest& WithTargetUser(TargetUserT&& value) {
+    SetTargetUser(std::forward<TargetUserT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_organizationId;
 
-    AWS_WORKMAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_impersonationRoleId;
 
+  Aws::String m_targetUser;
+  bool m_organizationIdHasBeenSet = false;
+  bool m_impersonationRoleIdHasBeenSet = false;
+  bool m_targetUserHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The WorkMail organization where the impersonation role is defined.</p>
-     */
-    inline const Aws::String& GetOrganizationId() const{ return m_organizationId; }
-    inline bool OrganizationIdHasBeenSet() const { return m_organizationIdHasBeenSet; }
-    inline void SetOrganizationId(const Aws::String& value) { m_organizationIdHasBeenSet = true; m_organizationId = value; }
-    inline void SetOrganizationId(Aws::String&& value) { m_organizationIdHasBeenSet = true; m_organizationId = std::move(value); }
-    inline void SetOrganizationId(const char* value) { m_organizationIdHasBeenSet = true; m_organizationId.assign(value); }
-    inline GetImpersonationRoleEffectRequest& WithOrganizationId(const Aws::String& value) { SetOrganizationId(value); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithOrganizationId(Aws::String&& value) { SetOrganizationId(std::move(value)); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithOrganizationId(const char* value) { SetOrganizationId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The impersonation role ID to test.</p>
-     */
-    inline const Aws::String& GetImpersonationRoleId() const{ return m_impersonationRoleId; }
-    inline bool ImpersonationRoleIdHasBeenSet() const { return m_impersonationRoleIdHasBeenSet; }
-    inline void SetImpersonationRoleId(const Aws::String& value) { m_impersonationRoleIdHasBeenSet = true; m_impersonationRoleId = value; }
-    inline void SetImpersonationRoleId(Aws::String&& value) { m_impersonationRoleIdHasBeenSet = true; m_impersonationRoleId = std::move(value); }
-    inline void SetImpersonationRoleId(const char* value) { m_impersonationRoleIdHasBeenSet = true; m_impersonationRoleId.assign(value); }
-    inline GetImpersonationRoleEffectRequest& WithImpersonationRoleId(const Aws::String& value) { SetImpersonationRoleId(value); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithImpersonationRoleId(Aws::String&& value) { SetImpersonationRoleId(std::move(value)); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithImpersonationRoleId(const char* value) { SetImpersonationRoleId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The WorkMail organization user chosen to test the impersonation role. The
-     * following identity formats are available:</p> <ul> <li> <p>User ID:
-     * <code>12345678-1234-1234-1234-123456789012</code> or
-     * <code>S-1-1-12-1234567890-123456789-123456789-1234</code> </p> </li> <li>
-     * <p>Email address: <code>user@domain.tld</code> </p> </li> <li> <p>User name:
-     * <code>user</code> </p> </li> </ul>
-     */
-    inline const Aws::String& GetTargetUser() const{ return m_targetUser; }
-    inline bool TargetUserHasBeenSet() const { return m_targetUserHasBeenSet; }
-    inline void SetTargetUser(const Aws::String& value) { m_targetUserHasBeenSet = true; m_targetUser = value; }
-    inline void SetTargetUser(Aws::String&& value) { m_targetUserHasBeenSet = true; m_targetUser = std::move(value); }
-    inline void SetTargetUser(const char* value) { m_targetUserHasBeenSet = true; m_targetUser.assign(value); }
-    inline GetImpersonationRoleEffectRequest& WithTargetUser(const Aws::String& value) { SetTargetUser(value); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithTargetUser(Aws::String&& value) { SetTargetUser(std::move(value)); return *this;}
-    inline GetImpersonationRoleEffectRequest& WithTargetUser(const char* value) { SetTargetUser(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_organizationId;
-    bool m_organizationIdHasBeenSet = false;
-
-    Aws::String m_impersonationRoleId;
-    bool m_impersonationRoleIdHasBeenSet = false;
-
-    Aws::String m_targetUser;
-    bool m_targetUserHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkMail
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkMail
+}  // namespace Aws

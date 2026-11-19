@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/s3-crt/model/ListBucketsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/s3-crt/model/ListBucketsResult.h>
 
 #include <utility>
 
@@ -16,55 +16,47 @@ using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ListBucketsResult::ListBucketsResult()
-{
-}
+ListBucketsResult::ListBucketsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ListBucketsResult::ListBucketsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ListBucketsResult& ListBucketsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ListBucketsResult& ListBucketsResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode resultNode = xmlDocument.GetRootElement();
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode bucketsNode = resultNode.FirstChild("Buckets");
-    if(!bucketsNode.IsNull())
-    {
+    if (!bucketsNode.IsNull()) {
       XmlNode bucketsMember = bucketsNode.FirstChild("Bucket");
-      while(!bucketsMember.IsNull())
-      {
+      m_bucketsHasBeenSet = !bucketsMember.IsNull();
+      while (!bucketsMember.IsNull()) {
         m_buckets.push_back(bucketsMember);
         bucketsMember = bucketsMember.NextNode("Bucket");
       }
 
+      m_bucketsHasBeenSet = true;
     }
     XmlNode ownerNode = resultNode.FirstChild("Owner");
-    if(!ownerNode.IsNull())
-    {
+    if (!ownerNode.IsNull()) {
       m_owner = ownerNode;
+      m_ownerHasBeenSet = true;
     }
     XmlNode continuationTokenNode = resultNode.FirstChild("ContinuationToken");
-    if(!continuationTokenNode.IsNull())
-    {
+    if (!continuationTokenNode.IsNull()) {
       m_continuationToken = Aws::Utils::Xml::DecodeEscapedXmlText(continuationTokenNode.GetText());
+      m_continuationTokenHasBeenSet = true;
     }
     XmlNode prefixNode = resultNode.FirstChild("Prefix");
-    if(!prefixNode.IsNull())
-    {
+    if (!prefixNode.IsNull()) {
       m_prefix = Aws::Utils::Xml::DecodeEscapedXmlText(prefixNode.GetText());
+      m_prefixHasBeenSet = true;
     }
   }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amz-request-id");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
 
   return *this;

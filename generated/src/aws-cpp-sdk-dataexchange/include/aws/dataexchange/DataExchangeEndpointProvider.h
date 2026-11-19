@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/dataexchange/DataExchange_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dataexchange/DataExchange_EXPORTS.h>
 
-#include <aws/dataexchange/DataExchangeEndpointRules.h>
-
-
-namespace Aws
-{
-namespace DataExchange
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace DataExchange {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using DataExchangeClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using DataExchangeEndpointProviderBase =
     EndpointProviderBase<DataExchangeClientConfiguration, DataExchangeBuiltInParameters, DataExchangeClientContextParameters>;
 
 using DataExchangeDefaultEpProviderBase =
-    DefaultEndpointProvider<DataExchangeClientConfiguration, DataExchangeBuiltInParameters, DataExchangeClientContextParameters>;
+    BDDEndpointProvider<DataExchangeClientConfiguration, DataExchangeBuiltInParameters, DataExchangeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_DATAEXCHANGE_API DataExchangeEndpointProvider : public DataExchangeDefaultEpProviderBase
-{
-public:
-    using DataExchangeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_DATAEXCHANGE_API DataExchangeEndpointProvider : public DataExchangeDefaultEpProviderBase {
+ public:
+  using DataExchangeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    DataExchangeEndpointProvider()
-      : DataExchangeDefaultEpProviderBase(Aws::DataExchange::DataExchangeEndpointRules::GetRulesBlob(), Aws::DataExchange::DataExchangeEndpointRules::RulesBlobSize)
-    {}
+  DataExchangeEndpointProvider();
 
-    ~DataExchangeEndpointProvider()
-    {
-    }
+  ~DataExchangeEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace DataExchange
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace DataExchange
+}  // namespace Aws

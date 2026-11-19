@@ -4,13 +4,15 @@
  */
 
 #include <aws/translate/TranslateEndpointProvider.h>
+#include <aws/translate/internal/TranslateEndpointRules.h>
 
-namespace Aws
-{
-namespace Translate
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace Translate
-} // namespace Aws
+namespace Aws {
+namespace Translate {
+namespace Endpoint {
+TranslateEndpointProvider::TranslateEndpointProvider()
+    : TranslateDefaultEpProviderBase(Aws::Translate::TranslateEndpointRules::GetRulesBlob(),
+                                     Aws::Translate::TranslateEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace Translate
+}  // namespace Aws

@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/emr-containers/EMRContainers_EXPORTS.h>
 #include <aws/emr-containers/model/SecurityConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EMRContainers
-{
-namespace Model
-{
-  class DescribeSecurityConfigurationResult
-  {
-  public:
-    AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult();
-    AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EMRContainers {
+namespace Model {
+class DescribeSecurityConfigurationResult {
+ public:
+  AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult() = default;
+  AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EMRCONTAINERS_API DescribeSecurityConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Details of the security configuration.</p>
+   */
+  inline const SecurityConfiguration& GetSecurityConfiguration() const { return m_securityConfiguration; }
+  template <typename SecurityConfigurationT = SecurityConfiguration>
+  void SetSecurityConfiguration(SecurityConfigurationT&& value) {
+    m_securityConfigurationHasBeenSet = true;
+    m_securityConfiguration = std::forward<SecurityConfigurationT>(value);
+  }
+  template <typename SecurityConfigurationT = SecurityConfiguration>
+  DescribeSecurityConfigurationResult& WithSecurityConfiguration(SecurityConfigurationT&& value) {
+    SetSecurityConfiguration(std::forward<SecurityConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details of the security configuration.</p>
-     */
-    inline const SecurityConfiguration& GetSecurityConfiguration() const{ return m_securityConfiguration; }
-    inline void SetSecurityConfiguration(const SecurityConfiguration& value) { m_securityConfiguration = value; }
-    inline void SetSecurityConfiguration(SecurityConfiguration&& value) { m_securityConfiguration = std::move(value); }
-    inline DescribeSecurityConfigurationResult& WithSecurityConfiguration(const SecurityConfiguration& value) { SetSecurityConfiguration(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithSecurityConfiguration(SecurityConfiguration&& value) { SetSecurityConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeSecurityConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeSecurityConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeSecurityConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SecurityConfiguration m_securityConfiguration;
+ private:
+  SecurityConfiguration m_securityConfiguration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_securityConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EMRContainers
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMRContainers
+}  // namespace Aws

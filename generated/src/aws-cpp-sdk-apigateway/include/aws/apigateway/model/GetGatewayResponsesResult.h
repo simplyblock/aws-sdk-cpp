@@ -5,86 +5,104 @@
 
 #pragma once
 #include <aws/apigateway/APIGateway_EXPORTS.h>
+#include <aws/apigateway/model/GatewayResponse.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/apigateway/model/GatewayResponse.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace APIGateway
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace APIGateway {
+namespace Model {
+/**
+ * <p>The collection of the GatewayResponse instances of a RestApi as a
+ * <code>responseType</code>-to-GatewayResponse object map of key-value pairs. As
+ * such, pagination is not supported for querying this collection.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/GatewayResponses">AWS
+ * API Reference</a></p>
+ */
+class GetGatewayResponsesResult {
+ public:
+  AWS_APIGATEWAY_API GetGatewayResponsesResult() = default;
+  AWS_APIGATEWAY_API GetGatewayResponsesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APIGATEWAY_API GetGatewayResponsesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
+
+  inline const Aws::String& GetPosition() const { return m_position; }
+  template <typename PositionT = Aws::String>
+  void SetPosition(PositionT&& value) {
+    m_positionHasBeenSet = true;
+    m_position = std::forward<PositionT>(value);
+  }
+  template <typename PositionT = Aws::String>
+  GetGatewayResponsesResult& WithPosition(PositionT&& value) {
+    SetPosition(std::forward<PositionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>The collection of the GatewayResponse instances of a RestApi as a
-   * <code>responseType</code>-to-GatewayResponse object map of key-value pairs. As
-   * such, pagination is not supported for querying this collection.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/GatewayResponses">AWS
-   * API Reference</a></p>
+   * <p>Returns the entire collection, because of no pagination support.</p>
    */
-  class GetGatewayResponsesResult
-  {
-  public:
-    AWS_APIGATEWAY_API GetGatewayResponsesResult();
-    AWS_APIGATEWAY_API GetGatewayResponsesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APIGATEWAY_API GetGatewayResponsesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<GatewayResponse>& GetItems() const { return m_items; }
+  template <typename ItemsT = Aws::Vector<GatewayResponse>>
+  void SetItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items = std::forward<ItemsT>(value);
+  }
+  template <typename ItemsT = Aws::Vector<GatewayResponse>>
+  GetGatewayResponsesResult& WithItems(ItemsT&& value) {
+    SetItems(std::forward<ItemsT>(value));
+    return *this;
+  }
+  template <typename ItemsT = GatewayResponse>
+  GetGatewayResponsesResult& AddItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items.emplace_back(std::forward<ItemsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetPosition() const{ return m_position; }
-    inline void SetPosition(const Aws::String& value) { m_position = value; }
-    inline void SetPosition(Aws::String&& value) { m_position = std::move(value); }
-    inline void SetPosition(const char* value) { m_position.assign(value); }
-    inline GetGatewayResponsesResult& WithPosition(const Aws::String& value) { SetPosition(value); return *this;}
-    inline GetGatewayResponsesResult& WithPosition(Aws::String&& value) { SetPosition(std::move(value)); return *this;}
-    inline GetGatewayResponsesResult& WithPosition(const char* value) { SetPosition(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetGatewayResponsesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>Returns the entire collection, because of no pagination support.</p>
-     */
-    inline const Aws::Vector<GatewayResponse>& GetItems() const{ return m_items; }
-    inline void SetItems(const Aws::Vector<GatewayResponse>& value) { m_items = value; }
-    inline void SetItems(Aws::Vector<GatewayResponse>&& value) { m_items = std::move(value); }
-    inline GetGatewayResponsesResult& WithItems(const Aws::Vector<GatewayResponse>& value) { SetItems(value); return *this;}
-    inline GetGatewayResponsesResult& WithItems(Aws::Vector<GatewayResponse>&& value) { SetItems(std::move(value)); return *this;}
-    inline GetGatewayResponsesResult& AddItems(const GatewayResponse& value) { m_items.push_back(value); return *this; }
-    inline GetGatewayResponsesResult& AddItems(GatewayResponse&& value) { m_items.push_back(std::move(value)); return *this; }
-    ///@}
+ private:
+  Aws::String m_position;
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetGatewayResponsesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetGatewayResponsesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetGatewayResponsesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  Aws::Vector<GatewayResponse> m_items;
 
-    Aws::String m_position;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_positionHasBeenSet = false;
+  bool m_itemsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::Vector<GatewayResponse> m_items;
-
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace APIGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace APIGateway
+}  // namespace Aws

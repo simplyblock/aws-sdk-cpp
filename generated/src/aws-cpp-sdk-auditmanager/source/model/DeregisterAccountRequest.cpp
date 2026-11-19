@@ -12,15 +12,4 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeregisterAccountRequest::DeregisterAccountRequest()
-{
-}
-
-Aws::String DeregisterAccountRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeregisterAccountRequest::SerializePayload() const { return {}; }

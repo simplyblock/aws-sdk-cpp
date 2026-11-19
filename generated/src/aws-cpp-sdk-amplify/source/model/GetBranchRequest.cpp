@@ -12,17 +12,4 @@ using namespace Aws::Amplify::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetBranchRequest::GetBranchRequest() : 
-    m_appIdHasBeenSet(false),
-    m_branchNameHasBeenSet(false)
-{
-}
-
-Aws::String GetBranchRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetBranchRequest::SerializePayload() const { return {}; }

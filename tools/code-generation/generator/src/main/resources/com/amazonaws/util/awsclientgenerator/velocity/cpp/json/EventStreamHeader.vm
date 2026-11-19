@@ -9,6 +9,7 @@
 \#include $header
 #end
 \#include <aws/core/utils/event/EventStream.h>
+\#include <aws/core/utils/stream/HttpWriteDataStreamBuf.h>
 #foreach($entry in $shape.members.entrySet())
 #if($entry.value.shape.isEvent())
 #foreach($eventMemberEntry in $entry.value.shape.members.entrySet())
@@ -43,12 +44,23 @@ namespace Model
   class $typeInfo.exportValue $typeInfo.className : public Aws::Utils::Event::EventEncoderStream
   {
   public:
+    ${typeInfo.className}() = default;
+    explicit ${typeInfo.className}(std::shared_ptr<Aws::Utils::Stream::HttpWriteDataStreamBuf> streambuf)
+        : Aws::Utils::Event::EventEncoderStream(std::move(streambuf)) {}
 #foreach($entry in $shape.members.entrySet())
 #if($entry.value.shape.isEvent())
     ${typeInfo.className}& Write${entry.value.shape.name}(const ${entry.value.shape.name}& value)
     {
        Aws::Utils::Event::Message msg;
-#if(!$entry.value.shape.eventPayloadType.equals("blob"))
+#if($entry.value.shape.eventPayloadType.equals("blob"))
+       if(!value.Get$CppViewHelper.capitalizeFirstChar(${entry.value.shape.eventPayloadMemberName})().empty())
+       {
+           msg.InsertEventHeader(":message-type", Aws::String("event"));
+           msg.InsertEventHeader(":event-type", Aws::String("${entry.key}"));
+           msg.InsertEventHeader(":content-type", Aws::String("application/octet-stream"));
+           msg.WriteEventPayload(value.Get$CppViewHelper.capitalizeFirstChar(${entry.value.shape.eventPayloadMemberName})());
+       }
+#else
        msg.InsertEventHeader(":message-type", Aws::String("event"));
        msg.InsertEventHeader(":event-type", Aws::String("${entry.key}"));
 #if($entry.value.shape.eventPayloadType.equals("string"))
@@ -60,15 +72,7 @@ namespace Model
 #else
        AWS_UNREFERENCED_PARAM(value);
 #end
-#else##if($entry.value.shape.eventPayloadType.equals("blob"))
-       if(!value.Get$CppViewHelper.capitalizeFirstChar(${entry.value.shape.eventPayloadMemberName})().empty())
-       {
-           msg.InsertEventHeader(":message-type", Aws::String("event"));
-           msg.InsertEventHeader(":event-type", Aws::String("${entry.key}"));
-           msg.InsertEventHeader(":content-type", Aws::String("application/octet-stream"));
-           msg.WriteEventPayload(value.Get$CppViewHelper.capitalizeFirstChar(${entry.value.shape.eventPayloadMemberName})());
-       }
-#end
+#end##if($entry.value.shape.eventPayloadType.equals("blob"))
        WriteEvent(msg);
        return *this;
     }

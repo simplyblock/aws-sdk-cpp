@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ivs-realtime/Ivsrealtime_EXPORTS.h>
 #include <aws/ivs-realtime/model/EncoderConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ivsrealtime
-{
-namespace Model
-{
-  class GetEncoderConfigurationResult
-  {
-  public:
-    AWS_IVSREALTIME_API GetEncoderConfigurationResult();
-    AWS_IVSREALTIME_API GetEncoderConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IVSREALTIME_API GetEncoderConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ivsrealtime {
+namespace Model {
+class GetEncoderConfigurationResult {
+ public:
+  AWS_IVSREALTIME_API GetEncoderConfigurationResult() = default;
+  AWS_IVSREALTIME_API GetEncoderConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IVSREALTIME_API GetEncoderConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The EncoderConfiguration that was returned.</p>
+   */
+  inline const EncoderConfiguration& GetEncoderConfiguration() const { return m_encoderConfiguration; }
+  template <typename EncoderConfigurationT = EncoderConfiguration>
+  void SetEncoderConfiguration(EncoderConfigurationT&& value) {
+    m_encoderConfigurationHasBeenSet = true;
+    m_encoderConfiguration = std::forward<EncoderConfigurationT>(value);
+  }
+  template <typename EncoderConfigurationT = EncoderConfiguration>
+  GetEncoderConfigurationResult& WithEncoderConfiguration(EncoderConfigurationT&& value) {
+    SetEncoderConfiguration(std::forward<EncoderConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The EncoderConfiguration that was returned.</p>
-     */
-    inline const EncoderConfiguration& GetEncoderConfiguration() const{ return m_encoderConfiguration; }
-    inline void SetEncoderConfiguration(const EncoderConfiguration& value) { m_encoderConfiguration = value; }
-    inline void SetEncoderConfiguration(EncoderConfiguration&& value) { m_encoderConfiguration = std::move(value); }
-    inline GetEncoderConfigurationResult& WithEncoderConfiguration(const EncoderConfiguration& value) { SetEncoderConfiguration(value); return *this;}
-    inline GetEncoderConfigurationResult& WithEncoderConfiguration(EncoderConfiguration&& value) { SetEncoderConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEncoderConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEncoderConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEncoderConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEncoderConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    EncoderConfiguration m_encoderConfiguration;
+ private:
+  EncoderConfiguration m_encoderConfiguration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_encoderConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ivsrealtime
-} // namespace Aws
+}  // namespace Model
+}  // namespace ivsrealtime
+}  // namespace Aws

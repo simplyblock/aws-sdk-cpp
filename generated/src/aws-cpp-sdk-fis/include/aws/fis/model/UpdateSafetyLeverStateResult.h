@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fis/FIS_EXPORTS.h>
 #include <aws/fis/model/SafetyLever.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FIS
-{
-namespace Model
-{
-  class UpdateSafetyLeverStateResult
-  {
-  public:
-    AWS_FIS_API UpdateSafetyLeverStateResult();
-    AWS_FIS_API UpdateSafetyLeverStateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FIS_API UpdateSafetyLeverStateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FIS {
+namespace Model {
+class UpdateSafetyLeverStateResult {
+ public:
+  AWS_FIS_API UpdateSafetyLeverStateResult() = default;
+  AWS_FIS_API UpdateSafetyLeverStateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FIS_API UpdateSafetyLeverStateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> Information about the safety lever. </p>
+   */
+  inline const SafetyLever& GetSafetyLever() const { return m_safetyLever; }
+  template <typename SafetyLeverT = SafetyLever>
+  void SetSafetyLever(SafetyLeverT&& value) {
+    m_safetyLeverHasBeenSet = true;
+    m_safetyLever = std::forward<SafetyLeverT>(value);
+  }
+  template <typename SafetyLeverT = SafetyLever>
+  UpdateSafetyLeverStateResult& WithSafetyLever(SafetyLeverT&& value) {
+    SetSafetyLever(std::forward<SafetyLeverT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Information about the safety lever. </p>
-     */
-    inline const SafetyLever& GetSafetyLever() const{ return m_safetyLever; }
-    inline void SetSafetyLever(const SafetyLever& value) { m_safetyLever = value; }
-    inline void SetSafetyLever(SafetyLever&& value) { m_safetyLever = std::move(value); }
-    inline UpdateSafetyLeverStateResult& WithSafetyLever(const SafetyLever& value) { SetSafetyLever(value); return *this;}
-    inline UpdateSafetyLeverStateResult& WithSafetyLever(SafetyLever&& value) { SetSafetyLever(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSafetyLeverStateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSafetyLeverStateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSafetyLeverStateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSafetyLeverStateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SafetyLever m_safetyLever;
+ private:
+  SafetyLever m_safetyLever;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_safetyLeverHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FIS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FIS
+}  // namespace Aws

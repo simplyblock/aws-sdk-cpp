@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppSync
-{
-namespace Model
-{
+namespace Aws {
+namespace AppSync {
+namespace Model {
 
-HttpDataSourceConfig::HttpDataSourceConfig() : 
-    m_endpointHasBeenSet(false),
-    m_authorizationConfigHasBeenSet(false)
-{
-}
+HttpDataSourceConfig::HttpDataSourceConfig(JsonView jsonValue) { *this = jsonValue; }
 
-HttpDataSourceConfig::HttpDataSourceConfig(JsonView jsonValue)
-  : HttpDataSourceConfig()
-{
-  *this = jsonValue;
-}
-
-HttpDataSourceConfig& HttpDataSourceConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("endpoint"))
-  {
+HttpDataSourceConfig& HttpDataSourceConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("endpoint")) {
     m_endpoint = jsonValue.GetString("endpoint");
-
     m_endpointHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("authorizationConfig"))
-  {
+  if (jsonValue.ValueExists("authorizationConfig")) {
     m_authorizationConfig = jsonValue.GetObject("authorizationConfig");
-
     m_authorizationConfigHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue HttpDataSourceConfig::Jsonize() const
-{
+JsonValue HttpDataSourceConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_endpointHasBeenSet)
-  {
-   payload.WithString("endpoint", m_endpoint);
-
+  if (m_endpointHasBeenSet) {
+    payload.WithString("endpoint", m_endpoint);
   }
 
-  if(m_authorizationConfigHasBeenSet)
-  {
-   payload.WithObject("authorizationConfig", m_authorizationConfig.Jsonize());
-
+  if (m_authorizationConfigHasBeenSet) {
+    payload.WithObject("authorizationConfig", m_authorizationConfig.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

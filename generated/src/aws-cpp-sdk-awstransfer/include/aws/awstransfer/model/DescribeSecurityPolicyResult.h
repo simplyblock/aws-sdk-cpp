@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/awstransfer/model/DescribedSecurityPolicy.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Transfer
-{
-namespace Model
-{
-  class DescribeSecurityPolicyResult
-  {
-  public:
-    AWS_TRANSFER_API DescribeSecurityPolicyResult();
-    AWS_TRANSFER_API DescribeSecurityPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSFER_API DescribeSecurityPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Transfer {
+namespace Model {
+class DescribeSecurityPolicyResult {
+ public:
+  AWS_TRANSFER_API DescribeSecurityPolicyResult() = default;
+  AWS_TRANSFER_API DescribeSecurityPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSFER_API DescribeSecurityPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array containing the properties of the security policy.</p>
+   */
+  inline const DescribedSecurityPolicy& GetSecurityPolicy() const { return m_securityPolicy; }
+  template <typename SecurityPolicyT = DescribedSecurityPolicy>
+  void SetSecurityPolicy(SecurityPolicyT&& value) {
+    m_securityPolicyHasBeenSet = true;
+    m_securityPolicy = std::forward<SecurityPolicyT>(value);
+  }
+  template <typename SecurityPolicyT = DescribedSecurityPolicy>
+  DescribeSecurityPolicyResult& WithSecurityPolicy(SecurityPolicyT&& value) {
+    SetSecurityPolicy(std::forward<SecurityPolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array containing the properties of the security policy.</p>
-     */
-    inline const DescribedSecurityPolicy& GetSecurityPolicy() const{ return m_securityPolicy; }
-    inline void SetSecurityPolicy(const DescribedSecurityPolicy& value) { m_securityPolicy = value; }
-    inline void SetSecurityPolicy(DescribedSecurityPolicy&& value) { m_securityPolicy = std::move(value); }
-    inline DescribeSecurityPolicyResult& WithSecurityPolicy(const DescribedSecurityPolicy& value) { SetSecurityPolicy(value); return *this;}
-    inline DescribeSecurityPolicyResult& WithSecurityPolicy(DescribedSecurityPolicy&& value) { SetSecurityPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeSecurityPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeSecurityPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeSecurityPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeSecurityPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DescribedSecurityPolicy m_securityPolicy;
+ private:
+  DescribedSecurityPolicy m_securityPolicy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_securityPolicyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

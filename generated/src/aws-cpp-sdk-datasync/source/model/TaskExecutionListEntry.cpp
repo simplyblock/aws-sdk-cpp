@@ -3,85 +3,196 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/model/TaskExecutionListEntry.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DataSync
-{
-namespace Model
-{
+namespace Aws {
+namespace DataSync {
+namespace Model {
 
-TaskExecutionListEntry::TaskExecutionListEntry() : 
-    m_taskExecutionArnHasBeenSet(false),
-    m_status(TaskExecutionStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_taskMode(TaskMode::NOT_SET),
-    m_taskModeHasBeenSet(false)
-{
-}
+TaskExecutionListEntry::TaskExecutionListEntry(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-TaskExecutionListEntry::TaskExecutionListEntry(JsonView jsonValue)
-  : TaskExecutionListEntry()
-{
-  *this = jsonValue;
-}
+TaskExecutionListEntry& TaskExecutionListEntry::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-TaskExecutionListEntry& TaskExecutionListEntry::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("TaskExecutionArn"))
-  {
-    m_taskExecutionArn = jsonValue.GetString("TaskExecutionArn");
+              if (initialKeyStr == "TaskExecutionArn") {
+                auto peekType = decoder->PeekType();
+                if (peekType.has_value()) {
+                  if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      m_taskExecutionArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  } else {
+                    decoder->ConsumeNextSingleElement();
+                    Aws::StringStream ss;
+                    while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                      auto nextType = decoder->PeekType();
+                      if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                        if (nextType.has_value()) {
+                          decoder->ConsumeNextSingleElement();  // consume the Break
+                        }
+                        break;
+                      }
+                      auto val = decoder->PopNextTextVal();
+                      if (val.has_value()) {
+                        ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                      }
+                    }
+                    m_taskExecutionArn = ss.str();
+                  }
+                }
+                m_taskExecutionArnHasBeenSet = true;
+              }
 
-    m_taskExecutionArnHasBeenSet = true;
-  }
+              else if (initialKeyStr == "Status") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_status = TaskExecutionStatusMapper::GetTaskExecutionStatusForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_statusHasBeenSet = true;
+              }
 
-  if(jsonValue.ValueExists("Status"))
-  {
-    m_status = TaskExecutionStatusMapper::GetTaskExecutionStatusForName(jsonValue.GetString("Status"));
+              else if (initialKeyStr == "TaskMode") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_taskMode =
+                      TaskModeMapper::GetTaskModeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_taskModeHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("TaskExecutionListEntry", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_statusHasBeenSet = true;
-  }
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-  if(jsonValue.ValueExists("TaskMode"))
-  {
-    m_taskMode = TaskModeMapper::GetTaskModeForName(jsonValue.GetString("TaskMode"));
+            if (initialKeyStr == "TaskExecutionArn") {
+              auto peekType = decoder->PeekType();
+              if (peekType.has_value()) {
+                if (peekType.value() == Aws::Crt::Cbor::CborType::Text) {
+                  auto val = decoder->PopNextTextVal();
+                  if (val.has_value()) {
+                    m_taskExecutionArn = Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                  }
+                } else {
+                  decoder->ConsumeNextSingleElement();
+                  Aws::StringStream ss;
+                  while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+                    auto nextType = decoder->PeekType();
+                    if (!nextType.has_value() || nextType.value() == CborType::Break) {
+                      if (nextType.has_value()) {
+                        decoder->ConsumeNextSingleElement();  // consume the Break
+                      }
+                      break;
+                    }
+                    auto val = decoder->PopNextTextVal();
+                    if (val.has_value()) {
+                      ss << Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len);
+                    }
+                  }
+                  m_taskExecutionArn = ss.str();
+                }
+              }
+              m_taskExecutionArnHasBeenSet = true;
+            }
 
-    m_taskModeHasBeenSet = true;
+            else if (initialKeyStr == "Status") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_status = TaskExecutionStatusMapper::GetTaskExecutionStatusForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_statusHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "TaskMode") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_taskMode =
+                    TaskModeMapper::GetTaskModeForName(Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_taskModeHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue TaskExecutionListEntry::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_taskExecutionArnHasBeenSet)
-  {
-   payload.WithString("TaskExecutionArn", m_taskExecutionArn);
-
+void TaskExecutionListEntry::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_taskExecutionArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_statusHasBeenSet) {
+    mapSize++;
+  }
+  if (m_taskModeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("Status", TaskExecutionStatusMapper::GetNameForTaskExecutionStatus(m_status));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_taskExecutionArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TaskExecutionArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_taskExecutionArn.c_str()));
   }
 
-  if(m_taskModeHasBeenSet)
-  {
-   payload.WithString("TaskMode", TaskModeMapper::GetNameForTaskMode(m_taskMode));
+  if (m_statusHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Status"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TaskExecutionStatusMapper::GetNameForTaskExecutionStatus(m_status).c_str()));
   }
 
-  return payload;
+  if (m_taskModeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TaskMode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(TaskModeMapper::GetNameForTaskMode(m_taskMode).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

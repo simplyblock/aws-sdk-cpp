@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-support-app "C++ SDK for the AWS support-app service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-support-app "C++ SDK for AWS Support App" aws-cpp-sdk-core)
 
 file(GLOB AWS_SUPPORT-APP_HEADERS
     "include/aws/support-app/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SUPPORT-APP_HEADERS
 
 file(GLOB AWS_SUPPORT-APP_MODEL_HEADERS
     "include/aws/support-app/model/*.h"
+)
+
+file(GLOB AWS_SUPPORT-APP_INTERNAL_HEADERS
+    "include/aws/support-app/internal/*.h"
 )
 
 file(GLOB AWS_SUPPORT-APP_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SUPPORT-APP_MODEL_SOURCE
 
 file(GLOB SUPPORT-APP_UNIFIED_HEADERS
     ${AWS_SUPPORT-APP_HEADERS}
+    ${AWS_SUPPORT-APP_INTERNAL_HEADERS}
     ${AWS_SUPPORT-APP_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\support-app" FILES ${AWS_SUPPORT-APP_HEADERS})
+        source_group("Header Files\\aws\\support-app\\internal" FILES ${AWS_SUPPORT-APP_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\support-app\\model" FILES ${AWS_SUPPORT-APP_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SUPPORT-APP_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SUPPORT-APP_MODEL_SOURCE})

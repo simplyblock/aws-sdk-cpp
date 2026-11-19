@@ -4,68 +4,77 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of RegisterImage.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RegisterImageResult">AWS
+ * API Reference</a></p>
+ */
+class RegisterImageResponse {
+ public:
+  AWS_EC2_API RegisterImageResponse() = default;
+  AWS_EC2_API RegisterImageResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API RegisterImageResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of RegisterImage.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RegisterImageResult">AWS
-   * API Reference</a></p>
+   * <p>The ID of the newly registered AMI.</p>
    */
-  class RegisterImageResponse
-  {
-  public:
-    AWS_EC2_API RegisterImageResponse();
-    AWS_EC2_API RegisterImageResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API RegisterImageResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetImageId() const { return m_imageId; }
+  template <typename ImageIdT = Aws::String>
+  void SetImageId(ImageIdT&& value) {
+    m_imageIdHasBeenSet = true;
+    m_imageId = std::forward<ImageIdT>(value);
+  }
+  template <typename ImageIdT = Aws::String>
+  RegisterImageResponse& WithImageId(ImageIdT&& value) {
+    SetImageId(std::forward<ImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The ID of the newly registered AMI.</p>
-     */
-    inline const Aws::String& GetImageId() const{ return m_imageId; }
-    inline void SetImageId(const Aws::String& value) { m_imageId = value; }
-    inline void SetImageId(Aws::String&& value) { m_imageId = std::move(value); }
-    inline void SetImageId(const char* value) { m_imageId.assign(value); }
-    inline RegisterImageResponse& WithImageId(const Aws::String& value) { SetImageId(value); return *this;}
-    inline RegisterImageResponse& WithImageId(Aws::String&& value) { SetImageId(std::move(value)); return *this;}
-    inline RegisterImageResponse& WithImageId(const char* value) { SetImageId(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  RegisterImageResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline RegisterImageResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline RegisterImageResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_imageId;
 
-    Aws::String m_imageId;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_imageIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

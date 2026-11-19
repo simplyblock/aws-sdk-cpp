@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/DeleteUserGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticache/model/DeleteUserGroupRequest.h>
 
 using namespace Aws::ElastiCache::Model;
 using namespace Aws::Utils;
 
-DeleteUserGroupRequest::DeleteUserGroupRequest() : 
-    m_userGroupIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteUserGroupRequest::SerializePayload() const
-{
+Aws::String DeleteUserGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteUserGroup&";
-  if(m_userGroupIdHasBeenSet)
-  {
+  if (m_userGroupIdHasBeenSet) {
     ss << "UserGroupId=" << StringUtils::URLEncode(m_userGroupId.c_str()) << "&";
   }
 
@@ -28,8 +21,4 @@ Aws::String DeleteUserGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteUserGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteUserGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

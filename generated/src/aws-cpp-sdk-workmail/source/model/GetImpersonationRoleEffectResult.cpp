@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/workmail/model/GetImpersonationRoleEffectResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/workmail/model/GetImpersonationRoleEffectResult.h>
 
 #include <utility>
 
@@ -17,50 +17,33 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetImpersonationRoleEffectResult::GetImpersonationRoleEffectResult() : 
-    m_type(ImpersonationRoleType::NOT_SET),
-    m_effect(AccessEffect::NOT_SET)
-{
-}
+GetImpersonationRoleEffectResult::GetImpersonationRoleEffectResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-GetImpersonationRoleEffectResult::GetImpersonationRoleEffectResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : GetImpersonationRoleEffectResult()
-{
-  *this = result;
-}
-
-GetImpersonationRoleEffectResult& GetImpersonationRoleEffectResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetImpersonationRoleEffectResult& GetImpersonationRoleEffectResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("Type"))
-  {
+  if (jsonValue.ValueExists("Type")) {
     m_type = ImpersonationRoleTypeMapper::GetImpersonationRoleTypeForName(jsonValue.GetString("Type"));
-
+    m_typeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Effect"))
-  {
+  if (jsonValue.ValueExists("Effect")) {
     m_effect = AccessEffectMapper::GetAccessEffectForName(jsonValue.GetString("Effect"));
-
+    m_effectHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("MatchedRules"))
-  {
+  if (jsonValue.ValueExists("MatchedRules")) {
     Aws::Utils::Array<JsonView> matchedRulesJsonList = jsonValue.GetArray("MatchedRules");
-    for(unsigned matchedRulesIndex = 0; matchedRulesIndex < matchedRulesJsonList.GetLength(); ++matchedRulesIndex)
-    {
+    for (unsigned matchedRulesIndex = 0; matchedRulesIndex < matchedRulesJsonList.GetLength(); ++matchedRulesIndex) {
       m_matchedRules.push_back(matchedRulesJsonList[matchedRulesIndex].AsObject());
     }
+    m_matchedRulesHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

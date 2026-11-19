@@ -4,99 +4,118 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/location/LocationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
-  class CreateGeofenceCollectionResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult();
-    AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
+class CreateGeofenceCollectionResult {
+ public:
+  AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult() = default;
+  AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LOCATIONSERVICE_API CreateGeofenceCollectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name for the geofence collection.</p>
+   */
+  inline const Aws::String& GetCollectionName() const { return m_collectionName; }
+  template <typename CollectionNameT = Aws::String>
+  void SetCollectionName(CollectionNameT&& value) {
+    m_collectionNameHasBeenSet = true;
+    m_collectionName = std::forward<CollectionNameT>(value);
+  }
+  template <typename CollectionNameT = Aws::String>
+  CreateGeofenceCollectionResult& WithCollectionName(CollectionNameT&& value) {
+    SetCollectionName(std::forward<CollectionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name for the geofence collection.</p>
-     */
-    inline const Aws::String& GetCollectionName() const{ return m_collectionName; }
-    inline void SetCollectionName(const Aws::String& value) { m_collectionName = value; }
-    inline void SetCollectionName(Aws::String&& value) { m_collectionName = std::move(value); }
-    inline void SetCollectionName(const char* value) { m_collectionName.assign(value); }
-    inline CreateGeofenceCollectionResult& WithCollectionName(const Aws::String& value) { SetCollectionName(value); return *this;}
-    inline CreateGeofenceCollectionResult& WithCollectionName(Aws::String&& value) { SetCollectionName(std::move(value)); return *this;}
-    inline CreateGeofenceCollectionResult& WithCollectionName(const char* value) { SetCollectionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used
+   * when you need to specify a resource across all Amazon Web Services. </p> <ul>
+   * <li> <p>Format example:
+   * <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code>
+   * </p> </li> </ul>
+   */
+  inline const Aws::String& GetCollectionArn() const { return m_collectionArn; }
+  template <typename CollectionArnT = Aws::String>
+  void SetCollectionArn(CollectionArnT&& value) {
+    m_collectionArnHasBeenSet = true;
+    m_collectionArn = std::forward<CollectionArnT>(value);
+  }
+  template <typename CollectionArnT = Aws::String>
+  CreateGeofenceCollectionResult& WithCollectionArn(CollectionArnT&& value) {
+    SetCollectionArn(std::forward<CollectionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used
-     * when you need to specify a resource across all Amazon Web Services. </p> <ul>
-     * <li> <p>Format example:
-     * <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code>
-     * </p> </li> </ul>
-     */
-    inline const Aws::String& GetCollectionArn() const{ return m_collectionArn; }
-    inline void SetCollectionArn(const Aws::String& value) { m_collectionArn = value; }
-    inline void SetCollectionArn(Aws::String&& value) { m_collectionArn = std::move(value); }
-    inline void SetCollectionArn(const char* value) { m_collectionArn.assign(value); }
-    inline CreateGeofenceCollectionResult& WithCollectionArn(const Aws::String& value) { SetCollectionArn(value); return *this;}
-    inline CreateGeofenceCollectionResult& WithCollectionArn(Aws::String&& value) { SetCollectionArn(std::move(value)); return *this;}
-    inline CreateGeofenceCollectionResult& WithCollectionArn(const char* value) { SetCollectionArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the geofence collection was created in <a
+   * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a>
+   * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateTime() const { return m_createTime; }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  void SetCreateTime(CreateTimeT&& value) {
+    m_createTimeHasBeenSet = true;
+    m_createTime = std::forward<CreateTimeT>(value);
+  }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  CreateGeofenceCollectionResult& WithCreateTime(CreateTimeT&& value) {
+    SetCreateTime(std::forward<CreateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the geofence collection was created in <a
-     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a>
-     * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateTime() const{ return m_createTime; }
-    inline void SetCreateTime(const Aws::Utils::DateTime& value) { m_createTime = value; }
-    inline void SetCreateTime(Aws::Utils::DateTime&& value) { m_createTime = std::move(value); }
-    inline CreateGeofenceCollectionResult& WithCreateTime(const Aws::Utils::DateTime& value) { SetCreateTime(value); return *this;}
-    inline CreateGeofenceCollectionResult& WithCreateTime(Aws::Utils::DateTime&& value) { SetCreateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateGeofenceCollectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateGeofenceCollectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateGeofenceCollectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateGeofenceCollectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_collectionName;
+ private:
+  Aws::String m_collectionName;
 
-    Aws::String m_collectionArn;
+  Aws::String m_collectionArn;
 
-    Aws::Utils::DateTime m_createTime;
+  Aws::Utils::DateTime m_createTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_collectionNameHasBeenSet = false;
+  bool m_collectionArnHasBeenSet = false;
+  bool m_createTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

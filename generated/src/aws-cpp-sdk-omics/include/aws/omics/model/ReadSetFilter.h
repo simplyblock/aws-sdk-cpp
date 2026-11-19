@@ -4,189 +4,222 @@
  */
 
 #pragma once
-#include <aws/omics/Omics_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/omics/model/ReadSetStatus.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/omics/Omics_EXPORTS.h>
 #include <aws/omics/model/CreationType.h>
+#include <aws/omics/model/ReadSetStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Omics
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Omics {
+namespace Model {
 
+/**
+ * <p>A filter for read sets.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ReadSetFilter">AWS
+ * API Reference</a></p>
+ */
+class ReadSetFilter {
+ public:
+  AWS_OMICS_API ReadSetFilter() = default;
+  AWS_OMICS_API ReadSetFilter(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OMICS_API ReadSetFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OMICS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A filter for read sets.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ReadSetFilter">AWS
-   * API Reference</a></p>
+   * <p>A name to filter on.</p>
    */
-  class ReadSetFilter
-  {
-  public:
-    AWS_OMICS_API ReadSetFilter();
-    AWS_OMICS_API ReadSetFilter(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OMICS_API ReadSetFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OMICS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ReadSetFilter& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A status to filter on.</p>
+   */
+  inline ReadSetStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(ReadSetStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ReadSetFilter& WithStatus(ReadSetStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A name to filter on.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ReadSetFilter& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ReadSetFilter& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ReadSetFilter& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A genome reference ARN to filter on.</p>
+   */
+  inline const Aws::String& GetReferenceArn() const { return m_referenceArn; }
+  inline bool ReferenceArnHasBeenSet() const { return m_referenceArnHasBeenSet; }
+  template <typename ReferenceArnT = Aws::String>
+  void SetReferenceArn(ReferenceArnT&& value) {
+    m_referenceArnHasBeenSet = true;
+    m_referenceArn = std::forward<ReferenceArnT>(value);
+  }
+  template <typename ReferenceArnT = Aws::String>
+  ReadSetFilter& WithReferenceArn(ReferenceArnT&& value) {
+    SetReferenceArn(std::forward<ReferenceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A status to filter on.</p>
-     */
-    inline const ReadSetStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const ReadSetStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(ReadSetStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline ReadSetFilter& WithStatus(const ReadSetStatus& value) { SetStatus(value); return *this;}
-    inline ReadSetFilter& WithStatus(ReadSetStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The filter's start date.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAfter() const { return m_createdAfter; }
+  inline bool CreatedAfterHasBeenSet() const { return m_createdAfterHasBeenSet; }
+  template <typename CreatedAfterT = Aws::Utils::DateTime>
+  void SetCreatedAfter(CreatedAfterT&& value) {
+    m_createdAfterHasBeenSet = true;
+    m_createdAfter = std::forward<CreatedAfterT>(value);
+  }
+  template <typename CreatedAfterT = Aws::Utils::DateTime>
+  ReadSetFilter& WithCreatedAfter(CreatedAfterT&& value) {
+    SetCreatedAfter(std::forward<CreatedAfterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A genome reference ARN to filter on.</p>
-     */
-    inline const Aws::String& GetReferenceArn() const{ return m_referenceArn; }
-    inline bool ReferenceArnHasBeenSet() const { return m_referenceArnHasBeenSet; }
-    inline void SetReferenceArn(const Aws::String& value) { m_referenceArnHasBeenSet = true; m_referenceArn = value; }
-    inline void SetReferenceArn(Aws::String&& value) { m_referenceArnHasBeenSet = true; m_referenceArn = std::move(value); }
-    inline void SetReferenceArn(const char* value) { m_referenceArnHasBeenSet = true; m_referenceArn.assign(value); }
-    inline ReadSetFilter& WithReferenceArn(const Aws::String& value) { SetReferenceArn(value); return *this;}
-    inline ReadSetFilter& WithReferenceArn(Aws::String&& value) { SetReferenceArn(std::move(value)); return *this;}
-    inline ReadSetFilter& WithReferenceArn(const char* value) { SetReferenceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The filter's end date.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedBefore() const { return m_createdBefore; }
+  inline bool CreatedBeforeHasBeenSet() const { return m_createdBeforeHasBeenSet; }
+  template <typename CreatedBeforeT = Aws::Utils::DateTime>
+  void SetCreatedBefore(CreatedBeforeT&& value) {
+    m_createdBeforeHasBeenSet = true;
+    m_createdBefore = std::forward<CreatedBeforeT>(value);
+  }
+  template <typename CreatedBeforeT = Aws::Utils::DateTime>
+  ReadSetFilter& WithCreatedBefore(CreatedBeforeT&& value) {
+    SetCreatedBefore(std::forward<CreatedBeforeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The filter's start date.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAfter() const{ return m_createdAfter; }
-    inline bool CreatedAfterHasBeenSet() const { return m_createdAfterHasBeenSet; }
-    inline void SetCreatedAfter(const Aws::Utils::DateTime& value) { m_createdAfterHasBeenSet = true; m_createdAfter = value; }
-    inline void SetCreatedAfter(Aws::Utils::DateTime&& value) { m_createdAfterHasBeenSet = true; m_createdAfter = std::move(value); }
-    inline ReadSetFilter& WithCreatedAfter(const Aws::Utils::DateTime& value) { SetCreatedAfter(value); return *this;}
-    inline ReadSetFilter& WithCreatedAfter(Aws::Utils::DateTime&& value) { SetCreatedAfter(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The read set source's sample ID. </p>
+   */
+  inline const Aws::String& GetSampleId() const { return m_sampleId; }
+  inline bool SampleIdHasBeenSet() const { return m_sampleIdHasBeenSet; }
+  template <typename SampleIdT = Aws::String>
+  void SetSampleId(SampleIdT&& value) {
+    m_sampleIdHasBeenSet = true;
+    m_sampleId = std::forward<SampleIdT>(value);
+  }
+  template <typename SampleIdT = Aws::String>
+  ReadSetFilter& WithSampleId(SampleIdT&& value) {
+    SetSampleId(std::forward<SampleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The filter's end date.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedBefore() const{ return m_createdBefore; }
-    inline bool CreatedBeforeHasBeenSet() const { return m_createdBeforeHasBeenSet; }
-    inline void SetCreatedBefore(const Aws::Utils::DateTime& value) { m_createdBeforeHasBeenSet = true; m_createdBefore = value; }
-    inline void SetCreatedBefore(Aws::Utils::DateTime&& value) { m_createdBeforeHasBeenSet = true; m_createdBefore = std::move(value); }
-    inline ReadSetFilter& WithCreatedBefore(const Aws::Utils::DateTime& value) { SetCreatedBefore(value); return *this;}
-    inline ReadSetFilter& WithCreatedBefore(Aws::Utils::DateTime&& value) { SetCreatedBefore(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The read set source's subject ID. </p>
+   */
+  inline const Aws::String& GetSubjectId() const { return m_subjectId; }
+  inline bool SubjectIdHasBeenSet() const { return m_subjectIdHasBeenSet; }
+  template <typename SubjectIdT = Aws::String>
+  void SetSubjectId(SubjectIdT&& value) {
+    m_subjectIdHasBeenSet = true;
+    m_subjectId = std::forward<SubjectIdT>(value);
+  }
+  template <typename SubjectIdT = Aws::String>
+  ReadSetFilter& WithSubjectId(SubjectIdT&& value) {
+    SetSubjectId(std::forward<SubjectIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The read set source's sample ID. </p>
-     */
-    inline const Aws::String& GetSampleId() const{ return m_sampleId; }
-    inline bool SampleIdHasBeenSet() const { return m_sampleIdHasBeenSet; }
-    inline void SetSampleId(const Aws::String& value) { m_sampleIdHasBeenSet = true; m_sampleId = value; }
-    inline void SetSampleId(Aws::String&& value) { m_sampleIdHasBeenSet = true; m_sampleId = std::move(value); }
-    inline void SetSampleId(const char* value) { m_sampleIdHasBeenSet = true; m_sampleId.assign(value); }
-    inline ReadSetFilter& WithSampleId(const Aws::String& value) { SetSampleId(value); return *this;}
-    inline ReadSetFilter& WithSampleId(Aws::String&& value) { SetSampleId(std::move(value)); return *this;}
-    inline ReadSetFilter& WithSampleId(const char* value) { SetSampleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Where the source originated. </p>
+   */
+  inline const Aws::String& GetGeneratedFrom() const { return m_generatedFrom; }
+  inline bool GeneratedFromHasBeenSet() const { return m_generatedFromHasBeenSet; }
+  template <typename GeneratedFromT = Aws::String>
+  void SetGeneratedFrom(GeneratedFromT&& value) {
+    m_generatedFromHasBeenSet = true;
+    m_generatedFrom = std::forward<GeneratedFromT>(value);
+  }
+  template <typename GeneratedFromT = Aws::String>
+  ReadSetFilter& WithGeneratedFrom(GeneratedFromT&& value) {
+    SetGeneratedFrom(std::forward<GeneratedFromT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The read set source's subject ID. </p>
-     */
-    inline const Aws::String& GetSubjectId() const{ return m_subjectId; }
-    inline bool SubjectIdHasBeenSet() const { return m_subjectIdHasBeenSet; }
-    inline void SetSubjectId(const Aws::String& value) { m_subjectIdHasBeenSet = true; m_subjectId = value; }
-    inline void SetSubjectId(Aws::String&& value) { m_subjectIdHasBeenSet = true; m_subjectId = std::move(value); }
-    inline void SetSubjectId(const char* value) { m_subjectIdHasBeenSet = true; m_subjectId.assign(value); }
-    inline ReadSetFilter& WithSubjectId(const Aws::String& value) { SetSubjectId(value); return *this;}
-    inline ReadSetFilter& WithSubjectId(Aws::String&& value) { SetSubjectId(std::move(value)); return *this;}
-    inline ReadSetFilter& WithSubjectId(const char* value) { SetSubjectId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The creation type of the read set. </p>
+   */
+  inline CreationType GetCreationType() const { return m_creationType; }
+  inline bool CreationTypeHasBeenSet() const { return m_creationTypeHasBeenSet; }
+  inline void SetCreationType(CreationType value) {
+    m_creationTypeHasBeenSet = true;
+    m_creationType = value;
+  }
+  inline ReadSetFilter& WithCreationType(CreationType value) {
+    SetCreationType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p> Where the source originated. </p>
-     */
-    inline const Aws::String& GetGeneratedFrom() const{ return m_generatedFrom; }
-    inline bool GeneratedFromHasBeenSet() const { return m_generatedFromHasBeenSet; }
-    inline void SetGeneratedFrom(const Aws::String& value) { m_generatedFromHasBeenSet = true; m_generatedFrom = value; }
-    inline void SetGeneratedFrom(Aws::String&& value) { m_generatedFromHasBeenSet = true; m_generatedFrom = std::move(value); }
-    inline void SetGeneratedFrom(const char* value) { m_generatedFromHasBeenSet = true; m_generatedFrom.assign(value); }
-    inline ReadSetFilter& WithGeneratedFrom(const Aws::String& value) { SetGeneratedFrom(value); return *this;}
-    inline ReadSetFilter& WithGeneratedFrom(Aws::String&& value) { SetGeneratedFrom(std::move(value)); return *this;}
-    inline ReadSetFilter& WithGeneratedFrom(const char* value) { SetGeneratedFrom(value); return *this;}
-    ///@}
+  ReadSetStatus m_status{ReadSetStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p> The creation type of the read set. </p>
-     */
-    inline const CreationType& GetCreationType() const{ return m_creationType; }
-    inline bool CreationTypeHasBeenSet() const { return m_creationTypeHasBeenSet; }
-    inline void SetCreationType(const CreationType& value) { m_creationTypeHasBeenSet = true; m_creationType = value; }
-    inline void SetCreationType(CreationType&& value) { m_creationTypeHasBeenSet = true; m_creationType = std::move(value); }
-    inline ReadSetFilter& WithCreationType(const CreationType& value) { SetCreationType(value); return *this;}
-    inline ReadSetFilter& WithCreationType(CreationType&& value) { SetCreationType(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_referenceArn;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAfter{};
 
-    ReadSetStatus m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::Utils::DateTime m_createdBefore{};
 
-    Aws::String m_referenceArn;
-    bool m_referenceArnHasBeenSet = false;
+  Aws::String m_sampleId;
 
-    Aws::Utils::DateTime m_createdAfter;
-    bool m_createdAfterHasBeenSet = false;
+  Aws::String m_subjectId;
 
-    Aws::Utils::DateTime m_createdBefore;
-    bool m_createdBeforeHasBeenSet = false;
+  Aws::String m_generatedFrom;
 
-    Aws::String m_sampleId;
-    bool m_sampleIdHasBeenSet = false;
+  CreationType m_creationType{CreationType::NOT_SET};
+  bool m_nameHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_referenceArnHasBeenSet = false;
+  bool m_createdAfterHasBeenSet = false;
+  bool m_createdBeforeHasBeenSet = false;
+  bool m_sampleIdHasBeenSet = false;
+  bool m_subjectIdHasBeenSet = false;
+  bool m_generatedFromHasBeenSet = false;
+  bool m_creationTypeHasBeenSet = false;
+};
 
-    Aws::String m_subjectId;
-    bool m_subjectIdHasBeenSet = false;
-
-    Aws::String m_generatedFrom;
-    bool m_generatedFromHasBeenSet = false;
-
-    CreationType m_creationType;
-    bool m_creationTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Omics
-} // namespace Aws
+}  // namespace Model
+}  // namespace Omics
+}  // namespace Aws

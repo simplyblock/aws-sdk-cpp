@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/socialmessaging/model/DeleteWhatsAppMessageMediaRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/http/URI.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/socialmessaging/model/DeleteWhatsAppMessageMediaRequest.h>
 
 #include <utility>
 
@@ -15,35 +15,19 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
 
-DeleteWhatsAppMessageMediaRequest::DeleteWhatsAppMessageMediaRequest() : 
-    m_mediaIdHasBeenSet(false),
-    m_originationPhoneNumberIdHasBeenSet(false)
-{
+Aws::String DeleteWhatsAppMessageMediaRequest::SerializePayload() const { return {}; }
+
+void DeleteWhatsAppMessageMediaRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_mediaIdHasBeenSet) {
+    ss << m_mediaId;
+    uri.AddQueryStringParameter("mediaId", ss.str());
+    ss.str("");
+  }
+
+  if (m_originationPhoneNumberIdHasBeenSet) {
+    ss << m_originationPhoneNumberId;
+    uri.AddQueryStringParameter("originationPhoneNumberId", ss.str());
+    ss.str("");
+  }
 }
-
-Aws::String DeleteWhatsAppMessageMediaRequest::SerializePayload() const
-{
-  return {};
-}
-
-void DeleteWhatsAppMessageMediaRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_mediaIdHasBeenSet)
-    {
-      ss << m_mediaId;
-      uri.AddQueryStringParameter("mediaId", ss.str());
-      ss.str("");
-    }
-
-    if(m_originationPhoneNumberIdHasBeenSet)
-    {
-      ss << m_originationPhoneNumberId;
-      uri.AddQueryStringParameter("originationPhoneNumberId", ss.str());
-      ss.str("");
-    }
-
-}
-
-
-

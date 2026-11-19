@@ -4,40 +4,37 @@
  */
 
 #include <aws/backup-gateway/model/StartVirtualMachinesMetadataSyncRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::BackupGateway::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-StartVirtualMachinesMetadataSyncRequest::StartVirtualMachinesMetadataSyncRequest() : 
-    m_hypervisorArnHasBeenSet(false)
-{
-}
+Aws::String StartVirtualMachinesMetadataSyncRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String StartVirtualMachinesMetadataSyncRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_hypervisorArnHasBeenSet)
-  {
-   payload.WithString("HypervisorArn", m_hypervisorArn);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_hypervisorArnHasBeenSet) {
+    mapSize++;
   }
 
-  return payload.View().WriteReadable();
+  encoder.WriteMapStart(mapSize);
+
+  if (m_hypervisorArnHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("HypervisorArn"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_hypervisorArn.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection StartVirtualMachinesMetadataSyncRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StartVirtualMachinesMetadataSyncRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BackupOnPremises_v20210101.StartVirtualMachinesMetadataSync"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

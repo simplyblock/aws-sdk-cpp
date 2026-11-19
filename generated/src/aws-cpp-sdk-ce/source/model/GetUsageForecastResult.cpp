@@ -4,10 +4,10 @@
  */
 
 #include <aws/ce/model/GetUsageForecastResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
@@ -17,41 +17,30 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetUsageForecastResult::GetUsageForecastResult()
-{
-}
+GetUsageForecastResult::GetUsageForecastResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-GetUsageForecastResult::GetUsageForecastResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-GetUsageForecastResult& GetUsageForecastResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetUsageForecastResult& GetUsageForecastResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("Total"))
-  {
+  if (jsonValue.ValueExists("Total")) {
     m_total = jsonValue.GetObject("Total");
-
+    m_totalHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ForecastResultsByTime"))
-  {
+  if (jsonValue.ValueExists("ForecastResultsByTime")) {
     Aws::Utils::Array<JsonView> forecastResultsByTimeJsonList = jsonValue.GetArray("ForecastResultsByTime");
-    for(unsigned forecastResultsByTimeIndex = 0; forecastResultsByTimeIndex < forecastResultsByTimeJsonList.GetLength(); ++forecastResultsByTimeIndex)
-    {
+    for (unsigned forecastResultsByTimeIndex = 0; forecastResultsByTimeIndex < forecastResultsByTimeJsonList.GetLength();
+         ++forecastResultsByTimeIndex) {
       m_forecastResultsByTime.push_back(forecastResultsByTimeJsonList[forecastResultsByTimeIndex].AsObject());
     }
+    m_forecastResultsByTimeHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

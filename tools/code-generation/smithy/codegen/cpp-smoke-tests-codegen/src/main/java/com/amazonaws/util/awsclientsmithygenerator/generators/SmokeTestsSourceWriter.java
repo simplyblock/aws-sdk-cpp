@@ -5,8 +5,10 @@
  */
 package com.amazonaws.util.awsclientsmithygenerator.generators;
 
-import software.amazon.smithy.codegen.core.SymbolWriter;
+import com.google.common.base.CaseFormat;
 import software.amazon.smithy.aws.smoketests.model.AwsVendorParams;
+import software.amazon.smithy.codegen.core.SymbolWriter;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -45,9 +47,12 @@ public final class SmokeTestsSourceWriter extends SymbolWriter<SmokeTestsSourceW
     {
         //declare test fixture
         write("TEST_F($LSmokeTestSuite, $L )",clientNamespace, test.getTestcaseName()).write("{").indent().
-        write("Aws::$L::$LClientConfiguration clientConfiguration;", clientNamespace,clientNamespace);
-        if(test.getConfig().getParams() instanceof AwsVendorParams configParams)
+        write("Aws::$L::$LClientConfiguration clientConfiguration;",
+                        clientNamespace,
+                        CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, clientNamespace));
+        if(test.getConfig().getParams() instanceof AwsVendorParams)
         {
+            AwsVendorParams configParams = (AwsVendorParams) test.getConfig().getParams();
             if(!configParams.getRegion().isEmpty())
             {
                 write("clientConfiguration.region = \"$L\";",configParams.getRegion());
@@ -59,7 +64,8 @@ public final class SmokeTestsSourceWriter extends SymbolWriter<SmokeTestsSourceW
 
         if(Objects.equals(test.getAuth(), "sigv4") || Objects.equals(test.getAuth(), "sigv4a"))
         {
-            write("auto clientSp = Aws::MakeShared<$LClient>(ALLOCATION_TAG, clientConfiguration);",clientNamespace);
+            write("auto clientSp = Aws::MakeShared<$LClient>(ALLOCATION_TAG, clientConfiguration);",
+                    CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, clientNamespace));
         }
         //comments
         if( !test.getTestDataCodeBlock().isEmpty() )
@@ -75,7 +81,7 @@ public final class SmokeTestsSourceWriter extends SymbolWriter<SmokeTestsSourceW
         write("auto outcome = clientSp->$L(input);",test.getOperationName());
         if (test.isExpectSuccess())
         {
-            write("EXPECT_TRUE( outcome.IsSuccess());");
+            write("EXPECT_TRUE( outcome.IsSuccess()) << outcome.GetError().GetExceptionName() << \" - \" << outcome.GetError().GetMessage();");
         }
         else
         {

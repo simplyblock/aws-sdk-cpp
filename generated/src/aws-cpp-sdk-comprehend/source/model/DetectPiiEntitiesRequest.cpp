@@ -4,47 +4,45 @@
  */
 
 #include <aws/comprehend/model/DetectPiiEntitiesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::Comprehend::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-DetectPiiEntitiesRequest::DetectPiiEntitiesRequest() : 
-    m_textHasBeenSet(false),
-    m_languageCode(LanguageCode::NOT_SET),
-    m_languageCodeHasBeenSet(false)
-{
-}
+Aws::String DetectPiiEntitiesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String DetectPiiEntitiesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_textHasBeenSet)
-  {
-   payload.WithString("Text", m_text);
-
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_textHasBeenSet) {
+    mapSize++;
+  }
+  if (m_languageCodeHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_languageCodeHasBeenSet)
-  {
-   payload.WithString("LanguageCode", LanguageCodeMapper::GetNameForLanguageCode(m_languageCode));
+  encoder.WriteMapStart(mapSize);
+
+  if (m_textHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Text"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_text.c_str()));
   }
 
-  return payload.View().WriteReadable();
+  if (m_languageCodeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("LanguageCode"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(LanguageCodeMapper::GetNameForLanguageCode(m_languageCode).c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::Http::HeaderValueCollection DetectPiiEntitiesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DetectPiiEntitiesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.DetectPiiEntities"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

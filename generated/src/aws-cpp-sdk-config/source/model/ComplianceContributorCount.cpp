@@ -11,65 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ConfigService
-{
-namespace Model
-{
+namespace Aws {
+namespace ConfigService {
+namespace Model {
 
-ComplianceContributorCount::ComplianceContributorCount() : 
-    m_cappedCount(0),
-    m_cappedCountHasBeenSet(false),
-    m_capExceeded(false),
-    m_capExceededHasBeenSet(false)
-{
-}
+ComplianceContributorCount::ComplianceContributorCount(JsonView jsonValue) { *this = jsonValue; }
 
-ComplianceContributorCount::ComplianceContributorCount(JsonView jsonValue)
-  : ComplianceContributorCount()
-{
-  *this = jsonValue;
-}
-
-ComplianceContributorCount& ComplianceContributorCount::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("CappedCount"))
-  {
+ComplianceContributorCount& ComplianceContributorCount::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("CappedCount")) {
     m_cappedCount = jsonValue.GetInteger("CappedCount");
-
     m_cappedCountHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CapExceeded"))
-  {
+  if (jsonValue.ValueExists("CapExceeded")) {
     m_capExceeded = jsonValue.GetBool("CapExceeded");
-
     m_capExceededHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ComplianceContributorCount::Jsonize() const
-{
+JsonValue ComplianceContributorCount::Jsonize() const {
   JsonValue payload;
 
-  if(m_cappedCountHasBeenSet)
-  {
-   payload.WithInteger("CappedCount", m_cappedCount);
-
+  if (m_cappedCountHasBeenSet) {
+    payload.WithInteger("CappedCount", m_cappedCount);
   }
 
-  if(m_capExceededHasBeenSet)
-  {
-   payload.WithBool("CapExceeded", m_capExceeded);
-
+  if (m_capExceededHasBeenSet) {
+    payload.WithBool("CapExceeded", m_capExceeded);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

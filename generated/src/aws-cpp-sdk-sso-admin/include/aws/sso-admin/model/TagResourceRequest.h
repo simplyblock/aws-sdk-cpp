@@ -4,95 +4,108 @@
  */
 
 #pragma once
-#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
-#include <aws/sso-admin/SSOAdminRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sso-admin/SSOAdminRequest.h>
+#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
 #include <aws/sso-admin/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SSOAdmin
-{
-namespace Model
-{
+namespace Aws {
+namespace SSOAdmin {
+namespace Model {
 
+/**
+ */
+class TagResourceRequest : public SSOAdminRequest {
+ public:
+  AWS_SSOADMIN_API TagResourceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "TagResource"; }
+
+  AWS_SSOADMIN_API Aws::String SerializePayload() const override;
+
+  AWS_SSOADMIN_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the IAM Identity Center instance under which the operation will be
+   * executed. For more information about ARNs, see <a
+   * href="/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+   * (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web
+   * Services General Reference</i>.</p>
    */
-  class TagResourceRequest : public SSOAdminRequest
-  {
-  public:
-    AWS_SSOADMIN_API TagResourceRequest();
+  inline const Aws::String& GetInstanceArn() const { return m_instanceArn; }
+  inline bool InstanceArnHasBeenSet() const { return m_instanceArnHasBeenSet; }
+  template <typename InstanceArnT = Aws::String>
+  void SetInstanceArn(InstanceArnT&& value) {
+    m_instanceArnHasBeenSet = true;
+    m_instanceArn = std::forward<InstanceArnT>(value);
+  }
+  template <typename InstanceArnT = Aws::String>
+  TagResourceRequest& WithInstanceArn(InstanceArnT&& value) {
+    SetInstanceArn(std::forward<InstanceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "TagResource"; }
+  ///@{
+  /**
+   * <p>The ARN of the resource with the tags to be listed.</p>
+   */
+  inline const Aws::String& GetResourceArn() const { return m_resourceArn; }
+  inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
+  template <typename ResourceArnT = Aws::String>
+  void SetResourceArn(ResourceArnT&& value) {
+    m_resourceArnHasBeenSet = true;
+    m_resourceArn = std::forward<ResourceArnT>(value);
+  }
+  template <typename ResourceArnT = Aws::String>
+  TagResourceRequest& WithResourceArn(ResourceArnT&& value) {
+    SetResourceArn(std::forward<ResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SSOADMIN_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A set of key-value pairs that are used to manage the resource.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  TagResourceRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  TagResourceRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceArn;
 
-    AWS_SSOADMIN_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_resourceArn;
 
+  Aws::Vector<Tag> m_tags;
+  bool m_instanceArnHasBeenSet = false;
+  bool m_resourceArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ARN of the IAM Identity Center instance under which the operation will be
-     * executed. For more information about ARNs, see <a
-     * href="/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
-     * (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web
-     * Services General Reference</i>.</p>
-     */
-    inline const Aws::String& GetInstanceArn() const{ return m_instanceArn; }
-    inline bool InstanceArnHasBeenSet() const { return m_instanceArnHasBeenSet; }
-    inline void SetInstanceArn(const Aws::String& value) { m_instanceArnHasBeenSet = true; m_instanceArn = value; }
-    inline void SetInstanceArn(Aws::String&& value) { m_instanceArnHasBeenSet = true; m_instanceArn = std::move(value); }
-    inline void SetInstanceArn(const char* value) { m_instanceArnHasBeenSet = true; m_instanceArn.assign(value); }
-    inline TagResourceRequest& WithInstanceArn(const Aws::String& value) { SetInstanceArn(value); return *this;}
-    inline TagResourceRequest& WithInstanceArn(Aws::String&& value) { SetInstanceArn(std::move(value)); return *this;}
-    inline TagResourceRequest& WithInstanceArn(const char* value) { SetInstanceArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The ARN of the resource with the tags to be listed.</p>
-     */
-    inline const Aws::String& GetResourceArn() const{ return m_resourceArn; }
-    inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
-    inline void SetResourceArn(const Aws::String& value) { m_resourceArnHasBeenSet = true; m_resourceArn = value; }
-    inline void SetResourceArn(Aws::String&& value) { m_resourceArnHasBeenSet = true; m_resourceArn = std::move(value); }
-    inline void SetResourceArn(const char* value) { m_resourceArnHasBeenSet = true; m_resourceArn.assign(value); }
-    inline TagResourceRequest& WithResourceArn(const Aws::String& value) { SetResourceArn(value); return *this;}
-    inline TagResourceRequest& WithResourceArn(Aws::String&& value) { SetResourceArn(std::move(value)); return *this;}
-    inline TagResourceRequest& WithResourceArn(const char* value) { SetResourceArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A set of key-value pairs that are used to manage the resource.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline TagResourceRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline TagResourceRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline TagResourceRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline TagResourceRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_instanceArn;
-    bool m_instanceArnHasBeenSet = false;
-
-    Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

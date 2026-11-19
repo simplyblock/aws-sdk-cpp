@@ -11,57 +11,40 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-ChatParticipantRoleConfig::ChatParticipantRoleConfig() : 
-    m_participantTimerConfigListHasBeenSet(false)
-{
-}
+ChatParticipantRoleConfig::ChatParticipantRoleConfig(JsonView jsonValue) { *this = jsonValue; }
 
-ChatParticipantRoleConfig::ChatParticipantRoleConfig(JsonView jsonValue)
-  : ChatParticipantRoleConfig()
-{
-  *this = jsonValue;
-}
-
-ChatParticipantRoleConfig& ChatParticipantRoleConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ParticipantTimerConfigList"))
-  {
+ChatParticipantRoleConfig& ChatParticipantRoleConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ParticipantTimerConfigList")) {
     Aws::Utils::Array<JsonView> participantTimerConfigListJsonList = jsonValue.GetArray("ParticipantTimerConfigList");
-    for(unsigned participantTimerConfigListIndex = 0; participantTimerConfigListIndex < participantTimerConfigListJsonList.GetLength(); ++participantTimerConfigListIndex)
-    {
+    for (unsigned participantTimerConfigListIndex = 0; participantTimerConfigListIndex < participantTimerConfigListJsonList.GetLength();
+         ++participantTimerConfigListIndex) {
       m_participantTimerConfigList.push_back(participantTimerConfigListJsonList[participantTimerConfigListIndex].AsObject());
     }
     m_participantTimerConfigListHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ChatParticipantRoleConfig::Jsonize() const
-{
+JsonValue ChatParticipantRoleConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_participantTimerConfigListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> participantTimerConfigListJsonList(m_participantTimerConfigList.size());
-   for(unsigned participantTimerConfigListIndex = 0; participantTimerConfigListIndex < participantTimerConfigListJsonList.GetLength(); ++participantTimerConfigListIndex)
-   {
-     participantTimerConfigListJsonList[participantTimerConfigListIndex].AsObject(m_participantTimerConfigList[participantTimerConfigListIndex].Jsonize());
-   }
-   payload.WithArray("ParticipantTimerConfigList", std::move(participantTimerConfigListJsonList));
-
+  if (m_participantTimerConfigListHasBeenSet) {
+    Aws::Utils::Array<JsonValue> participantTimerConfigListJsonList(m_participantTimerConfigList.size());
+    for (unsigned participantTimerConfigListIndex = 0; participantTimerConfigListIndex < participantTimerConfigListJsonList.GetLength();
+         ++participantTimerConfigListIndex) {
+      participantTimerConfigListJsonList[participantTimerConfigListIndex].AsObject(
+          m_participantTimerConfigList[participantTimerConfigListIndex].Jsonize());
+    }
+    payload.WithArray("ParticipantTimerConfigList", std::move(participantTimerConfigListJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

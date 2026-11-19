@@ -4,306 +4,423 @@
  */
 
 #pragma once
-#include <aws/geo-places/GeoPlaces_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/geo-places/GeoPlaces_EXPORTS.h>
 #include <aws/geo-places/model/Country.h>
 #include <aws/geo-places/model/Region.h>
-#include <aws/geo-places/model/SubRegion.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/geo-places/model/SecondaryAddressComponent.h>
 #include <aws/geo-places/model/StreetComponents.h>
+#include <aws/geo-places/model/SubRegion.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GeoPlaces
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GeoPlaces {
+namespace Model {
 
+/**
+ * <p>The place address.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/geo-places-2020-11-19/Address">AWS
+ * API Reference</a></p>
+ */
+class Address {
+ public:
+  AWS_GEOPLACES_API Address() = default;
+  AWS_GEOPLACES_API Address(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOPLACES_API Address& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOPLACES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The place address.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/geo-places-2020-11-19/Address">AWS
-   * API Reference</a></p>
+   * <p>Assembled address value built out of the address components, according to the
+   * regional postal rules. This is the correctly formatted address.</p>
    */
-  class Address
-  {
-  public:
-    AWS_GEOPLACES_API Address();
-    AWS_GEOPLACES_API Address(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOPLACES_API Address& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOPLACES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetLabel() const { return m_label; }
+  inline bool LabelHasBeenSet() const { return m_labelHasBeenSet; }
+  template <typename LabelT = Aws::String>
+  void SetLabel(LabelT&& value) {
+    m_labelHasBeenSet = true;
+    m_label = std::forward<LabelT>(value);
+  }
+  template <typename LabelT = Aws::String>
+  Address& WithLabel(LabelT&& value) {
+    SetLabel(std::forward<LabelT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The country component of the address.</p>
+   */
+  inline const Country& GetCountry() const { return m_country; }
+  inline bool CountryHasBeenSet() const { return m_countryHasBeenSet; }
+  template <typename CountryT = Country>
+  void SetCountry(CountryT&& value) {
+    m_countryHasBeenSet = true;
+    m_country = std::forward<CountryT>(value);
+  }
+  template <typename CountryT = Country>
+  Address& WithCountry(CountryT&& value) {
+    SetCountry(std::forward<CountryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Assembled address value built out of the address components, according to the
-     * regional postal rules. This is the correctly formatted address.</p>
-     */
-    inline const Aws::String& GetLabel() const{ return m_label; }
-    inline bool LabelHasBeenSet() const { return m_labelHasBeenSet; }
-    inline void SetLabel(const Aws::String& value) { m_labelHasBeenSet = true; m_label = value; }
-    inline void SetLabel(Aws::String&& value) { m_labelHasBeenSet = true; m_label = std::move(value); }
-    inline void SetLabel(const char* value) { m_labelHasBeenSet = true; m_label.assign(value); }
-    inline Address& WithLabel(const Aws::String& value) { SetLabel(value); return *this;}
-    inline Address& WithLabel(Aws::String&& value) { SetLabel(std::move(value)); return *this;}
-    inline Address& WithLabel(const char* value) { SetLabel(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The region or state results should be present in. </p> <p>Example:
+   * <code>North Rhine-Westphalia</code>.</p>
+   */
+  inline const Region& GetRegion() const { return m_region; }
+  inline bool RegionHasBeenSet() const { return m_regionHasBeenSet; }
+  template <typename RegionT = Region>
+  void SetRegion(RegionT&& value) {
+    m_regionHasBeenSet = true;
+    m_region = std::forward<RegionT>(value);
+  }
+  template <typename RegionT = Region>
+  Address& WithRegion(RegionT&& value) {
+    SetRegion(std::forward<RegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The country component of the address.</p>
-     */
-    inline const Country& GetCountry() const{ return m_country; }
-    inline bool CountryHasBeenSet() const { return m_countryHasBeenSet; }
-    inline void SetCountry(const Country& value) { m_countryHasBeenSet = true; m_country = value; }
-    inline void SetCountry(Country&& value) { m_countryHasBeenSet = true; m_country = std::move(value); }
-    inline Address& WithCountry(const Country& value) { SetCountry(value); return *this;}
-    inline Address& WithCountry(Country&& value) { SetCountry(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The sub-region or county for which results should be present in. </p>
+   */
+  inline const SubRegion& GetSubRegion() const { return m_subRegion; }
+  inline bool SubRegionHasBeenSet() const { return m_subRegionHasBeenSet; }
+  template <typename SubRegionT = SubRegion>
+  void SetSubRegion(SubRegionT&& value) {
+    m_subRegionHasBeenSet = true;
+    m_subRegion = std::forward<SubRegionT>(value);
+  }
+  template <typename SubRegionT = SubRegion>
+  Address& WithSubRegion(SubRegionT&& value) {
+    SetSubRegion(std::forward<SubRegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The region or state results should be present in. </p> <p>Example:
-     * <code>North Rhine-Westphalia</code>.</p>
-     */
-    inline const Region& GetRegion() const{ return m_region; }
-    inline bool RegionHasBeenSet() const { return m_regionHasBeenSet; }
-    inline void SetRegion(const Region& value) { m_regionHasBeenSet = true; m_region = value; }
-    inline void SetRegion(Region&& value) { m_regionHasBeenSet = true; m_region = std::move(value); }
-    inline Address& WithRegion(const Region& value) { SetRegion(value); return *this;}
-    inline Address& WithRegion(Region&& value) { SetRegion(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The city or locality of the address.</p> <p>Example:
+   * <code>Vancouver</code>.</p>
+   */
+  inline const Aws::String& GetLocality() const { return m_locality; }
+  inline bool LocalityHasBeenSet() const { return m_localityHasBeenSet; }
+  template <typename LocalityT = Aws::String>
+  void SetLocality(LocalityT&& value) {
+    m_localityHasBeenSet = true;
+    m_locality = std::forward<LocalityT>(value);
+  }
+  template <typename LocalityT = Aws::String>
+  Address& WithLocality(LocalityT&& value) {
+    SetLocality(std::forward<LocalityT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The sub-region or county for which results should be present in. </p>
-     */
-    inline const SubRegion& GetSubRegion() const{ return m_subRegion; }
-    inline bool SubRegionHasBeenSet() const { return m_subRegionHasBeenSet; }
-    inline void SetSubRegion(const SubRegion& value) { m_subRegionHasBeenSet = true; m_subRegion = value; }
-    inline void SetSubRegion(SubRegion&& value) { m_subRegionHasBeenSet = true; m_subRegion = std::move(value); }
-    inline Address& WithSubRegion(const SubRegion& value) { SetSubRegion(value); return *this;}
-    inline Address& WithSubRegion(SubRegion&& value) { SetSubRegion(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The district or division of a locality associated with this address.</p>
+   */
+  inline const Aws::String& GetDistrict() const { return m_district; }
+  inline bool DistrictHasBeenSet() const { return m_districtHasBeenSet; }
+  template <typename DistrictT = Aws::String>
+  void SetDistrict(DistrictT&& value) {
+    m_districtHasBeenSet = true;
+    m_district = std::forward<DistrictT>(value);
+  }
+  template <typename DistrictT = Aws::String>
+  Address& WithDistrict(DistrictT&& value) {
+    SetDistrict(std::forward<DistrictT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The locality or city of the address.</p> <p>Example:
-     * <code>Vancouver</code>.</p>
-     */
-    inline const Aws::String& GetLocality() const{ return m_locality; }
-    inline bool LocalityHasBeenSet() const { return m_localityHasBeenSet; }
-    inline void SetLocality(const Aws::String& value) { m_localityHasBeenSet = true; m_locality = value; }
-    inline void SetLocality(Aws::String&& value) { m_localityHasBeenSet = true; m_locality = std::move(value); }
-    inline void SetLocality(const char* value) { m_localityHasBeenSet = true; m_locality.assign(value); }
-    inline Address& WithLocality(const Aws::String& value) { SetLocality(value); return *this;}
-    inline Address& WithLocality(Aws::String&& value) { SetLocality(std::move(value)); return *this;}
-    inline Address& WithLocality(const char* value) { SetLocality(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A subdivision of a district. </p> <p>Example:
+   * <code>Minden-Lübbecke</code>.</p>
+   */
+  inline const Aws::String& GetSubDistrict() const { return m_subDistrict; }
+  inline bool SubDistrictHasBeenSet() const { return m_subDistrictHasBeenSet; }
+  template <typename SubDistrictT = Aws::String>
+  void SetSubDistrict(SubDistrictT&& value) {
+    m_subDistrictHasBeenSet = true;
+    m_subDistrict = std::forward<SubDistrictT>(value);
+  }
+  template <typename SubDistrictT = Aws::String>
+  Address& WithSubDistrict(SubDistrictT&& value) {
+    SetSubDistrict(std::forward<SubDistrictT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The district or division of a locality associated with this address.</p>
-     */
-    inline const Aws::String& GetDistrict() const{ return m_district; }
-    inline bool DistrictHasBeenSet() const { return m_districtHasBeenSet; }
-    inline void SetDistrict(const Aws::String& value) { m_districtHasBeenSet = true; m_district = value; }
-    inline void SetDistrict(Aws::String&& value) { m_districtHasBeenSet = true; m_district = std::move(value); }
-    inline void SetDistrict(const char* value) { m_districtHasBeenSet = true; m_district.assign(value); }
-    inline Address& WithDistrict(const Aws::String& value) { SetDistrict(value); return *this;}
-    inline Address& WithDistrict(Aws::String&& value) { SetDistrict(std::move(value)); return *this;}
-    inline Address& WithDistrict(const char* value) { SetDistrict(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An alphanumeric string included in a postal address to facilitate mail
+   * sorting, such as post code, postcode, or ZIP code, for which the result should
+   * possess. </p>
+   */
+  inline const Aws::String& GetPostalCode() const { return m_postalCode; }
+  inline bool PostalCodeHasBeenSet() const { return m_postalCodeHasBeenSet; }
+  template <typename PostalCodeT = Aws::String>
+  void SetPostalCode(PostalCodeT&& value) {
+    m_postalCodeHasBeenSet = true;
+    m_postalCode = std::forward<PostalCodeT>(value);
+  }
+  template <typename PostalCodeT = Aws::String>
+  Address& WithPostalCode(PostalCodeT&& value) {
+    SetPostalCode(std::forward<PostalCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A subdivision of a district. </p> <p>Example:
-     * <code>Minden-Lübbecke</code>.</p>
-     */
-    inline const Aws::String& GetSubDistrict() const{ return m_subDistrict; }
-    inline bool SubDistrictHasBeenSet() const { return m_subDistrictHasBeenSet; }
-    inline void SetSubDistrict(const Aws::String& value) { m_subDistrictHasBeenSet = true; m_subDistrict = value; }
-    inline void SetSubDistrict(Aws::String&& value) { m_subDistrictHasBeenSet = true; m_subDistrict = std::move(value); }
-    inline void SetSubDistrict(const char* value) { m_subDistrictHasBeenSet = true; m_subDistrict.assign(value); }
-    inline Address& WithSubDistrict(const Aws::String& value) { SetSubDistrict(value); return *this;}
-    inline Address& WithSubDistrict(Aws::String&& value) { SetSubDistrict(std::move(value)); return *this;}
-    inline Address& WithSubDistrict(const char* value) { SetSubDistrict(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Name of the block. Not available in <code>ap-southeast-1</code> and
+   * <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>
+   */
+  inline const Aws::String& GetBlock() const { return m_block; }
+  inline bool BlockHasBeenSet() const { return m_blockHasBeenSet; }
+  template <typename BlockT = Aws::String>
+  void SetBlock(BlockT&& value) {
+    m_blockHasBeenSet = true;
+    m_block = std::forward<BlockT>(value);
+  }
+  template <typename BlockT = Aws::String>
+  Address& WithBlock(BlockT&& value) {
+    SetBlock(std::forward<BlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An alphanumeric string included in a postal address to facilitate mail
-     * sorting, such as post code, postcode, or ZIP code, for which the result should
-     * posses. </p>
-     */
-    inline const Aws::String& GetPostalCode() const{ return m_postalCode; }
-    inline bool PostalCodeHasBeenSet() const { return m_postalCodeHasBeenSet; }
-    inline void SetPostalCode(const Aws::String& value) { m_postalCodeHasBeenSet = true; m_postalCode = value; }
-    inline void SetPostalCode(Aws::String&& value) { m_postalCodeHasBeenSet = true; m_postalCode = std::move(value); }
-    inline void SetPostalCode(const char* value) { m_postalCodeHasBeenSet = true; m_postalCode.assign(value); }
-    inline Address& WithPostalCode(const Aws::String& value) { SetPostalCode(value); return *this;}
-    inline Address& WithPostalCode(Aws::String&& value) { SetPostalCode(std::move(value)); return *this;}
-    inline Address& WithPostalCode(const char* value) { SetPostalCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Name of sub-block. Not available in <code>ap-southeast-1</code> and
+   * <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>
+   */
+  inline const Aws::String& GetSubBlock() const { return m_subBlock; }
+  inline bool SubBlockHasBeenSet() const { return m_subBlockHasBeenSet; }
+  template <typename SubBlockT = Aws::String>
+  void SetSubBlock(SubBlockT&& value) {
+    m_subBlockHasBeenSet = true;
+    m_subBlock = std::forward<SubBlockT>(value);
+  }
+  template <typename SubBlockT = Aws::String>
+  Address& WithSubBlock(SubBlockT&& value) {
+    SetSubBlock(std::forward<SubBlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the block. </p> <p>Example: <code>Sunny Mansion 203 block: 2
-     * Chome</code> </p>
-     */
-    inline const Aws::String& GetBlock() const{ return m_block; }
-    inline bool BlockHasBeenSet() const { return m_blockHasBeenSet; }
-    inline void SetBlock(const Aws::String& value) { m_blockHasBeenSet = true; m_block = value; }
-    inline void SetBlock(Aws::String&& value) { m_blockHasBeenSet = true; m_block = std::move(value); }
-    inline void SetBlock(const char* value) { m_blockHasBeenSet = true; m_block.assign(value); }
-    inline Address& WithBlock(const Aws::String& value) { SetBlock(value); return *this;}
-    inline Address& WithBlock(Aws::String&& value) { SetBlock(std::move(value)); return *this;}
-    inline Address& WithBlock(const char* value) { SetBlock(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Name of the streets in the intersection. Not available in
+   * <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p> <p>Example: <code>["Friedrichstraße","Unter den Linden"]</code>
+   * </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetIntersection() const { return m_intersection; }
+  inline bool IntersectionHasBeenSet() const { return m_intersectionHasBeenSet; }
+  template <typename IntersectionT = Aws::Vector<Aws::String>>
+  void SetIntersection(IntersectionT&& value) {
+    m_intersectionHasBeenSet = true;
+    m_intersection = std::forward<IntersectionT>(value);
+  }
+  template <typename IntersectionT = Aws::Vector<Aws::String>>
+  Address& WithIntersection(IntersectionT&& value) {
+    SetIntersection(std::forward<IntersectionT>(value));
+    return *this;
+  }
+  template <typename IntersectionT = Aws::String>
+  Address& AddIntersection(IntersectionT&& value) {
+    m_intersectionHasBeenSet = true;
+    m_intersection.emplace_back(std::forward<IntersectionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block:
-     * 4</code> </p>
-     */
-    inline const Aws::String& GetSubBlock() const{ return m_subBlock; }
-    inline bool SubBlockHasBeenSet() const { return m_subBlockHasBeenSet; }
-    inline void SetSubBlock(const Aws::String& value) { m_subBlockHasBeenSet = true; m_subBlock = value; }
-    inline void SetSubBlock(Aws::String&& value) { m_subBlockHasBeenSet = true; m_subBlock = std::move(value); }
-    inline void SetSubBlock(const char* value) { m_subBlockHasBeenSet = true; m_subBlock.assign(value); }
-    inline Address& WithSubBlock(const Aws::String& value) { SetSubBlock(value); return *this;}
-    inline Address& WithSubBlock(Aws::String&& value) { SetSubBlock(std::move(value)); return *this;}
-    inline Address& WithSubBlock(const char* value) { SetSubBlock(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the street results should be present in.</p>
+   */
+  inline const Aws::String& GetStreet() const { return m_street; }
+  inline bool StreetHasBeenSet() const { return m_streetHasBeenSet; }
+  template <typename StreetT = Aws::String>
+  void SetStreet(StreetT&& value) {
+    m_streetHasBeenSet = true;
+    m_street = std::forward<StreetT>(value);
+  }
+  template <typename StreetT = Aws::String>
+  Address& WithStreet(StreetT&& value) {
+    SetStreet(std::forward<StreetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the streets in the intersection. </p> <p>Example:
-     * <code>["Friedrichstraße","Unter den Linden"]</code> </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetIntersection() const{ return m_intersection; }
-    inline bool IntersectionHasBeenSet() const { return m_intersectionHasBeenSet; }
-    inline void SetIntersection(const Aws::Vector<Aws::String>& value) { m_intersectionHasBeenSet = true; m_intersection = value; }
-    inline void SetIntersection(Aws::Vector<Aws::String>&& value) { m_intersectionHasBeenSet = true; m_intersection = std::move(value); }
-    inline Address& WithIntersection(const Aws::Vector<Aws::String>& value) { SetIntersection(value); return *this;}
-    inline Address& WithIntersection(Aws::Vector<Aws::String>&& value) { SetIntersection(std::move(value)); return *this;}
-    inline Address& AddIntersection(const Aws::String& value) { m_intersectionHasBeenSet = true; m_intersection.push_back(value); return *this; }
-    inline Address& AddIntersection(Aws::String&& value) { m_intersectionHasBeenSet = true; m_intersection.push_back(std::move(value)); return *this; }
-    inline Address& AddIntersection(const char* value) { m_intersectionHasBeenSet = true; m_intersection.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> Components of the street. Not available in <code>ap-southeast-1</code> and
+   * <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p> <p>Example: Yonge from "Yonge street".</p>
+   */
+  inline const Aws::Vector<StreetComponents>& GetStreetComponents() const { return m_streetComponents; }
+  inline bool StreetComponentsHasBeenSet() const { return m_streetComponentsHasBeenSet; }
+  template <typename StreetComponentsT = Aws::Vector<StreetComponents>>
+  void SetStreetComponents(StreetComponentsT&& value) {
+    m_streetComponentsHasBeenSet = true;
+    m_streetComponents = std::forward<StreetComponentsT>(value);
+  }
+  template <typename StreetComponentsT = Aws::Vector<StreetComponents>>
+  Address& WithStreetComponents(StreetComponentsT&& value) {
+    SetStreetComponents(std::forward<StreetComponentsT>(value));
+    return *this;
+  }
+  template <typename StreetComponentsT = StreetComponents>
+  Address& AddStreetComponents(StreetComponentsT&& value) {
+    m_streetComponentsHasBeenSet = true;
+    m_streetComponents.emplace_back(std::forward<StreetComponentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the street results should be present in.</p>
-     */
-    inline const Aws::String& GetStreet() const{ return m_street; }
-    inline bool StreetHasBeenSet() const { return m_streetHasBeenSet; }
-    inline void SetStreet(const Aws::String& value) { m_streetHasBeenSet = true; m_street = value; }
-    inline void SetStreet(Aws::String&& value) { m_streetHasBeenSet = true; m_street = std::move(value); }
-    inline void SetStreet(const char* value) { m_streetHasBeenSet = true; m_street.assign(value); }
-    inline Address& WithStreet(const Aws::String& value) { SetStreet(value); return *this;}
-    inline Address& WithStreet(Aws::String&& value) { SetStreet(std::move(value)); return *this;}
-    inline Address& WithStreet(const char* value) { SetStreet(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number that identifies an address within a street.</p>
+   */
+  inline const Aws::String& GetAddressNumber() const { return m_addressNumber; }
+  inline bool AddressNumberHasBeenSet() const { return m_addressNumberHasBeenSet; }
+  template <typename AddressNumberT = Aws::String>
+  void SetAddressNumber(AddressNumberT&& value) {
+    m_addressNumberHasBeenSet = true;
+    m_addressNumber = std::forward<AddressNumberT>(value);
+  }
+  template <typename AddressNumberT = Aws::String>
+  Address& WithAddressNumber(AddressNumberT&& value) {
+    SetAddressNumber(std::forward<AddressNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Components of the street. </p> <p>Example: Younge from the "Younge
-     * street".</p>
-     */
-    inline const Aws::Vector<StreetComponents>& GetStreetComponents() const{ return m_streetComponents; }
-    inline bool StreetComponentsHasBeenSet() const { return m_streetComponentsHasBeenSet; }
-    inline void SetStreetComponents(const Aws::Vector<StreetComponents>& value) { m_streetComponentsHasBeenSet = true; m_streetComponents = value; }
-    inline void SetStreetComponents(Aws::Vector<StreetComponents>&& value) { m_streetComponentsHasBeenSet = true; m_streetComponents = std::move(value); }
-    inline Address& WithStreetComponents(const Aws::Vector<StreetComponents>& value) { SetStreetComponents(value); return *this;}
-    inline Address& WithStreetComponents(Aws::Vector<StreetComponents>&& value) { SetStreetComponents(std::move(value)); return *this;}
-    inline Address& AddStreetComponents(const StreetComponents& value) { m_streetComponentsHasBeenSet = true; m_streetComponents.push_back(value); return *this; }
-    inline Address& AddStreetComponents(StreetComponents&& value) { m_streetComponentsHasBeenSet = true; m_streetComponents.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The name of the building at the address. Not available in
+   * <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p>
+   */
+  inline const Aws::String& GetBuilding() const { return m_building; }
+  inline bool BuildingHasBeenSet() const { return m_buildingHasBeenSet; }
+  template <typename BuildingT = Aws::String>
+  void SetBuilding(BuildingT&& value) {
+    m_buildingHasBeenSet = true;
+    m_building = std::forward<BuildingT>(value);
+  }
+  template <typename BuildingT = Aws::String>
+  Address& WithBuilding(BuildingT&& value) {
+    SetBuilding(std::forward<BuildingT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number that identifies an address within a street.</p>
-     */
-    inline const Aws::String& GetAddressNumber() const{ return m_addressNumber; }
-    inline bool AddressNumberHasBeenSet() const { return m_addressNumberHasBeenSet; }
-    inline void SetAddressNumber(const Aws::String& value) { m_addressNumberHasBeenSet = true; m_addressNumber = value; }
-    inline void SetAddressNumber(Aws::String&& value) { m_addressNumberHasBeenSet = true; m_addressNumber = std::move(value); }
-    inline void SetAddressNumber(const char* value) { m_addressNumberHasBeenSet = true; m_addressNumber.assign(value); }
-    inline Address& WithAddressNumber(const Aws::String& value) { SetAddressNumber(value); return *this;}
-    inline Address& WithAddressNumber(Aws::String&& value) { SetAddressNumber(std::move(value)); return *this;}
-    inline Address& WithAddressNumber(const char* value) { SetAddressNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Components that correspond to secondary identifiers on an Address. Secondary
+   * address components include information such as Suite or Unit Number, Building,
+   * or Floor. Not available in <code>ap-southeast-1</code> and
+   * <code>ap-southeast-5</code> regions for <a
+   * href="https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html">GrabMaps</a>
+   * customers. </p>  <p>Coverage for
+   * <code>Address.SecondaryAddressComponents</code> is available in the following
+   * countries:</p> <p>AUS, CAN, NZL, USA, PRI</p>
+   */
+  inline const Aws::Vector<SecondaryAddressComponent>& GetSecondaryAddressComponents() const { return m_secondaryAddressComponents; }
+  inline bool SecondaryAddressComponentsHasBeenSet() const { return m_secondaryAddressComponentsHasBeenSet; }
+  template <typename SecondaryAddressComponentsT = Aws::Vector<SecondaryAddressComponent>>
+  void SetSecondaryAddressComponents(SecondaryAddressComponentsT&& value) {
+    m_secondaryAddressComponentsHasBeenSet = true;
+    m_secondaryAddressComponents = std::forward<SecondaryAddressComponentsT>(value);
+  }
+  template <typename SecondaryAddressComponentsT = Aws::Vector<SecondaryAddressComponent>>
+  Address& WithSecondaryAddressComponents(SecondaryAddressComponentsT&& value) {
+    SetSecondaryAddressComponents(std::forward<SecondaryAddressComponentsT>(value));
+    return *this;
+  }
+  template <typename SecondaryAddressComponentsT = SecondaryAddressComponent>
+  Address& AddSecondaryAddressComponents(SecondaryAddressComponentsT&& value) {
+    m_secondaryAddressComponentsHasBeenSet = true;
+    m_secondaryAddressComponents.emplace_back(std::forward<SecondaryAddressComponentsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_label;
 
-    ///@{
-    /**
-     * <p>The name of the building at the address.</p>
-     */
-    inline const Aws::String& GetBuilding() const{ return m_building; }
-    inline bool BuildingHasBeenSet() const { return m_buildingHasBeenSet; }
-    inline void SetBuilding(const Aws::String& value) { m_buildingHasBeenSet = true; m_building = value; }
-    inline void SetBuilding(Aws::String&& value) { m_buildingHasBeenSet = true; m_building = std::move(value); }
-    inline void SetBuilding(const char* value) { m_buildingHasBeenSet = true; m_building.assign(value); }
-    inline Address& WithBuilding(const Aws::String& value) { SetBuilding(value); return *this;}
-    inline Address& WithBuilding(Aws::String&& value) { SetBuilding(std::move(value)); return *this;}
-    inline Address& WithBuilding(const char* value) { SetBuilding(value); return *this;}
-    ///@}
-  private:
+  Country m_country;
 
-    Aws::String m_label;
-    bool m_labelHasBeenSet = false;
+  Region m_region;
 
-    Country m_country;
-    bool m_countryHasBeenSet = false;
+  SubRegion m_subRegion;
 
-    Region m_region;
-    bool m_regionHasBeenSet = false;
+  Aws::String m_locality;
 
-    SubRegion m_subRegion;
-    bool m_subRegionHasBeenSet = false;
+  Aws::String m_district;
 
-    Aws::String m_locality;
-    bool m_localityHasBeenSet = false;
+  Aws::String m_subDistrict;
 
-    Aws::String m_district;
-    bool m_districtHasBeenSet = false;
+  Aws::String m_postalCode;
 
-    Aws::String m_subDistrict;
-    bool m_subDistrictHasBeenSet = false;
+  Aws::String m_block;
 
-    Aws::String m_postalCode;
-    bool m_postalCodeHasBeenSet = false;
+  Aws::String m_subBlock;
 
-    Aws::String m_block;
-    bool m_blockHasBeenSet = false;
+  Aws::Vector<Aws::String> m_intersection;
 
-    Aws::String m_subBlock;
-    bool m_subBlockHasBeenSet = false;
+  Aws::String m_street;
 
-    Aws::Vector<Aws::String> m_intersection;
-    bool m_intersectionHasBeenSet = false;
+  Aws::Vector<StreetComponents> m_streetComponents;
 
-    Aws::String m_street;
-    bool m_streetHasBeenSet = false;
+  Aws::String m_addressNumber;
 
-    Aws::Vector<StreetComponents> m_streetComponents;
-    bool m_streetComponentsHasBeenSet = false;
+  Aws::String m_building;
 
-    Aws::String m_addressNumber;
-    bool m_addressNumberHasBeenSet = false;
+  Aws::Vector<SecondaryAddressComponent> m_secondaryAddressComponents;
+  bool m_labelHasBeenSet = false;
+  bool m_countryHasBeenSet = false;
+  bool m_regionHasBeenSet = false;
+  bool m_subRegionHasBeenSet = false;
+  bool m_localityHasBeenSet = false;
+  bool m_districtHasBeenSet = false;
+  bool m_subDistrictHasBeenSet = false;
+  bool m_postalCodeHasBeenSet = false;
+  bool m_blockHasBeenSet = false;
+  bool m_subBlockHasBeenSet = false;
+  bool m_intersectionHasBeenSet = false;
+  bool m_streetHasBeenSet = false;
+  bool m_streetComponentsHasBeenSet = false;
+  bool m_addressNumberHasBeenSet = false;
+  bool m_buildingHasBeenSet = false;
+  bool m_secondaryAddressComponentsHasBeenSet = false;
+};
 
-    Aws::String m_building;
-    bool m_buildingHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GeoPlaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoPlaces
+}  // namespace Aws

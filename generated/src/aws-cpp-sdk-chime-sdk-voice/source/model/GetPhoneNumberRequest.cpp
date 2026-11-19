@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetPhoneNumberRequest::GetPhoneNumberRequest() : 
-    m_phoneNumberIdHasBeenSet(false)
-{
-}
-
-Aws::String GetPhoneNumberRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetPhoneNumberRequest::SerializePayload() const { return {}; }

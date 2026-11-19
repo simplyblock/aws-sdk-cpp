@@ -4,118 +4,127 @@
  */
 
 #pragma once
-#include <aws/swf/SWF_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/swf/SWF_EXPORTS.h>
 #include <aws/swf/model/ChildPolicy.h>
 #include <aws/swf/model/WorkflowExecutionTerminatedCause.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SWF
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SWF {
+namespace Model {
 
+/**
+ * <p>Provides the details of the <code>WorkflowExecutionTerminated</code>
+ * event.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/swf-2012-01-25/WorkflowExecutionTerminatedEventAttributes">AWS
+ * API Reference</a></p>
+ */
+class WorkflowExecutionTerminatedEventAttributes {
+ public:
+  AWS_SWF_API WorkflowExecutionTerminatedEventAttributes() = default;
+  AWS_SWF_API WorkflowExecutionTerminatedEventAttributes(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SWF_API WorkflowExecutionTerminatedEventAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SWF_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides the details of the <code>WorkflowExecutionTerminated</code>
-   * event.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/swf-2012-01-25/WorkflowExecutionTerminatedEventAttributes">AWS
-   * API Reference</a></p>
+   * <p>The reason provided for the termination.</p>
    */
-  class WorkflowExecutionTerminatedEventAttributes
-  {
-  public:
-    AWS_SWF_API WorkflowExecutionTerminatedEventAttributes();
-    AWS_SWF_API WorkflowExecutionTerminatedEventAttributes(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SWF_API WorkflowExecutionTerminatedEventAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SWF_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  template <typename ReasonT = Aws::String>
+  void SetReason(ReasonT&& value) {
+    m_reasonHasBeenSet = true;
+    m_reason = std::forward<ReasonT>(value);
+  }
+  template <typename ReasonT = Aws::String>
+  WorkflowExecutionTerminatedEventAttributes& WithReason(ReasonT&& value) {
+    SetReason(std::forward<ReasonT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The details provided for the termination.</p>
+   */
+  inline const Aws::String& GetDetails() const { return m_details; }
+  inline bool DetailsHasBeenSet() const { return m_detailsHasBeenSet; }
+  template <typename DetailsT = Aws::String>
+  void SetDetails(DetailsT&& value) {
+    m_detailsHasBeenSet = true;
+    m_details = std::forward<DetailsT>(value);
+  }
+  template <typename DetailsT = Aws::String>
+  WorkflowExecutionTerminatedEventAttributes& WithDetails(DetailsT&& value) {
+    SetDetails(std::forward<DetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason provided for the termination.</p>
-     */
-    inline const Aws::String& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const Aws::String& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(Aws::String&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline void SetReason(const char* value) { m_reasonHasBeenSet = true; m_reason.assign(value); }
-    inline WorkflowExecutionTerminatedEventAttributes& WithReason(const Aws::String& value) { SetReason(value); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithReason(Aws::String&& value) { SetReason(std::move(value)); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithReason(const char* value) { SetReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The policy used for the child workflow executions of this workflow
+   * execution.</p> <p>The supported child policies are:</p> <ul> <li> <p>
+   * <code>TERMINATE</code> – The child executions are terminated.</p> </li> <li> <p>
+   * <code>REQUEST_CANCEL</code> – A request to cancel is attempted for each child
+   * execution by recording a <code>WorkflowExecutionCancelRequested</code> event in
+   * its history. It is up to the decider to take appropriate actions when it
+   * receives an execution history with this event.</p> </li> <li> <p>
+   * <code>ABANDON</code> – No action is taken. The child executions continue to
+   * run.</p> </li> </ul>
+   */
+  inline ChildPolicy GetChildPolicy() const { return m_childPolicy; }
+  inline bool ChildPolicyHasBeenSet() const { return m_childPolicyHasBeenSet; }
+  inline void SetChildPolicy(ChildPolicy value) {
+    m_childPolicyHasBeenSet = true;
+    m_childPolicy = value;
+  }
+  inline WorkflowExecutionTerminatedEventAttributes& WithChildPolicy(ChildPolicy value) {
+    SetChildPolicy(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details provided for the termination.</p>
-     */
-    inline const Aws::String& GetDetails() const{ return m_details; }
-    inline bool DetailsHasBeenSet() const { return m_detailsHasBeenSet; }
-    inline void SetDetails(const Aws::String& value) { m_detailsHasBeenSet = true; m_details = value; }
-    inline void SetDetails(Aws::String&& value) { m_detailsHasBeenSet = true; m_details = std::move(value); }
-    inline void SetDetails(const char* value) { m_detailsHasBeenSet = true; m_details.assign(value); }
-    inline WorkflowExecutionTerminatedEventAttributes& WithDetails(const Aws::String& value) { SetDetails(value); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithDetails(Aws::String&& value) { SetDetails(std::move(value)); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithDetails(const char* value) { SetDetails(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If set, indicates that the workflow execution was automatically terminated,
+   * and specifies the cause. This happens if the parent workflow execution times out
+   * or is terminated and the child policy is set to terminate child executions.</p>
+   */
+  inline WorkflowExecutionTerminatedCause GetCause() const { return m_cause; }
+  inline bool CauseHasBeenSet() const { return m_causeHasBeenSet; }
+  inline void SetCause(WorkflowExecutionTerminatedCause value) {
+    m_causeHasBeenSet = true;
+    m_cause = value;
+  }
+  inline WorkflowExecutionTerminatedEventAttributes& WithCause(WorkflowExecutionTerminatedCause value) {
+    SetCause(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_reason;
 
-    ///@{
-    /**
-     * <p>The policy used for the child workflow executions of this workflow
-     * execution.</p> <p>The supported child policies are:</p> <ul> <li> <p>
-     * <code>TERMINATE</code> – The child executions are terminated.</p> </li> <li> <p>
-     * <code>REQUEST_CANCEL</code> – A request to cancel is attempted for each child
-     * execution by recording a <code>WorkflowExecutionCancelRequested</code> event in
-     * its history. It is up to the decider to take appropriate actions when it
-     * receives an execution history with this event.</p> </li> <li> <p>
-     * <code>ABANDON</code> – No action is taken. The child executions continue to
-     * run.</p> </li> </ul>
-     */
-    inline const ChildPolicy& GetChildPolicy() const{ return m_childPolicy; }
-    inline bool ChildPolicyHasBeenSet() const { return m_childPolicyHasBeenSet; }
-    inline void SetChildPolicy(const ChildPolicy& value) { m_childPolicyHasBeenSet = true; m_childPolicy = value; }
-    inline void SetChildPolicy(ChildPolicy&& value) { m_childPolicyHasBeenSet = true; m_childPolicy = std::move(value); }
-    inline WorkflowExecutionTerminatedEventAttributes& WithChildPolicy(const ChildPolicy& value) { SetChildPolicy(value); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithChildPolicy(ChildPolicy&& value) { SetChildPolicy(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_details;
 
-    ///@{
-    /**
-     * <p>If set, indicates that the workflow execution was automatically terminated,
-     * and specifies the cause. This happens if the parent workflow execution times out
-     * or is terminated and the child policy is set to terminate child executions.</p>
-     */
-    inline const WorkflowExecutionTerminatedCause& GetCause() const{ return m_cause; }
-    inline bool CauseHasBeenSet() const { return m_causeHasBeenSet; }
-    inline void SetCause(const WorkflowExecutionTerminatedCause& value) { m_causeHasBeenSet = true; m_cause = value; }
-    inline void SetCause(WorkflowExecutionTerminatedCause&& value) { m_causeHasBeenSet = true; m_cause = std::move(value); }
-    inline WorkflowExecutionTerminatedEventAttributes& WithCause(const WorkflowExecutionTerminatedCause& value) { SetCause(value); return *this;}
-    inline WorkflowExecutionTerminatedEventAttributes& WithCause(WorkflowExecutionTerminatedCause&& value) { SetCause(std::move(value)); return *this;}
-    ///@}
-  private:
+  ChildPolicy m_childPolicy{ChildPolicy::NOT_SET};
 
-    Aws::String m_reason;
-    bool m_reasonHasBeenSet = false;
+  WorkflowExecutionTerminatedCause m_cause{WorkflowExecutionTerminatedCause::NOT_SET};
+  bool m_reasonHasBeenSet = false;
+  bool m_detailsHasBeenSet = false;
+  bool m_childPolicyHasBeenSet = false;
+  bool m_causeHasBeenSet = false;
+};
 
-    Aws::String m_details;
-    bool m_detailsHasBeenSet = false;
-
-    ChildPolicy m_childPolicy;
-    bool m_childPolicyHasBeenSet = false;
-
-    WorkflowExecutionTerminatedCause m_cause;
-    bool m_causeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SWF
-} // namespace Aws
+}  // namespace Model
+}  // namespace SWF
+}  // namespace Aws

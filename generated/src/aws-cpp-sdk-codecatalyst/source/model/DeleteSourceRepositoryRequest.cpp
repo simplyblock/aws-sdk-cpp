@@ -12,18 +12,4 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteSourceRepositoryRequest::DeleteSourceRepositoryRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_projectNameHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteSourceRepositoryRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteSourceRepositoryRequest::SerializePayload() const { return {}; }

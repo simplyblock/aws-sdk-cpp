@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/osis/OSIS_EXPORTS.h>
 #include <aws/osis/model/Pipeline.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace OSIS
-{
-namespace Model
-{
-  class UpdatePipelineResult
-  {
-  public:
-    AWS_OSIS_API UpdatePipelineResult();
-    AWS_OSIS_API UpdatePipelineResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OSIS_API UpdatePipelineResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace OSIS {
+namespace Model {
+class UpdatePipelineResult {
+ public:
+  AWS_OSIS_API UpdatePipelineResult() = default;
+  AWS_OSIS_API UpdatePipelineResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OSIS_API UpdatePipelineResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Container for information about the updated pipeline.</p>
+   */
+  inline const Pipeline& GetPipeline() const { return m_pipeline; }
+  template <typename PipelineT = Pipeline>
+  void SetPipeline(PipelineT&& value) {
+    m_pipelineHasBeenSet = true;
+    m_pipeline = std::forward<PipelineT>(value);
+  }
+  template <typename PipelineT = Pipeline>
+  UpdatePipelineResult& WithPipeline(PipelineT&& value) {
+    SetPipeline(std::forward<PipelineT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Container for information about the updated pipeline.</p>
-     */
-    inline const Pipeline& GetPipeline() const{ return m_pipeline; }
-    inline void SetPipeline(const Pipeline& value) { m_pipeline = value; }
-    inline void SetPipeline(Pipeline&& value) { m_pipeline = std::move(value); }
-    inline UpdatePipelineResult& WithPipeline(const Pipeline& value) { SetPipeline(value); return *this;}
-    inline UpdatePipelineResult& WithPipeline(Pipeline&& value) { SetPipeline(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdatePipelineResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdatePipelineResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdatePipelineResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdatePipelineResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Pipeline m_pipeline;
+ private:
+  Pipeline m_pipeline;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_pipelineHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace OSIS
-} // namespace Aws
+}  // namespace Model
+}  // namespace OSIS
+}  // namespace Aws

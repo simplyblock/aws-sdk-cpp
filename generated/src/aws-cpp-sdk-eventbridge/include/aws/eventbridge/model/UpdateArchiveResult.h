@@ -4,107 +4,131 @@
  */
 
 #pragma once
-#include <aws/eventbridge/EventBridge_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/eventbridge/model/ArchiveState.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/eventbridge/EventBridge_EXPORTS.h>
+#include <aws/eventbridge/model/ArchiveState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EventBridge
-{
-namespace Model
-{
-  class UpdateArchiveResult
-  {
-  public:
-    AWS_EVENTBRIDGE_API UpdateArchiveResult();
-    AWS_EVENTBRIDGE_API UpdateArchiveResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EVENTBRIDGE_API UpdateArchiveResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EventBridge {
+namespace Model {
+class UpdateArchiveResult {
+ public:
+  AWS_EVENTBRIDGE_API UpdateArchiveResult() = default;
+  AWS_EVENTBRIDGE_API UpdateArchiveResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EVENTBRIDGE_API UpdateArchiveResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the archive.</p>
+   */
+  inline const Aws::String& GetArchiveArn() const { return m_archiveArn; }
+  template <typename ArchiveArnT = Aws::String>
+  void SetArchiveArn(ArchiveArnT&& value) {
+    m_archiveArnHasBeenSet = true;
+    m_archiveArn = std::forward<ArchiveArnT>(value);
+  }
+  template <typename ArchiveArnT = Aws::String>
+  UpdateArchiveResult& WithArchiveArn(ArchiveArnT&& value) {
+    SetArchiveArn(std::forward<ArchiveArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the archive.</p>
-     */
-    inline const Aws::String& GetArchiveArn() const{ return m_archiveArn; }
-    inline void SetArchiveArn(const Aws::String& value) { m_archiveArn = value; }
-    inline void SetArchiveArn(Aws::String&& value) { m_archiveArn = std::move(value); }
-    inline void SetArchiveArn(const char* value) { m_archiveArn.assign(value); }
-    inline UpdateArchiveResult& WithArchiveArn(const Aws::String& value) { SetArchiveArn(value); return *this;}
-    inline UpdateArchiveResult& WithArchiveArn(Aws::String&& value) { SetArchiveArn(std::move(value)); return *this;}
-    inline UpdateArchiveResult& WithArchiveArn(const char* value) { SetArchiveArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the archive.</p>
+   */
+  inline ArchiveState GetState() const { return m_state; }
+  inline void SetState(ArchiveState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline UpdateArchiveResult& WithState(ArchiveState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the archive.</p>
-     */
-    inline const ArchiveState& GetState() const{ return m_state; }
-    inline void SetState(const ArchiveState& value) { m_state = value; }
-    inline void SetState(ArchiveState&& value) { m_state = std::move(value); }
-    inline UpdateArchiveResult& WithState(const ArchiveState& value) { SetState(value); return *this;}
-    inline UpdateArchiveResult& WithState(ArchiveState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason that the archive is in the current state.</p>
+   */
+  inline const Aws::String& GetStateReason() const { return m_stateReason; }
+  template <typename StateReasonT = Aws::String>
+  void SetStateReason(StateReasonT&& value) {
+    m_stateReasonHasBeenSet = true;
+    m_stateReason = std::forward<StateReasonT>(value);
+  }
+  template <typename StateReasonT = Aws::String>
+  UpdateArchiveResult& WithStateReason(StateReasonT&& value) {
+    SetStateReason(std::forward<StateReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason that the archive is in the current state.</p>
-     */
-    inline const Aws::String& GetStateReason() const{ return m_stateReason; }
-    inline void SetStateReason(const Aws::String& value) { m_stateReason = value; }
-    inline void SetStateReason(Aws::String&& value) { m_stateReason = std::move(value); }
-    inline void SetStateReason(const char* value) { m_stateReason.assign(value); }
-    inline UpdateArchiveResult& WithStateReason(const Aws::String& value) { SetStateReason(value); return *this;}
-    inline UpdateArchiveResult& WithStateReason(Aws::String&& value) { SetStateReason(std::move(value)); return *this;}
-    inline UpdateArchiveResult& WithStateReason(const char* value) { SetStateReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the archive was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  UpdateArchiveResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the archive was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline UpdateArchiveResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline UpdateArchiveResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateArchiveResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateArchiveResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateArchiveResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateArchiveResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_archiveArn;
+ private:
+  Aws::String m_archiveArn;
 
-    ArchiveState m_state;
+  ArchiveState m_state{ArchiveState::NOT_SET};
 
-    Aws::String m_stateReason;
+  Aws::String m_stateReason;
 
-    Aws::Utils::DateTime m_creationTime;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_archiveArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_stateReasonHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EventBridge
-} // namespace Aws
+}  // namespace Model
+}  // namespace EventBridge
+}  // namespace Aws

@@ -4,321 +4,367 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/machinelearning/MachineLearning_EXPORTS.h>
 #include <aws/machinelearning/model/RDSDatabase.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/machinelearning/model/RDSDatabaseCredentials.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MachineLearning
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MachineLearning {
+namespace Model {
 
+/**
+ * <p>The data specification of an Amazon Relational Database Service (Amazon RDS)
+ * <code>DataSource</code>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/machinelearning-2014-12-12/RDSDataSpec">AWS
+ * API Reference</a></p>
+ */
+class RDSDataSpec {
+ public:
+  AWS_MACHINELEARNING_API RDSDataSpec() = default;
+  AWS_MACHINELEARNING_API RDSDataSpec(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MACHINELEARNING_API RDSDataSpec& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MACHINELEARNING_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The data specification of an Amazon Relational Database Service (Amazon RDS)
-   * <code>DataSource</code>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/machinelearning-2014-12-12/RDSDataSpec">AWS
-   * API Reference</a></p>
+   * <p>Describes the <code>DatabaseName</code> and <code>InstanceIdentifier</code>
+   * of an Amazon RDS database.</p>
    */
-  class RDSDataSpec
-  {
-  public:
-    AWS_MACHINELEARNING_API RDSDataSpec();
-    AWS_MACHINELEARNING_API RDSDataSpec(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MACHINELEARNING_API RDSDataSpec& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MACHINELEARNING_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const RDSDatabase& GetDatabaseInformation() const { return m_databaseInformation; }
+  inline bool DatabaseInformationHasBeenSet() const { return m_databaseInformationHasBeenSet; }
+  template <typename DatabaseInformationT = RDSDatabase>
+  void SetDatabaseInformation(DatabaseInformationT&& value) {
+    m_databaseInformationHasBeenSet = true;
+    m_databaseInformation = std::forward<DatabaseInformationT>(value);
+  }
+  template <typename DatabaseInformationT = RDSDatabase>
+  RDSDataSpec& WithDatabaseInformation(DatabaseInformationT&& value) {
+    SetDatabaseInformation(std::forward<DatabaseInformationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The query that is used to retrieve the observation data for the
+   * <code>DataSource</code>.</p>
+   */
+  inline const Aws::String& GetSelectSqlQuery() const { return m_selectSqlQuery; }
+  inline bool SelectSqlQueryHasBeenSet() const { return m_selectSqlQueryHasBeenSet; }
+  template <typename SelectSqlQueryT = Aws::String>
+  void SetSelectSqlQuery(SelectSqlQueryT&& value) {
+    m_selectSqlQueryHasBeenSet = true;
+    m_selectSqlQuery = std::forward<SelectSqlQueryT>(value);
+  }
+  template <typename SelectSqlQueryT = Aws::String>
+  RDSDataSpec& WithSelectSqlQuery(SelectSqlQueryT&& value) {
+    SetSelectSqlQuery(std::forward<SelectSqlQueryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the <code>DatabaseName</code> and <code>InstanceIdentifier</code>
-     * of an Amazon RDS database.</p>
-     */
-    inline const RDSDatabase& GetDatabaseInformation() const{ return m_databaseInformation; }
-    inline bool DatabaseInformationHasBeenSet() const { return m_databaseInformationHasBeenSet; }
-    inline void SetDatabaseInformation(const RDSDatabase& value) { m_databaseInformationHasBeenSet = true; m_databaseInformation = value; }
-    inline void SetDatabaseInformation(RDSDatabase&& value) { m_databaseInformationHasBeenSet = true; m_databaseInformation = std::move(value); }
-    inline RDSDataSpec& WithDatabaseInformation(const RDSDatabase& value) { SetDatabaseInformation(value); return *this;}
-    inline RDSDataSpec& WithDatabaseInformation(RDSDatabase&& value) { SetDatabaseInformation(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The AWS Identity and Access Management (IAM) credentials that are used
+   * connect to the Amazon RDS database.</p>
+   */
+  inline const RDSDatabaseCredentials& GetDatabaseCredentials() const { return m_databaseCredentials; }
+  inline bool DatabaseCredentialsHasBeenSet() const { return m_databaseCredentialsHasBeenSet; }
+  template <typename DatabaseCredentialsT = RDSDatabaseCredentials>
+  void SetDatabaseCredentials(DatabaseCredentialsT&& value) {
+    m_databaseCredentialsHasBeenSet = true;
+    m_databaseCredentials = std::forward<DatabaseCredentialsT>(value);
+  }
+  template <typename DatabaseCredentialsT = RDSDatabaseCredentials>
+  RDSDataSpec& WithDatabaseCredentials(DatabaseCredentialsT&& value) {
+    SetDatabaseCredentials(std::forward<DatabaseCredentialsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The query that is used to retrieve the observation data for the
-     * <code>DataSource</code>.</p>
-     */
-    inline const Aws::String& GetSelectSqlQuery() const{ return m_selectSqlQuery; }
-    inline bool SelectSqlQueryHasBeenSet() const { return m_selectSqlQueryHasBeenSet; }
-    inline void SetSelectSqlQuery(const Aws::String& value) { m_selectSqlQueryHasBeenSet = true; m_selectSqlQuery = value; }
-    inline void SetSelectSqlQuery(Aws::String&& value) { m_selectSqlQueryHasBeenSet = true; m_selectSqlQuery = std::move(value); }
-    inline void SetSelectSqlQuery(const char* value) { m_selectSqlQueryHasBeenSet = true; m_selectSqlQuery.assign(value); }
-    inline RDSDataSpec& WithSelectSqlQuery(const Aws::String& value) { SetSelectSqlQuery(value); return *this;}
-    inline RDSDataSpec& WithSelectSqlQuery(Aws::String&& value) { SetSelectSqlQuery(std::move(value)); return *this;}
-    inline RDSDataSpec& WithSelectSqlQuery(const char* value) { SetSelectSqlQuery(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon S3 location for staging Amazon RDS data. The data retrieved from
+   * Amazon RDS using <code>SelectSqlQuery</code> is stored in this location.</p>
+   */
+  inline const Aws::String& GetS3StagingLocation() const { return m_s3StagingLocation; }
+  inline bool S3StagingLocationHasBeenSet() const { return m_s3StagingLocationHasBeenSet; }
+  template <typename S3StagingLocationT = Aws::String>
+  void SetS3StagingLocation(S3StagingLocationT&& value) {
+    m_s3StagingLocationHasBeenSet = true;
+    m_s3StagingLocation = std::forward<S3StagingLocationT>(value);
+  }
+  template <typename S3StagingLocationT = Aws::String>
+  RDSDataSpec& WithS3StagingLocation(S3StagingLocationT&& value) {
+    SetS3StagingLocation(std::forward<S3StagingLocationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The AWS Identity and Access Management (IAM) credentials that are used
-     * connect to the Amazon RDS database.</p>
-     */
-    inline const RDSDatabaseCredentials& GetDatabaseCredentials() const{ return m_databaseCredentials; }
-    inline bool DatabaseCredentialsHasBeenSet() const { return m_databaseCredentialsHasBeenSet; }
-    inline void SetDatabaseCredentials(const RDSDatabaseCredentials& value) { m_databaseCredentialsHasBeenSet = true; m_databaseCredentials = value; }
-    inline void SetDatabaseCredentials(RDSDatabaseCredentials&& value) { m_databaseCredentialsHasBeenSet = true; m_databaseCredentials = std::move(value); }
-    inline RDSDataSpec& WithDatabaseCredentials(const RDSDatabaseCredentials& value) { SetDatabaseCredentials(value); return *this;}
-    inline RDSDataSpec& WithDatabaseCredentials(RDSDatabaseCredentials&& value) { SetDatabaseCredentials(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A JSON string that represents the splitting and rearrangement processing to
+   * be applied to a <code>DataSource</code>. If the <code>DataRearrangement</code>
+   * parameter is not provided, all of the input data is used to create the
+   * <code>Datasource</code>.</p> <p>There are multiple parameters that control what
+   * data is used to create a datasource:</p> <ul> <li> <p> <b>
+   * <code>percentBegin</code> </b> </p> <p>Use <code>percentBegin</code> to indicate
+   * the beginning of the range of the data used to create the Datasource. If you do
+   * not include <code>percentBegin</code> and <code>percentEnd</code>, Amazon ML
+   * includes all of the data when creating the datasource.</p> </li> <li> <p> <b>
+   * <code>percentEnd</code> </b> </p> <p>Use <code>percentEnd</code> to indicate the
+   * end of the range of the data used to create the Datasource. If you do not
+   * include <code>percentBegin</code> and <code>percentEnd</code>, Amazon ML
+   * includes all of the data when creating the datasource.</p> </li> <li> <p> <b>
+   * <code>complement</code> </b> </p> <p>The <code>complement</code> parameter
+   * instructs Amazon ML to use the data that is not included in the range of
+   * <code>percentBegin</code> to <code>percentEnd</code> to create a datasource. The
+   * <code>complement</code> parameter is useful if you need to create complementary
+   * datasources for training and evaluation. To create a complementary datasource,
+   * use the same values for <code>percentBegin</code> and <code>percentEnd</code>,
+   * along with the <code>complement</code> parameter.</p> <p>For example, the
+   * following two datasources do not share any data, and can be used to train and
+   * evaluate a model. The first datasource has 25 percent of the data, and the
+   * second one has 75 percent of the data.</p> <p>Datasource for evaluation:
+   * <code>{"splitting":{"percentBegin":0, "percentEnd":25}}</code> </p>
+   * <p>Datasource for training: <code>{"splitting":{"percentBegin":0,
+   * "percentEnd":25, "complement":"true"}}</code> </p> </li> <li> <p> <b>
+   * <code>strategy</code> </b> </p> <p>To change how Amazon ML splits the data for a
+   * datasource, use the <code>strategy</code> parameter.</p> <p>The default value
+   * for the <code>strategy</code> parameter is <code>sequential</code>, meaning that
+   * Amazon ML takes all of the data records between the <code>percentBegin</code>
+   * and <code>percentEnd</code> parameters for the datasource, in the order that the
+   * records appear in the input data.</p> <p>The following two
+   * <code>DataRearrangement</code> lines are examples of sequentially ordered
+   * training and evaluation datasources:</p> <p>Datasource for evaluation:
+   * <code>{"splitting":{"percentBegin":70, "percentEnd":100,
+   * "strategy":"sequential"}}</code> </p> <p>Datasource for training:
+   * <code>{"splitting":{"percentBegin":70, "percentEnd":100,
+   * "strategy":"sequential", "complement":"true"}}</code> </p> <p>To randomly split
+   * the input data into the proportions indicated by the percentBegin and percentEnd
+   * parameters, set the <code>strategy</code> parameter to <code>random</code> and
+   * provide a string that is used as the seed value for the random data splitting
+   * (for example, you can use the S3 path to your data as the random seed string).
+   * If you choose the random split strategy, Amazon ML assigns each row of data a
+   * pseudo-random number between 0 and 100, and then selects the rows that have an
+   * assigned number between <code>percentBegin</code> and <code>percentEnd</code>.
+   * Pseudo-random numbers are assigned using both the input seed string value and
+   * the byte offset as a seed, so changing the data results in a different split.
+   * Any existing ordering is preserved. The random splitting strategy ensures that
+   * variables in the training and evaluation data are distributed similarly. It is
+   * useful in the cases where the input data may have an implicit sort order, which
+   * would otherwise result in training and evaluation datasources containing
+   * non-similar data records.</p> <p>The following two
+   * <code>DataRearrangement</code> lines are examples of non-sequentially ordered
+   * training and evaluation datasources:</p> <p>Datasource for evaluation:
+   * <code>{"splitting":{"percentBegin":70, "percentEnd":100, "strategy":"random",
+   * "randomSeed"="s3://my_s3_path/bucket/file.csv"}}</code> </p> <p>Datasource for
+   * training: <code>{"splitting":{"percentBegin":70, "percentEnd":100,
+   * "strategy":"random", "randomSeed"="s3://my_s3_path/bucket/file.csv",
+   * "complement":"true"}}</code> </p> </li> </ul>
+   */
+  inline const Aws::String& GetDataRearrangement() const { return m_dataRearrangement; }
+  inline bool DataRearrangementHasBeenSet() const { return m_dataRearrangementHasBeenSet; }
+  template <typename DataRearrangementT = Aws::String>
+  void SetDataRearrangement(DataRearrangementT&& value) {
+    m_dataRearrangementHasBeenSet = true;
+    m_dataRearrangement = std::forward<DataRearrangementT>(value);
+  }
+  template <typename DataRearrangementT = Aws::String>
+  RDSDataSpec& WithDataRearrangement(DataRearrangementT&& value) {
+    SetDataRearrangement(std::forward<DataRearrangementT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon S3 location for staging Amazon RDS data. The data retrieved from
-     * Amazon RDS using <code>SelectSqlQuery</code> is stored in this location.</p>
-     */
-    inline const Aws::String& GetS3StagingLocation() const{ return m_s3StagingLocation; }
-    inline bool S3StagingLocationHasBeenSet() const { return m_s3StagingLocationHasBeenSet; }
-    inline void SetS3StagingLocation(const Aws::String& value) { m_s3StagingLocationHasBeenSet = true; m_s3StagingLocation = value; }
-    inline void SetS3StagingLocation(Aws::String&& value) { m_s3StagingLocationHasBeenSet = true; m_s3StagingLocation = std::move(value); }
-    inline void SetS3StagingLocation(const char* value) { m_s3StagingLocationHasBeenSet = true; m_s3StagingLocation.assign(value); }
-    inline RDSDataSpec& WithS3StagingLocation(const Aws::String& value) { SetS3StagingLocation(value); return *this;}
-    inline RDSDataSpec& WithS3StagingLocation(Aws::String&& value) { SetS3StagingLocation(std::move(value)); return *this;}
-    inline RDSDataSpec& WithS3StagingLocation(const char* value) { SetS3StagingLocation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A JSON string that represents the schema for an Amazon RDS
+   * <code>DataSource</code>. The <code>DataSchema</code> defines the structure of
+   * the observation data in the data file(s) referenced in the
+   * <code>DataSource</code>.</p> <p>A <code>DataSchema</code> is not required if you
+   * specify a <code>DataSchemaUri</code> </p> <p>Define your <code>DataSchema</code>
+   * as a series of key-value pairs. <code>attributes</code> and
+   * <code>excludedVariableNames</code> have an array of key-value pairs for their
+   * value. Use the following format to define your <code>DataSchema</code>.</p> <p>{
+   * "version": "1.0",</p> <p>"recordAnnotationFieldName": "F1",</p>
+   * <p>"recordWeightFieldName": "F2",</p> <p>"targetFieldName": "F3",</p>
+   * <p>"dataFormat": "CSV",</p> <p>"dataFileContainsHeader": true,</p>
+   * <p>"attributes": [</p> <p>{ "fieldName": "F1", "fieldType": "TEXT" }, {
+   * "fieldName": "F2", "fieldType": "NUMERIC" }, { "fieldName": "F3", "fieldType":
+   * "CATEGORICAL" }, { "fieldName": "F4", "fieldType": "NUMERIC" }, { "fieldName":
+   * "F5", "fieldType": "CATEGORICAL" }, { "fieldName": "F6", "fieldType": "TEXT" },
+   * { "fieldName": "F7", "fieldType": "WEIGHTED_INT_SEQUENCE" }, { "fieldName":
+   * "F8", "fieldType": "WEIGHTED_STRING_SEQUENCE" } ],</p>
+   * <p>"excludedVariableNames": [ "F6" ] }</p>
+   */
+  inline const Aws::String& GetDataSchema() const { return m_dataSchema; }
+  inline bool DataSchemaHasBeenSet() const { return m_dataSchemaHasBeenSet; }
+  template <typename DataSchemaT = Aws::String>
+  void SetDataSchema(DataSchemaT&& value) {
+    m_dataSchemaHasBeenSet = true;
+    m_dataSchema = std::forward<DataSchemaT>(value);
+  }
+  template <typename DataSchemaT = Aws::String>
+  RDSDataSpec& WithDataSchema(DataSchemaT&& value) {
+    SetDataSchema(std::forward<DataSchemaT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A JSON string that represents the splitting and rearrangement processing to
-     * be applied to a <code>DataSource</code>. If the <code>DataRearrangement</code>
-     * parameter is not provided, all of the input data is used to create the
-     * <code>Datasource</code>.</p> <p>There are multiple parameters that control what
-     * data is used to create a datasource:</p> <ul> <li> <p> <b>
-     * <code>percentBegin</code> </b> </p> <p>Use <code>percentBegin</code> to indicate
-     * the beginning of the range of the data used to create the Datasource. If you do
-     * not include <code>percentBegin</code> and <code>percentEnd</code>, Amazon ML
-     * includes all of the data when creating the datasource.</p> </li> <li> <p> <b>
-     * <code>percentEnd</code> </b> </p> <p>Use <code>percentEnd</code> to indicate the
-     * end of the range of the data used to create the Datasource. If you do not
-     * include <code>percentBegin</code> and <code>percentEnd</code>, Amazon ML
-     * includes all of the data when creating the datasource.</p> </li> <li> <p> <b>
-     * <code>complement</code> </b> </p> <p>The <code>complement</code> parameter
-     * instructs Amazon ML to use the data that is not included in the range of
-     * <code>percentBegin</code> to <code>percentEnd</code> to create a datasource. The
-     * <code>complement</code> parameter is useful if you need to create complementary
-     * datasources for training and evaluation. To create a complementary datasource,
-     * use the same values for <code>percentBegin</code> and <code>percentEnd</code>,
-     * along with the <code>complement</code> parameter.</p> <p>For example, the
-     * following two datasources do not share any data, and can be used to train and
-     * evaluate a model. The first datasource has 25 percent of the data, and the
-     * second one has 75 percent of the data.</p> <p>Datasource for evaluation:
-     * <code>{"splitting":{"percentBegin":0, "percentEnd":25}}</code> </p>
-     * <p>Datasource for training: <code>{"splitting":{"percentBegin":0,
-     * "percentEnd":25, "complement":"true"}}</code> </p> </li> <li> <p> <b>
-     * <code>strategy</code> </b> </p> <p>To change how Amazon ML splits the data for a
-     * datasource, use the <code>strategy</code> parameter.</p> <p>The default value
-     * for the <code>strategy</code> parameter is <code>sequential</code>, meaning that
-     * Amazon ML takes all of the data records between the <code>percentBegin</code>
-     * and <code>percentEnd</code> parameters for the datasource, in the order that the
-     * records appear in the input data.</p> <p>The following two
-     * <code>DataRearrangement</code> lines are examples of sequentially ordered
-     * training and evaluation datasources:</p> <p>Datasource for evaluation:
-     * <code>{"splitting":{"percentBegin":70, "percentEnd":100,
-     * "strategy":"sequential"}}</code> </p> <p>Datasource for training:
-     * <code>{"splitting":{"percentBegin":70, "percentEnd":100,
-     * "strategy":"sequential", "complement":"true"}}</code> </p> <p>To randomly split
-     * the input data into the proportions indicated by the percentBegin and percentEnd
-     * parameters, set the <code>strategy</code> parameter to <code>random</code> and
-     * provide a string that is used as the seed value for the random data splitting
-     * (for example, you can use the S3 path to your data as the random seed string).
-     * If you choose the random split strategy, Amazon ML assigns each row of data a
-     * pseudo-random number between 0 and 100, and then selects the rows that have an
-     * assigned number between <code>percentBegin</code> and <code>percentEnd</code>.
-     * Pseudo-random numbers are assigned using both the input seed string value and
-     * the byte offset as a seed, so changing the data results in a different split.
-     * Any existing ordering is preserved. The random splitting strategy ensures that
-     * variables in the training and evaluation data are distributed similarly. It is
-     * useful in the cases where the input data may have an implicit sort order, which
-     * would otherwise result in training and evaluation datasources containing
-     * non-similar data records.</p> <p>The following two
-     * <code>DataRearrangement</code> lines are examples of non-sequentially ordered
-     * training and evaluation datasources:</p> <p>Datasource for evaluation:
-     * <code>{"splitting":{"percentBegin":70, "percentEnd":100, "strategy":"random",
-     * "randomSeed"="s3://my_s3_path/bucket/file.csv"}}</code> </p> <p>Datasource for
-     * training: <code>{"splitting":{"percentBegin":70, "percentEnd":100,
-     * "strategy":"random", "randomSeed"="s3://my_s3_path/bucket/file.csv",
-     * "complement":"true"}}</code> </p> </li> </ul>
-     */
-    inline const Aws::String& GetDataRearrangement() const{ return m_dataRearrangement; }
-    inline bool DataRearrangementHasBeenSet() const { return m_dataRearrangementHasBeenSet; }
-    inline void SetDataRearrangement(const Aws::String& value) { m_dataRearrangementHasBeenSet = true; m_dataRearrangement = value; }
-    inline void SetDataRearrangement(Aws::String&& value) { m_dataRearrangementHasBeenSet = true; m_dataRearrangement = std::move(value); }
-    inline void SetDataRearrangement(const char* value) { m_dataRearrangementHasBeenSet = true; m_dataRearrangement.assign(value); }
-    inline RDSDataSpec& WithDataRearrangement(const Aws::String& value) { SetDataRearrangement(value); return *this;}
-    inline RDSDataSpec& WithDataRearrangement(Aws::String&& value) { SetDataRearrangement(std::move(value)); return *this;}
-    inline RDSDataSpec& WithDataRearrangement(const char* value) { SetDataRearrangement(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon S3 location of the <code>DataSchema</code>. </p>
+   */
+  inline const Aws::String& GetDataSchemaUri() const { return m_dataSchemaUri; }
+  inline bool DataSchemaUriHasBeenSet() const { return m_dataSchemaUriHasBeenSet; }
+  template <typename DataSchemaUriT = Aws::String>
+  void SetDataSchemaUri(DataSchemaUriT&& value) {
+    m_dataSchemaUriHasBeenSet = true;
+    m_dataSchemaUri = std::forward<DataSchemaUriT>(value);
+  }
+  template <typename DataSchemaUriT = Aws::String>
+  RDSDataSpec& WithDataSchemaUri(DataSchemaUriT&& value) {
+    SetDataSchemaUri(std::forward<DataSchemaUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A JSON string that represents the schema for an Amazon RDS
-     * <code>DataSource</code>. The <code>DataSchema</code> defines the structure of
-     * the observation data in the data file(s) referenced in the
-     * <code>DataSource</code>.</p> <p>A <code>DataSchema</code> is not required if you
-     * specify a <code>DataSchemaUri</code> </p> <p>Define your <code>DataSchema</code>
-     * as a series of key-value pairs. <code>attributes</code> and
-     * <code>excludedVariableNames</code> have an array of key-value pairs for their
-     * value. Use the following format to define your <code>DataSchema</code>.</p> <p>{
-     * "version": "1.0",</p> <p>"recordAnnotationFieldName": "F1",</p>
-     * <p>"recordWeightFieldName": "F2",</p> <p>"targetFieldName": "F3",</p>
-     * <p>"dataFormat": "CSV",</p> <p>"dataFileContainsHeader": true,</p>
-     * <p>"attributes": [</p> <p>{ "fieldName": "F1", "fieldType": "TEXT" }, {
-     * "fieldName": "F2", "fieldType": "NUMERIC" }, { "fieldName": "F3", "fieldType":
-     * "CATEGORICAL" }, { "fieldName": "F4", "fieldType": "NUMERIC" }, { "fieldName":
-     * "F5", "fieldType": "CATEGORICAL" }, { "fieldName": "F6", "fieldType": "TEXT" },
-     * { "fieldName": "F7", "fieldType": "WEIGHTED_INT_SEQUENCE" }, { "fieldName":
-     * "F8", "fieldType": "WEIGHTED_STRING_SEQUENCE" } ],</p>
-     * <p>"excludedVariableNames": [ "F6" ] }</p>
-     */
-    inline const Aws::String& GetDataSchema() const{ return m_dataSchema; }
-    inline bool DataSchemaHasBeenSet() const { return m_dataSchemaHasBeenSet; }
-    inline void SetDataSchema(const Aws::String& value) { m_dataSchemaHasBeenSet = true; m_dataSchema = value; }
-    inline void SetDataSchema(Aws::String&& value) { m_dataSchemaHasBeenSet = true; m_dataSchema = std::move(value); }
-    inline void SetDataSchema(const char* value) { m_dataSchemaHasBeenSet = true; m_dataSchema.assign(value); }
-    inline RDSDataSpec& WithDataSchema(const Aws::String& value) { SetDataSchema(value); return *this;}
-    inline RDSDataSpec& WithDataSchema(Aws::String&& value) { SetDataSchema(std::move(value)); return *this;}
-    inline RDSDataSpec& WithDataSchema(const char* value) { SetDataSchema(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The role (DataPipelineDefaultResourceRole) assumed by an Amazon Elastic
+   * Compute Cloud (Amazon EC2) instance to carry out the copy operation from Amazon
+   * RDS to an Amazon S3 task. For more information, see <a
+   * href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-roles.html">Role
+   * templates</a> for data pipelines.</p>
+   */
+  inline const Aws::String& GetResourceRole() const { return m_resourceRole; }
+  inline bool ResourceRoleHasBeenSet() const { return m_resourceRoleHasBeenSet; }
+  template <typename ResourceRoleT = Aws::String>
+  void SetResourceRole(ResourceRoleT&& value) {
+    m_resourceRoleHasBeenSet = true;
+    m_resourceRole = std::forward<ResourceRoleT>(value);
+  }
+  template <typename ResourceRoleT = Aws::String>
+  RDSDataSpec& WithResourceRole(ResourceRoleT&& value) {
+    SetResourceRole(std::forward<ResourceRoleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon S3 location of the <code>DataSchema</code>. </p>
-     */
-    inline const Aws::String& GetDataSchemaUri() const{ return m_dataSchemaUri; }
-    inline bool DataSchemaUriHasBeenSet() const { return m_dataSchemaUriHasBeenSet; }
-    inline void SetDataSchemaUri(const Aws::String& value) { m_dataSchemaUriHasBeenSet = true; m_dataSchemaUri = value; }
-    inline void SetDataSchemaUri(Aws::String&& value) { m_dataSchemaUriHasBeenSet = true; m_dataSchemaUri = std::move(value); }
-    inline void SetDataSchemaUri(const char* value) { m_dataSchemaUriHasBeenSet = true; m_dataSchemaUri.assign(value); }
-    inline RDSDataSpec& WithDataSchemaUri(const Aws::String& value) { SetDataSchemaUri(value); return *this;}
-    inline RDSDataSpec& WithDataSchemaUri(Aws::String&& value) { SetDataSchemaUri(std::move(value)); return *this;}
-    inline RDSDataSpec& WithDataSchemaUri(const char* value) { SetDataSchemaUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The role (DataPipelineDefaultRole) assumed by AWS Data Pipeline service to
+   * monitor the progress of the copy task from Amazon RDS to Amazon S3. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-roles.html">Role
+   * templates</a> for data pipelines.</p>
+   */
+  inline const Aws::String& GetServiceRole() const { return m_serviceRole; }
+  inline bool ServiceRoleHasBeenSet() const { return m_serviceRoleHasBeenSet; }
+  template <typename ServiceRoleT = Aws::String>
+  void SetServiceRole(ServiceRoleT&& value) {
+    m_serviceRoleHasBeenSet = true;
+    m_serviceRole = std::forward<ServiceRoleT>(value);
+  }
+  template <typename ServiceRoleT = Aws::String>
+  RDSDataSpec& WithServiceRole(ServiceRoleT&& value) {
+    SetServiceRole(std::forward<ServiceRoleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The role (DataPipelineDefaultResourceRole) assumed by an Amazon Elastic
-     * Compute Cloud (Amazon EC2) instance to carry out the copy operation from Amazon
-     * RDS to an Amazon S3 task. For more information, see <a
-     * href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-roles.html">Role
-     * templates</a> for data pipelines.</p>
-     */
-    inline const Aws::String& GetResourceRole() const{ return m_resourceRole; }
-    inline bool ResourceRoleHasBeenSet() const { return m_resourceRoleHasBeenSet; }
-    inline void SetResourceRole(const Aws::String& value) { m_resourceRoleHasBeenSet = true; m_resourceRole = value; }
-    inline void SetResourceRole(Aws::String&& value) { m_resourceRoleHasBeenSet = true; m_resourceRole = std::move(value); }
-    inline void SetResourceRole(const char* value) { m_resourceRoleHasBeenSet = true; m_resourceRole.assign(value); }
-    inline RDSDataSpec& WithResourceRole(const Aws::String& value) { SetResourceRole(value); return *this;}
-    inline RDSDataSpec& WithResourceRole(Aws::String&& value) { SetResourceRole(std::move(value)); return *this;}
-    inline RDSDataSpec& WithResourceRole(const char* value) { SetResourceRole(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The subnet ID to be used to access a VPC-based RDS DB instance. This
+   * attribute is used by Data Pipeline to carry out the copy task from Amazon RDS to
+   * Amazon S3.</p>
+   */
+  inline const Aws::String& GetSubnetId() const { return m_subnetId; }
+  inline bool SubnetIdHasBeenSet() const { return m_subnetIdHasBeenSet; }
+  template <typename SubnetIdT = Aws::String>
+  void SetSubnetId(SubnetIdT&& value) {
+    m_subnetIdHasBeenSet = true;
+    m_subnetId = std::forward<SubnetIdT>(value);
+  }
+  template <typename SubnetIdT = Aws::String>
+  RDSDataSpec& WithSubnetId(SubnetIdT&& value) {
+    SetSubnetId(std::forward<SubnetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The role (DataPipelineDefaultRole) assumed by AWS Data Pipeline service to
-     * monitor the progress of the copy task from Amazon RDS to Amazon S3. For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-roles.html">Role
-     * templates</a> for data pipelines.</p>
-     */
-    inline const Aws::String& GetServiceRole() const{ return m_serviceRole; }
-    inline bool ServiceRoleHasBeenSet() const { return m_serviceRoleHasBeenSet; }
-    inline void SetServiceRole(const Aws::String& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = value; }
-    inline void SetServiceRole(Aws::String&& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = std::move(value); }
-    inline void SetServiceRole(const char* value) { m_serviceRoleHasBeenSet = true; m_serviceRole.assign(value); }
-    inline RDSDataSpec& WithServiceRole(const Aws::String& value) { SetServiceRole(value); return *this;}
-    inline RDSDataSpec& WithServiceRole(Aws::String&& value) { SetServiceRole(std::move(value)); return *this;}
-    inline RDSDataSpec& WithServiceRole(const char* value) { SetServiceRole(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The security group IDs to be used to access a VPC-based RDS DB instance.
+   * Ensure that there are appropriate ingress rules set up to allow access to the
+   * RDS DB instance. This attribute is used by Data Pipeline to carry out the copy
+   * operation from Amazon RDS to an Amazon S3 task.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const { return m_securityGroupIds; }
+  inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds = std::forward<SecurityGroupIdsT>(value);
+  }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  RDSDataSpec& WithSecurityGroupIds(SecurityGroupIdsT&& value) {
+    SetSecurityGroupIds(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupIdsT = Aws::String>
+  RDSDataSpec& AddSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds.emplace_back(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  RDSDatabase m_databaseInformation;
 
-    ///@{
-    /**
-     * <p>The subnet ID to be used to access a VPC-based RDS DB instance. This
-     * attribute is used by Data Pipeline to carry out the copy task from Amazon RDS to
-     * Amazon S3.</p>
-     */
-    inline const Aws::String& GetSubnetId() const{ return m_subnetId; }
-    inline bool SubnetIdHasBeenSet() const { return m_subnetIdHasBeenSet; }
-    inline void SetSubnetId(const Aws::String& value) { m_subnetIdHasBeenSet = true; m_subnetId = value; }
-    inline void SetSubnetId(Aws::String&& value) { m_subnetIdHasBeenSet = true; m_subnetId = std::move(value); }
-    inline void SetSubnetId(const char* value) { m_subnetIdHasBeenSet = true; m_subnetId.assign(value); }
-    inline RDSDataSpec& WithSubnetId(const Aws::String& value) { SetSubnetId(value); return *this;}
-    inline RDSDataSpec& WithSubnetId(Aws::String&& value) { SetSubnetId(std::move(value)); return *this;}
-    inline RDSDataSpec& WithSubnetId(const char* value) { SetSubnetId(value); return *this;}
-    ///@}
+  Aws::String m_selectSqlQuery;
 
-    ///@{
-    /**
-     * <p>The security group IDs to be used to access a VPC-based RDS DB instance.
-     * Ensure that there are appropriate ingress rules set up to allow access to the
-     * RDS DB instance. This attribute is used by Data Pipeline to carry out the copy
-     * operation from Amazon RDS to an Amazon S3 task.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const{ return m_securityGroupIds; }
-    inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
-    inline void SetSecurityGroupIds(const Aws::Vector<Aws::String>& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = value; }
-    inline void SetSecurityGroupIds(Aws::Vector<Aws::String>&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = std::move(value); }
-    inline RDSDataSpec& WithSecurityGroupIds(const Aws::Vector<Aws::String>& value) { SetSecurityGroupIds(value); return *this;}
-    inline RDSDataSpec& WithSecurityGroupIds(Aws::Vector<Aws::String>&& value) { SetSecurityGroupIds(std::move(value)); return *this;}
-    inline RDSDataSpec& AddSecurityGroupIds(const Aws::String& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    inline RDSDataSpec& AddSecurityGroupIds(Aws::String&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(std::move(value)); return *this; }
-    inline RDSDataSpec& AddSecurityGroupIds(const char* value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    ///@}
-  private:
+  RDSDatabaseCredentials m_databaseCredentials;
 
-    RDSDatabase m_databaseInformation;
-    bool m_databaseInformationHasBeenSet = false;
+  Aws::String m_s3StagingLocation;
 
-    Aws::String m_selectSqlQuery;
-    bool m_selectSqlQueryHasBeenSet = false;
+  Aws::String m_dataRearrangement;
 
-    RDSDatabaseCredentials m_databaseCredentials;
-    bool m_databaseCredentialsHasBeenSet = false;
+  Aws::String m_dataSchema;
 
-    Aws::String m_s3StagingLocation;
-    bool m_s3StagingLocationHasBeenSet = false;
+  Aws::String m_dataSchemaUri;
 
-    Aws::String m_dataRearrangement;
-    bool m_dataRearrangementHasBeenSet = false;
+  Aws::String m_resourceRole;
 
-    Aws::String m_dataSchema;
-    bool m_dataSchemaHasBeenSet = false;
+  Aws::String m_serviceRole;
 
-    Aws::String m_dataSchemaUri;
-    bool m_dataSchemaUriHasBeenSet = false;
+  Aws::String m_subnetId;
 
-    Aws::String m_resourceRole;
-    bool m_resourceRoleHasBeenSet = false;
+  Aws::Vector<Aws::String> m_securityGroupIds;
+  bool m_databaseInformationHasBeenSet = false;
+  bool m_selectSqlQueryHasBeenSet = false;
+  bool m_databaseCredentialsHasBeenSet = false;
+  bool m_s3StagingLocationHasBeenSet = false;
+  bool m_dataRearrangementHasBeenSet = false;
+  bool m_dataSchemaHasBeenSet = false;
+  bool m_dataSchemaUriHasBeenSet = false;
+  bool m_resourceRoleHasBeenSet = false;
+  bool m_serviceRoleHasBeenSet = false;
+  bool m_subnetIdHasBeenSet = false;
+  bool m_securityGroupIdsHasBeenSet = false;
+};
 
-    Aws::String m_serviceRole;
-    bool m_serviceRoleHasBeenSet = false;
-
-    Aws::String m_subnetId;
-    bool m_subnetIdHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_securityGroupIds;
-    bool m_securityGroupIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MachineLearning
-} // namespace Aws
+}  // namespace Model
+}  // namespace MachineLearning
+}  // namespace Aws

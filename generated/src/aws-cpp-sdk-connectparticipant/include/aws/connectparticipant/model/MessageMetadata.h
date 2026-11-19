@@ -5,76 +5,103 @@
 
 #pragma once
 #include <aws/connectparticipant/ConnectParticipant_EXPORTS.h>
+#include <aws/connectparticipant/model/MessageProcessingStatus.h>
+#include <aws/connectparticipant/model/Receipt.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/connectparticipant/model/Receipt.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ConnectParticipant
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectParticipant {
+namespace Model {
 
+/**
+ * <p>Contains metadata related to a message.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/MessageMetadata">AWS
+ * API Reference</a></p>
+ */
+class MessageMetadata {
+ public:
+  AWS_CONNECTPARTICIPANT_API MessageMetadata() = default;
+  AWS_CONNECTPARTICIPANT_API MessageMetadata(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTPARTICIPANT_API MessageMetadata& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTPARTICIPANT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains metadata related to a message.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/MessageMetadata">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the message that contains the metadata information. </p>
    */
-  class MessageMetadata
-  {
-  public:
-    AWS_CONNECTPARTICIPANT_API MessageMetadata();
-    AWS_CONNECTPARTICIPANT_API MessageMetadata(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTPARTICIPANT_API MessageMetadata& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTPARTICIPANT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetMessageId() const { return m_messageId; }
+  inline bool MessageIdHasBeenSet() const { return m_messageIdHasBeenSet; }
+  template <typename MessageIdT = Aws::String>
+  void SetMessageId(MessageIdT&& value) {
+    m_messageIdHasBeenSet = true;
+    m_messageId = std::forward<MessageIdT>(value);
+  }
+  template <typename MessageIdT = Aws::String>
+  MessageMetadata& WithMessageId(MessageIdT&& value) {
+    SetMessageId(std::forward<MessageIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of receipt information for a message for different recipients.</p>
+   */
+  inline const Aws::Vector<Receipt>& GetReceipts() const { return m_receipts; }
+  inline bool ReceiptsHasBeenSet() const { return m_receiptsHasBeenSet; }
+  template <typename ReceiptsT = Aws::Vector<Receipt>>
+  void SetReceipts(ReceiptsT&& value) {
+    m_receiptsHasBeenSet = true;
+    m_receipts = std::forward<ReceiptsT>(value);
+  }
+  template <typename ReceiptsT = Aws::Vector<Receipt>>
+  MessageMetadata& WithReceipts(ReceiptsT&& value) {
+    SetReceipts(std::forward<ReceiptsT>(value));
+    return *this;
+  }
+  template <typename ReceiptsT = Receipt>
+  MessageMetadata& AddReceipts(ReceiptsT&& value) {
+    m_receiptsHasBeenSet = true;
+    m_receipts.emplace_back(std::forward<ReceiptsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the message that contains the metadata information. </p>
-     */
-    inline const Aws::String& GetMessageId() const{ return m_messageId; }
-    inline bool MessageIdHasBeenSet() const { return m_messageIdHasBeenSet; }
-    inline void SetMessageId(const Aws::String& value) { m_messageIdHasBeenSet = true; m_messageId = value; }
-    inline void SetMessageId(Aws::String&& value) { m_messageIdHasBeenSet = true; m_messageId = std::move(value); }
-    inline void SetMessageId(const char* value) { m_messageIdHasBeenSet = true; m_messageId.assign(value); }
-    inline MessageMetadata& WithMessageId(const Aws::String& value) { SetMessageId(value); return *this;}
-    inline MessageMetadata& WithMessageId(Aws::String&& value) { SetMessageId(std::move(value)); return *this;}
-    inline MessageMetadata& WithMessageId(const char* value) { SetMessageId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of Message Processing for the message.</p>
+   */
+  inline MessageProcessingStatus GetMessageProcessingStatus() const { return m_messageProcessingStatus; }
+  inline bool MessageProcessingStatusHasBeenSet() const { return m_messageProcessingStatusHasBeenSet; }
+  inline void SetMessageProcessingStatus(MessageProcessingStatus value) {
+    m_messageProcessingStatusHasBeenSet = true;
+    m_messageProcessingStatus = value;
+  }
+  inline MessageMetadata& WithMessageProcessingStatus(MessageProcessingStatus value) {
+    SetMessageProcessingStatus(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_messageId;
 
-    ///@{
-    /**
-     * <p>The list of receipt information for a message for different recipients.</p>
-     */
-    inline const Aws::Vector<Receipt>& GetReceipts() const{ return m_receipts; }
-    inline bool ReceiptsHasBeenSet() const { return m_receiptsHasBeenSet; }
-    inline void SetReceipts(const Aws::Vector<Receipt>& value) { m_receiptsHasBeenSet = true; m_receipts = value; }
-    inline void SetReceipts(Aws::Vector<Receipt>&& value) { m_receiptsHasBeenSet = true; m_receipts = std::move(value); }
-    inline MessageMetadata& WithReceipts(const Aws::Vector<Receipt>& value) { SetReceipts(value); return *this;}
-    inline MessageMetadata& WithReceipts(Aws::Vector<Receipt>&& value) { SetReceipts(std::move(value)); return *this;}
-    inline MessageMetadata& AddReceipts(const Receipt& value) { m_receiptsHasBeenSet = true; m_receipts.push_back(value); return *this; }
-    inline MessageMetadata& AddReceipts(Receipt&& value) { m_receiptsHasBeenSet = true; m_receipts.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Receipt> m_receipts;
 
-    Aws::String m_messageId;
-    bool m_messageIdHasBeenSet = false;
+  MessageProcessingStatus m_messageProcessingStatus{MessageProcessingStatus::NOT_SET};
+  bool m_messageIdHasBeenSet = false;
+  bool m_receiptsHasBeenSet = false;
+  bool m_messageProcessingStatusHasBeenSet = false;
+};
 
-    Aws::Vector<Receipt> m_receipts;
-    bool m_receiptsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectParticipant
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectParticipant
+}  // namespace Aws

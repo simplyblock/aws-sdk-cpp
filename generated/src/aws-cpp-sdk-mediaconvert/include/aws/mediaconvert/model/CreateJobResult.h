@@ -4,65 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 #include <aws/mediaconvert/model/Job.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConvert
-{
-namespace Model
-{
-  class CreateJobResult
-  {
-  public:
-    AWS_MEDIACONVERT_API CreateJobResult();
-    AWS_MEDIACONVERT_API CreateJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONVERT_API CreateJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
+class CreateJobResult {
+ public:
+  AWS_MEDIACONVERT_API CreateJobResult() = default;
+  AWS_MEDIACONVERT_API CreateJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONVERT_API CreateJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * Each job converts an input file into an output file or files. For more
+   * information, see the User Guide at
+   * https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html
+   */
+  inline const Job& GetJob() const { return m_job; }
+  template <typename JobT = Job>
+  void SetJob(JobT&& value) {
+    m_jobHasBeenSet = true;
+    m_job = std::forward<JobT>(value);
+  }
+  template <typename JobT = Job>
+  CreateJobResult& WithJob(JobT&& value) {
+    SetJob(std::forward<JobT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Each job converts an input file into an output file or files. For more
-     * information, see the User Guide at
-     * https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html
-     */
-    inline const Job& GetJob() const{ return m_job; }
-    inline void SetJob(const Job& value) { m_job = value; }
-    inline void SetJob(Job&& value) { m_job = std::move(value); }
-    inline CreateJobResult& WithJob(const Job& value) { SetJob(value); return *this;}
-    inline CreateJobResult& WithJob(Job&& value) { SetJob(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Job m_job;
+ private:
+  Job m_job;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

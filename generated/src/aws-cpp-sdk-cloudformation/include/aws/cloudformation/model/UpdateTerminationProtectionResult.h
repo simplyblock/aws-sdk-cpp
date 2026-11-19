@@ -5,62 +5,72 @@
 
 #pragma once
 #include <aws/cloudformation/CloudFormation_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/cloudformation/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFormation
-{
-namespace Model
-{
-  class UpdateTerminationProtectionResult
-  {
-  public:
-    AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult();
-    AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFormation {
+namespace Model {
+class UpdateTerminationProtectionResult {
+ public:
+  AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult() = default;
+  AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFORMATION_API UpdateTerminationProtectionResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The unique ID of the stack.</p>
+   */
+  inline const Aws::String& GetStackId() const { return m_stackId; }
+  template <typename StackIdT = Aws::String>
+  void SetStackId(StackIdT&& value) {
+    m_stackIdHasBeenSet = true;
+    m_stackId = std::forward<StackIdT>(value);
+  }
+  template <typename StackIdT = Aws::String>
+  UpdateTerminationProtectionResult& WithStackId(StackIdT&& value) {
+    SetStackId(std::forward<StackIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique ID of the stack.</p>
-     */
-    inline const Aws::String& GetStackId() const{ return m_stackId; }
-    inline void SetStackId(const Aws::String& value) { m_stackId = value; }
-    inline void SetStackId(Aws::String&& value) { m_stackId = std::move(value); }
-    inline void SetStackId(const char* value) { m_stackId.assign(value); }
-    inline UpdateTerminationProtectionResult& WithStackId(const Aws::String& value) { SetStackId(value); return *this;}
-    inline UpdateTerminationProtectionResult& WithStackId(Aws::String&& value) { SetStackId(std::move(value)); return *this;}
-    inline UpdateTerminationProtectionResult& WithStackId(const char* value) { SetStackId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline UpdateTerminationProtectionResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline UpdateTerminationProtectionResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  UpdateTerminationProtectionResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_stackId;
+ private:
+  Aws::String m_stackId;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_stackIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFormation
+}  // namespace Aws

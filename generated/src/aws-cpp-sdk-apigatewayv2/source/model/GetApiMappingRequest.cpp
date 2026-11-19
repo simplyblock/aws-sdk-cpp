@@ -12,17 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetApiMappingRequest::GetApiMappingRequest() : 
-    m_apiMappingIdHasBeenSet(false),
-    m_domainNameHasBeenSet(false)
-{
-}
-
-Aws::String GetApiMappingRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetApiMappingRequest::SerializePayload() const { return {}; }

@@ -4,128 +4,151 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
-#include <aws/ssm/SSMRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm/SSMRequest.h>
+#include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/CommandFilter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SSM
-{
-namespace Model
-{
+namespace Aws {
+namespace SSM {
+namespace Model {
 
+/**
+ */
+class ListCommandsRequest : public SSMRequest {
+ public:
+  AWS_SSM_API ListCommandsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListCommands"; }
+
+  AWS_SSM_API Aws::String SerializePayload() const override;
+
+  AWS_SSM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>(Optional) If provided, lists only the specified command.</p>
    */
-  class ListCommandsRequest : public SSMRequest
-  {
-  public:
-    AWS_SSM_API ListCommandsRequest();
+  inline const Aws::String& GetCommandId() const { return m_commandId; }
+  inline bool CommandIdHasBeenSet() const { return m_commandIdHasBeenSet; }
+  template <typename CommandIdT = Aws::String>
+  void SetCommandId(CommandIdT&& value) {
+    m_commandIdHasBeenSet = true;
+    m_commandId = std::forward<CommandIdT>(value);
+  }
+  template <typename CommandIdT = Aws::String>
+  ListCommandsRequest& WithCommandId(CommandIdT&& value) {
+    SetCommandId(std::forward<CommandIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListCommands"; }
+  ///@{
+  /**
+   * <p>(Optional) Lists commands issued against this managed node ID.</p>
+   * <p>You can't specify a managed node ID in the same command that you specify
+   * <code>Status</code> = <code>Pending</code>. This is because the command hasn't
+   * reached the managed node yet.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  ListCommandsRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SSM_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>(Optional) The maximum number of items to return for this call. The call also
+   * returns a token that you can specify in a subsequent call to get the next set of
+   * results.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListCommandsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SSM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>(Optional) The token for the next set of items to return. (You received this
+   * token from a previous call.)</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListCommandsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>(Optional) One or more filters. Use a filter to return a more specific list
+   * of results. </p>
+   */
+  inline const Aws::Vector<CommandFilter>& GetFilters() const { return m_filters; }
+  inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
+  template <typename FiltersT = Aws::Vector<CommandFilter>>
+  void SetFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters = std::forward<FiltersT>(value);
+  }
+  template <typename FiltersT = Aws::Vector<CommandFilter>>
+  ListCommandsRequest& WithFilters(FiltersT&& value) {
+    SetFilters(std::forward<FiltersT>(value));
+    return *this;
+  }
+  template <typename FiltersT = CommandFilter>
+  ListCommandsRequest& AddFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters.emplace_back(std::forward<FiltersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_commandId;
 
-    ///@{
-    /**
-     * <p>(Optional) If provided, lists only the specified command.</p>
-     */
-    inline const Aws::String& GetCommandId() const{ return m_commandId; }
-    inline bool CommandIdHasBeenSet() const { return m_commandIdHasBeenSet; }
-    inline void SetCommandId(const Aws::String& value) { m_commandIdHasBeenSet = true; m_commandId = value; }
-    inline void SetCommandId(Aws::String&& value) { m_commandIdHasBeenSet = true; m_commandId = std::move(value); }
-    inline void SetCommandId(const char* value) { m_commandIdHasBeenSet = true; m_commandId.assign(value); }
-    inline ListCommandsRequest& WithCommandId(const Aws::String& value) { SetCommandId(value); return *this;}
-    inline ListCommandsRequest& WithCommandId(Aws::String&& value) { SetCommandId(std::move(value)); return *this;}
-    inline ListCommandsRequest& WithCommandId(const char* value) { SetCommandId(value); return *this;}
-    ///@}
+  Aws::String m_instanceId;
 
-    ///@{
-    /**
-     * <p>(Optional) Lists commands issued against this managed node ID.</p> 
-     * <p>You can't specify a managed node ID in the same command that you specify
-     * <code>Status</code> = <code>Pending</code>. This is because the command hasn't
-     * reached the managed node yet.</p> 
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline ListCommandsRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline ListCommandsRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline ListCommandsRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>(Optional) The maximum number of items to return for this call. The call also
-     * returns a token that you can specify in a subsequent call to get the next set of
-     * results.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListCommandsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>(Optional) The token for the next set of items to return. (You received this
-     * token from a previous call.)</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListCommandsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListCommandsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListCommandsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  Aws::Vector<CommandFilter> m_filters;
+  bool m_commandIdHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_filtersHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>(Optional) One or more filters. Use a filter to return a more specific list
-     * of results. </p>
-     */
-    inline const Aws::Vector<CommandFilter>& GetFilters() const{ return m_filters; }
-    inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
-    inline void SetFilters(const Aws::Vector<CommandFilter>& value) { m_filtersHasBeenSet = true; m_filters = value; }
-    inline void SetFilters(Aws::Vector<CommandFilter>&& value) { m_filtersHasBeenSet = true; m_filters = std::move(value); }
-    inline ListCommandsRequest& WithFilters(const Aws::Vector<CommandFilter>& value) { SetFilters(value); return *this;}
-    inline ListCommandsRequest& WithFilters(Aws::Vector<CommandFilter>&& value) { SetFilters(std::move(value)); return *this;}
-    inline ListCommandsRequest& AddFilters(const CommandFilter& value) { m_filtersHasBeenSet = true; m_filters.push_back(value); return *this; }
-    inline ListCommandsRequest& AddFilters(CommandFilter&& value) { m_filtersHasBeenSet = true; m_filters.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_commandId;
-    bool m_commandIdHasBeenSet = false;
-
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    Aws::Vector<CommandFilter> m_filters;
-    bool m_filtersHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

@@ -4,95 +4,105 @@
  */
 
 #pragma once
-#include <aws/elasticmapreduce/EMR_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticmapreduce/EMR_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EMR
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EMR {
+namespace Model {
 
+/**
+ * <p>An entity describing an executable that runs on a cluster.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/Command">AWS
+ * API Reference</a></p>
+ */
+class Command {
+ public:
+  AWS_EMR_API Command() = default;
+  AWS_EMR_API Command(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMR_API Command& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EMR_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An entity describing an executable that runs on a cluster.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/Command">AWS
-   * API Reference</a></p>
+   * <p>The name of the command.</p>
    */
-  class Command
-  {
-  public:
-    AWS_EMR_API Command();
-    AWS_EMR_API Command(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMR_API Command& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EMR_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Command& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon S3 location of the command script.</p>
+   */
+  inline const Aws::String& GetScriptPath() const { return m_scriptPath; }
+  inline bool ScriptPathHasBeenSet() const { return m_scriptPathHasBeenSet; }
+  template <typename ScriptPathT = Aws::String>
+  void SetScriptPath(ScriptPathT&& value) {
+    m_scriptPathHasBeenSet = true;
+    m_scriptPath = std::forward<ScriptPathT>(value);
+  }
+  template <typename ScriptPathT = Aws::String>
+  Command& WithScriptPath(ScriptPathT&& value) {
+    SetScriptPath(std::forward<ScriptPathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the command.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Command& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Command& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Command& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Arguments for Amazon EMR to pass to the command for execution.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetArgs() const { return m_args; }
+  inline bool ArgsHasBeenSet() const { return m_argsHasBeenSet; }
+  template <typename ArgsT = Aws::Vector<Aws::String>>
+  void SetArgs(ArgsT&& value) {
+    m_argsHasBeenSet = true;
+    m_args = std::forward<ArgsT>(value);
+  }
+  template <typename ArgsT = Aws::Vector<Aws::String>>
+  Command& WithArgs(ArgsT&& value) {
+    SetArgs(std::forward<ArgsT>(value));
+    return *this;
+  }
+  template <typename ArgsT = Aws::String>
+  Command& AddArgs(ArgsT&& value) {
+    m_argsHasBeenSet = true;
+    m_args.emplace_back(std::forward<ArgsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The Amazon S3 location of the command script.</p>
-     */
-    inline const Aws::String& GetScriptPath() const{ return m_scriptPath; }
-    inline bool ScriptPathHasBeenSet() const { return m_scriptPathHasBeenSet; }
-    inline void SetScriptPath(const Aws::String& value) { m_scriptPathHasBeenSet = true; m_scriptPath = value; }
-    inline void SetScriptPath(Aws::String&& value) { m_scriptPathHasBeenSet = true; m_scriptPath = std::move(value); }
-    inline void SetScriptPath(const char* value) { m_scriptPathHasBeenSet = true; m_scriptPath.assign(value); }
-    inline Command& WithScriptPath(const Aws::String& value) { SetScriptPath(value); return *this;}
-    inline Command& WithScriptPath(Aws::String&& value) { SetScriptPath(std::move(value)); return *this;}
-    inline Command& WithScriptPath(const char* value) { SetScriptPath(value); return *this;}
-    ///@}
+  Aws::String m_scriptPath;
 
-    ///@{
-    /**
-     * <p>Arguments for Amazon EMR to pass to the command for execution.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetArgs() const{ return m_args; }
-    inline bool ArgsHasBeenSet() const { return m_argsHasBeenSet; }
-    inline void SetArgs(const Aws::Vector<Aws::String>& value) { m_argsHasBeenSet = true; m_args = value; }
-    inline void SetArgs(Aws::Vector<Aws::String>&& value) { m_argsHasBeenSet = true; m_args = std::move(value); }
-    inline Command& WithArgs(const Aws::Vector<Aws::String>& value) { SetArgs(value); return *this;}
-    inline Command& WithArgs(Aws::Vector<Aws::String>&& value) { SetArgs(std::move(value)); return *this;}
-    inline Command& AddArgs(const Aws::String& value) { m_argsHasBeenSet = true; m_args.push_back(value); return *this; }
-    inline Command& AddArgs(Aws::String&& value) { m_argsHasBeenSet = true; m_args.push_back(std::move(value)); return *this; }
-    inline Command& AddArgs(const char* value) { m_argsHasBeenSet = true; m_args.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_args;
+  bool m_nameHasBeenSet = false;
+  bool m_scriptPathHasBeenSet = false;
+  bool m_argsHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_scriptPath;
-    bool m_scriptPathHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_args;
-    bool m_argsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

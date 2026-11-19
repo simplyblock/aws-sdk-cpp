@@ -5,92 +5,109 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/connect/model/VocabularyState.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class CreateVocabularyResult
-  {
-  public:
-    AWS_CONNECT_API CreateVocabularyResult();
-    AWS_CONNECT_API CreateVocabularyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API CreateVocabularyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class CreateVocabularyResult {
+ public:
+  AWS_CONNECT_API CreateVocabularyResult() = default;
+  AWS_CONNECT_API CreateVocabularyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API CreateVocabularyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>
+   */
+  inline const Aws::String& GetVocabularyArn() const { return m_vocabularyArn; }
+  template <typename VocabularyArnT = Aws::String>
+  void SetVocabularyArn(VocabularyArnT&& value) {
+    m_vocabularyArnHasBeenSet = true;
+    m_vocabularyArn = std::forward<VocabularyArnT>(value);
+  }
+  template <typename VocabularyArnT = Aws::String>
+  CreateVocabularyResult& WithVocabularyArn(VocabularyArnT&& value) {
+    SetVocabularyArn(std::forward<VocabularyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>
-     */
-    inline const Aws::String& GetVocabularyArn() const{ return m_vocabularyArn; }
-    inline void SetVocabularyArn(const Aws::String& value) { m_vocabularyArn = value; }
-    inline void SetVocabularyArn(Aws::String&& value) { m_vocabularyArn = std::move(value); }
-    inline void SetVocabularyArn(const char* value) { m_vocabularyArn.assign(value); }
-    inline CreateVocabularyResult& WithVocabularyArn(const Aws::String& value) { SetVocabularyArn(value); return *this;}
-    inline CreateVocabularyResult& WithVocabularyArn(Aws::String&& value) { SetVocabularyArn(std::move(value)); return *this;}
-    inline CreateVocabularyResult& WithVocabularyArn(const char* value) { SetVocabularyArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the custom vocabulary.</p>
+   */
+  inline const Aws::String& GetVocabularyId() const { return m_vocabularyId; }
+  template <typename VocabularyIdT = Aws::String>
+  void SetVocabularyId(VocabularyIdT&& value) {
+    m_vocabularyIdHasBeenSet = true;
+    m_vocabularyId = std::forward<VocabularyIdT>(value);
+  }
+  template <typename VocabularyIdT = Aws::String>
+  CreateVocabularyResult& WithVocabularyId(VocabularyIdT&& value) {
+    SetVocabularyId(std::forward<VocabularyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the custom vocabulary.</p>
-     */
-    inline const Aws::String& GetVocabularyId() const{ return m_vocabularyId; }
-    inline void SetVocabularyId(const Aws::String& value) { m_vocabularyId = value; }
-    inline void SetVocabularyId(Aws::String&& value) { m_vocabularyId = std::move(value); }
-    inline void SetVocabularyId(const char* value) { m_vocabularyId.assign(value); }
-    inline CreateVocabularyResult& WithVocabularyId(const Aws::String& value) { SetVocabularyId(value); return *this;}
-    inline CreateVocabularyResult& WithVocabularyId(Aws::String&& value) { SetVocabularyId(std::move(value)); return *this;}
-    inline CreateVocabularyResult& WithVocabularyId(const char* value) { SetVocabularyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current state of the custom vocabulary.</p>
+   */
+  inline VocabularyState GetState() const { return m_state; }
+  inline void SetState(VocabularyState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline CreateVocabularyResult& WithState(VocabularyState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current state of the custom vocabulary.</p>
-     */
-    inline const VocabularyState& GetState() const{ return m_state; }
-    inline void SetState(const VocabularyState& value) { m_state = value; }
-    inline void SetState(VocabularyState&& value) { m_state = std::move(value); }
-    inline CreateVocabularyResult& WithState(const VocabularyState& value) { SetState(value); return *this;}
-    inline CreateVocabularyResult& WithState(VocabularyState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateVocabularyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateVocabularyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateVocabularyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateVocabularyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_vocabularyArn;
+ private:
+  Aws::String m_vocabularyArn;
 
-    Aws::String m_vocabularyId;
+  Aws::String m_vocabularyId;
 
-    VocabularyState m_state;
+  VocabularyState m_state{VocabularyState::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vocabularyArnHasBeenSet = false;
+  bool m_vocabularyIdHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

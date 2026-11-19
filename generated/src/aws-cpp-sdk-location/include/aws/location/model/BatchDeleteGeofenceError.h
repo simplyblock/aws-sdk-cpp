@@ -4,75 +4,78 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/location/LocationService_EXPORTS.h>
 #include <aws/location/model/BatchItemError.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
 
+/**
+ * <p>Contains error details for each geofence that failed to delete from the
+ * geofence collection.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/BatchDeleteGeofenceError">AWS
+ * API Reference</a></p>
+ */
+class BatchDeleteGeofenceError {
+ public:
+  AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError() = default;
+  AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LOCATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains error details for each geofence that failed to delete from the
-   * geofence collection.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/location-2020-11-19/BatchDeleteGeofenceError">AWS
-   * API Reference</a></p>
+   * <p>The geofence associated with the error message.</p>
    */
-  class BatchDeleteGeofenceError
-  {
-  public:
-    AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError();
-    AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LOCATIONSERVICE_API BatchDeleteGeofenceError& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LOCATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetGeofenceId() const { return m_geofenceId; }
+  inline bool GeofenceIdHasBeenSet() const { return m_geofenceIdHasBeenSet; }
+  template <typename GeofenceIdT = Aws::String>
+  void SetGeofenceId(GeofenceIdT&& value) {
+    m_geofenceIdHasBeenSet = true;
+    m_geofenceId = std::forward<GeofenceIdT>(value);
+  }
+  template <typename GeofenceIdT = Aws::String>
+  BatchDeleteGeofenceError& WithGeofenceId(GeofenceIdT&& value) {
+    SetGeofenceId(std::forward<GeofenceIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Contains details associated to the batch error.</p>
+   */
+  inline const BatchItemError& GetError() const { return m_error; }
+  inline bool ErrorHasBeenSet() const { return m_errorHasBeenSet; }
+  template <typename ErrorT = BatchItemError>
+  void SetError(ErrorT&& value) {
+    m_errorHasBeenSet = true;
+    m_error = std::forward<ErrorT>(value);
+  }
+  template <typename ErrorT = BatchItemError>
+  BatchDeleteGeofenceError& WithError(ErrorT&& value) {
+    SetError(std::forward<ErrorT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_geofenceId;
 
-    ///@{
-    /**
-     * <p>The geofence associated with the error message.</p>
-     */
-    inline const Aws::String& GetGeofenceId() const{ return m_geofenceId; }
-    inline bool GeofenceIdHasBeenSet() const { return m_geofenceIdHasBeenSet; }
-    inline void SetGeofenceId(const Aws::String& value) { m_geofenceIdHasBeenSet = true; m_geofenceId = value; }
-    inline void SetGeofenceId(Aws::String&& value) { m_geofenceIdHasBeenSet = true; m_geofenceId = std::move(value); }
-    inline void SetGeofenceId(const char* value) { m_geofenceIdHasBeenSet = true; m_geofenceId.assign(value); }
-    inline BatchDeleteGeofenceError& WithGeofenceId(const Aws::String& value) { SetGeofenceId(value); return *this;}
-    inline BatchDeleteGeofenceError& WithGeofenceId(Aws::String&& value) { SetGeofenceId(std::move(value)); return *this;}
-    inline BatchDeleteGeofenceError& WithGeofenceId(const char* value) { SetGeofenceId(value); return *this;}
-    ///@}
+  BatchItemError m_error;
+  bool m_geofenceIdHasBeenSet = false;
+  bool m_errorHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Contains details associated to the batch error.</p>
-     */
-    inline const BatchItemError& GetError() const{ return m_error; }
-    inline bool ErrorHasBeenSet() const { return m_errorHasBeenSet; }
-    inline void SetError(const BatchItemError& value) { m_errorHasBeenSet = true; m_error = value; }
-    inline void SetError(BatchItemError&& value) { m_errorHasBeenSet = true; m_error = std::move(value); }
-    inline BatchDeleteGeofenceError& WithError(const BatchItemError& value) { SetError(value); return *this;}
-    inline BatchDeleteGeofenceError& WithError(BatchItemError&& value) { SetError(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_geofenceId;
-    bool m_geofenceIdHasBeenSet = false;
-
-    BatchItemError m_error;
-    bool m_errorHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

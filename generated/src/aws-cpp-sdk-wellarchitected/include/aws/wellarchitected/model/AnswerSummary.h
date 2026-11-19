@@ -4,211 +4,269 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/wellarchitected/model/Risk.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/AnswerReason.h>
-#include <aws/wellarchitected/model/QuestionType.h>
-#include <aws/wellarchitected/model/JiraConfiguration.h>
 #include <aws/wellarchitected/model/Choice.h>
 #include <aws/wellarchitected/model/ChoiceAnswerSummary.h>
+#include <aws/wellarchitected/model/JiraConfiguration.h>
+#include <aws/wellarchitected/model/QuestionType.h>
+#include <aws/wellarchitected/model/Risk.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
 
+/**
+ * <p>An answer summary of a lens review in a workload.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/AnswerSummary">AWS
+ * API Reference</a></p>
+ */
+class AnswerSummary {
+ public:
+  AWS_WELLARCHITECTED_API AnswerSummary() = default;
+  AWS_WELLARCHITECTED_API AnswerSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API AnswerSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetQuestionId() const { return m_questionId; }
+  inline bool QuestionIdHasBeenSet() const { return m_questionIdHasBeenSet; }
+  template <typename QuestionIdT = Aws::String>
+  void SetQuestionId(QuestionIdT&& value) {
+    m_questionIdHasBeenSet = true;
+    m_questionId = std::forward<QuestionIdT>(value);
+  }
+  template <typename QuestionIdT = Aws::String>
+  AnswerSummary& WithQuestionId(QuestionIdT&& value) {
+    SetQuestionId(std::forward<QuestionIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::String& GetPillarId() const { return m_pillarId; }
+  inline bool PillarIdHasBeenSet() const { return m_pillarIdHasBeenSet; }
+  template <typename PillarIdT = Aws::String>
+  void SetPillarId(PillarIdT&& value) {
+    m_pillarIdHasBeenSet = true;
+    m_pillarId = std::forward<PillarIdT>(value);
+  }
+  template <typename PillarIdT = Aws::String>
+  AnswerSummary& WithPillarId(PillarIdT&& value) {
+    SetPillarId(std::forward<PillarIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::String& GetQuestionTitle() const { return m_questionTitle; }
+  inline bool QuestionTitleHasBeenSet() const { return m_questionTitleHasBeenSet; }
+  template <typename QuestionTitleT = Aws::String>
+  void SetQuestionTitle(QuestionTitleT&& value) {
+    m_questionTitleHasBeenSet = true;
+    m_questionTitle = std::forward<QuestionTitleT>(value);
+  }
+  template <typename QuestionTitleT = Aws::String>
+  AnswerSummary& WithQuestionTitle(QuestionTitleT&& value) {
+    SetQuestionTitle(std::forward<QuestionTitleT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::Vector<Choice>& GetChoices() const { return m_choices; }
+  inline bool ChoicesHasBeenSet() const { return m_choicesHasBeenSet; }
+  template <typename ChoicesT = Aws::Vector<Choice>>
+  void SetChoices(ChoicesT&& value) {
+    m_choicesHasBeenSet = true;
+    m_choices = std::forward<ChoicesT>(value);
+  }
+  template <typename ChoicesT = Aws::Vector<Choice>>
+  AnswerSummary& WithChoices(ChoicesT&& value) {
+    SetChoices(std::forward<ChoicesT>(value));
+    return *this;
+  }
+  template <typename ChoicesT = Choice>
+  AnswerSummary& AddChoices(ChoicesT&& value) {
+    m_choicesHasBeenSet = true;
+    m_choices.emplace_back(std::forward<ChoicesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::Vector<Aws::String>& GetSelectedChoices() const { return m_selectedChoices; }
+  inline bool SelectedChoicesHasBeenSet() const { return m_selectedChoicesHasBeenSet; }
+  template <typename SelectedChoicesT = Aws::Vector<Aws::String>>
+  void SetSelectedChoices(SelectedChoicesT&& value) {
+    m_selectedChoicesHasBeenSet = true;
+    m_selectedChoices = std::forward<SelectedChoicesT>(value);
+  }
+  template <typename SelectedChoicesT = Aws::Vector<Aws::String>>
+  AnswerSummary& WithSelectedChoices(SelectedChoicesT&& value) {
+    SetSelectedChoices(std::forward<SelectedChoicesT>(value));
+    return *this;
+  }
+  template <typename SelectedChoicesT = Aws::String>
+  AnswerSummary& AddSelectedChoices(SelectedChoicesT&& value) {
+    m_selectedChoicesHasBeenSet = true;
+    m_selectedChoices.emplace_back(std::forward<SelectedChoicesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>An answer summary of a lens review in a workload.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/AnswerSummary">AWS
-   * API Reference</a></p>
+   * <p>A list of selected choices to a question in your workload.</p>
    */
-  class AnswerSummary
-  {
-  public:
-    AWS_WELLARCHITECTED_API AnswerSummary();
-    AWS_WELLARCHITECTED_API AnswerSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API AnswerSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<ChoiceAnswerSummary>& GetChoiceAnswerSummaries() const { return m_choiceAnswerSummaries; }
+  inline bool ChoiceAnswerSummariesHasBeenSet() const { return m_choiceAnswerSummariesHasBeenSet; }
+  template <typename ChoiceAnswerSummariesT = Aws::Vector<ChoiceAnswerSummary>>
+  void SetChoiceAnswerSummaries(ChoiceAnswerSummariesT&& value) {
+    m_choiceAnswerSummariesHasBeenSet = true;
+    m_choiceAnswerSummaries = std::forward<ChoiceAnswerSummariesT>(value);
+  }
+  template <typename ChoiceAnswerSummariesT = Aws::Vector<ChoiceAnswerSummary>>
+  AnswerSummary& WithChoiceAnswerSummaries(ChoiceAnswerSummariesT&& value) {
+    SetChoiceAnswerSummaries(std::forward<ChoiceAnswerSummariesT>(value));
+    return *this;
+  }
+  template <typename ChoiceAnswerSummariesT = ChoiceAnswerSummary>
+  AnswerSummary& AddChoiceAnswerSummaries(ChoiceAnswerSummariesT&& value) {
+    m_choiceAnswerSummariesHasBeenSet = true;
+    m_choiceAnswerSummaries.emplace_back(std::forward<ChoiceAnswerSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetQuestionId() const{ return m_questionId; }
-    inline bool QuestionIdHasBeenSet() const { return m_questionIdHasBeenSet; }
-    inline void SetQuestionId(const Aws::String& value) { m_questionIdHasBeenSet = true; m_questionId = value; }
-    inline void SetQuestionId(Aws::String&& value) { m_questionIdHasBeenSet = true; m_questionId = std::move(value); }
-    inline void SetQuestionId(const char* value) { m_questionIdHasBeenSet = true; m_questionId.assign(value); }
-    inline AnswerSummary& WithQuestionId(const Aws::String& value) { SetQuestionId(value); return *this;}
-    inline AnswerSummary& WithQuestionId(Aws::String&& value) { SetQuestionId(std::move(value)); return *this;}
-    inline AnswerSummary& WithQuestionId(const char* value) { SetQuestionId(value); return *this;}
-    ///@}
+  inline bool GetIsApplicable() const { return m_isApplicable; }
+  inline bool IsApplicableHasBeenSet() const { return m_isApplicableHasBeenSet; }
+  inline void SetIsApplicable(bool value) {
+    m_isApplicableHasBeenSet = true;
+    m_isApplicable = value;
+  }
+  inline AnswerSummary& WithIsApplicable(bool value) {
+    SetIsApplicable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetPillarId() const{ return m_pillarId; }
-    inline bool PillarIdHasBeenSet() const { return m_pillarIdHasBeenSet; }
-    inline void SetPillarId(const Aws::String& value) { m_pillarIdHasBeenSet = true; m_pillarId = value; }
-    inline void SetPillarId(Aws::String&& value) { m_pillarIdHasBeenSet = true; m_pillarId = std::move(value); }
-    inline void SetPillarId(const char* value) { m_pillarIdHasBeenSet = true; m_pillarId.assign(value); }
-    inline AnswerSummary& WithPillarId(const Aws::String& value) { SetPillarId(value); return *this;}
-    inline AnswerSummary& WithPillarId(Aws::String&& value) { SetPillarId(std::move(value)); return *this;}
-    inline AnswerSummary& WithPillarId(const char* value) { SetPillarId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetQuestionTitle() const{ return m_questionTitle; }
-    inline bool QuestionTitleHasBeenSet() const { return m_questionTitleHasBeenSet; }
-    inline void SetQuestionTitle(const Aws::String& value) { m_questionTitleHasBeenSet = true; m_questionTitle = value; }
-    inline void SetQuestionTitle(Aws::String&& value) { m_questionTitleHasBeenSet = true; m_questionTitle = std::move(value); }
-    inline void SetQuestionTitle(const char* value) { m_questionTitleHasBeenSet = true; m_questionTitle.assign(value); }
-    inline AnswerSummary& WithQuestionTitle(const Aws::String& value) { SetQuestionTitle(value); return *this;}
-    inline AnswerSummary& WithQuestionTitle(Aws::String&& value) { SetQuestionTitle(std::move(value)); return *this;}
-    inline AnswerSummary& WithQuestionTitle(const char* value) { SetQuestionTitle(value); return *this;}
-    ///@}
+  inline Risk GetRisk() const { return m_risk; }
+  inline bool RiskHasBeenSet() const { return m_riskHasBeenSet; }
+  inline void SetRisk(Risk value) {
+    m_riskHasBeenSet = true;
+    m_risk = value;
+  }
+  inline AnswerSummary& WithRisk(Risk value) {
+    SetRisk(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<Choice>& GetChoices() const{ return m_choices; }
-    inline bool ChoicesHasBeenSet() const { return m_choicesHasBeenSet; }
-    inline void SetChoices(const Aws::Vector<Choice>& value) { m_choicesHasBeenSet = true; m_choices = value; }
-    inline void SetChoices(Aws::Vector<Choice>&& value) { m_choicesHasBeenSet = true; m_choices = std::move(value); }
-    inline AnswerSummary& WithChoices(const Aws::Vector<Choice>& value) { SetChoices(value); return *this;}
-    inline AnswerSummary& WithChoices(Aws::Vector<Choice>&& value) { SetChoices(std::move(value)); return *this;}
-    inline AnswerSummary& AddChoices(const Choice& value) { m_choicesHasBeenSet = true; m_choices.push_back(value); return *this; }
-    inline AnswerSummary& AddChoices(Choice&& value) { m_choicesHasBeenSet = true; m_choices.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The reason why a choice is non-applicable to a question in your workload.</p>
+   */
+  inline AnswerReason GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  inline void SetReason(AnswerReason value) {
+    m_reasonHasBeenSet = true;
+    m_reason = value;
+  }
+  inline AnswerSummary& WithReason(AnswerReason value) {
+    SetReason(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<Aws::String>& GetSelectedChoices() const{ return m_selectedChoices; }
-    inline bool SelectedChoicesHasBeenSet() const { return m_selectedChoicesHasBeenSet; }
-    inline void SetSelectedChoices(const Aws::Vector<Aws::String>& value) { m_selectedChoicesHasBeenSet = true; m_selectedChoices = value; }
-    inline void SetSelectedChoices(Aws::Vector<Aws::String>&& value) { m_selectedChoicesHasBeenSet = true; m_selectedChoices = std::move(value); }
-    inline AnswerSummary& WithSelectedChoices(const Aws::Vector<Aws::String>& value) { SetSelectedChoices(value); return *this;}
-    inline AnswerSummary& WithSelectedChoices(Aws::Vector<Aws::String>&& value) { SetSelectedChoices(std::move(value)); return *this;}
-    inline AnswerSummary& AddSelectedChoices(const Aws::String& value) { m_selectedChoicesHasBeenSet = true; m_selectedChoices.push_back(value); return *this; }
-    inline AnswerSummary& AddSelectedChoices(Aws::String&& value) { m_selectedChoicesHasBeenSet = true; m_selectedChoices.push_back(std::move(value)); return *this; }
-    inline AnswerSummary& AddSelectedChoices(const char* value) { m_selectedChoicesHasBeenSet = true; m_selectedChoices.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the question.</p>
+   */
+  inline QuestionType GetQuestionType() const { return m_questionType; }
+  inline bool QuestionTypeHasBeenSet() const { return m_questionTypeHasBeenSet; }
+  inline void SetQuestionType(QuestionType value) {
+    m_questionTypeHasBeenSet = true;
+    m_questionType = value;
+  }
+  inline AnswerSummary& WithQuestionType(QuestionType value) {
+    SetQuestionType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of selected choices to a question in your workload.</p>
-     */
-    inline const Aws::Vector<ChoiceAnswerSummary>& GetChoiceAnswerSummaries() const{ return m_choiceAnswerSummaries; }
-    inline bool ChoiceAnswerSummariesHasBeenSet() const { return m_choiceAnswerSummariesHasBeenSet; }
-    inline void SetChoiceAnswerSummaries(const Aws::Vector<ChoiceAnswerSummary>& value) { m_choiceAnswerSummariesHasBeenSet = true; m_choiceAnswerSummaries = value; }
-    inline void SetChoiceAnswerSummaries(Aws::Vector<ChoiceAnswerSummary>&& value) { m_choiceAnswerSummariesHasBeenSet = true; m_choiceAnswerSummaries = std::move(value); }
-    inline AnswerSummary& WithChoiceAnswerSummaries(const Aws::Vector<ChoiceAnswerSummary>& value) { SetChoiceAnswerSummaries(value); return *this;}
-    inline AnswerSummary& WithChoiceAnswerSummaries(Aws::Vector<ChoiceAnswerSummary>&& value) { SetChoiceAnswerSummaries(std::move(value)); return *this;}
-    inline AnswerSummary& AddChoiceAnswerSummaries(const ChoiceAnswerSummary& value) { m_choiceAnswerSummariesHasBeenSet = true; m_choiceAnswerSummaries.push_back(value); return *this; }
-    inline AnswerSummary& AddChoiceAnswerSummaries(ChoiceAnswerSummary&& value) { m_choiceAnswerSummariesHasBeenSet = true; m_choiceAnswerSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration of the Jira integration.</p>
+   */
+  inline const JiraConfiguration& GetJiraConfiguration() const { return m_jiraConfiguration; }
+  inline bool JiraConfigurationHasBeenSet() const { return m_jiraConfigurationHasBeenSet; }
+  template <typename JiraConfigurationT = JiraConfiguration>
+  void SetJiraConfiguration(JiraConfigurationT&& value) {
+    m_jiraConfigurationHasBeenSet = true;
+    m_jiraConfiguration = std::forward<JiraConfigurationT>(value);
+  }
+  template <typename JiraConfigurationT = JiraConfiguration>
+  AnswerSummary& WithJiraConfiguration(JiraConfigurationT&& value) {
+    SetJiraConfiguration(std::forward<JiraConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_questionId;
 
-    ///@{
-    
-    inline bool GetIsApplicable() const{ return m_isApplicable; }
-    inline bool IsApplicableHasBeenSet() const { return m_isApplicableHasBeenSet; }
-    inline void SetIsApplicable(bool value) { m_isApplicableHasBeenSet = true; m_isApplicable = value; }
-    inline AnswerSummary& WithIsApplicable(bool value) { SetIsApplicable(value); return *this;}
-    ///@}
+  Aws::String m_pillarId;
 
-    ///@{
-    
-    inline const Risk& GetRisk() const{ return m_risk; }
-    inline bool RiskHasBeenSet() const { return m_riskHasBeenSet; }
-    inline void SetRisk(const Risk& value) { m_riskHasBeenSet = true; m_risk = value; }
-    inline void SetRisk(Risk&& value) { m_riskHasBeenSet = true; m_risk = std::move(value); }
-    inline AnswerSummary& WithRisk(const Risk& value) { SetRisk(value); return *this;}
-    inline AnswerSummary& WithRisk(Risk&& value) { SetRisk(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_questionTitle;
 
-    ///@{
-    /**
-     * <p>The reason why a choice is non-applicable to a question in your workload.</p>
-     */
-    inline const AnswerReason& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const AnswerReason& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(AnswerReason&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline AnswerSummary& WithReason(const AnswerReason& value) { SetReason(value); return *this;}
-    inline AnswerSummary& WithReason(AnswerReason&& value) { SetReason(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<Choice> m_choices;
 
-    ///@{
-    /**
-     * <p>The type of the question.</p>
-     */
-    inline const QuestionType& GetQuestionType() const{ return m_questionType; }
-    inline bool QuestionTypeHasBeenSet() const { return m_questionTypeHasBeenSet; }
-    inline void SetQuestionType(const QuestionType& value) { m_questionTypeHasBeenSet = true; m_questionType = value; }
-    inline void SetQuestionType(QuestionType&& value) { m_questionTypeHasBeenSet = true; m_questionType = std::move(value); }
-    inline AnswerSummary& WithQuestionType(const QuestionType& value) { SetQuestionType(value); return *this;}
-    inline AnswerSummary& WithQuestionType(QuestionType&& value) { SetQuestionType(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_selectedChoices;
 
-    ///@{
-    /**
-     * <p>Configuration of the Jira integration.</p>
-     */
-    inline const JiraConfiguration& GetJiraConfiguration() const{ return m_jiraConfiguration; }
-    inline bool JiraConfigurationHasBeenSet() const { return m_jiraConfigurationHasBeenSet; }
-    inline void SetJiraConfiguration(const JiraConfiguration& value) { m_jiraConfigurationHasBeenSet = true; m_jiraConfiguration = value; }
-    inline void SetJiraConfiguration(JiraConfiguration&& value) { m_jiraConfigurationHasBeenSet = true; m_jiraConfiguration = std::move(value); }
-    inline AnswerSummary& WithJiraConfiguration(const JiraConfiguration& value) { SetJiraConfiguration(value); return *this;}
-    inline AnswerSummary& WithJiraConfiguration(JiraConfiguration&& value) { SetJiraConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Vector<ChoiceAnswerSummary> m_choiceAnswerSummaries;
 
-    Aws::String m_questionId;
-    bool m_questionIdHasBeenSet = false;
+  bool m_isApplicable{false};
 
-    Aws::String m_pillarId;
-    bool m_pillarIdHasBeenSet = false;
+  Risk m_risk{Risk::NOT_SET};
 
-    Aws::String m_questionTitle;
-    bool m_questionTitleHasBeenSet = false;
+  AnswerReason m_reason{AnswerReason::NOT_SET};
 
-    Aws::Vector<Choice> m_choices;
-    bool m_choicesHasBeenSet = false;
+  QuestionType m_questionType{QuestionType::NOT_SET};
 
-    Aws::Vector<Aws::String> m_selectedChoices;
-    bool m_selectedChoicesHasBeenSet = false;
+  JiraConfiguration m_jiraConfiguration;
+  bool m_questionIdHasBeenSet = false;
+  bool m_pillarIdHasBeenSet = false;
+  bool m_questionTitleHasBeenSet = false;
+  bool m_choicesHasBeenSet = false;
+  bool m_selectedChoicesHasBeenSet = false;
+  bool m_choiceAnswerSummariesHasBeenSet = false;
+  bool m_isApplicableHasBeenSet = false;
+  bool m_riskHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+  bool m_questionTypeHasBeenSet = false;
+  bool m_jiraConfigurationHasBeenSet = false;
+};
 
-    Aws::Vector<ChoiceAnswerSummary> m_choiceAnswerSummaries;
-    bool m_choiceAnswerSummariesHasBeenSet = false;
-
-    bool m_isApplicable;
-    bool m_isApplicableHasBeenSet = false;
-
-    Risk m_risk;
-    bool m_riskHasBeenSet = false;
-
-    AnswerReason m_reason;
-    bool m_reasonHasBeenSet = false;
-
-    QuestionType m_questionType;
-    bool m_questionTypeHasBeenSet = false;
-
-    JiraConfiguration m_jiraConfiguration;
-    bool m_jiraConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

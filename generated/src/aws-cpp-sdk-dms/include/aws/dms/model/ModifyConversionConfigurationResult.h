@@ -4,64 +4,73 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
-  class ModifyConversionConfigurationResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult();
-    AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+class ModifyConversionConfigurationResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API ModifyConversionConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name or Amazon Resource Name (ARN) of the modified configuration.</p>
+   */
+  inline const Aws::String& GetMigrationProjectIdentifier() const { return m_migrationProjectIdentifier; }
+  template <typename MigrationProjectIdentifierT = Aws::String>
+  void SetMigrationProjectIdentifier(MigrationProjectIdentifierT&& value) {
+    m_migrationProjectIdentifierHasBeenSet = true;
+    m_migrationProjectIdentifier = std::forward<MigrationProjectIdentifierT>(value);
+  }
+  template <typename MigrationProjectIdentifierT = Aws::String>
+  ModifyConversionConfigurationResult& WithMigrationProjectIdentifier(MigrationProjectIdentifierT&& value) {
+    SetMigrationProjectIdentifier(std::forward<MigrationProjectIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name or Amazon Resource Name (ARN) of the modified configuration.</p>
-     */
-    inline const Aws::String& GetMigrationProjectIdentifier() const{ return m_migrationProjectIdentifier; }
-    inline void SetMigrationProjectIdentifier(const Aws::String& value) { m_migrationProjectIdentifier = value; }
-    inline void SetMigrationProjectIdentifier(Aws::String&& value) { m_migrationProjectIdentifier = std::move(value); }
-    inline void SetMigrationProjectIdentifier(const char* value) { m_migrationProjectIdentifier.assign(value); }
-    inline ModifyConversionConfigurationResult& WithMigrationProjectIdentifier(const Aws::String& value) { SetMigrationProjectIdentifier(value); return *this;}
-    inline ModifyConversionConfigurationResult& WithMigrationProjectIdentifier(Aws::String&& value) { SetMigrationProjectIdentifier(std::move(value)); return *this;}
-    inline ModifyConversionConfigurationResult& WithMigrationProjectIdentifier(const char* value) { SetMigrationProjectIdentifier(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ModifyConversionConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ModifyConversionConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ModifyConversionConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ModifyConversionConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_migrationProjectIdentifier;
+ private:
+  Aws::String m_migrationProjectIdentifier;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_migrationProjectIdentifierHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

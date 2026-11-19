@@ -4,145 +4,199 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
+#include <aws/glue/model/AutoDataQuality.h>
 #include <aws/glue/model/CatalogSchemaChangePolicy.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Specifies a data target that writes to Amazon S3 using the Glue Data
+ * Catalog.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/S3CatalogTarget">AWS
+ * API Reference</a></p>
+ */
+class S3CatalogTarget {
+ public:
+  AWS_GLUE_API S3CatalogTarget() = default;
+  AWS_GLUE_API S3CatalogTarget(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API S3CatalogTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies a data target that writes to Amazon S3 using the Glue Data
-   * Catalog.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/S3CatalogTarget">AWS
-   * API Reference</a></p>
+   * <p>The name of the data target.</p>
    */
-  class S3CatalogTarget
-  {
-  public:
-    AWS_GLUE_API S3CatalogTarget();
-    AWS_GLUE_API S3CatalogTarget(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API S3CatalogTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  S3CatalogTarget& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The nodes that are inputs to the data target.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetInputs() const { return m_inputs; }
+  inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  void SetInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs = std::forward<InputsT>(value);
+  }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  S3CatalogTarget& WithInputs(InputsT&& value) {
+    SetInputs(std::forward<InputsT>(value));
+    return *this;
+  }
+  template <typename InputsT = Aws::String>
+  S3CatalogTarget& AddInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs.emplace_back(std::forward<InputsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the data target.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline S3CatalogTarget& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline S3CatalogTarget& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline S3CatalogTarget& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies native partitioning using a sequence of keys.</p>
+   */
+  inline const Aws::Vector<Aws::Vector<Aws::String>>& GetPartitionKeys() const { return m_partitionKeys; }
+  inline bool PartitionKeysHasBeenSet() const { return m_partitionKeysHasBeenSet; }
+  template <typename PartitionKeysT = Aws::Vector<Aws::Vector<Aws::String>>>
+  void SetPartitionKeys(PartitionKeysT&& value) {
+    m_partitionKeysHasBeenSet = true;
+    m_partitionKeys = std::forward<PartitionKeysT>(value);
+  }
+  template <typename PartitionKeysT = Aws::Vector<Aws::Vector<Aws::String>>>
+  S3CatalogTarget& WithPartitionKeys(PartitionKeysT&& value) {
+    SetPartitionKeys(std::forward<PartitionKeysT>(value));
+    return *this;
+  }
+  template <typename PartitionKeysT = Aws::Vector<Aws::String>>
+  S3CatalogTarget& AddPartitionKeys(PartitionKeysT&& value) {
+    m_partitionKeysHasBeenSet = true;
+    m_partitionKeys.emplace_back(std::forward<PartitionKeysT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The nodes that are inputs to the data target.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetInputs() const{ return m_inputs; }
-    inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
-    inline void SetInputs(const Aws::Vector<Aws::String>& value) { m_inputsHasBeenSet = true; m_inputs = value; }
-    inline void SetInputs(Aws::Vector<Aws::String>&& value) { m_inputsHasBeenSet = true; m_inputs = std::move(value); }
-    inline S3CatalogTarget& WithInputs(const Aws::Vector<Aws::String>& value) { SetInputs(value); return *this;}
-    inline S3CatalogTarget& WithInputs(Aws::Vector<Aws::String>&& value) { SetInputs(std::move(value)); return *this;}
-    inline S3CatalogTarget& AddInputs(const Aws::String& value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    inline S3CatalogTarget& AddInputs(Aws::String&& value) { m_inputsHasBeenSet = true; m_inputs.push_back(std::move(value)); return *this; }
-    inline S3CatalogTarget& AddInputs(const char* value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the table in the database to write to.</p>
+   */
+  inline const Aws::String& GetTable() const { return m_table; }
+  inline bool TableHasBeenSet() const { return m_tableHasBeenSet; }
+  template <typename TableT = Aws::String>
+  void SetTable(TableT&& value) {
+    m_tableHasBeenSet = true;
+    m_table = std::forward<TableT>(value);
+  }
+  template <typename TableT = Aws::String>
+  S3CatalogTarget& WithTable(TableT&& value) {
+    SetTable(std::forward<TableT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies native partitioning using a sequence of keys.</p>
-     */
-    inline const Aws::Vector<Aws::Vector<Aws::String>>& GetPartitionKeys() const{ return m_partitionKeys; }
-    inline bool PartitionKeysHasBeenSet() const { return m_partitionKeysHasBeenSet; }
-    inline void SetPartitionKeys(const Aws::Vector<Aws::Vector<Aws::String>>& value) { m_partitionKeysHasBeenSet = true; m_partitionKeys = value; }
-    inline void SetPartitionKeys(Aws::Vector<Aws::Vector<Aws::String>>&& value) { m_partitionKeysHasBeenSet = true; m_partitionKeys = std::move(value); }
-    inline S3CatalogTarget& WithPartitionKeys(const Aws::Vector<Aws::Vector<Aws::String>>& value) { SetPartitionKeys(value); return *this;}
-    inline S3CatalogTarget& WithPartitionKeys(Aws::Vector<Aws::Vector<Aws::String>>&& value) { SetPartitionKeys(std::move(value)); return *this;}
-    inline S3CatalogTarget& AddPartitionKeys(const Aws::Vector<Aws::String>& value) { m_partitionKeysHasBeenSet = true; m_partitionKeys.push_back(value); return *this; }
-    inline S3CatalogTarget& AddPartitionKeys(Aws::Vector<Aws::String>&& value) { m_partitionKeysHasBeenSet = true; m_partitionKeys.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the database to write to.</p>
+   */
+  inline const Aws::String& GetDatabase() const { return m_database; }
+  inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
+  template <typename DatabaseT = Aws::String>
+  void SetDatabase(DatabaseT&& value) {
+    m_databaseHasBeenSet = true;
+    m_database = std::forward<DatabaseT>(value);
+  }
+  template <typename DatabaseT = Aws::String>
+  S3CatalogTarget& WithDatabase(DatabaseT&& value) {
+    SetDatabase(std::forward<DatabaseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the table in the database to write to.</p>
-     */
-    inline const Aws::String& GetTable() const{ return m_table; }
-    inline bool TableHasBeenSet() const { return m_tableHasBeenSet; }
-    inline void SetTable(const Aws::String& value) { m_tableHasBeenSet = true; m_table = value; }
-    inline void SetTable(Aws::String&& value) { m_tableHasBeenSet = true; m_table = std::move(value); }
-    inline void SetTable(const char* value) { m_tableHasBeenSet = true; m_table.assign(value); }
-    inline S3CatalogTarget& WithTable(const Aws::String& value) { SetTable(value); return *this;}
-    inline S3CatalogTarget& WithTable(Aws::String&& value) { SetTable(std::move(value)); return *this;}
-    inline S3CatalogTarget& WithTable(const char* value) { SetTable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A policy that specifies update behavior for the crawler.</p>
+   */
+  inline const CatalogSchemaChangePolicy& GetSchemaChangePolicy() const { return m_schemaChangePolicy; }
+  inline bool SchemaChangePolicyHasBeenSet() const { return m_schemaChangePolicyHasBeenSet; }
+  template <typename SchemaChangePolicyT = CatalogSchemaChangePolicy>
+  void SetSchemaChangePolicy(SchemaChangePolicyT&& value) {
+    m_schemaChangePolicyHasBeenSet = true;
+    m_schemaChangePolicy = std::forward<SchemaChangePolicyT>(value);
+  }
+  template <typename SchemaChangePolicyT = CatalogSchemaChangePolicy>
+  S3CatalogTarget& WithSchemaChangePolicy(SchemaChangePolicyT&& value) {
+    SetSchemaChangePolicy(std::forward<SchemaChangePolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the database to write to.</p>
-     */
-    inline const Aws::String& GetDatabase() const{ return m_database; }
-    inline bool DatabaseHasBeenSet() const { return m_databaseHasBeenSet; }
-    inline void SetDatabase(const Aws::String& value) { m_databaseHasBeenSet = true; m_database = value; }
-    inline void SetDatabase(Aws::String&& value) { m_databaseHasBeenSet = true; m_database = std::move(value); }
-    inline void SetDatabase(const char* value) { m_databaseHasBeenSet = true; m_database.assign(value); }
-    inline S3CatalogTarget& WithDatabase(const Aws::String& value) { SetDatabase(value); return *this;}
-    inline S3CatalogTarget& WithDatabase(Aws::String&& value) { SetDatabase(std::move(value)); return *this;}
-    inline S3CatalogTarget& WithDatabase(const char* value) { SetDatabase(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether to automatically enable data quality evaluation for the S3
+   * catalog target. When set to <code>true</code>, data quality checks are performed
+   * automatically during the write operation.</p>
+   */
+  inline const AutoDataQuality& GetAutoDataQuality() const { return m_autoDataQuality; }
+  inline bool AutoDataQualityHasBeenSet() const { return m_autoDataQualityHasBeenSet; }
+  template <typename AutoDataQualityT = AutoDataQuality>
+  void SetAutoDataQuality(AutoDataQualityT&& value) {
+    m_autoDataQualityHasBeenSet = true;
+    m_autoDataQuality = std::forward<AutoDataQualityT>(value);
+  }
+  template <typename AutoDataQualityT = AutoDataQuality>
+  S3CatalogTarget& WithAutoDataQuality(AutoDataQualityT&& value) {
+    SetAutoDataQuality(std::forward<AutoDataQualityT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A policy that specifies update behavior for the crawler.</p>
-     */
-    inline const CatalogSchemaChangePolicy& GetSchemaChangePolicy() const{ return m_schemaChangePolicy; }
-    inline bool SchemaChangePolicyHasBeenSet() const { return m_schemaChangePolicyHasBeenSet; }
-    inline void SetSchemaChangePolicy(const CatalogSchemaChangePolicy& value) { m_schemaChangePolicyHasBeenSet = true; m_schemaChangePolicy = value; }
-    inline void SetSchemaChangePolicy(CatalogSchemaChangePolicy&& value) { m_schemaChangePolicyHasBeenSet = true; m_schemaChangePolicy = std::move(value); }
-    inline S3CatalogTarget& WithSchemaChangePolicy(const CatalogSchemaChangePolicy& value) { SetSchemaChangePolicy(value); return *this;}
-    inline S3CatalogTarget& WithSchemaChangePolicy(CatalogSchemaChangePolicy&& value) { SetSchemaChangePolicy(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_inputs;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<Aws::Vector<Aws::String>> m_partitionKeys;
 
-    Aws::Vector<Aws::String> m_inputs;
-    bool m_inputsHasBeenSet = false;
+  Aws::String m_table;
 
-    Aws::Vector<Aws::Vector<Aws::String>> m_partitionKeys;
-    bool m_partitionKeysHasBeenSet = false;
+  Aws::String m_database;
 
-    Aws::String m_table;
-    bool m_tableHasBeenSet = false;
+  CatalogSchemaChangePolicy m_schemaChangePolicy;
 
-    Aws::String m_database;
-    bool m_databaseHasBeenSet = false;
+  AutoDataQuality m_autoDataQuality;
+  bool m_nameHasBeenSet = false;
+  bool m_inputsHasBeenSet = false;
+  bool m_partitionKeysHasBeenSet = false;
+  bool m_tableHasBeenSet = false;
+  bool m_databaseHasBeenSet = false;
+  bool m_schemaChangePolicyHasBeenSet = false;
+  bool m_autoDataQualityHasBeenSet = false;
+};
 
-    CatalogSchemaChangePolicy m_schemaChangePolicy;
-    bool m_schemaChangePolicyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

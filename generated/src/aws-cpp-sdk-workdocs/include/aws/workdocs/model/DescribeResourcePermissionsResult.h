@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/workdocs/model/Principal.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkDocs
-{
-namespace Model
-{
-  class DescribeResourcePermissionsResult
-  {
-  public:
-    AWS_WORKDOCS_API DescribeResourcePermissionsResult();
-    AWS_WORKDOCS_API DescribeResourcePermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKDOCS_API DescribeResourcePermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkDocs {
+namespace Model {
+class DescribeResourcePermissionsResult {
+ public:
+  AWS_WORKDOCS_API DescribeResourcePermissionsResult() = default;
+  AWS_WORKDOCS_API DescribeResourcePermissionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKDOCS_API DescribeResourcePermissionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The principals.</p>
+   */
+  inline const Aws::Vector<Principal>& GetPrincipals() const { return m_principals; }
+  template <typename PrincipalsT = Aws::Vector<Principal>>
+  void SetPrincipals(PrincipalsT&& value) {
+    m_principalsHasBeenSet = true;
+    m_principals = std::forward<PrincipalsT>(value);
+  }
+  template <typename PrincipalsT = Aws::Vector<Principal>>
+  DescribeResourcePermissionsResult& WithPrincipals(PrincipalsT&& value) {
+    SetPrincipals(std::forward<PrincipalsT>(value));
+    return *this;
+  }
+  template <typename PrincipalsT = Principal>
+  DescribeResourcePermissionsResult& AddPrincipals(PrincipalsT&& value) {
+    m_principalsHasBeenSet = true;
+    m_principals.emplace_back(std::forward<PrincipalsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The principals.</p>
-     */
-    inline const Aws::Vector<Principal>& GetPrincipals() const{ return m_principals; }
-    inline void SetPrincipals(const Aws::Vector<Principal>& value) { m_principals = value; }
-    inline void SetPrincipals(Aws::Vector<Principal>&& value) { m_principals = std::move(value); }
-    inline DescribeResourcePermissionsResult& WithPrincipals(const Aws::Vector<Principal>& value) { SetPrincipals(value); return *this;}
-    inline DescribeResourcePermissionsResult& WithPrincipals(Aws::Vector<Principal>&& value) { SetPrincipals(std::move(value)); return *this;}
-    inline DescribeResourcePermissionsResult& AddPrincipals(const Principal& value) { m_principals.push_back(value); return *this; }
-    inline DescribeResourcePermissionsResult& AddPrincipals(Principal&& value) { m_principals.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The marker to use when requesting the next set of results. If there are no
+   * additional results, the string is empty.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeResourcePermissionsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The marker to use when requesting the next set of results. If there are no
-     * additional results, the string is empty.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeResourcePermissionsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeResourcePermissionsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeResourcePermissionsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeResourcePermissionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeResourcePermissionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeResourcePermissionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeResourcePermissionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Principal> m_principals;
+ private:
+  Aws::Vector<Principal> m_principals;
 
-    Aws::String m_marker;
+  Aws::String m_marker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_principalsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

@@ -4,71 +4,99 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
-#include <aws/datazone/DataZoneRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/datazone/DataZoneRequest.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
+#include <aws/datazone/model/MetadataGenerationRunType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace DataZone {
+namespace Model {
 
+/**
+ */
+class GetMetadataGenerationRunRequest : public DataZoneRequest {
+ public:
+  AWS_DATAZONE_API GetMetadataGenerationRunRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetMetadataGenerationRun"; }
+
+  AWS_DATAZONE_API Aws::String SerializePayload() const override;
+
+  AWS_DATAZONE_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The ID of the Amazon DataZone domain the metadata generation run of which you
+   * want to get.</p>
    */
-  class GetMetadataGenerationRunRequest : public DataZoneRequest
-  {
-  public:
-    AWS_DATAZONE_API GetMetadataGenerationRunRequest();
+  inline const Aws::String& GetDomainIdentifier() const { return m_domainIdentifier; }
+  inline bool DomainIdentifierHasBeenSet() const { return m_domainIdentifierHasBeenSet; }
+  template <typename DomainIdentifierT = Aws::String>
+  void SetDomainIdentifier(DomainIdentifierT&& value) {
+    m_domainIdentifierHasBeenSet = true;
+    m_domainIdentifier = std::forward<DomainIdentifierT>(value);
+  }
+  template <typename DomainIdentifierT = Aws::String>
+  GetMetadataGenerationRunRequest& WithDomainIdentifier(DomainIdentifierT&& value) {
+    SetDomainIdentifier(std::forward<DomainIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetMetadataGenerationRun"; }
+  ///@{
+  /**
+   * <p>The identifier of the metadata generation run.</p>
+   */
+  inline const Aws::String& GetIdentifier() const { return m_identifier; }
+  inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
+  template <typename IdentifierT = Aws::String>
+  void SetIdentifier(IdentifierT&& value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = std::forward<IdentifierT>(value);
+  }
+  template <typename IdentifierT = Aws::String>
+  GetMetadataGenerationRunRequest& WithIdentifier(IdentifierT&& value) {
+    SetIdentifier(std::forward<IdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DATAZONE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The type of the metadata generation run.</p>
+   */
+  inline MetadataGenerationRunType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(MetadataGenerationRunType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline GetMetadataGenerationRunRequest& WithType(MetadataGenerationRunType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainIdentifier;
 
+  Aws::String m_identifier;
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon DataZone domain the metadata generation run of which you
-     * want to get.</p>
-     */
-    inline const Aws::String& GetDomainIdentifier() const{ return m_domainIdentifier; }
-    inline bool DomainIdentifierHasBeenSet() const { return m_domainIdentifierHasBeenSet; }
-    inline void SetDomainIdentifier(const Aws::String& value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier = value; }
-    inline void SetDomainIdentifier(Aws::String&& value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier = std::move(value); }
-    inline void SetDomainIdentifier(const char* value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier.assign(value); }
-    inline GetMetadataGenerationRunRequest& WithDomainIdentifier(const Aws::String& value) { SetDomainIdentifier(value); return *this;}
-    inline GetMetadataGenerationRunRequest& WithDomainIdentifier(Aws::String&& value) { SetDomainIdentifier(std::move(value)); return *this;}
-    inline GetMetadataGenerationRunRequest& WithDomainIdentifier(const char* value) { SetDomainIdentifier(value); return *this;}
-    ///@}
+  MetadataGenerationRunType m_type{MetadataGenerationRunType::NOT_SET};
+  bool m_domainIdentifierHasBeenSet = false;
+  bool m_identifierHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier of the metadata generation run.</p>
-     */
-    inline const Aws::String& GetIdentifier() const{ return m_identifier; }
-    inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
-    inline void SetIdentifier(const Aws::String& value) { m_identifierHasBeenSet = true; m_identifier = value; }
-    inline void SetIdentifier(Aws::String&& value) { m_identifierHasBeenSet = true; m_identifier = std::move(value); }
-    inline void SetIdentifier(const char* value) { m_identifierHasBeenSet = true; m_identifier.assign(value); }
-    inline GetMetadataGenerationRunRequest& WithIdentifier(const Aws::String& value) { SetIdentifier(value); return *this;}
-    inline GetMetadataGenerationRunRequest& WithIdentifier(Aws::String&& value) { SetIdentifier(std::move(value)); return *this;}
-    inline GetMetadataGenerationRunRequest& WithIdentifier(const char* value) { SetIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainIdentifier;
-    bool m_domainIdentifierHasBeenSet = false;
-
-    Aws::String m_identifier;
-    bool m_identifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

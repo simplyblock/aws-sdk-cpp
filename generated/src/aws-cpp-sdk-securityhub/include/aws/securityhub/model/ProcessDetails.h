@@ -4,167 +4,164 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>The details of process-related information about a finding.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ProcessDetails">AWS
+ * API Reference</a></p>
+ */
+class ProcessDetails {
+ public:
+  AWS_SECURITYHUB_API ProcessDetails() = default;
+  AWS_SECURITYHUB_API ProcessDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API ProcessDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The details of process-related information about a finding.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ProcessDetails">AWS
-   * API Reference</a></p>
+   * <p>The name of the process.</p> <p>Length Constraints: Minimum of 1. Maximum of
+   * 64.</p>
    */
-  class ProcessDetails
-  {
-  public:
-    AWS_SECURITYHUB_API ProcessDetails();
-    AWS_SECURITYHUB_API ProcessDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API ProcessDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ProcessDetails& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The path to the process executable.</p> <p>Length Constraints: Minimum of 1.
+   * Maximum of 512.</p>
+   */
+  inline const Aws::String& GetPath() const { return m_path; }
+  inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
+  template <typename PathT = Aws::String>
+  void SetPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path = std::forward<PathT>(value);
+  }
+  template <typename PathT = Aws::String>
+  ProcessDetails& WithPath(PathT&& value) {
+    SetPath(std::forward<PathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the process.</p> <p>Length Constraints: Minimum of 1. Maximum of
-     * 64.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ProcessDetails& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ProcessDetails& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ProcessDetails& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The process ID.</p>
+   */
+  inline int GetPid() const { return m_pid; }
+  inline bool PidHasBeenSet() const { return m_pidHasBeenSet; }
+  inline void SetPid(int value) {
+    m_pidHasBeenSet = true;
+    m_pid = value;
+  }
+  inline ProcessDetails& WithPid(int value) {
+    SetPid(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The path to the process executable.</p> <p>Length Constraints: Minimum of 1.
-     * Maximum of 512.</p>
-     */
-    inline const Aws::String& GetPath() const{ return m_path; }
-    inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
-    inline void SetPath(const Aws::String& value) { m_pathHasBeenSet = true; m_path = value; }
-    inline void SetPath(Aws::String&& value) { m_pathHasBeenSet = true; m_path = std::move(value); }
-    inline void SetPath(const char* value) { m_pathHasBeenSet = true; m_path.assign(value); }
-    inline ProcessDetails& WithPath(const Aws::String& value) { SetPath(value); return *this;}
-    inline ProcessDetails& WithPath(Aws::String&& value) { SetPath(std::move(value)); return *this;}
-    inline ProcessDetails& WithPath(const char* value) { SetPath(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The parent process ID. This field accepts positive integers between
+   * <code>O</code> and <code>2147483647</code>.</p>
+   */
+  inline int GetParentPid() const { return m_parentPid; }
+  inline bool ParentPidHasBeenSet() const { return m_parentPidHasBeenSet; }
+  inline void SetParentPid(int value) {
+    m_parentPidHasBeenSet = true;
+    m_parentPid = value;
+  }
+  inline ProcessDetails& WithParentPid(int value) {
+    SetParentPid(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The process ID.</p>
-     */
-    inline int GetPid() const{ return m_pid; }
-    inline bool PidHasBeenSet() const { return m_pidHasBeenSet; }
-    inline void SetPid(int value) { m_pidHasBeenSet = true; m_pid = value; }
-    inline ProcessDetails& WithPid(int value) { SetPid(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates when the process was launched.</p> <p>For more information about
+   * the validation and formatting of timestamp fields in Security Hub CSPM, see <a
+   * href="https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps">Timestamps</a>.</p>
+   */
+  inline const Aws::String& GetLaunchedAt() const { return m_launchedAt; }
+  inline bool LaunchedAtHasBeenSet() const { return m_launchedAtHasBeenSet; }
+  template <typename LaunchedAtT = Aws::String>
+  void SetLaunchedAt(LaunchedAtT&& value) {
+    m_launchedAtHasBeenSet = true;
+    m_launchedAt = std::forward<LaunchedAtT>(value);
+  }
+  template <typename LaunchedAtT = Aws::String>
+  ProcessDetails& WithLaunchedAt(LaunchedAtT&& value) {
+    SetLaunchedAt(std::forward<LaunchedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The parent process ID. This field accepts positive integers between
-     * <code>O</code> and <code>2147483647</code>.</p>
-     */
-    inline int GetParentPid() const{ return m_parentPid; }
-    inline bool ParentPidHasBeenSet() const { return m_parentPidHasBeenSet; }
-    inline void SetParentPid(int value) { m_parentPidHasBeenSet = true; m_parentPid = value; }
-    inline ProcessDetails& WithParentPid(int value) { SetParentPid(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates when the process was terminated.</p> <p>For more information about
+   * the validation and formatting of timestamp fields in Security Hub CSPM, see <a
+   * href="https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps">Timestamps</a>.</p>
+   */
+  inline const Aws::String& GetTerminatedAt() const { return m_terminatedAt; }
+  inline bool TerminatedAtHasBeenSet() const { return m_terminatedAtHasBeenSet; }
+  template <typename TerminatedAtT = Aws::String>
+  void SetTerminatedAt(TerminatedAtT&& value) {
+    m_terminatedAtHasBeenSet = true;
+    m_terminatedAt = std::forward<TerminatedAtT>(value);
+  }
+  template <typename TerminatedAtT = Aws::String>
+  ProcessDetails& WithTerminatedAt(TerminatedAtT&& value) {
+    SetTerminatedAt(std::forward<TerminatedAtT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>Indicates when the process was launched.</p> <p>This field accepts only the
-     * specified formats. Timestamps can end with <code>Z</code> or <code>("+" / "-")
-     * time-hour [":" time-minute]</code>. The time-secfrac after seconds is limited to
-     * a maximum of 9 digits. The offset is bounded by +/-18:00. Here are valid
-     * timestamp formats with examples:</p> <ul> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SSZ</code> (for example,
-     * <code>2019-01-31T23:00:00Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ</code> (for example,
-     * <code>2019-01-31T23:00:00.123456789Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10+17:59</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS-HHMM</code> (for example,
-     * <code>2024-01-04T15:25:10-1759</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10.123456789+17:59</code>)</p> </li> </ul>
-     */
-    inline const Aws::String& GetLaunchedAt() const{ return m_launchedAt; }
-    inline bool LaunchedAtHasBeenSet() const { return m_launchedAtHasBeenSet; }
-    inline void SetLaunchedAt(const Aws::String& value) { m_launchedAtHasBeenSet = true; m_launchedAt = value; }
-    inline void SetLaunchedAt(Aws::String&& value) { m_launchedAtHasBeenSet = true; m_launchedAt = std::move(value); }
-    inline void SetLaunchedAt(const char* value) { m_launchedAtHasBeenSet = true; m_launchedAt.assign(value); }
-    inline ProcessDetails& WithLaunchedAt(const Aws::String& value) { SetLaunchedAt(value); return *this;}
-    inline ProcessDetails& WithLaunchedAt(Aws::String&& value) { SetLaunchedAt(std::move(value)); return *this;}
-    inline ProcessDetails& WithLaunchedAt(const char* value) { SetLaunchedAt(value); return *this;}
-    ///@}
+  Aws::String m_path;
 
-    ///@{
-    /**
-     * <p>Indicates when the process was terminated.</p> <p>This field accepts only the
-     * specified formats. Timestamps can end with <code>Z</code> or <code>("+" / "-")
-     * time-hour [":" time-minute]</code>. The time-secfrac after seconds is limited to
-     * a maximum of 9 digits. The offset is bounded by +/-18:00. Here are valid
-     * timestamp formats with examples:</p> <ul> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SSZ</code> (for example,
-     * <code>2019-01-31T23:00:00Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ</code> (for example,
-     * <code>2019-01-31T23:00:00.123456789Z</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10+17:59</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS-HHMM</code> (for example,
-     * <code>2024-01-04T15:25:10-1759</code>)</p> </li> <li> <p>
-     * <code>YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM</code> (for example,
-     * <code>2024-01-04T15:25:10.123456789+17:59</code>)</p> </li> </ul>
-     */
-    inline const Aws::String& GetTerminatedAt() const{ return m_terminatedAt; }
-    inline bool TerminatedAtHasBeenSet() const { return m_terminatedAtHasBeenSet; }
-    inline void SetTerminatedAt(const Aws::String& value) { m_terminatedAtHasBeenSet = true; m_terminatedAt = value; }
-    inline void SetTerminatedAt(Aws::String&& value) { m_terminatedAtHasBeenSet = true; m_terminatedAt = std::move(value); }
-    inline void SetTerminatedAt(const char* value) { m_terminatedAtHasBeenSet = true; m_terminatedAt.assign(value); }
-    inline ProcessDetails& WithTerminatedAt(const Aws::String& value) { SetTerminatedAt(value); return *this;}
-    inline ProcessDetails& WithTerminatedAt(Aws::String&& value) { SetTerminatedAt(std::move(value)); return *this;}
-    inline ProcessDetails& WithTerminatedAt(const char* value) { SetTerminatedAt(value); return *this;}
-    ///@}
-  private:
+  int m_pid{0};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  int m_parentPid{0};
 
-    Aws::String m_path;
-    bool m_pathHasBeenSet = false;
+  Aws::String m_launchedAt;
 
-    int m_pid;
-    bool m_pidHasBeenSet = false;
+  Aws::String m_terminatedAt;
+  bool m_nameHasBeenSet = false;
+  bool m_pathHasBeenSet = false;
+  bool m_pidHasBeenSet = false;
+  bool m_parentPidHasBeenSet = false;
+  bool m_launchedAtHasBeenSet = false;
+  bool m_terminatedAtHasBeenSet = false;
+};
 
-    int m_parentPid;
-    bool m_parentPidHasBeenSet = false;
-
-    Aws::String m_launchedAt;
-    bool m_launchedAtHasBeenSet = false;
-
-    Aws::String m_terminatedAt;
-    bool m_terminatedAtHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

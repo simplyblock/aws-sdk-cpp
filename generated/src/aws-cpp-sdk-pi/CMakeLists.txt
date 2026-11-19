@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-pi "C++ SDK for the AWS pi service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-pi "C++ SDK for AWS Performance Insights" aws-cpp-sdk-core)
 
 file(GLOB AWS_PI_HEADERS
     "include/aws/pi/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PI_HEADERS
 
 file(GLOB AWS_PI_MODEL_HEADERS
     "include/aws/pi/model/*.h"
+)
+
+file(GLOB AWS_PI_INTERNAL_HEADERS
+    "include/aws/pi/internal/*.h"
 )
 
 file(GLOB AWS_PI_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PI_MODEL_SOURCE
 
 file(GLOB PI_UNIFIED_HEADERS
     ${AWS_PI_HEADERS}
+    ${AWS_PI_INTERNAL_HEADERS}
     ${AWS_PI_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\pi" FILES ${AWS_PI_HEADERS})
+        source_group("Header Files\\aws\\pi\\internal" FILES ${AWS_PI_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\pi\\model" FILES ${AWS_PI_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PI_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PI_MODEL_SOURCE})

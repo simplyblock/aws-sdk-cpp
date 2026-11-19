@@ -3,62 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/ds/model/RegisterCertificateRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::DirectoryService::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RegisterCertificateRequest::RegisterCertificateRequest() : 
-    m_directoryIdHasBeenSet(false),
-    m_certificateDataHasBeenSet(false),
-    m_type(CertificateType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_clientCertAuthSettingsHasBeenSet(false)
-{
+Aws::String RegisterCertificateRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_directoryIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_certificateDataHasBeenSet) {
+    mapSize++;
+  }
+  if (m_typeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_clientCertAuthSettingsHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_directoryIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DirectoryId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_directoryId.c_str()));
+  }
+
+  if (m_certificateDataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CertificateData"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_certificateData.c_str()));
+  }
+
+  if (m_typeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Type"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(CertificateTypeMapper::GetNameForCertificateType(m_type).c_str()));
+  }
+
+  if (m_clientCertAuthSettingsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ClientCertAuthSettings"));
+    m_clientCertAuthSettings.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String RegisterCertificateRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
-  }
-
-  if(m_certificateDataHasBeenSet)
-  {
-   payload.WithString("CertificateData", m_certificateData);
-
-  }
-
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", CertificateTypeMapper::GetNameForCertificateType(m_type));
-  }
-
-  if(m_clientCertAuthSettingsHasBeenSet)
-  {
-   payload.WithObject("ClientCertAuthSettings", m_clientCertAuthSettings.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection RegisterCertificateRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RegisterCertificateRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DirectoryService_20150416.RegisterCertificate"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

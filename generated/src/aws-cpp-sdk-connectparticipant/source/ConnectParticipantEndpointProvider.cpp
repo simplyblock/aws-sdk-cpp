@@ -4,13 +4,15 @@
  */
 
 #include <aws/connectparticipant/ConnectParticipantEndpointProvider.h>
+#include <aws/connectparticipant/internal/ConnectParticipantEndpointRules.h>
 
-namespace Aws
-{
-namespace ConnectParticipant
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace ConnectParticipant
-} // namespace Aws
+namespace Aws {
+namespace ConnectParticipant {
+namespace Endpoint {
+ConnectParticipantEndpointProvider::ConnectParticipantEndpointProvider()
+    : ConnectParticipantDefaultEpProviderBase(Aws::ConnectParticipant::ConnectParticipantEndpointRules::GetRulesBlob(),
+                                              Aws::ConnectParticipant::ConnectParticipantEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace ConnectParticipant
+}  // namespace Aws

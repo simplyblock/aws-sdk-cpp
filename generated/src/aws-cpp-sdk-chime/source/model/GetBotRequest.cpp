@@ -12,17 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetBotRequest::GetBotRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_botIdHasBeenSet(false)
-{
-}
-
-Aws::String GetBotRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetBotRequest::SerializePayload() const { return {}; }

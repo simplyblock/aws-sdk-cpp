@@ -12,44 +12,24 @@ using namespace Aws::AccessAnalyzer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateAccessPreviewRequest::CreateAccessPreviewRequest() : 
-    m_analyzerArnHasBeenSet(false),
-    m_configurationsHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true)
-{
-}
-
-Aws::String CreateAccessPreviewRequest::SerializePayload() const
-{
+Aws::String CreateAccessPreviewRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_analyzerArnHasBeenSet)
-  {
-   payload.WithString("analyzerArn", m_analyzerArn);
-
+  if (m_analyzerArnHasBeenSet) {
+    payload.WithString("analyzerArn", m_analyzerArn);
   }
 
-  if(m_configurationsHasBeenSet)
-  {
-   JsonValue configurationsJsonMap;
-   for(auto& configurationsItem : m_configurations)
-   {
-     configurationsJsonMap.WithObject(configurationsItem.first, configurationsItem.second.Jsonize());
-   }
-   payload.WithObject("configurations", std::move(configurationsJsonMap));
-
+  if (m_configurationsHasBeenSet) {
+    JsonValue configurationsJsonMap;
+    for (auto& configurationsItem : m_configurations) {
+      configurationsJsonMap.WithObject(configurationsItem.first, configurationsItem.second.Jsonize());
+    }
+    payload.WithObject("configurations", std::move(configurationsJsonMap));
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,87 +4,94 @@
  */
 
 #pragma once
-#include <aws/lex/LexRuntimeService_EXPORTS.h>
-#include <aws/lex/LexRuntimeServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lex/LexRuntimeServiceRequest.h>
+#include <aws/lex/LexRuntimeService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexRuntimeService
-{
-namespace Model
-{
+namespace Aws {
+namespace LexRuntimeService {
+namespace Model {
 
+/**
+ */
+class DeleteSessionRequest : public LexRuntimeServiceRequest {
+ public:
+  AWS_LEXRUNTIMESERVICE_API DeleteSessionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteSession"; }
+
+  AWS_LEXRUNTIMESERVICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name of the bot that contains the session data.</p>
    */
-  class DeleteSessionRequest : public LexRuntimeServiceRequest
-  {
-  public:
-    AWS_LEXRUNTIMESERVICE_API DeleteSessionRequest();
+  inline const Aws::String& GetBotName() const { return m_botName; }
+  inline bool BotNameHasBeenSet() const { return m_botNameHasBeenSet; }
+  template <typename BotNameT = Aws::String>
+  void SetBotName(BotNameT&& value) {
+    m_botNameHasBeenSet = true;
+    m_botName = std::forward<BotNameT>(value);
+  }
+  template <typename BotNameT = Aws::String>
+  DeleteSessionRequest& WithBotName(BotNameT&& value) {
+    SetBotName(std::forward<BotNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteSession"; }
+  ///@{
+  /**
+   * <p>The alias in use for the bot that contains the session data.</p>
+   */
+  inline const Aws::String& GetBotAlias() const { return m_botAlias; }
+  inline bool BotAliasHasBeenSet() const { return m_botAliasHasBeenSet; }
+  template <typename BotAliasT = Aws::String>
+  void SetBotAlias(BotAliasT&& value) {
+    m_botAliasHasBeenSet = true;
+    m_botAlias = std::forward<BotAliasT>(value);
+  }
+  template <typename BotAliasT = Aws::String>
+  DeleteSessionRequest& WithBotAlias(BotAliasT&& value) {
+    SetBotAlias(std::forward<BotAliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXRUNTIMESERVICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The identifier of the user associated with the session data.</p>
+   */
+  inline const Aws::String& GetUserId() const { return m_userId; }
+  inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
+  template <typename UserIdT = Aws::String>
+  void SetUserId(UserIdT&& value) {
+    m_userIdHasBeenSet = true;
+    m_userId = std::forward<UserIdT>(value);
+  }
+  template <typename UserIdT = Aws::String>
+  DeleteSessionRequest& WithUserId(UserIdT&& value) {
+    SetUserId(std::forward<UserIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_botName;
 
+  Aws::String m_botAlias;
 
-    ///@{
-    /**
-     * <p>The name of the bot that contains the session data.</p>
-     */
-    inline const Aws::String& GetBotName() const{ return m_botName; }
-    inline bool BotNameHasBeenSet() const { return m_botNameHasBeenSet; }
-    inline void SetBotName(const Aws::String& value) { m_botNameHasBeenSet = true; m_botName = value; }
-    inline void SetBotName(Aws::String&& value) { m_botNameHasBeenSet = true; m_botName = std::move(value); }
-    inline void SetBotName(const char* value) { m_botNameHasBeenSet = true; m_botName.assign(value); }
-    inline DeleteSessionRequest& WithBotName(const Aws::String& value) { SetBotName(value); return *this;}
-    inline DeleteSessionRequest& WithBotName(Aws::String&& value) { SetBotName(std::move(value)); return *this;}
-    inline DeleteSessionRequest& WithBotName(const char* value) { SetBotName(value); return *this;}
-    ///@}
+  Aws::String m_userId;
+  bool m_botNameHasBeenSet = false;
+  bool m_botAliasHasBeenSet = false;
+  bool m_userIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The alias in use for the bot that contains the session data.</p>
-     */
-    inline const Aws::String& GetBotAlias() const{ return m_botAlias; }
-    inline bool BotAliasHasBeenSet() const { return m_botAliasHasBeenSet; }
-    inline void SetBotAlias(const Aws::String& value) { m_botAliasHasBeenSet = true; m_botAlias = value; }
-    inline void SetBotAlias(Aws::String&& value) { m_botAliasHasBeenSet = true; m_botAlias = std::move(value); }
-    inline void SetBotAlias(const char* value) { m_botAliasHasBeenSet = true; m_botAlias.assign(value); }
-    inline DeleteSessionRequest& WithBotAlias(const Aws::String& value) { SetBotAlias(value); return *this;}
-    inline DeleteSessionRequest& WithBotAlias(Aws::String&& value) { SetBotAlias(std::move(value)); return *this;}
-    inline DeleteSessionRequest& WithBotAlias(const char* value) { SetBotAlias(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the user associated with the session data.</p>
-     */
-    inline const Aws::String& GetUserId() const{ return m_userId; }
-    inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
-    inline void SetUserId(const Aws::String& value) { m_userIdHasBeenSet = true; m_userId = value; }
-    inline void SetUserId(Aws::String&& value) { m_userIdHasBeenSet = true; m_userId = std::move(value); }
-    inline void SetUserId(const char* value) { m_userIdHasBeenSet = true; m_userId.assign(value); }
-    inline DeleteSessionRequest& WithUserId(const Aws::String& value) { SetUserId(value); return *this;}
-    inline DeleteSessionRequest& WithUserId(Aws::String&& value) { SetUserId(std::move(value)); return *this;}
-    inline DeleteSessionRequest& WithUserId(const char* value) { SetUserId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_botName;
-    bool m_botNameHasBeenSet = false;
-
-    Aws::String m_botAlias;
-    bool m_botAliasHasBeenSet = false;
-
-    Aws::String m_userId;
-    bool m_userIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexRuntimeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexRuntimeService
+}  // namespace Aws

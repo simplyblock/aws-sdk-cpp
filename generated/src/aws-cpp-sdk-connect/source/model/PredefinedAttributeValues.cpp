@@ -11,57 +11,37 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-PredefinedAttributeValues::PredefinedAttributeValues() : 
-    m_stringListHasBeenSet(false)
-{
-}
+PredefinedAttributeValues::PredefinedAttributeValues(JsonView jsonValue) { *this = jsonValue; }
 
-PredefinedAttributeValues::PredefinedAttributeValues(JsonView jsonValue)
-  : PredefinedAttributeValues()
-{
-  *this = jsonValue;
-}
-
-PredefinedAttributeValues& PredefinedAttributeValues::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("StringList"))
-  {
+PredefinedAttributeValues& PredefinedAttributeValues::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("StringList")) {
     Aws::Utils::Array<JsonView> stringListJsonList = jsonValue.GetArray("StringList");
-    for(unsigned stringListIndex = 0; stringListIndex < stringListJsonList.GetLength(); ++stringListIndex)
-    {
+    for (unsigned stringListIndex = 0; stringListIndex < stringListJsonList.GetLength(); ++stringListIndex) {
       m_stringList.push_back(stringListJsonList[stringListIndex].AsString());
     }
     m_stringListHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PredefinedAttributeValues::Jsonize() const
-{
+JsonValue PredefinedAttributeValues::Jsonize() const {
   JsonValue payload;
 
-  if(m_stringListHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> stringListJsonList(m_stringList.size());
-   for(unsigned stringListIndex = 0; stringListIndex < stringListJsonList.GetLength(); ++stringListIndex)
-   {
-     stringListJsonList[stringListIndex].AsString(m_stringList[stringListIndex]);
-   }
-   payload.WithArray("StringList", std::move(stringListJsonList));
-
+  if (m_stringListHasBeenSet) {
+    Aws::Utils::Array<JsonValue> stringListJsonList(m_stringList.size());
+    for (unsigned stringListIndex = 0; stringListIndex < stringListJsonList.GetLength(); ++stringListIndex) {
+      stringListJsonList[stringListIndex].AsString(m_stringList[stringListIndex]);
+    }
+    payload.WithArray("StringList", std::move(stringListJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

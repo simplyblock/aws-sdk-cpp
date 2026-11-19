@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCollaborationAnalysisTemplateRequest::GetCollaborationAnalysisTemplateRequest() : 
-    m_collaborationIdentifierHasBeenSet(false),
-    m_analysisTemplateArnHasBeenSet(false)
-{
-}
-
-Aws::String GetCollaborationAnalysisTemplateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCollaborationAnalysisTemplateRequest::SerializePayload() const { return {}; }

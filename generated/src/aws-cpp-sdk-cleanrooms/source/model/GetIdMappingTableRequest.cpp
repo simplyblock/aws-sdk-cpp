@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetIdMappingTableRequest::GetIdMappingTableRequest() : 
-    m_idMappingTableIdentifierHasBeenSet(false),
-    m_membershipIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetIdMappingTableRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetIdMappingTableRequest::SerializePayload() const { return {}; }

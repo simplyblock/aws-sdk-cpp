@@ -5,7 +5,13 @@
 #set($serviceNamespace = $metadata.namespace)
 \#include <aws/${metadata.projectName}/model/${typeInfo.className}.h>
 \#include <aws/core/AmazonWebServiceResult.h>
-#if($shape.hasQueryStringMembers())
+#set($needsURIHeader = $shape.hasQueryStringMembers())
+#if(!$needsURIHeader)
+#foreach($member in $shape.members.entrySet())
+#if($member.value.requiresHeaderEncoding())#set($needsURIHeader = true)#end
+#end
+#end
+#if($needsURIHeader)
 \#include <aws/core/http/URI.h>
 #end
 #foreach($header in $typeInfo.sourceIncludes)
@@ -20,25 +26,10 @@
 using namespace ${rootNamespace}::${serviceNamespace}::Model;
 using namespace Aws::Utils::Stream;
 using namespace Aws::Utils;
-#if($shape.hasQueryStringMembers())
+#if($needsURIHeader)
 using namespace Aws::Http;
 #end
 using namespace Aws;
-
-#set($useRequiredField = true)
-#parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ModelClassMembersGenerateInitializers.vm")
-${typeInfo.className}::${typeInfo.className}()$initializers
-{
-#if ($typeInfo.shape.isRequest() && $operation.result && $operation.result.shape.hasEventStreamMembers())
-    AmazonWebServiceRequest::SetHeadersReceivedEventHandler([this](const Http::HttpRequest*, Http::HttpResponse* response)
-    {
-        auto& initialResponseHandler = m_handler.GetInitialResponseCallbackEx();
-        if (initialResponseHandler) {
-            initialResponseHandler(${operation.name}InitialResponse(response->GetHeaders()), Utils::Event::InitialResponseType::ON_RESPONSE);
-        }
-    });
-#end
-}
 
 #if($shape.hasEventStreamMembers())
 #foreach($member in $shape.members.entrySet())
@@ -59,7 +50,7 @@ std::shared_ptr<Aws::IOStream> ${typeInfo.className}::GetBody() const
 Aws::Http::HeaderValueCollection ${typeInfo.className}::GetRequestSpecificHeaders() const
 {
   Aws::Http::HeaderValueCollection headers;
-#if($metadata.targetPrefix)
+#if($metadata.targetPrefix && $metadata.protocol != "smithy-rpc-v2-cbor")
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "${metadata.targetPrefix}.${CppViewHelper.computeOperationNameFromInputOutputShape($shape.name)}"));
 #end
 #if($metadata.additionalHeaders)

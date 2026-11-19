@@ -5,88 +5,107 @@
 
 #pragma once
 #include <aws/budgets/Budgets_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/budgets/model/Action.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Budgets
-{
-namespace Model
-{
-  class DescribeBudgetActionResult
-  {
-  public:
-    AWS_BUDGETS_API DescribeBudgetActionResult();
-    AWS_BUDGETS_API DescribeBudgetActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BUDGETS_API DescribeBudgetActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Budgets {
+namespace Model {
+class DescribeBudgetActionResult {
+ public:
+  AWS_BUDGETS_API DescribeBudgetActionResult() = default;
+  AWS_BUDGETS_API DescribeBudgetActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BUDGETS_API DescribeBudgetActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline void SetAccountId(const Aws::String& value) { m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountId.assign(value); }
-    inline DescribeBudgetActionResult& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline DescribeBudgetActionResult& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline DescribeBudgetActionResult& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  DescribeBudgetActionResult& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetBudgetName() const{ return m_budgetName; }
-    inline void SetBudgetName(const Aws::String& value) { m_budgetName = value; }
-    inline void SetBudgetName(Aws::String&& value) { m_budgetName = std::move(value); }
-    inline void SetBudgetName(const char* value) { m_budgetName.assign(value); }
-    inline DescribeBudgetActionResult& WithBudgetName(const Aws::String& value) { SetBudgetName(value); return *this;}
-    inline DescribeBudgetActionResult& WithBudgetName(Aws::String&& value) { SetBudgetName(std::move(value)); return *this;}
-    inline DescribeBudgetActionResult& WithBudgetName(const char* value) { SetBudgetName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p> A budget action resource. </p>
-     */
-    inline const Action& GetAction() const{ return m_action; }
-    inline void SetAction(const Action& value) { m_action = value; }
-    inline void SetAction(Action&& value) { m_action = std::move(value); }
-    inline DescribeBudgetActionResult& WithAction(const Action& value) { SetAction(value); return *this;}
-    inline DescribeBudgetActionResult& WithAction(Action&& value) { SetAction(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetBudgetName() const { return m_budgetName; }
+  template <typename BudgetNameT = Aws::String>
+  void SetBudgetName(BudgetNameT&& value) {
+    m_budgetNameHasBeenSet = true;
+    m_budgetName = std::forward<BudgetNameT>(value);
+  }
+  template <typename BudgetNameT = Aws::String>
+  DescribeBudgetActionResult& WithBudgetName(BudgetNameT&& value) {
+    SetBudgetName(std::forward<BudgetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeBudgetActionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeBudgetActionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeBudgetActionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p> A budget action resource. </p>
+   */
+  inline const Action& GetAction() const { return m_action; }
+  template <typename ActionT = Action>
+  void SetAction(ActionT&& value) {
+    m_actionHasBeenSet = true;
+    m_action = std::forward<ActionT>(value);
+  }
+  template <typename ActionT = Action>
+  DescribeBudgetActionResult& WithAction(ActionT&& value) {
+    SetAction(std::forward<ActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_accountId;
+  ///@{
 
-    Aws::String m_budgetName;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeBudgetActionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Action m_action;
+ private:
+  Aws::String m_accountId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_budgetName;
 
-} // namespace Model
-} // namespace Budgets
-} // namespace Aws
+  Action m_action;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountIdHasBeenSet = false;
+  bool m_budgetNameHasBeenSet = false;
+  bool m_actionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Budgets
+}  // namespace Aws

@@ -3,75 +3,73 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/mailmanager/model/UpdateTrafficPolicyRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::MailManager::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateTrafficPolicyRequest::UpdateTrafficPolicyRequest() : 
-    m_defaultAction(AcceptAction::NOT_SET),
-    m_defaultActionHasBeenSet(false),
-    m_maxMessageSizeBytes(0),
-    m_maxMessageSizeBytesHasBeenSet(false),
-    m_policyStatementsHasBeenSet(false),
-    m_trafficPolicyIdHasBeenSet(false),
-    m_trafficPolicyNameHasBeenSet(false)
-{
+Aws::String UpdateTrafficPolicyRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_trafficPolicyIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_trafficPolicyNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_policyStatementsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_defaultActionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maxMessageSizeBytesHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_trafficPolicyIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TrafficPolicyId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_trafficPolicyId.c_str()));
+  }
+
+  if (m_trafficPolicyNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TrafficPolicyName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_trafficPolicyName.c_str()));
+  }
+
+  if (m_policyStatementsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PolicyStatements"));
+    encoder.WriteArrayStart(m_policyStatements.size());
+    for (const auto& item_0 : m_policyStatements) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_defaultActionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("DefaultAction"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(AcceptActionMapper::GetNameForAcceptAction(m_defaultAction).c_str()));
+  }
+
+  if (m_maxMessageSizeBytesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaxMessageSizeBytes"));
+    (m_maxMessageSizeBytes >= 0) ? encoder.WriteUInt(m_maxMessageSizeBytes) : encoder.WriteNegInt(m_maxMessageSizeBytes);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateTrafficPolicyRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_defaultActionHasBeenSet)
-  {
-   payload.WithString("DefaultAction", AcceptActionMapper::GetNameForAcceptAction(m_defaultAction));
-  }
-
-  if(m_maxMessageSizeBytesHasBeenSet)
-  {
-   payload.WithInteger("MaxMessageSizeBytes", m_maxMessageSizeBytes);
-
-  }
-
-  if(m_policyStatementsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> policyStatementsJsonList(m_policyStatements.size());
-   for(unsigned policyStatementsIndex = 0; policyStatementsIndex < policyStatementsJsonList.GetLength(); ++policyStatementsIndex)
-   {
-     policyStatementsJsonList[policyStatementsIndex].AsObject(m_policyStatements[policyStatementsIndex].Jsonize());
-   }
-   payload.WithArray("PolicyStatements", std::move(policyStatementsJsonList));
-
-  }
-
-  if(m_trafficPolicyIdHasBeenSet)
-  {
-   payload.WithString("TrafficPolicyId", m_trafficPolicyId);
-
-  }
-
-  if(m_trafficPolicyNameHasBeenSet)
-  {
-   payload.WithString("TrafficPolicyName", m_trafficPolicyName);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateTrafficPolicyRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateTrafficPolicyRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "MailManagerSvc.UpdateTrafficPolicy"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

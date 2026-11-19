@@ -3,143 +3,102 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediapackagev2/model/CreateLowLatencyHlsManifestConfiguration.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediapackagev2/model/CreateLowLatencyHlsManifestConfiguration.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace mediapackagev2
-{
-namespace Model
-{
+namespace Aws {
+namespace mediapackagev2 {
+namespace Model {
 
-CreateLowLatencyHlsManifestConfiguration::CreateLowLatencyHlsManifestConfiguration() : 
-    m_manifestNameHasBeenSet(false),
-    m_childManifestNameHasBeenSet(false),
-    m_scteHlsHasBeenSet(false),
-    m_startTagHasBeenSet(false),
-    m_manifestWindowSeconds(0),
-    m_manifestWindowSecondsHasBeenSet(false),
-    m_programDateTimeIntervalSeconds(0),
-    m_programDateTimeIntervalSecondsHasBeenSet(false),
-    m_filterConfigurationHasBeenSet(false)
-{
-}
+CreateLowLatencyHlsManifestConfiguration::CreateLowLatencyHlsManifestConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-CreateLowLatencyHlsManifestConfiguration::CreateLowLatencyHlsManifestConfiguration(JsonView jsonValue)
-  : CreateLowLatencyHlsManifestConfiguration()
-{
-  *this = jsonValue;
-}
-
-CreateLowLatencyHlsManifestConfiguration& CreateLowLatencyHlsManifestConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ManifestName"))
-  {
+CreateLowLatencyHlsManifestConfiguration& CreateLowLatencyHlsManifestConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ManifestName")) {
     m_manifestName = jsonValue.GetString("ManifestName");
-
     m_manifestNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ChildManifestName"))
-  {
+  if (jsonValue.ValueExists("ChildManifestName")) {
     m_childManifestName = jsonValue.GetString("ChildManifestName");
-
     m_childManifestNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ScteHls"))
-  {
+  if (jsonValue.ValueExists("ScteHls")) {
     m_scteHls = jsonValue.GetObject("ScteHls");
-
     m_scteHlsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("StartTag"))
-  {
+  if (jsonValue.ValueExists("StartTag")) {
     m_startTag = jsonValue.GetObject("StartTag");
-
     m_startTagHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ManifestWindowSeconds"))
-  {
+  if (jsonValue.ValueExists("ManifestWindowSeconds")) {
     m_manifestWindowSeconds = jsonValue.GetInteger("ManifestWindowSeconds");
-
     m_manifestWindowSecondsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ProgramDateTimeIntervalSeconds"))
-  {
+  if (jsonValue.ValueExists("ProgramDateTimeIntervalSeconds")) {
     m_programDateTimeIntervalSeconds = jsonValue.GetInteger("ProgramDateTimeIntervalSeconds");
-
     m_programDateTimeIntervalSecondsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("FilterConfiguration"))
-  {
+  if (jsonValue.ValueExists("FilterConfiguration")) {
     m_filterConfiguration = jsonValue.GetObject("FilterConfiguration");
-
     m_filterConfigurationHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("UrlEncodeChildManifest")) {
+    m_urlEncodeChildManifest = jsonValue.GetBool("UrlEncodeChildManifest");
+    m_urlEncodeChildManifestHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("UriPathType")) {
+    m_uriPathType = UriPathTypeMapper::GetUriPathTypeForName(jsonValue.GetString("UriPathType"));
+    m_uriPathTypeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue CreateLowLatencyHlsManifestConfiguration::Jsonize() const
-{
+JsonValue CreateLowLatencyHlsManifestConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_manifestNameHasBeenSet)
-  {
-   payload.WithString("ManifestName", m_manifestName);
-
+  if (m_manifestNameHasBeenSet) {
+    payload.WithString("ManifestName", m_manifestName);
   }
 
-  if(m_childManifestNameHasBeenSet)
-  {
-   payload.WithString("ChildManifestName", m_childManifestName);
-
+  if (m_childManifestNameHasBeenSet) {
+    payload.WithString("ChildManifestName", m_childManifestName);
   }
 
-  if(m_scteHlsHasBeenSet)
-  {
-   payload.WithObject("ScteHls", m_scteHls.Jsonize());
-
+  if (m_scteHlsHasBeenSet) {
+    payload.WithObject("ScteHls", m_scteHls.Jsonize());
   }
 
-  if(m_startTagHasBeenSet)
-  {
-   payload.WithObject("StartTag", m_startTag.Jsonize());
-
+  if (m_startTagHasBeenSet) {
+    payload.WithObject("StartTag", m_startTag.Jsonize());
   }
 
-  if(m_manifestWindowSecondsHasBeenSet)
-  {
-   payload.WithInteger("ManifestWindowSeconds", m_manifestWindowSeconds);
-
+  if (m_manifestWindowSecondsHasBeenSet) {
+    payload.WithInteger("ManifestWindowSeconds", m_manifestWindowSeconds);
   }
 
-  if(m_programDateTimeIntervalSecondsHasBeenSet)
-  {
-   payload.WithInteger("ProgramDateTimeIntervalSeconds", m_programDateTimeIntervalSeconds);
-
+  if (m_programDateTimeIntervalSecondsHasBeenSet) {
+    payload.WithInteger("ProgramDateTimeIntervalSeconds", m_programDateTimeIntervalSeconds);
   }
 
-  if(m_filterConfigurationHasBeenSet)
-  {
-   payload.WithObject("FilterConfiguration", m_filterConfiguration.Jsonize());
+  if (m_filterConfigurationHasBeenSet) {
+    payload.WithObject("FilterConfiguration", m_filterConfiguration.Jsonize());
+  }
 
+  if (m_urlEncodeChildManifestHasBeenSet) {
+    payload.WithBool("UrlEncodeChildManifest", m_urlEncodeChildManifest);
+  }
+
+  if (m_uriPathTypeHasBeenSet) {
+    payload.WithString("UriPathType", UriPathTypeMapper::GetNameForUriPathType(m_uriPathType));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace mediapackagev2
-} // namespace Aws
+}  // namespace Model
+}  // namespace mediapackagev2
+}  // namespace Aws

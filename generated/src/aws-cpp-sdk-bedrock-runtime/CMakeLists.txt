@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-bedrock-runtime "C++ SDK for the AWS bedrock-runtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-bedrock-runtime "C++ SDK for Amazon Bedrock Runtime" aws-cpp-sdk-core)
 
 file(GLOB AWS_BEDROCK-RUNTIME_HEADERS
     "include/aws/bedrock-runtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BEDROCK-RUNTIME_HEADERS
 
 file(GLOB AWS_BEDROCK-RUNTIME_MODEL_HEADERS
     "include/aws/bedrock-runtime/model/*.h"
+)
+
+file(GLOB AWS_BEDROCK-RUNTIME_INTERNAL_HEADERS
+    "include/aws/bedrock-runtime/internal/*.h"
 )
 
 file(GLOB AWS_BEDROCK-RUNTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BEDROCK-RUNTIME_MODEL_SOURCE
 
 file(GLOB BEDROCK-RUNTIME_UNIFIED_HEADERS
     ${AWS_BEDROCK-RUNTIME_HEADERS}
+    ${AWS_BEDROCK-RUNTIME_INTERNAL_HEADERS}
     ${AWS_BEDROCK-RUNTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\bedrock-runtime" FILES ${AWS_BEDROCK-RUNTIME_HEADERS})
+        source_group("Header Files\\aws\\bedrock-runtime\\internal" FILES ${AWS_BEDROCK-RUNTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\bedrock-runtime\\model" FILES ${AWS_BEDROCK-RUNTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BEDROCK-RUNTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BEDROCK-RUNTIME_MODEL_SOURCE})

@@ -10,23 +10,14 @@
 using namespace Aws::CloudSearch::Model;
 using namespace Aws::Utils;
 
-DefineIndexFieldRequest::DefineIndexFieldRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_indexFieldHasBeenSet(false)
-{
-}
-
-Aws::String DefineIndexFieldRequest::SerializePayload() const
-{
+Aws::String DefineIndexFieldRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DefineIndexField&";
-  if(m_domainNameHasBeenSet)
-  {
+  if (m_domainNameHasBeenSet) {
     ss << "DomainName=" << StringUtils::URLEncode(m_domainName.c_str()) << "&";
   }
 
-  if(m_indexFieldHasBeenSet)
-  {
+  if (m_indexFieldHasBeenSet) {
     m_indexField.OutputToStream(ss, "IndexField");
   }
 
@@ -34,8 +25,4 @@ Aws::String DefineIndexFieldRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DefineIndexFieldRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DefineIndexFieldRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

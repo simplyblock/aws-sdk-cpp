@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/awstransfer/Transfer_EXPORTS.h>
 #include <aws/awstransfer/model/DescribedConnector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Transfer
-{
-namespace Model
-{
-  class DescribeConnectorResult
-  {
-  public:
-    AWS_TRANSFER_API DescribeConnectorResult();
-    AWS_TRANSFER_API DescribeConnectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSFER_API DescribeConnectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Transfer {
+namespace Model {
+class DescribeConnectorResult {
+ public:
+  AWS_TRANSFER_API DescribeConnectorResult() = default;
+  AWS_TRANSFER_API DescribeConnectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSFER_API DescribeConnectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The structure that contains the details of the connector.</p>
+   */
+  inline const DescribedConnector& GetConnector() const { return m_connector; }
+  template <typename ConnectorT = DescribedConnector>
+  void SetConnector(ConnectorT&& value) {
+    m_connectorHasBeenSet = true;
+    m_connector = std::forward<ConnectorT>(value);
+  }
+  template <typename ConnectorT = DescribedConnector>
+  DescribeConnectorResult& WithConnector(ConnectorT&& value) {
+    SetConnector(std::forward<ConnectorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The structure that contains the details of the connector.</p>
-     */
-    inline const DescribedConnector& GetConnector() const{ return m_connector; }
-    inline void SetConnector(const DescribedConnector& value) { m_connector = value; }
-    inline void SetConnector(DescribedConnector&& value) { m_connector = std::move(value); }
-    inline DescribeConnectorResult& WithConnector(const DescribedConnector& value) { SetConnector(value); return *this;}
-    inline DescribeConnectorResult& WithConnector(DescribedConnector&& value) { SetConnector(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeConnectorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeConnectorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeConnectorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeConnectorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DescribedConnector m_connector;
+ private:
+  DescribedConnector m_connector;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_connectorHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

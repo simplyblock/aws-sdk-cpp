@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
-  class AddPermissionResult
-  {
-  public:
-    AWS_LAMBDA_API AddPermissionResult();
-    AWS_LAMBDA_API AddPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAMBDA_API AddPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+class AddPermissionResult {
+ public:
+  AWS_LAMBDA_API AddPermissionResult() = default;
+  AWS_LAMBDA_API AddPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAMBDA_API AddPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The permission statement that's added to the function policy.</p>
+   */
+  inline const Aws::String& GetStatement() const { return m_statement; }
+  template <typename StatementT = Aws::String>
+  void SetStatement(StatementT&& value) {
+    m_statementHasBeenSet = true;
+    m_statement = std::forward<StatementT>(value);
+  }
+  template <typename StatementT = Aws::String>
+  AddPermissionResult& WithStatement(StatementT&& value) {
+    SetStatement(std::forward<StatementT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The permission statement that's added to the function policy.</p>
-     */
-    inline const Aws::String& GetStatement() const{ return m_statement; }
-    inline void SetStatement(const Aws::String& value) { m_statement = value; }
-    inline void SetStatement(Aws::String&& value) { m_statement = std::move(value); }
-    inline void SetStatement(const char* value) { m_statement.assign(value); }
-    inline AddPermissionResult& WithStatement(const Aws::String& value) { SetStatement(value); return *this;}
-    inline AddPermissionResult& WithStatement(Aws::String&& value) { SetStatement(std::move(value)); return *this;}
-    inline AddPermissionResult& WithStatement(const char* value) { SetStatement(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AddPermissionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AddPermissionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AddPermissionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AddPermissionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_statement;
+ private:
+  Aws::String m_statement;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statementHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

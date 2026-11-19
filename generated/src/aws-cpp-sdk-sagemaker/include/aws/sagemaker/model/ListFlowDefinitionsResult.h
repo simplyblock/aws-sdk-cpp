@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/FlowDefinitionSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class ListFlowDefinitionsResult
-  {
-  public:
-    AWS_SAGEMAKER_API ListFlowDefinitionsResult();
-    AWS_SAGEMAKER_API ListFlowDefinitionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API ListFlowDefinitionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class ListFlowDefinitionsResult {
+ public:
+  AWS_SAGEMAKER_API ListFlowDefinitionsResult() = default;
+  AWS_SAGEMAKER_API ListFlowDefinitionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API ListFlowDefinitionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of objects describing the flow definitions.</p>
+   */
+  inline const Aws::Vector<FlowDefinitionSummary>& GetFlowDefinitionSummaries() const { return m_flowDefinitionSummaries; }
+  template <typename FlowDefinitionSummariesT = Aws::Vector<FlowDefinitionSummary>>
+  void SetFlowDefinitionSummaries(FlowDefinitionSummariesT&& value) {
+    m_flowDefinitionSummariesHasBeenSet = true;
+    m_flowDefinitionSummaries = std::forward<FlowDefinitionSummariesT>(value);
+  }
+  template <typename FlowDefinitionSummariesT = Aws::Vector<FlowDefinitionSummary>>
+  ListFlowDefinitionsResult& WithFlowDefinitionSummaries(FlowDefinitionSummariesT&& value) {
+    SetFlowDefinitionSummaries(std::forward<FlowDefinitionSummariesT>(value));
+    return *this;
+  }
+  template <typename FlowDefinitionSummariesT = FlowDefinitionSummary>
+  ListFlowDefinitionsResult& AddFlowDefinitionSummaries(FlowDefinitionSummariesT&& value) {
+    m_flowDefinitionSummariesHasBeenSet = true;
+    m_flowDefinitionSummaries.emplace_back(std::forward<FlowDefinitionSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects describing the flow definitions.</p>
-     */
-    inline const Aws::Vector<FlowDefinitionSummary>& GetFlowDefinitionSummaries() const{ return m_flowDefinitionSummaries; }
-    inline void SetFlowDefinitionSummaries(const Aws::Vector<FlowDefinitionSummary>& value) { m_flowDefinitionSummaries = value; }
-    inline void SetFlowDefinitionSummaries(Aws::Vector<FlowDefinitionSummary>&& value) { m_flowDefinitionSummaries = std::move(value); }
-    inline ListFlowDefinitionsResult& WithFlowDefinitionSummaries(const Aws::Vector<FlowDefinitionSummary>& value) { SetFlowDefinitionSummaries(value); return *this;}
-    inline ListFlowDefinitionsResult& WithFlowDefinitionSummaries(Aws::Vector<FlowDefinitionSummary>&& value) { SetFlowDefinitionSummaries(std::move(value)); return *this;}
-    inline ListFlowDefinitionsResult& AddFlowDefinitionSummaries(const FlowDefinitionSummary& value) { m_flowDefinitionSummaries.push_back(value); return *this; }
-    inline ListFlowDefinitionsResult& AddFlowDefinitionSummaries(FlowDefinitionSummary&& value) { m_flowDefinitionSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token to resume pagination.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFlowDefinitionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token to resume pagination.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFlowDefinitionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFlowDefinitionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFlowDefinitionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFlowDefinitionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFlowDefinitionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFlowDefinitionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFlowDefinitionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FlowDefinitionSummary> m_flowDefinitionSummaries;
+ private:
+  Aws::Vector<FlowDefinitionSummary> m_flowDefinitionSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_flowDefinitionSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

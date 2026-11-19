@@ -4,25 +4,19 @@
  */
 
 #pragma once
-#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
 
-#include <aws/iotfleetwise/IoTFleetWiseEndpointRules.h>
-
-
-namespace Aws
-{
-namespace IoTFleetWise
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace IoTFleetWise {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using IoTFleetWiseClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -38,24 +32,19 @@ using IoTFleetWiseEndpointProviderBase =
     EndpointProviderBase<IoTFleetWiseClientConfiguration, IoTFleetWiseBuiltInParameters, IoTFleetWiseClientContextParameters>;
 
 using IoTFleetWiseDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTFleetWiseClientConfiguration, IoTFleetWiseBuiltInParameters, IoTFleetWiseClientContextParameters>;
+    BDDEndpointProvider<IoTFleetWiseClientConfiguration, IoTFleetWiseBuiltInParameters, IoTFleetWiseClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_IOTFLEETWISE_API IoTFleetWiseEndpointProvider : public IoTFleetWiseDefaultEpProviderBase
-{
-public:
-    using IoTFleetWiseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_IOTFLEETWISE_API IoTFleetWiseEndpointProvider : public IoTFleetWiseDefaultEpProviderBase {
+ public:
+  using IoTFleetWiseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    IoTFleetWiseEndpointProvider()
-      : IoTFleetWiseDefaultEpProviderBase(Aws::IoTFleetWise::IoTFleetWiseEndpointRules::GetRulesBlob(), Aws::IoTFleetWise::IoTFleetWiseEndpointRules::RulesBlobSize)
-    {}
+  IoTFleetWiseEndpointProvider();
 
-    ~IoTFleetWiseEndpointProvider()
-    {
-    }
+  ~IoTFleetWiseEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace IoTFleetWise
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace IoTFleetWise
+}  // namespace Aws

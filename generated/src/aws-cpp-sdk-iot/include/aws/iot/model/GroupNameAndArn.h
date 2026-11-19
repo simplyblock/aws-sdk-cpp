@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
 
+/**
+ * <p>The name and ARN of a group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GroupNameAndArn">AWS
+ * API Reference</a></p>
+ */
+class GroupNameAndArn {
+ public:
+  AWS_IOT_API GroupNameAndArn() = default;
+  AWS_IOT_API GroupNameAndArn(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API GroupNameAndArn& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The name and ARN of a group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GroupNameAndArn">AWS
-   * API Reference</a></p>
+   * <p>The group name.</p>
    */
-  class GroupNameAndArn
-  {
-  public:
-    AWS_IOT_API GroupNameAndArn();
-    AWS_IOT_API GroupNameAndArn(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API GroupNameAndArn& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetGroupName() const { return m_groupName; }
+  inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
+  template <typename GroupNameT = Aws::String>
+  void SetGroupName(GroupNameT&& value) {
+    m_groupNameHasBeenSet = true;
+    m_groupName = std::forward<GroupNameT>(value);
+  }
+  template <typename GroupNameT = Aws::String>
+  GroupNameAndArn& WithGroupName(GroupNameT&& value) {
+    SetGroupName(std::forward<GroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The group ARN.</p>
+   */
+  inline const Aws::String& GetGroupArn() const { return m_groupArn; }
+  inline bool GroupArnHasBeenSet() const { return m_groupArnHasBeenSet; }
+  template <typename GroupArnT = Aws::String>
+  void SetGroupArn(GroupArnT&& value) {
+    m_groupArnHasBeenSet = true;
+    m_groupArn = std::forward<GroupArnT>(value);
+  }
+  template <typename GroupArnT = Aws::String>
+  GroupNameAndArn& WithGroupArn(GroupArnT&& value) {
+    SetGroupArn(std::forward<GroupArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_groupName;
 
-    ///@{
-    /**
-     * <p>The group name.</p>
-     */
-    inline const Aws::String& GetGroupName() const{ return m_groupName; }
-    inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
-    inline void SetGroupName(const Aws::String& value) { m_groupNameHasBeenSet = true; m_groupName = value; }
-    inline void SetGroupName(Aws::String&& value) { m_groupNameHasBeenSet = true; m_groupName = std::move(value); }
-    inline void SetGroupName(const char* value) { m_groupNameHasBeenSet = true; m_groupName.assign(value); }
-    inline GroupNameAndArn& WithGroupName(const Aws::String& value) { SetGroupName(value); return *this;}
-    inline GroupNameAndArn& WithGroupName(Aws::String&& value) { SetGroupName(std::move(value)); return *this;}
-    inline GroupNameAndArn& WithGroupName(const char* value) { SetGroupName(value); return *this;}
-    ///@}
+  Aws::String m_groupArn;
+  bool m_groupNameHasBeenSet = false;
+  bool m_groupArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The group ARN.</p>
-     */
-    inline const Aws::String& GetGroupArn() const{ return m_groupArn; }
-    inline bool GroupArnHasBeenSet() const { return m_groupArnHasBeenSet; }
-    inline void SetGroupArn(const Aws::String& value) { m_groupArnHasBeenSet = true; m_groupArn = value; }
-    inline void SetGroupArn(Aws::String&& value) { m_groupArnHasBeenSet = true; m_groupArn = std::move(value); }
-    inline void SetGroupArn(const char* value) { m_groupArnHasBeenSet = true; m_groupArn.assign(value); }
-    inline GroupNameAndArn& WithGroupArn(const Aws::String& value) { SetGroupArn(value); return *this;}
-    inline GroupNameAndArn& WithGroupArn(Aws::String&& value) { SetGroupArn(std::move(value)); return *this;}
-    inline GroupNameAndArn& WithGroupArn(const char* value) { SetGroupArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_groupName;
-    bool m_groupNameHasBeenSet = false;
-
-    Aws::String m_groupArn;
-    bool m_groupArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

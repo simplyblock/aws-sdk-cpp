@@ -4,64 +4,72 @@
  */
 
 #pragma once
-#include <aws/securitylake/SecurityLake_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securitylake/SecurityLake_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityLake
-{
-namespace Model
-{
-  class UpdateSubscriberNotificationResult
-  {
-  public:
-    AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult();
-    AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityLake {
+namespace Model {
+class UpdateSubscriberNotificationResult {
+ public:
+  AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult() = default;
+  AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYLAKE_API UpdateSubscriberNotificationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The subscriber endpoint to which exception messages are posted.</p>
+   */
+  inline const Aws::String& GetSubscriberEndpoint() const { return m_subscriberEndpoint; }
+  template <typename SubscriberEndpointT = Aws::String>
+  void SetSubscriberEndpoint(SubscriberEndpointT&& value) {
+    m_subscriberEndpointHasBeenSet = true;
+    m_subscriberEndpoint = std::forward<SubscriberEndpointT>(value);
+  }
+  template <typename SubscriberEndpointT = Aws::String>
+  UpdateSubscriberNotificationResult& WithSubscriberEndpoint(SubscriberEndpointT&& value) {
+    SetSubscriberEndpoint(std::forward<SubscriberEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subscriber endpoint to which exception messages are posted.</p>
-     */
-    inline const Aws::String& GetSubscriberEndpoint() const{ return m_subscriberEndpoint; }
-    inline void SetSubscriberEndpoint(const Aws::String& value) { m_subscriberEndpoint = value; }
-    inline void SetSubscriberEndpoint(Aws::String&& value) { m_subscriberEndpoint = std::move(value); }
-    inline void SetSubscriberEndpoint(const char* value) { m_subscriberEndpoint.assign(value); }
-    inline UpdateSubscriberNotificationResult& WithSubscriberEndpoint(const Aws::String& value) { SetSubscriberEndpoint(value); return *this;}
-    inline UpdateSubscriberNotificationResult& WithSubscriberEndpoint(Aws::String&& value) { SetSubscriberEndpoint(std::move(value)); return *this;}
-    inline UpdateSubscriberNotificationResult& WithSubscriberEndpoint(const char* value) { SetSubscriberEndpoint(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSubscriberNotificationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSubscriberNotificationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSubscriberNotificationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSubscriberNotificationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_subscriberEndpoint;
+ private:
+  Aws::String m_subscriberEndpoint;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_subscriberEndpointHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityLake
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityLake
+}  // namespace Aws

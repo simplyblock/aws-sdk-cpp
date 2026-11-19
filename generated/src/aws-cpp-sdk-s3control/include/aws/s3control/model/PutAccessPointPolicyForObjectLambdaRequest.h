@@ -4,94 +4,102 @@
  */
 
 #pragma once
-#include <aws/s3control/S3Control_EXPORTS.h>
-#include <aws/s3control/S3ControlRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3control/S3ControlRequest.h>
+#include <aws/s3control/S3Control_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace S3Control
-{
-namespace Model
-{
+namespace Aws {
+namespace S3Control {
+namespace Model {
+
+/**
+ */
+class PutAccessPointPolicyForObjectLambdaRequest : public S3ControlRequest {
+ public:
+  AWS_S3CONTROL_API PutAccessPointPolicyForObjectLambdaRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutAccessPointPolicyForObjectLambda"; }
+
+  AWS_S3CONTROL_API Aws::String SerializePayload() const override;
+
+  AWS_S3CONTROL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
   /**
+   * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
    */
-  class PutAccessPointPolicyForObjectLambdaRequest : public S3ControlRequest
-  {
-  public:
-    AWS_S3CONTROL_API PutAccessPointPolicyForObjectLambdaRequest();
+  AWS_S3CONTROL_API EndpointParameters GetEndpointContextParams() const override;
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutAccessPointPolicyForObjectLambda"; }
+  ///@{
+  /**
+   * <p>The account ID for the account that owns the specified Object Lambda Access
+   * Point.</p>
+   */
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  PutAccessPointPolicyForObjectLambdaRequest& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_S3CONTROL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the Object Lambda Access Point.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  PutAccessPointPolicyForObjectLambdaRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_S3CONTROL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Object Lambda Access Point resource policy document.</p>
+   */
+  inline const Aws::String& GetPolicy() const { return m_policy; }
+  inline bool PolicyHasBeenSet() const { return m_policyHasBeenSet; }
+  template <typename PolicyT = Aws::String>
+  void SetPolicy(PolicyT&& value) {
+    m_policyHasBeenSet = true;
+    m_policy = std::forward<PolicyT>(value);
+  }
+  template <typename PolicyT = Aws::String>
+  PutAccessPointPolicyForObjectLambdaRequest& WithPolicy(PolicyT&& value) {
+    SetPolicy(std::forward<PolicyT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
-    /**
-     * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
-     */
-    AWS_S3CONTROL_API EndpointParameters GetEndpointContextParams() const override;
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The account ID for the account that owns the specified Object Lambda Access
-     * Point.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  Aws::String m_policy;
+  bool m_accountIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_policyHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the Object Lambda Access Point.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Object Lambda Access Point resource policy document.</p>
-     */
-    inline const Aws::String& GetPolicy() const{ return m_policy; }
-    inline bool PolicyHasBeenSet() const { return m_policyHasBeenSet; }
-    inline void SetPolicy(const Aws::String& value) { m_policyHasBeenSet = true; m_policy = value; }
-    inline void SetPolicy(Aws::String&& value) { m_policyHasBeenSet = true; m_policy = std::move(value); }
-    inline void SetPolicy(const char* value) { m_policyHasBeenSet = true; m_policy.assign(value); }
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithPolicy(const Aws::String& value) { SetPolicy(value); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithPolicy(Aws::String&& value) { SetPolicy(std::move(value)); return *this;}
-    inline PutAccessPointPolicyForObjectLambdaRequest& WithPolicy(const char* value) { SetPolicy(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_policy;
-    bool m_policyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

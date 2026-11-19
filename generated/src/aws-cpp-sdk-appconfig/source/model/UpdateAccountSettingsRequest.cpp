@@ -12,24 +12,16 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAccountSettingsRequest::UpdateAccountSettingsRequest() : 
-    m_deletionProtectionHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAccountSettingsRequest::SerializePayload() const
-{
+Aws::String UpdateAccountSettingsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_deletionProtectionHasBeenSet)
-  {
-   payload.WithObject("DeletionProtection", m_deletionProtection.Jsonize());
+  if (m_deletionProtectionHasBeenSet) {
+    payload.WithObject("DeletionProtection", m_deletionProtection.Jsonize());
+  }
 
+  if (m_vendedMetricsHasBeenSet) {
+    payload.WithObject("VendedMetrics", m_vendedMetrics.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

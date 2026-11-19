@@ -4,89 +4,122 @@
  */
 
 #pragma once
-#include <aws/appsync/AppSync_EXPORTS.h>
 #include <aws/appsync/AppSyncRequest.h>
+#include <aws/appsync/AppSync_EXPORTS.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace AppSync
-{
-namespace Model
-{
+namespace Aws {
+namespace AppSync {
+namespace Model {
 
+/**
+ */
+class CreateDomainNameRequest : public AppSyncRequest {
+ public:
+  AWS_APPSYNC_API CreateDomainNameRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDomainName"; }
+
+  AWS_APPSYNC_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The domain name.</p>
    */
-  class CreateDomainNameRequest : public AppSyncRequest
-  {
-  public:
-    AWS_APPSYNC_API CreateDomainNameRequest();
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  CreateDomainNameRequest& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDomainName"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the certificate. This can be an Certificate
+   * Manager (ACM) certificate or an Identity and Access Management (IAM) server
+   * certificate.</p>
+   */
+  inline const Aws::String& GetCertificateArn() const { return m_certificateArn; }
+  inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
+  template <typename CertificateArnT = Aws::String>
+  void SetCertificateArn(CertificateArnT&& value) {
+    m_certificateArnHasBeenSet = true;
+    m_certificateArn = std::forward<CertificateArnT>(value);
+  }
+  template <typename CertificateArnT = Aws::String>
+  CreateDomainNameRequest& WithCertificateArn(CertificateArnT&& value) {
+    SetCertificateArn(std::forward<CertificateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_APPSYNC_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A description of the <code>DomainName</code>.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateDomainNameRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The domain name.</p>
-     */
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
-    inline void SetDomainName(const Aws::String& value) { m_domainNameHasBeenSet = true; m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainNameHasBeenSet = true; m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainNameHasBeenSet = true; m_domainName.assign(value); }
-    inline CreateDomainNameRequest& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline CreateDomainNameRequest& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline CreateDomainNameRequest& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateDomainNameRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateDomainNameRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainName;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the certificate. This can be an Certificate
-     * Manager (ACM) certificate or an Identity and Access Management (IAM) server
-     * certificate.</p>
-     */
-    inline const Aws::String& GetCertificateArn() const{ return m_certificateArn; }
-    inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
-    inline void SetCertificateArn(const Aws::String& value) { m_certificateArnHasBeenSet = true; m_certificateArn = value; }
-    inline void SetCertificateArn(Aws::String&& value) { m_certificateArnHasBeenSet = true; m_certificateArn = std::move(value); }
-    inline void SetCertificateArn(const char* value) { m_certificateArnHasBeenSet = true; m_certificateArn.assign(value); }
-    inline CreateDomainNameRequest& WithCertificateArn(const Aws::String& value) { SetCertificateArn(value); return *this;}
-    inline CreateDomainNameRequest& WithCertificateArn(Aws::String&& value) { SetCertificateArn(std::move(value)); return *this;}
-    inline CreateDomainNameRequest& WithCertificateArn(const char* value) { SetCertificateArn(value); return *this;}
-    ///@}
+  Aws::String m_certificateArn;
 
-    ///@{
-    /**
-     * <p>A description of the <code>DomainName</code>.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateDomainNameRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateDomainNameRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateDomainNameRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_description;
 
-    Aws::String m_domainName;
-    bool m_domainNameHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_domainNameHasBeenSet = false;
+  bool m_certificateArnHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_certificateArn;
-    bool m_certificateArnHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

@@ -5,60 +5,85 @@
 
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/cleanrooms/model/IdMappingTableInputSource.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
 
+/**
+ * <p>Additional properties that are specific to the type of the associated
+ * schema.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/IdMappingTableSchemaTypeProperties">AWS
+ * API Reference</a></p>
+ */
+class IdMappingTableSchemaTypeProperties {
+ public:
+  AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties() = default;
+  AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Additional properties that are specific to the type of the associated
-   * schema.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/IdMappingTableSchemaTypeProperties">AWS
-   * API Reference</a></p>
+   * <p>Defines which ID namespace associations are used to create the ID mapping
+   * table.</p>
    */
-  class IdMappingTableSchemaTypeProperties
-  {
-  public:
-    AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties();
-    AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API IdMappingTableSchemaTypeProperties& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<IdMappingTableInputSource>& GetIdMappingTableInputSource() const { return m_idMappingTableInputSource; }
+  inline bool IdMappingTableInputSourceHasBeenSet() const { return m_idMappingTableInputSourceHasBeenSet; }
+  template <typename IdMappingTableInputSourceT = Aws::Vector<IdMappingTableInputSource>>
+  void SetIdMappingTableInputSource(IdMappingTableInputSourceT&& value) {
+    m_idMappingTableInputSourceHasBeenSet = true;
+    m_idMappingTableInputSource = std::forward<IdMappingTableInputSourceT>(value);
+  }
+  template <typename IdMappingTableInputSourceT = Aws::Vector<IdMappingTableInputSource>>
+  IdMappingTableSchemaTypeProperties& WithIdMappingTableInputSource(IdMappingTableInputSourceT&& value) {
+    SetIdMappingTableInputSource(std::forward<IdMappingTableInputSourceT>(value));
+    return *this;
+  }
+  template <typename IdMappingTableInputSourceT = IdMappingTableInputSource>
+  IdMappingTableSchemaTypeProperties& AddIdMappingTableInputSource(IdMappingTableInputSourceT&& value) {
+    m_idMappingTableInputSourceHasBeenSet = true;
+    m_idMappingTableInputSource.emplace_back(std::forward<IdMappingTableInputSourceT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of the ID mapping table.</p>
+   */
+  inline const Aws::String& GetIdMappingTableId() const { return m_idMappingTableId; }
+  inline bool IdMappingTableIdHasBeenSet() const { return m_idMappingTableIdHasBeenSet; }
+  template <typename IdMappingTableIdT = Aws::String>
+  void SetIdMappingTableId(IdMappingTableIdT&& value) {
+    m_idMappingTableIdHasBeenSet = true;
+    m_idMappingTableId = std::forward<IdMappingTableIdT>(value);
+  }
+  template <typename IdMappingTableIdT = Aws::String>
+  IdMappingTableSchemaTypeProperties& WithIdMappingTableId(IdMappingTableIdT&& value) {
+    SetIdMappingTableId(std::forward<IdMappingTableIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<IdMappingTableInputSource> m_idMappingTableInputSource;
 
-    ///@{
-    /**
-     * <p>Defines which ID namespace associations are used to create the ID mapping
-     * table.</p>
-     */
-    inline const Aws::Vector<IdMappingTableInputSource>& GetIdMappingTableInputSource() const{ return m_idMappingTableInputSource; }
-    inline bool IdMappingTableInputSourceHasBeenSet() const { return m_idMappingTableInputSourceHasBeenSet; }
-    inline void SetIdMappingTableInputSource(const Aws::Vector<IdMappingTableInputSource>& value) { m_idMappingTableInputSourceHasBeenSet = true; m_idMappingTableInputSource = value; }
-    inline void SetIdMappingTableInputSource(Aws::Vector<IdMappingTableInputSource>&& value) { m_idMappingTableInputSourceHasBeenSet = true; m_idMappingTableInputSource = std::move(value); }
-    inline IdMappingTableSchemaTypeProperties& WithIdMappingTableInputSource(const Aws::Vector<IdMappingTableInputSource>& value) { SetIdMappingTableInputSource(value); return *this;}
-    inline IdMappingTableSchemaTypeProperties& WithIdMappingTableInputSource(Aws::Vector<IdMappingTableInputSource>&& value) { SetIdMappingTableInputSource(std::move(value)); return *this;}
-    inline IdMappingTableSchemaTypeProperties& AddIdMappingTableInputSource(const IdMappingTableInputSource& value) { m_idMappingTableInputSourceHasBeenSet = true; m_idMappingTableInputSource.push_back(value); return *this; }
-    inline IdMappingTableSchemaTypeProperties& AddIdMappingTableInputSource(IdMappingTableInputSource&& value) { m_idMappingTableInputSourceHasBeenSet = true; m_idMappingTableInputSource.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_idMappingTableId;
+  bool m_idMappingTableInputSourceHasBeenSet = false;
+  bool m_idMappingTableIdHasBeenSet = false;
+};
 
-    Aws::Vector<IdMappingTableInputSource> m_idMappingTableInputSource;
-    bool m_idMappingTableInputSourceHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

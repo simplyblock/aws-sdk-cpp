@@ -12,24 +12,12 @@ using namespace Aws::CloudDirectory::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateSchemaRequest::CreateSchemaRequest() : 
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String CreateSchemaRequest::SerializePayload() const
-{
+Aws::String CreateSchemaRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

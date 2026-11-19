@@ -4,96 +4,103 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/lexv2-models/LexModelsV2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lexv2-models/LexModelsV2Request.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ */
+class BuildBotLocaleRequest : public LexModelsV2Request {
+ public:
+  AWS_LEXMODELSV2_API BuildBotLocaleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "BuildBotLocale"; }
+
+  AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the bot to build. The identifier is returned in the
+   * response from the <a
+   * href="https://docs.aws.amazon.com/lexv2/latest/APIReference/API_CreateBot.html">CreateBot</a>
+   * operation.</p>
    */
-  class BuildBotLocaleRequest : public LexModelsV2Request
-  {
-  public:
-    AWS_LEXMODELSV2_API BuildBotLocaleRequest();
+  inline const Aws::String& GetBotId() const { return m_botId; }
+  inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
+  template <typename BotIdT = Aws::String>
+  void SetBotId(BotIdT&& value) {
+    m_botIdHasBeenSet = true;
+    m_botId = std::forward<BotIdT>(value);
+  }
+  template <typename BotIdT = Aws::String>
+  BuildBotLocaleRequest& WithBotId(BotIdT&& value) {
+    SetBotId(std::forward<BotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "BuildBotLocale"; }
+  ///@{
+  /**
+   * <p>The version of the bot to build. This can only be the draft version of the
+   * bot.</p>
+   */
+  inline const Aws::String& GetBotVersion() const { return m_botVersion; }
+  inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
+  template <typename BotVersionT = Aws::String>
+  void SetBotVersion(BotVersionT&& value) {
+    m_botVersionHasBeenSet = true;
+    m_botVersion = std::forward<BotVersionT>(value);
+  }
+  template <typename BotVersionT = Aws::String>
+  BuildBotLocaleRequest& WithBotVersion(BotVersionT&& value) {
+    SetBotVersion(std::forward<BotVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The identifier of the language and locale that the bot will be used in. The
+   * string must match one of the supported locales. All of the intents, slot types,
+   * and slots used in the bot must have the same locale. For more information, see
+   * <a
+   * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
+   * languages</a>.</p>
+   */
+  inline const Aws::String& GetLocaleId() const { return m_localeId; }
+  inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
+  template <typename LocaleIdT = Aws::String>
+  void SetLocaleId(LocaleIdT&& value) {
+    m_localeIdHasBeenSet = true;
+    m_localeId = std::forward<LocaleIdT>(value);
+  }
+  template <typename LocaleIdT = Aws::String>
+  BuildBotLocaleRequest& WithLocaleId(LocaleIdT&& value) {
+    SetLocaleId(std::forward<LocaleIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_botId;
 
+  Aws::String m_botVersion;
 
-    ///@{
-    /**
-     * <p>The identifier of the bot to build. The identifier is returned in the
-     * response from the <a
-     * href="https://docs.aws.amazon.com/lexv2/latest/APIReference/API_CreateBot.html">CreateBot</a>
-     * operation.</p>
-     */
-    inline const Aws::String& GetBotId() const{ return m_botId; }
-    inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
-    inline void SetBotId(const Aws::String& value) { m_botIdHasBeenSet = true; m_botId = value; }
-    inline void SetBotId(Aws::String&& value) { m_botIdHasBeenSet = true; m_botId = std::move(value); }
-    inline void SetBotId(const char* value) { m_botIdHasBeenSet = true; m_botId.assign(value); }
-    inline BuildBotLocaleRequest& WithBotId(const Aws::String& value) { SetBotId(value); return *this;}
-    inline BuildBotLocaleRequest& WithBotId(Aws::String&& value) { SetBotId(std::move(value)); return *this;}
-    inline BuildBotLocaleRequest& WithBotId(const char* value) { SetBotId(value); return *this;}
-    ///@}
+  Aws::String m_localeId;
+  bool m_botIdHasBeenSet = false;
+  bool m_botVersionHasBeenSet = false;
+  bool m_localeIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The version of the bot to build. This can only be the draft version of the
-     * bot.</p>
-     */
-    inline const Aws::String& GetBotVersion() const{ return m_botVersion; }
-    inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
-    inline void SetBotVersion(const Aws::String& value) { m_botVersionHasBeenSet = true; m_botVersion = value; }
-    inline void SetBotVersion(Aws::String&& value) { m_botVersionHasBeenSet = true; m_botVersion = std::move(value); }
-    inline void SetBotVersion(const char* value) { m_botVersionHasBeenSet = true; m_botVersion.assign(value); }
-    inline BuildBotLocaleRequest& WithBotVersion(const Aws::String& value) { SetBotVersion(value); return *this;}
-    inline BuildBotLocaleRequest& WithBotVersion(Aws::String&& value) { SetBotVersion(std::move(value)); return *this;}
-    inline BuildBotLocaleRequest& WithBotVersion(const char* value) { SetBotVersion(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the language and locale that the bot will be used in. The
-     * string must match one of the supported locales. All of the intents, slot types,
-     * and slots used in the bot must have the same locale. For more information, see
-     * <a
-     * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
-     * languages</a>.</p>
-     */
-    inline const Aws::String& GetLocaleId() const{ return m_localeId; }
-    inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
-    inline void SetLocaleId(const Aws::String& value) { m_localeIdHasBeenSet = true; m_localeId = value; }
-    inline void SetLocaleId(Aws::String&& value) { m_localeIdHasBeenSet = true; m_localeId = std::move(value); }
-    inline void SetLocaleId(const char* value) { m_localeIdHasBeenSet = true; m_localeId.assign(value); }
-    inline BuildBotLocaleRequest& WithLocaleId(const Aws::String& value) { SetLocaleId(value); return *this;}
-    inline BuildBotLocaleRequest& WithLocaleId(Aws::String&& value) { SetLocaleId(std::move(value)); return *this;}
-    inline BuildBotLocaleRequest& WithLocaleId(const char* value) { SetLocaleId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_botId;
-    bool m_botIdHasBeenSet = false;
-
-    Aws::String m_botVersion;
-    bool m_botVersionHasBeenSet = false;
-
-    Aws::String m_localeId;
-    bool m_localeIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

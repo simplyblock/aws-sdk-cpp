@@ -4,75 +4,84 @@
  */
 
 #pragma once
-#include <aws/greengrass/Greengrass_EXPORTS.h>
-#include <aws/greengrass/GreengrassRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/greengrass/GreengrassRequest.h>
+#include <aws/greengrass/Greengrass_EXPORTS.h>
 #include <aws/greengrass/model/ConnectivityInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Greengrass
-{
-namespace Model
-{
+namespace Aws {
+namespace Greengrass {
+namespace Model {
 
+/**
+ * Connectivity information.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UpdateConnectivityInfoRequest">AWS
+ * API Reference</a></p>
+ */
+class UpdateConnectivityInfoRequest : public GreengrassRequest {
+ public:
+  AWS_GREENGRASS_API UpdateConnectivityInfoRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateConnectivityInfo"; }
+
+  AWS_GREENGRASS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * Connectivity information.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UpdateConnectivityInfoRequest">AWS
-   * API Reference</a></p>
+   * A list of connectivity info.
    */
-  class UpdateConnectivityInfoRequest : public GreengrassRequest
-  {
-  public:
-    AWS_GREENGRASS_API UpdateConnectivityInfoRequest();
+  inline const Aws::Vector<ConnectivityInfo>& GetConnectivityInfo() const { return m_connectivityInfo; }
+  inline bool ConnectivityInfoHasBeenSet() const { return m_connectivityInfoHasBeenSet; }
+  template <typename ConnectivityInfoT = Aws::Vector<ConnectivityInfo>>
+  void SetConnectivityInfo(ConnectivityInfoT&& value) {
+    m_connectivityInfoHasBeenSet = true;
+    m_connectivityInfo = std::forward<ConnectivityInfoT>(value);
+  }
+  template <typename ConnectivityInfoT = Aws::Vector<ConnectivityInfo>>
+  UpdateConnectivityInfoRequest& WithConnectivityInfo(ConnectivityInfoT&& value) {
+    SetConnectivityInfo(std::forward<ConnectivityInfoT>(value));
+    return *this;
+  }
+  template <typename ConnectivityInfoT = ConnectivityInfo>
+  UpdateConnectivityInfoRequest& AddConnectivityInfo(ConnectivityInfoT&& value) {
+    m_connectivityInfoHasBeenSet = true;
+    m_connectivityInfo.emplace_back(std::forward<ConnectivityInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateConnectivityInfo"; }
+  ///@{
+  /**
+   * The thing name.
+   */
+  inline const Aws::String& GetThingName() const { return m_thingName; }
+  inline bool ThingNameHasBeenSet() const { return m_thingNameHasBeenSet; }
+  template <typename ThingNameT = Aws::String>
+  void SetThingName(ThingNameT&& value) {
+    m_thingNameHasBeenSet = true;
+    m_thingName = std::forward<ThingNameT>(value);
+  }
+  template <typename ThingNameT = Aws::String>
+  UpdateConnectivityInfoRequest& WithThingName(ThingNameT&& value) {
+    SetThingName(std::forward<ThingNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<ConnectivityInfo> m_connectivityInfo;
 
-    AWS_GREENGRASS_API Aws::String SerializePayload() const override;
+  Aws::String m_thingName;
+  bool m_connectivityInfoHasBeenSet = false;
+  bool m_thingNameHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * A list of connectivity info.
-     */
-    inline const Aws::Vector<ConnectivityInfo>& GetConnectivityInfo() const{ return m_connectivityInfo; }
-    inline bool ConnectivityInfoHasBeenSet() const { return m_connectivityInfoHasBeenSet; }
-    inline void SetConnectivityInfo(const Aws::Vector<ConnectivityInfo>& value) { m_connectivityInfoHasBeenSet = true; m_connectivityInfo = value; }
-    inline void SetConnectivityInfo(Aws::Vector<ConnectivityInfo>&& value) { m_connectivityInfoHasBeenSet = true; m_connectivityInfo = std::move(value); }
-    inline UpdateConnectivityInfoRequest& WithConnectivityInfo(const Aws::Vector<ConnectivityInfo>& value) { SetConnectivityInfo(value); return *this;}
-    inline UpdateConnectivityInfoRequest& WithConnectivityInfo(Aws::Vector<ConnectivityInfo>&& value) { SetConnectivityInfo(std::move(value)); return *this;}
-    inline UpdateConnectivityInfoRequest& AddConnectivityInfo(const ConnectivityInfo& value) { m_connectivityInfoHasBeenSet = true; m_connectivityInfo.push_back(value); return *this; }
-    inline UpdateConnectivityInfoRequest& AddConnectivityInfo(ConnectivityInfo&& value) { m_connectivityInfoHasBeenSet = true; m_connectivityInfo.push_back(std::move(value)); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * The thing name.
-     */
-    inline const Aws::String& GetThingName() const{ return m_thingName; }
-    inline bool ThingNameHasBeenSet() const { return m_thingNameHasBeenSet; }
-    inline void SetThingName(const Aws::String& value) { m_thingNameHasBeenSet = true; m_thingName = value; }
-    inline void SetThingName(Aws::String&& value) { m_thingNameHasBeenSet = true; m_thingName = std::move(value); }
-    inline void SetThingName(const char* value) { m_thingNameHasBeenSet = true; m_thingName.assign(value); }
-    inline UpdateConnectivityInfoRequest& WithThingName(const Aws::String& value) { SetThingName(value); return *this;}
-    inline UpdateConnectivityInfoRequest& WithThingName(Aws::String&& value) { SetThingName(std::move(value)); return *this;}
-    inline UpdateConnectivityInfoRequest& WithThingName(const char* value) { SetThingName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<ConnectivityInfo> m_connectivityInfo;
-    bool m_connectivityInfoHasBeenSet = false;
-
-    Aws::String m_thingName;
-    bool m_thingNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Greengrass
-} // namespace Aws
+}  // namespace Model
+}  // namespace Greengrass
+}  // namespace Aws

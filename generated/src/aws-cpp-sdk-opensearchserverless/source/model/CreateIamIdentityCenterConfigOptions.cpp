@@ -3,85 +3,56 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/opensearchserverless/model/CreateIamIdentityCenterConfigOptions.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/opensearchserverless/model/CreateIamIdentityCenterConfigOptions.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace OpenSearchServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace OpenSearchServerless {
+namespace Model {
 
-CreateIamIdentityCenterConfigOptions::CreateIamIdentityCenterConfigOptions() : 
-    m_groupAttribute(IamIdentityCenterGroupAttribute::NOT_SET),
-    m_groupAttributeHasBeenSet(false),
-    m_instanceArnHasBeenSet(false),
-    m_userAttribute(IamIdentityCenterUserAttribute::NOT_SET),
-    m_userAttributeHasBeenSet(false)
-{
-}
+CreateIamIdentityCenterConfigOptions::CreateIamIdentityCenterConfigOptions(JsonView jsonValue) { *this = jsonValue; }
 
-CreateIamIdentityCenterConfigOptions::CreateIamIdentityCenterConfigOptions(JsonView jsonValue)
-  : CreateIamIdentityCenterConfigOptions()
-{
-  *this = jsonValue;
-}
-
-CreateIamIdentityCenterConfigOptions& CreateIamIdentityCenterConfigOptions::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("groupAttribute"))
-  {
-    m_groupAttribute = IamIdentityCenterGroupAttributeMapper::GetIamIdentityCenterGroupAttributeForName(jsonValue.GetString("groupAttribute"));
-
-    m_groupAttributeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("instanceArn"))
-  {
+CreateIamIdentityCenterConfigOptions& CreateIamIdentityCenterConfigOptions::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("instanceArn")) {
     m_instanceArn = jsonValue.GetString("instanceArn");
-
     m_instanceArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("userAttribute"))
-  {
+  if (jsonValue.ValueExists("userAttribute")) {
     m_userAttribute = IamIdentityCenterUserAttributeMapper::GetIamIdentityCenterUserAttributeForName(jsonValue.GetString("userAttribute"));
-
     m_userAttributeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("groupAttribute")) {
+    m_groupAttribute =
+        IamIdentityCenterGroupAttributeMapper::GetIamIdentityCenterGroupAttributeForName(jsonValue.GetString("groupAttribute"));
+    m_groupAttributeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue CreateIamIdentityCenterConfigOptions::Jsonize() const
-{
+JsonValue CreateIamIdentityCenterConfigOptions::Jsonize() const {
   JsonValue payload;
 
-  if(m_groupAttributeHasBeenSet)
-  {
-   payload.WithString("groupAttribute", IamIdentityCenterGroupAttributeMapper::GetNameForIamIdentityCenterGroupAttribute(m_groupAttribute));
+  if (m_instanceArnHasBeenSet) {
+    payload.WithString("instanceArn", m_instanceArn);
   }
 
-  if(m_instanceArnHasBeenSet)
-  {
-   payload.WithString("instanceArn", m_instanceArn);
-
+  if (m_userAttributeHasBeenSet) {
+    payload.WithString("userAttribute", IamIdentityCenterUserAttributeMapper::GetNameForIamIdentityCenterUserAttribute(m_userAttribute));
   }
 
-  if(m_userAttributeHasBeenSet)
-  {
-   payload.WithString("userAttribute", IamIdentityCenterUserAttributeMapper::GetNameForIamIdentityCenterUserAttribute(m_userAttribute));
+  if (m_groupAttributeHasBeenSet) {
+    payload.WithString("groupAttribute",
+                       IamIdentityCenterGroupAttributeMapper::GetNameForIamIdentityCenterGroupAttribute(m_groupAttribute));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

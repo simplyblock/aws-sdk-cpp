@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediaconnect/model/DescribeFlowSourceMetadataRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediaconnect/model/DescribeFlowSourceMetadataRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::MediaConnect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeFlowSourceMetadataRequest::DescribeFlowSourceMetadataRequest() : 
-    m_flowArnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeFlowSourceMetadataRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeFlowSourceMetadataRequest::SerializePayload() const { return {}; }

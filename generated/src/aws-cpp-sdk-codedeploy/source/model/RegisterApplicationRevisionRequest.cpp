@@ -4,54 +4,53 @@
  */
 
 #include <aws/codedeploy/model/RegisterApplicationRevisionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodeDeploy::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RegisterApplicationRevisionRequest::RegisterApplicationRevisionRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_revisionHasBeenSet(false)
-{
+Aws::String RegisterApplicationRevisionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_applicationNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_descriptionHasBeenSet) {
+    mapSize++;
+  }
+  if (m_revisionHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_applicationNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("applicationName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_applicationName.c_str()));
+  }
+
+  if (m_descriptionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("description"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_description.c_str()));
+  }
+
+  if (m_revisionHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("revision"));
+    m_revision.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String RegisterApplicationRevisionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
-  }
-
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
-  }
-
-  if(m_revisionHasBeenSet)
-  {
-   payload.WithObject("revision", m_revision.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection RegisterApplicationRevisionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RegisterApplicationRevisionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.RegisterApplicationRevision"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

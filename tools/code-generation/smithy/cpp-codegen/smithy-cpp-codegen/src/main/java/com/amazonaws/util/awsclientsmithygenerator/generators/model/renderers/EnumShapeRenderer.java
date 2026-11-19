@@ -1,0 +1,42 @@
+/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+package com.amazonaws.util.awsclientsmithygenerator.generators.model.renderers;
+
+import com.amazonaws.util.awsclientsmithygenerator.generators.CppWriterDelegator;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.CppTypeMapper;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.EnumRenderer;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.RenderContext;
+import com.amazonaws.util.awsclientsmithygenerator.generators.model.ShapeRenderer;
+import software.amazon.smithy.model.shapes.Shape;
+
+import java.util.List;
+
+/**
+ * Renders C++ enum class headers and mapper source files for all classified enum shapes.
+ */
+public final class EnumShapeRenderer implements ShapeRenderer {
+
+    private final List<Shape> enumShapes;
+    private final RenderContext ctx;
+
+    public EnumShapeRenderer(List<Shape> enumShapes, RenderContext ctx) {
+        this.enumShapes = enumShapes;
+        this.ctx = ctx;
+    }
+
+    @Override
+    public void render(CppWriterDelegator writerDelegator) {
+        for (Shape enumShape : enumShapes) {
+            String name = CppTypeMapper.cppShapeName(enumShape);
+            String headerFile = "include/aws/" + ctx.smithyServiceName() + "/model/" + name + ".h";
+            writerDelegator.useFileWriter(headerFile, writer ->
+                EnumRenderer.renderHeader(writer, enumShape, ctx.namespace(), ctx.exportMacro(), ctx.smithyServiceName()));
+
+            String sourceFile = "source/model/" + name + ".cpp";
+            writerDelegator.useFileWriter(sourceFile, writer ->
+                EnumRenderer.renderSource(writer, enumShape, ctx.namespace(), ctx.exportMacro(), ctx.smithyServiceName()));
+        }
+    }
+}

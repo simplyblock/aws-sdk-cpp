@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribePredefinedAttributeRequest::DescribePredefinedAttributeRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DescribePredefinedAttributeRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribePredefinedAttributeRequest::SerializePayload() const { return {}; }

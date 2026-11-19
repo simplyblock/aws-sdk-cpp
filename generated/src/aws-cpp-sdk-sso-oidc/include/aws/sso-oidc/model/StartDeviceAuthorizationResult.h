@@ -4,138 +4,174 @@
  */
 
 #pragma once
-#include <aws/sso-oidc/SSOOIDC_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sso-oidc/SSOOIDC_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOOIDC
-{
-namespace Model
-{
-  class StartDeviceAuthorizationResult
-  {
-  public:
-    AWS_SSOOIDC_API StartDeviceAuthorizationResult();
-    AWS_SSOOIDC_API StartDeviceAuthorizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOOIDC_API StartDeviceAuthorizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOOIDC {
+namespace Model {
+class StartDeviceAuthorizationResult {
+ public:
+  AWS_SSOOIDC_API StartDeviceAuthorizationResult() = default;
+  AWS_SSOOIDC_API StartDeviceAuthorizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOOIDC_API StartDeviceAuthorizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The short-lived code that is used by the device when polling for a session
+   * token.</p>
+   */
+  inline const Aws::String& GetDeviceCode() const { return m_deviceCode; }
+  template <typename DeviceCodeT = Aws::String>
+  void SetDeviceCode(DeviceCodeT&& value) {
+    m_deviceCodeHasBeenSet = true;
+    m_deviceCode = std::forward<DeviceCodeT>(value);
+  }
+  template <typename DeviceCodeT = Aws::String>
+  StartDeviceAuthorizationResult& WithDeviceCode(DeviceCodeT&& value) {
+    SetDeviceCode(std::forward<DeviceCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The short-lived code that is used by the device when polling for a session
-     * token.</p>
-     */
-    inline const Aws::String& GetDeviceCode() const{ return m_deviceCode; }
-    inline void SetDeviceCode(const Aws::String& value) { m_deviceCode = value; }
-    inline void SetDeviceCode(Aws::String&& value) { m_deviceCode = std::move(value); }
-    inline void SetDeviceCode(const char* value) { m_deviceCode.assign(value); }
-    inline StartDeviceAuthorizationResult& WithDeviceCode(const Aws::String& value) { SetDeviceCode(value); return *this;}
-    inline StartDeviceAuthorizationResult& WithDeviceCode(Aws::String&& value) { SetDeviceCode(std::move(value)); return *this;}
-    inline StartDeviceAuthorizationResult& WithDeviceCode(const char* value) { SetDeviceCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A one-time user verification code. This is needed to authorize an in-use
+   * device.</p>
+   */
+  inline const Aws::String& GetUserCode() const { return m_userCode; }
+  template <typename UserCodeT = Aws::String>
+  void SetUserCode(UserCodeT&& value) {
+    m_userCodeHasBeenSet = true;
+    m_userCode = std::forward<UserCodeT>(value);
+  }
+  template <typename UserCodeT = Aws::String>
+  StartDeviceAuthorizationResult& WithUserCode(UserCodeT&& value) {
+    SetUserCode(std::forward<UserCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A one-time user verification code. This is needed to authorize an in-use
-     * device.</p>
-     */
-    inline const Aws::String& GetUserCode() const{ return m_userCode; }
-    inline void SetUserCode(const Aws::String& value) { m_userCode = value; }
-    inline void SetUserCode(Aws::String&& value) { m_userCode = std::move(value); }
-    inline void SetUserCode(const char* value) { m_userCode.assign(value); }
-    inline StartDeviceAuthorizationResult& WithUserCode(const Aws::String& value) { SetUserCode(value); return *this;}
-    inline StartDeviceAuthorizationResult& WithUserCode(Aws::String&& value) { SetUserCode(std::move(value)); return *this;}
-    inline StartDeviceAuthorizationResult& WithUserCode(const char* value) { SetUserCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The URI of the verification page that takes the <code>userCode</code> to
+   * authorize the device.</p>
+   */
+  inline const Aws::String& GetVerificationUri() const { return m_verificationUri; }
+  template <typename VerificationUriT = Aws::String>
+  void SetVerificationUri(VerificationUriT&& value) {
+    m_verificationUriHasBeenSet = true;
+    m_verificationUri = std::forward<VerificationUriT>(value);
+  }
+  template <typename VerificationUriT = Aws::String>
+  StartDeviceAuthorizationResult& WithVerificationUri(VerificationUriT&& value) {
+    SetVerificationUri(std::forward<VerificationUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URI of the verification page that takes the <code>userCode</code> to
-     * authorize the device.</p>
-     */
-    inline const Aws::String& GetVerificationUri() const{ return m_verificationUri; }
-    inline void SetVerificationUri(const Aws::String& value) { m_verificationUri = value; }
-    inline void SetVerificationUri(Aws::String&& value) { m_verificationUri = std::move(value); }
-    inline void SetVerificationUri(const char* value) { m_verificationUri.assign(value); }
-    inline StartDeviceAuthorizationResult& WithVerificationUri(const Aws::String& value) { SetVerificationUri(value); return *this;}
-    inline StartDeviceAuthorizationResult& WithVerificationUri(Aws::String&& value) { SetVerificationUri(std::move(value)); return *this;}
-    inline StartDeviceAuthorizationResult& WithVerificationUri(const char* value) { SetVerificationUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An alternate URL that the client can use to automatically launch a browser.
+   * This process skips the manual step in which the user visits the verification
+   * page and enters their code.</p>
+   */
+  inline const Aws::String& GetVerificationUriComplete() const { return m_verificationUriComplete; }
+  template <typename VerificationUriCompleteT = Aws::String>
+  void SetVerificationUriComplete(VerificationUriCompleteT&& value) {
+    m_verificationUriCompleteHasBeenSet = true;
+    m_verificationUriComplete = std::forward<VerificationUriCompleteT>(value);
+  }
+  template <typename VerificationUriCompleteT = Aws::String>
+  StartDeviceAuthorizationResult& WithVerificationUriComplete(VerificationUriCompleteT&& value) {
+    SetVerificationUriComplete(std::forward<VerificationUriCompleteT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An alternate URL that the client can use to automatically launch a browser.
-     * This process skips the manual step in which the user visits the verification
-     * page and enters their code.</p>
-     */
-    inline const Aws::String& GetVerificationUriComplete() const{ return m_verificationUriComplete; }
-    inline void SetVerificationUriComplete(const Aws::String& value) { m_verificationUriComplete = value; }
-    inline void SetVerificationUriComplete(Aws::String&& value) { m_verificationUriComplete = std::move(value); }
-    inline void SetVerificationUriComplete(const char* value) { m_verificationUriComplete.assign(value); }
-    inline StartDeviceAuthorizationResult& WithVerificationUriComplete(const Aws::String& value) { SetVerificationUriComplete(value); return *this;}
-    inline StartDeviceAuthorizationResult& WithVerificationUriComplete(Aws::String&& value) { SetVerificationUriComplete(std::move(value)); return *this;}
-    inline StartDeviceAuthorizationResult& WithVerificationUriComplete(const char* value) { SetVerificationUriComplete(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates the number of seconds in which the verification code will become
+   * invalid.</p>
+   */
+  inline int GetExpiresIn() const { return m_expiresIn; }
+  inline void SetExpiresIn(int value) {
+    m_expiresInHasBeenSet = true;
+    m_expiresIn = value;
+  }
+  inline StartDeviceAuthorizationResult& WithExpiresIn(int value) {
+    SetExpiresIn(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates the number of seconds in which the verification code will become
-     * invalid.</p>
-     */
-    inline int GetExpiresIn() const{ return m_expiresIn; }
-    inline void SetExpiresIn(int value) { m_expiresIn = value; }
-    inline StartDeviceAuthorizationResult& WithExpiresIn(int value) { SetExpiresIn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates the number of seconds the client must wait between attempts when
+   * polling for a session.</p>
+   */
+  inline int GetInterval() const { return m_interval; }
+  inline void SetInterval(int value) {
+    m_intervalHasBeenSet = true;
+    m_interval = value;
+  }
+  inline StartDeviceAuthorizationResult& WithInterval(int value) {
+    SetInterval(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates the number of seconds the client must wait between attempts when
-     * polling for a session.</p>
-     */
-    inline int GetInterval() const{ return m_interval; }
-    inline void SetInterval(int value) { m_interval = value; }
-    inline StartDeviceAuthorizationResult& WithInterval(int value) { SetInterval(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartDeviceAuthorizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartDeviceAuthorizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartDeviceAuthorizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartDeviceAuthorizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_deviceCode;
+ private:
+  Aws::String m_deviceCode;
 
-    Aws::String m_userCode;
+  Aws::String m_userCode;
 
-    Aws::String m_verificationUri;
+  Aws::String m_verificationUri;
 
-    Aws::String m_verificationUriComplete;
+  Aws::String m_verificationUriComplete;
 
-    int m_expiresIn;
+  int m_expiresIn{0};
 
-    int m_interval;
+  int m_interval{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deviceCodeHasBeenSet = false;
+  bool m_userCodeHasBeenSet = false;
+  bool m_verificationUriHasBeenSet = false;
+  bool m_verificationUriCompleteHasBeenSet = false;
+  bool m_expiresInHasBeenSet = false;
+  bool m_intervalHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOOIDC
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOOIDC
+}  // namespace Aws

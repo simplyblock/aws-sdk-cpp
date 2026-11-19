@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/macie2/model/GetMasterAccountRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/macie2/model/GetMasterAccountRequest.h>
 
 #include <utility>
 
@@ -12,15 +12,4 @@ using namespace Aws::Macie2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetMasterAccountRequest::GetMasterAccountRequest()
-{
-}
-
-Aws::String GetMasterAccountRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetMasterAccountRequest::SerializePayload() const { return {}; }

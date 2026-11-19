@@ -4,13 +4,15 @@
  */
 
 #include <aws/amplifybackend/AmplifyBackendEndpointProvider.h>
+#include <aws/amplifybackend/internal/AmplifyBackendEndpointRules.h>
 
-namespace Aws
-{
-namespace AmplifyBackend
-{
-namespace Endpoint
-{
-} // namespace Endpoint
-} // namespace AmplifyBackend
-} // namespace Aws
+namespace Aws {
+namespace AmplifyBackend {
+namespace Endpoint {
+AmplifyBackendEndpointProvider::AmplifyBackendEndpointProvider()
+    : AmplifyBackendDefaultEpProviderBase(Aws::AmplifyBackend::AmplifyBackendEndpointRules::GetRulesBlob(),
+                                          Aws::AmplifyBackend::AmplifyBackendEndpointRules::RulesBlobSize) {}
+
+}  // namespace Endpoint
+}  // namespace AmplifyBackend
+}  // namespace Aws

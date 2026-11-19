@@ -11,49 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-ContactFlowSearchFilter::ContactFlowSearchFilter() : 
-    m_tagFilterHasBeenSet(false)
-{
-}
+ContactFlowSearchFilter::ContactFlowSearchFilter(JsonView jsonValue) { *this = jsonValue; }
 
-ContactFlowSearchFilter::ContactFlowSearchFilter(JsonView jsonValue)
-  : ContactFlowSearchFilter()
-{
-  *this = jsonValue;
-}
-
-ContactFlowSearchFilter& ContactFlowSearchFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("TagFilter"))
-  {
+ContactFlowSearchFilter& ContactFlowSearchFilter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("TagFilter")) {
     m_tagFilter = jsonValue.GetObject("TagFilter");
-
     m_tagFilterHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("FlowAttributeFilter")) {
+    m_flowAttributeFilter = jsonValue.GetObject("FlowAttributeFilter");
+    m_flowAttributeFilterHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ContactFlowSearchFilter::Jsonize() const
-{
+JsonValue ContactFlowSearchFilter::Jsonize() const {
   JsonValue payload;
 
-  if(m_tagFilterHasBeenSet)
-  {
-   payload.WithObject("TagFilter", m_tagFilter.Jsonize());
+  if (m_tagFilterHasBeenSet) {
+    payload.WithObject("TagFilter", m_tagFilter.Jsonize());
+  }
 
+  if (m_flowAttributeFilterHasBeenSet) {
+    payload.WithObject("FlowAttributeFilter", m_flowAttributeFilter.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/HubInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class ListHubsResult
-  {
-  public:
-    AWS_SAGEMAKER_API ListHubsResult();
-    AWS_SAGEMAKER_API ListHubsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API ListHubsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class ListHubsResult {
+ public:
+  AWS_SAGEMAKER_API ListHubsResult() = default;
+  AWS_SAGEMAKER_API ListHubsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API ListHubsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The summaries of the listed hubs.</p>
+   */
+  inline const Aws::Vector<HubInfo>& GetHubSummaries() const { return m_hubSummaries; }
+  template <typename HubSummariesT = Aws::Vector<HubInfo>>
+  void SetHubSummaries(HubSummariesT&& value) {
+    m_hubSummariesHasBeenSet = true;
+    m_hubSummaries = std::forward<HubSummariesT>(value);
+  }
+  template <typename HubSummariesT = Aws::Vector<HubInfo>>
+  ListHubsResult& WithHubSummaries(HubSummariesT&& value) {
+    SetHubSummaries(std::forward<HubSummariesT>(value));
+    return *this;
+  }
+  template <typename HubSummariesT = HubInfo>
+  ListHubsResult& AddHubSummaries(HubSummariesT&& value) {
+    m_hubSummariesHasBeenSet = true;
+    m_hubSummaries.emplace_back(std::forward<HubSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The summaries of the listed hubs.</p>
-     */
-    inline const Aws::Vector<HubInfo>& GetHubSummaries() const{ return m_hubSummaries; }
-    inline void SetHubSummaries(const Aws::Vector<HubInfo>& value) { m_hubSummaries = value; }
-    inline void SetHubSummaries(Aws::Vector<HubInfo>&& value) { m_hubSummaries = std::move(value); }
-    inline ListHubsResult& WithHubSummaries(const Aws::Vector<HubInfo>& value) { SetHubSummaries(value); return *this;}
-    inline ListHubsResult& WithHubSummaries(Aws::Vector<HubInfo>&& value) { SetHubSummaries(std::move(value)); return *this;}
-    inline ListHubsResult& AddHubSummaries(const HubInfo& value) { m_hubSummaries.push_back(value); return *this; }
-    inline ListHubsResult& AddHubSummaries(HubInfo&& value) { m_hubSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If the response is truncated, SageMaker returns this token. To retrieve the
+   * next set of hubs, use it in the subsequent request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListHubsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the response is truncated, SageMaker returns this token. To retrieve the
-     * next set of hubs, use it in the subsequent request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListHubsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListHubsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListHubsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListHubsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListHubsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListHubsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListHubsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<HubInfo> m_hubSummaries;
+ private:
+  Aws::Vector<HubInfo> m_hubSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hubSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

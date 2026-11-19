@@ -4,91 +4,98 @@
  */
 
 #pragma once
-#include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/amplify/AmplifyRequest.h>
+#include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Amplify
-{
-namespace Model
-{
+namespace Aws {
+namespace Amplify {
+namespace Model {
 
+/**
+ * <p>The request structure for the create webhook request. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateWebhookRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateWebhookRequest : public AmplifyRequest {
+ public:
+  AWS_AMPLIFY_API CreateWebhookRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateWebhook"; }
+
+  AWS_AMPLIFY_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p>The request structure for the create webhook request. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateWebhookRequest">AWS
-   * API Reference</a></p>
+   * <p>The unique ID for an Amplify app. </p>
    */
-  class CreateWebhookRequest : public AmplifyRequest
-  {
-  public:
-    AWS_AMPLIFY_API CreateWebhookRequest();
+  inline const Aws::String& GetAppId() const { return m_appId; }
+  inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
+  template <typename AppIdT = Aws::String>
+  void SetAppId(AppIdT&& value) {
+    m_appIdHasBeenSet = true;
+    m_appId = std::forward<AppIdT>(value);
+  }
+  template <typename AppIdT = Aws::String>
+  CreateWebhookRequest& WithAppId(AppIdT&& value) {
+    SetAppId(std::forward<AppIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateWebhook"; }
+  ///@{
+  /**
+   * <p>The name for a branch that is part of an Amplify app. </p>
+   */
+  inline const Aws::String& GetBranchName() const { return m_branchName; }
+  inline bool BranchNameHasBeenSet() const { return m_branchNameHasBeenSet; }
+  template <typename BranchNameT = Aws::String>
+  void SetBranchName(BranchNameT&& value) {
+    m_branchNameHasBeenSet = true;
+    m_branchName = std::forward<BranchNameT>(value);
+  }
+  template <typename BranchNameT = Aws::String>
+  CreateWebhookRequest& WithBranchName(BranchNameT&& value) {
+    SetBranchName(std::forward<BranchNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_AMPLIFY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The description for a webhook. </p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateWebhookRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_appId;
 
+  Aws::String m_branchName;
 
-    ///@{
-    /**
-     * <p>The unique ID for an Amplify app. </p>
-     */
-    inline const Aws::String& GetAppId() const{ return m_appId; }
-    inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
-    inline void SetAppId(const Aws::String& value) { m_appIdHasBeenSet = true; m_appId = value; }
-    inline void SetAppId(Aws::String&& value) { m_appIdHasBeenSet = true; m_appId = std::move(value); }
-    inline void SetAppId(const char* value) { m_appIdHasBeenSet = true; m_appId.assign(value); }
-    inline CreateWebhookRequest& WithAppId(const Aws::String& value) { SetAppId(value); return *this;}
-    inline CreateWebhookRequest& WithAppId(Aws::String&& value) { SetAppId(std::move(value)); return *this;}
-    inline CreateWebhookRequest& WithAppId(const char* value) { SetAppId(value); return *this;}
-    ///@}
+  Aws::String m_description;
+  bool m_appIdHasBeenSet = false;
+  bool m_branchNameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name for a branch that is part of an Amplify app. </p>
-     */
-    inline const Aws::String& GetBranchName() const{ return m_branchName; }
-    inline bool BranchNameHasBeenSet() const { return m_branchNameHasBeenSet; }
-    inline void SetBranchName(const Aws::String& value) { m_branchNameHasBeenSet = true; m_branchName = value; }
-    inline void SetBranchName(Aws::String&& value) { m_branchNameHasBeenSet = true; m_branchName = std::move(value); }
-    inline void SetBranchName(const char* value) { m_branchNameHasBeenSet = true; m_branchName.assign(value); }
-    inline CreateWebhookRequest& WithBranchName(const Aws::String& value) { SetBranchName(value); return *this;}
-    inline CreateWebhookRequest& WithBranchName(Aws::String&& value) { SetBranchName(std::move(value)); return *this;}
-    inline CreateWebhookRequest& WithBranchName(const char* value) { SetBranchName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The description for a webhook. </p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateWebhookRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateWebhookRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateWebhookRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_appId;
-    bool m_appIdHasBeenSet = false;
-
-    Aws::String m_branchName;
-    bool m_branchNameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Amplify
-} // namespace Aws
+}  // namespace Model
+}  // namespace Amplify
+}  // namespace Aws

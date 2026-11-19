@@ -6,23 +6,17 @@
 #pragma once
 #include <aws/appintegrations/AppIntegrationsService_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
-#include <aws/appintegrations/AppIntegrationsServiceEndpointRules.h>
-
-
-namespace Aws
-{
-namespace AppIntegrationsService
-{
-namespace Endpoint
-{
+namespace Aws {
+namespace AppIntegrationsService {
+namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
-using Aws::Endpoint::DefaultEndpointProvider;
 
 using AppIntegrationsServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
 
@@ -35,27 +29,24 @@ using AppIntegrationsServiceBuiltInParameters = Aws::Endpoint::BuiltInParameters
  * The SDK must use service-specific type for each service per specification.
  */
 using AppIntegrationsServiceEndpointProviderBase =
-    EndpointProviderBase<AppIntegrationsServiceClientConfiguration, AppIntegrationsServiceBuiltInParameters, AppIntegrationsServiceClientContextParameters>;
+    EndpointProviderBase<AppIntegrationsServiceClientConfiguration, AppIntegrationsServiceBuiltInParameters,
+                         AppIntegrationsServiceClientContextParameters>;
 
 using AppIntegrationsServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<AppIntegrationsServiceClientConfiguration, AppIntegrationsServiceBuiltInParameters, AppIntegrationsServiceClientContextParameters>;
+    BDDEndpointProvider<AppIntegrationsServiceClientConfiguration, AppIntegrationsServiceBuiltInParameters,
+                        AppIntegrationsServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
  */
-class AWS_APPINTEGRATIONSSERVICE_API AppIntegrationsServiceEndpointProvider : public AppIntegrationsServiceDefaultEpProviderBase
-{
-public:
-    using AppIntegrationsServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
+class AWS_APPINTEGRATIONSSERVICE_API AppIntegrationsServiceEndpointProvider : public AppIntegrationsServiceDefaultEpProviderBase {
+ public:
+  using AppIntegrationsServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-    AppIntegrationsServiceEndpointProvider()
-      : AppIntegrationsServiceDefaultEpProviderBase(Aws::AppIntegrationsService::AppIntegrationsServiceEndpointRules::GetRulesBlob(), Aws::AppIntegrationsService::AppIntegrationsServiceEndpointRules::RulesBlobSize)
-    {}
+  AppIntegrationsServiceEndpointProvider();
 
-    ~AppIntegrationsServiceEndpointProvider()
-    {
-    }
+  ~AppIntegrationsServiceEndpointProvider() {}
 };
-} // namespace Endpoint
-} // namespace AppIntegrationsService
-} // namespace Aws
+}  // namespace Endpoint
+}  // namespace AppIntegrationsService
+}  // namespace Aws

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DeleteDBClusterAutomatedBackupResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/rds/model/DeleteDBClusterAutomatedBackupResult.h>
 
 #include <utility>
 
@@ -17,38 +17,34 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteDBClusterAutomatedBackupResult::DeleteDBClusterAutomatedBackupResult()
-{
-}
-
-DeleteDBClusterAutomatedBackupResult::DeleteDBClusterAutomatedBackupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteDBClusterAutomatedBackupResult::DeleteDBClusterAutomatedBackupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DeleteDBClusterAutomatedBackupResult& DeleteDBClusterAutomatedBackupResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteDBClusterAutomatedBackupResult& DeleteDBClusterAutomatedBackupResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteDBClusterAutomatedBackupResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteDBClusterAutomatedBackupResult")) {
     resultNode = rootNode.FirstChild("DeleteDBClusterAutomatedBackupResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode dBClusterAutomatedBackupNode = resultNode.FirstChild("DBClusterAutomatedBackup");
-    if(!dBClusterAutomatedBackupNode.IsNull())
-    {
+    if (!dBClusterAutomatedBackupNode.IsNull()) {
       m_dBClusterAutomatedBackup = dBClusterAutomatedBackupNode;
+      m_dBClusterAutomatedBackupHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DeleteDBClusterAutomatedBackupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DeleteDBClusterAutomatedBackupResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

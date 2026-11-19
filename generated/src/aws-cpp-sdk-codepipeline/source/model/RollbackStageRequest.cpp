@@ -4,54 +4,53 @@
  */
 
 #include <aws/codepipeline/model/RollbackStageRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::CodePipeline::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-RollbackStageRequest::RollbackStageRequest() : 
-    m_pipelineNameHasBeenSet(false),
-    m_stageNameHasBeenSet(false),
-    m_targetPipelineExecutionIdHasBeenSet(false)
-{
+Aws::String RollbackStageRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_pipelineNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_stageNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_targetPipelineExecutionIdHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_pipelineNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("pipelineName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_pipelineName.c_str()));
+  }
+
+  if (m_stageNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("stageName"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_stageName.c_str()));
+  }
+
+  if (m_targetPipelineExecutionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("targetPipelineExecutionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_targetPipelineExecutionId.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String RollbackStageRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_pipelineNameHasBeenSet)
-  {
-   payload.WithString("pipelineName", m_pipelineName);
-
-  }
-
-  if(m_stageNameHasBeenSet)
-  {
-   payload.WithString("stageName", m_stageName);
-
-  }
-
-  if(m_targetPipelineExecutionIdHasBeenSet)
-  {
-   payload.WithString("targetPipelineExecutionId", m_targetPipelineExecutionId);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection RollbackStageRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RollbackStageRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodePipeline_20150709.RollbackStage"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/CatalogImportStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class GetCatalogImportStatusResult
-  {
-  public:
-    AWS_GLUE_API GetCatalogImportStatusResult();
-    AWS_GLUE_API GetCatalogImportStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API GetCatalogImportStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class GetCatalogImportStatusResult {
+ public:
+  AWS_GLUE_API GetCatalogImportStatusResult() = default;
+  AWS_GLUE_API GetCatalogImportStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API GetCatalogImportStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status of the specified catalog migration.</p>
+   */
+  inline const CatalogImportStatus& GetImportStatus() const { return m_importStatus; }
+  template <typename ImportStatusT = CatalogImportStatus>
+  void SetImportStatus(ImportStatusT&& value) {
+    m_importStatusHasBeenSet = true;
+    m_importStatus = std::forward<ImportStatusT>(value);
+  }
+  template <typename ImportStatusT = CatalogImportStatus>
+  GetCatalogImportStatusResult& WithImportStatus(ImportStatusT&& value) {
+    SetImportStatus(std::forward<ImportStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the specified catalog migration.</p>
-     */
-    inline const CatalogImportStatus& GetImportStatus() const{ return m_importStatus; }
-    inline void SetImportStatus(const CatalogImportStatus& value) { m_importStatus = value; }
-    inline void SetImportStatus(CatalogImportStatus&& value) { m_importStatus = std::move(value); }
-    inline GetCatalogImportStatusResult& WithImportStatus(const CatalogImportStatus& value) { SetImportStatus(value); return *this;}
-    inline GetCatalogImportStatusResult& WithImportStatus(CatalogImportStatus&& value) { SetImportStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCatalogImportStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCatalogImportStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCatalogImportStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCatalogImportStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CatalogImportStatus m_importStatus;
+ private:
+  CatalogImportStatus m_importStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_importStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

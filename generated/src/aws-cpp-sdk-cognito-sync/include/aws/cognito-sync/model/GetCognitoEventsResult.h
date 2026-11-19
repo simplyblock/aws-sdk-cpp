@@ -5,74 +5,82 @@
 
 #pragma once
 #include <aws/cognito-sync/CognitoSync_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoSync
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoSync {
+namespace Model {
+/**
+ * <p>The response from the GetCognitoEvents request</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-sync-2014-06-30/GetCognitoEventsResponse">AWS
+ * API Reference</a></p>
+ */
+class GetCognitoEventsResult {
+ public:
+  AWS_COGNITOSYNC_API GetCognitoEventsResult() = default;
+  AWS_COGNITOSYNC_API GetCognitoEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOSYNC_API GetCognitoEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response from the GetCognitoEvents request</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-sync-2014-06-30/GetCognitoEventsResponse">AWS
-   * API Reference</a></p>
+   * <p>The Cognito Events returned from the GetCognitoEvents request</p>
    */
-  class GetCognitoEventsResult
-  {
-  public:
-    AWS_COGNITOSYNC_API GetCognitoEventsResult();
-    AWS_COGNITOSYNC_API GetCognitoEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOSYNC_API GetCognitoEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Map<Aws::String, Aws::String>& GetEvents() const { return m_events; }
+  template <typename EventsT = Aws::Map<Aws::String, Aws::String>>
+  void SetEvents(EventsT&& value) {
+    m_eventsHasBeenSet = true;
+    m_events = std::forward<EventsT>(value);
+  }
+  template <typename EventsT = Aws::Map<Aws::String, Aws::String>>
+  GetCognitoEventsResult& WithEvents(EventsT&& value) {
+    SetEvents(std::forward<EventsT>(value));
+    return *this;
+  }
+  template <typename EventsKeyT = Aws::String, typename EventsValueT = Aws::String>
+  GetCognitoEventsResult& AddEvents(EventsKeyT&& key, EventsValueT&& value) {
+    m_eventsHasBeenSet = true;
+    m_events.emplace(std::forward<EventsKeyT>(key), std::forward<EventsValueT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The Cognito Events returned from the GetCognitoEvents request</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetEvents() const{ return m_events; }
-    inline void SetEvents(const Aws::Map<Aws::String, Aws::String>& value) { m_events = value; }
-    inline void SetEvents(Aws::Map<Aws::String, Aws::String>&& value) { m_events = std::move(value); }
-    inline GetCognitoEventsResult& WithEvents(const Aws::Map<Aws::String, Aws::String>& value) { SetEvents(value); return *this;}
-    inline GetCognitoEventsResult& WithEvents(Aws::Map<Aws::String, Aws::String>&& value) { SetEvents(std::move(value)); return *this;}
-    inline GetCognitoEventsResult& AddEvents(const Aws::String& key, const Aws::String& value) { m_events.emplace(key, value); return *this; }
-    inline GetCognitoEventsResult& AddEvents(Aws::String&& key, const Aws::String& value) { m_events.emplace(std::move(key), value); return *this; }
-    inline GetCognitoEventsResult& AddEvents(const Aws::String& key, Aws::String&& value) { m_events.emplace(key, std::move(value)); return *this; }
-    inline GetCognitoEventsResult& AddEvents(Aws::String&& key, Aws::String&& value) { m_events.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetCognitoEventsResult& AddEvents(const char* key, Aws::String&& value) { m_events.emplace(key, std::move(value)); return *this; }
-    inline GetCognitoEventsResult& AddEvents(Aws::String&& key, const char* value) { m_events.emplace(std::move(key), value); return *this; }
-    inline GetCognitoEventsResult& AddEvents(const char* key, const char* value) { m_events.emplace(key, value); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCognitoEventsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCognitoEventsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCognitoEventsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCognitoEventsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Map<Aws::String, Aws::String> m_events;
 
-    Aws::Map<Aws::String, Aws::String> m_events;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CognitoSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoSync
+}  // namespace Aws

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/BlueprintRun.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class GetBlueprintRunResult
-  {
-  public:
-    AWS_GLUE_API GetBlueprintRunResult();
-    AWS_GLUE_API GetBlueprintRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API GetBlueprintRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class GetBlueprintRunResult {
+ public:
+  AWS_GLUE_API GetBlueprintRunResult() = default;
+  AWS_GLUE_API GetBlueprintRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API GetBlueprintRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns a <code>BlueprintRun</code> object.</p>
+   */
+  inline const BlueprintRun& GetBlueprintRun() const { return m_blueprintRun; }
+  template <typename BlueprintRunT = BlueprintRun>
+  void SetBlueprintRun(BlueprintRunT&& value) {
+    m_blueprintRunHasBeenSet = true;
+    m_blueprintRun = std::forward<BlueprintRunT>(value);
+  }
+  template <typename BlueprintRunT = BlueprintRun>
+  GetBlueprintRunResult& WithBlueprintRun(BlueprintRunT&& value) {
+    SetBlueprintRun(std::forward<BlueprintRunT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns a <code>BlueprintRun</code> object.</p>
-     */
-    inline const BlueprintRun& GetBlueprintRun() const{ return m_blueprintRun; }
-    inline void SetBlueprintRun(const BlueprintRun& value) { m_blueprintRun = value; }
-    inline void SetBlueprintRun(BlueprintRun&& value) { m_blueprintRun = std::move(value); }
-    inline GetBlueprintRunResult& WithBlueprintRun(const BlueprintRun& value) { SetBlueprintRun(value); return *this;}
-    inline GetBlueprintRunResult& WithBlueprintRun(BlueprintRun&& value) { SetBlueprintRun(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBlueprintRunResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBlueprintRunResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBlueprintRunResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBlueprintRunResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    BlueprintRun m_blueprintRun;
+ private:
+  BlueprintRun m_blueprintRun;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_blueprintRunHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

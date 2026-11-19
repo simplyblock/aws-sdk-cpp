@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteVocabularyRequest::DeleteVocabularyRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_vocabularyIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteVocabularyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteVocabularyRequest::SerializePayload() const { return {}; }

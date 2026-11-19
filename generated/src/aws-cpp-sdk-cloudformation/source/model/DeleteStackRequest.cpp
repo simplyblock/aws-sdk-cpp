@@ -10,64 +10,43 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DeleteStackRequest::DeleteStackRequest() : 
-    m_stackNameHasBeenSet(false),
-    m_retainResourcesHasBeenSet(false),
-    m_roleARNHasBeenSet(false),
-    m_clientRequestTokenHasBeenSet(false),
-    m_deletionMode(DeletionMode::NOT_SET),
-    m_deletionModeHasBeenSet(false)
-{
-}
-
-Aws::String DeleteStackRequest::SerializePayload() const
-{
+Aws::String DeleteStackRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteStack&";
-  if(m_stackNameHasBeenSet)
-  {
+  if (m_stackNameHasBeenSet) {
     ss << "StackName=" << StringUtils::URLEncode(m_stackName.c_str()) << "&";
   }
 
-  if(m_retainResourcesHasBeenSet)
-  {
-    if (m_retainResources.empty())
-    {
+  if (m_retainResourcesHasBeenSet) {
+    if (m_retainResources.empty()) {
       ss << "RetainResources=&";
-    }
-    else
-    {
+    } else {
       unsigned retainResourcesCount = 1;
-      for(auto& item : m_retainResources)
-      {
-        ss << "RetainResources.member." << retainResourcesCount << "="
-            << StringUtils::URLEncode(item.c_str()) << "&";
+      for (auto& item : m_retainResources) {
+        ss << "RetainResources.member." << retainResourcesCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
         retainResourcesCount++;
       }
     }
   }
 
-  if(m_roleARNHasBeenSet)
-  {
+  if (m_roleARNHasBeenSet) {
     ss << "RoleARN=" << StringUtils::URLEncode(m_roleARN.c_str()) << "&";
   }
 
-  if(m_clientRequestTokenHasBeenSet)
-  {
+  if (m_clientRequestTokenHasBeenSet) {
     ss << "ClientRequestToken=" << StringUtils::URLEncode(m_clientRequestToken.c_str()) << "&";
   }
 
-  if(m_deletionModeHasBeenSet)
-  {
-    ss << "DeletionMode=" << DeletionModeMapper::GetNameForDeletionMode(m_deletionMode) << "&";
+  if (m_deletionModeHasBeenSet) {
+    ss << "DeletionMode=" << StringUtils::URLEncode(DeletionModeMapper::GetNameForDeletionMode(m_deletionMode)) << "&";
+  }
+
+  if (m_deploymentConfigHasBeenSet) {
+    m_deploymentConfig.OutputToStream(ss, "DeploymentConfig");
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  DeleteStackRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteStackRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

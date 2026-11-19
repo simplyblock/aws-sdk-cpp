@@ -5,64 +5,79 @@
 
 #pragma once
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/autoscaling/model/ResponseMetadata.h>
 #include <aws/autoscaling/model/Activity.h>
+#include <aws/autoscaling/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace AutoScaling
-{
-namespace Model
-{
-  class ExitStandbyResult
-  {
-  public:
-    AWS_AUTOSCALING_API ExitStandbyResult();
-    AWS_AUTOSCALING_API ExitStandbyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_AUTOSCALING_API ExitStandbyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace AutoScaling {
+namespace Model {
+class ExitStandbyResult {
+ public:
+  AWS_AUTOSCALING_API ExitStandbyResult() = default;
+  AWS_AUTOSCALING_API ExitStandbyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_AUTOSCALING_API ExitStandbyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The activities related to moving instances out of <code>Standby</code>
+   * mode.</p>
+   */
+  inline const Aws::Vector<Activity>& GetActivities() const { return m_activities; }
+  template <typename ActivitiesT = Aws::Vector<Activity>>
+  void SetActivities(ActivitiesT&& value) {
+    m_activitiesHasBeenSet = true;
+    m_activities = std::forward<ActivitiesT>(value);
+  }
+  template <typename ActivitiesT = Aws::Vector<Activity>>
+  ExitStandbyResult& WithActivities(ActivitiesT&& value) {
+    SetActivities(std::forward<ActivitiesT>(value));
+    return *this;
+  }
+  template <typename ActivitiesT = Activity>
+  ExitStandbyResult& AddActivities(ActivitiesT&& value) {
+    m_activitiesHasBeenSet = true;
+    m_activities.emplace_back(std::forward<ActivitiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The activities related to moving instances out of <code>Standby</code>
-     * mode.</p>
-     */
-    inline const Aws::Vector<Activity>& GetActivities() const{ return m_activities; }
-    inline void SetActivities(const Aws::Vector<Activity>& value) { m_activities = value; }
-    inline void SetActivities(Aws::Vector<Activity>&& value) { m_activities = std::move(value); }
-    inline ExitStandbyResult& WithActivities(const Aws::Vector<Activity>& value) { SetActivities(value); return *this;}
-    inline ExitStandbyResult& WithActivities(Aws::Vector<Activity>&& value) { SetActivities(std::move(value)); return *this;}
-    inline ExitStandbyResult& AddActivities(const Activity& value) { m_activities.push_back(value); return *this; }
-    inline ExitStandbyResult& AddActivities(Activity&& value) { m_activities.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ExitStandbyResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ExitStandbyResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ExitStandbyResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Activity> m_activities;
+ private:
+  Aws::Vector<Activity> m_activities;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_activitiesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AutoScaling
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScaling
+}  // namespace Aws
